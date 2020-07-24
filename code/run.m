@@ -80,7 +80,7 @@ pseudoOpts.octsubdiv = 1;
 
 T = true;
 F = false;
-meshloadQ = F; %just makes it easier to switch back and forth between true and false
+meshloadQ = T; %just makes it easier to switch back and forth between true and false
 dataloadQ = T;
 pseudoloadQ = T;
 meshdataloadQ = T; %whether to check for and load intersection & barycentric data from previous run
