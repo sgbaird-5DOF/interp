@@ -209,6 +209,7 @@ ilist = [];
 nonintDists = [];
 for i = 1:ndatapts
 	datapt = data.pts(i,:);
+	sphbaryOK = false;
 	if ~isempty(intfacetIDs{i})
 		%setup
 		intfacetID = intfacetIDs{i}(1); %take only the first intersecting facet? Average values? Use oSLERP instead?
@@ -219,15 +220,23 @@ for i = 1:ndatapts
 		
 		%% spherical barycentric coordinates
 		databary(i,:) = sphbary(datapt,facet); %need to save for inference input
+		% 		[~,databary(i,:)] = intersect_facet(facet,1:7,datapt,1e-12,false);
 		
-		%% interpolate using sph. bary coords
-		datainterp(i) = dot(databary(i,:),facetprops(i,:));
-		
-	else
+		nonNegQ = all(databary(i,:) > 0);
+		greaterThanOneQ = sum(databary(i,:)) >= 1-1e-12;
+		if nonNegQ && gtonecheck
+			sphbaryOK = true;
+			%% interpolate using sph. bary coords
+			datainterp(i) = dot(databary(i,:),facetprops(i,:));
+		else
+			disp([num2str(databary) ' ... sum(databary) == ' num2str(sum(databary(i,:)))]);
+		end
+	end
+	if ~sphbaryOK
 		disp(['i == ' int2str(i) ...
-			'; no intersection, taking NN with dist = ' num2str(nndistList(i))])
+			'; no valid intersection, taking NN with dist = ' num2str(nndistList(i))])
 		nonintDists = [nonintDists;nndistList(i)];
-		nndistList(i) = NaN;
+		nndistList(i) = NaN; %to distinguish interp vs. NN distances in plotting
 		nnID = [nnID;nnList(i)]; %nearest neighbor indices
 		ilist = [ilist;i];
 		% 			datainterp(i) = mesh.props(k(i));
