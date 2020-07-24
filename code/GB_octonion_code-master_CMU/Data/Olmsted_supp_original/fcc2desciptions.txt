@@ -1,0 +1,28 @@
+Description of supplemental files
+
+I.  mobility.txt
+
+1.  The index number for the grain boundary as given in the
+supplemental data for part I.  
+
+2.  The measured mobiltity at 1400K, with a added potential energy of
+0.025 eV per atom in m/sGPa.  A value of zero indicates that the
+boundary did not move some minimum distance, see the text for details.
+No estimate of the error is given, but at least for the larger values
+not all digits are significant.
+
+
+II.  shear.txt
+
+1.  The index number for the grain boundary as given in the
+supplemental data for part I.
+
+2.  The average relative shear of the right grain, with respect to the left
+grain, at 1400K.  One run in each direction for 0.005, 0.01, 0.025, and 
+in some cases 0.05 eV/atom are included.  For boundaries where
+any of the runs failed to move the minimum distance, "****" is shown.
+    The relative shear is shown as a y-z vector in the sample 
+coordinates. 
+    In many cases the relative shear is very consistent from run to run
+and both figures are significant, but in some cases the shear is noisy
+or varies with driving force.

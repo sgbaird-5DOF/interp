@@ -1,0 +1,91 @@
+Description of supplemental files
+
+I.  The description of the grain boundary in the dsc_csl.txt and the
+axis_angle_by_gb.txt file.  
+
+The left grain and the right grain are each described by three
+integer vectors.  The first vector on the left is the direction in
+fcc (cubic) coordinates (for the left grain) of the sample x axis.  The x axis
+is the normal to the grain boundary, so this vector gives the grain
+boundary normal.  The second and third vectors similarly give the
+directions of the sample y and z axes.  The three vectors on the right
+give the same information for the right grain.  Each vector is an fcc
+lattice vector when considered as having units of half the lattice constant.
+
+This can be stated another way.  If each vector is converted to a unit
+vector and the three vectors on the left are used as the rows of a 3x3
+matrix, this gives a rotation matrix P.  (Similarly the three vectors
+on the right give a rotation matrix Q.)  If P is multiplied by a
+column vector which is a lattice vector in fcc coordinates it gives a
+lattice vector in the left grain in the sample coordinates.  Similarly
+Q transforms lattice vectors in fcc coordinates into lattice vectors
+of the right grain.
+
+This description specifies the grain boundary exactly.  There are of course
+many different descriptions of this form that would describe the same boundary,
+of which one has been chosen.  The only part of the choice that is relevant 
+here is that each vector has a length less than or equal to 15.
+
+II.  dsc_csl.txt
+The first line has three items:
+  1.  An index number for the grain boundary which is used throughout this 
+supplemental data.
+  2.  Sigma, the inverse of the fraction of coincident sites.
+  3.  An index number for the misorientation represented by the grain
+boundary.  Thus boundaries with the same misorientation index have
+the same misorientation, but different boundary planes.
+
+The next three lines give the grain boundary as described in (I).
+
+A set of primitive lattice vectors for the DSC lattice is then given.
+These are given in fcc coordinates which makes them rational numbers.
+They must be multiplied by the rotation matrix P for the left grain in
+order to obtain them in sample coordinates.  The units are half the
+lattice constant.
+
+A set of primitive lattice vectors for the CSL lattice is then given,
+in the same coordinate frame and units as for the DSC lattice.
+
+III.  axis_angle_by_gb.txt
+This files gives the various possible descriptions of each boundary in terms
+of rotation axis and rotation angle.
+
+The first line gives the grain boundary index, and the next three lines
+give the description of the grain boundary as in (I).  The grain boundary
+index is repeated, followed by seven to twenty-four lines giving a description of
+the boundary as follows:
+  1.  The Miller type of the rotation axis.
+  2.  The cosine of the rotation angle.
+  3.  The rotation angle in degrees (as a positive number).
+  4.  The Miller types of the grain boundary normals.  (These are given
+as fcc lattice vectors with units of half the lattice spacing, so "10 6 2" is
+given rather than "5 3 1".)
+  5.  Whether the boundary is pure twist, pure tilt or mixed.  By pure twist we
+mean that the rotation axis is normal to the boundary plane.  By pure tilt we
+mean that the rotation axis lies in the boundary plane.
+  6.  The grain boundary index.
+
+Some of this data is redundant, but is intended to be useful for mining.
+
+IV.  gb_by_axis_angle.txt
+
+The lines in this file are in order by rotation axis and angle.  The entries
+are the same as in (III) up through the "twist/tilt/mixed" indication.  This
+is followed by the number of boundaries in this database that fit the description.
+This number can be 1, 2 or 3, and is in parenthesis.  (Because the description
+consists of the Miller types of the boundary axis and the boundary normals, rather
+than giving specific directions, it does not uniquely specify a boundary.)
+This is followed by the grain boundary index or indices.
+
+V.  ni_al_energy.txt
+
+The lines consist of
+  1.  The grain boundary index.
+  2.  The computed energy for the Foiles & Hoyt nickel potential.
+  3.  The computed energy for the Ercolessi & Adams aluminum potential.
+
+The units are Joules per square meter.  The number of significant figures
+is uncertain, because the energy for the best configuration found is not necessarily 
+the global minimum. 
+
+

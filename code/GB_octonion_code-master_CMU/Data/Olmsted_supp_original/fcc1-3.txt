@@ -1,0 +1,6208 @@
+GB_index: 1 Sigma: 5 Misorientation_index: 1
+3 1 0     3 1 0 
+0 0 2     0 0 -2 
+1 -3 0     -1 3 0 
+
+DSC_lattice:
+3/5 -4/5 -1 
+-2/5 6/5 2 
+1 -3 -4 
+
+CSL_lattice:
+3 1 0 
+4 3 -5 
+1 2 -3 
+
+
+GB_index: 2 Sigma: 5 Misorientation_index: 1
+2 0 0     2 0 0 
+0 3 1     0 3 -1 
+0 -1 3     0 1 3 
+
+DSC_lattice:
+1 4/5 3/5 
+0 3/5 1/5 
+0 -7/5 1/5 
+
+CSL_lattice:
+2 0 0 
+5 -3 4 
+3 -2 1 
+
+
+GB_index: 3 Sigma: 3 Misorientation_index: 2
+2 2 2     2 2 2 
+1 -1 0     -1 1 0 
+1 1 -2     -1 -1 2 
+
+DSC_lattice:
+1/3 1/3 4/3 
+-1/3 -1/3 2/3 
+1 0 -1 
+
+CSL_lattice:
+2 2 2 
+-1 -4 -1 
+1 -1 0 
+
+
+GB_index: 4 Sigma: 3 Misorientation_index: 2
+2 1 1     2 1 1 
+0 1 -1     0 -1 1 
+-2 2 2     2 -2 -2 
+
+DSC_lattice:
+-1/3 4/3 1/3 
+4/3 -7/3 -1/3 
+-2 4 0 
+
+CSL_lattice:
+2 1 1 
+4 -1 -1 
+1 1 0 
+
+
+GB_index: 5 Sigma: 3 Misorientation_index: 2
+1 1 0     1 1 0 
+1 -1 2     1 -1 -2 
+2 -2 -2     -2 2 -2 
+
+DSC_lattice:
+0 -1 1 
+-1/3 1/3 4/3 
+-1/3 1/3 -2/3 
+
+CSL_lattice:
+-1 -1 0 
+0 1 -1 
+1 -4 -1 
+
+
+GB_index: 6 Sigma: 5 Misorientation_index: 1
+4 2 0     4 2 0 
+0 0 2     0 0 -2 
+2 -4 0     -2 4 0 
+
+DSC_lattice:
+4/5 -3/5 -1 
+-1/5 2/5 1 
+1 -2 -3 
+
+CSL_lattice:
+4 2 0 
+3 4 -5 
+1 3 -4 
+
+
+GB_index: 7 Sigma: 13 Misorientation_index: 3
+5 1 0     5 1 0 
+0 0 2     0 0 -2 
+1 -5 0     -1 5 0 
+
+DSC_lattice:
+5/13 -12/13 -1 
+-4/13 20/13 2 
+1 -5 -6 
+
+CSL_lattice:
+5 1 0 
+12 5 -13 
+12 5 -11 
+
+
+GB_index: 8 Sigma: 13 Misorientation_index: 3
+2 0 0     2 0 0 
+0 5 1     0 5 -1 
+0 -1 5     0 1 5 
+
+DSC_lattice:
+1 12/13 5/13 
+0 11/13 -3/13 
+0 -17/13 7/13 
+
+CSL_lattice:
+2 0 0 
+13 -5 12 
+9 -4 7 
+
+
+GB_index: 9 Sigma: 15 Misorientation_index: 4
+5 2 1     5 2 1 
+1 -2 -1     -1 2 1 
+0 2 -4     0 -2 4 
+
+DSC_lattice:
+-2/3 17/15 31/15 
+-7/3 46/15 83/15 
+3 -4 -7 
+
+CSL_lattice:
+5 2 1 
+5 4 -3 
+-3 1 -2 
+
+
+GB_index: 10 Sigma: 5 Misorientation_index: 1
+5 2 1     5 2 -1 
+1 -2 -1     1 -2 1 
+0 2 -4     0 -2 -4 
+
+DSC_lattice:
+1 3/5 4/5 
+0 4/5 2/5 
+0 -7/5 -1/5 
+
+CSL_lattice:
+2 0 0 
+5 -4 3 
+4 -3 1 
+
+
+GB_index: 11 Sigma: 3 Misorientation_index: 2
+5 2 1     5 2 -1 
+1 -2 -1     -1 2 -1 
+0 2 -4     0 2 4 
+
+DSC_lattice:
+-1/3 -1/3 4/3 
+0 0 2 
+-1/3 2/3 -11/3 
+
+CSL_lattice:
+-4 -2 0 
+-1 -4 1 
+-2 -3 1 
+
+
+GB_index: 12 Sigma: 15 Misorientation_index: 4
+4 2 0     4 2 0 
+1 -2 1     1 -2 -1 
+1 -2 -5     -1 2 -5 
+
+DSC_lattice:
+1/5 -7/5 0 
+2/5 -4/5 0 
+-5/3 10/3 1/3 
+
+CSL_lattice:
+-4 -2 0 
+-3 -4 -5 
+-5 -5 -2 
+
+
+GB_index: 13 Sigma: 3 Misorientation_index: 2
+4 2 0     4 2 0 
+1 -2 1     -1 2 1 
+1 -2 -5     1 -2 5 
+
+DSC_lattice:
+1 -1 0 
+1/3 -2/3 1/3 
+5/3 -10/3 -1/3 
+
+CSL_lattice:
+4 2 0 
+1 0 -1 
+-4 -1 -1 
+
+
+GB_index: 14 Sigma: 15 Misorientation_index: 4
+2 1 1     2 1 1 
+2 -4 0     2 0 -4 
+2 1 -5     -2 5 -1 
+
+DSC_lattice:
+-1/15 7/15 -4/3 
+2/15 1/15 -1/3 
+-6/5 -8/5 4 
+
+CSL_lattice:
+-2 -1 -1 
+-8 -19 5 
+-1 -3 2 
+
+
+GB_index: 15 Sigma: 5 Misorientation_index: 1
+2 1 1     2 1 1 
+2 -4 0     -2 0 4 
+2 1 -5     2 -5 1 
+
+DSC_lattice:
+3/5 4/5 -1 
+-4/5 -7/5 3 
+6/5 8/5 -4 
+
+CSL_lattice:
+2 1 1 
+4 -3 5 
+3 -1 2 
+
+
+GB_index: 16 Sigma: 17 Misorientation_index: 5
+5 3 0     5 3 0 
+0 0 2     0 0 -2 
+3 -5 0     -3 5 0 
+
+DSC_lattice:
+22/17 -31/17 -1 
+-114/17 190/17 6 
+9 -15 -8 
+
+CSL_lattice:
+5 3 0 
+8 15 -17 
+1 4 -5 
+
+
+GB_index: 17 Sigma: 17 Misorientation_index: 5
+2 0 0     2 0 0 
+0 5 3     0 5 -3 
+0 -3 5     0 3 5 
+
+DSC_lattice:
+1 8/17 15/17 
+0 5/17 3/17 
+0 -23/17 -7/17 
+
+CSL_lattice:
+2 0 0 
+17 -15 8 
+5 -4 1 
+
+
+GB_index: 18 Sigma: 3 Misorientation_index: 2
+4 4 2     2 0 0 
+1 -1 0     0 1 1 
+1 1 -4     0 -3 3 
+
+DSC_lattice:
+1 -1 0 
+2/3 -7/3 1/3 
+1/3 -2/3 -1/3 
+
+CSL_lattice:
+6 2 2 
+4 1 -1 
+-1 0 -1 
+
+
+GB_index: 19 Sigma: 9 Misorientation_index: 6
+4 4 2     4 4 2 
+1 -1 0     -1 1 0 
+1 1 -4     -1 -1 4 
+
+DSC_lattice:
+-5/9 4/9 11/9 
+-14/9 4/9 20/9 
+3 -1 -4 
+
+CSL_lattice:
+4 4 2 
+-1 -4 1 
+-3 -5 -2 
+
+
+GB_index: 20 Sigma: 3 Misorientation_index: 2
+4 1 1     1 1 0 
+0 1 -1     1 -1 0 
+-2 4 4     0 0 -6 
+
+DSC_lattice:
+1 -1 0 
+1/3 -2/3 1/3 
+5/3 -10/3 -1/3 
+
+CSL_lattice:
+4 2 0 
+1 0 -1 
+-4 -1 -1 
+
+
+GB_index: 21 Sigma: 9 Misorientation_index: 6
+4 1 1     4 1 1 
+0 1 -1     0 -1 1 
+-2 4 4     2 -4 -4 
+
+DSC_lattice:
+-5/9 19/9 10/9 
+14/9 -37/9 -19/9 
+-4/3 11/3 5/3 
+
+CSL_lattice:
+4 1 1 
+11 5 -4 
+0 1 -1 
+
+
+GB_index: 22 Sigma: 9 Misorientation_index: 6
+4 4 2     4 4 2 
+3 -3 0     1 1 -4 
+1 1 -4     -3 3 0 
+
+DSC_lattice:
+-8/9 7/9 -7/9 
+2/9 -4/9 4/9 
+-7/3 11/3 -8/3 
+
+CSL_lattice:
+-4 -4 -2 
+0 1 1 
+-11 -5 -4 
+
+
+GB_index: 23 Sigma: 9 Misorientation_index: 6
+4 1 1     1 1 0 
+0 3 -3     1 -1 4 
+-2 4 4     4 -4 -2 
+
+DSC_lattice:
+4/9 -11/9 -5/9 
+23/9 -34/9 -13/9 
+-28/9 41/9 17/9 
+
+CSL_lattice:
+-10 -6 -2 
+-5 -11 4 
+-3 -4 1 
+
+
+GB_index: 24 Sigma: 9 Misorientation_index: 6
+1 1 0     1 1 0 
+1 -1 4     1 -1 -4 
+4 -4 -2     -4 4 -2 
+
+DSC_lattice:
+-4/9 -5/9 11/9 
+0 0 2 
+-1/9 1/9 -22/9 
+
+CSL_lattice:
+-1 -1 0 
+4 5 -11 
+3 2 -7 
+
+
+GB_index: 25 Sigma: 21 Misorientation_index: 7
+5 4 1     5 4 1 
+2 -2 -2     -2 2 2 
+-1 2 -3     1 -2 3 
+
+DSC_lattice:
+-16/21 25/21 1/21 
+37/21 -46/21 -1/21 
+-8 10 0 
+
+CSL_lattice:
+5 4 1 
+25 -1 -16 
+6 -1 -5 
+
+
+GB_index: 26 Sigma: 7 Misorientation_index: 8
+5 4 1     5 4 -1 
+2 -2 -2     2 -2 2 
+-1 2 -3     1 -2 -3 
+
+DSC_lattice:
+5/7 -3/7 8/7 
+1/7 -2/7 17/7 
+1/7 -2/7 3/7 
+
+CSL_lattice:
+4 2 0 
+9 -4 -1 
+4 -3 -1 
+
+
+GB_index: 27 Sigma: 3 Misorientation_index: 2
+5 4 1     5 4 -1 
+2 -2 -2     -2 2 -2 
+-1 2 -3     -1 2 3 
+
+DSC_lattice:
+0 -1 1 
+-1/3 1/3 4/3 
+-1/3 1/3 -2/3 
+
+CSL_lattice:
+-1 -1 0 
+0 1 -1 
+1 -4 -1 
+
+
+GB_index: 28 Sigma: 7 Misorientation_index: 8
+3 2 1     3 2 1 
+2 -2 -2     -2 2 2 
+-1 4 -5     1 -4 5 
+
+DSC_lattice:
+-4/7 9/7 1/7 
+11/7 -16/7 -1/7 
+-4 6 0 
+
+CSL_lattice:
+3 2 1 
+9 -1 -4 
+4 -1 -3 
+
+
+GB_index: 29 Sigma: 21 Misorientation_index: 7
+3 2 1     3 2 -1 
+2 -2 -2     2 -2 2 
+-1 4 -5     1 -4 -5 
+
+DSC_lattice:
+3/7 -5/7 8/7 
+11/21 -44/21 97/21 
+1/21 -4/21 5/21 
+
+CSL_lattice:
+8 2 0 
+25 -16 -1 
+16 -13 -1 
+
+
+GB_index: 30 Sigma: 3 Misorientation_index: 2
+3 2 1     3 2 -1 
+2 -2 -2     -2 2 -2 
+-1 4 -5     -1 4 5 
+
+DSC_lattice:
+0 -1 1 
+-1/3 1/3 4/3 
+-1/3 1/3 -2/3 
+
+CSL_lattice:
+-1 -1 0 
+0 1 -1 
+1 -4 -1 
+
+
+GB_index: 31 Sigma: 21 Misorientation_index: 7
+2 2 2     2 2 2 
+3 -2 -1     3 -1 -2 
+1 4 -5     -1 5 -4 
+
+DSC_lattice:
+-25/21 -16/21 -1/21 
+19/21 -8/21 -11/21 
+-8/7 3/7 5/7 
+
+CSL_lattice:
+-2 -2 -2 
+16 1 25 
+13 2 21 
+
+
+GB_index: 32 Sigma: 7 Misorientation_index: 8
+2 2 2     2 2 2 
+3 -2 -1     -3 1 2 
+1 4 -5     1 -5 4 
+
+DSC_lattice:
+1/7 4/7 9/7 
+-5/7 1/7 4/7 
+8/7 -3/7 -5/7 
+
+CSL_lattice:
+2 2 2 
+-4 -9 -1 
+-1 -5 0 
+
+
+GB_index: 33 Sigma: 11 Misorientation_index: 9
+6 2 2     6 2 2 
+0 1 -1     0 -1 1 
+-2 3 3     2 -3 -3 
+
+DSC_lattice:
+12/11 -7/11 -7/11 
+-9/11 8/11 19/11 
+1 -1 -2 
+
+CSL_lattice:
+6 2 2 
+13 8 -3 
+0 1 -1 
+
+
+GB_index: 34 Sigma: 11 Misorientation_index: 9
+3 3 2     3 3 2 
+1 -1 0     -1 1 0 
+2 2 -6     -2 -2 6 
+
+DSC_lattice:
+-8/11 3/11 13/11 
+-19/11 3/11 24/11 
+5 -1 -6 
+
+CSL_lattice:
+3 3 2 
+-4 -15 1 
+-1 -2 -1 
+
+
+GB_index: 35 Sigma: 11 Misorientation_index: 9
+1 1 0     1 1 0 
+3 -3 2     3 -3 -2 
+2 -2 -6     -2 2 -6 
+
+DSC_lattice:
+4/11 -15/11 -1/11 
+1 -1 0 
+-19/11 19/11 2/11 
+
+CSL_lattice:
+-1 -1 0 
+-4 15 1 
+-1 2 -1 
+
+
+GB_index: 36 Sigma: 25 Misorientation_index: 10
+7 1 0     7 1 0 
+0 0 2     0 0 -2 
+1 -7 0     -1 7 0 
+
+DSC_lattice:
+7/25 -24/25 -1 
+-6/25 42/25 2 
+1 -7 -8 
+
+CSL_lattice:
+7 1 0 
+24 7 -25 
+24 7 -23 
+
+
+GB_index: 37 Sigma: 5 Misorientation_index: 1
+7 1 0     1 1 0 
+0 0 2     0 0 2 
+1 -7 0     5 -5 0 
+
+DSC_lattice:
+-3/5 -4/5 -1 
+3/5 -1/5 0 
+-7/5 -1/5 0 
+
+CSL_lattice:
+0 0 -2 
+4 -3 5 
+1 -2 1 
+
+
+GB_index: 38 Sigma: 15 Misorientation_index: 4
+7 1 0     4 1 1 
+0 0 6     2 -4 -4 
+1 -7 0     0 5 -5 
+
+DSC_lattice:
+-7/15 -1/15 4/3 
+-1/3 -1/3 8/3 
+3/5 4/5 -5 
+
+CSL_lattice:
+-14 -2 -2 
+-34 -37 -25 
+-33 -34 -23 
+
+
+GB_index: 39 Sigma: 25 Misorientation_index: 10
+2 0 0     2 0 0 
+0 7 1     0 7 -1 
+0 -1 7     0 1 7 
+
+DSC_lattice:
+1 24/25 7/25 
+0 23/25 -11/25 
+0 -31/25 17/25 
+
+CSL_lattice:
+2 0 0 
+25 -7 24 
+19 -6 17 
+
+
+GB_index: 40 Sigma: 13 Misorientation_index: 3
+6 4 0     6 4 0 
+0 0 2     0 0 -2 
+4 -6 0     -4 6 0 
+
+DSC_lattice:
+-7/13 17/13 0 
+2 -3 -1 
+-4/13 6/13 0 
+
+CSL_lattice:
+6 4 0 
+5 12 -13 
+1 5 -6 
+
+
+GB_index: 41 Sigma: 29 Misorientation_index: 11
+7 3 0     7 3 0 
+0 0 2     0 0 -2 
+3 -7 0     -3 7 0 
+
+DSC_lattice:
+-22/29 61/29 1 
+156/29 -364/29 -6 
+-9 21 10 
+
+CSL_lattice:
+7 3 0 
+20 21 -29 
+9 8 -9 
+
+
+GB_index: 42 Sigma: 29 Misorientation_index: 11
+2 0 0     2 0 0 
+0 7 3     0 7 -3 
+0 -3 7     0 3 7 
+
+DSC_lattice:
+1 20/29 21/29 
+0 24/29 2/29 
+0 -41/29 -1/29 
+
+CSL_lattice:
+2 0 0 
+29 -21 20 
+18 -13 11 
+
+
+GB_index: 43 Sigma: 33 Misorientation_index: 12
+7 4 1     7 4 1 
+1 -2 1     -1 2 -1 
+2 -2 -6     -2 2 6 
+
+DSC_lattice:
+-59/33 103/33 34/33 
+551/33 -892/33 -289/33 
+-21 34 11 
+
+CSL_lattice:
+7 4 1 
+23 32 -25 
+14 21 -17 
+
+
+GB_index: 44 Sigma: 11 Misorientation_index: 9
+7 4 1     7 4 -1 
+1 -2 1     1 -2 -1 
+2 -2 -6     -2 2 -6 
+
+DSC_lattice:
+4/11 -15/11 -1/11 
+1 -1 0 
+-19/11 19/11 2/11 
+
+CSL_lattice:
+-1 -1 0 
+-4 15 1 
+-1 2 -1 
+
+
+GB_index: 45 Sigma: 3 Misorientation_index: 2
+7 4 1     7 4 -1 
+1 -2 1     -1 2 1 
+2 -2 -6     2 -2 6 
+
+DSC_lattice:
+1 -1 0 
+1/3 -2/3 1/3 
+5/3 -10/3 -1/3 
+
+CSL_lattice:
+4 2 0 
+1 0 -1 
+-4 -1 -1 
+
+
+GB_index: 46 Sigma: 33 Misorientation_index: 12
+6 2 2     6 2 2 
+1 -2 -1     1 -1 -2 
+1 4 -7     -1 7 -4 
+
+DSC_lattice:
+-1/11 -15/11 -4/11 
+5/33 -13/33 -2/33 
+-1/3 2/3 1/3 
+
+CSL_lattice:
+-6 -2 -2 
+-28 -13 -35 
+-19 -9 -22 
+
+
+GB_index: 47 Sigma: 3 Misorientation_index: 2
+6 2 2     6 2 2 
+1 -2 -1     -1 1 2 
+1 4 -7     1 -7 4 
+
+DSC_lattice:
+1 -1 0 
+2/3 -7/3 1/3 
+1/3 -2/3 -1/3 
+
+CSL_lattice:
+6 2 2 
+4 1 -1 
+-1 0 -1 
+
+
+GB_index: 48 Sigma: 33 Misorientation_index: 12
+2 1 1     2 1 1 
+2 -6 2     2 2 -6 
+4 -1 -7     -4 7 1 
+
+DSC_lattice:
+1/3 -1/3 -4/3 
+74/33 -35/33 -113/33 
+-26/11 12/11 40/11 
+
+CSL_lattice:
+-2 -1 -1 
+-32 -25 23 
+-11 -8 9 
+
+
+GB_index: 49 Sigma: 11 Misorientation_index: 9
+2 1 1     2 1 1 
+2 -6 2     -2 -2 6 
+4 -1 -7     4 -7 -1 
+
+DSC_lattice:
+1 0 -1 
+-4/11 1/11 7/11 
+26/11 -12/11 -40/11 
+
+CSL_lattice:
+2 1 1 
+4 -1 15 
+5 -1 14 
+
+
+GB_index: 50 Sigma: 17 Misorientation_index: 13
+6 4 4     6 4 4 
+0 1 -1     0 -1 1 
+-4 3 3     4 -3 -3 
+
+DSC_lattice:
+-11/17 21/17 4/17 
+24/17 -35/17 -1/17 
+-4 6 0 
+
+CSL_lattice:
+6 4 4 
+-13 -20 -3 
+-13 -19 -4 
+
+
+GB_index: 51 Sigma: 17 Misorientation_index: 13
+4 3 3     4 3 3 
+0 1 -1     0 -1 1 
+-6 4 4     6 -4 -4 
+
+DSC_lattice:
+-13/17 20/17 3/17 
+78/17 -103/17 -1/17 
+-6 8 0 
+
+CSL_lattice:
+4 3 3 
+-11 -21 -4 
+-11 -20 -5 
+
+
+GB_index: 52 Sigma: 17 Misorientation_index: 5
+8 2 0     8 2 0 
+0 0 2     0 0 -2 
+2 -8 0     -2 8 0 
+
+DSC_lattice:
+8/17 -15/17 -1 
+-3/17 12/17 1 
+1 -4 -5 
+
+CSL_lattice:
+8 2 0 
+15 8 -17 
+11 7 -16 
+
+
+GB_index: 53 Sigma: 17 Misorientation_index: 13
+1 1 0     1 1 0 
+3 -3 4     3 -3 -4 
+4 -4 -6     -4 4 -6 
+
+DSC_lattice:
+4/17 -21/17 11/17 
+3/17 -3/17 4/17 
+-25/17 25/17 -22/17 
+
+CSL_lattice:
+-1 -1 0 
+-4 21 -11 
+-1 5 -4 
+
+
+GB_index: 54 Sigma: 35 Misorientation_index: 14
+6 5 3     6 5 3 
+2 -3 1     -2 3 -1 
+2 0 -4     -2 0 4 
+
+DSC_lattice:
+-29/35 8/7 3/35 
+138/35 -33/7 -1/35 
+-10 12 0 
+
+CSL_lattice:
+6 5 3 
+-19 -45 8 
+-15 -34 5 
+
+
+GB_index: 55 Sigma: 5 Misorientation_index: 1
+6 5 3     6 5 -3 
+2 -3 1     2 -3 -1 
+2 0 -4     -2 0 -4 
+
+DSC_lattice:
+-3/5 -1 -4/5 
+4/5 0 2/5 
+-7/5 0 -1/5 
+
+CSL_lattice:
+0 -2 0 
+-1 0 7 
+-1 1 2 
+
+
+GB_index: 56 Sigma: 7 Misorientation_index: 8
+6 5 3     6 5 -3 
+2 -3 1     -2 3 1 
+2 0 -4     2 0 4 
+
+DSC_lattice:
+-3/7 8/7 -5/7 
+2/7 -3/7 1/7 
+-24/7 36/7 -26/7 
+
+CSL_lattice:
+6 4 0 
+5 3 -8 
+3 2 -7 
+
+
+GB_index: 57 Sigma: 35 Misorientation_index: 14
+4 2 0     4 2 0 
+1 -2 3     1 -2 -3 
+3 -6 -5     -3 6 -5 
+
+DSC_lattice:
+-3/35 -29/35 8/7 
+2/35 -4/35 4/7 
+-1/7 2/7 -3/7 
+
+CSL_lattice:
+-4 -2 0 
+-11 -48 -5 
+-11 -43 -4 
+
+
+GB_index: 58 Sigma: 7 Misorientation_index: 8
+4 2 0     4 2 0 
+1 -2 3     -1 2 3 
+3 -6 -5     3 -6 5 
+
+DSC_lattice:
+5/7 -3/7 8/7 
+1/7 -2/7 17/7 
+1/7 -2/7 3/7 
+
+CSL_lattice:
+4 2 0 
+9 -4 -1 
+4 -3 -1 
+
+
+GB_index: 59 Sigma: 35 Misorientation_index: 14
+3 2 1     3 2 -1 
+0 2 -4     0 2 4 
+-5 6 3     5 -6 3 
+
+DSC_lattice:
+4/7 -31/35 -33/35 
+5 -6 -7 
+-52/7 312/35 366/35 
+
+CSL_lattice:
+-12 -10 0 
+5 -48 11 
+2 -31 7 
+
+
+GB_index: 60 Sigma: 5 Misorientation_index: 1
+3 2 1     3 2 -1 
+0 2 -4     0 -2 -4 
+-5 6 3     -5 6 -3 
+
+DSC_lattice:
+1 3/5 4/5 
+0 4/5 2/5 
+0 -7/5 -1/5 
+
+CSL_lattice:
+2 0 0 
+5 -4 3 
+4 -3 1 
+
+
+GB_index: 61 Sigma: 37 Misorientation_index: 15
+7 5 0     7 5 0 
+0 0 2     0 0 -2 
+5 -7 0     -5 7 0 
+
+DSC_lattice:
+81/37 -106/37 -1 
+-770/37 1078/37 10 
+25 -35 -12 
+
+CSL_lattice:
+7 5 0 
+12 35 -37 
+1 6 -7 
+
+
+GB_index: 62 Sigma: 37 Misorientation_index: 15
+2 0 0     2 0 0 
+0 7 5     0 7 -5 
+0 -5 7     0 5 7 
+
+DSC_lattice:
+1 12/37 35/37 
+0 7/37 5/37 
+0 -47/37 -23/37 
+
+CSL_lattice:
+2 0 0 
+37 -35 12 
+7 -6 1 
+
+
+GB_index: 63 Sigma: 19 Misorientation_index: 16
+6 6 2     6 6 2 
+1 -1 0     -1 1 0 
+1 1 -6     -1 -1 6 
+
+DSC_lattice:
+-7/19 12/19 23/19 
+-13/19 6/19 21/19 
+2 -1 -3 
+
+CSL_lattice:
+6 6 2 
+-5 -24 11 
+-3 -11 4 
+
+
+GB_index: 64 Sigma: 19 Misorientation_index: 16
+6 1 1     6 1 1 
+0 1 -1     0 -1 1 
+-2 6 6     2 -6 -6 
+
+DSC_lattice:
+-13/19 58/19 39/19 
+86/19 -315/19 -201/19 
+-6 22 14 
+
+CSL_lattice:
+6 1 1 
+-11 -24 -5 
+-7 -12 -3 
+
+
+GB_index: 65 Sigma: 19 Misorientation_index: 16
+1 1 0     1 1 0 
+1 -1 6     1 -1 -6 
+6 -6 -2     -6 6 -2 
+
+DSC_lattice:
+-12/19 -7/19 23/19 
+-3/19 3/19 20/19 
+5/19 -5/19 -46/19 
+
+CSL_lattice:
+-1 -1 0 
+12 7 -23 
+11 5 -20 
+
+
+GB_index: 66 Sigma: 39 Misorientation_index: 17
+7 5 2     7 5 2 
+2 -2 -2     -2 2 2 
+-1 3 -4     1 -3 4 
+
+DSC_lattice:
+124/39 -151/39 -37/39 
+-511/39 649/39 166/39 
+37 -47 -12 
+
+CSL_lattice:
+7 5 2 
+49 -4 -25 
+18 1 -7 
+
+
+GB_index: 67 Sigma: 13 Misorientation_index: 18
+7 5 2     7 5 -2 
+2 -2 -2     2 -2 2 
+-1 3 -4     1 -3 -4 
+
+DSC_lattice:
+7/13 -8/13 15/13 
+5/13 -15/13 46/13 
+1/13 -3/13 4/13 
+
+CSL_lattice:
+3 1 0 
+16 -9 -1 
+5 -4 -1 
+
+
+GB_index: 68 Sigma: 3 Misorientation_index: 2
+7 5 2     7 5 -2 
+2 -2 -2     -2 2 -2 
+-1 3 -4     -1 3 4 
+
+DSC_lattice:
+0 -1 1 
+-1/3 1/3 4/3 
+-1/3 1/3 -2/3 
+
+CSL_lattice:
+-1 -1 0 
+0 1 -1 
+1 -4 -1 
+
+
+GB_index: 69 Sigma: 13 Misorientation_index: 18
+4 3 1     4 3 1 
+2 -2 -2     -2 2 2 
+-2 5 -7     2 -5 7 
+
+DSC_lattice:
+-9/13 16/13 1/13 
+22/13 -29/13 -1/13 
+-6 8 0 
+
+CSL_lattice:
+4 3 1 
+16 -1 -9 
+5 -1 -4 
+
+
+GB_index: 70 Sigma: 39 Misorientation_index: 17
+4 3 1     4 3 -1 
+2 -2 -2     2 -2 2 
+-2 5 -7     2 -5 -7 
+
+DSC_lattice:
+1/39 17/39 -94/39 
+22/39 -55/39 389/39 
+-38/39 95/39 -679/39 
+
+CSL_lattice:
+10 4 0 
+49 -25 -4 
+13 -4 -1 
+
+
+GB_index: 71 Sigma: 3 Misorientation_index: 2
+4 3 1     4 3 -1 
+2 -2 -2     -2 2 -2 
+-2 5 -7     -2 5 7 
+
+DSC_lattice:
+0 -1 1 
+-1/3 1/3 4/3 
+-1/3 1/3 -2/3 
+
+CSL_lattice:
+-1 -1 0 
+0 1 -1 
+1 -4 -1 
+
+
+GB_index: 72 Sigma: 39 Misorientation_index: 17
+2 2 2     2 2 2 
+4 -3 -1     4 -1 -3 
+2 5 -7     -2 7 -5 
+
+DSC_lattice:
+-49/39 -25/39 -4/39 
+19/39 -11/39 -8/39 
+-15/13 8/13 7/13 
+
+CSL_lattice:
+-2 -2 -2 
+25 4 49 
+11 3 22 
+
+
+GB_index: 73 Sigma: 13 Misorientation_index: 18
+2 2 2     2 2 2 
+4 -3 -1     -4 1 3 
+2 5 -7     2 -7 5 
+
+DSC_lattice:
+1/13 9/13 16/13 
+-11/13 5/13 6/13 
+15/13 -8/13 -7/13 
+
+CSL_lattice:
+2 2 2 
+-9 -16 -1 
+-5 -11 0 
+
+
+GB_index: 74 Sigma: 41 Misorientation_index: 19
+9 1 0     9 1 0 
+0 0 2     0 0 -2 
+1 -9 0     -1 9 0 
+
+DSC_lattice:
+9/41 -40/41 -1 
+-8/41 72/41 2 
+1 -9 -10 
+
+CSL_lattice:
+9 1 0 
+40 9 -41 
+40 9 -39 
+
+
+GB_index: 75 Sigma: 41 Misorientation_index: 19
+2 0 0     2 0 0 
+0 9 1     0 9 -1 
+0 -1 9     0 1 9 
+
+DSC_lattice:
+1 40/41 9/41 
+0 39/41 -23/41 
+0 -49/41 31/41 
+
+CSL_lattice:
+2 0 0 
+41 -9 40 
+33 -8 31 
+
+
+GB_index: 76 Sigma: 21 Misorientation_index: 20
+8 4 2     8 4 2 
+1 -1 -2     -1 1 2 
+-1 3 -2     1 -3 2 
+
+DSC_lattice:
+29/21 -38/21 -19/21 
+-137/21 215/21 118/21 
+7 -11 -6 
+
+CSL_lattice:
+8 4 2 
+19 20 -11 
+15 17 -10 
+
+
+GB_index: 77 Sigma: 7 Misorientation_index: 8
+8 4 2     8 4 -2 
+1 -1 -2     1 -1 2 
+-1 3 -2     1 -3 -2 
+
+DSC_lattice:
+5/7 -8/7 3/7 
+1/7 -3/7 2/7 
+11/7 -33/7 8/7 
+
+CSL_lattice:
+3 1 0 
+8 -3 -5 
+1 -1 -2 
+
+
+GB_index: 78 Sigma: 3 Misorientation_index: 2
+8 4 2     8 4 -2 
+1 -1 -2     -1 1 -2 
+-1 3 -2     -1 3 2 
+
+DSC_lattice:
+1/3 -4/3 1/3 
+2/3 -2/3 2/3 
+-5/3 5/3 -2/3 
+
+CSL_lattice:
+-1 -1 0 
+-1 4 -1 
+0 -1 -1 
+
+
+GB_index: 79 Sigma: 21 Misorientation_index: 20
+3 2 1     3 2 -1 
+1 -2 1     1 -2 -1 
+4 -2 -8     -4 2 -8 
+
+DSC_lattice:
+1/7 -4/7 -9/7 
+4/21 -2/21 -8/21 
+-26/21 13/21 73/21 
+
+CSL_lattice:
+-2 -4 0 
+-1 4 9 
+-3 -1 4 
+
+
+GB_index: 80 Sigma: 3 Misorientation_index: 2
+3 2 1     3 2 -1 
+1 -2 1     -1 2 1 
+4 -2 -8     4 -2 8 
+
+DSC_lattice:
+1 -1 0 
+1/3 -2/3 1/3 
+5/3 -10/3 -1/3 
+
+CSL_lattice:
+4 2 0 
+1 0 -1 
+-4 -1 -1 
+
+
+GB_index: 81 Sigma: 21 Misorientation_index: 20
+2 1 1     2 1 1 
+2 -3 -1     2 -1 -3 
+2 4 -8     -2 8 -4 
+
+DSC_lattice:
+-11/21 20/21 -19/21 
+-4/21 55/21 -47/21 
+2/7 -24/7 20/7 
+
+CSL_lattice:
+-2 -1 -1 
+-4 -29 -5 
+-1 -12 -1 
+
+
+GB_index: 82 Sigma: 7 Misorientation_index: 8
+2 1 1     2 1 1 
+2 -3 -1     -2 1 3 
+2 4 -8     2 -8 4 
+
+DSC_lattice:
+1/7 9/7 -4/7 
+2/7 -17/7 13/7 
+-2/7 24/7 -20/7 
+
+CSL_lattice:
+2 1 1 
+8 -5 3 
+7 -3 2 
+
+
+GB_index: 83 Sigma: 15 Misorientation_index: 4
+7 5 4     3 1 0 
+4 -4 -2     0 0 6 
+1 5 -8     3 -9 0 
+
+DSC_lattice:
+4/5 -1 3/5 
+-2/15 1/3 1/15 
+11/15 -7/3 2/15 
+
+CSL_lattice:
+6 2 2 
+7 0 -1 
+3 -1 -4 
+
+
+GB_index: 84 Sigma: 3 Misorientation_index: 2
+7 5 4     3 1 0 
+4 -4 -2     0 0 -6 
+1 5 -8     -3 9 0 
+
+DSC_lattice:
+1/3 -4/3 1/3 
+2/3 -2/3 2/3 
+-5/3 5/3 -2/3 
+
+CSL_lattice:
+-1 -1 0 
+-1 4 -1 
+0 -1 -1 
+
+
+GB_index: 85 Sigma: 45 Misorientation_index: 21
+7 5 4     7 5 4 
+4 -4 -2     -4 4 2 
+1 5 -8     -1 -5 8 
+
+DSC_lattice:
+187/45 -44/9 -41/45 
+-677/45 163/9 166/45 
+49 -59 -12 
+
+CSL_lattice:
+7 5 4 
+-32 -55 1 
+-3 -4 -1 
+
+
+GB_index: 86 Sigma: 45 Misorientation_index: 22
+7 5 4     7 5 -4 
+4 -4 -2     4 -4 2 
+1 5 -8     -1 -5 -8 
+
+DSC_lattice:
+13/45 4/9 -59/45 
+-7/45 -7/9 146/45 
+13/45 13/9 -284/45 
+
+CSL_lattice:
+5 -1 0 
+4 -5 3 
+-16 0 -2 
+
+
+GB_index: 87 Sigma: 9 Misorientation_index: 6
+7 5 4     7 5 -4 
+4 -4 -2     -4 4 -2 
+1 5 -8     1 5 8 
+
+DSC_lattice:
+-4/9 -5/9 11/9 
+0 0 2 
+-1/9 1/9 -22/9 
+
+CSL_lattice:
+-1 -1 0 
+4 5 -11 
+3 2 -7 
+
+
+GB_index: 88 Sigma: 15 Misorientation_index: 4
+8 5 1     3 1 0 
+2 -4 4     0 0 6 
+4 -5 -7     3 -9 0 
+
+DSC_lattice:
+1/5 0 7/5 
+-1/15 1/3 -2/15 
+-2/15 -1/3 11/15 
+
+CSL_lattice:
+6 2 2 
+19 -5 8 
+3 -2 1 
+
+
+GB_index: 89 Sigma: 3 Misorientation_index: 2
+8 5 1     3 1 0 
+2 -4 4     0 0 -6 
+4 -5 -7     -3 9 0 
+
+DSC_lattice:
+-1/3 -1/3 4/3 
+0 0 2 
+-1/3 2/3 -11/3 
+
+CSL_lattice:
+-4 -2 0 
+-1 -4 1 
+-2 -3 1 
+
+
+GB_index: 90 Sigma: 9 Misorientation_index: 6
+8 5 1     7 5 4 
+2 -4 4     4 -4 -2 
+4 -5 -7     1 5 -8 
+
+DSC_lattice:
+-1/3 -4/3 1/3 
+1/9 -8/9 5/9 
+-2/9 7/9 -1/9 
+
+CSL_lattice:
+-6 -2 -2 
+-7 -7 -8 
+-6 -5 -5 
+
+
+GB_index: 91 Sigma: 45 Misorientation_index: 23
+8 5 1     7 5 4 
+2 -4 4     -4 4 2 
+4 -5 -7     -1 -5 8 
+
+DSC_lattice:
+-4/45 7/9 -53/45 
+19/15 -16/3 143/15 
+-16/9 68/9 -122/9 
+
+CSL_lattice:
+12 10 4 
+-53 -20 29 
+-22 -9 11 
+
+
+GB_index: 92 Sigma: 5 Misorientation_index: 1
+8 5 1     7 5 -4 
+2 -4 4     4 -4 2 
+4 -5 -7     -1 -5 -8 
+
+DSC_lattice:
+-4/5 -1 -3/5 
+3/5 0 1/5 
+-7/5 0 1/5 
+
+CSL_lattice:
+0 -2 0 
+1 0 7 
+0 1 5 
+
+
+GB_index: 93 Sigma: 9 Misorientation_index: 6
+8 5 1     7 5 -4 
+2 -4 4     -4 4 -2 
+4 -5 -7     1 5 8 
+
+DSC_lattice:
+7/9 -8/9 -7/9 
+-13/9 29/9 22/9 
+16/9 -35/9 -25/9 
+
+CSL_lattice:
+10 6 -2 
+7 -8 -7 
+1 -3 -2 
+
+
+GB_index: 94 Sigma: 45 Misorientation_index: 22
+8 5 1     8 5 1 
+2 -4 4     -2 4 -4 
+4 -5 -7     -4 5 7 
+
+DSC_lattice:
+143/45 -44/9 1/45 
+172/45 -55/9 -1/45 
+-10 16 0 
+
+CSL_lattice:
+8 5 1 
+3 5 -4 
+-10 -1 -5 
+
+
+GB_index: 95 Sigma: 45 Misorientation_index: 21
+8 5 1     8 5 -1 
+2 -4 4     2 -4 -4 
+4 -5 -7     -4 5 -7 
+
+DSC_lattice:
+-1/5 0 -7/5 
+-4/45 1/9 -83/45 
+32/45 -8/9 574/45 
+
+CSL_lattice:
+-10 -8 0 
+-1 -55 -32 
+-2 -51 -29 
+
+
+GB_index: 96 Sigma: 9 Misorientation_index: 6
+8 5 1     8 5 -1 
+2 -4 4     -2 4 4 
+4 -5 -7     4 -5 7 
+
+DSC_lattice:
+8/9 -7/9 7/9 
+-11/9 22/9 -13/9 
+13/9 -26/9 17/9 
+
+CSL_lattice:
+4 2 0 
+11 -4 -5 
+0 -1 -1 
+
+
+GB_index: 97 Sigma: 15 Misorientation_index: 4
+4 4 2     2 0 0 
+5 -1 -8     0 9 -3 
+-5 7 -4     0 3 9 
+
+DSC_lattice:
+1/3 -13/15 16/15 
+2/3 -11/15 17/15 
+-7/3 8/3 -11/3 
+
+CSL_lattice:
+-10 -6 2 
+5 -13 16 
+1 -6 7 
+
+
+GB_index: 98 Sigma: 45 Misorientation_index: 22
+4 4 2     4 4 2 
+5 -1 -8     1 -5 8 
+-5 7 -4     7 -5 -4 
+
+DSC_lattice:
+-7/9 52/45 11/45 
+-19/9 91/45 8/45 
+11/3 -53/15 -4/15 
+
+CSL_lattice:
+4 4 2 
+-5 -4 3 
+-9 -13 -4 
+
+
+GB_index: 99 Sigma: 45 Misorientation_index: 21
+4 4 2     4 4 2 
+5 -1 -8     -1 5 -8 
+-5 7 -4     -7 5 4 
+
+DSC_lattice:
+-11/9 32/45 1/45 
+25/9 -121/45 -8/45 
+-11/3 53/15 4/15 
+
+CSL_lattice:
+-4 -4 -2 
+5 8 19 
+-3 -1 2 
+
+
+GB_index: 100 Sigma: 45 Misorientation_index: 23
+4 4 2     4 4 2 
+5 -1 -8     7 -5 -4 
+-5 7 -4     -1 5 -8 
+
+DSC_lattice:
+4/9 29/45 -53/45 
+8/9 58/45 -196/45 
+-1 -7/5 24/5 
+
+CSL_lattice:
+4 4 2 
+-20 1 -7 
+-13 -3 -4 
+
+
+GB_index: 101 Sigma: 5 Misorientation_index: 1
+4 4 2     4 4 2 
+5 -1 -8     -7 5 4 
+-5 7 -4     1 -5 8 
+
+DSC_lattice:
+0 1/5 -7/5 
+-1 -1 4 
+1 7/5 -24/5 
+
+CSL_lattice:
+-4 -4 -2 
+0 7 1 
+-1 5 0 
+
+
+GB_index: 102 Sigma: 5 Misorientation_index: 1
+8 6 0     2 0 0 
+0 0 2     0 2 0 
+6 -8 0     0 0 10 
+
+DSC_lattice:
+3/5 -4/5 1 
+-1/5 3/5 0 
+2/5 -11/5 1 
+
+CSL_lattice:
+6 2 2 
+7 -1 0 
+2 -1 -1 
+
+
+GB_index: 103 Sigma: 25 Misorientation_index: 10
+8 6 0     8 6 0 
+0 0 2     0 0 -2 
+6 -8 0     -6 8 0 
+
+DSC_lattice:
+-17/25 31/25 0 
+3 -4 -1 
+-6/25 8/25 0 
+
+CSL_lattice:
+8 6 0 
+7 24 -25 
+1 7 -8 
+
+
+GB_index: 104 Sigma: 25 Misorientation_index: 24
+8 6 0     2 0 0 
+3 -4 5     0 7 1 
+3 -4 -5     0 -1 7 
+
+DSC_lattice:
+-2/5 11/5 -1 
+2 -8 4 
+-109/25 437/25 -44/5 
+
+CSL_lattice:
+12 4 2 
+43 26 -35 
+4 3 -5 
+
+
+GB_index: 105 Sigma: 25 Misorientation_index: 24
+8 6 0     8 6 0 
+3 -4 5     3 -4 -5 
+3 -4 -5     -3 4 -5 
+
+DSC_lattice:
+-4/25 -3/25 -7/5 
+3/25 -4/25 -1/5 
+0 0 2 
+
+CSL_lattice:
+-8 -6 0 
+-1 -32 -15 
+-2 -29 -13 
+
+
+GB_index: 106 Sigma: 25 Misorientation_index: 24
+7 1 0     5 4 3 
+1 -7 0     5 -4 -3 
+0 0 -10     0 6 -8 
+
+DSC_lattice:
+-32/25 -1/25 3/5 
+7/25 -24/25 -3/5 
+-11/25 27/25 4/5 
+
+CSL_lattice:
+-6 2 -6 
+-29 3 -20 
+-27 4 -19 
+
+
+GB_index: 107 Sigma: 25 Misorientation_index: 24
+7 1 0     5 4 3 
+1 -7 0     -5 4 3 
+0 0 -10     0 -6 8 
+
+DSC_lattice:
+29/25 -53/25 2/5 
+-2/5 4/5 0 
+46/25 -97/25 3/5 
+
+CSL_lattice:
+6 3 1 
+27 11 -20 
+2 1 -3 
+
+
+GB_index: 108 Sigma: 5 Misorientation_index: 1
+5 4 3     1 1 0 
+5 -4 -3     5 -5 0 
+0 6 -8     0 0 -10 
+
+DSC_lattice:
+1 4/5 3/5 
+0 3/5 1/5 
+0 -7/5 1/5 
+
+CSL_lattice:
+2 0 0 
+5 -3 4 
+3 -2 1 
+
+
+GB_index: 109 Sigma: 25 Misorientation_index: 24
+5 4 3     5 4 3 
+5 -4 -3     -5 4 3 
+0 6 -8     0 -6 8 
+
+DSC_lattice:
+-4/5 29/25 3/25 
+3/5 -18/25 -1/25 
+-8 10 0 
+
+CSL_lattice:
+5 4 3 
+-15 -32 1 
+-2 -3 -1 
+
+
+GB_index: 110 Sigma: 25 Misorientation_index: 10
+5 4 3     5 4 -3 
+5 -4 -3     5 -4 3 
+0 6 -8     0 -6 -8 
+
+DSC_lattice:
+1 7/25 24/25 
+0 8/25 6/25 
+0 -31/25 -17/25 
+
+CSL_lattice:
+2 0 0 
+25 -24 7 
+8 -7 1 
+
+
+GB_index: 111 Sigma: 25 Misorientation_index: 24
+5 4 3     5 4 -3 
+5 -4 -3     -5 4 -3 
+0 6 -8     0 6 8 
+
+DSC_lattice:
+-4/5 11/25 27/25 
+-11/5 44/25 83/25 
+32/5 -128/25 -246/25 
+
+CSL_lattice:
+-8 -10 0 
+-15 32 -1 
+-14 27 -1 
+
+
+GB_index: 112 Sigma: 53 Misorientation_index: 25
+9 5 0     9 5 0 
+0 0 2     0 0 -2 
+5 -9 0     -5 9 0 
+
+DSC_lattice:
+62/53 -101/53 -1 
+-340/53 612/53 6 
+15 -27 -14 
+
+CSL_lattice:
+9 5 0 
+28 45 -53 
+26 38 -42 
+
+
+GB_index: 113 Sigma: 53 Misorientation_index: 25
+2 0 0     2 0 0 
+0 9 5     0 9 -5 
+0 -5 9     0 5 9 
+
+DSC_lattice:
+1 28/53 45/53 
+0 41/53 11/53 
+0 -73/53 -17/53 
+
+CSL_lattice:
+2 0 0 
+53 -45 28 
+31 -26 15 
+
+
+GB_index: 114 Sigma: 27 Misorientation_index: 26
+10 2 2     10 2 2 
+0 1 -1     0 -1 1 
+-2 5 5     2 -5 -5 
+
+DSC_lattice:
+20/27 -23/27 -23/27 
+-25/27 49/27 76/27 
+1 -2 -3 
+
+CSL_lattice:
+10 2 2 
+46 47 -7 
+9 11 -2 
+
+
+GB_index: 115 Sigma: 9 Misorientation_index: 6
+10 2 2     2 2 2 
+0 1 -1     1 -1 0 
+-2 5 5     3 3 -6 
+
+DSC_lattice:
+0 1 -1 
+1/3 -4/3 5/3 
+-8/9 38/9 -52/9 
+
+CSL_lattice:
+3 2 1 
+11 -5 4 
+4 -3 1 
+
+
+GB_index: 116 Sigma: 3 Misorientation_index: 2
+10 2 2     2 2 2 
+0 1 -1     -1 1 0 
+-2 5 5     -3 -3 6 
+
+DSC_lattice:
+-4/3 1/3 1/3 
+-1/3 -2/3 1/3 
+-1/3 4/3 1/3 
+
+CSL_lattice:
+-1 0 -1 
+-1 -1 0 
+-4 1 1 
+
+
+GB_index: 117 Sigma: 27 Misorientation_index: 26
+5 5 2     5 5 2 
+1 -1 0     -1 1 0 
+2 2 -10     -2 -2 10 
+
+DSC_lattice:
+59/27 -22/27 -79/27 
+-76/27 32/27 110/27 
+7 -3 -10 
+
+CSL_lattice:
+5 5 2 
+-8 -35 13 
+-5 -19 6 
+
+
+GB_index: 118 Sigma: 9 Misorientation_index: 6
+5 5 2     2 1 1 
+1 -1 0     0 1 -1 
+2 2 -10     -6 6 6 
+
+DSC_lattice:
+4/9 -5/9 -11/9 
+5/9 -4/9 -7/9 
+-32/9 22/9 52/9 
+
+CSL_lattice:
+-3 -2 -1 
+-7 -7 8 
+-6 -5 5 
+
+
+GB_index: 119 Sigma: 3 Misorientation_index: 2
+5 5 2     2 1 1 
+1 -1 0     0 -1 1 
+2 2 -10     6 -6 -6 
+
+DSC_lattice:
+1/3 4/3 1/3 
+-1/3 2/3 -1/3 
+0 -1 1 
+
+CSL_lattice:
+2 2 2 
+-4 -1 -1 
+-1 0 1 
+
+
+GB_index: 120 Sigma: 27 Misorientation_index: 27
+10 2 2     10 2 2 
+1 -4 -1     1 -1 -4 
+1 2 -7     -1 7 -2 
+
+DSC_lattice:
+-5/27 -37/27 8/27 
+7/27 -40/27 5/27 
+-2/3 11/3 -1/3 
+
+CSL_lattice:
+-10 -2 -2 
+-43 -5 -50 
+-6 -1 -5 
+
+
+GB_index: 121 Sigma: 9 Misorientation_index: 6
+10 2 2     10 2 2 
+1 -4 -1     -1 1 4 
+1 2 -7     1 -7 2 
+
+DSC_lattice:
+5/9 -11/9 4/9 
+-1/9 4/9 1/9 
+2/3 -11/3 1/3 
+
+CSL_lattice:
+10 2 2 
+19 5 -10 
+-1 0 -1 
+
+
+GB_index: 122 Sigma: 27 Misorientation_index: 27
+7 2 1     5 5 2 
+1 -4 1     3 -3 0 
+2 -2 -10     2 2 -10 
+
+DSC_lattice:
+-37/27 -8/27 5/27 
+26/27 37/27 -13/27 
+-28/27 -44/27 14/27 
+
+CSL_lattice:
+-2 0 -4 
+25 -7 28 
+17 -6 19 
+
+
+GB_index: 123 Sigma: 9 Misorientation_index: 6
+7 2 1     5 5 2 
+1 -4 1     -3 3 0 
+2 -2 -10     -2 -2 10 
+
+DSC_lattice:
+-1/3 4/3 -1/3 
+7/9 -13/9 4/9 
+-23/9 44/9 -17/9 
+
+CSL_lattice:
+10 6 2 
+8 7 -7 
+5 5 -6 
+
+
+GB_index: 124 Sigma: 27 Misorientation_index: 27
+7 2 1     7 2 1 
+1 -4 1     -1 4 -1 
+2 -2 -10     -2 2 10 
+
+DSC_lattice:
+34/27 -79/27 -53/27 
+-107/27 278/27 193/27 
+10 -26 -18 
+
+CSL_lattice:
+7 2 1 
+-8 -37 -5 
+-4 -12 -2 
+
+
+GB_index: 125 Sigma: 27 Misorientation_index: 26
+7 2 1     7 2 -1 
+1 -4 1     1 -4 -1 
+2 -2 -10     -2 2 -10 
+
+DSC_lattice:
+8/27 -35/27 -13/27 
+4/9 -4/9 -2/9 
+-43/27 43/27 26/27 
+
+CSL_lattice:
+-1 -1 0 
+-8 35 13 
+-5 19 6 
+
+
+GB_index: 126 Sigma: 9 Misorientation_index: 6
+7 2 1     7 2 -1 
+1 -4 1     -1 4 1 
+2 -2 -10     2 -2 10 
+
+DSC_lattice:
+5/9 -11/9 -4/9 
+-2/3 8/3 4/3 
+13/9 -52/9 -23/9 
+
+CSL_lattice:
+8 2 0 
+1 0 -1 
+-28 -5 -1 
+
+
+GB_index: 127 Sigma: 3 Misorientation_index: 2
+7 2 1     2 1 1 
+1 -4 1     0 3 -3 
+2 -2 -10     -6 6 6 
+
+DSC_lattice:
+-1 0 1 
+-1/3 1/3 2/3 
+2/3 1/3 -7/3 
+
+CSL_lattice:
+-6 -2 -2 
+-1 -1 0 
+-4 1 -1 
+
+
+GB_index: 128 Sigma: 9 Misorientation_index: 6
+7 2 1     2 1 1 
+1 -4 1     0 -3 3 
+2 -2 -10     6 -6 -6 
+
+DSC_lattice:
+5/9 4/9 11/9 
+-1/9 1/9 -4/9 
+1/9 -1/9 22/9 
+
+CSL_lattice:
+1 1 0 
+5 4 11 
+3 1 4 
+
+
+GB_index: 129 Sigma: 27 Misorientation_index: 26
+4 1 1     4 1 1 
+2 -7 -1     2 -1 -7 
+2 2 -10     -2 10 -2 
+
+DSC_lattice:
+-7/27 47/27 -46/27 
+2/27 -25/27 17/27 
+0 -1 1 
+
+CSL_lattice:
+-4 -1 -1 
+-23 -23 -20 
+-3 -2 -1 
+
+
+GB_index: 130 Sigma: 27 Misorientation_index: 27
+4 1 1     4 1 1 
+2 -7 -1     -2 1 7 
+2 2 -10     2 -10 2 
+
+DSC_lattice:
+5/27 50/27 -43/27 
+2/27 -61/27 53/27 
+0 1 -1 
+
+CSL_lattice:
+4 1 1 
+37 -8 -5 
+21 -5 -4 
+
+
+GB_index: 131 Sigma: 27 Misorientation_index: 27
+4 1 1     1 1 0 
+2 -7 -1     5 -5 -2 
+2 2 -10     -2 2 -10 
+
+DSC_lattice:
+-4/3 -1/3 -1/3 
+37/27 -26/27 13/27 
+-44/27 28/27 -14/27 
+
+CSL_lattice:
+0 -2 -4 
+-7 -25 -28 
+-6 -19 -23 
+
+
+GB_index: 132 Sigma: 27 Misorientation_index: 26
+1 1 0     1 1 0 
+5 -5 2     5 -5 -2 
+2 -2 -10     -2 2 -10 
+
+DSC_lattice:
+8/27 -35/27 -13/27 
+4/9 -4/9 -2/9 
+-43/27 43/27 26/27 
+
+CSL_lattice:
+-1 -1 0 
+-8 35 13 
+-5 19 6 
+
+
+GB_index: 133 Sigma: 55 Misorientation_index: 28
+10 3 1     10 3 1 
+0 1 -3     0 -1 3 
+-2 6 2     2 -6 -2 
+
+DSC_lattice:
+13/11 -162/55 -109/55 
+-100/11 1357/55 929/55 
+14 -38 -26 
+
+CSL_lattice:
+10 3 1 
+-15 -76 -7 
+-3 -8 -1 
+
+
+GB_index: 134 Sigma: 11 Misorientation_index: 9
+10 3 1     10 3 -1 
+0 1 -3     0 1 3 
+-2 6 2     2 -6 2 
+
+DSC_lattice:
+-4/11 1/11 15/11 
+-1/11 3/11 34/11 
+1/11 -3/11 -56/11 
+
+CSL_lattice:
+-3 -1 0 
+-7 -12 7 
+-2 -1 1 
+
+
+GB_index: 135 Sigma: 5 Misorientation_index: 1
+10 3 1     10 3 -1 
+0 1 -3     0 -1 -3 
+-2 6 2     -2 6 -2 
+
+DSC_lattice:
+1 4/5 3/5 
+0 3/5 1/5 
+0 -7/5 1/5 
+
+CSL_lattice:
+2 0 0 
+5 -3 4 
+3 -2 1 
+
+
+GB_index: 136 Sigma: 55 Misorientation_index: 28
+6 2 2     6 2 2 
+1 -3 0     1 0 -3 
+3 1 -10     -3 10 -1 
+
+DSC_lattice:
+-27/55 -64/55 7/11 
+9/55 -52/55 5/11 
+-2/5 11/5 -1 
+
+CSL_lattice:
+-6 -2 -2 
+-43 -51 -40 
+-35 -40 -31 
+
+
+GB_index: 137 Sigma: 5 Misorientation_index: 1
+6 2 2     6 2 2 
+1 -3 0     -1 0 3 
+3 1 -10     3 -10 1 
+
+DSC_lattice:
+3/5 -4/5 1 
+-1/5 3/5 0 
+2/5 -11/5 1 
+
+CSL_lattice:
+6 2 2 
+7 -1 0 
+2 -1 -1 
+
+
+GB_index: 138 Sigma: 55 Misorientation_index: 28
+3 1 0     3 1 0 
+2 -6 2     2 -6 -2 
+1 -3 -10     -1 3 -10 
+
+DSC_lattice:
+7/55 -76/55 -3/11 
+12/55 -36/55 -2/11 
+-17/11 51/11 16/11 
+
+CSL_lattice:
+-3 -1 0 
+-4 -3 -5 
+-13 -11 2 
+
+
+GB_index: 139 Sigma: 11 Misorientation_index: 9
+3 1 0     3 1 0 
+2 -6 2     -2 6 2 
+1 -3 -10     1 -3 10 
+
+DSC_lattice:
+8/11 -13/11 -3/11 
+-5/11 15/11 6/11 
+17/11 -51/11 -16/11 
+
+CSL_lattice:
+3 1 0 
+1 0 -1 
+-15 1 -4 
+
+
+GB_index: 140 Sigma: 57 Misorientation_index: 29
+8 7 1     8 7 1 
+2 -2 -2     -2 2 2 
+-2 3 -5     2 -3 5 
+
+DSC_lattice:
+-49/57 64/57 1/57 
+106/57 -121/57 -1/57 
+-14 16 0 
+
+CSL_lattice:
+8 7 1 
+64 -1 -49 
+9 -1 -8 
+
+
+GB_index: 141 Sigma: 19 Misorientation_index: 30
+8 7 1     8 7 -1 
+2 -2 -2     2 -2 2 
+-2 3 -5     2 -3 -5 
+
+DSC_lattice:
+9/19 -4/19 -25/19 
+-14/19 21/19 79/19 
+24/19 -36/19 -130/19 
+
+CSL_lattice:
+6 4 0 
+25 -9 -4 
+16 -7 -3 
+
+
+GB_index: 142 Sigma: 3 Misorientation_index: 2
+8 7 1     8 7 -1 
+2 -2 -2     -2 2 -2 
+-2 3 -5     -2 3 5 
+
+DSC_lattice:
+0 -1 1 
+-1/3 1/3 4/3 
+-1/3 1/3 -2/3 
+
+CSL_lattice:
+-1 -1 0 
+0 1 -1 
+1 -4 -1 
+
+
+GB_index: 143 Sigma: 19 Misorientation_index: 30
+5 3 2     5 3 2 
+2 -2 -2     -2 2 2 
+-1 7 -8     1 -7 8 
+
+DSC_lattice:
+43/19 -54/19 -17/19 
+-148/19 200/19 70/19 
+17 -23 -8 
+
+CSL_lattice:
+5 3 2 
+25 -4 -9 
+23 -2 -7 
+
+
+GB_index: 144 Sigma: 57 Misorientation_index: 29
+5 3 2     5 3 -2 
+2 -2 -2     2 -2 2 
+-1 7 -8     1 -7 -8 
+
+DSC_lattice:
+5/19 -16/19 21/19 
+41/57 -287/57 442/57 
+1/57 -7/57 8/57 
+
+CSL_lattice:
+7 1 0 
+64 -49 -1 
+48 -35 -1 
+
+
+GB_index: 145 Sigma: 3 Misorientation_index: 2
+5 3 2     5 3 -2 
+2 -2 -2     -2 2 -2 
+-1 7 -8     -1 7 8 
+
+DSC_lattice:
+0 -1 1 
+-1/3 1/3 4/3 
+-1/3 1/3 -2/3 
+
+CSL_lattice:
+-1 -1 0 
+0 1 -1 
+1 -4 -1 
+
+
+GB_index: 146 Sigma: 57 Misorientation_index: 29
+2 2 2     2 2 2 
+5 -3 -2     5 -2 -3 
+1 7 -8     -1 8 -7 
+
+DSC_lattice:
+-64/57 -49/57 -1/57 
+55/57 -14/57 -41/57 
+-21/19 5/19 16/19 
+
+CSL_lattice:
+-2 -2 -2 
+49 1 64 
+43 2 57 
+
+
+GB_index: 147 Sigma: 19 Misorientation_index: 30
+2 2 2     2 2 2 
+5 -3 -2     -5 2 3 
+1 7 -8     1 -8 7 
+
+DSC_lattice:
+4/19 9/19 25/19 
+-8/19 1/19 7/19 
+21/19 -5/19 -16/19 
+
+CSL_lattice:
+2 2 2 
+-9 -25 -4 
+-2 -9 -1 
+
+
+GB_index: 148 Sigma: 29 Misorientation_index: 11
+10 4 0     10 4 0 
+0 0 2     0 0 -2 
+4 -10 0     -4 10 0 
+
+DSC_lattice:
+-19/29 62/29 1 
+74/29 -185/29 -3 
+-6 15 7 
+
+CSL_lattice:
+10 4 0 
+21 20 -29 
+13 11 -14 
+
+
+GB_index: 149 Sigma: 61 Misorientation_index: 31
+11 1 0     11 1 0 
+0 0 2     0 0 -2 
+1 -11 0     -1 11 0 
+
+DSC_lattice:
+11/61 -60/61 -1 
+-10/61 110/61 2 
+1 -11 -12 
+
+CSL_lattice:
+11 1 0 
+60 11 -61 
+60 11 -59 
+
+
+GB_index: 150 Sigma: 61 Misorientation_index: 31
+2 0 0     2 0 0 
+0 11 1     0 11 -1 
+0 -1 11     0 1 11 
+
+DSC_lattice:
+1 60/61 11/61 
+0 59/61 -39/61 
+0 -71/61 49/61 
+
+CSL_lattice:
+2 0 0 
+61 -11 60 
+51 -10 49 
+
+
+GB_index: 151 Sigma: 65 Misorientation_index: 32
+11 3 0     11 3 0 
+0 0 2     0 0 -2 
+3 -11 0     -3 11 0 
+
+DSC_lattice:
+76/65 -257/65 -3 
+-882/65 3234/65 38 
+15 -55 -42 
+
+CSL_lattice:
+11 3 0 
+56 33 -65 
+15 10 -21 
+
+
+GB_index: 152 Sigma: 13 Misorientation_index: 3
+11 3 0     9 7 0 
+0 0 2     0 0 2 
+3 -11 0     7 -9 0 
+
+DSC_lattice:
+-5/13 -12/13 -1 
+11/13 3/13 0 
+-17/13 -7/13 0 
+
+CSL_lattice:
+0 0 -2 
+12 -5 13 
+7 -4 7 
+
+
+GB_index: 153 Sigma: 5 Misorientation_index: 1
+11 3 0     9 7 0 
+0 0 2     0 0 -2 
+3 -11 0     -7 9 0 
+
+DSC_lattice:
+4/5 -3/5 -1 
+-1/5 2/5 1 
+1 -2 -3 
+
+CSL_lattice:
+4 2 0 
+3 4 -5 
+1 3 -4 
+
+
+GB_index: 154 Sigma: 65 Misorientation_index: 33
+9 7 0     9 7 0 
+0 0 2     0 0 -2 
+7 -9 0     -7 9 0 
+
+DSC_lattice:
+204/65 -253/65 -1 
+-2786/65 3582/65 14 
+49 -63 -16 
+
+CSL_lattice:
+9 7 0 
+16 63 -65 
+1 8 -9 
+
+
+GB_index: 155 Sigma: 65 Misorientation_index: 32
+2 0 0     2 0 0 
+0 11 3     0 11 -3 
+0 -3 11     0 3 11 
+
+DSC_lattice:
+1 56/65 33/65 
+0 5/13 -1/13 
+0 -89/65 23/65 
+
+CSL_lattice:
+2 0 0 
+65 -33 56 
+19 -10 15 
+
+
+GB_index: 156 Sigma: 65 Misorientation_index: 33
+2 0 0     2 0 0 
+0 9 7     0 9 -7 
+0 -7 9     0 7 9 
+
+DSC_lattice:
+1 16/65 63/65 
+0 9/65 7/65 
+0 -79/65 -47/65 
+
+CSL_lattice:
+2 0 0 
+65 -63 16 
+9 -8 1 
+
+
+GB_index: 157 Sigma: 33 Misorientation_index: 34
+8 8 2     8 8 2 
+1 -1 0     -1 1 0 
+1 1 -8     -1 -1 8 
+
+DSC_lattice:
+-58/33 41/33 101/33 
+-124/33 74/33 200/33 
+5 -3 -8 
+
+CSL_lattice:
+8 8 2 
+-7 -40 23 
+-2 -7 3 
+
+
+GB_index: 158 Sigma: 11 Misorientation_index: 9
+10 4 4     8 8 2 
+0 1 -1     1 -1 0 
+-4 5 5     1 1 -8 
+
+DSC_lattice:
+0 1 -1 
+1 -3 4 
+-12/11 37/11 -51/11 
+
+CSL_lattice:
+10 6 2 
+13 3 -8 
+6 1 -5 
+
+
+GB_index: 159 Sigma: 3 Misorientation_index: 2
+10 4 4     8 8 2 
+0 1 -1     -1 1 0 
+-4 5 5     -1 -1 8 
+
+DSC_lattice:
+-4/3 -1/3 -1/3 
+1/3 -2/3 1/3 
+-1 1 0 
+
+CSL_lattice:
+-2 -2 -2 
+1 1 4 
+1 2 3 
+
+
+GB_index: 160 Sigma: 33 Misorientation_index: 35
+10 4 4     10 4 4 
+0 1 -1     0 -1 1 
+-4 5 5     4 -5 -5 
+
+DSC_lattice:
+43/33 -62/33 -29/33 
+-4/33 5/33 5/33 
+8/3 -13/3 -7/3 
+
+CSL_lattice:
+10 4 4 
+37 28 -5 
+0 1 -1 
+
+
+GB_index: 161 Sigma: 33 Misorientation_index: 34
+8 1 1     8 1 1 
+0 1 -1     0 -1 1 
+-2 8 8     2 -8 -8 
+
+DSC_lattice:
+-25/33 133/33 100/33 
+106/33 -490/33 -358/33 
+-8 37 27 
+
+CSL_lattice:
+8 1 1 
+-23 -40 -7 
+-20 -32 -6 
+
+
+GB_index: 162 Sigma: 11 Misorientation_index: 9
+8 1 1     5 5 4 
+0 1 -1     1 -1 0 
+-2 8 8     4 4 -10 
+
+DSC_lattice:
+0 1 -1 
+1 -3 4 
+-12/11 37/11 -51/11 
+
+CSL_lattice:
+10 6 2 
+13 3 -8 
+6 1 -5 
+
+
+GB_index: 163 Sigma: 3 Misorientation_index: 2
+8 1 1     5 5 4 
+0 1 -1     -1 1 0 
+-2 8 8     -4 -4 10 
+
+DSC_lattice:
+-4/3 1/3 1/3 
+-1/3 -2/3 1/3 
+-1/3 4/3 1/3 
+
+CSL_lattice:
+-1 0 -1 
+-1 -1 0 
+-4 1 1 
+
+
+GB_index: 164 Sigma: 33 Misorientation_index: 35
+5 5 4     5 5 4 
+1 -1 0     -1 1 0 
+4 4 -10     -4 -4 10 
+
+DSC_lattice:
+-28/33 5/33 37/33 
+-179/33 19/33 200/33 
+9 -1 -10 
+
+CSL_lattice:
+5 5 4 
+-4 -15 -1 
+6 4 4 
+
+
+GB_index: 165 Sigma: 33 Misorientation_index: 34
+1 1 0     1 1 0 
+1 -1 8     1 -1 -8 
+8 -8 -2     -8 8 -2 
+
+DSC_lattice:
+-8/11 -3/11 13/11 
+-2/11 2/11 6/11 
+5/33 -5/33 -26/33 
+
+CSL_lattice:
+-1 -1 0 
+8 3 -13 
+5 -2 -5 
+
+
+GB_index: 166 Sigma: 33 Misorientation_index: 35
+1 1 0     1 1 0 
+5 -5 4     5 -5 -4 
+4 -4 -10     -4 4 -10 
+
+DSC_lattice:
+4/11 -15/11 1/11 
+5/33 -5/33 4/33 
+-19/33 19/33 -2/33 
+
+CSL_lattice:
+-1 -1 0 
+-4 15 -1 
+-3 7 -4 
+
+
+GB_index: 167 Sigma: 35 Misorientation_index: 36
+10 6 2     10 6 2 
+0 1 -3     0 -1 3 
+-2 3 1     2 -3 -1 
+
+DSC_lattice:
+-3/7 47/35 4/35 
+13/7 -108/35 -1/35 
+-3 5 0 
+
+CSL_lattice:
+10 6 2 
+25 36 -23 
+8 13 -9 
+
+
+GB_index: 168 Sigma: 7 Misorientation_index: 8
+10 6 2     10 6 -2 
+0 1 -3     0 1 3 
+-2 3 1     2 -3 1 
+
+DSC_lattice:
+3/7 -8/7 -5/7 
+2/7 -3/7 -1/7 
+-24/7 36/7 26/7 
+
+CSL_lattice:
+-6 -4 0 
+-1 -9 4 
+-2 -7 3 
+
+
+GB_index: 169 Sigma: 5 Misorientation_index: 1
+10 6 2     10 6 -2 
+0 1 -3     0 -1 -3 
+-2 3 1     -2 3 -1 
+
+DSC_lattice:
+1 4/5 3/5 
+0 3/5 1/5 
+0 -7/5 1/5 
+
+CSL_lattice:
+2 0 0 
+5 -3 4 
+3 -2 1 
+
+
+GB_index: 170 Sigma: 35 Misorientation_index: 36
+3 2 1     3 2 -1 
+1 0 -3     1 0 3 
+-6 10 -2     6 -10 -2 
+
+DSC_lattice:
+7/5 -2 -1/5 
+6/35 -2/7 2/35 
+69/35 -23/7 -12/35 
+
+CSL_lattice:
+5 3 0 
+23 20 -39 
+21 19 -38 
+
+
+GB_index: 171 Sigma: 5 Misorientation_index: 1
+3 2 1     3 2 -1 
+1 0 -3     -1 0 -3 
+-6 10 -2     -6 10 2 
+
+DSC_lattice:
+-4/5 -1 -3/5 
+3/5 0 1/5 
+-7/5 0 1/5 
+
+CSL_lattice:
+0 -2 0 
+1 0 7 
+0 1 5 
+
+
+GB_index: 172 Sigma: 35 Misorientation_index: 36
+3 1 0     3 1 0 
+1 -3 2     1 -3 -2 
+2 -6 -10     -2 6 -10 
+
+DSC_lattice:
+4/35 -47/35 3/7 
+12/35 -36/35 2/7 
+-11/7 33/7 -8/7 
+
+CSL_lattice:
+-3 -1 0 
+-23 -36 -25 
+-9 -13 -8 
+
+
+GB_index: 173 Sigma: 7 Misorientation_index: 8
+3 1 0     3 1 0 
+1 -3 2     -1 3 2 
+2 -6 -10     2 -6 10 
+
+DSC_lattice:
+5/7 -8/7 3/7 
+1/7 -3/7 2/7 
+11/7 -33/7 8/7 
+
+CSL_lattice:
+3 1 0 
+8 -3 -5 
+1 -1 -2 
+
+
+GB_index: 174 Sigma: 15 Misorientation_index: 4
+10 6 2     10 6 2 
+0 3 -9     5 -8 -1 
+-6 9 3     1 2 -11 
+
+DSC_lattice:
+1/3 8/15 -19/15 
+0 -1/5 3/5 
+1/3 4/3 -17/3 
+
+CSL_lattice:
+10 6 2 
+20 -1 -7 
+3 -1 -2 
+
+
+GB_index: 175 Sigma: 21 Misorientation_index: 20
+10 6 2     10 6 2 
+0 3 -9     -5 8 1 
+-6 9 3     -1 -2 11 
+
+DSC_lattice:
+-5/21 4/21 -29/21 
+5/21 17/21 -76/21 
+-1/3 -4/3 17/3 
+
+CSL_lattice:
+-10 -6 -2 
+-8 -23 -17 
+-7 -17 -12 
+
+
+GB_index: 176 Sigma: 105 Misorientation_index: 37
+10 6 2     10 6 -2 
+0 3 -9     5 -8 1 
+-6 9 3     -1 -2 -11 
+
+DSC_lattice:
+-2/3 5/3 -5/3 
+3 -33/5 34/5 
+-251/21 2761/105 -2848/105 
+
+CSL_lattice:
+11 5 0 
+40 -11 -27 
+-10 -6 -2 
+
+
+GB_index: 177 Sigma: 3 Misorientation_index: 2
+10 6 2     10 6 -2 
+0 3 -9     -5 8 -1 
+-6 9 3     1 2 11 
+
+DSC_lattice:
+1/3 -4/3 1/3 
+2/3 -2/3 2/3 
+-5/3 5/3 -2/3 
+
+CSL_lattice:
+-1 -1 0 
+-1 4 -1 
+0 -1 -1 
+
+
+GB_index: 178 Sigma: 3 Misorientation_index: 2
+10 6 2     10 6 -2 
+0 3 -9     5 -7 4 
+-6 9 3     1 -5 -10 
+
+DSC_lattice:
+1 -1 0 
+1/3 -2/3 1/3 
+5/3 -10/3 -1/3 
+
+CSL_lattice:
+4 2 0 
+1 0 -1 
+-4 -1 -1 
+
+
+GB_index: 179 Sigma: 105 Misorientation_index: 38
+10 6 2     10 6 -2 
+0 3 -9     -5 7 -4 
+-6 9 3     -1 5 10 
+
+DSC_lattice:
+4/7 -23/35 39/35 
+59/21 -236/105 493/105 
+-128/21 512/105 -1066/105 
+
+CSL_lattice:
+-8 -10 0 
+5 24 43 
+-2 1 7 
+
+
+GB_index: 180 Sigma: 63 Misorientation_index: 39
+10 6 2     10 6 -2 
+5 -8 -1     5 -8 1 
+1 2 -11     -1 -2 -11 
+
+DSC_lattice:
+20/21 19/21 11/21 
+4/9 8/9 10/9 
+-47/63 -94/63 -113/63 
+
+CSL_lattice:
+4 -2 0 
+17 -8 23 
+16 -9 17 
+
+
+GB_index: 181 Sigma: 45 Misorientation_index: 22
+10 6 2     10 6 -2 
+5 -8 -1     -5 8 -1 
+1 2 -11     1 2 11 
+
+DSC_lattice:
+5/3 -43/15 -26/15 
+1/9 -8/45 -1/45 
+-23/9 184/45 113/45 
+
+CSL_lattice:
+-16 -10 0 
+-5 -16 13 
+12 1 7 
+
+
+GB_index: 182 Sigma: 315 Misorientation_index: 40
+10 6 2     10 6 2 
+5 -8 -1     5 -7 -4 
+1 2 -11     -1 5 -10 
+
+DSC_lattice:
+-19/21 104/105 -47/105 
+-44/21 421/105 -163/105 
+23/9 -44/9 17/9 
+
+CSL_lattice:
+-10 -6 -2 
+-260 -79 -353 
+-77 -24 -103 
+
+
+GB_index: 183 Sigma: 9 Misorientation_index: 6
+10 6 2     10 6 2 
+5 -8 -1     -5 7 4 
+1 2 -11     1 -5 10 
+
+DSC_lattice:
+-1/3 4/3 -1/3 
+7/9 -13/9 4/9 
+-23/9 44/9 -17/9 
+
+CSL_lattice:
+10 6 2 
+8 7 -7 
+5 5 -6 
+
+
+GB_index: 184 Sigma: 63 Misorientation_index: 41
+10 6 2     10 6 -2 
+5 -7 -4     5 -7 4 
+-1 5 -10     1 -5 -10 
+
+DSC_lattice:
+5/21 -4/21 29/21 
+-4/21 20/21 -82/21 
+23/63 -115/63 482/63 
+
+CSL_lattice:
+5 1 0 
+8 -5 3 
+20 0 -2 
+
+
+GB_index: 185 Sigma: 45 Misorientation_index: 21
+10 6 2     10 6 -2 
+5 -7 -4     -5 7 -4 
+-1 5 -10     -1 5 10 
+
+DSC_lattice:
+-1 6/5 17/5 
+-91/9 637/45 1714/45 
+97/9 -679/45 -1828/45 
+
+CSL_lattice:
+-7 -5 0 
+0 -7 1 
+-11 -9 2 
+
+
+GB_index: 186 Sigma: 15 Misorientation_index: 4
+11 2 1     3 2 1 
+1 -8 5     3 0 -9 
+2 -6 -10     -6 10 -2 
+
+DSC_lattice:
+-4/5 -3/5 1 
+-1/5 -2/5 1 
+1/15 7/15 -2/3 
+
+CSL_lattice:
+-6 -2 -2 
+-13 -16 -5 
+-4 -3 -1 
+
+
+GB_index: 187 Sigma: 105 Misorientation_index: 37
+11 2 1     3 2 1 
+1 -8 5     -3 0 9 
+2 -6 -10     6 -10 2 
+
+DSC_lattice:
+28/15 -29/15 13/3 
+-188/105 214/105 -92/21 
+169/35 -192/35 83/7 
+
+CSL_lattice:
+7 4 -1 
+27 -11 40 
+11 -8 21 
+
+
+GB_index: 188 Sigma: 21 Misorientation_index: 20
+11 2 1     3 2 -1 
+1 -8 5     3 0 9 
+2 -6 -10     6 -10 -2 
+
+DSC_lattice:
+-4/21 5/21 -29/21 
+8/21 -10/21 16/21 
+-5/21 1/21 -10/21 
+
+CSL_lattice:
+4 0 -2 
+4 -5 29 
+1 -3 16 
+
+
+GB_index: 189 Sigma: 3 Misorientation_index: 2
+11 2 1     3 2 -1 
+1 -8 5     -3 0 -9 
+2 -6 -10     -6 10 2 
+
+DSC_lattice:
+-1/3 -1/3 4/3 
+0 0 2 
+-1/3 2/3 -11/3 
+
+CSL_lattice:
+-4 -2 0 
+-1 -4 1 
+-2 -3 1 
+
+
+GB_index: 190 Sigma: 63 Misorientation_index: 39
+11 2 1     11 2 1 
+1 -8 5     -1 8 -5 
+2 -6 -10     -2 6 10 
+
+DSC_lattice:
+-52/63 191/63 253/63 
+-23/63 76/63 101/63 
+3 -10 -13 
+
+CSL_lattice:
+11 2 1 
+-4 -9 -1 
+-12 4 -2 
+
+
+GB_index: 191 Sigma: 35 Misorientation_index: 36
+11 2 1     11 2 -1 
+1 -8 5     1 -8 -5 
+2 -6 -10     -2 6 -10 
+
+DSC_lattice:
+4/35 -47/35 3/7 
+12/35 -36/35 2/7 
+-11/7 33/7 -8/7 
+
+CSL_lattice:
+-3 -1 0 
+-23 -36 -25 
+-9 -13 -8 
+
+
+GB_index: 192 Sigma: 45 Misorientation_index: 22
+11 2 1     11 2 -1 
+1 -8 5     -1 8 5 
+2 -6 -10     2 -6 10 
+
+DSC_lattice:
+13/45 -59/45 4/9 
+-32/45 256/45 -14/9 
+13/9 -104/9 29/9 
+
+CSL_lattice:
+16 2 0 
+49 -32 -25 
+30 -25 -19 
+
+
+GB_index: 193 Sigma: 9 Misorientation_index: 6
+11 2 1     10 5 1 
+1 -8 5     4 -7 -5 
+2 -6 -10     -2 6 -10 
+
+DSC_lattice:
+-1/3 -4/3 1/3 
+1/9 -8/9 5/9 
+-2/9 7/9 -1/9 
+
+CSL_lattice:
+-6 -2 -2 
+-7 -7 -8 
+-6 -5 -5 
+
+
+GB_index: 194 Sigma: 7 Misorientation_index: 8
+11 2 1     10 5 1 
+1 -8 5     -4 7 5 
+2 -6 -10     2 -6 10 
+
+DSC_lattice:
+5/7 -8/7 3/7 
+1/7 -3/7 2/7 
+11/7 -33/7 8/7 
+
+CSL_lattice:
+3 1 0 
+8 -3 -5 
+1 -1 -2 
+
+
+GB_index: 195 Sigma: 315 Misorientation_index: 40
+11 2 1     10 5 -1 
+1 -8 5     4 -7 5 
+2 -6 -10     2 -6 -10 
+
+DSC_lattice:
+-128/105 -71/105 -5/21 
+151/315 142/315 -11/63 
+-5/9 -5/9 2/9 
+
+CSL_lattice:
+2 -6 -10 
+-31 -292 -335 
+-21 -187 -214 
+
+
+GB_index: 196 Sigma: 5 Misorientation_index: 1
+11 2 1     10 5 -1 
+1 -8 5     -4 7 -5 
+2 -6 -10     -2 6 10 
+
+DSC_lattice:
+3/5 -4/5 -1 
+-2/5 6/5 2 
+1 -3 -4 
+
+CSL_lattice:
+3 1 0 
+4 3 -5 
+1 2 -3 
+
+
+GB_index: 197 Sigma: 15 Misorientation_index: 4
+10 5 1     3 2 1 
+4 -7 -5     3 0 -9 
+-2 6 -10     -6 10 -2 
+
+DSC_lattice:
+-1/5 -7/5 0 
+1/5 -3/5 0 
+-13/15 34/15 1/3 
+
+CSL_lattice:
+-6 -2 -2 
+-4 -3 -5 
+-7 -4 -3 
+
+
+GB_index: 198 Sigma: 105 Misorientation_index: 38
+10 5 1     3 2 1 
+4 -7 -5     -3 0 9 
+-2 6 -10     6 -10 2 
+
+DSC_lattice:
+31/21 -58/21 43/21 
+-233/21 461/21 -332/21 
+891/35 -1763/35 254/7 
+
+CSL_lattice:
+11 7 2 
+116 37 -85 
+95 30 -71 
+
+
+GB_index: 199 Sigma: 21 Misorientation_index: 20
+10 5 1     3 2 -1 
+4 -7 -5     3 0 9 
+-2 6 -10     6 -10 -2 
+
+DSC_lattice:
+17/21 -23/21 8/21 
+5/21 -8/21 11/21 
+8/21 -17/21 5/21 
+
+CSL_lattice:
+14 6 -2 
+2 -5 5 
+-9 -3 0 
+
+
+GB_index: 200 Sigma: 3 Misorientation_index: 2
+10 5 1     3 2 -1 
+4 -7 -5     -3 0 -9 
+-2 6 -10     -6 10 2 
+
+DSC_lattice:
+1/3 -4/3 1/3 
+2/3 -2/3 2/3 
+-5/3 5/3 -2/3 
+
+CSL_lattice:
+-1 -1 0 
+-1 4 -1 
+0 -1 -1 
+
+
+GB_index: 201 Sigma: 63 Misorientation_index: 41
+10 5 1     10 5 1 
+4 -7 -5     -4 7 5 
+-2 6 -10     2 -6 10 
+
+DSC_lattice:
+73/63 -121/63 -62/63 
+-218/63 395/63 205/63 
+16 -29 -15 
+
+CSL_lattice:
+10 5 1 
+13 -88 -5 
+11 -84 -5 
+
+
+GB_index: 202 Sigma: 35 Misorientation_index: 36
+10 5 1     10 5 -1 
+4 -7 -5     4 -7 5 
+-2 6 -10     2 -6 -10 
+
+DSC_lattice:
+16/35 -13/35 9/7 
+-2/35 6/35 -2/7 
+5/7 -15/7 32/7 
+
+CSL_lattice:
+3 1 0 
+43 -24 5 
+21 -13 2 
+
+
+GB_index: 203 Sigma: 45 Misorientation_index: 21
+10 5 1     10 5 -1 
+4 -7 -5     -4 7 -5 
+-2 6 -10     -2 6 10 
+
+DSC_lattice:
+-7/45 1/45 22/9 
+-8/45 14/45 92/9 
+4/9 -7/9 -239/9 
+
+CSL_lattice:
+-14 -8 0 
+-1 -7 0 
+-46 -27 1 
+
+
+GB_index: 204 Sigma: 35 Misorientation_index: 36
+8 5 1     8 5 -1 
+2 -1 -11     2 -1 11 
+-6 10 -2     6 -10 -2 
+
+DSC_lattice:
+7/5 -2 -1/5 
+6/35 -2/7 2/35 
+69/35 -23/7 -12/35 
+
+CSL_lattice:
+5 3 0 
+23 20 -39 
+21 19 -38 
+
+
+GB_index: 205 Sigma: 63 Misorientation_index: 39
+8 5 1     8 5 -1 
+2 -1 -11     -2 1 -11 
+-6 10 -2     -6 10 2 
+
+DSC_lattice:
+-37/63 -13/63 -80/63 
+-4/21 2/21 -20/21 
+50/63 -25/63 229/63 
+
+CSL_lattice:
+-2 -4 0 
+37 13 80 
+19 6 43 
+
+
+GB_index: 206 Sigma: 315 Misorientation_index: 40
+8 5 1     7 5 4 
+2 -1 -11     5 1 -10 
+-6 10 -2     -6 10 -2 
+
+DSC_lattice:
+104/105 19/21 -47/105 
+142/315 11/63 -151/315 
+-5/9 -2/9 5/9 
+
+CSL_lattice:
+-6 10 -2 
+-181 140 -17 
+-19 3 2 
+
+
+GB_index: 207 Sigma: 7 Misorientation_index: 8
+8 5 1     7 5 4 
+2 -1 -11     -5 -1 10 
+-6 10 -2     6 -10 2 
+
+DSC_lattice:
+-4/7 9/7 1/7 
+11/7 -16/7 -1/7 
+-4 6 0 
+
+CSL_lattice:
+3 2 1 
+9 -1 -4 
+4 -1 -3 
+
+
+GB_index: 208 Sigma: 21 Misorientation_index: 20
+8 5 1     3 1 0 
+2 -1 -11     3 -9 6 
+-6 10 -2     2 -6 -10 
+
+DSC_lattice:
+-2/3 7/3 -1/3 
+-2 5 -1 
+47/21 -118/21 25/21 
+
+CSL_lattice:
+14 6 2 
+5 2 -5 
+-8 -3 -5 
+
+
+GB_index: 209 Sigma: 105 Misorientation_index: 37
+8 5 1     3 1 0 
+2 -1 -11     -3 9 -6 
+-6 10 -2     -2 6 10 
+
+DSC_lattice:
+52/21 -89/21 29/21 
+488/105 -158/21 256/105 
+-247/35 80/7 -129/35 
+
+CSL_lattice:
+-7 -4 1 
+13 -45 16 
+0 -13 5 
+
+
+GB_index: 210 Sigma: 35 Misorientation_index: 36
+7 5 4     7 5 -4 
+5 1 -10     5 1 10 
+-6 10 -2     6 -10 -2 
+
+DSC_lattice:
+7/5 -2 -1/5 
+6/35 -2/7 2/35 
+69/35 -23/7 -12/35 
+
+CSL_lattice:
+5 3 0 
+23 20 -39 
+21 19 -38 
+
+
+GB_index: 211 Sigma: 63 Misorientation_index: 41
+7 5 4     7 5 -4 
+5 1 -10     -5 -1 -10 
+-6 10 -2     -6 10 2 
+
+DSC_lattice:
+-4/21 -5/21 29/21 
+-10/63 -2/63 146/63 
+5/63 1/63 -136/63 
+
+CSL_lattice:
+1 -5 0 
+-4 -5 29 
+-2 -9 17 
+
+
+GB_index: 212 Sigma: 21 Misorientation_index: 20
+7 5 4     3 1 0 
+5 1 -10     3 -9 -6 
+-6 10 -2     -2 6 -10 
+
+DSC_lattice:
+-4/21 -5/21 29/21 
+11/21 19/21 -22/21 
+-19/21 -29/21 38/21 
+
+CSL_lattice:
+4 0 2 
+23 -8 17 
+21 -7 14 
+
+
+GB_index: 213 Sigma: 105 Misorientation_index: 38
+7 5 4     3 1 0 
+5 1 -10     -3 9 6 
+-6 10 -2     2 -6 10 
+
+DSC_lattice:
+-143/105 22/21 349/105 
+-358/21 298/21 926/21 
+811/35 -135/7 -2098/35 
+
+CSL_lattice:
+-11 -7 -2 
+-32 -145 1 
+-5 -17 0 
+
+
+GB_index: 214 Sigma: 73 Misorientation_index: 42
+11 5 0     11 5 0 
+0 0 2     0 0 -2 
+5 -11 0     -5 11 0 
+
+DSC_lattice:
+-62/73 151/73 1 
+410/73 -902/73 -6 
+-15 33 16 
+
+CSL_lattice:
+11 5 0 
+48 55 -73 
+34 42 -58 
+
+
+GB_index: 215 Sigma: 73 Misorientation_index: 42
+2 0 0     2 0 0 
+0 11 5     0 11 -5 
+0 -5 11     0 5 11 
+
+DSC_lattice:
+1 48/73 55/73 
+0 38/73 4/73 
+0 -103/73 -7/73 
+
+CSL_lattice:
+2 0 0 
+73 -55 48 
+28 -21 17 
+
+
+GB_index: 216 Sigma: 37 Misorientation_index: 15
+12 2 0     12 2 0 
+0 0 2     0 0 -2 
+2 -12 0     -2 12 0 
+
+DSC_lattice:
+12/37 -35/37 -1 
+-5/37 30/37 1 
+1 -6 -7 
+
+CSL_lattice:
+12 2 0 
+35 12 -37 
+29 11 -36 
+
+
+GB_index: 217 Sigma: 77 Misorientation_index: 43
+12 3 1     12 3 1 
+2 -5 -9     -2 5 9 
+-2 10 -6     2 -10 6 
+
+DSC_lattice:
+-65/77 234/77 155/77 
+4/7 -13/7 -9/7 
+-14/11 46/11 30/11 
+
+CSL_lattice:
+12 3 1 
+-31 -104 -9 
+-11 -32 -3 
+
+
+GB_index: 218 Sigma: 35 Misorientation_index: 36
+12 3 1     12 3 -1 
+2 -5 -9     2 -5 9 
+-2 10 -6     2 -10 -6 
+
+DSC_lattice:
+16/35 -9/7 13/35 
+-17/35 17/7 -16/35 
+53/35 -53/7 54/35 
+
+CSL_lattice:
+5 1 0 
+39 -20 -23 
+3 0 -1 
+
+
+GB_index: 219 Sigma: 55 Misorientation_index: 44
+12 3 1     12 3 -1 
+2 -5 -9     -2 5 -9 
+-2 10 -6     -2 10 6 
+
+DSC_lattice:
+-49/55 19/11 -82/55 
+-116/55 58/11 -248/55 
+282/55 -141/11 601/55 
+
+CSL_lattice:
+-10 -4 0 
+-3 -5 -4 
+32 11 1 
+
+
+GB_index: 220 Sigma: 7 Misorientation_index: 8
+12 3 1     9 8 3 
+2 -5 -9     7 -6 -5 
+-2 10 -6     -2 6 -10 
+
+DSC_lattice:
+9/7 4/7 -1/7 
+-5/7 4/7 -1/7 
+8/7 -5/7 3/7 
+
+CSL_lattice:
+2 2 -2 
+8 -5 3 
+1 -2 1 
+
+
+GB_index: 221 Sigma: 11 Misorientation_index: 9
+12 3 1     9 8 3 
+2 -5 -9     -7 6 5 
+-2 10 -6     2 -6 10 
+
+DSC_lattice:
+-14/11 13/11 19/11 
+-53/11 61/11 90/11 
+69/11 -79/11 -118/11 
+
+CSL_lattice:
+-8 -4 -2 
+-8 -13 3 
+-5 -6 1 
+
+
+GB_index: 222 Sigma: 5 Misorientation_index: 1
+12 3 1     9 8 -3 
+2 -5 -9     7 -6 5 
+-2 10 -6     2 -6 -10 
+
+DSC_lattice:
+4/5 -1 -3/5 
+0 1 1 
+1/5 -2 -7/5 
+
+CSL_lattice:
+6 2 -2 
+3 -5 4 
+1 -4 3 
+
+
+GB_index: 223 Sigma: 385 Misorientation_index: 45
+12 3 1     9 8 -3 
+2 -5 -9     -7 6 -5 
+-2 10 -6     -2 6 10 
+
+DSC_lattice:
+137/385 80/77 -2459/385 
+75/7 199/7 -1196/7 
+-4317/385 -2291/77 68844/385 
+
+CSL_lattice:
+-32 -24 -6 
+-52 -475 -261 
+-13 -108 -59 
+
+
+GB_index: 224 Sigma: 77 Misorientation_index: 46
+9 8 3     9 8 3 
+7 -6 -5     -7 6 5 
+-2 6 -10     2 -6 10 
+
+DSC_lattice:
+-68/77 85/77 3/77 
+459/77 -516/77 -1/77 
+-16 18 0 
+
+CSL_lattice:
+9 8 3 
+-31 -96 41 
+-3 -7 2 
+
+
+GB_index: 225 Sigma: 35 Misorientation_index: 36
+9 8 3     9 8 -3 
+7 -6 -5     7 -6 5 
+-2 6 -10     2 -6 -10 
+
+DSC_lattice:
+16/35 -13/35 9/7 
+-2/35 6/35 -2/7 
+5/7 -15/7 32/7 
+
+CSL_lattice:
+3 1 0 
+43 -24 5 
+21 -13 2 
+
+
+GB_index: 226 Sigma: 55 Misorientation_index: 47
+9 8 3     9 8 -3 
+7 -6 -5     -7 6 -5 
+-2 6 -10     -2 6 10 
+
+DSC_lattice:
+-36/55 23/55 13/11 
+-91/55 78/55 35/11 
+84/55 -72/55 -34/11 
+
+CSL_lattice:
+-12 -14 0 
+-29 72 5 
+-13 29 2 
+
+
+GB_index: 227 Sigma: 77 Misorientation_index: 43
+10 6 2     10 6 -2 
+5 -9 2     5 -9 -2 
+3 -1 -12     -3 1 -12 
+
+DSC_lattice:
+-32/77 -15/77 -103/77 
+-6/11 2/11 -42/11 
+57/77 -19/77 388/77 
+
+CSL_lattice:
+-1 -3 0 
+32 15 103 
+29 13 96 
+
+
+GB_index: 228 Sigma: 55 Misorientation_index: 44
+10 6 2     10 6 -2 
+5 -9 2     -5 9 2 
+3 -1 -12     3 -1 12 
+
+DSC_lattice:
+14/11 -23/11 -1/11 
+-45/11 81/11 4/11 
+181/11 -1629/55 -78/55 
+
+CSL_lattice:
+9 5 0 
+40 27 -61 
+30 20 -40 
+
+
+GB_index: 229 Sigma: 385 Misorientation_index: 45
+10 6 2     10 6 2 
+5 -9 2     5 -6 -7 
+3 -1 -12     -3 8 -9 
+
+DSC_lattice:
+-4/7 23/35 -39/35 
+-41/77 633/385 -874/385 
+12/11 -37/11 51/11 
+
+CSL_lattice:
+-10 -6 -2 
+-205 -291 -412 
+-162 -229 -323 
+
+
+GB_index: 230 Sigma: 11 Misorientation_index: 9
+10 6 2     10 6 2 
+5 -9 2     -5 6 7 
+3 -1 -12     3 -8 9 
+
+DSC_lattice:
+0 1 -1 
+1 -3 4 
+-12/11 37/11 -51/11 
+
+CSL_lattice:
+10 6 2 
+13 3 -8 
+6 1 -5 
+
+
+GB_index: 231 Sigma: 77 Misorientation_index: 46
+10 6 2     10 6 -2 
+5 -6 -7     5 -6 7 
+-3 8 -9     3 -8 -9 
+
+DSC_lattice:
+58/77 -129/77 251/77 
+-3/77 8/77 -9/77 
+78/77 -208/77 388/77 
+
+CSL_lattice:
+16 6 0 
+95 -48 -23 
+19 -7 -4 
+
+
+GB_index: 232 Sigma: 55 Misorientation_index: 47
+10 6 2     10 6 -2 
+5 -6 -7     -5 6 -7 
+-3 8 -9     -3 8 9 
+
+DSC_lattice:
+0 -1/5 -7/5 
+7/11 -42/55 -489/55 
+-12/11 72/55 854/55 
+
+CSL_lattice:
+-12 -10 0 
+5 -72 -29 
+1 -31 -12 
+
+
+GB_index: 233 Sigma: 55 Misorientation_index: 44
+9 5 2     9 5 2 
+1 3 -12     -1 -3 12 
+-6 10 2     6 -10 -2 
+
+DSC_lattice:
+-101/55 34/11 57/55 
+1303/55 -415/11 -676/55 
+-27 43 14 
+
+CSL_lattice:
+9 5 2 
+4 5 -3 
+-11 1 -8 
+
+
+GB_index: 234 Sigma: 35 Misorientation_index: 36
+9 5 2     9 5 -2 
+1 3 -12     1 3 12 
+-6 10 2     6 -10 2 
+
+DSC_lattice:
+-37/35 10/7 59/35 
+-159/35 53/7 298/35 
+249/35 -83/7 -468/35 
+
+CSL_lattice:
+-5 -3 0 
+-11 -40 27 
+-7 -21 14 
+
+
+GB_index: 235 Sigma: 77 Misorientation_index: 43
+9 5 2     9 5 -2 
+1 3 -12     -1 -3 -12 
+-6 10 2     -6 10 -2 
+
+DSC_lattice:
+15/77 -32/77 -103/77 
+17/77 51/77 104/77 
+-43/77 -129/77 -254/77 
+
+CSL_lattice:
+3 -1 0 
+64 -39 79 
+11 -7 12 
+
+
+GB_index: 236 Sigma: 11 Misorientation_index: 9
+9 5 2     7 6 5 
+1 3 -12     9 -8 -3 
+-6 10 2     2 6 -10 
+
+DSC_lattice:
+-3/11 13/11 -8/11 
+-5/11 7/11 -6/11 
+17/11 -26/11 27/11 
+
+CSL_lattice:
+6 6 2 
+-15 -1 4 
+-13 -2 3 
+
+
+GB_index: 237 Sigma: 5 Misorientation_index: 1
+9 5 2     7 6 5 
+1 3 -12     -9 8 3 
+-6 10 2     -2 -6 10 
+
+DSC_lattice:
+1/5 0 -7/5 
+-6/5 -1 17/5 
+-2/5 0 4/5 
+
+CSL_lattice:
+-2 -1 -1 
+-4 -5 3 
+-1 -1 2 
+
+
+GB_index: 238 Sigma: 385 Misorientation_index: 45
+9 5 2     7 6 -5 
+1 3 -12     9 -8 3 
+-6 10 2     -2 -6 -10 
+
+DSC_lattice:
+-1437/385 647/77 -466/385 
+-2969/385 1314/77 -947/385 
+4594/385 -2033/77 1467/385 
+
+CSL_lattice:
+62 26 -14 
+-1383 3320 -2269 
+-745 1785 -1220 
+
+
+GB_index: 239 Sigma: 7 Misorientation_index: 8
+9 5 2     7 6 -5 
+1 3 -12     -9 8 -3 
+-6 10 2     2 6 10 
+
+DSC_lattice:
+3/7 -5/7 -8/7 
+-2/7 1/7 17/7 
+-2/7 1/7 3/7 
+
+CSL_lattice:
+-2 -4 0 
+-3 5 8 
+-2 1 3 
+
+
+GB_index: 240 Sigma: 55 Misorientation_index: 47
+7 6 5     7 6 5 
+2 6 -10     -2 -6 10 
+-9 8 3     9 -8 -3 
+
+DSC_lattice:
+-48/55 61/55 1/11 
+103/55 -116/55 -1/11 
+-12/5 14/5 0 
+
+CSL_lattice:
+7 6 5 
+106 83 5 
+88 69 3 
+
+
+GB_index: 241 Sigma: 77 Misorientation_index: 46
+7 6 5     7 6 -5 
+2 6 -10     2 6 10 
+-9 8 3     9 -8 3 
+
+DSC_lattice:
+-76/77 59/77 51/77 
+-117/11 104/11 83/11 
+1224/77 -1088/77 -870/77 
+
+CSL_lattice:
+-16 -18 0 
+-31 96 -41 
+-19 55 -24 
+
+
+GB_index: 242 Sigma: 35 Misorientation_index: 36
+7 6 5     7 6 -5 
+2 6 -10     -2 -6 -10 
+-9 8 3     -9 8 -3 
+
+DSC_lattice:
+16/35 13/35 -9/7 
+-4/35 -12/35 18/7 
+1/7 3/7 -26/7 
+
+CSL_lattice:
+3 -1 0 
+23 -36 25 
+9 -13 8 
+
+
+GB_index: 243 Sigma: 41 Misorientation_index: 48
+8 8 6     8 8 6 
+1 -1 0     -1 1 0 
+3 3 -8     -3 -3 8 
+
+DSC_lattice:
+-33/41 8/41 47/41 
+-216/41 30/41 248/41 
+7 -1 -8 
+
+CSL_lattice:
+8 8 6 
+-15 -56 -1 
+-12 -37 -3 
+
+
+GB_index: 244 Sigma: 41 Misorientation_index: 48
+8 3 3     8 3 3 
+0 1 -1     0 -1 1 
+-6 8 8     6 -8 -8 
+
+DSC_lattice:
+49/41 -79/41 -38/41 
+-198/41 346/41 182/41 
+12 -21 -11 
+
+CSL_lattice:
+8 3 3 
+47 33 -8 
+0 1 -1 
+
+
+GB_index: 245 Sigma: 41 Misorientation_index: 19
+10 8 0     10 8 0 
+0 0 2     0 0 -2 
+8 -10 0     -8 10 0 
+
+DSC_lattice:
+-31/41 49/41 0 
+4 -5 -1 
+-8/41 10/41 0 
+
+CSL_lattice:
+10 8 0 
+9 40 -41 
+1 9 -10 
+
+
+GB_index: 246 Sigma: 41 Misorientation_index: 48
+1 1 0     1 1 0 
+3 -3 8     3 -3 -8 
+8 -8 -6     -8 8 -6 
+
+DSC_lattice:
+-8/41 -33/41 47/41 
+22/41 -22/41 86/41 
+-25/41 25/41 -94/41 
+
+CSL_lattice:
+-1 -1 0 
+8 33 -47 
+7 26 -39 
+
+
+GB_index: 247 Sigma: 85 Misorientation_index: 49
+13 1 0     13 1 0 
+0 0 2     0 0 -2 
+1 -13 0     -1 13 0 
+
+DSC_lattice:
+13/85 -84/85 -1 
+-12/85 156/85 2 
+1 -13 -14 
+
+CSL_lattice:
+13 1 0 
+84 13 -85 
+84 13 -83 
+
+
+GB_index: 248 Sigma: 17 Misorientation_index: 5
+13 1 0     11 7 0 
+0 0 2     0 0 2 
+1 -13 0     7 -11 0 
+
+DSC_lattice:
+-8/17 -15/17 -1 
+18/17 4/17 0 
+-23/17 -7/17 0 
+
+CSL_lattice:
+0 0 -2 
+15 -8 17 
+11 -7 12 
+
+
+GB_index: 249 Sigma: 5 Misorientation_index: 1
+13 1 0     11 7 0 
+0 0 2     0 0 -2 
+1 -13 0     -7 11 0 
+
+DSC_lattice:
+3/5 -4/5 -1 
+-2/5 6/5 2 
+1 -3 -4 
+
+CSL_lattice:
+3 1 0 
+4 3 -5 
+1 2 -3 
+
+
+GB_index: 250 Sigma: 85 Misorientation_index: 50
+11 7 0     11 7 0 
+0 0 2     0 0 -2 
+7 -11 0     -7 11 0 
+
+DSC_lattice:
+-159/85 262/85 1 
+1652/85 -2596/85 -10 
+-35 55 18 
+
+CSL_lattice:
+11 7 0 
+36 77 -85 
+15 25 -24 
+
+
+GB_index: 251 Sigma: 85 Misorientation_index: 49
+2 0 0     2 0 0 
+0 13 1     0 13 -1 
+0 -1 13     0 1 13 
+
+DSC_lattice:
+1 84/85 13/85 
+0 83/85 -59/85 
+0 -97/85 71/85 
+
+CSL_lattice:
+2 0 0 
+85 -13 84 
+73 -12 71 
+
+
+GB_index: 252 Sigma: 85 Misorientation_index: 50
+2 0 0     2 0 0 
+0 11 7     0 11 -7 
+0 -7 11     0 7 11 
+
+DSC_lattice:
+1 36/85 77/85 
+0 62/85 24/85 
+0 -113/85 -41/85 
+
+CSL_lattice:
+2 0 0 
+85 -77 36 
+48 -43 19 
+
+
+GB_index: 253 Sigma: 43 Misorientation_index: 51
+10 6 6     10 6 6 
+0 1 -1     0 -1 1 
+-6 5 5     6 -5 -5 
+
+DSC_lattice:
+-23/43 55/43 12/43 
+27/43 -44/43 -1/43 
+-3 5 0 
+
+CSL_lattice:
+10 6 6 
+-37 -48 -5 
+-37 -47 -6 
+
+
+GB_index: 254 Sigma: 43 Misorientation_index: 51
+6 5 5     6 5 5 
+0 1 -1     0 -1 1 
+-10 6 6     10 -6 -6 
+
+DSC_lattice:
+-37/43 48/43 5/43 
+360/43 -431/43 -1/43 
+-10 12 0 
+
+CSL_lattice:
+6 5 5 
+83 62 19 
+40 30 8 
+
+
+GB_index: 255 Sigma: 43 Misorientation_index: 51
+1 1 0     1 1 0 
+5 -5 6     5 -5 -6 
+6 -6 -10     -6 6 -10 
+
+DSC_lattice:
+12/43 -55/43 23/43 
+36/43 -36/43 26/43 
+-67/43 67/43 -46/43 
+
+CSL_lattice:
+-1 -1 0 
+-12 55 -23 
+-1 4 -3 
+
+
+GB_index: 256 Sigma: 87 Misorientation_index: 52
+11 7 2     11 7 2 
+1 -1 -2     -1 1 2 
+-4 8 -6     4 -8 6 
+
+DSC_lattice:
+185/87 -254/87 -85/87 
+-2248/87 3220/87 1094/87 
+37 -53 -18 
+
+CSL_lattice:
+11 7 2 
+56 91 -61 
+47 78 -53 
+
+
+GB_index: 257 Sigma: 29 Misorientation_index: 53
+11 7 2     11 7 -2 
+1 -1 -2     1 -1 2 
+-4 8 -6     4 -8 -6 
+
+DSC_lattice:
+28/29 -27/29 13/29 
+-30/29 60/29 -16/29 
+47/29 -94/29 27/29 
+
+CSL_lattice:
+4 2 0 
+33 -8 -23 
+1 -1 -2 
+
+
+GB_index: 258 Sigma: 3 Misorientation_index: 2
+11 7 2     11 7 -2 
+1 -1 -2     -1 1 -2 
+-4 8 -6     -4 8 6 
+
+DSC_lattice:
+1/3 -4/3 1/3 
+2/3 -2/3 2/3 
+-5/3 5/3 -2/3 
+
+CSL_lattice:
+-1 -1 0 
+-1 4 -1 
+0 -1 -1 
+
+
+GB_index: 259 Sigma: 29 Misorientation_index: 53
+8 6 4     8 6 4 
+1 -2 1     -1 2 -1 
+7 -2 -11     -7 2 11 
+
+DSC_lattice:
+-21/29 35/29 4/29 
+143/29 -190/29 -1/29 
+-6 8 0 
+
+CSL_lattice:
+8 6 4 
+-19 -36 5 
+-16 -29 3 
+
+
+GB_index: 260 Sigma: 87 Misorientation_index: 52
+8 6 4     8 6 -4 
+1 -2 1     1 -2 -1 
+7 -2 -11     -7 2 -11 
+
+DSC_lattice:
+-18/29 1/29 107/29 
+-301/87 86/87 2039/87 
+434/87 -124/87 -2944/87 
+
+CSL_lattice:
+-4 -14 0 
+-13 12 37 
+-5 -7 6 
+
+
+GB_index: 261 Sigma: 3 Misorientation_index: 2
+8 6 4     8 6 -4 
+1 -2 1     -1 2 1 
+7 -2 -11     7 -2 11 
+
+DSC_lattice:
+1 -1 0 
+1/3 -2/3 1/3 
+5/3 -10/3 -1/3 
+
+CSL_lattice:
+4 2 0 
+1 0 -1 
+-4 -1 -1 
+
+
+GB_index: 262 Sigma: 87 Misorientation_index: 52
+2 1 1     2 1 1 
+6 -8 -4     6 -4 -8 
+2 7 -11     -2 11 -7 
+
+DSC_lattice:
+-61/87 91/87 -56/87 
+-22/87 97/87 -53/87 
+26/29 -112/29 60/29 
+
+CSL_lattice:
+-2 -1 -1 
+-8 -115 -43 
+-5 -83 -30 
+
+
+GB_index: 263 Sigma: 29 Misorientation_index: 53
+2 1 1     2 1 1 
+6 -8 -4     -6 4 8 
+2 7 -11     2 -11 7 
+
+DSC_lattice:
+-1/29 40/29 -9/29 
+4/29 -15/29 7/29 
+-26/29 112/29 -60/29 
+
+CSL_lattice:
+2 1 1 
+36 -19 5 
+31 -15 4 
+
+
+GB_index: 264 Sigma: 89 Misorientation_index: 54
+13 3 0     13 3 0 
+0 0 2     0 0 -2 
+3 -13 0     -3 13 0 
+
+DSC_lattice:
+-76/89 359/89 3 
+723/89 -3133/89 -26 
+-15 65 48 
+
+CSL_lattice:
+13 3 0 
+80 39 -89 
+31 14 -29 
+
+
+GB_index: 265 Sigma: 89 Misorientation_index: 54
+2 0 0     2 0 0 
+0 13 3     0 13 -3 
+0 -3 13     0 3 13 
+
+DSC_lattice:
+1 80/89 39/89 
+0 74/89 -24/89 
+0 -119/89 41/89 
+
+CSL_lattice:
+2 0 0 
+89 -39 80 
+56 -25 49 
+
+
+GB_index: 266 Sigma: 15 Misorientation_index: 4
+10 8 4     4 2 0 
+0 2 -4     2 -4 0 
+-4 4 2     0 0 -6 
+
+DSC_lattice:
+2/3 -5/3 5/3 
+-1/3 17/15 -14/15 
+3 -53/5 46/5 
+
+CSL_lattice:
+8 4 2 
+20 1 -7 
+11 0 -5 
+
+
+GB_index: 267 Sigma: 3 Misorientation_index: 2
+10 8 4     4 2 0 
+0 2 -4     -2 4 0 
+-4 4 2     0 0 6 
+
+DSC_lattice:
+1/3 -4/3 1/3 
+2/3 -2/3 2/3 
+-5/3 5/3 -2/3 
+
+CSL_lattice:
+-1 -1 0 
+-1 4 -1 
+0 -1 -1 
+
+
+GB_index: 268 Sigma: 45 Misorientation_index: 23
+10 8 4     10 8 4 
+0 2 -4     0 -2 4 
+-4 4 2     4 -4 -2 
+
+DSC_lattice:
+-7/9 53/45 4/45 
+22/9 -137/45 -1/45 
+-8 10 0 
+
+CSL_lattice:
+10 8 4 
+-25 -56 17 
+-11 -23 6 
+
+
+GB_index: 269 Sigma: 9 Misorientation_index: 6
+10 8 4     10 8 -4 
+0 2 -4     0 2 4 
+-4 4 2     4 -4 2 
+
+DSC_lattice:
+-4/9 -5/9 11/9 
+0 0 2 
+-1/9 1/9 -22/9 
+
+CSL_lattice:
+-1 -1 0 
+4 5 -11 
+3 2 -7 
+
+
+GB_index: 270 Sigma: 5 Misorientation_index: 1
+10 8 4     10 8 -4 
+0 2 -4     0 -2 -4 
+-4 4 2     -4 4 -2 
+
+DSC_lattice:
+1 3/5 4/5 
+0 4/5 2/5 
+0 -7/5 -1/5 
+
+CSL_lattice:
+2 0 0 
+5 -4 3 
+4 -3 1 
+
+
+GB_index: 271 Sigma: 9 Misorientation_index: 6
+10 8 4     4 2 0 
+4 -4 -2     2 -4 4 
+0 6 -12     4 -8 -10 
+
+DSC_lattice:
+1/3 -1/3 4/3 
+0 1 -1 
+-1/9 -14/9 17/9 
+
+CSL_lattice:
+6 2 2 
+4 -1 1 
+-1 -3 -2 
+
+
+GB_index: 272 Sigma: 45 Misorientation_index: 22
+10 8 4     4 2 0 
+4 -4 -2     2 -4 -4 
+0 6 -12     -4 8 -10 
+
+DSC_lattice:
+5/9 -49/45 -32/45 
+5/9 -13/45 -14/45 
+-17/9 46/45 53/45 
+
+CSL_lattice:
+-2 -6 2 
+20 13 59 
+1 0 5 
+
+
+GB_index: 273 Sigma: 9 Misorientation_index: 6
+10 8 4     4 2 0 
+4 -4 -2     -2 4 4 
+0 6 -12     4 -8 10 
+
+DSC_lattice:
+-1/3 4/3 -1/3 
+7/9 -13/9 4/9 
+-23/9 44/9 -17/9 
+
+CSL_lattice:
+10 6 2 
+8 7 -7 
+5 5 -6 
+
+
+GB_index: 274 Sigma: 45 Misorientation_index: 21
+10 8 4     4 2 0 
+4 -4 -2     -2 4 -4 
+0 6 -12     -4 8 10 
+
+DSC_lattice:
+1/3 -8/15 -19/15 
+1/3 -1/3 -2/3 
+-7/9 32/45 91/45 
+
+CSL_lattice:
+-18 -14 -2 
+0 -7 -1 
+-11 -12 -1 
+
+
+GB_index: 275 Sigma: 45 Misorientation_index: 23
+4 2 0     4 2 0 
+2 -4 4     2 -4 -4 
+4 -8 -10     -4 8 -10 
+
+DSC_lattice:
+4/45 -53/45 7/9 
+41/45 -82/45 11/9 
+-13/9 26/9 -17/9 
+
+CSL_lattice:
+-4 -2 0 
+-17 -56 -25 
+-11 -33 -14 
+
+
+GB_index: 276 Sigma: 9 Misorientation_index: 6
+4 2 0     4 2 0 
+2 -4 4     -2 4 4 
+4 -8 -10     4 -8 10 
+
+DSC_lattice:
+8/9 -7/9 7/9 
+-11/9 22/9 -13/9 
+13/9 -26/9 17/9 
+
+CSL_lattice:
+4 2 0 
+11 -4 -5 
+0 -1 -1 
+
+
+GB_index: 277 Sigma: 91 Misorientation_index: 55
+13 3 2     13 3 2 
+1 -3 -2     -1 3 2 
+0 4 -6     0 -4 6 
+
+DSC_lattice:
+-6/7 185/91 275/91 
+-8/7 228/91 334/91 
+5 -11 -16 
+
+CSL_lattice:
+13 3 2 
+-39 -121 -20 
+-25 -94 -15 
+
+
+GB_index: 278 Sigma: 13 Misorientation_index: 3
+13 3 2     13 3 -2 
+1 -3 -2     1 -3 2 
+0 4 -6     0 -4 -6 
+
+DSC_lattice:
+1 5/13 12/13 
+0 6/13 4/13 
+0 -17/13 -7/13 
+
+CSL_lattice:
+2 0 0 
+13 -12 5 
+6 -5 1 
+
+
+GB_index: 279 Sigma: 7 Misorientation_index: 8
+13 3 2     13 3 -2 
+1 -3 -2     -1 3 -2 
+0 4 -6     0 4 6 
+
+DSC_lattice:
+-1/7 -4/7 9/7 
+3/7 -9/7 22/7 
+-5/7 15/7 -32/7 
+
+CSL_lattice:
+-3 -1 0 
+-4 -9 1 
+-3 -4 1 
+
+
+GB_index: 280 Sigma: 91 Misorientation_index: 55
+6 4 0     6 4 0 
+2 -3 1     2 -3 -1 
+2 -3 -13     -2 3 -13 
+
+DSC_lattice:
+-81/91 76/91 -5/7 
+2/7 -3/7 1/7 
+24/91 -36/91 2/7 
+
+CSL_lattice:
+-6 -4 0 
+-61 -45 -104 
+-58 -43 -97 
+
+
+GB_index: 281 Sigma: 7 Misorientation_index: 8
+6 4 0     6 4 0 
+2 -3 1     -2 3 1 
+2 -3 -13     2 -3 13 
+
+DSC_lattice:
+-3/7 8/7 -5/7 
+2/7 -3/7 1/7 
+-24/7 36/7 -26/7 
+
+CSL_lattice:
+6 4 0 
+5 3 -8 
+3 2 -7 
+
+
+GB_index: 282 Sigma: 91 Misorientation_index: 55
+3 2 1     3 2 -1 
+4 -6 0     4 -6 0 
+3 2 -13     -3 -2 -13 
+
+DSC_lattice:
+-76/91 -81/91 -5/7 
+75/91 50/91 -11/7 
+-6/7 -4/7 12/7 
+
+CSL_lattice:
+4 -6 0 
+43 -32 117 
+34 -25 95 
+
+
+GB_index: 283 Sigma: 13 Misorientation_index: 3
+3 2 1     3 2 -1 
+4 -6 0     -4 6 0 
+3 2 -13     3 2 13 
+
+DSC_lattice:
+-7/13 17/13 0 
+2 -3 -1 
+-4/13 6/13 0 
+
+CSL_lattice:
+6 4 0 
+5 12 -13 
+1 5 -6 
+
+
+GB_index: 284 Sigma: 93 Misorientation_index: 56
+11 7 4     11 7 4 
+2 -2 -2     -2 2 2 
+-1 5 -6     1 -5 6 
+
+DSC_lattice:
+-268/93 379/93 97/93 
+4039/93 -5563/93 -1372/93 
+-53 73 18 
+
+CSL_lattice:
+11 7 4 
+121 -16 -49 
+36 -7 -17 
+
+
+GB_index: 285 Sigma: 31 Misorientation_index: 57
+11 7 4     11 7 -4 
+2 -2 -2     2 -2 2 
+-1 5 -6     1 -5 -6 
+
+DSC_lattice:
+11/31 -24/31 35/31 
+19/31 -95/31 176/31 
+1/31 -5/31 6/31 
+
+CSL_lattice:
+5 1 0 
+36 -25 -1 
+24 -15 -1 
+
+
+GB_index: 286 Sigma: 3 Misorientation_index: 2
+11 7 4     11 7 -4 
+2 -2 -2     -2 2 -2 
+-1 5 -6     -1 5 6 
+
+DSC_lattice:
+0 -1 1 
+-1/3 1/3 4/3 
+-1/3 1/3 -2/3 
+
+CSL_lattice:
+-1 -1 0 
+0 1 -1 
+1 -4 -1 
+
+
+GB_index: 287 Sigma: 31 Misorientation_index: 57
+6 5 1     6 5 1 
+2 -2 -2     -2 2 2 
+-4 7 -11     4 -7 11 
+
+DSC_lattice:
+-25/31 36/31 1/31 
+56/31 -67/31 -1/31 
+-10 12 0 
+
+CSL_lattice:
+6 5 1 
+36 -1 -25 
+7 -1 -6 
+
+
+GB_index: 288 Sigma: 93 Misorientation_index: 56
+6 5 1     6 5 -1 
+2 -2 -2     2 -2 2 
+-4 7 -11     4 -7 -11 
+
+DSC_lattice:
+23/93 -17/93 226/93 
+-36/31 63/31 -595/31 
+148/93 -259/93 2453/93 
+
+CSL_lattice:
+14 8 0 
+121 -49 -16 
+47 -24 -7 
+
+
+GB_index: 289 Sigma: 3 Misorientation_index: 2
+6 5 1     6 5 -1 
+2 -2 -2     -2 2 -2 
+-4 7 -11     -4 7 11 
+
+DSC_lattice:
+0 -1 1 
+-1/3 1/3 4/3 
+-1/3 1/3 -2/3 
+
+CSL_lattice:
+-1 -1 0 
+0 1 -1 
+1 -4 -1 
+
+
+GB_index: 290 Sigma: 93 Misorientation_index: 56
+2 2 2     2 2 2 
+6 -5 -1     6 -1 -5 
+4 7 -11     -4 11 -7 
+
+DSC_lattice:
+-121/93 -49/93 -16/93 
+76/93 -53/93 -23/93 
+-35/31 24/31 11/31 
+
+CSL_lattice:
+-2 -2 -2 
+49 16 121 
+36 13 89 
+
+
+GB_index: 291 Sigma: 31 Misorientation_index: 57
+2 2 2     2 2 2 
+6 -5 -1     -6 1 5 
+4 7 -11     4 -11 7 
+
+DSC_lattice:
+1/31 25/31 36/31 
+-29/31 19/31 10/31 
+35/31 -24/31 -11/31 
+
+CSL_lattice:
+2 2 2 
+-25 -36 -1 
+-19 -29 0 
+
+
+GB_index: 292 Sigma: 95 Misorientation_index: 58
+10 9 3     10 9 3 
+0 1 -3     0 -1 3 
+-6 6 2     6 -6 -2 
+
+DSC_lattice:
+-17/19 104/95 3/95 
+240/19 -1333/95 -1/95 
+-18 20 0 
+
+CSL_lattice:
+10 9 3 
+-35 -117 56 
+-22 -71 33 
+
+
+GB_index: 293 Sigma: 19 Misorientation_index: 16
+10 9 3     10 9 -3 
+0 1 -3     0 1 3 
+-6 6 2     6 -6 2 
+
+DSC_lattice:
+-12/19 -7/19 23/19 
+-3/19 3/19 20/19 
+5/19 -5/19 -46/19 
+
+CSL_lattice:
+-1 -1 0 
+12 7 -23 
+11 5 -20 
+
+
+GB_index: 294 Sigma: 5 Misorientation_index: 1
+10 9 3     10 9 -3 
+0 1 -3     0 -1 -3 
+-6 6 2     -6 6 -2 
+
+DSC_lattice:
+1 4/5 3/5 
+0 3/5 1/5 
+0 -7/5 1/5 
+
+CSL_lattice:
+2 0 0 
+5 -3 4 
+3 -2 1 
+
+
+GB_index: 295 Sigma: 95 Misorientation_index: 58
+6 6 2     6 6 2 
+1 0 -3     0 1 -3 
+-9 10 -3     -10 9 3 
+
+DSC_lattice:
+-117/95 7/19 56/95 
+32/95 -5/19 -21/95 
+-13/5 2 9/5 
+
+CSL_lattice:
+-6 -6 -2 
+63 25 116 
+44 17 83 
+
+
+GB_index: 296 Sigma: 5 Misorientation_index: 1
+6 6 2     6 6 2 
+1 0 -3     0 -1 3 
+-9 10 -3     10 -9 -3 
+
+DSC_lattice:
+-3/5 1 4/5 
+-7/5 1 6/5 
+13/5 -2 -9/5 
+
+CSL_lattice:
+6 6 2 
+-3 -5 4 
+-2 -3 1 
+
+
+GB_index: 297 Sigma: 95 Misorientation_index: 58
+3 1 0     3 1 0 
+2 -6 6     2 -6 -6 
+3 -9 -10     -3 9 -10 
+
+DSC_lattice:
+3/95 -104/95 17/19 
+102/95 -306/95 46/19 
+-25/19 75/19 -56/19 
+
+CSL_lattice:
+-3 -1 0 
+-56 -117 -35 
+-23 -46 -13 
+
+
+GB_index: 298 Sigma: 19 Misorientation_index: 16
+3 1 0     3 1 0 
+2 -6 6     -2 6 6 
+3 -9 -10     3 -9 10 
+
+DSC_lattice:
+12/19 -17/19 17/19 
+-23/19 69/19 -50/19 
+25/19 -75/19 56/19 
+
+CSL_lattice:
+3 1 0 
+23 -12 -7 
+0 -1 -1 
+
+
+GB_index: 299 Sigma: 97 Misorientation_index: 59
+13 5 0     13 5 0 
+0 0 2     0 0 -2 
+5 -13 0     -5 13 0 
+
+DSC_lattice:
+-181/97 490/97 3 
+880/97 -2288/97 -14 
+-35 91 54 
+
+CSL_lattice:
+13 5 0 
+72 65 -97 
+17 14 -19 
+
+
+GB_index: 300 Sigma: 97 Misorientation_index: 59
+2 0 0     2 0 0 
+0 13 5     0 13 -5 
+0 -5 13     0 5 13 
+
+DSC_lattice:
+1 72/97 65/97 
+0 106/97 -4/97 
+0 -137/97 7/97 
+
+CSL_lattice:
+2 0 0 
+97 -65 72 
+76 -51 55 
+
+
+GB_index: 301 Sigma: 7 Misorientation_index: 8
+12 6 4     2 0 0 
+1 4 -9     0 7 7 
+-5 8 3     0 -7 7 
+
+DSC_lattice:
+-1/7 -4/7 9/7 
+3/7 -9/7 22/7 
+-5/7 15/7 -32/7 
+
+CSL_lattice:
+-3 -1 0 
+-4 -9 1 
+-3 -4 1 
+
+
+GB_index: 302 Sigma: 49 Misorientation_index: 60
+12 6 4     12 6 4 
+1 4 -9     -1 -4 9 
+-5 8 3     5 -8 -3 
+
+DSC_lattice:
+-86/49 153/49 53/49 
+719/49 -1184/49 -381/49 
+-17 28 9 
+
+CSL_lattice:
+12 6 4 
+47 48 -17 
+41 43 -16 
+
+
+GB_index: 303 Sigma: 49 Misorientation_index: 61
+12 6 4     12 6 -4 
+1 4 -9     1 4 9 
+-5 8 3     5 -8 3 
+
+DSC_lattice:
+57/49 -101/49 -142/49 
+60/49 -96/49 -134/49 
+-115/49 184/49 265/49 
+
+CSL_lattice:
+-16 -10 0 
+-9 -64 25 
+-3 -53 22 
+
+
+GB_index: 304 Sigma: 49 Misorientation_index: 62
+12 6 4     12 6 -4 
+1 4 -9     -1 -4 -9 
+-5 8 3     -5 8 -3 
+
+DSC_lattice:
+13/49 3/49 -68/49 
+3/49 12/49 169/49 
+-5/49 -20/49 -249/49 
+
+CSL_lattice:
+8 -2 0 
+39 -40 41 
+7 -5 4 
+
+
+GB_index: 305 Sigma: 49 Misorientation_index: 62
+12 6 4     12 6 4 
+1 4 -9     5 -8 -3 
+-5 8 3     1 4 -9 
+
+DSC_lattice:
+27/49 73/49 -166/49 
+-30/49 -92/49 228/49 
+29/7 88/7 -219/7 
+
+CSL_lattice:
+12 6 4 
+69 -4 -5 
+2 -1 -1 
+
+
+GB_index: 306 Sigma: 49 Misorientation_index: 60
+12 6 4     12 6 -4 
+1 4 -9     5 -8 3 
+-5 8 3     -1 -4 -9 
+
+DSC_lattice:
+36/49 -59/49 5/49 
+-15/49 45/49 2/49 
+79/49 -237/49 -4/49 
+
+CSL_lattice:
+3 1 0 
+53 -12 -43 
+3 -1 -4 
+
+
+GB_index: 307 Sigma: 49 Misorientation_index: 60
+12 6 4     12 6 -4 
+1 4 -9     -5 8 -3 
+-5 8 3     1 4 9 
+
+DSC_lattice:
+19/49 -29/49 60/49 
+57/49 -38/49 131/49 
+-138/49 92/49 -312/49 
+
+CSL_lattice:
+-4 -6 0 
+-5 36 59 
+-2 7 13 
+
+
+GB_index: 308 Sigma: 7 Misorientation_index: 8
+8 5 3     1 1 0 
+4 -1 -9     7 -7 0 
+-6 12 -4     0 0 -14 
+
+DSC_lattice:
+5/7 -3/7 8/7 
+1/7 -2/7 17/7 
+1/7 -2/7 3/7 
+
+CSL_lattice:
+4 2 0 
+9 -4 -1 
+4 -3 -1 
+
+
+GB_index: 309 Sigma: 49 Misorientation_index: 61
+8 5 3     8 5 3 
+4 -1 -9     -4 1 9 
+-6 12 -4     6 -12 4 
+
+DSC_lattice:
+-139/49 201/49 52/49 
+1110/49 -1548/49 -380/49 
+-38 53 13 
+
+CSL_lattice:
+8 5 3 
+64 -9 -25 
+27 -6 -13 
+
+
+GB_index: 310 Sigma: 49 Misorientation_index: 60
+8 5 3     8 5 -3 
+4 -1 -9     4 -1 9 
+-6 12 -4     6 -12 -4 
+
+DSC_lattice:
+48/49 -47/49 -17/49 
+6/49 -12/49 4/49 
+11/49 -22/49 -9/49 
+
+CSL_lattice:
+4 2 0 
+43 12 -53 
+39 11 -50 
+
+
+GB_index: 311 Sigma: 49 Misorientation_index: 62
+8 5 3     8 5 -3 
+4 -1 -9     -4 1 -9 
+-6 12 -4     -6 12 4 
+
+DSC_lattice:
+3/49 -13/49 -68/49 
+4/7 -1/7 -23/7 
+-52/49 13/49 313/49 
+
+CSL_lattice:
+-2 -8 0 
+-3 13 68 
+-3 6 47 
+
+
+GB_index: 312 Sigma: 7 Misorientation_index: 8
+9 4 1     1 1 0 
+3 -8 5     7 -7 0 
+4 -6 -12     0 0 -14 
+
+DSC_lattice:
+-9/7 -4/7 -1/7 
+5/7 -4/7 -1/7 
+-8/7 5/7 3/7 
+
+CSL_lattice:
+-2 -2 -2 
+4 1 9 
+3 2 7 
+
+
+GB_index: 313 Sigma: 49 Misorientation_index: 62
+9 4 1     8 5 3 
+3 -8 5     4 -1 -9 
+4 -6 -12     -6 12 -4 
+
+DSC_lattice:
+-26/49 -31/49 113/49 
+-17/7 -27/7 100/7 
+191/49 305/49 -1126/49 
+
+CSL_lattice:
+-7 -3 -2 
+-32 -57 -23 
+-21 -35 -14 
+
+
+GB_index: 314 Sigma: 49 Misorientation_index: 60
+9 4 1     8 5 3 
+3 -8 5     -4 1 9 
+4 -6 -12     6 -12 4 
+
+DSC_lattice:
+24/49 -1/49 -65/49 
+-11/7 6/7 47/7 
+96/49 -53/49 -407/49 
+
+CSL_lattice:
+14 10 2 
+67 -13 -12 
+25 -6 -5 
+
+
+GB_index: 315 Sigma: 49 Misorientation_index: 62
+9 4 1     8 5 -3 
+3 -8 5     4 -1 9 
+4 -6 -12     6 -12 -4 
+
+DSC_lattice:
+-5/49 4/49 -69/49 
+10/49 -8/49 40/49 
+-11/49 -1/49 -44/49 
+
+CSL_lattice:
+8 0 -2 
+-34 37 109 
+-31 32 95 
+
+
+GB_index: 316 Sigma: 49 Misorientation_index: 60
+9 4 1     8 5 -3 
+3 -8 5     -4 1 -9 
+4 -6 -12     -6 12 4 
+
+DSC_lattice:
+-25/49 41/49 110/49 
+-8/49 19/49 45/49 
+165/49 -398/49 -971/49 
+
+CSL_lattice:
+-22 -14 2 
+-25 41 110 
+-15 22 61 
+
+
+GB_index: 317 Sigma: 49 Misorientation_index: 62
+9 4 1     9 4 1 
+3 -8 5     -3 8 -5 
+4 -6 -12     -4 6 12 
+
+DSC_lattice:
+-89/49 151/49 246/49 
+-144/49 230/49 376/49 
+5 -8 -13 
+
+CSL_lattice:
+9 4 1 
+4 -69 -5 
+0 -24 -2 
+
+
+GB_index: 318 Sigma: 49 Misorientation_index: 60
+9 4 1     9 4 -1 
+3 -8 5     3 -8 -5 
+4 -6 -12     -4 6 -12 
+
+DSC_lattice:
+-29/49 19/49 -60/49 
+-38/49 57/49 -131/49 
+92/49 -138/49 312/49 
+
+CSL_lattice:
+-6 -4 0 
+-17 -48 -47 
+-16 -43 -41 
+
+
+GB_index: 319 Sigma: 49 Misorientation_index: 61
+9 4 1     9 4 -1 
+3 -8 5     -3 8 5 
+4 -6 -12     4 -6 12 
+
+DSC_lattice:
+62/49 -149/49 87/49 
+3/49 -8/49 5/49 
+618/49 -1648/49 932/49 
+
+CSL_lattice:
+16 6 0 
+55 -16 -39 
+31 -7 -20 
+
+
+GB_index: 320 Sigma: 3 Misorientation_index: 2
+13 5 2     3 3 2 
+1 -1 -4     3 -3 0 
+-2 6 -2     2 2 -6 
+
+DSC_lattice:
+1 0 1 
+-1/3 1/3 4/3 
+1/3 -1/3 2/3 
+
+CSL_lattice:
+1 1 0 
+1 0 1 
+4 -1 -1 
+
+
+GB_index: 321 Sigma: 33 Misorientation_index: 12
+13 5 2     3 3 2 
+1 -1 -4     -3 3 0 
+-2 6 -2     -2 -2 6 
+
+DSC_lattice:
+1/3 -1/3 -4/3 
+74/33 -35/33 -113/33 
+-26/11 12/11 40/11 
+
+CSL_lattice:
+-2 -1 -1 
+-32 -25 23 
+-11 -8 9 
+
+
+GB_index: 322 Sigma: 99 Misorientation_index: 63
+13 5 2     13 5 2 
+1 -1 -4     -1 1 4 
+-2 6 -2     2 -6 2 
+
+DSC_lattice:
+-86/99 203/99 101/99 
+1469/99 -3197/99 -1556/99 
+-17 37 18 
+
+CSL_lattice:
+13 5 2 
+101 214 -53 
+17 39 -10 
+
+
+GB_index: 323 Sigma: 11 Misorientation_index: 9
+13 5 2     13 5 -2 
+1 -1 -4     1 -1 4 
+-2 6 -2     2 -6 -2 
+
+DSC_lattice:
+8/11 -13/11 -3/11 
+-5/11 15/11 6/11 
+17/11 -51/11 -16/11 
+
+CSL_lattice:
+3 1 0 
+1 0 -1 
+-15 1 -4 
+
+
+GB_index: 324 Sigma: 9 Misorientation_index: 6
+13 5 2     13 5 -2 
+1 -1 -4     -1 1 -4 
+-2 6 -2     -2 6 2 
+
+DSC_lattice:
+1/3 -4/3 -1/3 
+4/9 -4/9 2/9 
+-5/9 5/9 2/9 
+
+CSL_lattice:
+-1 -1 0 
+-1 4 1 
+-2 1 -3 
+
+
+GB_index: 325 Sigma: 99 Misorientation_index: 63
+6 2 2     6 2 2 
+1 -4 1     1 1 -4 
+5 -2 -13     -5 13 2 
+
+DSC_lattice:
+-25/33 -23/33 32/33 
+-2/99 -19/99 25/99 
+1/9 14/9 -17/9 
+
+CSL_lattice:
+-6 -2 -2 
+-28 -35 -13 
+-11 -8 -3 
+
+
+GB_index: 326 Sigma: 9 Misorientation_index: 6
+6 2 2     6 2 2 
+1 -4 1     -1 -1 4 
+5 -2 -13     5 -13 -2 
+
+DSC_lattice:
+1/3 -1/3 4/3 
+0 1 -1 
+-1/9 -14/9 17/9 
+
+CSL_lattice:
+6 2 2 
+4 -1 1 
+-1 -3 -2 
+
+
+GB_index: 327 Sigma: 99 Misorientation_index: 63
+4 1 1     4 1 1 
+2 -6 -2     2 -2 -6 
+2 5 -13     -2 13 -5 
+
+DSC_lattice:
+-53/99 214/99 -101/99 
+-38/99 301/99 -149/99 
+16/33 -125/33 61/33 
+
+CSL_lattice:
+-4 -1 -1 
+-85 -64 -91 
+-39 -29 -40 
+
+
+GB_index: 328 Sigma: 11 Misorientation_index: 9
+4 1 1     4 1 1 
+2 -6 -2     -2 2 6 
+2 5 -13     2 -13 5 
+
+DSC_lattice:
+-1/11 25/11 -10/11 
+14/11 -108/11 52/11 
+-16/11 125/11 -61/11 
+
+CSL_lattice:
+4 1 1 
+15 -1 -4 
+-1 0 -1 
+
+
+GB_index: 329 Sigma: 33 Misorientation_index: 12
+4 1 1     1 1 0 
+2 -6 -2     2 -2 6 
+2 5 -13     9 -9 -6 
+
+DSC_lattice:
+23/33 -25/33 32/33 
+-16/33 26/33 -28/33 
+39/11 -62/11 71/11 
+
+CSL_lattice:
+5 2 -1 
+23 -25 32 
+14 -17 21 
+
+
+GB_index: 330 Sigma: 101 Misorientation_index: 64
+11 9 0     11 9 0 
+0 0 2     0 0 -2 
+9 -11 0     -9 11 0 
+
+DSC_lattice:
+415/101 -496/101 -1 
+-7362/101 8998/101 18 
+81 -99 -20 
+
+CSL_lattice:
+11 9 0 
+20 99 -101 
+1 10 -11 
+
+
+GB_index: 331 Sigma: 101 Misorientation_index: 64
+2 0 0     2 0 0 
+0 11 9     0 11 -9 
+0 -9 11     0 9 11 
+
+DSC_lattice:
+1 20/101 99/101 
+0 11/101 9/101 
+0 -119/101 -79/101 
+
+CSL_lattice:
+2 0 0 
+101 -99 20 
+11 -10 1 
+
+
+GB_index: 332 Sigma: 51 Misorientation_index: 65
+10 10 2     10 10 2 
+1 -1 0     -1 1 0 
+1 1 -10     -1 -1 10 
+
+DSC_lattice:
+71/51 -31/51 -98/51 
+-92/51 61/51 155/51 
+3 -2 -5 
+
+CSL_lattice:
+10 10 2 
+-3 -20 13 
+-5 -17 8 
+
+
+GB_index: 333 Sigma: 3 Misorientation_index: 2
+14 2 2     10 10 2 
+0 1 -1     1 -1 0 
+-2 7 7     1 1 -10 
+
+DSC_lattice:
+1 -1 0 
+1/3 -2/3 1/3 
+5/3 -10/3 -1/3 
+
+CSL_lattice:
+4 2 0 
+1 0 -1 
+-4 -1 -1 
+
+
+GB_index: 334 Sigma: 17 Misorientation_index: 13
+14 2 2     10 10 2 
+0 1 -1     -1 1 0 
+-2 7 7     -1 -1 10 
+
+DSC_lattice:
+0 1 -1 
+5/17 8/17 -9/17 
+-24/17 -52/17 50/17 
+
+CSL_lattice:
+-4 -2 -4 
+11 4 21 
+11 5 20 
+
+
+GB_index: 335 Sigma: 51 Misorientation_index: 66
+14 2 2     14 2 2 
+0 1 -1     0 -1 1 
+-2 7 7     2 -7 -7 
+
+DSC_lattice:
+28/51 -47/51 -47/51 
+-49/51 146/51 197/51 
+1 -3 -4 
+
+CSL_lattice:
+14 2 2 
+127 142 -11 
+76 87 -7 
+
+
+GB_index: 336 Sigma: 51 Misorientation_index: 66
+7 7 2     7 7 2 
+1 -1 0     -1 1 0 
+2 2 -14     -2 -2 14 
+
+DSC_lattice:
+-95/51 58/51 155/51 
+-197/51 109/51 308/51 
+9 -5 -14 
+
+CSL_lattice:
+7 7 2 
+-4 -21 11 
+-3 -4 -1 
+
+
+GB_index: 337 Sigma: 3 Misorientation_index: 2
+10 1 1     7 7 2 
+0 1 -1     1 -1 0 
+-2 10 10     2 2 -14 
+
+DSC_lattice:
+1 -1 0 
+1/3 -2/3 1/3 
+5/3 -10/3 -1/3 
+
+CSL_lattice:
+4 2 0 
+1 0 -1 
+-4 -1 -1 
+
+
+GB_index: 338 Sigma: 17 Misorientation_index: 13
+10 1 1     7 7 2 
+0 1 -1     -1 1 0 
+-2 10 10     -2 -2 14 
+
+DSC_lattice:
+0 1 -1 
+19/17 24/17 -27/17 
+-24/17 -33/17 35/17 
+
+CSL_lattice:
+-6 -2 -6 
+13 3 20 
+13 4 19 
+
+
+GB_index: 339 Sigma: 51 Misorientation_index: 65
+10 1 1     10 1 1 
+0 1 -1     0 -1 1 
+-2 10 10     2 -10 -10 
+
+DSC_lattice:
+-41/51 256/51 205/51 
+86/51 -481/51 -379/51 
+-10/3 56/3 44/3 
+
+CSL_lattice:
+10 1 1 
+-13 -20 -3 
+-5 0 -1 
+
+
+GB_index: 340 Sigma: 85 Misorientation_index: 67
+14 2 2     14 2 2 
+1 -5 -2     1 -2 -5 
+1 5 -12     -1 12 -5 
+
+DSC_lattice:
+-7/85 -24/17 -1/85 
+3/17 -19/17 -2/17 
+-4/5 5 3/5 
+
+CSL_lattice:
+-14 -2 -2 
+-223 75 -214 
+-9 2 -7 
+
+
+GB_index: 341 Sigma: 15 Misorientation_index: 4
+14 2 2     14 2 2 
+1 -5 -2     -1 2 5 
+1 5 -12     1 -12 5 
+
+DSC_lattice:
+7/15 -4/3 1/15 
+-1/15 1/3 2/15 
+4/5 -5 -3/5 
+
+CSL_lattice:
+14 2 2 
+43 25 -26 
+19 12 -13 
+
+
+GB_index: 342 Sigma: 255 Misorientation_index: 68
+14 2 2     10 10 2 
+1 -5 -2     1 -2 5 
+1 5 -12     9 -8 -5 
+
+DSC_lattice:
+127/85 -26/17 261/85 
+-1076/255 233/51 -2303/255 
+7658/255 -1658/51 16394/255 
+
+CSL_lattice:
+14 7 -3 
+-11 13 -38 
+-26 1 -23 
+
+
+GB_index: 343 Sigma: 5 Misorientation_index: 1
+14 2 2     10 10 2 
+1 -5 -2     -1 2 -5 
+1 5 -12     -9 8 5 
+
+DSC_lattice:
+1/5 0 -7/5 
+-6/5 -1 17/5 
+-2/5 0 4/5 
+
+CSL_lattice:
+-2 -1 -1 
+-4 -5 3 
+-1 -1 2 
+
+
+GB_index: 344 Sigma: 15 Misorientation_index: 4
+10 10 2     10 10 2 
+2 -1 -5     1 -2 5 
+-8 9 -5     9 -8 -5 
+
+DSC_lattice:
+29/15 -22/15 -1/3 
+-17/15 16/15 1/3 
+22/5 -21/5 -1 
+
+CSL_lattice:
+10 10 2 
+-4 -3 5 
+-5 -5 2 
+
+
+GB_index: 345 Sigma: 85 Misorientation_index: 69
+10 10 2     10 10 2 
+2 -1 -5     -1 2 -5 
+-8 9 -5     -9 8 5 
+
+DSC_lattice:
+131/85 -158/85 -7/17 
+313/85 -299/85 -14/17 
+-22/5 21/5 1 
+
+CSL_lattice:
+-10 -10 -2 
+32 49 105 
+23 36 79 
+
+
+GB_index: 346 Sigma: 85 Misorientation_index: 67
+12 5 1     12 5 1 
+2 -5 1     -2 5 -1 
+2 -2 -14     -2 2 14 
+
+DSC_lattice:
+-73/85 35/17 86/85 
+158/85 -69/17 -171/85 
+-16/5 7 17/5 
+
+CSL_lattice:
+12 5 1 
+1 -120 -7 
+-1 -48 -3 
+
+
+GB_index: 347 Sigma: 51 Misorientation_index: 66
+12 5 1     12 5 -1 
+2 -5 1     2 -5 -1 
+2 -2 -14     -2 2 -14 
+
+DSC_lattice:
+4/17 -21/17 -11/17 
+16/51 -16/51 -10/51 
+-25/51 25/51 22/51 
+
+CSL_lattice:
+-1 -1 0 
+-4 21 11 
+-3 4 -1 
+
+
+GB_index: 348 Sigma: 15 Misorientation_index: 4
+12 5 1     12 5 -1 
+2 -5 1     -2 5 1 
+2 -2 -14     2 -2 14 
+
+DSC_lattice:
+-11/15 7/3 2/15 
+16/5 -8 -2/5 
+-98/15 49/3 11/15 
+
+CSL_lattice:
+10 4 0 
+13 5 -16 
+15 6 -15 
+
+
+GB_index: 349 Sigma: 255 Misorientation_index: 68
+12 5 1     9 8 5 
+2 -5 1     1 2 -5 
+2 -2 -14     -10 10 2 
+
+DSC_lattice:
+-569/51 8/51 1433/51 
+983/51 -14/51 -2495/51 
+-353/15 1/3 896/15 
+
+CSL_lattice:
+-46 -22 -18 
+-164 -295 -127 
+-7 -32 -11 
+
+
+GB_index: 350 Sigma: 3 Misorientation_index: 2
+12 5 1     9 8 5 
+2 -5 1     -1 -2 5 
+2 -2 -14     10 -10 -2 
+
+DSC_lattice:
+1 0 1 
+-1/3 1/3 4/3 
+1/3 -1/3 2/3 
+
+CSL_lattice:
+1 1 0 
+1 0 1 
+4 -1 -1 
+
+
+GB_index: 351 Sigma: 5 Misorientation_index: 1
+12 5 1     9 8 -5 
+2 -5 1     1 2 5 
+2 -2 -14     10 -10 2 
+
+DSC_lattice:
+4/5 -1 -3/5 
+0 1 1 
+1/5 -2 -7/5 
+
+CSL_lattice:
+6 2 -2 
+3 -5 4 
+1 -4 3 
+
+
+GB_index: 352 Sigma: 17 Misorientation_index: 13
+12 5 1     9 8 -5 
+2 -5 1     -1 -2 -5 
+2 -2 -14     -10 10 -2 
+
+DSC_lattice:
+3/17 -20/17 13/17 
+4/17 -4/17 6/17 
+-23/17 23/17 -26/17 
+
+CSL_lattice:
+-1 -1 0 
+-3 20 -13 
+-1 7 -6 
+
+
+GB_index: 353 Sigma: 85 Misorientation_index: 69
+9 8 5     9 8 5 
+1 2 -5     -1 -2 5 
+-10 10 2     10 -10 -2 
+
+DSC_lattice:
+-76/85 93/85 1/17 
+161/85 -178/85 -1/17 
+-16/5 18/5 0 
+
+CSL_lattice:
+9 8 5 
+158 131 -35 
+94 78 -22 
+
+
+GB_index: 354 Sigma: 51 Misorientation_index: 65
+9 8 5     9 8 -5 
+1 2 -5     1 2 5 
+-10 10 2     10 -10 2 
+
+DSC_lattice:
+-40/51 -11/51 59/51 
+-22/51 22/51 86/51 
+29/51 -29/51 -118/51 
+
+CSL_lattice:
+-1 -1 0 
+40 11 -59 
+19 4 -27 
+
+
+GB_index: 355 Sigma: 15 Misorientation_index: 4
+9 8 5     9 8 -5 
+1 2 -5     -1 -2 -5 
+-10 10 2     -10 10 -2 
+
+DSC_lattice:
+4/5 3/5 1 
+2/15 4/15 4/3 
+-1/3 -2/3 -7/3 
+
+CSL_lattice:
+4 -2 0 
+3 -4 5 
+5 -5 2 
+
+
+GB_index: 356 Sigma: 51 Misorientation_index: 65
+1 1 0     1 1 0 
+1 -1 10     1 -1 -10 
+10 -10 -2     -10 10 -2 
+
+DSC_lattice:
+-40/51 -11/51 59/51 
+-22/51 22/51 86/51 
+29/51 -29/51 -118/51 
+
+CSL_lattice:
+-1 -1 0 
+40 11 -59 
+19 4 -27 
+
+
+GB_index: 357 Sigma: 51 Misorientation_index: 66
+1 1 0     1 1 0 
+7 -7 2     7 -7 -2 
+2 -2 -14     -2 2 -14 
+
+DSC_lattice:
+4/17 -21/17 -11/17 
+16/51 -16/51 -10/51 
+-25/51 25/51 22/51 
+
+CSL_lattice:
+-1 -1 0 
+-4 21 11 
+-3 4 -1 
+
+
+GB_index: 358 Sigma: 51 Misorientation_index: 66
+5 2 1     5 2 -1 
+5 -12 -1     5 -12 1 
+2 2 -14     -2 -2 -14 
+
+DSC_lattice:
+16/51 -35/51 -61/51 
+40/51 40/51 26/51 
+-47/51 -47/51 -28/51 
+
+CSL_lattice:
+1 -1 0 
+35 -16 61 
+8 -5 15 
+
+
+GB_index: 359 Sigma: 85 Misorientation_index: 67
+5 2 1     5 2 -1 
+5 -12 -1     -5 12 -1 
+2 2 -14     2 2 14 
+
+DSC_lattice:
+-33/17 379/85 322/85 
+-500/17 1200/17 1018/17 
+537/17 -6444/85 -5467/85 
+
+CSL_lattice:
+-24 -10 0 
+-55 -72 79 
+-53 -63 66 
+
+
+GB_index: 360 Sigma: 255 Misorientation_index: 68
+5 2 1     5 2 1 
+5 -12 -1     5 -8 -9 
+2 2 -14     -2 10 -10 
+
+DSC_lattice:
+-59/51 521/255 178/255 
+148/51 -1606/255 -488/255 
+-59/17 128/17 39/17 
+
+CSL_lattice:
+-5 -2 -1 
+-65 -48 -89 
+-18 -13 -19 
+
+
+GB_index: 361 Sigma: 17 Misorientation_index: 13
+5 2 1     5 2 1 
+5 -12 -1     -5 8 9 
+2 2 -14     2 -10 10 
+
+DSC_lattice:
+-14/17 37/17 13/17 
+-27/17 58/17 19/17 
+59/17 -128/17 -39/17 
+
+CSL_lattice:
+5 2 1 
+21 4 -11 
+5 1 -4 
+
+
+GB_index: 362 Sigma: 51 Misorientation_index: 65
+5 2 1     5 2 -1 
+5 -8 -9     5 -8 9 
+-2 10 -10     2 -10 -10 
+
+DSC_lattice:
+20/51 -49/51 49/51 
+-59/51 295/51 -244/51 
+61/51 -305/51 254/51 
+
+CSL_lattice:
+5 1 0 
+59 -40 -11 
+32 -20 -6 
+
+
+GB_index: 363 Sigma: 85 Misorientation_index: 69
+5 2 1     5 2 -1 
+5 -8 -9     -5 8 -9 
+-2 10 -10     -2 10 10 
+
+DSC_lattice:
+-9/17 11/17 -62/17 
+-10/17 16/17 -84/17 
+97/17 -776/85 4057/85 
+
+CSL_lattice:
+-16 -10 0 
+-15 -112 -41 
+-9 -101 -38 
+
+
+GB_index: 364 Sigma: 105 Misorientation_index: 37
+11 8 5     11 8 5 
+1 -2 1     -1 2 -1 
+6 -2 -10     -6 2 10 
+
+DSC_lattice:
+431/105 -517/105 -20/21 
+-526/35 642/35 26/7 
+77/3 -94/3 -19/3 
+
+CSL_lattice:
+11 8 5 
+-71 -128 25 
+-49 -87 16 
+
+
+GB_index: 365 Sigma: 35 Misorientation_index: 36
+11 8 5     11 8 -5 
+1 -2 1     1 -2 -1 
+6 -2 -10     -6 2 -10 
+
+DSC_lattice:
+13/35 -16/35 -9/7 
+6/35 -2/35 -2/7 
+-15/7 5/7 32/7 
+
+CSL_lattice:
+-1 -3 0 
+-13 16 45 
+-4 3 11 
+
+
+GB_index: 366 Sigma: 3 Misorientation_index: 2
+11 8 5     11 8 -5 
+1 -2 1     -1 2 1 
+6 -2 -10     6 -2 10 
+
+DSC_lattice:
+1 -1 0 
+1/3 -2/3 1/3 
+5/3 -10/3 -1/3 
+
+CSL_lattice:
+4 2 0 
+1 0 -1 
+-4 -1 -1 
+
+
+GB_index: 367 Sigma: 21 Misorientation_index: 20
+13 5 4     11 8 5 
+1 -1 -2     1 -2 1 
+-2 10 -6     6 -2 -10 
+
+DSC_lattice:
+4/7 1/7 -9/7 
+-19/21 4/21 83/21 
+4/3 -1/3 -17/3 
+
+CSL_lattice:
+10 6 2 
+29 -5 -4 
+17 -4 -3 
+
+
+GB_index: 368 Sigma: 5 Misorientation_index: 1
+13 5 4     11 8 5 
+1 -1 -2     -1 2 -1 
+-2 10 -6     -6 2 10 
+
+DSC_lattice:
+1/5 0 -7/5 
+-6/5 -1 17/5 
+-2/5 0 4/5 
+
+CSL_lattice:
+-2 -1 -1 
+-4 -5 3 
+-1 -1 2 
+
+
+GB_index: 369 Sigma: 105 Misorientation_index: 38
+13 5 4     13 5 4 
+1 -1 -2     -1 1 2 
+-2 10 -6     2 -10 6 
+
+DSC_lattice:
+118/105 -41/21 -101/105 
+-88/105 32/21 86/105 
+19/5 -7 -18/5 
+
+CSL_lattice:
+13 5 4 
+116 85 -37 
+102 73 -29 
+
+
+GB_index: 370 Sigma: 35 Misorientation_index: 36
+13 5 4     13 5 -4 
+1 -1 -2     1 -1 2 
+-2 10 -6     2 -10 -6 
+
+DSC_lattice:
+16/35 -9/7 13/35 
+-17/35 17/7 -16/35 
+53/35 -53/7 54/35 
+
+CSL_lattice:
+5 1 0 
+39 -20 -23 
+3 0 -1 
+
+
+GB_index: 371 Sigma: 3 Misorientation_index: 2
+13 5 4     13 5 -4 
+1 -1 -2     -1 1 -2 
+-2 10 -6     -2 10 6 
+
+DSC_lattice:
+1/3 -4/3 1/3 
+2/3 -2/3 2/3 
+-5/3 5/3 -2/3 
+
+CSL_lattice:
+-1 -1 0 
+-1 4 -1 
+0 -1 -1 
+
+
+GB_index: 372 Sigma: 15 Misorientation_index: 4
+13 5 4     11 8 -5 
+1 -1 -2     1 -2 -1 
+-2 10 -6     -6 2 -10 
+
+DSC_lattice:
+16/15 1/3 13/15 
+1/5 0 3/5 
+-13/15 -1/3 -34/15 
+
+CSL_lattice:
+6 -2 -2 
+-1 1 2 
+-16 -5 -13 
+
+
+GB_index: 373 Sigma: 7 Misorientation_index: 8
+13 5 4     11 8 -5 
+1 -1 -2     -1 2 1 
+-2 10 -6     6 -2 10 
+
+DSC_lattice:
+3/7 -8/7 -5/7 
+2/7 -3/7 -1/7 
+-24/7 36/7 26/7 
+
+CSL_lattice:
+-6 -4 0 
+-1 -9 4 
+-2 -7 3 
+
+
+GB_index: 374 Sigma: 105 Misorientation_index: 38
+2 1 1     2 1 1 
+6 -10 -2     6 -2 -10 
+4 5 -13     -4 13 -5 
+
+DSC_lattice:
+-37/105 17/21 -116/105 
+4/105 1/21 -13/105 
+-2/35 -4/7 24/35 
+
+CSL_lattice:
+-2 -1 -1 
+-32 -145 -1 
+-3 -16 1 
+
+
+GB_index: 375 Sigma: 35 Misorientation_index: 36
+2 1 1     2 1 1 
+6 -10 -2     -6 2 10 
+4 5 -13     4 -13 5 
+
+DSC_lattice:
+11/35 8/7 -27/35 
+2/35 -3/7 11/35 
+2/35 4/7 -24/35 
+
+CSL_lattice:
+2 1 1 
+36 -25 23 
+25 -16 15 
+
+
+GB_index: 376 Sigma: 105 Misorientation_index: 37
+2 1 1     2 1 1 
+2 -10 6     2 6 -10 
+8 -5 -11     -8 11 5 
+
+DSC_lattice:
+47/105 -19/21 -104/105 
+-8/105 1/21 11/105 
+-18/35 4/7 16/35 
+
+CSL_lattice:
+-2 -1 -1 
+-128 -25 71 
+-87 -16 49 
+
+
+GB_index: 377 Sigma: 35 Misorientation_index: 36
+2 1 1     2 1 1 
+2 -10 6     -2 -6 10 
+8 -5 -11     8 -11 -5 
+
+DSC_lattice:
+39/35 -4/7 -23/35 
+-26/35 5/7 27/35 
+18/35 -4/7 -16/35 
+
+CSL_lattice:
+2 1 1 
+4 15 47 
+5 14 45 
+
+
+GB_index: 378 Sigma: 53 Misorientation_index: 25
+14 4 0     14 4 0 
+0 0 2     0 0 -2 
+4 -14 0     -4 14 0 
+
+DSC_lattice:
+-39/53 163/53 2 
+306/53 -1071/53 -13 
+-8 28 18 
+
+CSL_lattice:
+14 4 0 
+45 28 -53 
+19 13 -26 
+
+
+GB_index: 379 Sigma: 109 Misorientation_index: 70
+13 7 0     13 7 0 
+0 0 2     0 0 -2 
+7 -13 0     -7 13 0 
+
+DSC_lattice:
+122/109 -211/109 -1 
+-686/109 1274/109 6 
+21 -39 -20 
+
+CSL_lattice:
+13 7 0 
+60 91 -109 
+38 54 -62 
+
+
+GB_index: 380 Sigma: 109 Misorientation_index: 70
+2 0 0     2 0 0 
+0 13 7     0 13 -7 
+0 -7 13     0 7 13 
+
+DSC_lattice:
+1 60/109 91/109 
+0 105/109 23/109 
+0 -151/109 -31/109 
+
+CSL_lattice:
+2 0 0 
+109 -91 60 
+77 -64 41 
+
+
+GB_index: 381 Sigma: 111 Misorientation_index: 71
+11 10 1     11 10 1 
+2 -2 -2     -2 2 2 
+-3 4 -7     3 -4 7 
+
+DSC_lattice:
+-100/111 121/111 1/111 
+211/111 -232/111 -1/111 
+-20 22 0 
+
+CSL_lattice:
+11 10 1 
+121 -1 -100 
+12 -1 -11 
+
+
+GB_index: 382 Sigma: 37 Misorientation_index: 72
+11 10 1     11 10 -1 
+2 -2 -2     2 -2 2 
+-3 4 -7     3 -4 -7 
+
+DSC_lattice:
+16/37 -9/37 -49/37 
+-51/37 68/37 251/37 
+72/37 -96/37 -350/37 
+
+CSL_lattice:
+8 6 0 
+49 -16 -9 
+36 -13 -7 
+
+
+GB_index: 383 Sigma: 3 Misorientation_index: 2
+11 10 1     11 10 -1 
+2 -2 -2     -2 2 -2 
+-3 4 -7     -3 4 7 
+
+DSC_lattice:
+0 -1 1 
+-1/3 1/3 4/3 
+-1/3 1/3 -2/3 
+
+CSL_lattice:
+-1 -1 0 
+0 1 -1 
+1 -4 -1 
+
+
+GB_index: 384 Sigma: 37 Misorientation_index: 72
+7 4 3     7 4 3 
+2 -2 -2     -2 2 2 
+-1 10 -11     1 -10 11 
+
+DSC_lattice:
+81/37 -107/37 -34/37 
+-361/37 502/37 173/37 
+23 -32 -11 
+
+CSL_lattice:
+7 4 3 
+49 -9 -16 
+47 -7 -14 
+
+
+GB_index: 385 Sigma: 111 Misorientation_index: 71
+7 4 3     7 4 -3 
+2 -2 -2     2 -2 2 
+-1 10 -11     1 -10 -11 
+
+DSC_lattice:
+7/37 -33/37 40/37 
+89/111 -890/111 1201/111 
+1/111 -10/111 11/111 
+
+CSL_lattice:
+20 2 0 
+121 -100 -1 
+100 -91 -1 
+
+
+GB_index: 386 Sigma: 3 Misorientation_index: 2
+7 4 3     7 4 -3 
+2 -2 -2     -2 2 -2 
+-1 10 -11     -1 10 11 
+
+DSC_lattice:
+0 -1 1 
+-1/3 1/3 4/3 
+-1/3 1/3 -2/3 
+
+CSL_lattice:
+-1 -1 0 
+0 1 -1 
+1 -4 -1 
+
+
+GB_index: 387 Sigma: 111 Misorientation_index: 71
+2 2 2     2 2 2 
+7 -4 -3     7 -3 -4 
+1 10 -11     -1 11 -10 
+
+DSC_lattice:
+-121/111 -100/111 -1/111 
+109/111 -20/111 -89/111 
+-40/37 7/37 33/37 
+
+CSL_lattice:
+-2 -2 -2 
+100 1 121 
+91 2 111 
+
+
+GB_index: 388 Sigma: 37 Misorientation_index: 72
+2 2 2     2 2 2 
+7 -4 -3     -7 3 4 
+1 10 -11     1 -11 10 
+
+DSC_lattice:
+9/37 16/37 49/37 
+-11/37 1/37 10/37 
+40/37 -7/37 -33/37 
+
+CSL_lattice:
+2 2 2 
+-16 -49 -9 
+-3 -13 -2 
+
+
