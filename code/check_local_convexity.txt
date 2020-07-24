@@ -1,0 +1,22 @@
+bool
+    check_local_convexity(facet const & facet_,
+                          size_type const f) const
+    {
+        assert(&facets_[f] == &facet_);
+        for (size_type const n : facet_.neighbours_) {
+            facet const & neighbour_ = facets_[n];
+            if (cos_of_dihedral_angle(facet_, neighbour_) < one) { // avoid roundoff error
+                for (size_type v = 0; v < dimension_; ++v) {
+                    if (neighbour_.neighbours_[v] == f) { // vertex v of neigbour_ facet is opposite to facet_
+                        value_type const distance_ = facet_.distance(std::cbegin(*neighbour_.vertices_[v]));
+                        if (eps < distance_) {
+                            return false; // facet is not locally convex at ridge, common for facet_ and neighbour_ facets
+                        } else {
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+        return true;
+    }
