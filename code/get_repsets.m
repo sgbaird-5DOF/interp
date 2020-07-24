@@ -47,9 +47,9 @@ switch uniquetype
 		[~,ia,ic] = uniquetol(pts,tol,'ByRows',true);
 end
 
+%use histcounts to sort out repeats
 iaNum = numel(ia);
 [N, ~, icount] = histcounts(ic,iaNum);
-
 irep = find(N(icount) >= 1);
 
 % extract the cases
@@ -57,20 +57,46 @@ ic_rep = icount(irep);
 
 ic_unique = sort(unique(ic_rep),1);
 iculength = length(ic_unique);
-icset = cell(1,iculength);
+% icset = cell(1,iculength);
 repsets = icset;
 
-for i = 1:iculength	
+%textwaitbar setup
+D = parallel.pool.DataQueue;
+afterEach(D, @nUpdateProgress);
+N=iculength; %change this to the last index of for loop
+p=1;
+reverseStr = '';
+if nsets > 100
+	nreps = floor(nsets/100);
+	nreps2 = floor(nsets/100);
+else
+	nreps = 1;
+	nreps2 = 1;
+end
+
+	function nUpdateProgress(~)
+		percentDone = 100*p/N;
+		msg = sprintf('%3.1f ', percentDone); %Don't forget this semicolon
+		fprintf([reverseStr, msg]);
+		reverseStr = repmat(sprintf('\b'), 1, length(msg));
+		p = p + nreps;
+	end
+
+parfor i = 1:iculength	
 	%take a single microstructure that corresponds to a non-unique
 	%microstructure set
 	ic_val = ic_unique(i);
 	
 	% find the index of that microstructure in the set of all non-unique
 	% microstructures
-	icset{i} = find(ic_rep == ic_val);
+	icset = ic_rep == ic_val;
 	
 	% correlate that index back with the master list of microstructures
-	repsets{i} = irep(icset{i});
+	repsets{i} = irep(icset); %#ok<PFBNS>
+	
+	if mod(i,nreps2) == 0
+		send(D,i);
+	end
 end
 
 %-----------------------------CODE GRAVEYARD-------------------------------
