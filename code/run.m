@@ -246,7 +246,7 @@ for i = 1:ndatapts
 				if ~isempty(databaryTemp{1})
 					databary(i,:) = databaryTemp{1};
 					nonNegQ = all(databary(i,:) >= -1e-12);
-					equalToOneQ = abs(sum(databary(i,:)) - 1) < 1e-6
+					equalToOneQ = abs(sum(databary(i,:)) - 1) < 1e-6;
 					baryOK = nonNegQ && equalToOneQ;
 				end
 		end
