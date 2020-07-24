@@ -66,11 +66,11 @@ dataopts = meshopts;
 %mesh parameters
 meshopts.res = 12.5;
 meshopts.nint = 2; % 1 == zero subdivisions, 2 == one subdivision, etc.
-meshopts.octsubdiv = 2;
+meshopts.octsubdiv = 1;
 
 %data parameters
 dataopts.res = 10;
-dataopts.nint = 1;
+dataopts.nint = 2;
 dataopts.octsubdiv = 1;
 
 %psuedo mesh parameters
