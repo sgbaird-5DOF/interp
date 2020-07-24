@@ -55,7 +55,7 @@ for_type = 'parfor';
 switch for_type
 	case 'for'
 		for i = 1:nsets
-			fixQ{i} = find(ismember(K,irepsets{i}));
+			fixQ{i} = ismember(K,irepsets{i});
 			K(fixQ{i}) = 0; %might make sorting faster for next repetition (but doesn't work with parallelization)
 		end
 	case 'parfor'
