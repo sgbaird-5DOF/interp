@@ -62,12 +62,13 @@ repsets = cell(1,iculength);
 %textwaitbar setup
 D = parallel.pool.DataQueue;
 afterEach(D, @nUpdateProgress);
-N=iculength; %change this to the last index of for loop
+imax = iculength; %change this to the last index of for loop
+N=imax; 
 p=1;
 reverseStr = '';
-if nsets > 100
-	nreps = floor(nsets/100);
-	nreps2 = floor(nsets/100);
+if imax > 100
+	nreps = floor(imax/100);
+	nreps2 = floor(imax/100);
 else
 	nreps = 1;
 	nreps2 = 1;
