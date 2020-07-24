@@ -220,7 +220,7 @@ datainterp = NaN(size(datapts,1),1);
 nnID = [];
 ilist = [];
 nonintDists = [];
-databaryTemp = cell(1,size(datapts,1));
+% databaryTemp = cell(1,size(datapts,1));
 for i = 1:ndatapts
 	datapt = datapts(i,:); %use down-projected data (and mesh)
 	baryOK = false; %initialize
@@ -242,11 +242,13 @@ for i = 1:ndatapts
 				baryOK = nonNegQ && greaterThanOneQ;
 				
 			case 'planar'
-				[~,databaryTemp{i}] = intersect_facet(facet,1:7,datapt,1e-12,false);
-				databary(i,:) = databaryTemp{i}(1,:);
-				nonNegQ = all(databary(i,:) >= -1e-12);
-				equalToOneQ = abs(sum(databary(i,:)) - 1) < 1e-6
-				baryOK = nonNegQ && equalToOneQ;
+				[~,databaryTemp] = intersect_facet(facet,1:7,datapt,1e-12,false);
+				if ~isempty(databaryTemp{1})
+					databary(i,:) = databaryTemp{i}(1,:);
+					nonNegQ = all(databary(i,:) >= -1e-12);
+					equalToOneQ = abs(sum(databary(i,:)) - 1) < 1e-6
+					baryOK = nonNegQ && equalToOneQ;
+				end
 		end
 		
 		if baryOK
