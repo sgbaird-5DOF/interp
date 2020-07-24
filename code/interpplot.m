@@ -92,5 +92,4 @@ sgtitle({...
 
 fpath = fullfile('figures',fname(1:end-4));
 print(fpath,'-dpng')
-fig = gcf;
 savefig(fig,[fpath '.fig'],'compact')
