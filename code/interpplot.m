@@ -21,7 +21,8 @@ function interpplot(fname)
 %load info
 addpathdir({fname})
 vars = {'mesh','data','datainterp','nnID','psdata','ilist',...
-	'meshopts','dataopts','nndistList','nonintDists'};
+	'meshopts','dataopts','nndistList','nonintDists','meshMethod',...
+    'dataMethod'};
 load(fname,vars{:})
 
 %figure setup
@@ -90,6 +91,6 @@ sgtitle({...
 	['data == ' dataMethod '_octsubdiv' int2str(dataopts.octsubdiv)]}, ...
 	'Interpreter','none','FontSize',10);
 
-fpath = fullfile('data',meshdata.fname(1:end-4));
+fpath = fullfile('data',fname(1:end-4));
 print(fpath,'-dpng')
 savefig(fpath)
