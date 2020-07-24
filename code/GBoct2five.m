@@ -85,6 +85,7 @@ else
        nreps2 = 0;
     end
     %convert subdivided points to 5DOF
+	 disp(' ')
 	 disp('GBoct2five ')
 	parfor i = 1:npts %parfor compatible
         if waitbarQ	
