@@ -224,7 +224,7 @@ for i = 1:ndatapts
 		
 		nonNegQ = all(databary(i,:) > 0);
 		greaterThanOneQ = sum(databary(i,:)) >= 1-1e-12;
-		if nonNegQ && gtonecheck
+		if nonNegQ && greaterThanOneQ
 			sphbaryOK = true;
 			%% interpolate using sph. bary coords
 			datainterp(i) = dot(databary(i,:),facetprops(i,:));
