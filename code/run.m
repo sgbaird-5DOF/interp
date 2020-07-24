@@ -65,12 +65,12 @@ dataopts = meshopts;
 
 %mesh parameters
 meshopts.res = 12.5;
-meshopts.nint = 1; % 1 == zero subdivisions, 2 == one subdivision, etc.
-meshopts.octsubdiv = 1;
+meshopts.nint = 2; % 1 == zero subdivisions, 2 == one subdivision, etc.
+meshopts.octsubdiv = 2;
 
 %data parameters
 dataopts.res = 10;
-dataopts.nint = 1;
+dataopts.nint = 2;
 dataopts.octsubdiv = 1;
 
 %psuedo mesh parameters
@@ -80,7 +80,7 @@ pseudoOpts.octsubdiv = 1;
 
 T = true;
 F = false;
-meshloadQ = T; %just makes it easier to switch back and forth between true and false
+meshloadQ = F; %just makes it easier to switch back and forth between true and false
 dataloadQ = T;
 pseudoloadQ = T;
 meshdataloadQ = T; %whether to check for and load intersection & barycentric data from previous run
@@ -155,8 +155,8 @@ Y = q2rod(disorientation(vertcat(data.five.q),'cubic'));
 psdata.pts = zeros(size(data.pts));
 psdata.five(ndatapts) = struct;
 psdata.wmin = zeros(size(data.pts,1),1);
-for i = 1:ndatapts
-%for i = []
+%for i = 1:ndatapts
+for i = []
 	%unpack point
 	pt = data.pts(i,:);
 	
@@ -208,7 +208,7 @@ nnID = [];
 ilist = [];
 nonintDists = [];
 for i = 1:ndatapts
-	datapt = psdata.pts(i,:);
+	datapt = data.pts(i,:);
 	if ~isempty(intfacetIDs{i})
 		%setup
 		intfacetID = intfacetIDs{i}(1); %take only the first intersecting facet? Average values? Use oSLERP instead?
