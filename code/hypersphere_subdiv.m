@@ -165,6 +165,7 @@ if tricollapseQ
 % 	disp('find nonunique ID sets')
 	[K_out, newpts] = tricollapse(lvltwoK,lvltwoPts);
 else
+	disp('uniquetol')
 	[~,ia] = uniquetol(round(lvltwoPts,12),'ByRows',true); %careful to not output the rounded values directly
 	newpts = lvltwoPts(ia,:);
 	K_out = [];
