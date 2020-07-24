@@ -46,19 +46,13 @@ uniqueK = K;
 %% find fixQs
 tic
 fixQ = cell(1,nsets);
-for_type = 'for';
+for_type = 'parfor';
 switch for_type
 	case 'for'
-		msg2 = ['looping through ' int2str(nsets) ' ireps'];
-		f = waitbar(0,msg2);
 		for i = 1:nsets
 			fixQ{i} = find(ismember(K,irepsets{i}));
 			K(fixQ{i}) = 0; %might make sorting faster for next repetition (but doesn't work with parallelization)
-			if mod(i,100) == 0
-				waitbar(i/nsets,f);
-			end
 		end
-		close(f)
 	case 'parfor'
 		%textwaitbar setup
 		D = parallel.pool.DataQueue;
@@ -130,4 +124,16 @@ for i = 1:nsets
 	icu = icuList(i);
 	uniqueK(fixQ{i}) = icu-nptstot; % replace degenerate locations with unique ID
 end	
+
+
+% 		msg2 = ['looping through ' int2str(nsets) ' ireps'];
+% 		f = waitbar(0,msg2);
+		for i = 1:nsets
+			fixQ{i} = find(ismember(K,irepsets{i}));
+			K(fixQ{i}) = 0; %might make sorting faster for next repetition (but doesn't work with parallelization)
+% 			if mod(i,100) == 0
+% 				waitbar(i/nsets,f);
+% 			end
+		end
+% 		close(f)
 %}
