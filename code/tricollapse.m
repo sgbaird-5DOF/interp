@@ -26,11 +26,13 @@ function [uniqueK, uniquePts] = tricollapse(K,pts)
 nptstot = length(pts);
 
 %get sets of degenerate & non-degenerate values
+disp('get repsets')
 irepsets = get_repsets(pts);
 
 nsets = length(irepsets);
 
 %take first point ID from each set from repsets
+disp('take first point from each repset')
 icuList = cellfun(@(irep) irep(1),irepsets); %unique ic values
 
 %make copy of K
@@ -39,7 +41,7 @@ uniqueK = K;
 %% find fixQs
 tic
 fixQ = cell(1,nsets);
-for_type = 'parfor';
+for_type = 'for';
 switch for_type
 	case 'for'
 		msg2 = ['looping through ' int2str(nsets) ' ireps'];
@@ -54,18 +56,18 @@ switch for_type
 		close(f)
 	case 'parfor'
 		%textwaitbar setup
-		D = parallel.pool.DataQueue;
-		afterEach(D, @nUpdateProgress);
-		N=nsets;
-		p=1;
-		reverseStr = '';
-		if nsets > 100
-			nreps = floor(nsets/100);
-		    nreps2 = floor(nsets/100);
-		else
-			nreps = 1;
-            nreps2 = 1;
-		end
+% 		D = parallel.pool.DataQueue;
+% 		afterEach(D, @nUpdateProgress);
+% 		N=nsets;
+% 		p=1;
+% 		reverseStr = '';
+% 		if nsets > 100
+% 			nreps = floor(nsets/100);
+% 		    nreps2 = floor(nsets/100);
+% 		else
+% 			nreps = 1;
+%          nreps2 = 1;
+% 		end
 		
 		parfor i = 1:nsets
 			fixQ{i} = find(ismember(K,irepsets{i}));
@@ -91,13 +93,13 @@ disp(' ')
 %% reformat pts
 uniquePts = pts(icuList,:);
 
-	function nUpdateProgress(~)
-		percentDone = 100*p/N;
-		msg = sprintf('Tricollapse: %3.1f ', percentDone); %Don't forget this semicolon
-		fprintf([reverseStr, msg]);
-		reverseStr = repmat(sprintf('\b'), 1, length(msg));
-		p = p + nreps;
-	end
+% 	function nUpdateProgress(~)
+% 		percentDone = 100*p/N;
+% 		msg = sprintf('Tricollapse: %3.1f ', percentDone); %Don't forget this semicolon
+% 		fprintf([reverseStr, msg]);
+% 		reverseStr = repmat(sprintf('\b'), 1, length(msg));
+% 		p = p + nreps;
+% 	end
 
 end %tricollapse
 
