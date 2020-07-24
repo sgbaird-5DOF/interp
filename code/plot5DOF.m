@@ -24,6 +24,8 @@ d_all = vertcat(five.d);
 
 Q1 = strcmp(lbl,'mesh') || (exist('ilist','var') == 0);
 Q2 = strcmp(lbl,'mesh');
+
+%misorientation
 if Q1
 	tmp = num2cell(d_all,1);
 	scatter3(tmp{:},10,(1:size(d_all,1)).','filled')
@@ -57,6 +59,7 @@ end
 nexttile
 hold on
 
+%boundary plane
 [x,y,z] = sphere(40);
 scl = 0.65;
 x = x*scl;
