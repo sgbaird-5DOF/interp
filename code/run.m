@@ -228,7 +228,8 @@ for i = 1:ndatapts
 		% 			datainterp(i) = mesh.props(k(i));
 	end
 end
-save(meshdata.fname)
+fpath = fullfile('data',meshdata.fname);
+save(fpath)
 
 disp(['# non-intersections: ' int2str(length(nnID)) '/' int2str(ndatapts)])
 
