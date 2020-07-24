@@ -48,7 +48,7 @@ tic
 fixQ = cell(1,nsets);
 
 for i = 1:nsets
-	fixQ{i} = zeros(size(K));
+	fixQ{i} = false(size(K));
 end
 
 for_type = 'parfor';
