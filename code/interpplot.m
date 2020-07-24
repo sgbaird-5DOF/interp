@@ -40,10 +40,10 @@ xmax = max([mesh.props(nnID);data.props],[],'all');
 xlims = [xmin,xmax];
 
 %parity plot
-scatter(data.props,datainterp,5,'k','markerfacealpha',1);
+scatter(data.props,datainterp,5,'k','markerfacealpha',0.5);
 hold on
 % axis tight
-scatter(data.props(ilist),mesh.props(nnID),5,'r','filled','markerfacealpha',1);
+scatter(data.props(ilist),mesh.props(nnID),5,'r','markerfacealpha',0.5);
 
 xlabel('BRK Energy @ datapoint')
 ylabel('interpolated BRK Energy')
