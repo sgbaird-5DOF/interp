@@ -130,7 +130,8 @@ disp('nearest neighbor search for all datapoints')
 % 		ptstemp = mesh.pts;
 % 	end
 [nnList,nndistList] = dsearchn(mesh.pts,data.pts);
-
+meshtemp = mesh.pts(nnList,:);
+nndistList = get_omega(meshtemp,data.pts);
 % 	disp('convert mesh to 5DOF FZ')
 %	meshfiveFZ = tofiveFZ(mesh.five,mesh.pts);
 

@@ -61,9 +61,8 @@ hold on
 ax2 = histogram(nonintDists);
 
 legend('intersecting','non-intersecting','Location','northoutside')
-xlabel('7D Euclidean NN distance')
+xlabel('multi-GB symmetrized \omega(mesh,data) (rad)')
 ylabel('counts')
-
 % 5DOF plots
 
 %convert to disorientation

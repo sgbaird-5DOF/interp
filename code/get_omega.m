@@ -6,14 +6,22 @@ function omega = get_omega(o1,o2)
 %
 % Description:
 % 
-% Inputs:
+% Inputs: o1, o2 form an octonion pair, each can be rows of octonions
 %
 % Outputs:
 %
 % Dependencies:
 %
 %--------------------------------------------------------------------------
-omega = 2*acos(abs( dot(o1(1:4),o2(1:4)) + dot(o1(5:8),o2(5:8)) )/2);
+qA = o1(:,1:4);
+qB = o1(:,5:8);
+qC = o2(:,1:4);
+qD = o2(:,5:8);
+
+dot1 = dot(qA,qC,2);
+dot2 = dot(qB,qD,2);
+
+omega = 2*acos(abs(dot1+dot2)/2);
 
 end
 %----------------------------END get_omega()-------------------------------
