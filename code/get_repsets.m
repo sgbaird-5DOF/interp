@@ -57,8 +57,7 @@ ic_rep = icount(irep);
 
 ic_unique = sort(unique(ic_rep),1);
 iculength = length(ic_unique);
-% icset = cell(1,iculength);
-repsets = icset;
+repsets = cell(1,iculength);
 
 %textwaitbar setup
 D = parallel.pool.DataQueue;
@@ -117,4 +116,6 @@ numerics within an irepset cell.
 
 Also includes indices of unique points as their own cell if includeUniqueQ
 == true
+
+% icset = cell(1,iculength);
 %}
