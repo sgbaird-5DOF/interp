@@ -85,6 +85,7 @@ else
        nreps2 = 0;
     end
     %convert subdivided points to 5DOF
+	 disp('GBoct2five ')
 	parfor i = 1:npts %parfor compatible
         if waitbarQ	
             if mod(i,nreps2) == 0
@@ -112,14 +113,9 @@ end
 
          function nUpdateProgress(~)
              percentDone = 100*p/N;
-             if ~slurmQ
-             msg = sprintf('Percent done: %3.1f ', percentDone); %Don't forget this semicolon
+             msg = sprintf('%3.1f ', percentDone); %Don't forget this semicolon
              fprintf([reverseStr, msg]);
              reverseStr = repmat(sprintf('\b'), 1, length(msg));
-             else
-                 msg = sprintf('%3.0f ', percentDone);
-                 fprintf([sprintf('\b') msg]);
-             end
              p = p + nreps;
          end
 

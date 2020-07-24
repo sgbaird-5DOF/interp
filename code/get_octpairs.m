@@ -124,6 +124,7 @@ reverseStr = '';
 nreps = floor(N/100);
 nreps2 = nreps;
 
+disp('get_octpairs ')
 parfor i = 1:npts %parfor compatible
 	%unpack other octonion in pair
 	%(o2 and o3 form a pair, each is compared to o1)
@@ -137,7 +138,7 @@ end
 
 function nUpdateProgress(~)
 	percentDone = 100*p/N;
-	msg = sprintf('get_octpairs percent done: %3.1f ', percentDone); %Don't forget this semicolon
+	msg = sprintf('%3.1f ', percentDone); %Don't forget this semicolon
 	fprintf([reverseStr, msg]);
 	reverseStr = repmat(sprintf('\b'), 1, length(msg));
 	p = p + nreps;
