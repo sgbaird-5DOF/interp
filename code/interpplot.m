@@ -22,7 +22,7 @@ function interpplot(fname)
 addpathdir({fname})
 vars = {'mesh','data','datainterp','nnID','psdata','ilist',...
 	'meshopts','dataopts','nndistList','nonintDists'};
-load(fname,vars)
+load(fname,vars{:})
 
 %figure setup
 fig = figure;
