@@ -74,6 +74,14 @@ if waitbarQ
 	nreps2 = nreps;
 end
 
+	function nUpdateProgress(~)
+		percentDone = 100*p/N;
+		msg = sprintf('%3.0f', percentDone); %Don't forget this semicolon
+		fprintf([reverseStr, msg]);
+		reverseStr = repmat(sprintf('\b'), 1, length(msg));
+		p = p + nreps;
+	end
+
 K2temp = num2cell(K,2);
 ptstemp = cellfun(@(K2) pts(K2,:),K2temp,'UniformOutput',false); 
 
@@ -122,14 +130,6 @@ parfor i = 1:nfacets %parfor compatible, uncomment "send" lines if using parfor 
 		end
 	end
 end
-
-	function nUpdateProgress(~)
-		percentDone = 100*p/N;
-		msg = sprintf('hypersphere_subdiv percent done: %3.1f ', percentDone); %Don't forget this semicolon
-		fprintf([reverseStr, msg]);
-		reverseStr = repmat(sprintf('\b'), 1, length(msg));
-		p = p + nreps;
-	end
 
 disp(' ')
 toc
