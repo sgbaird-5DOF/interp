@@ -84,9 +84,9 @@ mymembercheck = @(a,b) ismembertol(r(a),r(b),tol,'ByRows',true);
 if d >= 7 && size(pts,1) > 400
 	warning(['d = ' int2str(d) ' and npts = ' ...
 		int2str(size(pts,1)) '. Initial convex hull input may be too big.'])
-	m = input('Continue? y/n:','s');
 	slurmQ = true;
 	if ~slurmQ
+		m = input('Continue? y/n:','s');
 		if ~strcmp(m,'y') && ~strcmp(m,'Y')
 			return
 		end
