@@ -242,9 +242,9 @@ for i = 1:ndatapts
 				baryOK = nonNegQ && greaterThanOneQ;
 				
 			case 'planar'
-				[~,databaryTemp] = intersect_facet(facet,1:7,datapt,1e-12,false);
+				[~,databaryTemp] = intersect_facet(facet,1:7,datapt,1e-12,true);
 				if ~isempty(databaryTemp{1})
-					databary(i,:) = databaryTemp{i}(1,:);
+					databary(i,:) = databaryTemp{1};
 					nonNegQ = all(databary(i,:) >= -1e-12);
 					equalToOneQ = abs(sum(databary(i,:)) - 1) < 1e-6
 					baryOK = nonNegQ && equalToOneQ;
