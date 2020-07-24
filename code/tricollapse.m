@@ -46,6 +46,11 @@ uniqueK = K;
 %% find fixQs
 tic
 fixQ = cell(1,nsets);
+
+for i = 1:nsets
+	fixQ{i} = zeros(size(K));
+end
+
 for_type = 'parfor';
 switch for_type
 	case 'for'
@@ -68,7 +73,7 @@ switch for_type
          nreps2 = 1;
 		end
 		
-		disp('loop through sets')
+		disp(['tricollapse ' int2str(nsets) ' sets for ' int2str(numel(K)) ' triangulation elements '])
 		parfor i = 1:nsets
 			fixQ{i} = ismember(K,irepsets{i});
 			
@@ -76,12 +81,11 @@ switch for_type
 				send(D,i);
 			end
 		end
-		
 		disp(' ')
 end
 
 %% reformat uniqueK
-for i = 1:nsets
+for i = 1:nsets % probably not parfor compatible in current implementation
 	uniqueK(fixQ{i}) = i+nptstot; % replace degenerate locations with a unique ID
 end
 
@@ -95,7 +99,7 @@ uniquePts = pts(icuList,:);
 
 	function nUpdateProgress(~)
 		percentDone = 100*p/N;
-		msg = sprintf('Tricollapse: %3.1f ', percentDone); %Don't forget this semicolon
+		msg = sprintf('%3.0f', percentDone); %Don't forget this semicolon
 		fprintf([reverseStr, msg]);
 		reverseStr = repmat(sprintf('\b'), 1, length(msg));
 		p = p + nreps;
