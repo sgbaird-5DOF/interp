@@ -229,7 +229,7 @@ for i = 1:ndatapts
 			%% interpolate using sph. bary coords
 			datainterp(i) = dot(databary(i,:),facetprops(i,:));
 		else
-			disp([num2str(databary) ' ... sum(databary) == ' num2str(sum(databary(i,:)))]);
+			disp([num2str(databary(i,:)) ' ... sum(databary) == ' num2str(sum(databary(i,:)))]);
 		end
 	end
 	if ~sphbaryOK
