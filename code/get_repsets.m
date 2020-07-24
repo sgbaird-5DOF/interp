@@ -4,15 +4,15 @@ function repsets = get_repsets(pts)
 %
 % Date: 2020-06-30
 %
-% Description: Find sets of non-unique (i.e. degenerate) points 
+% Description: Find sets of non-unique (i.e. degenerate) points
 %
 % Inputs:
 %		pts				===	set of points (rows) that may or may not contain
 %									duplicate values
-% 
+%
 % Outputs:
 %		irepset			===	cell array that contains sets of indices
-%									of a unique point in pts. 
+%									of a unique point in pts.
 %
 % % Example:
 % pts = [...
@@ -82,7 +82,7 @@ end
 		p = p + nreps;
 	end
 
-parfor i = 1:iculength	
+parfor i = 1:iculength
 	%take a single microstructure that corresponds to a non-unique
 	%microstructure set
 	ic_val = ic_unique(i);
@@ -97,6 +97,8 @@ parfor i = 1:iculength
 	if mod(i,nreps2) == 0
 		send(D,i);
 	end
+end
+
 end
 
 %-----------------------------CODE GRAVEYARD-------------------------------
