@@ -219,12 +219,14 @@ for i = 1:ndatapts
 		prop = data.props(i,:);
 		
 		%% spherical barycentric coordinates
-		databary(i,:) = sphbary(datapt,facet); %need to save for inference input
-		% 		[~,databary(i,:)] = intersect_facet(facet,1:7,datapt,1e-12,false);
+% 		databary(i,:) = sphbary(datapt,facet); %need to save for inference input
+		[~,databary(i,:)] = intersect_facet(facet,1:7,datapt,1e-12,false);
 		
-		nonNegQ = all(databary(i,:) > 0);
-		greaterThanOneQ = sum(databary(i,:)) >= 1-1e-12;
-		if nonNegQ && greaterThanOneQ
+		nonNegQ = all(databary(i,:) >= 0);
+% 		greaterThanOneQ = sum(databary(i,:)) >= 1-1e-12;
+		equalToOneQ = abs(sum(databary(i,:)) - 1) < 1e-6
+% 		if nonNegQ && greaterThanOneQ
+		if nonNegQ && equalToOneQ
 			sphbaryOK = true;
 			%% interpolate using sph. bary coords
 			datainterp(i) = dot(databary(i,:),facetprops(i,:));
