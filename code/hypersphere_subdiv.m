@@ -162,7 +162,7 @@ lvltwoPts = vertcat(lvltwo.pts);
 
 %collapse to single convex hull
 if tricollapseQ
-% 	disp('find nonunique ID sets')
+ 	disp('tricollapse')
 	[K_out, newpts] = tricollapse(lvltwoK,lvltwoPts);
 else
 	disp('uniquetol')
