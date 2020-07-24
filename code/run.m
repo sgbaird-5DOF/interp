@@ -189,11 +189,24 @@ end
 %project mesh and data together
 tol = 1e-3;
 [a,usv] = proj_down([mesh.pts;data.pts],tol);
-datapts = normr(proj_down(data.pts,tol,usv));
-meshpts = normr(proj_down(mesh.pts,tol,usv));
+
+datapts = data.pts;
+meshpts = mesh.pts;
+
+projdownQ = T;
+if projdownQ
+	datapts = proj_down(datapts,tol,usv);
+	meshpts = proj_down(meshpts,tol,usv);
+end
+
+normQ = T;
+if normQ
+	datapts = normr(datapts);
+	meshpts = normr(meshpts);
+end
 
 %compute intersecting facet IDs (might be zero, might have more than one)
-tol2 = 1e-4;
+tol2 = 1e-6;
 intfacetIDs = intersect_facet(meshpts,mesh.sphK,datapts,tol2);
 
 toc; disp(' ')
@@ -219,7 +232,7 @@ for i = 1:ndatapts
 		facetprops(i,:) = mesh.props(vtxIDs).'; %properties of vertices of facet
 		prop = data.props(i,:);
 		
-		baryType = 'spherical'; %'spherical', 'planar'
+		baryType = 'planar'; %'spherical', 'planar'
 		%% barycentric coordinates
 		switch baryType
 			case 'spherical'
@@ -231,7 +244,7 @@ for i = 1:ndatapts
 			case 'planar'
 				[~,databaryTemp{i}] = intersect_facet(facet,1:7,datapt,1e-12,false);
 				databary(i,:) = databaryTemp{i}(1,:);
-				nonNegQ = all(databary(i,:) >= 0);
+				nonNegQ = all(databary(i,:) >= -1e-12);
 				equalToOneQ = abs(sum(databary(i,:)) - 1) < 1e-6
 				baryOK = nonNegQ && equalToOneQ;
 		end
