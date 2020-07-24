@@ -130,8 +130,11 @@ disp('nearest neighbor search for all datapoints')
 % 		ptstemp = mesh.pts;
 % 	end
 [nnList,nndistList] = dsearchn(mesh.pts,data.pts);
-meshtemp = mesh.pts(nnList,:);
-nndistList = get_omega(meshtemp,data.pts);
+
+%remember to have each quaternion normalized to 1 before using get_omega
+meshtemp = sqrt2norm(mesh.pts(nnList,:),'oct');
+datatemp = sqrt2norm(data.pts,'oct');
+nndistList = get_omega(meshtemp,datatemp);
 % 	disp('convert mesh to 5DOF FZ')
 %	meshfiveFZ = tofiveFZ(mesh.five,mesh.pts);
 
