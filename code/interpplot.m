@@ -38,6 +38,7 @@ xmax = max([mesh.props(nnID);data.props],[],'all');
 
 xlims = [xmin,xmax];
 
+%parity plot
 scatter(data.props,datainterp,5,'k','markerfacealpha',1);
 hold on
 % axis tight
@@ -63,6 +64,24 @@ xlabel('7D Euclidean NN distance')
 ylabel('counts')
 
 % 5DOF plots
+
+%convert to disorientation
+meshtempq = disorientation(vertcat(mesh.five.q),'cubic');
+datatempq = disorientation(vertcat(data.five.q),'cubic');
+
+meshtempd = q2rod(meshtempq);
+datatempd = q2rod(datatempq);
+
+t = num2cell(meshtempq,2);
+[mesh.five.q] = t{:};
+t = num2cell(datatempq,2);
+[data.five.q] = t{:};
+
+t = num2cell(meshtempd,2);
+[mesh.five.d] = t{:};
+t = num2cell(datatempd,2);
+[data.five.d] = t{:};
+
 plot5DOF(mesh.five,'mesh',meshopts)
 plot5DOF(data.five,'data',dataopts,ilist)
 
@@ -71,5 +90,6 @@ sgtitle({...
 	['data == ' dataMethod '_octsubdiv' int2str(dataopts.octsubdiv)]}, ...
 	'Interpreter','none','FontSize',10);
 
-print(meshdata.fname(1:end-4),'-dpng')
-savefig(meshdata.fname(1:end-4))
+fpath = fullfile('data',meshdata.fname(1:end-4));
+print(fpath,'-dpng')
+savefig(fpath)
