@@ -58,7 +58,7 @@ if computeQ
 	if contains(sampleMethod,'pseudo')
 		Ktr = [];
 	end
-	fpath = fullfile('data','fname');
+	fpath = fullfile('data',fname);
     save(fpath,'pts','props','sphK','five','usv','Ktr')
 end
 
