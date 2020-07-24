@@ -107,7 +107,7 @@ toc; disp(' ')
 %% find intersecting facet of datapoints
 disp('find intersecting facet for each datapoint')
 
-r = 0.01; %Euclidean distance
+r = 0.1; %Euclidean distance
 meshdata.fname = ['mesh_' mesh.fname(1:end-4) '_data_' data.fname(1:end-4) '_100r--' int2str(100*r) '.mat'];
 
 %find symmetrically equivalent octonions inside convex hull
@@ -155,15 +155,16 @@ Y = q2rod(disorientation(vertcat(data.five.q),'cubic'));
 psdata.pts = zeros(size(data.pts));
 psdata.five(ndatapts) = struct;
 psdata.wmin = zeros(size(data.pts,1),1);
-%for i = 1:ndatapts
-for i = []
+for i = 1:ndatapts
+%for i = []
 	%unpack point
 	pt = data.pts(i,:);
 	
 	idx = idxlist{i};
 	disp([int2str(length(idx)) ' octonion inputs to GBdist'])
-	olist = pseudo.pts(idx,:);
-	%  		olist = pseudo.pts;
+	%olist = pseudo.pts(idx,:);
+	olist = mesh.pts(idx,:);
+    %  		olist = pseudo.pts;
 	%olist = mesh.pts;
 	
 	ptrep = repmat(pt,size(olist,1),1); % matrix of repeated rows (pt)
