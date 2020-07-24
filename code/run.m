@@ -207,34 +207,43 @@ datainterp = NaN(size(datapts,1),1);
 nnID = [];
 ilist = [];
 nonintDists = [];
+databaryTemp = cell(1,size(datapts,1));
 for i = 1:ndatapts
-	datapt = data.pts(i,:);
-	sphbaryOK = false;
+	datapt = datapts(i,:); %use down-projected data (and mesh)
+	baryOK = false; %initialize
 	if ~isempty(intfacetIDs{i})
 		%setup
 		intfacetID = intfacetIDs{i}(1); %take only the first intersecting facet? Average values? Use oSLERP instead?
 		vtxIDs = mesh.sphK(intfacetID,:);
-		facet = mesh.pts(vtxIDs,:); %vertices of facet
+		facet = meshpts(vtxIDs,:); %vertices of facet
 		facetprops(i,:) = mesh.props(vtxIDs).'; %properties of vertices of facet
 		prop = data.props(i,:);
 		
-		%% spherical barycentric coordinates
-% 		databary(i,:) = sphbary(datapt,facet); %need to save for inference input
-		[~,databary(i,:)] = intersect_facet(facet,1:7,datapt,1e-12,false);
+		baryType = 'spherical'; %'spherical', 'planar'
+		%% barycentric coordinates
+		switch baryType
+			case 'spherical'
+				databary(i,:) = sphbary(datapt,facet); %need to save for inference input
+				nonNegQ = all(databary(i,:) >= 0);
+				greaterThanOneQ = sum(databary(i,:)) >= 1-1e-12;
+				baryOK = nonNegQ && greaterThanOneQ;
+				
+			case 'planar'
+				[~,databaryTemp{i}] = intersect_facet(facet,1:7,datapt,1e-12,false);
+				databary(i,:) = databaryTemp{i}(1,:);
+				nonNegQ = all(databary(i,:) >= 0);
+				equalToOneQ = abs(sum(databary(i,:)) - 1) < 1e-6
+				baryOK = nonNegQ && equalToOneQ;
+		end
 		
-		nonNegQ = all(databary(i,:) >= 0);
-% 		greaterThanOneQ = sum(databary(i,:)) >= 1-1e-12;
-		equalToOneQ = abs(sum(databary(i,:)) - 1) < 1e-6
-% 		if nonNegQ && greaterThanOneQ
-		if nonNegQ && equalToOneQ
-			sphbaryOK = true;
-			%% interpolate using sph. bary coords
+		if baryOK
+			%% interpolate using bary coords
 			datainterp(i) = dot(databary(i,:),facetprops(i,:));
 		else
-			disp([num2str(databary(i,:)) ' ... sum(databary) == ' num2str(sum(databary(i,:)))]);
+			disp([num2str(databary(i,:),2) ' ... sum == ' num2str(sum(databary(i,:)))]);
 		end
 	end
-	if ~sphbaryOK
+	if ~baryOK
 		disp(['i == ' int2str(i) ...
 			'; no valid intersection, taking NN with dist = ' num2str(nndistList(i))])
 		nonintDists = [nonintDists;nndistList(i)];
