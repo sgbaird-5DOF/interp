@@ -208,7 +208,7 @@ nnID = [];
 ilist = [];
 nonintDists = [];
 for i = 1:ndatapts
-	datapt = data.pts(i,:);
+	datapt = psdata.pts(i,:);
 	if ~isempty(intfacetIDs{i})
 		%setup
 		intfacetID = intfacetIDs{i}(1); %take only the first intersecting facet? Average values? Use oSLERP instead?
