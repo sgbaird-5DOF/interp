@@ -86,10 +86,11 @@ afterEach(D, @nUpdateProgress);
 N=ndatapts;
 p=1;
 reverseStr = '';
-nreps = floor(N/100);
+nreps = floor(N/20);
 nreps2 = nreps;
 
 %% loop through datapts
+disp('intersect_facet ')
 parfor i  = 1:ndatapts % for parallelized, use parfor
 	%% first NN projection
 	data = datalist(i,:);
@@ -169,7 +170,7 @@ end
 
 	function nUpdateProgress(~)
 		percentDone = 100*p/N;
-		msg = sprintf('intersect_facet percent done: %3.1f ', percentDone); %Don't forget this semicolon
+		msg = sprintf('%3.0f', percentDone); %Don't forget this semicolon
 		fprintf([reverseStr, msg]);
 		reverseStr = repmat(sprintf('\b'), 1, length(msg));
 		p = p + nreps;

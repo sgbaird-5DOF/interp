@@ -59,14 +59,15 @@ switch for_type
 		N=nsets;
 		p=1;
 		reverseStr = '';
-		if nsets > 100
-			nreps = floor(nsets/100);
-		    nreps2 = floor(nsets/100);
+		nintervals = 20;
+		if nsets > nintervals
+			nreps = floor(nsets/nintervals);
+		    nreps2 = floor(nsets/nintervals);
 		else
 			nreps = 1;
          nreps2 = 1;
 		end
-		
+		disp(' ')
 		disp(['tricollapse ' int2str(nsets) ' sets for ' int2str(numel(K)) ' triangulation elements '])
 		parfor i = 1:nsets
 			fixQ{i} = find(ismember(K,irepsets{i}));

@@ -121,7 +121,7 @@ afterEach(D, @nUpdateProgress);
 N=npts;
 p=1;
 reverseStr = '';
-nreps = floor(N/100);
+nreps = floor(N/20);
 nreps2 = nreps;
 
 disp('get_octpairs ')
