@@ -1,5 +1,9 @@
 function plot5DOF(five,lbl,varargin)
 
+if nargin == 3
+	opts = varargin{1};
+end
+
 if nargin == 4
 	opts = varargin{1};
 	ilist = varargin{2};

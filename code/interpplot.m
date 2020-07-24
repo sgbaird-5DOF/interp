@@ -61,7 +61,7 @@ hold on
 ax2 = histogram(nonintDists);
 
 legend('intersecting','non-intersecting','Location','northoutside')
-xlabel('multi-GB symmetrized \omega(mesh,data) (rad)')
+xlabel('multi-GB symmetrized \omega (rad)')
 ylabel('counts')
 % 5DOF plots
 
