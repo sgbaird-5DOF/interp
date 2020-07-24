@@ -65,7 +65,7 @@ dataopts = meshopts;
 
 %mesh parameters
 meshopts.res = 12.5;
-meshopts.nint = 2; % 1 == zero subdivisions, 2 == one subdivision, etc.
+meshopts.nint = 1; % 1 == zero subdivisions, 2 == one subdivision, etc.
 meshopts.octsubdiv = 2;
 
 %data parameters
