@@ -31,7 +31,6 @@ irepsets = get_repsets(pts);
 nsets = length(irepsets);
 
 %take first point ID from each repset
-disp('take first point ID of each repset')
 icuList = zeros(1,nsets);
 parfor i = 1:nsets
 	icuList(i) = irepsets{i}(1);
@@ -39,17 +38,12 @@ end
 
 %icuList = cellfun(@(irep) irep(1),irepsets); %unique ic values
 
-
 %make copy of K
 uniqueK = K;
 
 %% find fixQs
 tic
 fixQ = cell(1,nsets);
-
-for i = 1:nsets
-	fixQ{i} = false(size(K));
-end
 
 for_type = 'parfor';
 switch for_type
@@ -75,7 +69,7 @@ switch for_type
 		
 		disp(['tricollapse ' int2str(nsets) ' sets for ' int2str(numel(K)) ' triangulation elements '])
 		parfor i = 1:nsets
-			fixQ{i} = ismember(K,irepsets{i});
+			fixQ{i} = find(ismember(K,irepsets{i}));
 			
 			if mod(i,nreps2) == 0
 				send(D,i);
