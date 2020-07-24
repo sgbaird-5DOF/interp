@@ -70,7 +70,7 @@ switch for_type
 		
 		disp('loop through sets')
 		parfor i = 1:nsets
-			fixQ{i} = find(ismember(K,irepsets{i}));
+			fixQ{i} = ismember(K,irepsets{i});
 			
 			if mod(i,nreps2) == 0
 				send(D,i);
