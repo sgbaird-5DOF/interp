@@ -189,8 +189,8 @@ end
 %project mesh and data together
 tol = 1e-3;
 [a,usv] = proj_down([mesh.pts;data.pts],tol);
-datapts = proj_down(data.pts,1e-3,usv);
-meshpts = proj_down(mesh.pts,1e-3,usv);
+datapts = normr(proj_down(data.pts,tol,usv));
+meshpts = normr(proj_down(mesh.pts,tol,usv));
 
 %compute intersecting facet IDs (might be zero, might have more than one)
 tol2 = 1e-4;
