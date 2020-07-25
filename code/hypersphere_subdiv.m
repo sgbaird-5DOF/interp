@@ -66,8 +66,9 @@ if waitbarQ
 	N=nfacets;
 	p=1;
 	reverseStr = '';
-	if N > 100
-		nreps = floor(N/100);
+    nintervals = 20;
+	if N > nintervals
+		nreps = floor(N/nintervals);
 	else
 		nreps = 1;
 	end

@@ -93,7 +93,7 @@ parfor i = 1:iculength
 	icset = ic_rep == ic_val;
 	
 	% correlate that index back with the master list of microstructures
-	repsets{i} = irep(icset); %#ok<PFBNS>
+	repsets{i} = irep(icset); %#ok<PFBNS> %I think this will be sorted
 	
 	if mod(i,nreps2) == 0
 		send(D,i);
