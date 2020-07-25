@@ -21,8 +21,15 @@ res = tan(deg2rad(resDegrees)/2);
 my_dir = pwd;
 
 % change to tetgen directory
-file = dir(fullfile('**','tetgen.exe'));
-tetgen_dir = fullfile(file(1).folder);
+loadMethod = 'auto'; %'auto', 'manual'
+switch loadMethod
+	case 'auto'
+		file = dir(fullfile('**','tetgen.exe'));
+		tetgen_dir = fullfile(file(1).folder);
+
+	case 'manual'
+		tetgen_dir = fullfile('C:','Users','sterg','Downloads','tetgen1.5.1');
+end
 %tetgen_dir = 'tetgen1.5.1';
 cd(tetgen_dir);
 
@@ -149,7 +156,19 @@ fclose(fid);
 % m (use the mesh sizing function in FZ.mtr)
 % q1.1 (quality mesh with radius-edge ratio 1.1)
 
-[status,result] = system('./tetgen -Vpimq1.1 FZ.poly');
+if ispc()
+	excmd = fullfile(tetgen_dir,'tetgen.exe');
+% 	excmd = 'tetgen';
+else
+	excmd = ['./' fullfile(tetgen_dir,'tetgen')];
+end
+
+[status,result] = system([excmd ' -Vpimq1.1 FZ.poly']);
+if status ~= 0
+	cd(my_dir)
+	error(['status: ' num2str(status) ' ... result: ' result])
+end
+
 
 %% Read in the surface mesh nodes
 
