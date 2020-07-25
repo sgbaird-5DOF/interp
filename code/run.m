@@ -226,6 +226,9 @@ nonintDists = [];
 % databaryTemp = cell(1,size(datapts,1));
 for i = 1:ndatapts
 	datapt = datapts(i,:); %use down-projected data (and mesh)
+	if any(isnan(datapt))
+		warning('NaN datapoint values')
+	end
 	baryOK = false; %initialize
 	if ~isempty(intfacetIDs{i})
 		%setup
@@ -235,14 +238,15 @@ for i = 1:ndatapts
 		facetprops(i,:) = mesh.props(vtxIDs).'; %properties of vertices of facet
 		prop = data.props(i,:);
 		
-		baryType = 'planar'; %'spherical', 'planar'
+		baryType = 'spherical'; %'spherical', 'planar'
 		%% barycentric coordinates
 		switch baryType
 			case 'spherical'
 				databary(i,:) = sphbary(datapt,facet); %need to save for inference input
 				nonNegQ = all(databary(i,:) >= 0);
 				greaterThanOneQ = sum(databary(i,:)) >= 1-1e-12;
-				baryOK = nonNegQ && greaterThanOneQ;
+				numcheck = all(isscalar(abs(databary(i,:))));
+				baryOK = nonNegQ && greaterThanOneQ && numcheck;
 				
 			case 'planar'
 				[~,databaryTemp] = intersect_facet(facet,1:7,datapt,1e-12,true);
@@ -250,7 +254,8 @@ for i = 1:ndatapts
 					databary(i,:) = databaryTemp{1};
 					nonNegQ = all(databary(i,:) >= -1e-12);
 					equalToOneQ = abs(sum(databary(i,:)) - 1) < 1e-6;
-					baryOK = nonNegQ && equalToOneQ;
+					numcheck = all(isscalar(abs(databary(i,:))));
+					baryOK = nonNegQ && equalToOneQ && numcheck;
 				end
 		end
 		
