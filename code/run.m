@@ -69,7 +69,7 @@ meshopts.nint = 2; % 1 == zero subdivisions, 2 == one subdivision, etc.
 meshopts.octsubdiv = 1;
 
 %data parameters
-dataopts.res = 2;
+dataopts.res = 0.1;
 dataopts.nint = 1;
 dataopts.octsubdiv = 1;
 
@@ -81,7 +81,7 @@ pseudoOpts.octsubdiv = 1;
 T = true;
 F = false;
 meshloadQ = T; %just makes it easier to switch back and forth between true and false
-dataloadQ = T;
+dataloadQ = F;
 pseudoloadQ = T;
 meshdataloadQ = T; %whether to check for and load intersection & barycentric data from previous run
 
