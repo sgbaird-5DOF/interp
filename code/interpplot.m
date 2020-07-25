@@ -94,7 +94,7 @@ plot5DOF(mesh.five,'mesh',meshopts)
 plot5DOF(data.five,'data',dataopts,ilist)
 
 nptsmesh = size(mesh.pts,1);
-nptsdata = size(mesh.data,1);
+nptsdata = size(data.pts,1);
 
 nexttile(5)
 legend('intersecting','non-intersecting','Location','northoutside')
