@@ -69,8 +69,8 @@ meshopts.nint = 1; % 1 == zero subdivisions, 2 == one subdivision, etc.
 meshopts.octsubdiv = 2;
 
 %data parameters
-dataopts.res = 10;
-dataopts.nint = 2;
+dataopts.res = 5;
+dataopts.nint = 3;
 dataopts.octsubdiv = 1;
 
 %psuedo mesh parameters
@@ -107,9 +107,12 @@ toc; disp(' ')
 %% find intersecting facet of datapoints
 disp('find intersecting facet for each datapoint')
 
-r = 0.1; %Euclidean distance
-meshdata.fname = ['mesh_' mesh.fname(1:end-4) '_data_' data.fname(1:end-4) '_100r--' int2str(100*r) '.mat'];
-
+% r = 0.1; %Euclidean distance
+if exist('r','var') ~= 0
+	meshdata.fname = ['mesh_' mesh.fname(1:end-4) '_data_' data.fname(1:end-4) '_100r--' int2str(100*r) '.mat'];
+else
+	meshdata.fname = ['mesh_' mesh.fname(1:end-4) '_data_' data.fname];
+end
 %find symmetrically equivalent octonions inside convex hull
 % 	xyz = mesh.Ktr.main.pts;
 % 	tess = mesh.Ktr.main.K;
