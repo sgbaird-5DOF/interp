@@ -65,12 +65,12 @@ dataopts = meshopts;
 
 %mesh parameters
 meshopts.res = 12.5;
-meshopts.nint = 1; % 1 == zero subdivisions, 2 == one subdivision, etc.
-meshopts.octsubdiv = 2;
+meshopts.nint = 2; % 1 == zero subdivisions, 2 == one subdivision, etc.
+meshopts.octsubdiv = 1;
 
 %data parameters
-dataopts.res = 5;
-dataopts.nint = 3;
+dataopts.res = 2.5;
+dataopts.nint = 1;
 dataopts.octsubdiv = 1;
 
 %psuedo mesh parameters
@@ -80,7 +80,7 @@ pseudoOpts.octsubdiv = 1;
 
 T = true;
 F = false;
-meshloadQ = F; %just makes it easier to switch back and forth between true and false
+meshloadQ = T; %just makes it easier to switch back and forth between true and false
 dataloadQ = T;
 pseudoloadQ = T;
 meshdataloadQ = T; %whether to check for and load intersection & barycentric data from previous run
@@ -150,7 +150,7 @@ d_all = q2rod(disorientation(vertcat(pseudo.five.q),'cubic'));
 Y = q2rod(disorientation(vertcat(data.five.q),'cubic'));
 
 %check for points within specified distance
-[idxlist,D] = rangesearch(d_all,Y,r);
+%[idxlist,D] = rangesearch(d_all,Y,r);
 %[idxlist,D] = knnsearch(d_all,Y,'K',1000);
 %idxlist = num2cell(idxlist,2);
 
