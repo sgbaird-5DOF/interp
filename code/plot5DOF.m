@@ -32,7 +32,7 @@ Q2 = strcmp(lbl,'mesh');
 %misorientation
 if Q1
 	tmp = num2cell(d_all,1);
-	scatter3(tmp{:},10,(1:size(d_all,1)).','filled')
+	scatter3(tmp{:},5,(1:size(d_all,1)).','filled','markerfacealpha',0.01)
 	
 	zero = num2cell(zeros(size(d_all,1),3),1);
 	tmp = num2cell(d_all,1);
@@ -47,9 +47,9 @@ if Q1
 else
 	intIDs = setdiff(1:size(d_all,1),ilist);
 	tmp = num2cell(d_all(intIDs,:),1);
-	scatter3(tmp{:},5,'k','filled','markerfacealpha',0.5)
+	scatter3(tmp{:},5,'k','filled','markerfacealpha',0.2)
 	tmp = num2cell(d_all(ilist,:),1);
-	scatter3(tmp{:},5,'r','filled','markerfacealpha',0.5)
+	scatter3(tmp{:},5,'r','filled','markerfacealpha',0.2)
 end
 
 % legend('intersecting','non-intersecting')
@@ -64,13 +64,13 @@ nexttile
 hold on
 
 %boundary plane
-[x,y,z] = sphere(40);
+[x,y,z] = sphere(100);
 scl = 0.65;
 x = x*scl;
 y = y*scl;
 z = z*scl;
 
-surf(x,y,z,'EdgeColor','none','FaceColor','cyan','FaceAlpha',0.7)
+surf(x,y,z,'EdgeColor','none','FaceColor','cyan','FaceAlpha',0.4)
 
 ax = gca;
 ax.View = [135 15];
@@ -89,7 +89,7 @@ nAfull = vertcat(five.nA);
 
 if Q1
 	tmp = num2cell(nAfull,1);
-	scatter3(tmp{:},10,(1:size(nAfull,1)).','filled')
+	scatter3(tmp{:},10,(1:size(nAfull,1)).','filled','markerfacealpha',0.01)
 	if strcmp(lbl,'OSLERP')
 		plot3(tmp{:})
 	end
@@ -97,13 +97,13 @@ if Q1
 		KnA = sphconvhulln(nAfull);
 		disp(' ')
 		tmp = num2cell(nAfull,1);
-		trisurf(KnA,tmp{:},'FaceColor','none')
+% 		trisurf(KnA,tmp{:},'FaceColor','none')
 	end
 else
 	tmp = num2cell(nAfull(intIDs,:),1);
-	scatter3(tmp{:},5,'k','filled','markerfacealpha',0.5)
+	scatter3(tmp{:},5,'k','filled','markerfacealpha',0.2)
 	tmp = num2cell(nAfull(ilist,:),1);
-	scatter3(tmp{:},5,'r','filled','markerfacealpha',0.5)
+	scatter3(tmp{:},5,'r','filled','markerfacealpha',0.2)
 end
 
 scl = 0.75;
