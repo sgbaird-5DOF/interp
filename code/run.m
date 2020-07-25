@@ -69,7 +69,7 @@ meshopts.nint = 2; % 1 == zero subdivisions, 2 == one subdivision, etc.
 meshopts.octsubdiv = 1;
 
 %data parameters
-dataopts.res = 2.5;
+dataopts.res = 2;
 dataopts.nint = 1;
 dataopts.octsubdiv = 1;
 
