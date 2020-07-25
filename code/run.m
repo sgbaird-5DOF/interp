@@ -245,7 +245,7 @@ for i = 1:ndatapts
 				databary(i,:) = sphbary(datapt,facet); %need to save for inference input
 				nonNegQ = all(databary(i,:) >= 0);
 				greaterThanOneQ = sum(databary(i,:)) >= 1-1e-12;
-				numcheck = all(isscalar(abs(databary(i,:))));
+				numcheck = all(~isnan(databary(i,:)) & ~isinf(databary(i,:)));
 				baryOK = nonNegQ && greaterThanOneQ && numcheck;
 				
 			case 'planar'
@@ -254,7 +254,7 @@ for i = 1:ndatapts
 					databary(i,:) = databaryTemp{1};
 					nonNegQ = all(databary(i,:) >= -1e-12);
 					equalToOneQ = abs(sum(databary(i,:)) - 1) < 1e-6;
-					numcheck = all(isscalar(abs(databary(i,:))));
+					numcheck = all(~isnan(databary(i,:)) & ~isinf(databary(i,:)));
 					baryOK = nonNegQ && equalToOneQ && numcheck;
 				end
 		end
