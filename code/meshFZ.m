@@ -21,7 +21,7 @@ res = tan(deg2rad(resDegrees)/2);
 my_dir = pwd;
 
 % change to tetgen directory
-loadMethod = 'auto'; %'auto', 'manual'
+loadMethod = 'manual'; %'auto', 'manual'
 switch loadMethod
 	case 'auto'
 		file = dir(fullfile('**','tetgen.exe'));

@@ -49,7 +49,7 @@ rng(seed);
 %mesh and data types
 
 addpathdir({'misFZfeatures.mat','PGnames.mat','nlt.m','q2rod.m',...
-	'GBfive2oct.m','qu2ax.m'})
+	'GBfive2oct.m','qu2ax.m','readNODE.m'})
 
 %'hypersphereGrid', 'Rohrer2009', 'Kim2011', '5DOF',
 %'Olmsted2004','5DOF_vtx','5DOF_misFZfeatures',

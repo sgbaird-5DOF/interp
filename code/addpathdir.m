@@ -16,6 +16,8 @@ for i = 1:n
 	file = dir(fpath);
 	if ~isempty(file)
 		addpath(file.folder);
+	else
+		disp(['DNE: ' file])
 	end
 end
 end
