@@ -46,13 +46,18 @@ tic
 fixQ = cell(1,nsets);
 
 for_type = 'parfor';
+
 switch for_type
 	case 'for'
 		for i = 1:nsets
 			fixQ{i} = ismember(K,irepsets{i});
-			K(fixQ{i}) = 0; %might make sorting faster for next repetition (but doesn't work with parallelization)
+		    disp('line to test: fixQ{i} = ismember(K,irepsets{i})')
+            disp('using "keyboard" for debugging')
+            keyboard
+            %K(fixQ{i}) = 0; %might make sorting faster for next repetition (but doesn't work with parallelization)
 		end
 	case 'parfor'
+        K = parallel.pool.Constant(K); %send this value to the workers only once
 		%textwaitbar setup
 		D = parallel.pool.DataQueue;
 		afterEach(D, @nUpdateProgress);
@@ -70,8 +75,8 @@ switch for_type
 		disp(' ')
 		disp(['tricollapse ' int2str(nsets) ' sets for ' int2str(numel(K)) ' triangulation elements '])
 		parfor i = 1:nsets
-			fixQ{i} = find(ismember(K,irepsets{i}));
-			
+			%fixQ{i} = find(ismember(K.Value,irepsets{i}));
+			fixQ{i} = ismembc2(K.Value,irepsets{i}); %ismembc2 should be ~20% faster, switch back to ismember if having issues
 			if mod(i,nreps2) == 0
 				send(D,i);
 			end
@@ -80,7 +85,7 @@ switch for_type
 end
 
 %% reformat uniqueK
-for i = 1:nsets % probably not parfor compatible in current implementation
+for i = 1:nsets % probably not parfor compatible in current implementation, unless fixQ values are unique from cell to cell
 	uniqueK(fixQ{i}) = i+nptstot; % replace degenerate locations with a unique ID
 end
 
@@ -92,13 +97,13 @@ disp(' ')
 %% reformat pts
 uniquePts = pts(icuList,:);
 
-	function nUpdateProgress(~)
-		percentDone = 100*p/N;
-		msg = sprintf('%3.0f', percentDone); %Don't forget this semicolon
-		fprintf([reverseStr, msg]);
-		reverseStr = repmat(sprintf('\b'), 1, length(msg));
-		p = p + nreps;
-	end
+	%function nUpdateProgress(~)
+	%	percentDone = 100*p/N;
+	%	msg = sprintf('%3.0f', percentDone); %Don't forget this semicolon
+	%	fprintf([reverseStr, msg]);
+	%	reverseStr = repmat(sprintf('\b'), 1, length(msg));
+	%	p = p + nreps;
+	%end
 
 end %tricollapse
 
