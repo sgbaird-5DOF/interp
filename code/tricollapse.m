@@ -42,11 +42,13 @@ end
 uniqueK = K;
 
 %% find fixQs
+%ticBytes(gcp)
 tic
 fixQ = cell(1,nsets);
 
+disp(' ')
+disp(['tricollapse ' int2str(nsets) ' sets for ' int2str(numel(K)) ' triangulation elements '])
 for_type = 'parfor';
-
 switch for_type
 	case 'for'
 		for i = 1:nsets
@@ -57,6 +59,7 @@ switch for_type
             %K(fixQ{i}) = 0; %might make sorting faster for next repetition (but doesn't work with parallelization)
 		end
 	case 'parfor'
+        K = reshape(K,1,[]);
         K = parallel.pool.Constant(K); %send this value to the workers only once
 		%textwaitbar setup
 		D = parallel.pool.DataQueue;
@@ -65,19 +68,16 @@ switch for_type
 		p=1;
 		reverseStr = '';
 		nintervals = 20;
-		if nsets > nintervals
-			nreps = floor(nsets/nintervals);
-		    nreps2 = floor(nsets/nintervals);
-		else
-			nreps = 1;
-         nreps2 = 1;
-		end
-		disp(' ')
-		disp(['tricollapse ' int2str(nsets) ' sets for ' int2str(numel(K)) ' triangulation elements '])
+        if nsets > nintervals
+            nreps2 = floor(nsets/nintervals);
+            nreps = nreps2;
+        else
+            nreps2 = 1;
+            nreps = nreps2;
+        end
 		parfor i = 1:nsets
-			%fixQ{i} = find(ismember(K.Value,irepsets{i}));
-			fixQ{i} = ismembc2(K.Value,irepsets{i}); %ismembc2 should be ~20% faster, switch back to ismember if having issues
-			if mod(i,nreps2) == 0
+			fixQ{i} = find(ismember(K.Value,irepsets{i}));
+            if mod(i,nreps2) == 0
 				send(D,i);
 			end
 		end
@@ -92,18 +92,19 @@ end
 uniqueK = uniqueK - nptstot; % shift IDs to go from 1:nsets (in same order as icuList)
 
 toc
+%tocBytes(gcp)
 disp(' ')
 
 %% reformat pts
 uniquePts = pts(icuList,:);
 
-	%function nUpdateProgress(~)
-	%	percentDone = 100*p/N;
-	%	msg = sprintf('%3.0f', percentDone); %Don't forget this semicolon
-	%	fprintf([reverseStr, msg]);
-	%	reverseStr = repmat(sprintf('\b'), 1, length(msg));
-	%	p = p + nreps;
-	%end
+	function nUpdateProgress(~)
+		p = p + nreps;
+		percentDone = 100*p/N;
+		msg = sprintf('%3.0f', percentDone); %Don't forget this semicolon
+		fprintf([reverseStr, msg]);
+		reverseStr = repmat(sprintf('\b'), 1, length(msg));
+	end
 
 end %tricollapse
 
@@ -140,4 +141,15 @@ end
 % 			end
 		end
 % 		close(f)
+			
+%fixQ{i} = ismembc2(K,irepsets{i}); % at some point, undocumented fucntion stopped giving indices 2020-07-24
+			%[~,fixQ{i}] = builtin('_ismemberhelper',K,irepsets{i}); % at some point, undocumented fucntion stopped giving indices 2020-07-24
+            %irepset = irepsets{i};
+            %Qtemp = cell(1,length(irepset));
+            %for j = 1:length(irepset)
+            %    Qtemp{j} = find(K.Value == irepset(j));
+            %end
+            %fixQ{i} = horzcat(Qtemp{:});   
+               % fixQ{i} = find(any(K.Value == irepsets{i}.')); %memory issues, but probably faster
+			%fixQ{i} = find(builtin('_ismemberhelper',K.Value,irepsets{i})); % undocumented helper function
 %}
