@@ -14,6 +14,7 @@ text(x(1),x(2)+0.01,x(3),'d_1','FontWeight','bold')
 text(y(1),y(2),y(3)+0.01,'d_2','FontWeight','bold')
 text(z(1)+0.01,z(2),z(3),'d_3','FontWeight','bold')
 
+addpathdir({'misFZfeatures.mat','q2rod.m'})
 load('misFZfeatures.mat','dlist')
 
 featurelist = {'A','B','C','D','E','O'};

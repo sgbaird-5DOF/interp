@@ -1,4 +1,5 @@
 **/*.asv
 **/.*.m
 **/FZ.*.*
+**/FZ.mtr
 **/slurm-*.out
