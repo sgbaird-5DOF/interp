@@ -43,8 +43,8 @@ tic
 %% Setup
 
 %set random number generator
-seed = 10;
-rng(seed);
+% seed = 10;
+% rng(seed);
 
 %mesh and data types
 
@@ -54,9 +54,9 @@ addpathdir({'misFZfeatures.mat','PGnames.mat','nlt.m','q2rod.m',...
 %'hypersphereGrid', 'Rohrer2009', 'Kim2011', '5DOF',
 %'Olmsted2004','5DOF_vtx','5DOF_misFZfeatures',
 %'5DOF_interior','5DOF_exterior', '5DOF_oct_vtx','5DOF_hsphext'
-%'5DOF_exterior_hsphext'
-meshMethod = '5DOF_exterior';
-dataMethod = '5DOF_interior';
+%'5DOF_exterior_hsphext', 'ocubo'
+meshMethod = 'ocubo';
+dataMethod = 'ocubo';
 pseudoMethod = [meshMethod '_pseudo'];
 
 %initialize
@@ -67,16 +67,25 @@ dataopts = meshopts;
 meshopts.res = 12.5;
 meshopts.nint = 2; % 1 == zero subdivisions, 2 == one subdivision, etc.
 meshopts.octsubdiv = 1;
+meshopts.ocuboOpts.n = 300; % # of octonions to generate, [] also ok if sidelength specified
+meshopts.ocuboOpts.method = 'random'; % 'random' or 'uniform' cubochoric sampling
+meshopts.ocuboOpts.sidelength = []; %sidelength of cubochoric grid (only specify if 'uniform', [] ok)
 
 %data parameters
 dataopts.res = 0.1;
 dataopts.nint = 1;
 dataopts.octsubdiv = 1;
+dataopts.ocuboOpts.n = 100; % # of octonions to generate, [] also ok if sidelength specified
+dataopts.ocuboOpts.method = 'random'; % 'random' or 'uniform' cubochoric sampling
+dataopts.ocuboOpts.sidelength = []; %sidelength of cubochoric grid (only specify if 'uniform', [] ok)
 
 %psuedo mesh parameters
 pseudoOpts.res = meshopts.res;
 pseudoOpts.nint = meshopts.nint;
 pseudoOpts.octsubdiv = 1;
+pseudoOpts.ocuboOpts.n = 1; % # of octonions to generate, [] also ok if sidelength specified
+pseudoOpts.ocuboOpts.method = 'random'; % 'random' or 'uniform' cubochoric sampling
+pseudoOpts.ocuboOpts.sidelength = []; %sidelength of cubochoric grid (only specify if 'uniform', [] ok)
 
 T = true;
 F = false;

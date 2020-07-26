@@ -32,7 +32,7 @@ Q2 = strcmp(lbl,'mesh');
 if strcmp(lbl,'ocubo')
 	alphaval = 1;
 else
-	alphaval = 0.01;
+	alphaval = 0.5;
 end
 
 %misorientation
@@ -42,20 +42,22 @@ if Q1
 	
 	zero = num2cell(zeros(size(d_all,1),3),1);
 	tmp = num2cell(d_all,1);
-	quiver3(tmp{1},zero{1:3},tmp{2},zero{1},'Color','k','ShowArrowhead','off',...
-		'LineStyle',':','AutoScale','off')
-	quiver3(tmp{1:2},zero{:},tmp{3},'Color','k','ShowArrowhead','off',...
-		'LineStyle',':','AutoScale','off')
+% 	quiver3(tmp{1},zero{1:3},tmp{2},zero{1},'Color','k','ShowArrowhead','off',...
+% 		'LineStyle',':','AutoScale','off')
+% 	quiver3(tmp{1:2},zero{:},tmp{3},'Color','k','ShowArrowhead','off',...
+% 		'LineStyle',':','AutoScale','off')
 	
 	if strcmp(lbl,'OSLERP')
 		plot3(tmp{:})
 	end
 else
+	% ilist specified
 	intIDs = setdiff(1:size(d_all,1),ilist);
 	tmp = num2cell(d_all(intIDs,:),1);
-	scatter3(tmp{:},5,'k','filled','markerfacealpha',0.2)
+	ax1 = scatter3(tmp{:},5,'b','filled','markerfacealpha',0.2);
 	tmp = num2cell(d_all(ilist,:),1);
-	scatter3(tmp{:},5,'r','filled','markerfacealpha',0.2)
+	ax2 = scatter3(tmp{:},5,'r','filled','markerfacealpha',0.2);
+	legend([ax1 ax2],{'intersecting','non-intersecting'},'location','southoutside');
 end
 
 % legend('intersecting','non-intersecting')
@@ -107,9 +109,10 @@ if Q1
 	end
 else
 	tmp = num2cell(nAfull(intIDs,:),1);
-	scatter3(tmp{:},5,'k','filled','markerfacealpha',0.2)
+	ax1 = scatter3(tmp{:},5,'b','filled','markerfacealpha',0.2);
 	tmp = num2cell(nAfull(ilist,:),1);
-	scatter3(tmp{:},5,'r','filled','markerfacealpha',0.2)
+	ax2 = scatter3(tmp{:},5,'r','filled','markerfacealpha',0.2);
+	legend([ax1 ax2],{'intersecting','non-intersecting'},'location','southoutside');
 end
 
 scl = 0.75;

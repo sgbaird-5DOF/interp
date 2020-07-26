@@ -37,12 +37,17 @@ function [meshList,propList,K,five,usv,Ktr] = ...
 %		Kim2011_FeGBEnergy.txt
 %		mesh5DOF.m
 %		allcomb.m (if using sampleMethod == 'Rohrer2009')
+%		addpathdir.m
 %
 % References
 %		[1] H.K. Kim, W.S. Ko, H.J. Lee, S.G. Kim, B.J. Lee, An
 %		identification scheme of grain boundaries and construction of a grain
 %		boundary energy database, Scr. Mater. 64 (2011) 1152–1155.
 %		https://doi.org/10.1016/j.scriptamat.2011.03.020.
+%
+% Notes:
+%		Re-work argument inputs using "arguments" validation syntax
+%--------------------------------------------------------------------------
 
 %% setup
 usual = 3; %usual # of variables
@@ -55,11 +60,12 @@ if pseudoQ
 end
 
 if nargin > usual
-	res = [];
-	nint = [];
-	sphK = [];
+	res = []; %double
+	nint = []; %double
+	sphK = []; % double
+	ocuboOpts = []; % struct
 	% initial new variables and add as input to var_names
-	S = var_names(res,nint,sphK); %package into struct
+	S = var_names(res,nint,sphK,ocuboOpts); %package into struct
 	vars = fields(S); %get fields (i.e. strings of variable names)
 	
 	irange = 1:nargin-usual;
@@ -80,6 +86,7 @@ if nargin > usual
 			res = S.(vars{1});
 			nint = S.(vars{2});
 			sphK = S.(vars{3});
+			ocuboOpts = S.(vars{4});
 	end
 end
 
@@ -96,13 +103,7 @@ end
 switch sampleMethod
 	case {'Kim2011','Olmsted2004'}
 		%add folders to path
-		filepathgen = fullfile('**',filelist);
-		for i = 1:length(filepathgen)
-			file = dir(filepathgen{i});
-			name = file(1).name;
-			folder = file(1).folder;
-			filepath{i} = fullfile(folder,name);
-		end
+		addpathdir(filelist)
 end
 
 %% generate data
@@ -209,6 +210,15 @@ switch sampleMethod
 	case {'5DOF_exterior_hsphext','5DOF_exterior_hsphext_pseudo'}
 		featureType = 'exterior';
 		
+	case {'ocubo'}
+		featureType = 'ocubo';
+		%unpack options
+		n = ocuboOpts.n;
+		method = ocuboOpts.method;
+		sidelength = ocuboOpts.sidelength;
+		%get cubochorically sampled octonions
+		meshList = get_ocubo(n,method,sidelength);
+		five = GBoct2five(meshList);
 end
 
 %5DOF cases
@@ -228,7 +238,12 @@ five = five(IA);
 %originally implemented for just '5DOF_oct_vtx' and 'hsphext'
 %get symmetrized octonions with respect to two points ('O' and
 %'interior', both +z)
-savename = [sampleMethod(6:end) '_pairmin.mat'];
+if contains(sampleMethod,'5DOF_')
+	savename = [sampleMethod(6:end) '_pairmin.mat'];
+else
+	savename = [sampleMethod '_pairmin.mat'];
+end
+
 if size(meshList,2) == 7
 	meshList = [meshList zeros(size(meshList,1),1)];
 end
@@ -255,7 +270,11 @@ else
 % 		[meshList,usv] = proj_down(meshList,1e-6);
 % 	end
 end
-projupQ = true;
+if ~isempty(meshList)
+	projupQ = true;
+else
+	projupQ = false;
+end
 %% Subdivide octonions, convex hull
 if octsubdiv > 1
 	
@@ -333,7 +352,7 @@ disp(['total of ' int2str(size(meshList,1)) ' after oct subdivision.'])
 % save('temp.mat')
 
 if strcmp(sampleType,'data')
-	if any([contains(sampleMethod,'5DOF'),strcmp(sampleMethod,'Rohrer2009')])
+	if any([contains(sampleMethod,{'5DOF','ocubo'}),strcmp(sampleMethod,'Rohrer2009')])
 		
 		disp('GB5DOF')
 		propList = GB5DOF_setup(five);

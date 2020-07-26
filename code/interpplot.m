@@ -54,12 +54,12 @@ nnRMSE = sqrt(mean(nnSE));
 
 xlabel('BRK Energy')
 ylabel('interpolated BRK Energy')
-title(['RMSE (rad): interp == ' num2str(interpRMSE) ', NN == ' num2str(nnRMSE)])
+title(['RMSE (rad): interp == ' num2str(interpRMSE,4) ', NN == ' num2str(nnRMSE,4)])
 
 plot(xlims,xlims,'c')
 axis tight
 
-legend({'interp data','NN data','parity'},'Location','northoutside')
+legend({'interp data','NN data'},'Location','northoutside')
 
 
 % distance histogram
@@ -96,10 +96,10 @@ plot5DOF(data.five,'data',dataopts,ilist)
 nptsmesh = size(mesh.pts,1);
 nptsdata = size(data.pts,1);
 
-nexttile(5)
-legend('intersecting','non-intersecting','Location','northoutside')
-nexttile(6)
-legend('intersecting','non-intersecting','Location','northoutside')
+% nexttile(5)
+% legend('intersecting','non-intersecting','Location','northoutside')
+% nexttile(6)
+% legend('intersecting','non-intersecting','Location','northoutside')
 
 sgtitle({...
 	['mesh == ' meshMethod '_octsubdiv' int2str(meshopts.octsubdiv) ', npts == ' int2str(nptsmesh)],...
