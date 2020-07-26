@@ -20,7 +20,8 @@ function S = datagen_setup(sampleMethod,opts,loadQ)
 res = opts.res;
 nint = opts.nint;
 octsubdiv = opts.octsubdiv;
-fname = get_fname(sampleMethod,res,nint,octsubdiv);
+ocuboOpts = opts.ocuboOpts;
+fname = get_fname(sampleMethod,res,nint,octsubdiv,ocuboOpts);
 
 if loadQ && (exist(fname,'file') ~= 0)
 	disp(fname)
@@ -54,7 +55,7 @@ end
 
 if computeQ
 	%assumption is that meshprops is a 1D array 2020-07-09
-	[pts,props,sphK,five,usv,Ktr] = datagen(sampleMethod,octsubdiv,'data',res,nint); %property values for validating sph. bary interp.
+	[pts,props,sphK,five,usv,Ktr] = datagen(sampleMethod,octsubdiv,'data',res,nint,[],ocuboOpts); %property values for validating sph. bary interp.
 	if contains(sampleMethod,'pseudo')
 		Ktr = [];
 	end

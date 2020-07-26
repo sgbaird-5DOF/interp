@@ -31,6 +31,7 @@ if nargin > 1
 	res = varargin{1};
 	nint = varargin{2};
 	octsubdiv = varargin{3};
+	ocuboOpts = varargin{4};
 end
 
 if any(cellfun(@(pattern) contains(sampleMethod,pattern),{'resolution','interior','exterior'}))
@@ -38,6 +39,24 @@ if any(cellfun(@(pattern) contains(sampleMethod,pattern),{'resolution','interior
 	fname = [sampleMethod '_res' int2str(res) ...
 		'_nint' int2str(nint) '_octsubdiv' int2str(octsubdiv) '.mat'];
 	
+elseif contains(sampleMethod,'ocubo')
+	n = ocuboOpts.n;
+	method = ocuboOpts.method;
+	sidelength = ocuboOpts.sidelength;
+	vars = fields(ocuboOpts);
+	for i = 1:length(vars)
+		fname = sampleMethod;
+		var = vars{i};
+		if ~isempty(var)
+			if ischar(var)
+				fname = [fname '_' var ocuboOpts.(var)];
+			else
+				fname = [fname '_' var int2str(ocuboOpts.(var))];
+			end
+		end
+	end
+	fname = [fname '_octsubdiv' int2str(octsubdiv) '.mat'];
+
 else
 	fname = [sampleMethod '_octsubdiv' int2str(octsubdiv) '.mat'];
 end
