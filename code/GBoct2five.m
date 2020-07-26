@@ -44,19 +44,16 @@ if ~parforQ
 	for i = 1:npts %parfor compatible
 		oct = octlist(i,:);
 		[q,nA] = GBoct2five_once(oct);
-		%call to disorientation might be expensive
-		if disQ
-			geometry = findgeometry(disorientation(q,'cubic'));
-		else
-			geometry = findgeometry(q); %if outside FZ, still registers as 'interior' with current implementation
-		end
+
 		five(i).q = q;
 		five(i).nA = nA;
 		
 		d = qu2ro(q);
 		five(i).d = d;
 		
-		five(i).geometry = geometry;
+		if ~disQ
+			five(i).geometry = findgeometry(q);
+		end
 	end
 else
     %textwaitbar setup
@@ -88,28 +85,32 @@ else
 	 disp(' ')
 	 disp('GBoct2five ')
 	parfor i = 1:npts %parfor compatible
-        if waitbarQ	
-            if mod(i,nreps2) == 0
-                send(D,i);
-            end
-        end
+		%textwaitbar
+		if waitbarQ
+			if mod(i,nreps2) == 0
+				send(D,i);
+			end
+		end
+		
 		oct = octlist(i,:);
 		[q,nA] = GBoct2five_once(oct);
-		%call to disorientation might be expensive
-		if disQ
-			geometry = findgeometry(disorientation(q,'cubic'));
-		else
-			geometry = findgeometry(q); %if outside FZ, still registers as 'interior' with current implementation
-		end
+
 		five(i).q = q;
 		five(i).nA = nA;
 		
-		d = qu2ro(q);
+		d = q2rod(q);
 		five(i).d = d;
 		
-		five(i).geometry = geometry;
+		if ~disQ
+			five(i).geometry = findgeometry(q);
+		end
 		
 	end
+end
+
+%call to disorientation might be expensive
+if disQ
+	[five.geometry] = findgeometry(disorientation(vertcat(five.q),'cubic'));
 end
 
          function nUpdateProgress(~)
@@ -202,5 +203,12 @@ end
 % 	five(i).geometry = geometry;
 % 	return
 % end
+
+		%call to disorientation might be expensive
+		if disQ
+			geometry = findgeometry(disorientation(q,'cubic'));
+		else
+			geometry = findgeometry(q); %if outside FZ, still registers as 'interior' with current implementation
+		end
 
 %}
