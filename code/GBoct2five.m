@@ -4,7 +4,8 @@ function five = GBoct2five(octlist,varargin)
 %
 % Date:
 %
-% Description:
+% Description: Do the inverse operation of GBfive2oct.m (CMU group,
+% octonion code), and package into "five" structure
 % 
 % Inputs:
 %
@@ -110,8 +111,12 @@ end
 
 %call to disorientation might be expensive
 if disQ
-	[five.geometry] = findgeometry(disorientation(vertcat(five.q),'cubic'));
+	geometry = findgeometry(disorientation(vertcat(five.q),'cubic'));
+else
+	geometry = findgeometry(vertcat(five.q));
 end
+
+[five.geometry] = geometry{:};
 
          function nUpdateProgress(~)
              percentDone = 100*p/N;

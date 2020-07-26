@@ -4,12 +4,6 @@ arguments
 	method string {mustBeMember(method,{'random','uniform'})} = 'random'
 	sidelength {mustBeNonNegIntegerOrEmpty} = double.empty
 end
-
-if strcmp(method,'uniform') && isempty(sidelength)
-	sidelength = ceil(n^(1/3)); % auto-calculate sidelength
-elseif isempty(n)
-	n = sidelength^3;
-end
 %--------------------------------------------------------------------------
 % Author: Sterling Baird
 %
@@ -34,6 +28,11 @@ end
 % Dependencies: cu2qu.m (De Graef CMU group, see GB Octonion code)
 %
 %--------------------------------------------------------------------------
+if strcmp(method,'uniform') && isempty(sidelength)
+	sidelength = ceil(n^(1/3)); % auto-calculate sidelength
+elseif isempty(n)
+	n = sidelength^3;
+end
 
 acube = 0.5*pi^(2/3);
 
