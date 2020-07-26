@@ -3,3 +3,4 @@
 **/FZ.*.*
 **/FZ.mtr
 **/slurm-*.out
+*.node
