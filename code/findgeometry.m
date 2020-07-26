@@ -1,4 +1,4 @@
-function geometry = findgeometry(q)
+function geometry = findgeometry(qlist)
 %-------------------------------------------------------------------------
 % Author: Sterling Baird
 %
@@ -12,7 +12,7 @@ function geometry = findgeometry(q)
 %	surface, the geometry is assumed to be 'interior'.
 %
 % Inputs:
-%		q	=== quaternion (according to convention in [1])
+%		qlist	=== rows of quaternion (according to convention in [1])
 %
 % Outputs:
 %		geometry === geometry corresponding to the point in the

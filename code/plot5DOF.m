@@ -29,10 +29,16 @@ d_all = vertcat(five.d);
 Q1 = strcmp(lbl,'mesh') || (exist('ilist','var') == 0);
 Q2 = strcmp(lbl,'mesh');
 
+if strcmp(lbl,'ocubo')
+	alphaval = 1;
+else
+	alphaval = 0.01;
+end
+
 %misorientation
 if Q1
 	tmp = num2cell(d_all,1);
-	scatter3(tmp{:},5,(1:size(d_all,1)).','filled','markerfacealpha',0.01)
+	scatter3(tmp{:},5,(1:size(d_all,1)).','filled','markerfacealpha',alphaval)
 	
 	zero = num2cell(zeros(size(d_all,1),3),1);
 	tmp = num2cell(d_all,1);
@@ -70,7 +76,7 @@ x = x*scl;
 y = y*scl;
 z = z*scl;
 
-surf(x,y,z,'EdgeColor','none','FaceColor','cyan','FaceAlpha',0.4)
+surf(x,y,z,'EdgeColor','none','FaceColor','cyan','FaceAlpha',0.7)
 
 ax = gca;
 ax.View = [135 15];
@@ -89,7 +95,7 @@ nAfull = vertcat(five.nA);
 
 if Q1
 	tmp = num2cell(nAfull,1);
-	scatter3(tmp{:},10,(1:size(nAfull,1)).','filled','markerfacealpha',0.01)
+	scatter3(tmp{:},10,(1:size(nAfull,1)).','filled','markerfacealpha',alphaval)
 	if strcmp(lbl,'OSLERP')
 		plot3(tmp{:})
 	end
