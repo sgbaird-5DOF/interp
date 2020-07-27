@@ -6,7 +6,7 @@ function nrlist = normr(rlist)
 %
 % Description: normalizes vectors row-by-row. Outputs a zero vector if a
 %					zero vector is input.
-% 
+%
 % Inputs:
 %
 %		rlist		===	rows of vectors to be normalized
@@ -22,29 +22,51 @@ function nrlist = normr(rlist)
 %
 %--------------------------------------------------------------------------
 
-% determine size & initalize array
-if ~any(size(rlist) == 1)
-	npts = size(rlist,1); %assume rows of points
-	nr = zeros(npts,size(rlist,2));
-else
-	npts = 1;
-	nr = zeros(1,npts);
-end
+%determine size
+[n,d] = size(rlist);
 
-%loop through points
-nrlist = zeros(size(rlist));
-for i = 1:npts
-	r = rlist(i,:);
-	
-	nm = norm(r);
+% shortcut if one row
+if n == 1
+	nm = norm(rlist);
 	if nm ~= 0
-		nr = r./nm;
+		nrlist = rlist./norm(rlist);
 	else
-		nr = zeros(size(r));
+		nrlist = zeros(n,d);
 	end
+else
+	%initialize
+	nrlist = zeros(size(rlist));
 	
-	nrlist(i,:) = nr;
+	%compute norms
+	nmlist = vecnorm(rlist,2,2);
 	
+	%get indices of non-zero elements
+	ids = find(nmlist);
+	
+	%normalize only rows where norm is non-zero
+	nrlist(ids,:) = rlist(ids,:)./nmlist(ids);
+	
+	%note: when nm(id) == 0, nrlist(id) == zeros(1,d)
 end
 
 end %normr
+
+
+%-----------------------------CODE GRAVEYARD-------------------------------
+%{
+for i = 1:npts
+		r = rlist(i,:);
+		
+		nm = nmlist(i);
+		if nm ~= 0
+			nr = r./nm;
+		else
+			nr = zeros(size(r));
+		end
+		
+		nrlist(i,:) = nr;
+		
+	end
+
+% 	ids = nmlist ~= 0;
+%}

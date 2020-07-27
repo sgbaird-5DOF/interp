@@ -4,17 +4,20 @@ function olist = osymsets(data,pgnum,varargin)
 %
 % Date: 2020-07-15
 %
-% Description: Get symmetrically equivalent octonions (osymsets) to a list
-%					of input octonions
-% 
+% Description: Get symmetrically equivalent octonions (osymsets) for each
+%					octonion in a list of octonions
+%
 % Inputs:
 %		data	===	rows of octonions
 %
 %		pgnum ===	point group number (e.g. 32 == cubic)
 %
+%		usv	===	optional, use if "data" is 7D and needs to be projected
+%						back to 8D
+%
 % Outputs:
 %		olist ===	1*size(data,1) cell array containing rows of
-%						symmetrically equivalent octonions
+%						unique symmetrically equivalent octonions
 %
 % Dependencies:
 %
@@ -40,22 +43,75 @@ pgname = symnames.PG_names{pgnum};
 qpt = symops.Q{pgnum}; %choose point group symmetry
 npt = size(qpt,1);
 
-%% perform distance calculation
+%get all combinations of symmetry operators
+qpttmp = num2cell(qpt,2);
+qptpairs = allcomb(qpttmp,qpttmp);
 
+nsyms = size(qptpairs,1);
+
+% unpack symmetry operator combinations
+SA = vertcat(qptpairs{:,1});
+SB = vertcat(qptpairs{:,2});
+
+%% reformat data (if applicable)
 ndatapts = size(data,1);
-% disp('Performing distance calculation ...')
-
 if size(data,2) == 7 && ~isempty(usv)
 	data = proj_up(data,usv);
-else
+elseif size(data,2) == 7
 	data = [data zeros(size(data,1),1)];
 end
 
+%% get symmetrically equivalent octonions
+%initialize
 olist = cell(1,ndatapts);
+
+%normalize quaternions
+qAlist = normr(data(:,1:4));
+qBlist = normr(data(:,5:8));
+
+%loop through quaternion pairs
+parfor i = 1:ndatapts
+	
+	%unpack quaternions
+	qA = qAlist(i,:);
+	qB = qBlist(i,:);
+	
+	%vertically stack copies of quaternions
+	qArep = repmat(qA,nsyms);
+	qBrep = repmat(qB,nsyms);
+	
+	%apply symmetry operators
+	qSA = qmult(SA,qArep);
+	qSB = qmult(SB,qBrep);
+	
+	% apply grain exchange & double cover
+	symocts = [...
+		qSA	 qSB
+		qSA	-qSB
+		-qSA	 qSB
+		-qSA	-qSB
+		qSB	 qSA
+		qSB	-qSA
+		-qSB	 qSA
+		-qSB	-qSA];
+	
+	olist{i} = uniquetol(round(symocts,12),'ByRows',true);
+end
+
+end %osymsets
+
+%-----------------------CODE GRAVEYARD-------------------------------------
+%{
+			% 			%double cover
+			% 			qSC = qmult(Si,-qA);
+			% 			qSD = qmult(Sj,-qB);
+
+
+
 for i = 1:ndatapts
 	%unpack quaternions
-	qA = normr(data(i,1:4));
-	qB = normr(data(i,5:8));
+	qA = qAlist(i,:);
+	qB = qBlist(i,:);
 	
 	%loop through symmetries
 	%initialize
@@ -93,10 +149,5 @@ for i = 1:ndatapts
 end
 
 
-%-----------------------CODE GRAVEYARD-------------------------------------
-%{
-			% 			%double cover
-			% 			qSC = qmult(Si,-qA);
-			% 			qSD = qmult(Sj,-qB);
 
 %}
