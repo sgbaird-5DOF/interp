@@ -43,8 +43,8 @@ tic
 %% Setup
 
 %set random number generator
-% seed = 10;
-% rng(seed);
+seed = 10;
+rng(seed);
 
 %mesh and data types
 
@@ -55,7 +55,7 @@ addpathdir({'misFZfeatures.mat','PGnames.mat','nlt.m','q2rod.m',...
 %'Olmsted2004','5DOF_vtx','5DOF_misFZfeatures',
 %'5DOF_interior','5DOF_exterior', '5DOF_oct_vtx','5DOF_hsphext'
 %'5DOF_exterior_hsphext', 'ocubo'
-meshMethod = 'ocubo';
+meshMethod = 'Olmsted2004';
 dataMethod = 'ocubo';
 pseudoMethod = [meshMethod '_pseudo'];
 
@@ -67,7 +67,7 @@ dataopts = meshopts;
 meshopts.res = 12.5;
 meshopts.nint = 2; % 1 == zero subdivisions, 2 == one subdivision, etc.
 meshopts.octsubdiv = 1;
-meshopts.ocuboOpts.n = 300; % # of octonions to generate, [] also ok if sidelength specified
+meshopts.ocuboOpts.n = 500; % # of octonions to generate, [] also ok if sidelength specified
 meshopts.ocuboOpts.method = 'random'; % 'random' or 'uniform' cubochoric sampling
 meshopts.ocuboOpts.sidelength = []; %sidelength of cubochoric grid (only specify if 'uniform', [] ok)
 
@@ -89,7 +89,7 @@ pseudoOpts.ocuboOpts.sidelength = []; %sidelength of cubochoric grid (only speci
 
 T = true;
 F = false;
-meshloadQ = T; %just makes it easier to switch back and forth between true and false
+meshloadQ = F; %just makes it easier to switch back and forth between true and false
 dataloadQ = F;
 pseudoloadQ = T;
 meshdataloadQ = T; %whether to check for and load intersection & barycentric data from previous run

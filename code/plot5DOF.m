@@ -62,7 +62,7 @@ end
 
 % legend('intersecting','non-intersecting')
 
-if exist('opts','var') ~= 0
+if (exist('opts','var') ~= 0) && ~isempty(opts)
 	title([lbl '_res' int2str(opts.res)],'interpreter','none')
 else
 	title(lbl)
@@ -92,6 +92,20 @@ ax.View = [135 15];
 % 	pause(0.5)
 % end
 
+scl = 0.75;
+x = [1,0,0]*scl;
+y = [0,1,0]*scl;
+z = [0,0,1]*scl;
+
+w = [0,0,0];
+hold on
+quiver3(w,w,w,x,y,z,1,'linewidth',1)
+text(x(1),x(2)+0.01,x(3),'d_1','FontWeight','bold')
+text(y(1),y(2),y(3)+0.01,'d_2','FontWeight','bold')
+text(z(1)+0.01,z(2),z(3),'d_3','FontWeight','bold')
+
+camlight('right')
+
 % nAfull = vertcat(vertcat(five2{:}).nA);
 nAfull = vertcat(five.nA);
 
@@ -115,23 +129,9 @@ else
 	legend([ax1 ax2],{'intersecting','non-intersecting'},'location','southoutside');
 end
 
-scl = 0.75;
-x = [1,0,0]*scl;
-y = [0,1,0]*scl;
-z = [0,0,1]*scl;
-
-w = [0,0,0];
-hold on
-quiver3(w,w,w,x,y,z,1,'linewidth',1)
-text(x(1),x(2)+0.01,x(3),'d_1','FontWeight','bold')
-text(y(1),y(2),y(3)+0.01,'d_2','FontWeight','bold')
-text(z(1)+0.01,z(2),z(3),'d_3','FontWeight','bold')
-
 axis equal tight vis3d off
 
-camlight('right')
-
-if exist('opts','var') ~= 0
+if (exist('opts','var') ~= 0) && ~isempty(opts)
 	title([lbl '_nint' int2str(opts.nint)],'interpreter','none')
 else
 	title(lbl)

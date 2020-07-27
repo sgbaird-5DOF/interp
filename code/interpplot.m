@@ -39,11 +39,12 @@ xmax = max([mesh.props(nnID);data.props],[],'all');
 
 xlims = [xmin,xmax];
 
+alphaval = 0.5;
 %parity plot
-scatter(data.props,datainterp,2,'k','filled','markerfacealpha',0.1);
+scatter(data.props,datainterp,2,'k','filled','markerfacealpha',alphaval);
 hold on
 % axis tight
-scatter(data.props(ilist),mesh.props(nnID),2,'r','filled','markerfacealpha',0.1);
+scatter(data.props(ilist),mesh.props(nnID),2,'r','filled','markerfacealpha',alphaval);
 
 %calculate SE and RMSE values
 ids = ~isnan(datainterp);
@@ -54,7 +55,7 @@ nnRMSE = sqrt(mean(nnSE));
 
 xlabel('BRK Energy')
 ylabel('interpolated BRK Energy')
-title(['RMSE (rad): interp == ' num2str(interpRMSE,4) ', NN == ' num2str(nnRMSE,4)])
+title(['RMSE (J/m^2): interp == ' num2str(interpRMSE,'%3.4f') ', NN == ' num2str(nnRMSE,'%3.4f')])
 
 plot(xlims,xlims,'c')
 axis tight
@@ -90,8 +91,13 @@ t = num2cell(meshtempd,2);
 t = num2cell(datatempd,2);
 [data.five.d] = t{:};
 
-plot5DOF(mesh.five,'mesh',meshopts)
-plot5DOF(data.five,'data',dataopts,ilist)
+if contains(fname,'ocubo')
+	plot5DOF(mesh.five,'mesh')
+	plot5DOF(data.five,'data',[],ilist)
+else
+	plot5DOF(mesh.five,'mesh',meshopts)
+	plot5DOF(data.five,'data',dataopts,ilist)
+end
 
 nptsmesh = size(mesh.pts,1);
 nptsdata = size(data.pts,1);

@@ -62,8 +62,8 @@ if (nargin - usual == 1) || ((nargin - usual == 2) && ~isempty(varargin{1}))
 		projpts = projpts(:,1:end-nforce);
 		
 	elseif ~nforceQ
-		projpts = [];
-		warning(['Nonzero last column. E.g. ' num2str(pts(1,end)) '. Setting projpts == []'])
+		projpts = pts;
+		warning(['Nonzero last column. E.g. ' num2str(pts(1,end)) '. Setting projpts == pts'])
 	end
 	
 else
@@ -94,8 +94,8 @@ else
 		warning(['ndegdim == 0, tol == ' num2str(tol) ...
 			', min(diag(S)) == ' num2str(min(diag(S))) ...
 			', max(diag(S)) == ' num2str(max(diag(S))) ...
-			'. Setting projpts == []'])
-		projpts = [];
+			'. Setting projpts == pts'])
+		projpts = pts;
 	end
 end
 

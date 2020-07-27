@@ -165,11 +165,14 @@ switch sampleMethod
 		end
 		
 	case 'Olmsted2004'
-		meshList = readmatrix(filepath{1},'NumHeaderLines',1,'Delimiter',' ');
-		meshList = meshList(:,1:8); %octonion representation, gets rid of a random NaN column..
 		
-		propList = readmatrix(filepath{2},'NumHeaderLines',1,'Delimiter',' '); %properties
-		propList = propList(:,1); %1st column == GB energy
+		meshList = readmatrix(filelist{1},'NumHeaderLines',1,'Delimiter',' ');
+		meshList = meshList(:,1:8); %octonion representation, gets rid of a random NaN column..
+ 		
+% 		propList = readmatrix(filelist{2},'NumHeaderLines',1,'Delimiter',' '); %properties
+% 		propList = propList(:,1); %1st column == GB energy
+		
+		five = GBoct2five(meshList);
 		
 	case '5DOF'
 		%resolution in misorientation FZ
@@ -270,7 +273,7 @@ else
 % 		[meshList,usv] = proj_down(meshList,1e-6);
 % 	end
 end
-if ~isempty(meshList)
+if size(meshList,2) == 7
 	projupQ = true;
 else
 	projupQ = false;
@@ -352,7 +355,7 @@ disp(['total of ' int2str(size(meshList,1)) ' after oct subdivision.'])
 % save('temp.mat')
 
 if strcmp(sampleType,'data')
-	if any([contains(sampleMethod,{'5DOF','ocubo'}),strcmp(sampleMethod,'Rohrer2009')])
+	if contains(sampleMethod,{'5DOF','ocubo','Rohrer2009','Olmsted2004'})
 		
 		disp('GB5DOF')
 		propList = GB5DOF_setup(five);
