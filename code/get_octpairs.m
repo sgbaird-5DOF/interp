@@ -44,14 +44,7 @@ o2addQ = P.Results.o2addQ;
 
 
 fnames = {'PGnames.mat','olist.mat','misFZfeatures.mat'};
-for i = 1:length(fnames)
-	fname = fnames{i};
-	fpath = fullfile('**',fname);
-	file = dir(fpath);
-	if ~isempty(file)
-		addpath(file.folder);
-	end
-end
+addpathdir(fnames)
 
 load('misFZfeatures.mat','qlist','dlist')
 
@@ -358,18 +351,21 @@ switch method
 			disp('')
 		end
 		
-		% qA_0 > qB_0 convention added based on discussion with Toby Francis
-		if (o12(1,1) > o12(1,5)) || (size(o12,1) == 1)
-			o2_out = o12(1,:);
-		else
-			o2_out = o12(2,:);
-		end
+% 		% qA_0 > qB_0 convention added based on discussion with Toby Francis
+% 		if (o12(1,1) > o12(1,5)) || (size(o12,1) == 1)
+% 			o2_out = o12(1,:);
+% 		else
+% 			o2_out = o12(2,:);
+% 		end
+% 		
+% 		if (o13(1,1) > o13(1,5)) || (size(o13,1) == 1)
+% 			o3_out = o13(1,:);
+% 		else
+% 			o3_out = o13(2,:);
+% 		end
 		
-		if (o13(1,1) > o13(1,5)) || (size(o13,1) == 1)
-			o3_out = o13(1,:);
-		else
-			o3_out = o13(2,:);
-		end
+		o2_out = o12(1,:);
+		o3_out = o13(1,:);
 		
 		%calculate distance again using GBdist (for comparison)
 		[omega3_GBdist,oct_sym3,zeta3] = GBdist([o2_out o3_out],32);

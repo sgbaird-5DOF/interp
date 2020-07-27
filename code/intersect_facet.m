@@ -63,11 +63,7 @@ baryMethod = 'planar'; %'spherical', 'planar' % 2020-07-21 still something wrong
 % disp(baryMethod)
 
 %% find nearest vertex for each datapoint
-try
 nnList = dsearchn(pts,datalist);
-catch
-	disp('')
-end
 
 nmeshpts = size(pts,1);
 ndatapts = size(datalist,1);
