@@ -89,8 +89,8 @@ pseudoOpts.ocuboOpts.sidelength = []; %sidelength of cubochoric grid (only speci
 
 T = true;
 F = false;
-meshloadQ = F; %just makes it easier to switch back and forth between true and false
-dataloadQ = F;
+meshloadQ = T; %just makes it easier to switch back and forth between true and false
+dataloadQ = T;
 pseudoloadQ = T;
 meshdataloadQ = T; %whether to check for and load intersection & barycentric data from previous run
 
@@ -198,15 +198,14 @@ for i = []
 
 end
 
-%project mesh and data together
-tol = 1e-3;
-[a,usv] = proj_down([mesh.pts;data.pts],tol);
-
 datapts = data.pts;
 meshpts = mesh.pts;
 
-projdownQ = T;
-if projdownQ
+%project mesh and data together
+tol = 1e-3;
+[a,usv] = proj_down([meshpts;datapts],tol);
+
+if size(a,2) <= 7
 	datapts = proj_down(datapts,tol,usv);
 	meshpts = proj_down(meshpts,tol,usv);
 end
@@ -281,7 +280,7 @@ for i = 1:ndatapts
 		nonintDists = [nonintDists;nndistList(i)];
 		nndistList(i) = NaN; %to distinguish interp vs. NN distances in plotting
 		nnID = [nnID;nnList(i)]; %nearest neighbor indices
-		ilist = [ilist;i];
+		ilist = [ilist;i]; %#ok<AGROW> % possible to separate out making baryOK a logical array & using 2 for loops
 		% 			datainterp(i) = mesh.props(k(i));
 	end
 end
