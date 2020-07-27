@@ -20,12 +20,14 @@ function olist = osymsets(data,pgnum,varargin)
 %						unique symmetrically equivalent octonions
 %
 % Dependencies:
-%
 %		Pgnames.mat, PGsymops.mat
+%
+%		osymset.m
+%			--qmult.m
 %
 % Notes:
 %		Adapted a portion from Grain Boundary Octonion function GBdist.m from
-%		Elizabeth Holm's CMU group.
+%		Elizabeth Holm's CMU group github page.
 %--------------------------------------------------------------------------
 if nargin - 2 == 1
 	usv = varargin{1};
@@ -34,24 +36,8 @@ else
 end
 
 %% load crystal symmetry
-symnames = load('PGnames.mat'); %need to add crystal_symmetry_ops to path in order for this to work
-symops = load('PGsymops.mat');
-
-pgname = symnames.PG_names{pgnum};
-
-%unpack point group
-qpt = symops.Q{pgnum}; %choose point group symmetry
-npt = size(qpt,1);
-
-%get all combinations of symmetry operators
-qpttmp = num2cell(qpt,2);
-qptpairs = allcomb(qpttmp,qpttmp);
-
-nsyms = size(qptpairs,1);
-
-% unpack symmetry operator combinations
-SA = vertcat(qptpairs{:,1});
-SB = vertcat(qptpairs{:,2});
+pgnum = 32;
+Spairs = get_sympairs(pgnum);
 
 %% reformat data (if applicable)
 ndatapts = size(data,1);
@@ -71,31 +57,12 @@ qBlist = normr(data(:,5:8));
 
 %loop through quaternion pairs
 parfor i = 1:ndatapts
-	
 	%unpack quaternions
 	qA = qAlist(i,:);
 	qB = qBlist(i,:);
 	
-	%vertically stack copies of quaternions
-	qArep = repmat(qA,nsyms);
-	qBrep = repmat(qB,nsyms);
-	
-	%apply symmetry operators
-	qSA = qmult(SA,qArep);
-	qSB = qmult(SB,qBrep);
-	
-	% apply grain exchange & double cover
-	symocts = [...
-		qSA	 qSB
-		qSA	-qSB
-		-qSA	 qSB
-		-qSA	-qSB
-		qSB	 qSA
-		qSB	-qSA
-		-qSB	 qSA
-		-qSB	-qSA];
-	
-	olist{i} = uniquetol(round(symocts,12),'ByRows',true);
+	%get symmetrically equivalent octonions
+	olist{i} = osymset(qA,qB,Spairs);
 end
 
 end %osymsets
@@ -149,5 +116,49 @@ for i = 1:ndatapts
 end
 
 
+
+
+	%unpack quaternions
+	qA = qAlist(i,:);
+	qB = qBlist(i,:);
+	
+	%vertically stack copies of quaternions
+	qArep = repmat(qA,nsyms);
+	qBrep = repmat(qB,nsyms);
+	
+	%apply symmetry operators
+	qSA = qmult(SA,qArep);
+	qSB = qmult(SB,qBrep);
+	
+	% apply grain exchange & double cover
+	symocts = [...
+		qSA	 qSB
+		qSA	-qSB
+		-qSA	 qSB
+		-qSA	-qSB
+		qSB	 qSA
+		qSB	-qSA
+		-qSB	 qSA
+		-qSB	-qSA];
+	
+	olist{i} = uniquetol(round(symocts,12),'ByRows',true);
+
+
+symnames = load('PGnames.mat'); %need to add crystal_symmetry_ops to path in order for this to work
+symops = load('PGsymops.mat');
+
+pgname = symnames.PG_names{pgnum};
+
+%unpack point group
+qpt = symops.Q{pgnum}; %choose point group symmetry
+npt = size(qpt,1);
+
+%get all combinations of symmetry operators
+qpttmp = num2cell(qpt,2);
+qptpairs = allcomb(qpttmp,qpttmp);
+
+% unpack symmetry operator combinations
+SAlist = vertcat(qptpairs{:,1});
+SBlist = vertcat(qptpairs{:,2});
 
 %}
