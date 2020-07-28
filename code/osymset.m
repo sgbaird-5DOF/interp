@@ -1,7 +1,7 @@
 function symocts = osymset(qA,qB,Spairs)
 arguments
-	qA(1,4) double {mustBeNumeric}
-	qB(1,4) double {mustBeNumeric}
+	qA(1,4) double {mustBeNumeric,mustBeFinite}
+	qB(1,4) double {mustBeNumeric,mustBeFinite}
 	Spairs(:,8) double {mustBeNumeric} = get_sympairs(qA,qB)
 end
 %--------------------------------------------------------------------------

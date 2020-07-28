@@ -1,4 +1,8 @@
-function five = GBoct2five(octlist,varargin)
+function five = GBoct2five(octlist,disQ)
+arguments
+	octlist(:,8) double {mustBeNumeric,mustBeFinite}
+	disQ(1,1) logical = true
+end
 %--------------------------------------------------------------------------
 % Author: Sterling Baird
 %
@@ -6,32 +10,21 @@ function five = GBoct2five(octlist,varargin)
 %
 % Description: Do the inverse operation of GBfive2oct.m (CMU group,
 % octonion code), and package into "five" structure
-% 
+%
 % Inputs:
+%		octlist - list of octonions (rows)
+%
+%		opts - structure with fields parforQ and disQ
 %
 % Outputs:
+%		five - struct with fields q, nA, d, and geometry (quaternion, BP
+%		normal, rodrigues vector, and misFZ geometry type, respectively)
 %
 % Dependencies:
+%		findgeometry.m
 %
 %--------------------------------------------------------------------------
-
-defaultparforQ = true;
-defaultdisQ = true;
-
-P = inputParser;
-addRequired(P,'octlist',@isnumeric);
-addParameter(P,'parforQ',defaultparforQ,@islogical);
-addParameter(P,'disQ',defaultdisQ,@islogical);
-parse(P,octlist,varargin{:});
-
-parforQ = P.Results.parforQ;
-disQ = P.Results.disQ;
-
 npts = size(octlist,1);
-
-if size(octlist,2) == 7
-	octlist = [octlist zeros(npts,1)];
-end
 
 %initialize
 five(npts) = struct;
@@ -40,73 +33,55 @@ five(1).nA = [];
 five(1).d = [];
 five(1).geometry = '';
 
-if ~parforQ
-	%convert subdivided points to 5DOF
-	for i = 1:npts %parfor compatible
-		oct = octlist(i,:);
-		[q,nA] = GBoct2five_once(oct);
-
-		five(i).q = q;
-		five(i).nA = nA;
-		
-		d = qu2ro(q);
-		five(i).d = d;
-		
-		if ~disQ
-			five(i).geometry = findgeometry(q);
-		end
+%textwaitbar setup
+waitbarQ = true;
+slurmQ = true;
+if waitbarQ
+	D = parallel.pool.DataQueue;
+	afterEach(D, @nUpdateProgress);
+	N=npts;
+	p=1;
+	reverseStr = '';
+	if slurmQ
+		nintervals = 20;
+	else
+		nintervals = 100;
+	end
+	if npts > nintervals
+		nreps = floor(npts/nintervals);
+		nreps2 = floor(npts/nintervals);
+	else
+		nreps = 1;
+		nreps2 = 1;
 	end
 else
-    %textwaitbar setup
-    waitbarQ = true;
-    slurmQ = true;
-    if waitbarQ
-        D = parallel.pool.DataQueue;
-        afterEach(D, @nUpdateProgress);
-        N=npts;
-        p=1;
-        reverseStr = '';
-        if slurmQ
-            nintervals = 20;
-        else
-            nintervals = 100;
-        end
-        if npts > nintervals
-            nreps = floor(npts/nintervals);
-            nreps2 = floor(npts/nintervals);
-        else
-           nreps = 1;
-           nreps2 = 1;
-        end
-    else
-       D = [];
-       nreps2 = 0;
-    end
-    %convert subdivided points to 5DOF
-	 disp(' ')
-	 disp('GBoct2five ')
-	parfor i = 1:npts %parfor compatible
-		%textwaitbar
-		if waitbarQ
-			if mod(i,nreps2) == 0
-				send(D,i);
-			end
+	D = [];
+	nreps2 = 0;
+end
+%convert subdivided points to 5DOF
+disp(' ')
+disp('GBoct2five ')
+parfor i = 1:npts %parfor compatible
+	%textwaitbar
+	if waitbarQ
+		if mod(i,nreps2) == 0
+			send(D,i);
 		end
-		
-		oct = octlist(i,:);
-		[q,nA] = GBoct2five_once(oct);
-
-		five(i).q = q;
-		five(i).nA = nA;
-		
-		d = q2rod(q);
-		five(i).d = d;
-		
-		if ~disQ
-			five(i).geometry = findgeometry(q);
-		end
-		
 	end
+	
+	%unpack octonion
+	oct = octlist(i,:);
+	
+	%get quaternion and BP normal
+	[q,nA] = GBoct2five_once(oct);
+	
+	%convert
+	d = q2rod(q);
+	
+	%package
+	five(i).q = q;
+	five(i).nA = nA;
+	five(i).d = d;	
 end
 
 %call to disorientation might be expensive
@@ -118,13 +93,13 @@ end
 
 [five.geometry] = geometry{:};
 
-         function nUpdateProgress(~)
-             percentDone = 100*p/N;
-             msg = sprintf('%3.0f', percentDone); %Don't forget this semicolon
-             fprintf([reverseStr, msg]);
-             reverseStr = repmat(sprintf('\b'), 1, length(msg));
-             p = p + nreps;
-         end
+	function nUpdateProgress(~)
+		percentDone = 100*p/N;
+		msg = sprintf('%3.0f', percentDone); %Don't forget this semicolon
+		fprintf([reverseStr, msg]);
+		reverseStr = repmat(sprintf('\b'), 1, length(msg));
+		p = p + nreps;
+	end
 
 end
 
@@ -215,5 +190,27 @@ end
 		else
 			geometry = findgeometry(q); %if outside FZ, still registers as 'interior' with current implementation
 		end
+
+
+defaultparforQ = true;
+defaultdisQ = true;
+
+P = inputParser;
+addRequired(P,'octlist',@isnumeric);
+addParameter(P,'parforQ',defaultparforQ,@islogical);
+addParameter(P,'disQ',defaultdisQ,@islogical);
+parse(P,octlist,varargin{:});
+
+parforQ = P.Results.parforQ;
+disQ = P.Results.disQ;
+
+if size(octlist,2) == 7
+	octlist = [octlist zeros(npts,1)];
+end
+
+
+	if ~disQ
+		five(i).geometry = findgeometry(q);
+	end
 
 %}

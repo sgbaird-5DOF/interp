@@ -1,8 +1,9 @@
-function o = get_ocubo(n,method,sidelength)
+function o = get_ocubo(n,method,sidelength,seed)
 arguments
 	n {mustBeNonNegIntegerOrEmpty} = 1
-	method string {mustBeMember(method,{'random','uniform'})} = 'random'
+	method char {mustBeMember(method,{'random','uniform'})} = 'random'
 	sidelength {mustBeNonNegIntegerOrEmpty} = double.empty
+	seed = 'shuffle'
 end
 %--------------------------------------------------------------------------
 % Author: Sterling Baird
@@ -55,6 +56,8 @@ end
 % are two contradictory options.
 %
 %--------------------------------------------------------------------------
+%set random number generator
+rng(seed)
 
 % argument validation (cont.)
 if strcmp(method,'random') && ~isempty(sidelength)

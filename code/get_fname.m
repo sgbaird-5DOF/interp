@@ -1,17 +1,21 @@
-function fname = get_fname(sampleMethod,varargin)
+function fname = get_fname(sampleMethod,opts)
+arguments
+	sampleMethod char
+	opts struct
+end
 %--------------------------------------------------------------------------
 % Author: Sterling Baird
 %
 % Date: 2020-07-09
 %
 % Description: Get a filename to load or save
-% 
+%
 % Inputs:
 %		sampleMethod	=== the sampling method used in datagen
 %
 %		res				=== as in resDegrees for meshFZ.m
 %
-%		nint				=== for meshBP.m		
+%		nint				=== for meshBP.m
 %
 % Outputs:
 %		fname				=== filename
@@ -27,38 +31,32 @@ function fname = get_fname(sampleMethod,varargin)
 % Dependencies:
 %
 %--------------------------------------------------------------------------
-if nargin > 1
-	res = varargin{1};
-	nint = varargin{2};
-	octsubdiv = varargin{3};
-	ocuboOpts = varargin{4};
-end
+
 
 if any(cellfun(@(pattern) contains(sampleMethod,pattern),{'resolution','interior','exterior'}))
-
-	fname = [sampleMethod '_res' int2str(res) ...
-		'_nint' int2str(nint) '_octsubdiv' int2str(octsubdiv) '.mat'];
+	
+	fname = [sampleMethod '_res' int2str(opts.res) ...
+		'_nint' int2str(opts.nint) '_octsubdiv' int2str(opts.octsubdiv) '.mat'];
 	
 elseif contains(sampleMethod,'ocubo')
-	n = ocuboOpts.n;
-	method = ocuboOpts.method;
-	sidelength = ocuboOpts.sidelength;
-	vars = fields(ocuboOpts);
-	for i = 1:length(vars)
-		fname = sampleMethod;
-		var = vars{i};
+	% ocuboOpts fields: n, method, sidelength, seed (2020-07-27)
+	varnames = fields(opts.ocuboOpts);
+	fname = sampleMethod;
+	for i = 1:length(varnames)
+		varname = varnames{i};
+		var = opts.ocuboOpts.(varname);
 		if ~isempty(var)
 			if ischar(var)
-				fname = [fname '_' var ocuboOpts.(var)];
+				fname = [fname '_' varname var];
 			else
-				fname = [fname '_' var int2str(ocuboOpts.(var))];
+				fname = [fname '_' varname int2str(var)];
 			end
 		end
 	end
-	fname = [fname '_octsubdiv' int2str(octsubdiv) '.mat'];
-
+	fname = [fname '_octsubdiv' int2str(opts.octsubdiv) '.mat'];
+	
 else
-	fname = [sampleMethod '_octsubdiv' int2str(octsubdiv) '.mat'];
+	fname = [sampleMethod '_octsubdiv' int2str(opts.octsubdiv) '.mat'];
 end
 end
 
@@ -73,5 +71,17 @@ switch sampleMethod
 	otherwise
 		fname = [sampleMethod '_octsubdiv' int2str(octsubdiv) '.mat'];
 end
+
+% if nargin > 1
+% 	res = varargin{1};
+% 	nint = varargin{2};
+% 	octsubdiv = varargin{3};
+% 	ocuboOpts = varargin{4};
+% end
+
+	n = opts.ocuboOpts.n;
+	method = opts.ocuboOpts.method;
+	sidelength = opts.ocuboOpts.sidelength;
+	seed = opts.ocubo
 
 %}

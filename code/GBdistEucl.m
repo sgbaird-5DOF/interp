@@ -80,187 +80,149 @@ for k = 1:npairs
 	octonion_pair_sym_list{k} = NaN(npt^2,16);
 	
 	ct = 0; %counter
-	for i = 1:1 %:npt
-		for j = 1:1 %:npt
-			for m = 1:npt
-				for l = 1:npt
-					ct_old = ct;
-					ct = ct + 8;
-					ctrange = ct_old+1:ct;
-					
-					%define symmetry operators
-					Si = qpt(i,:);
-					Sj = qpt(j,:);
-					Sm = qpt(m,:);
-					Sl = qpt(l,:);
-					
-					%apply symmetry operators
-					%                     qSA = qmult(Si,qA);
-					%                     qSB = qmult(Sj,qB);
-					qSC = qmult(Sm,qC);
-					qSD = qmult(Sl,qD);
-					
-					%now we implement U(1) and grain exchange symmetry
-					
-					%1. (A B C'(zeta) D'(zeta))
-					zm1 = zeta_min(qA,qB,qSC,qSD);
-					qzm1 = [cos(zm1/2) 0 0 sin(zm1/2)];
-					qCz1 = qmult(qSC,qzm1);
-					qDz1 = qmult(qSD,qzm1);
-% 					w1 = 2*acos(abs(sum(qA.*qCz1)-sum(qB.*qDz1))/2);
-% 					w5 = 2*acos(abs(sum(-qA.*qCz1)-sum(qB.*qDz1))/2);
-					w1 = norm([qA,qB]-[qCz1,qDz1]);
-					w5 = norm([qA,qB]-[-qCz1,qDz1]);
-					w9 = norm([qA,qB]-[qCz1,-qDz1]);
-					w13 = norm([qA,qB]-[-qCz1,-qDz1]);
-					
-					%2. (B A C'(sigma) D'(sigma))
-					
-					sm1 = zeta_min(qB,qA,qSC,qSD);
-					qsm1 = [cos(sm1/2) 0 0 sin(sm1/2)];
-					qCs1 = qmult(qSC,qsm1);
-					qDs1 = qmult(qSD,qsm1);
-% 					w2 = 2*acos(abs(sum(qB.*qCs1)-sum(qA.*qDs1))/2);
-% 					w6 = 2*acos(abs(sum(qB.*qCs1)-sum(qA.*-qDs1))/2);
-					w2 = norm([qA,qB]-[qCs1,qDs1]);
-					w6 = norm([qA,qB]-[-qCs1,qDs1]);
-					w10 = norm([qA,qB]-[qCs1,-qDs1]);
-					w14 = norm([qA,qB]-[-qCs1,-qDs1]);
-					
-					%3. (A -B C'(zeta') D'(zeta'))
-					
-					zm2 = zeta_min(qA,-qB,qSC,qSD);
-					qzm2 = [cos(zm2/2) 0 0 sin(zm2/2)];
-					qCz2 = qmult(qSC,qzm2);
-					qDz2 = qmult(qSD,qzm2);
-					
-% 					w3 = 2*acos(abs(sum(qA.*qCz2)-sum(-qB.*qDz2))/2);
-% 					w7 = 2*acos(abs(sum(-qA.*-qCz2)-sum(-qB.*qDz2))/2);
-					w3 = norm([qA,qB]-[qCz2,qDz2]);
-					w7 = norm([qA,qB]-[-qCz2,qDz2]);
-					w11 = norm([qA,qB]-[qCz2,-qDz2]);
-					w15 = norm([qA,qB]-[-qCz2,-qDz2]);
-					
-					%4. (B -A C'(sigma') D'(sigma'))
-					
-					sm2 = zeta_min(qB,-qA,qSC,qSD);
-					qsm2 = [cos(sm2/2) 0 0 sin(sm2/2)];
-					qCs2 = qmult(qSC,qsm2);
-					qDs2 = qmult(qSD,qsm2);
-					
-% 					w4 = 2*acos(abs(sum(qB.*-qCs2)-sum(qA.*qDs2))/2);
-% 					w8 = 2*acos(abs(sum(-qB.*qCs2)-sum(-qA.*qDs2))/2);
-					w4 = norm([qA,qB]-[qCs2,qDs2]);
-					w8 = norm([qA,qB]-[-qCs2,qDs2]);
-					w12 = norm([qA,qB]-[qCs2,-qDs2]);
-					w16 = norm([qA,qB]-[-qCs2,-qDs2]);
-					
-					%store candidate omega values
-					wvec = [w1 w2 w3 w4 w5 w6 w7 w8 w9 w10 w11 w12 w13 w14];
-					wveclist{k}(ctrange) = wvec.';
-					
-					octonion_pair_sym = ...
-						[qA qB qCz1 qDz1
-						qA qB qDs1 qCs1
-						qA qB qCz2 -qDz2
-						qA qB -qDs2 qCs2
-						qA qB -qCz1 qDz1
-						qA qB -qDs1 qCs1
-						qA qB -qCz2 -qDz2
-						qA qB -qDs2 -qCs2
-						
-						];
-					
-					[qA qB qCz1 qDz1 %1
-					qA qB qCs1 qDs1
-					qA qB qCz2 qDz2
-					qA qB qCs2 qDs2
-					
-					qA qB -qCz1 qDz1 %5
-					qA qB -qCs1 qDs1
-					qA qB -qCz2 qDz2
-					qA qB -qCs2 qDs2
-					
-					qA qB -qCz1 -qDz1 %9
-					qA qB qCs1 -qDs1
-					qA qB qCz2 -qDz2
-					
-					qA qB -qCz1 -qDz1 %13
-					qA qB -qCs1 -qDs1
-					qA qB -qCz2 -qDz2
-					
-					]
+	
+	for m = 1:npt
+		for l = 1:npt
+			ct_old = ct;
+			ct = ct + 16;
+			ctrange = ct_old+1:ct;
+			
+			%define symmetry operators
+			Sm = qpt(m,:);
+			Sl = qpt(l,:);
+			
+			%apply symmetry operators
+			%                     qSA = qmult(Si,qA);
+			%                     qSB = qmult(Sj,qB);
+			qSC = qmult(Sm,qC);
+			qSD = qmult(Sl,qD);
+			
+			%now we implement U(1) and grain exchange symmetry
+			
+			%1. (A B C'(zeta) D'(zeta))
+			zm1 = zeta_min(qA,qB,qSC,qSD);
+			qzm1 = [cos(zm1/2) 0 0 sin(zm1/2)];
+			qCz1 = qmult(qSC,qzm1);
+			qDz1 = qmult(qSD,qzm1);
+			
+			w1 = norm([qA,qB]-[qCz1,qDz1]);
+			w5 = norm([qA,qB]-[-qCz1,qDz1]);
+			w9 = norm([qA,qB]-[qCz1,-qDz1]);
+			w13 = norm([qA,qB]-[-qCz1,-qDz1]);
+			
+			%2. (B A C'(sigma) D'(sigma))
+			
+			sm1 = zeta_min(qB,qA,qSC,qSD);
+			qsm1 = [cos(sm1/2) 0 0 sin(sm1/2)];
+			qCs1 = qmult(qSC,qsm1);
+			qDs1 = qmult(qSD,qsm1);
+			
+			w2 = norm([qA,qB]-[qCs1,qDs1]);
+			w6 = norm([qA,qB]-[-qCs1,qDs1]);
+			w10 = norm([qA,qB]-[qCs1,-qDs1]);
+			w14 = norm([qA,qB]-[-qCs1,-qDs1]);
+			
+			%3. (A -B C'(zeta') D'(zeta'))
+			
+			zm2 = zeta_min(qA,-qB,qSC,qSD);
+			qzm2 = [cos(zm2/2) 0 0 sin(zm2/2)];
+			qCz2 = qmult(qSC,qzm2);
+			qDz2 = qmult(qSD,qzm2);
+			
+			
+			w3 = norm([qA,qB]-[qCz2,qDz2]);
+			w7 = norm([qA,qB]-[-qCz2,qDz2]);
+			w11 = norm([qA,qB]-[qCz2,-qDz2]);
+			w15 = norm([qA,qB]-[-qCz2,-qDz2]);
+			
+			%4. (B -A C'(sigma') D'(sigma'))
+			
+			sm2 = zeta_min(qB,-qA,qSC,qSD);
+			qsm2 = [cos(sm2/2) 0 0 sin(sm2/2)];
+			qCs2 = qmult(qSC,qsm2);
+			qDs2 = qmult(qSD,qsm2);
+			
+			w4 = norm([qA,qB]-[qCs2,qDs2]);
+			w8 = norm([qA,qB]-[-qCs2,qDs2]);
+			w12 = norm([qA,qB]-[qCs2,-qDs2]);
+			w16 = norm([qA,qB]-[-qCs2,-qDs2]);
+			
+			%store candidate omega values
+			wvec = [w1 w2 w3 w4 w5 w6 w7 w8 w9 w10 w11 w12 w13 w14 w15 w16];
+			wveclist{k}(ctrange) = wvec.';
+			
+			octonion_pair_sym = ...
+				[qA qB qCz1 qDz1 %1
+				qA qB qCs1 qDs1
+				qA qB qCz2 qDz2
+				qA qB qCs2 qDs2
 				
-				w4 = norm([qA,qB]-[qCs2,qDs2]);
-				w8 = norm([qA,qB]-[-qCs2,qDs2]);
-				w12 = norm([qA,qB]-[qCs2,-qDs2]);
-				w16 = norm([qA,qB]-[-qCs2,-qDs2]);
-					%									[qA qB qCz1 qDz1
-					%                           qB qA qCs1 qDs1;
-					%                           qA -qB qCz2 qDz2;
-					%                           qB -qA qCs2 qDs2;
-					%                           -qA qB qCz1 qDz1;
-					%                           -qB qA qCs1 qDs1;
-					%                           -qA -qB qCz2 qDz2;
-					%                           -qB -qA qCs2 qDs2]; %symmetrically equivalent candidate octonion pairs
-					
-					octonion_pair_sym_list{k}(ctrange,:) = octonion_pair_sym;
-					
-					%                   % take minimum omega value and corresponding symmetrized octonion
-					[omega_test,iwmin] = min(wvec);
-					zeta_sym = [zm1 sm1 zm2 sm2 zm1 sm1 zm2 sm2];
-					
-					% 						  zeta_sym_list = [zeta_sym_list zeta_sym];
-					
-					if (omega_test) <= omega_keep+1e-5
-						
-						omega_keep = omega_test;
-						oct_keep = octonion_pair_sym(iwmin,:);
-						zeta_keep = zeta_sym(iwmin);
-						%                         disp('theta (deg)')
-						%                         disp(rad2deg(omega_keep))
-						%                         disp('octonion:')
-						%                         disp(oct_keep)
-						%                         disp('U(1) angle (deg):')
-						%                         disp(rad2deg(zeta_keep))
-						
-						min_rep_count = min_rep_count+1; %how many times in min angle repeated?
-						
-						
-						%                         min_rep_oct(min_rep_count,:) = oct_keep;
-						min_rep_GBOM(min_rep_count) = omega_keep;
-						%                         min_rep_zeta(min_rep_count) = zeta_keep;
-						
-						if min_rep_count > Inf %if min angle is repeated nine times, exit symmetry loop %modified 2020-07-14 SGB
-							diff = abs(omega_keep - min_rep_GBOM(min_rep_count-1));
-							if diff < 1e-5
-								%                                 disp('break')
-								break
-							end
-						end
-						
-						
-					end
-					
+				qA qB -qCz1 qDz1 %5
+				qA qB -qCs1 qDs1
+				qA qB -qCz2 qDz2
+				qA qB -qCs2 qDs2
+				
+				qA qB qCz1 -qDz1 %9
+				qA qB qCs1 -qDs1
+				qA qB qCz2 -qDz2
+				qA qB qCs2 -qDs2
+				
+				qA qB -qCz1 -qDz1 %13
+				qA qB -qCs1 -qDs1
+				qA qB -qCz2 -qDz2
+				qA qB -qCs2 -qDs2]; %symmetrically equivalent candidate octonion pairs
+			
+			octonion_pair_sym_list{k}(ctrange,:) = octonion_pair_sym;
+			
+			%                   % take minimum omega value and corresponding symmetrized octonion
+			[omega_test,iwmin] = min(wvec);
+			zeta_sym = [zm1 sm1 zm2 sm2 zm1 sm1 zm2 sm2];
+			
+			% 						  zeta_sym_list = [zeta_sym_list zeta_sym];
+			
+			if (omega_test) <= omega_keep+1e-5
+				
+				omega_keep = omega_test;
+				oct_keep = octonion_pair_sym(iwmin,:);
+				zeta_keep = zeta_sym(iwmin);
+				%                         disp('theta (deg)')
+				%                         disp(rad2deg(omega_keep))
+				%                         disp('octonion:')
+				%                         disp(oct_keep)
+				%                         disp('U(1) angle (deg):')
+				%                         disp(rad2deg(zeta_keep))
+				
+				min_rep_count = min_rep_count+1; %how many times in min angle repeated?
+				
+				
+				%                         min_rep_oct(min_rep_count,:) = oct_keep;
+				min_rep_GBOM(min_rep_count) = omega_keep;
+				%                         min_rep_zeta(min_rep_count) = zeta_keep;
+				
+				if min_rep_count > Inf %if min angle is repeated nine times, exit symmetry loop %modified 2020-07-14 SGB
+					diff = abs(omega_keep - min_rep_GBOM(min_rep_count-1));
 					if diff < 1e-5
-						%                         disp('break')
+						%                                 disp('break')
 						break
 					end
-					
 				end
 				
-				if diff < 1e-5
-					%                         disp('break')
-					break
-				end
+				
 			end
 			
 			if diff < 1e-5
 				%                         disp('break')
 				break
 			end
+			
+		end
+		
+		if diff < 1e-5
+			%                         disp('break')
+			break
 		end
 	end
+	
 	oct_new(k,:) = oct_keep; %keep octonion
 	omega_new(k) = omega_keep; %keep
 	zeta_new(k,:) = zeta_keep;
@@ -396,3 +358,41 @@ function c = crossp(a,b)
 
 c = [a(2).*b(3)-a(3).*b(2) a(3).*b(1)-a(1).*b(3) a(1).*b(2)-a(2).*b(1)];
 end
+
+
+
+%----------------------CODE GRAVEYARD--------------------------
+%{
+
+octonion_pair_sym = ...
+						[qA qB qCz1 qDz1
+						qA qB qDs1 qCs1
+						qA qB qCz2 -qDz2
+						qA qB -qDs2 qCs2
+						qA qB -qCz1 qDz1
+						qA qB -qDs1 qCs1
+						qA qB -qCz2 -qDz2
+						qA qB -qDs2 -qCs2
+						
+						];
+
+
+%									[qA qB qCz1 qDz1
+					%                           qB qA qCs1 qDs1;
+					%                           qA -qB qCz2 qDz2;
+					%                           qB -qA qCs2 qDs2;
+					%                           -qA qB qCz1 qDz1;
+					%                           -qB qA qCs1 qDs1;
+					%                           -qA -qB qCz2 qDz2;
+					%                           -qB -qA qCs2 qDs2];
+
+
+					w1 = 2*acos(abs(sum(qA.*qCz1)-sum(qB.*qDz1))/2);
+					w5 = 2*acos(abs(sum(-qA.*qCz1)-sum(qB.*qDz1))/2);
+					w2 = 2*acos(abs(sum(qB.*qCs1)-sum(qA.*qDs1))/2);
+					w6 = 2*acos(abs(sum(qB.*qCs1)-sum(qA.*-qDs1))/2);
+					w3 = 2*acos(abs(sum(qA.*qCz2)-sum(-qB.*qDz2))/2);
+					w7 = 2*acos(abs(sum(-qA.*-qCz2)-sum(-qB.*qDz2))/2);
+					w4 = 2*acos(abs(sum(qB.*-qCs2)-sum(qA.*qDs2))/2);
+					w8 = 2*acos(abs(sum(-qB.*qCs2)-sum(-qA.*qDs2))/2);
+%}

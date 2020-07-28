@@ -41,7 +41,7 @@ mu_num1 = qA(:,4).*qC(:,1)-qC(:,4).*qA(:,1)+qB(:,4).*qD(:,1)-qD(:,4).*qB(:,1);
 crossAC = cross(qA(:,2:4),qC(:,2:4),2);
 crossBD = cross(qB(:,2:4),qD(:,2:4),2);
 
-mu_arg = (mu_num1 + crossAC(3) + crossBD(3))./(qdot_AC+qdot_BD);
+mu_arg = (mu_num1 + crossAC(:,3) + crossBD(:,3))./(qdot_AC+qdot_BD);
 mu = 2*atan(mu_arg);
 
 % shift negative values
