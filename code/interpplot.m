@@ -65,12 +65,32 @@ legend({'interp data','NN data'},'Location','northoutside')
 
 % distance histogram
 nexttile(4)
-histogram(interpSE);
+% interpSE = [interpSE; NaN(length(nnSE),1)];
+% histogram(interpSE,'Normalization','probability');
+% hold on
+% nnSE = [nnSE; NaN(length(interpSE),1)];
+% histogram(nnSE,'Normalization','probability');
+
+
+% specify number of bins and edges of those bins; this example evenly spaces bins
+nbins = 20;
+edges = linspace(0,max([interpSE;nnSE]),nbins);
+% use histcounts and specify your bins
+% cntA = histcounts(interpSE,'BinEdges',edges);
+% cntB = histcounts(nnSE,'BinEdges',edges);
+
+histogram(interpSE,edges);
 hold on
-histogram(nnSE);
+histogram(nnSE,edges);
+
+% % convert bin edges into bin centers
+% b = edges(1:end-1)+diff(edges)/2;
+% % use bar
+% bar(b,[cntA',cntB'],'stacked')
+
 
 legend('intersecting','non-intersecting','Location','northoutside')
-xlabel('multi-GB symmetrized \omega (rad)')
+xlabel('multi-GB symmetrized SE (J/m^2)')
 ylabel('counts')
 % 5DOF plots
 

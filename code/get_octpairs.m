@@ -1,12 +1,22 @@
-function [octvtx,usv,five,omega3,omega3_GBdist] = get_octpairs(pts,five,savename,varargin)
+function [octvtx,usv,five,omega3,omega3_GBdist] = get_octpairs(pts,savename,opts)
+arguments
+	pts(:,8) double {mustBeSqrt2Norm}
+	savename string
+	opts.o2addQ(1,1) logical = true
+	opts.plotQ(1,1) logical = false
+	opts.method char {mustBeMember(opts.method,{'standard','pairwise'})} = 'standard'
+	opts.pgnum(1,1) double = 32
+end
 %--------------------------------------------------------------------------
 % Author: Sterling Baird
 %
-% Date:
+% Date: 2020-07-27
 %
-% Description:
+% Description: Get a set of octonions that are symmetrized with respect to
+% two reference GBs
 %
 % Inputs:
+%		pts - 
 %
 %		o2addQ ===	logical, whether to add o2 (in this case, point 'O' with
 %						nA = [0 0 1]) to "five", and if not, then get rid of
@@ -25,40 +35,10 @@ function [octvtx,usv,five,omega3,omega3_GBdist] = get_octpairs(pts,five,savename
 %
 %		GBdist2.m
 %--------------------------------------------------------------------------
-default_o2addQ = true;
-defaultplotQ = false;
-defaultmethod = 2;
-
-P = inputParser;
-addRequired(P,'pts',@isnumeric);
-addRequired(P,'five',@isstruct);
-addRequired(P,'savename',@ischar);
-addParameter(P,'plotQ',defaultplotQ,@islogical);
-addParameter(P,'method',defaultmethod,@isscalar);
-addParameter(P,'o2addQ',default_o2addQ,@islogical);
-parse(P,pts,five,savename,varargin{:});
-
-plotQ = P.Results.plotQ;
-method = P.Results.method;
-o2addQ = P.Results.o2addQ;
-
-
 fnames = {'PGnames.mat','olist.mat','misFZfeatures.mat'};
 addpathdir(fnames)
 
-load('misFZfeatures.mat','qlist','dlist')
-
-%% correct octonions if necessary
-if size(pts,2) == 7
-	pts = [pts zeros(size(pts,1),1)]; % add column of zeros
-end
-
-% if norm(o) == 1 within tolerance, multiply by sqrt(2)
-if abs(norm(pts(1,:)) - 1) < 1e-6
-	pts = pts*sqrt(2);
-elseif abs(norm(pts(1,:)) - sqrt(2)) > 1e-6
-	error('norm of octonions ~= 1 || sqrt(2)')
-end
+load('misFZfeatures.mat','qlist')
 
 %% get two reference octonions (o1 and o2)
 
@@ -92,12 +72,13 @@ o2 = GBfive2oct(qB,nB);
 % o2 = [-1 0 0 0 1 0 0 0]; %input
 % o2 = [1 0 0 0 0 0 0 0]; %certainly seems to speed things up
 
-[omega0,oct_sym0,zeta0] = GBdist2([o1 o2],32,false);
+[omega0,oct_sym0] = GBdist4(o1,o2,32,'norm');
+% [omega0,oct_sym0,zeta0] = GBdist2([o1 o2],32,false);
 % [omega0,oct_sym0,zeta0] = GBdist([o1 o2],32,false);
 
 %take the symmetrized versions for comparison
 % o1 = oct_sym0(1,1:8);
-o2 = oct_sym0(1,9:16);
+o2 = oct_sym0{1};
 
 octvtx(1,:) = o2;
 
@@ -114,19 +95,20 @@ afterEach(D, @nUpdateProgress);
 N=npts;
 p=1;
 reverseStr = '';
-nreps = floor(N/20);
-nreps2 = nreps;
+nreps2 = floor(N/20);
+nreps = nreps2;
 
 disp('get_octpairs ')
-parfor i = 1:npts %parfor compatible
-	%unpack other octonion in pair
-	%(o2 and o3 form a pair, each is compared to o1)
-	o3 = pts(i,:); %input
-	[octvtx(i+1,:),omega3(i+1),omega3_GBdist(i+1)] = GBpair(o1,o2,o3,method);
+for i = 1:npts %parfor compatible
 	
 	if mod(i,nreps2) == 0
 		send(D,i);
 	end
+
+	%unpack other octonion in pair
+	%(o2 and o3 form a pair, each is compared to o1)
+	o3 = pts(i,:); %input
+	[octvtx(i+1,:),omega3(i+1),omega3_GBdist(i+1)] = GBpair(o1,o2,o3,opts.pgnum,opts.method);
 end
 
 function nUpdateProgress(~)
@@ -137,14 +119,14 @@ function nUpdateProgress(~)
 	p = p + nreps;
 end
 
-five = GBoct2five(octvtx);
+five = GBoct2five(octvtx,true);
 
-if ~o2addQ
+if ~opts.o2addQ
 	five(1) = [];
 	octvtx(1,:) = [];
 end
 
-if plotQ
+if opts.plotQ
 	figure
 	plotFZrodriguez_vtx();
 	hold on
@@ -375,5 +357,53 @@ end
 % 	maxnormQ = true;
 % 	sphK = sphconvhulln(octvtx,maxnormQ);
 % end
+
+
+% if size(pts,2) == 7
+% 	pts = [pts zeros(size(pts,1),1)]; % add column of zeros
+% end
+
+%% correct octonions if necessary
+
+% if norm(o) == 1 within tolerance, multiply by sqrt(2)
+if abs(norm(pts(1,:)) - 1) < 1e-6
+	pts = pts*sqrt(2);
+elseif abs(norm(pts(1,:)) - sqrt(2)) > 1e-6
+	error('norm of octonions ~= 1 || sqrt(2)')
+end
+pts = sqrt2norm(pts);
+
+
+load_type = 'evalc'; %'evalc', 'manual'
+switch load_type
+	case 'evalc'
+		vars = fields(opts);
+		for i = 1:length(vars)
+			var = vars{i};
+			temp = opts.(var); %#ok<NASGU> %temporary value of vName
+			evalc([var '= temp']); %assign temp value to the field name
+		end
+	case 'manual'
+		o2addQ = opts.o2addQ;
+		plotQ = opts.plotQ;
+		method = opts.method;
+end
+
+% default_o2addQ = true;
+% defaultplotQ = false;
+% defaultmethod = 2;
+% 
+% P = inputParser;
+% addRequired(P,'pts',@isnumeric);
+% addRequired(P,'five',@isstruct);
+% addRequired(P,'savename',@ischar);
+% addParameter(P,'plotQ',defaultplotQ,@islogical);
+% addParameter(P,'method',defaultmethod,@isscalar);
+% addParameter(P,'o2addQ',default_o2addQ,@islogical);
+% parse(P,pts,five,savename,varargin{:});
+% 
+% plotQ = P.Results.plotQ;
+% method = P.Results.method;
+% o2addQ = P.Results.o2addQ;
 
 %}

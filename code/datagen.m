@@ -1,5 +1,10 @@
 function [meshList,propList,K,five,usv,Ktr] = ...
-	datagen(sampleMethod,octsubdiv,sampleType,varargin)
+	datagen(sampleMethod,sampleType,opts)
+arguments
+	sampleMethod char = 'ocubo'
+	sampleType char = 'mesh'
+	opts struct = struct()
+end
 %--------------------------------------------------------------------------
 % Author: Sterling Baird
 %
@@ -50,46 +55,12 @@ function [meshList,propList,K,five,usv,Ktr] = ...
 %--------------------------------------------------------------------------
 
 %% setup
-usual = 3; %usual # of variables
-
 pseudoQ = contains(sampleMethod,'pseudo');
 
 if pseudoQ
 	str_id = strfind(sampleMethod,'_pseudo');
 	sampleMethod = sampleMethod(1:str_id-1); %assumes _pseudo is at end, and remove it
 end
-
-if nargin > usual
-	res = []; %double
-	nint = []; %double
-	sphK = []; % double
-	ocuboOpts = []; % struct
-	% initial new variables and add as input to var_names
-	S = var_names(res,nint,sphK,ocuboOpts); %package into struct
-	vars = fields(S); %get fields (i.e. strings of variable names)
-	
-	irange = 1:nargin-usual;
-	for i = irange
-		var = vars{i};
-		S.(var) = varargin{i};
-	end
-	
-	load_method = 'eval';
-	switch load_method
-		case 'eval'
-			for i = 1:length(vars)
-				var = vars{i};
-				temp = S.(var); %#ok<NASGU> %temporary value of vName
-				evalc([var '= temp']); %assign temp value to a short name
-			end
-		case 'manual'
-			res = S.(vars{1});
-			nint = S.(vars{2});
-			sphK = S.(vars{3});
-			ocuboOpts = S.(vars{4});
-	end
-end
-
 
 %get filenames, if any
 switch sampleMethod
@@ -100,17 +71,17 @@ switch sampleMethod
 end
 
 %add filename directories to path, if any
-switch sampleMethod
-	case {'Kim2011','Olmsted2004'}
-		%add folders to path
-		addpathdir(filelist)
+if contains(sampleMethod,{'Kim2011','Olmsted2004'})
+	%add folders to path
+	addpathdir(filelist)
 end
 
 %% generate data
 switch sampleMethod
 	case 'random'
-		seed = 10;
-		rng(seed)
+% 		seed = 10;
+% 		rng(seed)
+		rng('shuffle')
 		
 		%transpose to preserve rng sequence of pts with different number of datapts
 		datatemp = rand(d+1,ndatapts).';
@@ -122,7 +93,7 @@ switch sampleMethod
 		propList = datatemp(:,end);
 		
 	case 'Kim2011'
-		meshTable = readtable(filepath{1},'HeaderLines',9,'ReadVariableNames',true);
+		meshTable = readtable(filelist{1},'HeaderLines',9,'ReadVariableNames',true);
 		varNames = meshTable.Properties.VariableNames; %Euler angles (misorientation), the polar & azimuth (inclination), GBE (mJ/m^2)
 		datatemp = table2array(meshTable);
 		
@@ -168,11 +139,11 @@ switch sampleMethod
 		
 		meshList = readmatrix(filelist{1},'NumHeaderLines',1,'Delimiter',' ');
 		meshList = meshList(:,1:8); %octonion representation, gets rid of a random NaN column..
- 		
-% 		propList = readmatrix(filelist{2},'NumHeaderLines',1,'Delimiter',' '); %properties
-% 		propList = propList(:,1); %1st column == GB energy
 		
-		five = GBoct2five(meshList);
+		% 		propList = readmatrix(filelist{2},'NumHeaderLines',1,'Delimiter',' '); %properties
+		% 		propList = propList(:,1); %1st column == GB energy
+		
+		five = GBoct2five(meshList,false);
 		
 	case '5DOF'
 		%resolution in misorientation FZ
@@ -216,18 +187,20 @@ switch sampleMethod
 	case {'ocubo'}
 		featureType = 'ocubo';
 		%unpack options
-		n = ocuboOpts.n;
-		method = ocuboOpts.method;
-		sidelength = ocuboOpts.sidelength;
+		n = opts.ocuboOpts.n;
+		method = opts.ocuboOpts.method;
+		sidelength = opts.ocuboOpts.sidelength;
+		seed = opts.ocuboOpts.seed;
+		
 		%get cubochorically sampled octonions
-		meshList = get_ocubo(n,method,sidelength);
-		five = GBoct2five(meshList);
+		meshList = get_ocubo(n,method,sidelength,seed);
+		five = GBoct2five(meshList,false);
 end
 
 %5DOF cases
 if contains(sampleMethod,'5DOF')
 	ctrcuspQ = false;
-	[five,sept,o] = mesh5DOF(featureType,ctrcuspQ,res,nint);
+	[five,sept,o] = mesh5DOF(featureType,ctrcuspQ,opts.res,opts.nint);
 	meshList = sept;
 end
 
@@ -253,11 +226,11 @@ end
 
 if ~pseudoQ
 	if contains(sampleMethod,'oct_vtx')
-		opts = {'o2addQ',true,'method',2};
+		NVpairs = {'o2addQ',true,'method','pairwise'};
 	else
-		opts = {'o2addQ',false,'method',2};
+		NVpairs = {'o2addQ',false,'method','pairwise'};
 	end
-	[meshList,usv,five,~,~] = get_octpairs(meshList,five,savename,opts{:}); %find a way to not call this for 'data'
+	[meshList,usv,five,~,~] = get_octpairs(meshList,savename,NVpairs{:}); %find a way to not call this for 'data'
 	meshList = proj_down(meshList,1e-6,usv);
 else
 	try
@@ -268,10 +241,10 @@ else
 		warning('error with meshList = proj_down(octvtx,1e-6,usv); or load')
 		[meshList,usv] = proj_down(meshList,1e-6);
 	end
-% 	if isempty(meshListTemp)
-% 		warning('creating new usv')
-% 		[meshList,usv] = proj_down(meshList,1e-6);
-% 	end
+	% 	if isempty(meshListTemp)
+	% 		warning('creating new usv')
+	% 		[meshList,usv] = proj_down(meshList,1e-6);
+	% 	end
 end
 if size(meshList,2) == 7
 	projupQ = true;
@@ -279,50 +252,50 @@ else
 	projupQ = false;
 end
 %% Subdivide octonions, convex hull
-if octsubdiv > 1
+if opts.octsubdiv > 1
 	
 	if contains(sampleMethod,'hsphext')
 		if ~pseudoQ
-			[Ktr,K,meshList] = hsphext_subdiv(meshList,octsubdiv,true);
+			[Ktr,K,meshList] = hsphext_subdiv(meshList,opts.octsubdiv,true);
 		else
 			tricollapseQ = false;
-			[Ktr,K,meshList] = hsphext_subdiv(meshList,octsubdiv,tricollapseQ);
+			[Ktr,K,meshList] = hsphext_subdiv(meshList,opts.octsubdiv,tricollapseQ);
 		end
 	elseif pseudoQ
 		tricollapseQ = false;
-		[~,K,meshList] = hypersphere_subdiv(meshList,sphK,octsubdiv,tricollapseQ);
+		[~,K,meshList] = hypersphere_subdiv(meshList,opts.sphK,opts.octsubdiv,tricollapseQ);
 		Ktr = [];
 	else
-		[Ktr,K,meshList] = hypersphere_subdiv(meshList,sphK,octsubdiv,true);
+		[Ktr,K,meshList] = hypersphere_subdiv(meshList,opts.sphK,opts.octsubdiv,true);
 	end
 	
-% 	if any([strcmp(sampleMethod,'5DOF_oct_vtx'),contains(sampleMethod,'hsphext')])
-		%restore null dimensions for oct --> five
-		
-		if projupQ
-			meshList = proj_up(meshList,usv);
-			projupQ = false;
-		end
-% 	end
+	% 	if any([strcmp(sampleMethod,'5DOF_oct_vtx'),contains(sampleMethod,'hsphext')])
+	%restore null dimensions for oct --> five
 	
-	five = GBoct2five(meshList);
+	if projupQ
+		meshList = proj_up(meshList,usv);
+		projupQ = false;
+	end
+	% 	end
+	
+	five = GBoct2five(meshList,'disQ',false);
 	
 elseif (exist('sphK','var') ~= 0)
 	%create K if it exists & is empty
 	if ~pseudoQ
-		if isempty(sphK)
+		if isempty(opts.sphK)
 			if contains(sampleMethod,'hsphext')
 				[Ktr,K,meshList] = hsphext_subdiv(meshList,1);
 			else
 				K = sphconvhulln(meshList);
 			end
 		else
-			K = sphK;
+			K = opts.sphK;
 		end
 	else
 		K = [];
 	end
-		
+	
 else
 	if ~pseudoQ
 		K = sphconvhulln(meshList);
@@ -338,10 +311,9 @@ end
 %package geometry into "five" (e.g. 'A', 'O', 'AC', etc.)
 geomQ = true;
 if geomQ
-	for i = 1:length(five)
-		five(i).geometry = findgeometry(disorientation(five(i).q,'cubic'));
-	end
+	geometry = findgeometry(disorientation(vertcat(five.q),'cubic'));
 end
+[five.geometry] = geometry{:};
 
 %normalize octonions
 assert(size(meshList,2) == 8,['meshList should have 8 columns, not ' int2str(size(meshList,2))])
@@ -537,5 +509,36 @@ meshList = proj_down(meshList,1e-6,usv);
 		%restore null dimensions for oct --> five
 		meshList = proj_up(meshList,usv);
 % 	end
+
+
+load_method = 'evalc';
+switch load_method
+	case 'evalc'
+		for i = 1:length(vars)
+			var = vars{i};
+			val = opts.(var); %#ok<NASGU> %temporary value of vName
+			evalc([var '= val']); %assign temp value to a short name
+		end
+	case 'manual'
+		res = opts.res;
+		nint = opts.nint;
+		sphK = opts.sphK;
+		ocuboOpts = opts.ocuboOpts;
+end
+
+
+%package geometry into "five" (e.g. 'A', 'O', 'AC', etc.)
+geomQ = true;
+if geomQ
+	for i = 1:length(five)
+		five(i).geometry = findgeometry(disorientation(five(i).q,'cubic'));
+	end
+end
+
+	opts.octsubdiv = 1
+	opts.res = []; %double
+	opts.nint = []; %double
+	opts.sphK = []; % double
+	opts.ocuboOpts = []; % struct
 
 %}

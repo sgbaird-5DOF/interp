@@ -1,7 +1,7 @@
 function q = get_cubo(n,method,sidelength)
 arguments
 	n {mustBeNonNegIntegerOrEmpty} = 1
-	method string {mustBeMember(method,{'random','uniform'})} = 'random'
+	method char {mustBeMember(method,{'random','uniform'})} = 'random'
 	sidelength {mustBeNonNegIntegerOrEmpty} = double.empty
 end
 %--------------------------------------------------------------------------

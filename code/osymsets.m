@@ -1,4 +1,9 @@
-function olist = osymsets(data,pgnum,varargin)
+function osets = osymsets(oct,pgnum,usv)
+arguments
+	oct(:,8) double {mustBeFinite,mustBeReal,mustBeSqrt2Norm}
+	pgnum(1,1) double {mustBeInteger} = 32 %default to Oh cubic point group
+	usv(1,1) struct = struct
+end
 %--------------------------------------------------------------------------
 % Author: Sterling Baird
 %
@@ -29,31 +34,25 @@ function olist = osymsets(data,pgnum,varargin)
 %		Adapted a portion from Grain Boundary Octonion function GBdist.m from
 %		Elizabeth Holm's CMU group github page.
 %--------------------------------------------------------------------------
-if nargin - 2 == 1
-	usv = varargin{1};
-else
-	usv = [];
-end
 
-%% load crystal symmetry
-pgnum = 32;
+%% load symmetry operator combinations
 Spairs = get_sympairs(pgnum);
 
 %% reformat data (if applicable)
-ndatapts = size(data,1);
-if size(data,2) == 7 && ~isempty(usv)
-	data = proj_up(data,usv);
-elseif size(data,2) == 7
-	data = [data zeros(size(data,1),1)];
+ndatapts = size(oct,1);
+if size(oct,2) == 7 && ~isempty(fields(usv))
+	oct = proj_up(oct,usv);
+elseif size(oct,2) == 7
+	oct = [oct zeros(size(oct,1),1)];
 end
 
 %% get symmetrically equivalent octonions
 %initialize
-olist = cell(1,ndatapts);
+osets = cell(1,ndatapts);
 
 %normalize quaternions
-qAlist = normr(data(:,1:4));
-qBlist = normr(data(:,5:8));
+qAlist = normr(oct(:,1:4));
+qBlist = normr(oct(:,5:8));
 
 %loop through quaternion pairs
 parfor i = 1:ndatapts
@@ -62,7 +61,7 @@ parfor i = 1:ndatapts
 	qB = qBlist(i,:);
 	
 	%get symmetrically equivalent octonions
-	olist{i} = osymset(qA,qB,Spairs);
+	osets{i} = osymset(qA,qB,Spairs);
 end
 
 end %osymsets

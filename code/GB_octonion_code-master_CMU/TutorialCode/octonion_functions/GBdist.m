@@ -68,7 +68,6 @@ omega_new = zeros(1,length(pair_list)); %minimum octonion distances
 zeta_new = zeros(1,length(pair_list)); %minimizing U(1) angles
 
 %textwaitbar setup
-waitbarQ = true;
 slurmQ = true;
 if waitbarQ
 	D = parallel.pool.DataQueue;
@@ -77,16 +76,16 @@ if waitbarQ
 	p=1;
 	reverseStr = '';
 	if slurmQ
-        nintervals = 20;
-    else
-        nintervals = 100;
-    end
-    if npairs > nintervals
-	    nreps = floor(npairs/nintervals);
-        nreps2 = floor(npairs/nintervals);
-    else
-        nreps = 1;
-        nreps2 = 1;
+		nintervals = 20;
+	else
+		nintervals = 100;
+	end
+	if npairs > nintervals
+		nreps = floor(npairs/nintervals);
+		nreps2 = floor(npairs/nintervals);
+	else
+		nreps = 1;
+		nreps2 = 1;
 	end
 else
 	D = [];
@@ -96,13 +95,13 @@ end
 	function nUpdateProgress(~)
 		percentDone = 100*p/N;
 		if ~slurmQ
-		    msg = sprintf('GBdist: %3.1f ', percentDone); %Don't forget this semicolon
-        else
-            msg = sprintf('%3.0f', percentDone);
-        end
-        fprintf([reverseStr, msg]);
-        reverseStr = repmat(sprintf('\b'), 1, length(msg));
-        p = p + nreps;
+			msg = sprintf('GBdist: %3.1f ', percentDone); %Don't forget this semicolon
+		else
+			msg = sprintf('%3.0f', percentDone);
+		end
+		fprintf([reverseStr, msg]);
+		reverseStr = repmat(sprintf('\b'), 1, length(msg));
+		p = p + nreps;
 	end
 
 % GBOM_curr = 2*pi; %current GBOM angle. We want to lower this value via crystal symmetry!
@@ -122,14 +121,14 @@ parfor k = 1:npairs %parfor enabled
 		end
 	end
 	%     disp(k)
-% 	pair_id = pair_list(k);
-% 	pair_id = k;
+	% 	pair_id = pair_list(k);
+	% 	pair_id = k;
 	
 	%
- 	%if mod(k,1000)==0
- 	%	disp(['pair ',num2str(k)])
- 	%end
-% 	GBO_super = datatemp{k};
+	%if mod(k,1000)==0
+	%	disp(['pair ',num2str(k)])
+	%end
+	% 	GBO_super = datatemp{k};
 	GBO_super = data(k,:);
 	
 	o1 = GBO_super(:,1:8); %symmetrized octonion 1, unnormalized

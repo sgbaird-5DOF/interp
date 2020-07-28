@@ -56,6 +56,7 @@ if nargin == 4
 	geometry = varargin{1};
 else
 	geometry = findgeometry(q); %geometry in misorientation FZ, such as 'line OB'
+	geometry = geometry{1};
 end
 % geometry = 'twosphere'; %just for testing
 [A,R] = symaxis(q,geometry);

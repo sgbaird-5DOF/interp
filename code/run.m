@@ -55,7 +55,7 @@ addpathdir({'misFZfeatures.mat','PGnames.mat','nlt.m','q2rod.m',...
 %'Olmsted2004','5DOF_vtx','5DOF_misFZfeatures',
 %'5DOF_interior','5DOF_exterior', '5DOF_oct_vtx','5DOF_hsphext'
 %'5DOF_exterior_hsphext', 'ocubo'
-meshMethod = 'Olmsted2004';
+meshMethod = 'ocubo'; %'Olmsted2004';
 dataMethod = 'ocubo';
 pseudoMethod = [meshMethod '_pseudo'];
 
@@ -68,16 +68,18 @@ meshopts.res = 12.5;
 meshopts.nint = 2; % 1 == zero subdivisions, 2 == one subdivision, etc.
 meshopts.octsubdiv = 1;
 meshopts.ocuboOpts.n = 500; % # of octonions to generate, [] also ok if sidelength specified
-meshopts.ocuboOpts.method = 'random'; % 'random' or 'uniform' cubochoric sampling
+meshopts.ocuboOpts.method = 'uniform'; % 'random' or 'uniform' cubochoric sampling
 meshopts.ocuboOpts.sidelength = []; %sidelength of cubochoric grid (only specify if 'uniform', [] ok)
+meshopts.ocuboOpts.seed = 15; %sidelength of cubochoric grid (only specify if 'uniform', [] ok)
 
 %data parameters
 dataopts.res = 0.1;
 dataopts.nint = 1;
 dataopts.octsubdiv = 1;
-dataopts.ocuboOpts.n = 100; % # of octonions to generate, [] also ok if sidelength specified
+dataopts.ocuboOpts.n = 500; % # of octonions to generate, [] also ok if sidelength specified
 dataopts.ocuboOpts.method = 'random'; % 'random' or 'uniform' cubochoric sampling
 dataopts.ocuboOpts.sidelength = []; %sidelength of cubochoric grid (only specify if 'uniform', [] ok)
+dataopts.ocuboOpts.seed = 20; %integer or 'shuffle' OK
 
 %psuedo mesh parameters
 pseudoOpts.res = meshopts.res;
@@ -86,10 +88,11 @@ pseudoOpts.octsubdiv = 1;
 pseudoOpts.ocuboOpts.n = 1; % # of octonions to generate, [] also ok if sidelength specified
 pseudoOpts.ocuboOpts.method = 'random'; % 'random' or 'uniform' cubochoric sampling
 pseudoOpts.ocuboOpts.sidelength = []; %sidelength of cubochoric grid (only specify if 'uniform', [] ok)
+pseudoOpts.ocuboOpts.seed = 25; %integer or 'shuffle' OK
 
 T = true;
 F = false;
-meshloadQ = T; %just makes it easier to switch back and forth between true and false
+meshloadQ = F; %just makes it easier to switch back and forth between true and false
 dataloadQ = T;
 pseudoloadQ = T;
 meshdataloadQ = T; %whether to check for and load intersection & barycentric data from previous run
@@ -228,9 +231,10 @@ toc; disp(' ')
 databary = NaN(size(datapts));
 facetprops = databary;
 datainterp = NaN(size(datapts,1),1);
+nonintDists = datainterp;
 nnID = [];
 ilist = [];
-nonintDists = [];
+
 % databaryTemp = cell(1,size(datapts,1));
 for i = 1:ndatapts
 	datapt = datapts(i,:); %use down-projected data (and mesh)
@@ -251,7 +255,7 @@ for i = 1:ndatapts
 		switch baryType
 			case 'spherical'
 				databary(i,:) = sphbary(datapt,facet); %need to save for inference input
-				nonNegQ = all(databary(i,:) >= 0);
+				nonNegQ = all(databary(i,:) >= 1e-6);
 				greaterThanOneQ = sum(databary(i,:)) >= 1-1e-12;
 				numcheck = all(~isnan(databary(i,:)) & ~isinf(databary(i,:)));
 				baryOK = nonNegQ && greaterThanOneQ && numcheck;
@@ -271,23 +275,23 @@ for i = 1:ndatapts
 			%% interpolate using bary coords
 			datainterp(i) = dot(databary(i,:),facetprops(i,:));
 		else
-			disp([num2str(databary(i,:),2) ' ... sum == ' num2str(sum(databary(i,:)))]);
+			disp([num2str(databary(i,:),2) ' ... sum == ' num2str(sum(databary(i,:)),10)]);
 		end
 	end
 	if ~baryOK
 		disp(['i == ' int2str(i) ...
 			'; no valid intersection, taking NN with dist = ' num2str(nndistList(i))])
-		nonintDists = [nonintDists;nndistList(i)];
+		nonintDists(i) = nndistList(i);
 		nndistList(i) = NaN; %to distinguish interp vs. NN distances in plotting
-		nnID = [nnID;nnList(i)]; %nearest neighbor indices
-		ilist = [ilist;i]; %#ok<AGROW> % possible to separate out making baryOK a logical array & using 2 for loops
+		nnID = [nnID nnList(i)]; %nearest neighbor indices
+		ilist = [ilist i]; % possible to separate out making baryOK a logical array & using 2 for loops
 		% 			datainterp(i) = mesh.props(k(i));
 	end
 end
 fpath = fullfile('data',meshdata.fname);
 save(fpath)
 
-disp(['# non-intersections: ' int2str(length(nnID)) '/' int2str(ndatapts)])
+disp(['# non-intersections: ' int2str(sum(~isnan((nnID)))) '/' int2str(ndatapts)])
 
 %% plotting
 
