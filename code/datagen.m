@@ -226,7 +226,7 @@ end
 
 if ~pseudoQ
 	if contains(sampleMethod,'oct_vtx')
-		NVpairs = {'o2addQ',true,'method','pairwise'};
+		NVpairs = {'o2addQ',true,'method','pairwise'}; %method can be 'standard' or 'pairwise'
 	else
 		NVpairs = {'o2addQ',false,'method','pairwise'};
 	end
@@ -263,10 +263,10 @@ if opts.octsubdiv > 1
 		end
 	elseif pseudoQ
 		tricollapseQ = false;
-		[~,K,meshList] = hypersphere_subdiv(meshList,opts.sphK,opts.octsubdiv,tricollapseQ);
+		[~,K,meshList] = hypersphere_subdiv(meshList,[],opts.octsubdiv,tricollapseQ);
 		Ktr = [];
 	else
-		[Ktr,K,meshList] = hypersphere_subdiv(meshList,opts.sphK,opts.octsubdiv,true);
+		[Ktr,K,meshList] = hypersphere_subdiv(meshList,[],opts.octsubdiv,true); %originally had sphK
 	end
 	
 	% 	if any([strcmp(sampleMethod,'5DOF_oct_vtx'),contains(sampleMethod,'hsphext')])

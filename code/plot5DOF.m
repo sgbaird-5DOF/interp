@@ -81,7 +81,7 @@ z = z*scl;
 surf(x,y,z,'EdgeColor','none','FaceColor','cyan','FaceAlpha',0.7)
 
 ax = gca;
-ax.View = [135 15];
+ax.View = [135 60];
 
 % for i = nrange
 % 	nAtemp = vertcat(five2{i}.nA);

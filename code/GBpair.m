@@ -64,8 +64,8 @@ switch method
 		% o3 with respect to o1 and o2, output o3
 		
 		%calculate distances
-		[~, minsyms1] = GBdist4(o1,o2,pgnum,'omega');
-		[~, minsyms2] = GBdist4(o1,o3,pgnum,'omega');
+		[omega1, minsyms1] = GBdist4(o1,o3,pgnum,'omega');
+		[omega2, minsyms2] = GBdist4(o2,o3,pgnum,'omega');
 		
 	case 'pairwise'
 		%both with respect to o1, output o2 and o3
@@ -77,10 +77,10 @@ end
 
 switch method
 	case 'standard'
-		skipQ = true;
+		skipQ = false;
 		if skipQ
 			omega3 = omega2;
-			o3_out = octpairsymlist2(1,9:16);
+			o3_out = minsyms2{1}(1,:);
 			
 			%calculate distance again using GBdist (for comparison)
 			omega3_GBdist = omega2;
@@ -93,7 +93,7 @@ switch method
 % 		w2 = wveclist2(minIA2);
 		
 		%find o3 values that are the same
-		[min3,ia,ib] = intersect(minsyms1{1}(:,9:16),minsyms2{1}(:,9:16),'rows');
+		[min3,ia,ib] = intersect(minsyms1{1},minsyms2{1},'rows');
 		
 		%take o3's with minimum summed distance
 % 		wveclist3 = w1(ia)+w2(ib);
@@ -104,7 +104,7 @@ switch method
 		
 		symlist3 = min3;
 		
-		if size(symlist3,1) > 2
+		if size(symlist3,1) ~= 1
 			warning(['size(symlist3,1) == ' int2str(size(symlist3,1))])
 		end
 		
