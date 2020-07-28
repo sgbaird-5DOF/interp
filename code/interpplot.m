@@ -88,8 +88,9 @@ histogram(nnSE,edges);
 % % use bar
 % bar(b,[cntA',cntB'],'stacked')
 
-
-legend('intersecting','non-intersecting','Location','northoutside')
+title(['# non-intersections: ' int2str(length(nnSE)) ...
+	'/' int2str(length(nnSE)+length(interpSE))]);
+legend('intersecting','non-intersecting','Location','northeast')
 xlabel('multi-GB symmetrized SE (J/m^2)')
 ylabel('counts')
 % 5DOF plots

@@ -67,13 +67,13 @@ dataopts = meshopts;
 meshopts.res = 12.5;
 meshopts.nint = 2; % 1 == zero subdivisions, 2 == one subdivision, etc.
 meshopts.octsubdiv = 1;
-meshopts.ocuboOpts.n = 500; % # of octonions to generate, [] also ok if sidelength specified
-meshopts.ocuboOpts.method = 'uniform'; % 'random' or 'uniform' cubochoric sampling
+meshopts.ocuboOpts.n = 388; % # of octonions to generate, [] also ok if sidelength specified
+meshopts.ocuboOpts.method = 'random'; % 'random' or 'uniform' cubochoric sampling
 meshopts.ocuboOpts.sidelength = []; %sidelength of cubochoric grid (only specify if 'uniform', [] ok)
 meshopts.ocuboOpts.seed = 15; %sidelength of cubochoric grid (only specify if 'uniform', [] ok)
 
 %data parameters
-dataopts.res = 0.1;
+dataopts.res = 12.5;
 dataopts.nint = 1;
 dataopts.octsubdiv = 1;
 dataopts.ocuboOpts.n = 500; % # of octonions to generate, [] also ok if sidelength specified
@@ -93,9 +93,9 @@ pseudoOpts.ocuboOpts.seed = 25; %integer or 'shuffle' OK
 T = true;
 F = false;
 meshloadQ = F; %just makes it easier to switch back and forth between true and false
-dataloadQ = T;
+dataloadQ = F;
 pseudoloadQ = T;
-meshdataloadQ = T; %whether to check for and load intersection & barycentric data from previous run
+meshdataloadQ = F; %whether to check for and load intersection & barycentric data from previous run
 
 %% generate mesh
 disp('generating mesh')
@@ -144,7 +144,9 @@ disp('nearest neighbor search for all datapoints')
 % 	else
 % 		ptstemp = mesh.pts;
 % 	end
-[nnList,nndistList] = dsearchn(mesh.pts,data.pts);
+% [nnList,nndistList] = dsearchn(mesh.pts,data.pts);
+nnList = dsearchn(mesh.pts,data.pts);
+
 
 %remember to have each quaternion normalized to 1 before using get_omega
 meshtemp = sqrt2norm(mesh.pts(nnList,:),'oct');
@@ -205,7 +207,7 @@ datapts = data.pts;
 meshpts = mesh.pts;
 
 %project mesh and data together
-tol = 1e-3;
+tol = 0.5;
 [a,usv] = proj_down([meshpts;datapts],tol);
 
 if size(a,2) <= 7
