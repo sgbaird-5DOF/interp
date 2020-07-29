@@ -1,4 +1,12 @@
-function [intfacetIDs,dataBary] = intersect_facet(pts,K,datalist,tol,varargin)
+function [intfacetIDs,dataBary] = intersect_facet(pts,K,datalist,tol,maxnormQ,baryMethod)
+arguments
+	pts double {mustBeFinite,mustBeReal}
+	K double {mustBeFinite,mustBeReal}
+	datalist double {mustBeFinite,mustBeReal}
+	tol(1,1) double {mustBeFinite,mustBeReal} = 1e-6
+	maxnormQ(1,1) logical = false
+	baryMethod char {mustBeMember(baryMethod,{'planar','spherical'})} = 'planar'
+end
 %--------------------------------------------------------------------------
 % Author: Sterling Baird
 %
@@ -49,18 +57,10 @@ function [intfacetIDs,dataBary] = intersect_facet(pts,K,datalist,tol,varargin)
 % 			continue
 % 		end
 %
+%		Something wrong with 'spherical' still I think (too many
+%		intersections) 2020-07-21
+%
 %--------------------------------------------------------------------------
-usual = 4;
-if nargin - usual == 1
-	maxnormQ = varargin{1};
-else
-	maxnormQ = false;
-end
-
-
-%% options
-baryMethod = 'planar'; %'spherical', 'planar' % 2020-07-21 still something wrong with spherical I think
-% disp(baryMethod)
 
 %% find nearest vertex for each datapoint
 nnList = dsearchn(pts,datalist);

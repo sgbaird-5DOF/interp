@@ -54,8 +54,10 @@ tol = 1e-6; %tolerance
 %number of octonion pairs
 npts = size(o1,1);
 
+grainexchangeQ = false;
+doublecoverQ = false;
 %get symmetric octonions (SEOs)
-osets = osymsets(o2,pgnum);
+osets = osymsets(o2,pgnum,struct,grainexchangeQ,doublecoverQ);
 
 %number of CSEOs
 nsets = size(osets{1},1);
@@ -72,7 +74,7 @@ dmin = zeros(1,npts);
 o2minsyms = cell(1,npts);
 
 %loop through octonion pairs
-parfor i = 1:npts
+for i = 1:npts
 	%% setup
 	%unpack first octonion (held constant)
 	o1tmp = o1(i,:);
@@ -97,11 +99,24 @@ parfor i = 1:npts
 	qDz = qmult(qSD,qzm);
 	
 	%package quaternions
-	o2syms = [qCz qDz];
+% 	o2syms = [qCz qDz];
+	
+	%package quaternions
+	o2syms = [...
+		qCz	qDz
+		-qCz	qDz
+		qCz	-qDz
+		-qCz	-qDz
+		qDz	qCz
+		-qDz	qCz
+		qDz	-qCz
+		-qDz	-qCz];
 	
 	%% compute distances
 	%give the octonions a norm of sqrt(2)
 	o1rep = sqrt2norm(o1rep,'oct');
+	
+	o1rep = repelem(o1rep,8,1);
 	
 	%compute all distances
 	dlist = distfn(o1rep,o2syms); %#ok<PFBNS> %either omega or euclidean norm (see disttype arg)
@@ -111,13 +126,13 @@ parfor i = 1:npts
 	dmin(i) = min(dlist);
 	
 	%find logical indices of all minimum omegas
-	minIDs = ismembertol(dlist,dmin(i),tol,'DataScale',1);
+	minIDs = ismembertol(dlist,dmin(i),1e-1,'DataScale',1); %loosened tol for min omegas, 2020-07-28
 	
 	%find corresponding symmetrized octonions (with duplicates)
 	o2minsymsTmp = o2syms(minIDs,:);
 	
 	%delete duplicate rows (low tol OK b.c. matching 8 numbers)
-	[~,minIDs] = uniquetol(round(o2minsymsTmp,prec),tol,'ByRows',true,'DataScale',1);
+	[~,minIDs] = uniquetol(round(o2minsymsTmp,prec),tol,'ByRows',true,'DataScale',1); %generally repeats will be the same within ~12 sig figs
 	o2minsyms{i} = o2minsymsTmp(minIDs,:);
 	
 end

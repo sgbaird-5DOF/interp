@@ -1,8 +1,10 @@
-function osets = osymsets(oct,pgnum,usv)
+function osets = osymsets(oct,pgnum,usv,grainexchangeQ,doublecoverQ)
 arguments
 	oct(:,8) double {mustBeFinite,mustBeReal,mustBeSqrt2Norm}
 	pgnum(1,1) double {mustBeInteger} = 32 %default to Oh cubic point group
 	usv(1,1) struct = struct
+	grainexchangeQ logical = false
+	doublecoverQ logical = false
 end
 %--------------------------------------------------------------------------
 % Author: Sterling Baird
@@ -61,7 +63,7 @@ parfor i = 1:ndatapts
 	qB = qBlist(i,:);
 	
 	%get symmetrically equivalent octonions
-	osets{i} = osymset(qA,qB,Spairs);
+	osets{i} = osymset(qA,qB,Spairs,grainexchangeQ,doublecoverQ);
 end
 
 end %osymsets

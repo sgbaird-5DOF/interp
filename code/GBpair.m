@@ -148,7 +148,7 @@ switch method
 		omega3 = min(round(wveclist3,prec));
 		
 		%corresponding octonions
-		ids = find(abs(round(wveclist3-omega3,prec)) < tol);
+		ids = find(abs(round(wveclist3-omega3,prec)) < 0.1); %loosened tolerance, 2020-07-28
 		o12 = minsympairs1(ids,:);
 		o13 = minsympairs2(ids,:);
 		
@@ -164,7 +164,7 @@ switch method
 		
 		%% wrap-up
 		%calculate distance again using GBdist (for comparison)
-		omega3_GBdist = GBdist([o12 o13],32); %consider removing this
+% 		omega3_GBdist = GBdist([o12 o13],32); %consider removing this
 		
 		%package output
 		o2_out = o12;

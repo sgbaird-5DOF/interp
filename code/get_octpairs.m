@@ -1,11 +1,11 @@
-function [octvtx,usv,five,omega3,omega3_GBdist] = get_octpairs(pts,savename,opts)
+function [octvtx,usv,five,omega3] = get_octpairs(pts,savename,NV)
 arguments
 	pts(:,8) double {mustBeSqrt2Norm}
 	savename string
-	opts.o2addQ(1,1) logical = true
-	opts.plotQ(1,1) logical = false
-	opts.method char {mustBeMember(opts.method,{'standard','pairwise'})} = 'standard'
-	opts.pgnum(1,1) double = 32
+	NV.o2addQ(1,1) logical = true
+	NV.plotQ(1,1) logical = false
+	NV.method char {mustBeMember(NV.method,{'standard','pairwise'})} = 'standard'
+	NV.pgnum(1,1) double = 32
 end
 %--------------------------------------------------------------------------
 % Author: Sterling Baird
@@ -63,7 +63,7 @@ nB = normr((RB*[0 0 1].').');
 %package some "five" output for saving
 fiveref1.q =qA;
 fiveref1.nA = nA;
-fiveref1.d = qu2ro(qA);
+fiveref1.d = q2rod(qA);
 fiveref1.geometry = name1;
 
 %convert to octonions
@@ -78,9 +78,7 @@ o2 = GBfive2oct(qB,nB);
 
 %take the symmetrized versions for comparison
 % o1 = oct_sym0(1,1:8);
-o2 = oct_sym0{1};
-
-octvtx(1,:) = o2;
+o2 = oct_sym0{1}(1,:);
 
 %% get minimized distance octonions relative to oct pairs
 % o3 = pts(1,:);
@@ -88,6 +86,9 @@ octvtx(1,:) = o2;
 
 %loop through pairs relative to interior point. Each pair contains (+z) origin point
 npts = size(pts,1);
+
+octvtx = cell(1,npts);
+octvtx{1} = oct_sym0{1};
 
 %textwaitbar setup
 D = parallel.pool.DataQueue;
@@ -108,7 +109,7 @@ for i = 1:npts %parfor compatible
 	%unpack other octonion in pair
 	%(o2 and o3 form a pair, each is compared to o1)
 	o3 = pts(i,:); %input
-	[octvtx(i+1,:),omega3(i+1),omega3_GBdist(i+1)] = GBpair(o1,o2,o3,opts.pgnum,opts.method);
+	[octvtx{i+1},omega3(i+1)] = GBpair(o1,o2,o3,NV.pgnum,NV.method);
 end
 
 function nUpdateProgress(~)
@@ -119,20 +120,21 @@ function nUpdateProgress(~)
 	p = p + nreps;
 end
 
-five = GBoct2five(octvtx,true);
-
-if ~opts.o2addQ
-	five(1) = [];
-	octvtx(1,:) = [];
+if ~NV.o2addQ
+	octvtx{1} = [];
 end
 
-if opts.plotQ
+octvtx = vertcat(octvtx{:});
+
+five = GBoct2five(octvtx,true);
+
+if NV.plotQ
 	figure
 	plotFZrodriguez_vtx();
 	hold on
 	disQ = true;
 	if disQ
-		t = num2cell(qu2ro(disorientation(vertcat(five.q),'cubic')),1);
+		t = num2cell(q2rod(disorientation(vertcat(five.q),'cubic')),1);
 	else
 		t=num2cell(vertcat(five.d),1);
 	end
@@ -149,8 +151,9 @@ oref1 = o1;
 oref2 = o2;
 
 pts = octvtx2;
-disp(savename)
-save(savename,'pts','usv','oref1','oref2','five','fiveref1','octvtx')
+savepath = fullfile('data',savename);
+disp(savepath)
+save(savepath,'pts','usv','oref1','oref2','five','fiveref1','octvtx')
 
 end
 

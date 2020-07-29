@@ -65,9 +65,9 @@ dataopts = meshopts;
 
 %mesh parameters
 meshopts.res = 12.5;
-meshopts.nint = 2; % 1 == zero subdivisions, 2 == one subdivision, etc.
+meshopts.nint = 1; % 1 == zero subdivisions, 2 == one subdivision, etc.
 meshopts.octsubdiv = 1;
-meshopts.ocuboOpts.n = 388; % # of octonions to generate, [] also ok if sidelength specified
+meshopts.ocuboOpts.n = 100; % # of octonions to generate, [] also ok if sidelength specified
 meshopts.ocuboOpts.method = 'random'; % 'random' or 'uniform' cubochoric sampling
 meshopts.ocuboOpts.sidelength = []; %sidelength of cubochoric grid (only specify if 'uniform', [] ok)
 meshopts.ocuboOpts.seed = 15; %sidelength of cubochoric grid (only specify if 'uniform', [] ok)
@@ -90,10 +90,10 @@ pseudoOpts.ocuboOpts.method = 'random'; % 'random' or 'uniform' cubochoric sampl
 pseudoOpts.ocuboOpts.sidelength = []; %sidelength of cubochoric grid (only specify if 'uniform', [] ok)
 pseudoOpts.ocuboOpts.seed = 25; %integer or 'shuffle' OK
 
-T = true;
+T = true; %just makes it easier to switch back and forth between true and false
 F = false;
-meshloadQ = F; %just makes it easier to switch back and forth between true and false
-dataloadQ = F;
+meshloadQ = F;
+dataloadQ = T;
 pseudoloadQ = T;
 meshdataloadQ = F; %whether to check for and load intersection & barycentric data from previous run
 
@@ -223,7 +223,11 @@ end
 
 %compute intersecting facet IDs (might be zero, might have more than one)
 tol2 = 1e-6;
-intfacetIDs = intersect_facet(meshpts,mesh.sphK,datapts,tol2);
+
+mesh.sphK = sphconvhulln(meshpts);
+
+maxnormQ = true;
+intfacetIDs = intersect_facet(meshpts,mesh.sphK,datapts,tol2,maxnormQ);
 
 toc; disp(' ')
 
@@ -312,5 +316,6 @@ disp(' ')
 %%
 %-----------------------------CODE GRAVEYARD-------------------------------
 %{
+mesh.sphK = convhulln(meshpts); % check to see if % of intersections increases at all
 
 %}
