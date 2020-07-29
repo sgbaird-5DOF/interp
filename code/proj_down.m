@@ -3,7 +3,7 @@ arguments
 	pts double {mustBeFinite,mustBeReal}
 	tol(1,1) double {mustBeFinite,mustBeReal} = 1e-6
 	usv struct = struct.empty
-	nforce(1,1) double {mustBeInteger} = 1
+	nforce(1,1) double {mustBeInteger,mustBeNonnegative} = 0
 end
 %--------------------------------------------------------------------------
 % Author: Sterling Baird
@@ -32,11 +32,13 @@ end
 %dimensionality
 d = size(pts,2);
 
-
-
 if nforce >= d
-	error('nforce should be less than d == size(pts,2)')
-elseif nforce > 1
+	error(['nforce should be less than d == ' int2str(size(pts,2))])
+end
+
+if nforce == 0
+	nforceQ = false;
+else
 	nforceQ = true;
 end
 

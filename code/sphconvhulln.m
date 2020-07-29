@@ -1,4 +1,8 @@
-function K = sphconvhulln(pts,varargin)
+function K = sphconvhulln(pts,maxnormQ)
+arguments
+	pts double {mustBeFinite,mustBeReal}
+	maxnormQ(1,1) logical = false
+end
 %--------------------------------------------------------------------------
 % Author: Sterling Baird
 %
@@ -67,13 +71,6 @@ function K = sphconvhulln(pts,varargin)
 %% setup
 d = size(pts,2); %dimension
 
-usual = 1;
-if nargin - usual == 1
-	maxnormQ = varargin{1};
-else
-	maxnormQ = true;
-end
-
 % helper functions
 prec = 12;
 r = @(a) round(a,prec);
@@ -117,21 +114,6 @@ if maxnormQ
 		K(row,:) = [];
 		
 	else
-		
-% 		%calculate average of facet vertices for each facet
-% 		nfacets = size(K,1);
-% 		avgpts = zeros(nfacets,d);
-% 		for i = 1:nfacets
-% 			facetptIDs = K(i,:);
-% 			avgpts(i,:) = mean(pts(facetptIDs,:));
-% 		end
-% 		
-% 		%project facet averages onto each facet
-% 		%take intersection with largest norm
-% 		intfacetIDs = intersect_facet(pts,K,avgpts,tol,maxnormQ);
-% 		intfacetIDs = vertcat(intfacetIDs{:});
-% 		K = K(intfacetIDs,:);
-
 		K = convhulln(pts); %compute regular convex hull
 	end
 	
@@ -139,6 +121,7 @@ if maxnormQ
 end
 
 %% add orthoplex points (if not in pts) to prevent "undercut facets"
+
 % pts = uniquetol(pts,1e-6,'ByRows',true);
 
 %normalize the points to be on a unit sphere
@@ -153,21 +136,6 @@ end
 
 %define orthoplex vertices & triangulation, 1 point on each major axis
 [orthoPts,orthoK] = orthoplex(d);
-
-%define axis-based polytope
-% axpPts = axpolytope(d);
-	
-% check for duplicates between axis-based polytope points and pts
-% check = ~isempty(find(mymembercheck(axpPts,pts),1));
-% k = 0;
-% while check && k < 10
-% 	k = k+1;
-% 	% don't remove axpPts (& facets) that are a part of pts
-% 	R = slightRot(d);
-% 	hcubePts = (R*hcubePts.').';
-% 	axpPts = (R*axpPts.').';
-% 	check = ~isempty(find(mymembercheck(axpPts,pts),1));
-% end
 
 % don't remove hypercube points that are already in pts (i.e. a check for
 % duplicates, and don't remove duplicate pts & facets connected to them)
@@ -311,4 +279,37 @@ else
 end
 
 % 	extrapt = zeros(1,d);
+
+
+
+% 		%calculate average of facet vertices for each facet
+% 		nfacets = size(K,1);
+% 		avgpts = zeros(nfacets,d);
+% 		for i = 1:nfacets
+% 			facetptIDs = K(i,:);
+% 			avgpts(i,:) = mean(pts(facetptIDs,:));
+% 		end
+% 		
+% 		%project facet averages onto each facet
+% 		%take intersection with largest norm
+% 		intfacetIDs = intersect_facet(pts,K,avgpts,tol,maxnormQ);
+% 		intfacetIDs = vertcat(intfacetIDs{:});
+% 		K = K(intfacetIDs,:);
+
+
+%define axis-based polytope
+% axpPts = axpolytope(d);
+	
+% check for duplicates between axis-based polytope points and pts
+% check = ~isempty(find(mymembercheck(axpPts,pts),1));
+% k = 0;
+% while check && k < 10
+% 	k = k+1;
+% 	% don't remove axpPts (& facets) that are a part of pts
+% 	R = slightRot(d);
+% 	hcubePts = (R*hcubePts.').';
+% 	axpPts = (R*axpPts.').';
+% 	check = ~isempty(find(mymembercheck(axpPts,pts),1));
+% end
+
 %}

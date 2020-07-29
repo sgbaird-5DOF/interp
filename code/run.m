@@ -224,7 +224,8 @@ end
 %compute intersecting facet IDs (might be zero, might have more than one)
 tol2 = 1e-6;
 
-mesh.sphK = sphconvhulln(meshpts);
+maxnormQ = true;
+mesh.sphK = sphconvhulln(meshpts,maxnormQ);
 
 maxnormQ = false;
 intfacetIDs = intersect_facet(meshpts,mesh.sphK,datapts,tol2,maxnormQ);
