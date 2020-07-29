@@ -224,8 +224,13 @@ end
 %compute intersecting facet IDs (might be zero, might have more than one)
 tol2 = 1e-6;
 
-maxnormQ = true;
-mesh.sphK = sphconvhulln(meshpts,maxnormQ);
+% if size(meshpts,2) ~= size(mesh.sphK,2)
+	disp('--recomputing convex hull for mesh')
+	projpts = projfacet2hyperplane(normr(mean(meshpts)),meshpts);
+	projpts = proj_down(projpts,1e-6);
+	mesh.sphK = delaunayn(projpts);
+	%consider making the above lines a separate function and implementing elsewhere
+% end
 
 maxnormQ = false;
 intfacetIDs = intersect_facet(meshpts,mesh.sphK,datapts,tol2,maxnormQ);
@@ -318,5 +323,8 @@ disp(' ')
 %-----------------------------CODE GRAVEYARD-------------------------------
 %{
 mesh.sphK = convhulln(meshpts); % check to see if % of intersections increases at all
+
+	maxnormQ = true;
+ 	mesh.sphK = sphconvhulln(meshpts,maxnormQ);
 
 %}
