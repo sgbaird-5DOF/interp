@@ -62,6 +62,7 @@ if ~isempty(usv)
 		
 	elseif ~nforceQ
 		projpts = pts;
+		usv = struct.empty;
 		%not sure if I should have a constant, non-zero last column be OK
 		if size(pts,1) > 3
 			n = 3;
@@ -104,6 +105,7 @@ elseif isempty(usv)
 			', max(diag(S)) == ' num2str(max(diag(S))) ...
 			'. Setting projpts == pts'])
 		projpts = pts;
+		usv = struct.empty;
 	end
 end
 
