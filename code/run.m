@@ -225,10 +225,10 @@ end
 tol2 = 1e-6;
 
 % if size(meshpts,2) ~= size(mesh.sphK,2)
-	disp('--recomputing convex hull for mesh')
-	projpts = projfacet2hyperplane(normr(mean(meshpts)),meshpts);
-	projpts = proj_down(projpts,1e-6);
-	mesh.sphK = delaunayn(projpts);
+% 	disp('--recomputing convex hull for mesh')
+% 	projpts = projfacet2hyperplane(normr(mean(meshpts)),meshpts);
+% 	projpts = proj_down(projpts,1e-6);
+% 	mesh.sphK = delaunayn(projpts);
 	%consider making the above lines a separate function and implementing elsewhere
 % end
 
