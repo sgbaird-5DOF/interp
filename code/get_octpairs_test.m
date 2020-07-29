@@ -22,12 +22,10 @@ addpathdir({'q2rod.m','GBfive2oct.m','ax2qu.m'})
 
 % fname = '5DOF_vtx_deleteOz_octsubdiv1.mat';
 fname = '5DOF_vtx_octsubdiv1.mat';
-load(fname,'pts','five')
+load(fname,'pts')
 savename = 'octvtx_pairmin.mat';
-o2addQ = false;
-plotQ = true;
-method = 2;
-[octvtx,usv,five,omega23_pair,omega23_GBdist] = get_octpairs(pts,five,savename,o2addQ,plotQ,method);
+NV = {'o2addQ',true,'plotQ',true,'method','pairwise'};
+[octvtx,usv,five,omega23_pair,omega23_GBdist] = get_octpairs(pts,savename,NV{:});
 % [octvtx,usv,five,omega23_pair,omega23_GBdist] = get_octpairs2(pts,five,savename,o2addQ,plotQ);
 
 [vtxnames,ia] = sort({five.geometry});
@@ -38,6 +36,12 @@ npts2 = size(octvtx,1);
 % f = waitbar(0);
 pd1 = zeros(npts2);
 pd2 = pd1;
+
+% tmp = num2cell(octvtx,2);
+% octvtx_pairs = allcomb(tmp,tmp);
+% octvtx1 = vertcat(octvtx_pairs{:,1});
+% octvtx2 = vertcat(octvtx_pairs{:,2}); %if I want to use the vectorized versions, I'll need to deal with preserving PD-formating
+
 parfor i = 1:npts2
 % 	waitbar(i/npts2,f);
 	for j = 1:npts2
