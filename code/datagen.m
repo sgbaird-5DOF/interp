@@ -230,7 +230,7 @@ if ~pseudoQ
 	else
 		NVpairs = {'o2addQ',false,'method','pairwise'};
 	end
-	[meshList,usv,five,~,~] = get_octpairs(meshList,savename,NVpairs{:}); %find a way to not call this for 'data'
+	[meshList,usv,five,~] = get_octpairs(meshList,savename,NVpairs{:}); %find a way to not call this for 'data'
 	meshList = proj_down(meshList,1e-6,usv);
 else
 	try

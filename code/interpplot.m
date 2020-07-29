@@ -2,17 +2,17 @@ function interpplot(fname)
 %--------------------------------------------------------------------------
 % Author: Sterling Baird
 %
-% Date:
+% Date: 2020-07-28
 %
-% Description:
+% Description: Create parity plot with 5DOF plots on side
 % 
-% Inputs:
+% Inputs: fname - filename that contains relevant variables for plotting
 %
-% Outputs:
+% Outputs: none
 %
-% Usage:
+% Usage: interpplot(fname)
 %
-% Dependencies:
+% Dependencies: plot5DOF.m
 %
 % Notes:
 %

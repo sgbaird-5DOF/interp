@@ -126,7 +126,7 @@ for i = 1:npts
 	dmin(i) = min(dlist);
 	
 	%find logical indices of all minimum omegas
-	minIDs = ismembertol(dlist,dmin(i),1e-1,'DataScale',1); %loosened tol for min omegas, 2020-07-28
+	minIDs = ismembertol(dlist,dmin(i),0.2,'DataScale',1); %loosened tol for min omegas, 2020-07-28
 	
 	%find corresponding symmetrized octonions (with duplicates)
 	o2minsymsTmp = o2syms(minIDs,:);

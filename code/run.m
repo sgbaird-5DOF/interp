@@ -92,7 +92,7 @@ pseudoOpts.ocuboOpts.seed = 25; %integer or 'shuffle' OK
 
 T = true; %just makes it easier to switch back and forth between true and false
 F = false;
-meshloadQ = F;
+meshloadQ = T;
 dataloadQ = T;
 pseudoloadQ = T;
 meshdataloadQ = F; %whether to check for and load intersection & barycentric data from previous run
@@ -138,7 +138,7 @@ end
 % 	oint = inhull_setup(pts,usv,xyz,tess,five,savename);
 
 %% find nearest vertex of mesh to datapoint
-disp('nearest neighbor search for all datapoints')
+disp('--nearest neighbor search for all datapoints')
 % 	if ~isempty(mesh.usv) && (size(mesh.pts,2) == 8)
 % 		ptstemp = proj_down(mesh.pts,1e-6,mesh.usv);
 % 	else
@@ -207,7 +207,7 @@ datapts = data.pts;
 meshpts = mesh.pts;
 
 %project mesh and data together
-tol = 0.5;
+tol = 1e-3;
 [a,usv] = proj_down([meshpts;datapts],tol);
 
 if size(a,2) <= 7
@@ -226,7 +226,7 @@ tol2 = 1e-6;
 
 mesh.sphK = sphconvhulln(meshpts);
 
-maxnormQ = true;
+maxnormQ = false;
 intfacetIDs = intersect_facet(meshpts,mesh.sphK,datapts,tol2,maxnormQ);
 
 toc; disp(' ')
