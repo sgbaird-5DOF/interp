@@ -55,8 +55,8 @@ tol = 1e-6; %tolerance
 %number of octonion pairs
 npts = size(o1,1);
 
-grainexchangeQ = false;
-doublecoverQ = false;
+grainexchangeQ = true;
+doublecoverQ = true;
 %get symmetric octonions (SEOs)
 osets = osymsets(o2,pgnum,struct,grainexchangeQ,doublecoverQ);
 
@@ -100,18 +100,18 @@ parfor i = 1:npts %parfor compatible
 	qDz = qmult(qSD,qzm);
 	
 	%package quaternions
-% 	o2syms = [qCz qDz];
+	o2syms = [qCz qDz];
 	
 	%package quaternions
-	o2syms = [...
-		qCz	qDz
-		-qCz	qDz
-		qCz	-qDz
-		-qCz	-qDz
-		qDz	qCz
-		-qDz	qCz
-		qDz	-qCz
-		-qDz	-qCz];
+% 	o2syms = [...
+% 		qCz	qDz
+% 		-qCz	qDz
+% 		qCz	-qDz
+% 		-qCz	-qDz
+% 		qDz	qCz
+% 		-qDz	qCz
+% 		qDz	-qCz
+% 		-qDz	-qCz];
 	
 	%% compute distances
 	%give the octonions a norm of sqrt(2)
