@@ -63,7 +63,12 @@ if ~isempty(usv)
 	elseif ~nforceQ
 		projpts = pts;
 		%not sure if I should have a constant, non-zero last column be OK
-		warning(['Nonzero last column. E.g. ' num2str(pts([1 2],end)) '. Setting projpts == pts'])
+		if size(pts,1) > 3
+			n = 3;
+		else
+			n = 1;
+		end
+		warning(['Nonzero last column. E.g. ' num2str(pts(1:n,end).') '. Setting projpts == pts'])
 	end
 	
 elseif isempty(usv)
