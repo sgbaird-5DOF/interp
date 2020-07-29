@@ -6,6 +6,7 @@ arguments
 	NV.plotQ(1,1) logical = false
 	NV.method char {mustBeMember(NV.method,{'standard','pairwise'})} = 'standard'
 	NV.pgnum(1,1) double = 32
+	NV.wtol(1,1) double = 1e-6
 end
 %--------------------------------------------------------------------------
 % Author: Sterling Baird
@@ -72,7 +73,7 @@ o2 = GBfive2oct(qB,nB);
 % o2 = [-1 0 0 0 1 0 0 0]; %input
 % o2 = [1 0 0 0 0 0 0 0]; %certainly seems to speed things up
 
-[omega0,oct_sym0] = GBdist4(o1,o2,32,'norm');
+[omega0,oct_sym0] = GBdist4(o1,o2,32,'norm',NV.wtol);
 % [omega0,oct_sym0,zeta0] = GBdist2([o1 o2],32,false);
 % [omega0,oct_sym0,zeta0] = GBdist([o1 o2],32,false);
 
@@ -109,7 +110,7 @@ for i = 1:npts %parfor compatible
 	%unpack other octonion in pair
 	%(o2 and o3 form a pair, each is compared to o1)
 	o3 = pts(i,:); %input
-	[octvtx{i+1},omega3(i+1)] = GBpair(o1,o2,o3,NV.pgnum,NV.method);
+	[octvtx{i+1},omega3(i+1)] = GBpair(o1,o2,o3,NV.pgnum,NV.method,NV.wtol);
 end
 
 function nUpdateProgress(~)
