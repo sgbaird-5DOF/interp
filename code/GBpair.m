@@ -1,4 +1,4 @@
-function [o3_out,omega3,omega3_GBdist,o2_out] = GBpair(o1,o2,o3,pgnum,method)
+function [o3_out,omega3,o2_out] = GBpair(o1,o2,o3,pgnum,method)
 arguments
 	o1(:,8) double {mustBeFinite,mustBeReal}
 	o2(:,8) double {mustBeFinite,mustBeReal}
@@ -148,7 +148,7 @@ switch method
 		omega3 = min(round(wveclist3,prec));
 		
 		%corresponding octonions
-		ids = find(abs(round(wveclist3-omega3,prec)) < 0.1); %loosened tolerance, 2020-07-28
+		ids = find(abs(round(wveclist3-omega3,prec)) < 0.2); %loosened tolerance, 2020-07-28
 		o12 = minsympairs1(ids,:);
 		o13 = minsympairs2(ids,:);
 		
@@ -156,9 +156,9 @@ switch method
 		o12 = uniquetol(round(o12,prec),tol,'ByRows',true,'DataScale',1);
 		o13 = uniquetol(round(o13,prec),tol,'ByRows',true,'DataScale',1);
 		
-		if size(o13,1) > 1
-			warning('more than one octonion found')
-		end
+% 		if size(o13,1) > 1
+% 			warning('more than one octonion found')
+% 		end
 		
 		o3_out = o13;
 		
