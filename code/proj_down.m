@@ -66,12 +66,16 @@ if ~isempty(usv)
 		warning(['Nonzero last column. E.g. ' num2str(pts([1 2],end)) '. Setting projpts == pts'])
 	end
 	
-else
+elseif isempty(usv)
+	% make a non-empty struct with no fields
+	usv(1) = struct();
+	
 	%take average of points
 	avg = mean(pts);
 	
 	%project to d-1 dimensional space
 	[U,S,V]=svd(bsxfun(@minus,pts,avg),0);
+	
 	usv.U = U;
 	usv.S = S;
 	usv.V = V;
