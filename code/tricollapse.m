@@ -53,14 +53,14 @@ switch for_type
 	case 'for'
 		for i = 1:nsets
 			fixQ{i} = ismember(K,irepsets{i});
-		    disp('line to test: fixQ{i} = ismember(K,irepsets{i})')
-            disp('using "keyboard" for debugging')
-            keyboard
-            %K(fixQ{i}) = 0; %might make sorting faster for next repetition (but doesn't work with parallelization)
+			disp('line to test: fixQ{i} = ismember(K,irepsets{i})')
+			disp('using "keyboard" for debugging')
+			keyboard
+			%K(fixQ{i}) = 0; %might make sorting faster for next repetition (but doesn't work with parallelization)
 		end
 	case 'parfor'
-        K = reshape(K,1,[]);
-        K = parallel.pool.Constant(K); %send this value to the workers only once
+		K = reshape(K,1,[]);
+		K = parallel.pool.Constant(K); %send this value to the workers only once
 		%textwaitbar setup
 		D = parallel.pool.DataQueue;
 		afterEach(D, @nUpdateProgress);
@@ -68,16 +68,16 @@ switch for_type
 		p=1;
 		reverseStr = '';
 		nintervals = 20;
-        if nsets > nintervals
-            nreps2 = floor(nsets/nintervals);
-            nreps = nreps2;
-        else
-            nreps2 = 1;
-            nreps = nreps2;
-        end
+		if nsets > nintervals
+			nreps2 = floor(nsets/nintervals);
+			nreps = nreps2;
+		else
+			nreps2 = 1;
+			nreps = nreps2;
+		end
 		parfor i = 1:nsets
 			fixQ{i} = find(ismember(K.Value,irepsets{i}));
-            if mod(i,nreps2) == 0
+			if mod(i,nreps2) == 0
 				send(D,i);
 			end
 		end
@@ -128,7 +128,7 @@ end
 for i = 1:nsets
 	icu = icuList(i);
 	uniqueK(fixQ{i}) = icu-nptstot; % replace degenerate locations with unique ID
-end	
+end
 
 
 % 		msg2 = ['looping through ' int2str(nsets) ' ireps'];
@@ -149,7 +149,7 @@ end
             %for j = 1:length(irepset)
             %    Qtemp{j} = find(K.Value == irepset(j));
             %end
-            %fixQ{i} = horzcat(Qtemp{:});   
+            %fixQ{i} = horzcat(Qtemp{:});
                % fixQ{i} = find(any(K.Value == irepsets{i}.')); %memory issues, but probably faster
 			%fixQ{i} = find(builtin('_ismemberhelper',K.Value,irepsets{i})); % undocumented helper function
 %}
