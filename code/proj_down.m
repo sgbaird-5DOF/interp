@@ -55,6 +55,11 @@ if ~isempty(usv)
 		%remove last column
 		projpts = projpts(:,1:end-nforce);
 		
+	elseif nforceQ
+		projpts = projpts(:,1:end-nforce);
+		disp(['Nonzero last column. E.g. ' num2str(pts([1 2],end)) ...
+			'. Forcing projection ' int2str(nforce) ' dimensions.'])
+		
 	elseif ~nforceQ
 		projpts = pts;
 		%not sure if I should have a constant, non-zero last column be OK
