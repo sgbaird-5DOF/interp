@@ -1,4 +1,10 @@
-function [projpts,usv] = proj_down(pts,tol,varargin)
+function [projpts,usv] = proj_down(pts,tol,usv,nforce)
+arguments
+	pts double {mustBeFinite,mustBeReal}
+	tol(1,1) double {mustBeFinite,mustBeReal} = 1e-6
+	usv struct = struct.empty
+	nforce(1,1) double {mustBeInteger} = 1
+end
 %--------------------------------------------------------------------------
 % Author: Sterling Baird
 %
@@ -26,30 +32,15 @@ function [projpts,usv] = proj_down(pts,tol,varargin)
 %dimensionality
 d = size(pts,2);
 
-usual = 2;
 
-narginchk(2,4)
 
-if nargin - usual == 2
-	nforce = varargin{2};
+if nforce >= d
+	error('nforce should be less than d == size(pts,2)')
+elseif nforce > 1
 	nforceQ = true;
-	
-	if nforce >= d
-		error('nforce should be less than d == size(pts,2)')
-	end
-else
-	nforce = 1;
-	nforceQ = false;
 end
 
-if (nargin - usual == 1) || ((nargin - usual == 2) && ~isempty(varargin{1}))
-	
-	if ~isstruct(varargin{1})
-		error('usv should be a struct. Did you mean proj_down(pts,tol,[],nforce)?')
-	end
-	
-	usv = varargin{1};
-	
+if ~isempty(usv)
 	%unpackage
 	V = usv.V;
 	avg = usv.avg;
@@ -63,7 +54,8 @@ if (nargin - usual == 1) || ((nargin - usual == 2) && ~isempty(varargin{1}))
 		
 	elseif ~nforceQ
 		projpts = pts;
-		warning(['Nonzero last column. E.g. ' num2str(pts(1,end)) '. Setting projpts == pts'])
+		%not sure if I should have a constant, non-zero last column be OK
+		warning(['Nonzero last column. E.g. ' num2str(pts([1 2],end)) '. Setting projpts == pts'])
 	end
 	
 else
@@ -78,7 +70,6 @@ else
 	usv.avg = avg;
 	
 	%number of degenerate dimensions
-	% ndegdim = sum(abs(diag(S)) < tol);
 	ndegdim = sum(abs(diag(S)) < tol);
 	
 	if (ndegdim > 0) || nforceQ
@@ -99,6 +90,9 @@ else
 	end
 end
 
+end %proj_down
 
-
-end
+%-----------------------------CODE GRAVEYARD-------------------------------
+%{
+	% ndegdim = sum(abs(diag(S)) < tol);
+%}
