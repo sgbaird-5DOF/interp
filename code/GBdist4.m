@@ -117,7 +117,7 @@ parfor i = 1:npts %parfor compatible
 	%give the octonions a norm of sqrt(2)
 	o1rep = sqrt2norm(o1rep,'oct');
 	
-	o1rep = repelem(o1rep,8,1);
+% 	o1rep = repelem(o1rep,8,1);
 	
 	%compute all distances
 	dlist = distfn(o1rep,o2syms); %#ok<PFBNS> %either omega or euclidean norm (see disttype arg)
