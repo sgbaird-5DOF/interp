@@ -49,7 +49,7 @@ qA = qlist.(name1);
 
 %unpack no boundary point
 name2 = 'O';
-disp(['name2 = ' name2])
+% disp(['name2 = ' name2])
 qB = normr(qlist.(name2));
 % qB = normr(qB+0.05*rand(1,4));
 
@@ -112,6 +112,7 @@ parfor i = 1:npts %parfor compatible
 	o3 = pts(i,:); %input
 	[octvtx{i+1},omega3(i+1)] = GBpair(o1,o2,o3,NV.pgnum,NV.method,NV.wtol);
 end
+disp(' ')
 
 function nUpdateProgress(~)
 	percentDone = 100*p/N;

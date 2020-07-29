@@ -83,6 +83,9 @@ parfor i = 1:npts %parfor compatible
 	five(i).nA = nA;
 	five(i).d = d;	
 end
+if waitbarQ
+	disp(' ')
+end
 
 %call to disorientation might be expensive
 if disQ
