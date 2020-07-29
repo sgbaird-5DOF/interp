@@ -55,7 +55,7 @@ addpathdir({'misFZfeatures.mat','PGnames.mat','nlt.m','q2rod.m',...
 %'Olmsted2004','5DOF_vtx','5DOF_misFZfeatures',
 %'5DOF_interior','5DOF_exterior', '5DOF_oct_vtx','5DOF_hsphext'
 %'5DOF_exterior_hsphext', 'ocubo'
-meshMethod = 'ocubo'; %'Olmsted2004';
+meshMethod = 'Olmsted2004'; %'Olmsted2004';
 dataMethod = 'ocubo';
 pseudoMethod = [meshMethod '_pseudo'];
 

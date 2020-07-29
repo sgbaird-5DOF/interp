@@ -1,10 +1,11 @@
-function [o3_out,omega3,o2_out] = GBpair(o1,o2,o3,pgnum,method)
+function [o3_out,omega3,o2_out] = GBpair(o1,o2,o3,pgnum,method,wtol)
 arguments
 	o1(:,8) double {mustBeFinite,mustBeReal}
 	o2(:,8) double {mustBeFinite,mustBeReal}
 	o3 %can be empty if method == standard
 	pgnum(1,1) double {mustBeInteger} = 32 %default == Oh cubic
 	method char {mustBeMember(method,{'standard','pairwise'})} = 'standard'
+	wtol(1,1) double {mustBeFinite,mustBeReal} = 1e-6
 end
 %--------------------------------------------------------------------------
 % Author: Sterling Baird
@@ -77,10 +78,10 @@ end
 
 switch method
 	case 'standard'
-		skipQ = false;
+		skipQ = true;
 		if skipQ
 			omega3 = omega2;
-			o3_out = minsyms2{1}(1,:);
+			o3_out = minsyms1{1}(1,:);
 			
 			%calculate distance again using GBdist (for comparison)
 			omega3_GBdist = omega2;
@@ -148,7 +149,7 @@ switch method
 		omega3 = min(round(wveclist3,prec));
 		
 		%corresponding octonions
-		ids = find(abs(round(wveclist3-omega3,prec)) < 0.2); %loosened tolerance, 2020-07-28
+		ids = find(abs(round(wveclist3-omega3,prec)) < wtol); %loosened tolerance, 2020-07-28
 		o12 = minsympairs1(ids,:);
 		o13 = minsympairs2(ids,:);
 		

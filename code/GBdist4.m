@@ -1,9 +1,10 @@
-function [dmin, o2minsyms] = GBdist4(o1,o2,pgnum,dtype)
+function [dmin, o2minsyms] = GBdist4(o1,o2,pgnum,dtype,wtol)
 arguments
 	o1(:,8) double {mustBeFinite,mustBeReal,mustBeSqrt2Norm}
 	o2(:,8) double {mustBeFinite,mustBeReal,mustBeSqrt2Norm}
 	pgnum(1,1) double {mustBeInteger} = 32 % default == cubic Oh point group
 	dtype char {mustBeMember(dtype,{'omega','norm'})} = 'omega'
+	wtol(1,1) double {mustBeFinite,mustBeReal} = 1e-6
 end
 %--------------------------------------------------------------------------
 % Author: Sterling Baird
@@ -126,7 +127,7 @@ for i = 1:npts
 	dmin(i) = min(dlist);
 	
 	%find logical indices of all minimum omegas
-	minIDs = ismembertol(dlist,dmin(i),0.2,'DataScale',1); %loosened tol for min omegas, 2020-07-28
+	minIDs = ismembertol(dlist,dmin(i),wtol,'DataScale',1); %loosened tol for min omegas, 2020-07-28
 	
 	%find corresponding symmetrized octonions (with duplicates)
 	o2minsymsTmp = o2syms(minIDs,:);

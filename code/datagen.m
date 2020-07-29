@@ -226,9 +226,9 @@ end
 
 if ~pseudoQ
 	if contains(sampleMethod,'oct_vtx')
-		NVpairs = {'o2addQ',true,'method','pairwise'}; %method can be 'standard' or 'pairwise'
+		NVpairs = {'o2addQ',true,'method','pairwise','wtol',1e-6}; %method can be 'standard' or 'pairwise'
 	else
-		NVpairs = {'o2addQ',false,'method','pairwise'};
+		NVpairs = {'o2addQ',false,'method','pairwise','wtol',1e-6};
 	end
 	[meshList,usv,five,~] = get_octpairs(meshList,savename,NVpairs{:}); %find a way to not call this for 'data'
 	meshList = proj_down(meshList,1e-6,usv);
