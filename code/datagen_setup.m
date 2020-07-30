@@ -60,7 +60,8 @@ if computeQ
 		Ktr = [];
 	end
 	fpath = fullfile('data',fname);
-    save(fpath,'pts','props','sphK','five','usv','Ktr','opts','sampleMethod')
+   save(fpath,'pts','props','sphK','five','usv','Ktr','opts','sampleMethod','fname')
+	disp(fname)
 end
 
 d = size(pts,2);

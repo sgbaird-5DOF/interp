@@ -132,7 +132,12 @@ sgtitle({...
 	'Interpreter','none','FontSize',10);
 
 fpath = fullfile('figures',fname(1:end-4));
-print(fpath,'-dpng')
+try
+	print(fpath,'-dpng')
+catch
+	disp('attempting to print figure one more time')
+	print(fpath,'-dpng')
+end
 savefig(fig,[fpath '.fig'],'compact')
 
 
