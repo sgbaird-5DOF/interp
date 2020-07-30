@@ -106,7 +106,7 @@ nreps2 = floor(N/20);
 nreps = nreps2;
 
 disp('get_octpairs ')
-for i = 1:npts %parfor compatible
+parfor i = 1:npts %parfor compatible
 	
 	if mod(i,nreps2) == 0
 		send(D,i);

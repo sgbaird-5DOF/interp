@@ -43,12 +43,13 @@ savename = ['mesh_' mesh.fname(1:end-4) '_data_' data.fname];
 
 %nearest neighbor list
 nnList = dsearchn(meshpts,datapts);
+nndistList = get_omega(sqrt2norm(mesh.pts(nnList,:)),sqrt2norm(data.pts));
 
 %initialize
 databary = NaN(size(datapts));
 facetprops = databary;
 datainterp = NaN(size(datapts,1),1);
-nndistList = datainterp;
+% nndistList = datainterp;
 nonintDists = datainterp;
 nnID = [];
 ilist = [];
@@ -97,6 +98,7 @@ for i = 1:ndatapts
 		disp(['i == ' int2str(i) ...
 			'; no valid intersection, taking NN with dist = ' num2str(nndistList(i))])
 		nonintDists(i) = nndistList(i);
+		
 		nndistList(i) = NaN; %to distinguish interp vs. NN distances in plotting
 		nnID = [nnID nnList(i)]; %nearest neighbor indices
 		ilist = [ilist i]; % possible to separate out making baryOK a logical array & using 2 for loops
