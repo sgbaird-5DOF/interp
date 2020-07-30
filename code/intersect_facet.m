@@ -41,13 +41,6 @@ end
 %			numStabBary.m (optional)
 %
 % Notes:
-%		Consider changing it to only look at the k-nearest neighbors before
-%		just projecting onto all remaining facets since there are a lot of
-%		repeats with using the next nearest neighbor approach for all facets.
-%		Alternatively, keep track of which facets have already been
-%		considered and remove them from the list of intersecting facets
-%		before doing the projection.
-%
 %		To relax the requirement that pts need to close to on the unit
 %		sphere, then there's a set of lines in projray2hypersphere.m that can
 %		be changed or removed.
@@ -195,4 +188,12 @@ end
 % 			facetPtIDsOld = [facetPtIDsOld;facetPtIDsNext]; %#ok<AGROW>
 
 
+
+
+%		Consider changing it to only look at the k-nearest neighbors before
+%		just projecting onto all remaining facets since there are a lot of
+%		repeats with using the next nearest neighbor approach for all facets.
+%		Alternatively, keep track of which facets have already been
+%		considered and remove them from the list of intersecting facets
+%		before doing the projection.
 %}

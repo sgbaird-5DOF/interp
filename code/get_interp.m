@@ -27,7 +27,7 @@ end
 %		*
 %
 % Notes:
-%		*
+%		consider adding option for 'bary' vs. 'knn' interpolation
 %--------------------------------------------------------------------------
 meshpts = mesh.ppts;
 datapts = data.ppts;
