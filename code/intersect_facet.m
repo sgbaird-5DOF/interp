@@ -141,7 +141,9 @@ for i  = 1:ndatapts % for parallelized, use parfor
 	
 	if k > 0
 		row = rownext; %correct for indexing if the while loop was entered into
-		%NOTE: not having this was a serious source of error (2020-07-29)
+		%NOTE: not having this was a serious source of error (2020-07-29),
+		%i.e. only datapoints which did not enter the while loop had the
+		%correct output for the intersecting facet ID
 	end
 	
 	if ~isempty(subfacetIDs{i})
