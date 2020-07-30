@@ -1,4 +1,10 @@
-function [Ktr,K_out,newpts] = hypersphere_subdiv(pts,K,nint,varargin)
+function [Ktr,K_out,newpts] = hypersphere_subdiv(pts,K,nint,tricollapseQ)
+arguments
+	pts double
+	K double
+	nint(1,1) double = 1
+	tricollapseQ(1,1) logical = true
+end
 %--------------------------------------------------------------------------
 % Author: Sterling Baird
 %
@@ -19,12 +25,6 @@ function [Ktr,K_out,newpts] = hypersphere_subdiv(pts,K,nint,varargin)
 %		normr.m
 %--------------------------------------------------------------------------
 
-if nargin == 4
-	tricollapseQ = varargin{1};
-else
-	tricollapseQ = true;
-end
-
 %% compute top-level convex hull
 if isempty(K) % && tricollapseQ
 	maxnormQ = true;
@@ -39,7 +39,7 @@ if isempty(K) % && tricollapseQ
 end
 
 %% Ktree top-level
-npts = length(pts);
+npts = size(pts,1);
 nfacets = size(K,1);
 Ktr.main.K = K;
 Ktr.main.pts = pts;
@@ -119,7 +119,7 @@ parfor i = 1:nfacets %parfor compatible, uncomment "send" lines if using parfor 
 	end
 	
 % 	%renormalize to unit hypersphere
-%  	mpts2a = normr(mpts2a);
+%  	mpts2a = normr(mpts2a); %I think this was a source of error before (2020-07-30)
 	
 	%add subdivision to K-tree
 	KtrtempK{i} = K2a;
