@@ -75,7 +75,7 @@ dmin = zeros(1,npts);
 o2minsyms = cell(1,npts);
 
 %loop through octonion pairs
-for i = 1:npts %parfor compatible
+parfor i = 1:npts %parfor compatible
 	%% setup
 	%unpack first octonion (held constant)
 	o1tmp = o1(i,:);

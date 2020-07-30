@@ -87,10 +87,12 @@ nreps2 = nreps;
 
 %% loop through datapts
 %disp('intersect_facet ')
-for i  = 1:ndatapts % for parallelized, use parfor
+parfor i  = 1:ndatapts % for parallelized, use parfor
 	%% first NN projection
 	data = datalist(i,:);
 	nn = nnList(i);
+	
+	rownext = []; %initialize (used in while loop)
 	
 	%find vertices of facets attached to NN vertex (or use all facets)
 	[row,col]=find(K==nn);
