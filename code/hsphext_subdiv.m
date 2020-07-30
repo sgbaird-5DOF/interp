@@ -53,6 +53,7 @@ if nint > 1
 	
 else
 	Ktr.main = K;
+	%only output exterior points (update: 2020-07-30)
 	IDs = unique(K);
 	Ktr.pts = pts(IDs,:);
 	meshpts = pts(IDs,:);
