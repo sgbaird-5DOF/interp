@@ -215,11 +215,8 @@ if size(a,2) <= 7
 	meshpts = proj_down(meshpts,tol,usv);
 end
 
-normQ = T;
-if normQ
-	datapts = normr(datapts);
-	meshpts = normr(meshpts);
-end
+datapts = normr(datapts); %not doing this produced 100% non-intersections (2020-07-29)
+meshpts = normr(meshpts);
 
 %compute intersecting facet IDs (might be zero, might have more than one)
 tol2 = 1e-6;
@@ -267,7 +264,7 @@ for i = 1:ndatapts
 		switch baryType
 			case 'spherical'
 				databary(i,:) = sphbary(datapt,facet); %need to save for inference input
-				nonNegQ = all(databary(i,:) >= -1e-6);
+				nonNegQ = all(databary(i,:) >= -0.2);
 				greaterThanOneQ = sum(databary(i,:)) >= 1-1e-6;
 				numcheck = all(~isnan(databary(i,:)) & ~isinf(databary(i,:)));
 				baryOK = nonNegQ && greaterThanOneQ && numcheck;
