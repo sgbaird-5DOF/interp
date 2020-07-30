@@ -220,7 +220,7 @@ tol2 = 1e-6;
 maxnormQ = false;
 intfacetIDs = intersect_facet(mesh.ppts,mesh.sphK,data.ppts,tol2,maxnormQ);
 
-barytol = -0.2;
+barytol = 0.2;
 [datainterp,databary,meshdata.fname] = get_interp(mesh,data,intfacetIDs,'spherical',barytol);
 
 toc; disp(' ')
