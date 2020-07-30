@@ -278,7 +278,7 @@ if opts.octsubdiv > 1
 	end
 	% 	end
 	
-	five = GBoct2five(meshList,'disQ',false);
+	five = GBoct2five(meshList,false);
 	
 elseif (exist('sphK','var') ~= 0)
 	%create K if it exists & is empty
