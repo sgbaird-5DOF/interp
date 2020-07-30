@@ -108,7 +108,7 @@ if maxnormQ
 	
 	if subhemiQ
 		%compute convex hull with extra point
-		extrapt = -normr(mean(pts)); %assumes points fall on less than a hemisphere
+		extrapt = 0.1*normr(mean(pts)); %assumes points fall on less than a hemisphere
 		K = convhulln([pts;extrapt]);
 		
 		%delete everything connected to extra point
