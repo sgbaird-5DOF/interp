@@ -1,7 +1,7 @@
 function K = sphconvhulln(pts,maxnormQ)
 arguments
 	pts double {mustBeFinite,mustBeReal}
-	maxnormQ(1,1) logical = false
+	maxnormQ(1,1) logical = true
 end
 %--------------------------------------------------------------------------
 % Author: Sterling Baird
@@ -66,6 +66,8 @@ end
 %		no datapoint has a corresponding datapoint in the opposite orthant,
 %		and that less than 2^n orthants have intersections. Might not work if
 %		it's exactly a hemisphere.
+%
+%		maxnormQ == false might not be working correctly (2020-07-29)
 %
 %--------------------------------------------------------------------------
 %% setup
