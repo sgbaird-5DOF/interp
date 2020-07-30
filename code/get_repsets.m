@@ -66,9 +66,10 @@ imax = iculength; %change this to the last index of for loop
 N=imax; 
 p=1;
 reverseStr = '';
-if imax > 100
-	nreps = floor(imax/100);
-	nreps2 = floor(imax/100);
+ninterval = 20;
+if imax > ninterval
+	nreps = floor(imax/ninterval);
+	nreps2 = floor(imax/ninterval);
 else
 	nreps = 1;
 	nreps2 = 1;
