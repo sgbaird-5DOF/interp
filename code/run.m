@@ -216,9 +216,9 @@ if size(a,2) <= 7
 end
 
 %compute intersecting facet IDs (might be zero, might have more than one)
-tol2 = 1e-6;
+inttol = 1e-1;
 maxnormQ = false;
-intfacetIDs = intersect_facet(mesh.ppts,mesh.sphK,data.ppts,tol2,maxnormQ);
+intfacetIDs = intersect_facet(mesh.ppts,mesh.sphK,data.ppts,inttol,maxnormQ);
 
 barytype = 'planar';
 barytol = 1e-6; %0.2 gets most intersections for spherical
