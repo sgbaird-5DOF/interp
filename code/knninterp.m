@@ -3,7 +3,7 @@ arguments
 	meshpts double {mustBeReal,mustBeFinite}
 	meshprops(:,1) double {mustBeReal,mustBeFinite}
 	datapts double {mustBeReal,mustBeFinite}
-	K(1,1) double {mustBeInteger} = size(meshpts,2)+20;
+	K(1,1) double {mustBeInteger} = size(meshpts,2)+50;
 end
 %--------------------------------------------------------------------------
 % Author: Sterling Baird
@@ -20,7 +20,7 @@ end
 %		b -	b
 %
 % Usage:
-%		a = b(a);
+%		c = b(a);
 %
 % Dependencies:
 %		*
@@ -29,7 +29,7 @@ end
 %	griddatan could compute interpolated values based on a delaunay
 %	triangulation; however, this is infeasible if the dimensionality and/or
 %	number of points is too high. Thus, it is broken up into a nearest
-%	neighbor search, and then defining a triangulation & interpolation
+%	neighbor search and then defining a triangulation & interpolation
 %	locally.
 %
 % See also:
@@ -69,6 +69,15 @@ for i = 1:ndatapts %parfor compatible
 		warning(['no intersection found for i == ' int2str(i) '. Taking nearest neighbor interpolation value.'])
 		interpvals(i) = griddatan(x,v,xq,'nearest');
 	end
+	
+	if i == 7
+		figure
+		triplot(delaunayn(x),x(:,1),x(:,2))
+		hold on
+		plot(xq(1),xq(2),'*')
+		1+1;
+	end
+	
 end
 
 end %knninterp
