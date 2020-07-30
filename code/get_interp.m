@@ -1,8 +1,9 @@
-function [nndistList,databary] = get_interp(mesh,data,inttol,barytol)
+function [datainterp,databary,savename,varargout] = ...
+	get_interp(mesh,data,intfacetIDs,barytol)
 arguments
-	mesh struct {mustContainFields(mesh,{'pts','props','fname'})}
+	mesh struct {mustContainFields(mesh,{'pts','props','sphK','fname'})}
 	data struct {mustContainFields(data,{'pts','props','fname'})}
-	inttol(1,1) double {mustBeReal,mustBeFinite,mustBeNonnegative} = 1e-6
+	intfacetIDs cell
 	barytol(1,1) double {mustBeReal,mustBeFinite,mustBeNonnegative} = 1e-6
 end
 %--------------------------------------------------------------------------
@@ -27,32 +28,17 @@ end
 % Notes:
 %		*
 %--------------------------------------------------------------------------
+meshpts = mesh.ppts;
+datapts = data.ppts;
 
-if size(mesh.pts,2) ~= size(data.pts,2)
+if size(mesh.ppts,2) ~= size(data.ppts,2)
 	errmsg = ['mesh.pts and data.pts dims should be equal, but mesh dim == ' ...
-		int2str(size(mesh.pts,2)) ' and data dim == ' int2str(size(data.pts,2))];
+		int2str(size(mesh.ppts,2)) ' and data dim == ' int2str(size(data.ppts,2))];
 	error(errmsg)
 end
 
-datapts = data.pts;
-meshpts = mesh.pts;
-
-normQ = true;
-if normQ
-	%normalize points
-	datapts = normr(datapts);
-	meshpts = normr(meshpts);
-end
-
-mesh.K = sphconvhulln(mesh.pts,true);
-
-%get intersecting facets
-maxnormQ = false;
-disp('get intersecting facets')
-intfacetIDs = intersect_facet(meshpts,mesh.K,datapts,inttol,maxnormQ);
-
 %save name
-meshdata.fname = ['mesh_' mesh.fname(1:end-4) '_data_' data.fname];
+savename = ['mesh_' mesh.fname(1:end-4) '_data_' data.fname];
 
 %nearest neighbor list
 nnList = dsearchn(meshpts,datapts);
@@ -84,17 +70,17 @@ for i = 1:ndatapts
 		switch baryType
 			case 'spherical'
 				databary(i,:) = sphbary(datapt,facet); %need to save for inference input
-				nonNegQ = all(databary(i,:) >= -1e-1);
-				greaterThanOneQ = sum(databary(i,:)) >= 1-1e-6;
+				nonNegQ = all(databary(i,:) >= -barytol);
+				greaterThanOneQ = sum(databary(i,:)) >= 1-barytol;
 				numcheck = all(~isnan(databary(i,:)) & ~isinf(databary(i,:)));
 				baryOK = nonNegQ && greaterThanOneQ && numcheck;
 				
 			case 'planar'
-				[~,~,databaryTemp,~,~] = projray2hypersphere(facet,1:7,datapt,1e-6,true);
+				[~,~,databaryTemp,~,~] = projray2hypersphere(facet,1:7,datapt,barytol,true);
 				if ~isempty(databaryTemp)
 					databary(i,:) = databaryTemp;
-					nonNegQ = all(databary(i,:) >= -1e-6);
-					equalToOneQ = abs(sum(databary(i,:)) - 1) < 1e-6;
+					nonNegQ = all(databary(i,:) >= -barytol);
+					equalToOneQ = abs(sum(databary(i,:)) - 1) < barytol;
 					numcheck = all(~isnan(databary(i,:)) & ~isinf(databary(i,:)));
 					baryOK = nonNegQ && equalToOneQ && numcheck;
 				end
@@ -117,10 +103,31 @@ for i = 1:ndatapts
 		% 			datainterp(i) = mesh.props(k(i));
 	end
 end
-fpath = fullfile('data',meshdata.fname);
+fpath = fullfile('data',savename);
 save(fpath)
 
 
 disp(['# non-intersections: ' int2str(sum(~isnan((nnID)))) '/' int2str(ndatapts)])
 
+varargout = {nndistList,nonintDists,intfacetIDs};
+
 end
+
+%-----------------------------CODE GRAVEYARD-------------------------------
+%{
+
+datapts = data.pts;
+meshpts = mesh.pts;
+
+normQ = true;
+if normQ
+	%normalize points
+	datapts = normr(datapts);
+	meshpts = normr(meshpts);
+end
+
+%get intersecting facets
+maxnormQ = false;
+disp('get intersecting facets')
+intfacetIDs = intersect_facet(meshpts,mesh.K,datapts,inttol,maxnormQ);
+%}

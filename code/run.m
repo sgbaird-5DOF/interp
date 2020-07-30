@@ -203,23 +203,50 @@ for i = []
 
 end
 
-datapts = data.pts;
-meshpts = mesh.pts;
-
 %project mesh and data together
 tol = 1e-3;
-[a,usv] = proj_down([meshpts;datapts],tol);
+[a,usv] = proj_down([mesh.pts;data.pts],tol);
 
 if size(a,2) <= 7
-	datapts = proj_down(datapts,tol,usv);
-	meshpts = proj_down(meshpts,tol,usv);
+	data.ppts = proj_down(data.pts,tol,usv);
+	mesh.ppts = proj_down(mesh.pts,tol,usv);
 end
 
-datapts = normr(datapts); %not doing this produced 100% non-intersections (2020-07-29)
-meshpts = normr(meshpts);
+data.ppts = normr(data.ppts); %not normalizing produced 100% non-intersections (2020-07-29)
+mesh.ppts = normr(mesh.ppts);
 
 %compute intersecting facet IDs (might be zero, might have more than one)
 tol2 = 1e-6;
+maxnormQ = false;
+intfacetIDs = intersect_facet(mesh.ppts,mesh.sphK,data.ppts,tol2,maxnormQ);
+
+barytol = 1e-6;
+[datainterp,databary,meshdata.fname] = get_interp(mesh,data,intfacetIDs,barytol);
+
+toc; disp(' ')
+
+
+%% plotting
+
+% parity plot
+% xmin = min(data.props);
+% xmax = max(data.props);
+
+
+interpplot(meshdata.fname)
+
+
+%%
+toc
+disp('end run')
+disp(' ')
+%%
+%-----------------------------CODE GRAVEYARD-------------------------------
+%{
+mesh.sphK = convhulln(meshpts); % check to see if % of intersections increases at all
+
+	maxnormQ = true;
+ 	mesh.sphK = sphconvhulln(meshpts,maxnormQ);
 
 % if size(meshpts,2) ~= size(mesh.sphK,2)
 % 	disp('--recomputing convex hull for mesh')
@@ -229,10 +256,7 @@ tol2 = 1e-6;
 	%consider making the above lines a separate function and implementing elsewhere
 % end
 
-maxnormQ = false;
-intfacetIDs = intersect_facet(meshpts,mesh.sphK,datapts,tol2,maxnormQ);
 
-toc; disp(' ')
 
 %% projection, sph. barycentric coordinates & interpolation
 
@@ -304,26 +328,5 @@ save(fpath)
 
 disp(['# non-intersections: ' int2str(sum(~isnan((nnID)))) '/' int2str(ndatapts)])
 
-%% plotting
-
-% parity plot
-% xmin = min(data.props);
-% xmax = max(data.props);
-
-
-interpplot(meshdata.fname)
-
-
-%%
-toc
-disp('end run')
-disp(' ')
-%%
-%-----------------------------CODE GRAVEYARD-------------------------------
-%{
-mesh.sphK = convhulln(meshpts); % check to see if % of intersections increases at all
-
-	maxnormQ = true;
- 	mesh.sphK = sphconvhulln(meshpts,maxnormQ);
 
 %}
