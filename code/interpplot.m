@@ -20,9 +20,7 @@ function interpplot(fname)
 
 %load info
 addpathdir({fname})
-vars = {'mesh','data','datainterp','nnID','psdata','ilist',...
-	'meshopts','dataopts','nndistList','nonintDists','meshMethod',...
-    'dataMethod'};
+vars = {'mesh','data','datainterp','nnID','ilist','nndistList','nonintDists'};
 load(fname,vars{:})
 
 %figure setup
@@ -116,8 +114,8 @@ if contains(fname,'ocubo')
 	plot5DOF(mesh.five,'mesh')
 	plot5DOF(data.five,'data',[],ilist)
 else
-	plot5DOF(mesh.five,'mesh',meshopts)
-	plot5DOF(data.five,'data',dataopts,ilist)
+	plot5DOF(mesh.five,'mesh',mesh.opts)
+	plot5DOF(data.five,'data',data.opts,ilist)
 end
 
 nptsmesh = size(mesh.pts,1);
@@ -129,8 +127,8 @@ nptsdata = size(data.pts,1);
 % legend('intersecting','non-intersecting','Location','northoutside')
 
 sgtitle({...
-	['mesh == ' meshMethod '_octsubdiv' int2str(meshopts.octsubdiv) ', npts == ' int2str(nptsmesh)],...
-	['data == ' dataMethod '_octsubdiv' int2str(dataopts.octsubdiv) ', npts == ' int2str(nptsdata)]}, ...
+	['mesh == ' mesh.sampleMethod '_octsubdiv' int2str(mesh.opts.octsubdiv) ', npts == ' int2str(nptsmesh)],...
+	['data == ' data.sampleMethod '_octsubdiv' int2str(data.opts.octsubdiv) ', npts == ' int2str(nptsdata)]}, ...
 	'Interpreter','none','FontSize',10);
 
 fpath = fullfile('figures',fname(1:end-4));

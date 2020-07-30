@@ -1,4 +1,4 @@
-function opts = datagen_setup(sampleMethod,opts,loadQ)
+function S = datagen_setup(sampleMethod,opts,loadQ)
 %--------------------------------------------------------------------------
 % Author: Sterling Baird
 %
@@ -25,24 +25,24 @@ fname = get_fname(sampleMethod,opts);
 
 if loadQ && (exist(fname,'file') ~= 0)
 	disp(fname)
-	opts = load(fname,'pts','sphK','props','five','usv','Ktr');
+	S = load(fname,'pts','props','sphK','fname','five','Ktr','opts','sampleMethod','usv');
 	
 	load_type = 'evalc'; %'evalc', 'manual'
 	switch load_type
 		case 'evalc'
-			vars = fields(opts);
+			vars = fields(S);
 			for i = 1:length(vars)
 				var = vars{i};
-				temp = opts.(var); %#ok<NASGU> %temporary value of vName
+				temp = S.(var); %#ok<NASGU> %temporary value of vName
 				evalc([var '= temp']); %assign temp value to the field name
 			end
 		case 'manual'
-			pts = opts.pts;
-			sphK = opts.sphK;
-			props = opts.props;
-			five = opts.five;
-			usv = opts.usv;
-			Ktr = opts.Ktr;
+			pts = S.pts;
+			sphK = S.sphK;
+			props = S.props;
+			five = S.five;
+			usv = S.usv;
+			Ktr = S.Ktr;
 	end
 	if ~contains(sampleMethod,'pseudo') && any(cellfun(@isempty,{pts,sphK,props}))
 		computeQ = true;
@@ -60,7 +60,7 @@ if computeQ
 		Ktr = [];
 	end
 	fpath = fullfile('data',fname);
-    save(fpath,'pts','props','sphK','five','usv','Ktr')
+    save(fpath,'pts','props','sphK','five','usv','Ktr','opts','sampleMethod')
 end
 
 d = size(pts,2);
@@ -68,9 +68,9 @@ nmeshpts = length(pts);
 disp(['# vertices: ',int2str(nmeshpts)])
 
 if isempty(usv)
-	opts = var_names(pts,props,sphK,fname,five,Ktr);
+	S = var_names(pts,props,sphK,fname,five,Ktr,opts,sampleMethod);
 else
-	opts = var_names(pts,props,sphK,fname,five,usv,Ktr);
+	S = var_names(pts,props,sphK,fname,five,Ktr,opts,sampleMethod,usv);
 end
 
 end

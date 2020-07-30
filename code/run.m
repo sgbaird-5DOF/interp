@@ -55,7 +55,7 @@ addpathdir({'misFZfeatures.mat','PGnames.mat','nlt.m','q2rod.m',...
 %'Olmsted2004','5DOF_vtx','5DOF_misFZfeatures',
 %'5DOF_interior','5DOF_exterior', '5DOF_oct_vtx','5DOF_hsphext'
 %'5DOF_exterior_hsphext', 'ocubo'
-meshMethod = 'Olmsted2004';
+meshMethod = 'ocubo';
 dataMethod = 'ocubo';
 pseudoMethod = [meshMethod '_pseudo'];
 
@@ -67,7 +67,7 @@ dataopts = meshopts;
 meshopts.res = 12.5;
 meshopts.nint = 1; % 1 == zero subdivisions, 2 == one subdivision, etc.
 meshopts.octsubdiv = 1;
-meshopts.ocuboOpts.n = 100; % # of octonions to generate, [] also ok if sidelength specified
+meshopts.ocuboOpts.n = 388; % # of octonions to generate, [] also ok if sidelength specified
 meshopts.ocuboOpts.method = 'random'; % 'random' or 'uniform' cubochoric sampling
 meshopts.ocuboOpts.sidelength = []; %sidelength of cubochoric grid (only specify if 'uniform', [] ok)
 meshopts.ocuboOpts.seed = 15; %sidelength of cubochoric grid (only specify if 'uniform', [] ok)
@@ -76,7 +76,7 @@ meshopts.ocuboOpts.seed = 15; %sidelength of cubochoric grid (only specify if 'u
 dataopts.res = 12.5;
 dataopts.nint = 1;
 dataopts.octsubdiv = 1;
-dataopts.ocuboOpts.n = 100; % # of octonions to generate, [] also ok if sidelength specified
+dataopts.ocuboOpts.n = 500; % # of octonions to generate, [] also ok if sidelength specified
 dataopts.ocuboOpts.method = 'random'; % 'random' or 'uniform' cubochoric sampling
 dataopts.ocuboOpts.sidelength = []; %sidelength of cubochoric grid (only specify if 'uniform', [] ok)
 dataopts.ocuboOpts.seed = 20; %integer or 'shuffle' OK
@@ -94,7 +94,7 @@ T = true; %just makes it easier to switch back and forth between true and false
 F = false;
 meshloadQ = F;
 dataloadQ = F;
-pseudoloadQ = T;
+pseudoloadQ = F;
 meshdataloadQ = F; %whether to check for and load intersection & barycentric data from previous run
 
 %% generate mesh
@@ -220,19 +220,14 @@ tol2 = 1e-6;
 maxnormQ = false;
 intfacetIDs = intersect_facet(mesh.ppts,mesh.sphK,data.ppts,tol2,maxnormQ);
 
-barytol = 0.2;
-[datainterp,databary,meshdata.fname] = get_interp(mesh,data,intfacetIDs,'spherical',barytol);
+barytype = 'planar';
+barytol = 1e-6; %0.2 gets most intersections for spherical
+[datainterp,databary,meshdata.fname] = get_interp(mesh,data,intfacetIDs,barytype,barytol);
 
 toc; disp(' ')
 
 
 %% plotting
-
-% parity plot
-% xmin = min(data.props);
-% xmax = max(data.props);
-
-
 interpplot(meshdata.fname)
 
 
@@ -328,5 +323,11 @@ save(fpath)
 
 disp(['# non-intersections: ' int2str(sum(~isnan((nnID)))) '/' int2str(ndatapts)])
 
+
+
+
+% parity plot
+% xmin = min(data.props);
+% xmax = max(data.props);
 
 %}
