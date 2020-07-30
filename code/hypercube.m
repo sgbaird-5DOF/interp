@@ -5,7 +5,7 @@ function [pts,K] = hypercube(d)
 % Date: 2020-07-06
 %
 % Description: Calculate vertices and convex hull triangulation of a
-% hypercube in d-dimensions.
+% hypercube in d-dimensions centered at origin and edge length of 1.
 % 
 % Inputs:
 %		d		=== dimensionality

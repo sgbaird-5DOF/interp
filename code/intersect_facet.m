@@ -58,7 +58,7 @@ end
 %% find nearest vertex for each datapoint
 nnList = dsearchn(pts,datalist);
 
-nmeshpts = size(pts,1);
+% nmeshpts = size(pts,1);
 ndatapts = size(datalist,1);
 
 %% initalize

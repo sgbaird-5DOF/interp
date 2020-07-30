@@ -92,8 +92,8 @@ pseudoOpts.ocuboOpts.seed = 25; %integer or 'shuffle' OK
 
 T = true; %just makes it easier to switch back and forth between true and false
 F = false;
-meshloadQ = F;
-dataloadQ = F;
+meshloadQ = T;
+dataloadQ = T;
 pseudoloadQ = T;
 meshdataloadQ = F; %whether to check for and load intersection & barycentric data from previous run
 
