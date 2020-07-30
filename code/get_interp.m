@@ -116,12 +116,10 @@ nnRMSE = sqrt(mean(nnSE));
 fpath = fullfile('data',savename);
 save(fpath)
 
-
+disp(' ')
 disp(['# non-intersections: ' int2str(sum(~isnan((nnID)))) '/' int2str(ndatapts)])
-
+disp(' ')
 disp(['RMSE (J/m^2): interp == ' num2str(interpRMSE,'%3.4f') ', NN == ' num2str(nnRMSE,'%3.4f')])
-
-disp
 
 varargout = {nndistList,nonintDists,intfacetIDs};
 
