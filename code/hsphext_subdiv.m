@@ -1,4 +1,9 @@
-function [Ktr,K,meshpts] = hsphext_subdiv(pts,nint,varargin)
+function [Ktr,K,meshpts] = hsphext_subdiv(pts,nint,tricollapseQ)
+arguments
+	pts double
+	nint(1,1) double = 1
+	tricollapseQ(1,1) logical = true
+end
 %--------------------------------------------------------------------------
 % Author: Sterling Baird
 %
@@ -11,16 +16,16 @@ function [Ktr,K,meshpts] = hsphext_subdiv(pts,nint,varargin)
 % Outputs:
 %
 % Dependencies:
-%		hypersphere_subdiv.m		
-%			-facet_subdiv.m
+%	hypersphere_subdiv.m		
+%		-facet_subdiv.m
 %
-%			-tricollapse.m
+%		-tricollapse.m
 %
-%			-normr.m
+%		-normr.m
 %
-%		sphere_stereograph.m
+%	sphere_stereograph.m
 %
-%		proj_down.m
+%	proj_down.m
 %
 % Notes:
 %		Assumes maximum arc length is less than pi (2020-07-20, probably just
@@ -28,14 +33,8 @@ function [Ktr,K,meshpts] = hsphext_subdiv(pts,nint,varargin)
 %		sphere_stereograph.m is used)
 %--------------------------------------------------------------------------
 
-if nargin == 3
-	tricollapseQ = varargin{1};
-else
-	tricollapseQ = true;
-end
-
 % projpts = sphere_stereograph(pts);
-projpts = projfacet2hyperplane(mean(pts),pts); %valid for max arc length < pi
+projpts = projfacet2hyperplane(normr(mean(pts)),pts); %valid for max arc length < pi
 
 [projpts,usv] = proj_down(projpts,1e-6);
 
@@ -54,8 +53,9 @@ if nint > 1
 	
 else
 	Ktr.main = K;
-	Ktr.pts = pts;
-	meshpts = pts;
+	IDs = unique(K);
+	Ktr.pts = pts(IDs,:);
+	meshpts = pts(IDs,:);
 end
 
 %------------------------------CODE GRAVEYARD------------------------------
