@@ -11,7 +11,7 @@ end
 % Date: 2020-07-27
 %
 % Description: get barycentric interpolation values
-% 
+%
 % Inputs:
 %		a -	a
 %
@@ -67,17 +67,14 @@ nnID = [];
 ilist = [];
 
 ndatapts = size(datapts,1);
-% databaryTemp = cell(1,size(datapts,1));
 disp('loop through datapoints')
 for i = 1:ndatapts
-	
 	datapt = datapts(i,:); %use down-projected data (and mesh)
 	baryOK = false; %initialize
-	
 	if ~isempty(intfacetIDs{i})
 		%setup
 		intfacetID = intfacetIDs{i}(1); %take only the first intersecting facet? Average values? Use oSLERP instead?
-		vtxIDs = mesh.K(intfacetID,:);
+		vtxIDs = mesh.sphK(intfacetID,:);
 		facet = meshpts(vtxIDs,:); %vertices of facet
 		facetprops(i,:) = mesh.props(vtxIDs).'; %properties of vertices of facet
 		prop = data.props(i,:);
@@ -87,17 +84,17 @@ for i = 1:ndatapts
 		switch baryType
 			case 'spherical'
 				databary(i,:) = sphbary(datapt,facet); %need to save for inference input
-				nonNegQ = all(databary(i,:) >= -barytol);
-				greaterThanOneQ = sum(databary(i,:)) >= 1-barytol;
+				nonNegQ = all(databary(i,:) >= -1e-1);
+				greaterThanOneQ = sum(databary(i,:)) >= 1-1e-6;
 				numcheck = all(~isnan(databary(i,:)) & ~isinf(databary(i,:)));
 				baryOK = nonNegQ && greaterThanOneQ && numcheck;
 				
 			case 'planar'
-				[~,databaryTemp] = intersect_facet(facet,1:7,datapt,inttol,true);
-				if ~isempty(databaryTemp{1})
-					databary(i,:) = databaryTemp{1};
-					nonNegQ = all(databary(i,:) >= -barytol);
-					equalToOneQ = abs(sum(databary(i,:)) - 1) < barytol;
+				[~,~,databaryTemp,~,~] = projray2hypersphere(facet,1:7,datapt,1e-6,true);
+				if ~isempty(databaryTemp)
+					databary(i,:) = databaryTemp;
+					nonNegQ = all(databary(i,:) >= -1e-6);
+					equalToOneQ = abs(sum(databary(i,:)) - 1) < 1e-6;
 					numcheck = all(~isnan(databary(i,:)) & ~isinf(databary(i,:)));
 					baryOK = nonNegQ && equalToOneQ && numcheck;
 				end

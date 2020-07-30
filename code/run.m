@@ -215,7 +215,7 @@ if size(a,2) <= 7
 	meshpts = proj_down(meshpts,tol,usv);
 end
 
-normQ = T;
+normQ = F;
 if normQ
 	datapts = normr(datapts);
 	meshpts = normr(meshpts);
@@ -262,7 +262,7 @@ for i = 1:ndatapts
 		facetprops(i,:) = mesh.props(vtxIDs).'; %properties of vertices of facet
 		prop = data.props(i,:);
 		
-		baryType = 'planar'; %'spherical', 'planar'
+		baryType = 'spherical'; %'spherical', 'planar'
 		%% barycentric coordinates
 		switch baryType
 			case 'spherical'
@@ -276,8 +276,8 @@ for i = 1:ndatapts
 				%[~,databaryTemp] = intersect_facet(facet,1:7,datapt,1e-6,true);
 				[~,~,databaryTemp,~,~] = projray2hypersphere(facet,1:7,datapt,1e-6,true);
 % 				[intIDtemp,databaryTemp] = intersect_facet(meshpts,mesh.sphK,datapt,1e-6,true);
-				if ~isempty(databaryTemp{1})
-					databary(i,:) = databaryTemp{1};
+				if ~isempty(databaryTemp)
+					databary(i,:) = databaryTemp;
 					nonNegQ = all(databary(i,:) >= -1e-6);
 					equalToOneQ = abs(sum(databary(i,:)) - 1) < 1e-6;
 					numcheck = all(~isnan(databary(i,:)) & ~isinf(databary(i,:)));
