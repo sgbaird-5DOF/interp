@@ -1,4 +1,5 @@
 % run test
+clear; close all
 
 NV = {'o2addQ',false,'method','pairwise','wtol',1e-3};
 
@@ -19,7 +20,10 @@ end
 
 mesh.K = sphconvhulln(mesh.pts,true); %sphconvhulln output was different
 
-intfacetIDs = intersect_facet(mesh.pts,mesh.K,data.pts,1e-6,true);
+[intfacetIDs,dataBary] = intersect_facet(mesh.pts,mesh.K,data.pts,1e-6,true);
+
+intfacetIDs = vertcat(intfacetIDs{:});
+dataBary = vertcat(dataBary{:});
 
 disp(['# non-intersecting facets = ' ...
 	int2str(sum(cellfun(@isempty,intfacetIDs))) '/' int2str(length(intfacetIDs))])
@@ -30,4 +34,4 @@ data.props = GB5DOF_setup(GBoct2five(data.pts));
 
 
 disp('INTERPOLATION')
-[nndistList,databary] = get_interp(mesh,data);
+% [nndistList,databary] = get_interp(mesh,data);

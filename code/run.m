@@ -262,21 +262,22 @@ for i = 1:ndatapts
 		facetprops(i,:) = mesh.props(vtxIDs).'; %properties of vertices of facet
 		prop = data.props(i,:);
 		
-		baryType = 'spherical'; %'spherical', 'planar'
+		baryType = 'planar'; %'spherical', 'planar'
 		%% barycentric coordinates
 		switch baryType
 			case 'spherical'
 				databary(i,:) = sphbary(datapt,facet); %need to save for inference input
 				nonNegQ = all(databary(i,:) >= -1e-6);
-				greaterThanOneQ = sum(databary(i,:)) >= 1-1e-12;
+				greaterThanOneQ = sum(databary(i,:)) >= 1-1e-6;
 				numcheck = all(~isnan(databary(i,:)) & ~isinf(databary(i,:)));
 				baryOK = nonNegQ && greaterThanOneQ && numcheck;
 				
 			case 'planar'
-				[~,databaryTemp] = intersect_facet(facet,1:7,datapt,1e-12,true);
+% 				[~,databaryTemp] = intersect_facet(facet,1:7,datapt,1e-6,true);
+				[intIDtemp,databaryTemp] = intersect_facet(meshpts,mesh.sphK,datapt,1e-6,true);
 				if ~isempty(databaryTemp{1})
 					databary(i,:) = databaryTemp{1};
-					nonNegQ = all(databary(i,:) >= -1e-12);
+					nonNegQ = all(databary(i,:) >= -1e-6);
 					equalToOneQ = abs(sum(databary(i,:)) - 1) < 1e-6;
 					numcheck = all(~isnan(databary(i,:)) & ~isinf(databary(i,:)));
 					baryOK = nonNegQ && equalToOneQ && numcheck;
