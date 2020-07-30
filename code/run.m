@@ -273,8 +273,9 @@ for i = 1:ndatapts
 				baryOK = nonNegQ && greaterThanOneQ && numcheck;
 				
 			case 'planar'
-% 				[~,databaryTemp] = intersect_facet(facet,1:7,datapt,1e-6,true);
-				[intIDtemp,databaryTemp] = intersect_facet(meshpts,mesh.sphK,datapt,1e-6,true);
+				%[~,databaryTemp] = intersect_facet(facet,1:7,datapt,1e-6,true);
+				[~,~,databaryTemp,~,~] = projray2hypersphere(facet,1:7,datapt,1e-6,true);
+% 				[intIDtemp,databaryTemp] = intersect_facet(meshpts,mesh.sphK,datapt,1e-6,true);
 				if ~isempty(databaryTemp{1})
 					databary(i,:) = databaryTemp{1};
 					nonNegQ = all(databary(i,:) >= -1e-6);
