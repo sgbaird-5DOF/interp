@@ -1,9 +1,10 @@
 function [datainterp,databary,savename,varargout] = ...
-	get_interp(mesh,data,intfacetIDs,barytol)
+	get_interp(mesh,data,intfacetIDs,barytype,barytol)
 arguments
 	mesh struct {mustContainFields(mesh,{'pts','props','sphK','fname'})}
 	data struct {mustContainFields(data,{'pts','props','fname'})}
 	intfacetIDs cell
+	barytype char {mustBeMember(barytype,{'planar','spherical'})} = 'planar'
 	barytol(1,1) double {mustBeReal,mustBeFinite,mustBeNonnegative} = 1e-6
 end
 %--------------------------------------------------------------------------
@@ -65,9 +66,8 @@ for i = 1:ndatapts
 		facetprops(i,:) = mesh.props(vtxIDs).'; %properties of vertices of facet
 		prop = data.props(i,:);
 		
-		baryType = 'spherical'; %'spherical', 'planar'
 		%% barycentric coordinates
-		switch baryType
+		switch barytype
 			case 'spherical'
 				databary(i,:) = sphbary(datapt,facet); %need to save for inference input
 				nonNegQ = all(databary(i,:) >= -barytol);
