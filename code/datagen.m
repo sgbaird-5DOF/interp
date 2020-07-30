@@ -233,7 +233,7 @@ if ~pseudoQ
 	[meshList,usv,five,~] = get_octpairs(meshList,savename,NVpairs{:}); %find a way to not call this for 'data'
 	meshList = proj_down(meshList,1e-6,usv);
 	
-	if strcmp(sampleMethod,'ocubo')
+	if strcmp(sampleMethod,'ocubo') %might need a way to correlate back to original dataset for e.g. Rohrer2009
 		%reduce to unique set of points
 		[~,IA] = uniquetol(round(meshList,6),1e-3,'ByRows',true);
 		meshList = meshList(IA,:);
