@@ -122,6 +122,10 @@ if maxnormQ
 	return
 end
 
+if maxnormQ == false
+	disp('maxnormQ == false might not be working correctly (2020-07-29)')
+end
+
 %% add orthoplex points (if not in pts) to prevent "undercut facets"
 
 % pts = uniquetol(pts,1e-6,'ByRows',true);
