@@ -120,6 +120,10 @@ end
 %catenate
 o = [qA qB];
 
+%get unique list
+[~,ia] = uniquetol(round(o,12),'ByRows',true);
+o = o(ia,:);
+
 end %get_ocube.m
 
 %----------------------CUSTOM VALIDATION FUNCTIONS-------------------------

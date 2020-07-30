@@ -232,6 +232,14 @@ if ~pseudoQ
 	end
 	[meshList,usv,five,~] = get_octpairs(meshList,savename,NVpairs{:}); %find a way to not call this for 'data'
 	meshList = proj_down(meshList,1e-6,usv);
+	
+	if strcmp(sampleMethod,'ocubo')
+		%reduce to unique set of points
+		[~,IA] = uniquetol(round(meshList,6),1e-3,'ByRows',true);
+		meshList = meshList(IA,:);
+		%pare down five to a unique set of points
+		five = five(IA);
+	end
 else
 	try
 		load(savename,'octvtx','usv')
@@ -276,6 +284,10 @@ if opts.octsubdiv > 1
 		meshList = proj_up(meshList,usv);
 		projupQ = false;
 	end
+	
+	%checking to see if this increases the interpolation accuracy
+	NV = {'o2addQ',false,'method','pairwise','wtol',1e-3};
+	meshList = get_octpairs(meshList,savename,NV{:});
 	% 	end
 	
 	five = GBoct2five(meshList,false);
