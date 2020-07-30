@@ -264,7 +264,7 @@ for i = 1:ndatapts
 		switch baryType
 			case 'spherical'
 				databary(i,:) = sphbary(datapt,facet); %need to save for inference input
-				nonNegQ = all(databary(i,:) >= -0.2);
+				nonNegQ = all(databary(i,:) >= -1e-6);
 				greaterThanOneQ = sum(databary(i,:)) >= 1-1e-6;
 				numcheck = all(~isnan(databary(i,:)) & ~isinf(databary(i,:)));
 				baryOK = nonNegQ && greaterThanOneQ && numcheck;
