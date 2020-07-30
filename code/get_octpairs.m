@@ -78,8 +78,10 @@ o2 = GBfive2oct(qB,nB);
 % [omega0,oct_sym0,zeta0] = GBdist([o1 o2],32,false);
 
 %take the symmetrized versions for comparison
-% o1 = oct_sym0(1,1:8);
 o2 = oct_sym0{1}(1,:);
+
+% o1 = oct_sym0(1:8);
+% o2 = oct_sym0(9:16);
 
 %% get minimized distance octonions relative to oct pairs
 % o3 = pts(1,:);
@@ -91,6 +93,9 @@ npts = size(pts,1);
 octvtx = cell(1,npts);
 octvtx{1} = oct_sym0{1};
 
+% octvtx{1} = oct_sym0(9:16);
+
+
 %textwaitbar setup
 D = parallel.pool.DataQueue;
 afterEach(D, @nUpdateProgress);
@@ -101,7 +106,7 @@ nreps2 = floor(N/20);
 nreps = nreps2;
 
 disp('get_octpairs ')
-parfor i = 1:npts %parfor compatible
+for i = 1:npts %parfor compatible
 	
 	if mod(i,nreps2) == 0
 		send(D,i);

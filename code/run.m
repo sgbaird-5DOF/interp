@@ -67,7 +67,7 @@ dataopts = meshopts;
 meshopts.res = 12.5;
 meshopts.nint = 1; % 1 == zero subdivisions, 2 == one subdivision, etc.
 meshopts.octsubdiv = 1;
-meshopts.ocuboOpts.n = 500; % # of octonions to generate, [] also ok if sidelength specified
+meshopts.ocuboOpts.n = 100; % # of octonions to generate, [] also ok if sidelength specified
 meshopts.ocuboOpts.method = 'random'; % 'random' or 'uniform' cubochoric sampling
 meshopts.ocuboOpts.sidelength = []; %sidelength of cubochoric grid (only specify if 'uniform', [] ok)
 meshopts.ocuboOpts.seed = 15; %sidelength of cubochoric grid (only specify if 'uniform', [] ok)
@@ -76,7 +76,7 @@ meshopts.ocuboOpts.seed = 15; %sidelength of cubochoric grid (only specify if 'u
 dataopts.res = 12.5;
 dataopts.nint = 1;
 dataopts.octsubdiv = 1;
-dataopts.ocuboOpts.n = 500; % # of octonions to generate, [] also ok if sidelength specified
+dataopts.ocuboOpts.n = 100; % # of octonions to generate, [] also ok if sidelength specified
 dataopts.ocuboOpts.method = 'random'; % 'random' or 'uniform' cubochoric sampling
 dataopts.ocuboOpts.sidelength = []; %sidelength of cubochoric grid (only specify if 'uniform', [] ok)
 dataopts.ocuboOpts.seed = 20; %integer or 'shuffle' OK
@@ -267,7 +267,7 @@ for i = 1:ndatapts
 		switch baryType
 			case 'spherical'
 				databary(i,:) = sphbary(datapt,facet); %need to save for inference input
-				nonNegQ = all(databary(i,:) >= 1e-6);
+				nonNegQ = all(databary(i,:) >= -1e-6);
 				greaterThanOneQ = sum(databary(i,:)) >= 1-1e-12;
 				numcheck = all(~isnan(databary(i,:)) & ~isinf(databary(i,:)));
 				baryOK = nonNegQ && greaterThanOneQ && numcheck;
