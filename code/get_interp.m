@@ -105,11 +105,23 @@ for i = 1:ndatapts
 		% 			datainterp(i) = mesh.props(k(i));
 	end
 end
+
+%calculate SE and RMSE values
+ids = ~isnan(datainterp);
+interpSE = (data.props(ids)-datainterp(ids)).^2;
+nnSE = (data.props(ilist)-mesh.props(nnID)).^2;
+interpRMSE = sqrt(mean(interpSE));
+nnRMSE = sqrt(mean(nnSE));
+
 fpath = fullfile('data',savename);
 save(fpath)
 
 
 disp(['# non-intersections: ' int2str(sum(~isnan((nnID)))) '/' int2str(ndatapts)])
+
+disp(['RMSE (J/m^2): interp == ' num2str(interpRMSE,'%3.4f') ', NN == ' num2str(nnRMSE,'%3.4f')])
+
+disp
 
 varargout = {nndistList,nonintDists,intfacetIDs};
 

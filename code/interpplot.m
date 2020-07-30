@@ -20,7 +20,8 @@ function interpplot(fname)
 
 %load info
 addpathdir({fname})
-vars = {'mesh','data','datainterp','nnID','ilist','nndistList','nonintDists'};
+vars = {'mesh','data','datainterp','nnID','ilist','nndistList','nonintDists',...
+	'interpSE','nnSE','interpRMSE','nnRMSE'};
 load(fname,vars{:})
 
 %figure setup
@@ -45,11 +46,11 @@ hold on
 scatter(data.props(ilist),mesh.props(nnID),2,'r','filled','markerfacealpha',alphaval);
 
 %calculate SE and RMSE values
-ids = ~isnan(datainterp);
-interpSE = (data.props(ids)-datainterp(ids)).^2;
-nnSE = (data.props(ilist)-mesh.props(nnID)).^2;
-interpRMSE = sqrt(mean(interpSE));
-nnRMSE = sqrt(mean(nnSE));
+% ids = ~isnan(datainterp);
+% interpSE = (data.props(ids)-datainterp(ids)).^2;
+% nnSE = (data.props(ilist)-mesh.props(nnID)).^2;
+% interpRMSE = sqrt(mean(interpSE));
+% nnRMSE = sqrt(mean(nnSE));
 
 xlabel('BRK Energy')
 ylabel('interpolated BRK Energy')
