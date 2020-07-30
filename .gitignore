@@ -4,3 +4,4 @@
 **/FZ.mtr
 **/slurm-*.out
 *.node
+code/data/*.mat
