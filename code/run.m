@@ -215,7 +215,7 @@ if size(a,2) <= 7
 	meshpts = proj_down(meshpts,tol,usv);
 end
 
-normQ = F;
+normQ = T;
 if normQ
 	datapts = normr(datapts);
 	meshpts = normr(meshpts);
