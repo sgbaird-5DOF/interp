@@ -122,7 +122,7 @@ for i  = 1:ndatapts % for parallelized, use parfor
 		%find facets attached to next NN
 		[row,~]=find(K==nn);
 		
-		rownext = setdiff(row,oldrow);
+		rownext = setdiff(row,oldrow); %this seems problematic for indexing later (2020-07-29)
 		oldrow = [row;oldrow];
 		
 		if ~isempty(rownext)
@@ -139,8 +139,13 @@ for i  = 1:ndatapts % for parallelized, use parfor
 		end
 	end
 	
+	if k > 0
+		row = rownext; %correct for indexing if the while loop was entered into
+		%NOTE: not having this was a serious source of error (2020-07-29)
+	end
+	
 	if ~isempty(subfacetIDs{i})
-		intfacetIDs{i} = row(subfacetIDs{i}); %convert from facetPtIDs or facetPtIDsNext index to K index
+		intfacetIDs{i} = row(subfacetIDs{i}); %convert from facetPtIDs or facetPtIDsNext index to K index (possible bug 2020-07-29)
 	else
 		intfacetIDs{i} = [];
 	end
