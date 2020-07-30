@@ -216,8 +216,8 @@ if size(a,2) <= 7
 end
 
 %compute intersecting facet IDs (might be zero, might have more than one)
-inttol = 1e-1;
-maxnormQ = false;
+inttol = 1e-2;
+maxnormQ = true;
 intfacetIDs = intersect_facet(mesh.ppts,mesh.sphK,data.ppts,inttol,maxnormQ);
 
 barytype = 'planar';
