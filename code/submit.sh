@@ -32,3 +32,5 @@ matlab -nodisplay -nosplash -r "$pc_opts; run; exit"
 
 echo "Cleaning up temporary directory at end of script, meaning that the job exited cleanly"
 rm -rfv $TMPDIR
+
+git add figures/
