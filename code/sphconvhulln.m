@@ -100,8 +100,9 @@ if maxnormQ
 	while ~subhemiQ && (k < 10)
 		rid = randi(size(K,1));
 		avg1 = mean(pts(K(rid,:),:));
-		intTemp = intersect_facet(pts,K,avg1,tol);
-		subhemiQ = length(intTemp{:}) > 1;
+% 		intTemp = intersect_facet(pts,K,avg1,tol);
+		[~,~,~,intTemp,~] = projray2hypersphere(pts,K,avg1,1e-6,false);
+		subhemiQ = length(intTemp) > 1;
 		k = k+1;
 	end
 	
