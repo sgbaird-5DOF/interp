@@ -55,7 +55,7 @@ addpathdir({'misFZfeatures.mat','PGnames.mat','nlt.m','q2rod.m',...
 %'Olmsted2004','5DOF_vtx','5DOF_misFZfeatures',
 %'5DOF_interior','5DOF_exterior', '5DOF_oct_vtx','5DOF_hsphext'
 %'5DOF_exterior_hsphext', 'ocubo'
-meshMethod = 'ocubo';
+meshMethod = 'Olmsted_2004';
 dataMethod = 'ocubo';
 pseudoMethod = [meshMethod '_pseudo'];
 
@@ -210,18 +210,18 @@ tol = 1e-3;
 if size(a,2) <= 7
 	data.ppts = proj_down(data.pts,tol,usv);
 	mesh.ppts = proj_down(mesh.pts,tol,usv);
+	
+	data.ppts = normr(data.ppts); %not normalizing produced 100% non-intersections (2020-07-29)
+	mesh.ppts = normr(mesh.ppts);
 end
-
-data.ppts = normr(data.ppts); %not normalizing produced 100% non-intersections (2020-07-29)
-mesh.ppts = normr(mesh.ppts);
 
 %compute intersecting facet IDs (might be zero, might have more than one)
 tol2 = 1e-6;
 maxnormQ = false;
 intfacetIDs = intersect_facet(mesh.ppts,mesh.sphK,data.ppts,tol2,maxnormQ);
 
-barytol = 1e-6;
-[datainterp,databary,meshdata.fname] = get_interp(mesh,data,intfacetIDs,barytol);
+barytol = -0.2;
+[datainterp,databary,meshdata.fname] = get_interp(mesh,data,intfacetIDs,'spherical',barytol);
 
 toc; disp(' ')
 
