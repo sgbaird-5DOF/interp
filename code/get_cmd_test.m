@@ -4,7 +4,7 @@ N_trim = [1];
 jid = 1;
 cores = 24;
 setenv('cores',int2str(cores))
-walltimes = repelem(40,length(N_trim));
+walltimes = repelem(60,length(N_trim));
 mem = 1024*4; %MB
 qosopt = 'test'; %'', 'test'
 script_fpath = 'submit.sh';
