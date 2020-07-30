@@ -64,6 +64,11 @@ for i = 1:ndatapts %parfor compatible
 	
 	%interpolation
 	interpvals(i) = griddatan(x,v,xq);
+	
+	if isnan(interpvals(i))
+		warning(['no intersection found for i == ' int2str(i) '. Taking nearest neighbor interpolation value.'])
+		interpvals(i) = griddatan(x,v,xq,'nearest');
+	end
 end
 
 end %knninterp
