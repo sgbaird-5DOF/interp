@@ -1,5 +1,12 @@
 function [dataProj,facetPts,dataBary,facetIDs,tvals] = ...
-	projray2hypersphere(meshpts,facetPtIDs,datanorm,tol,varargin)
+	projray2hypersphere(meshpts,facetPtIDs,datanorm,tol,maxnormQ)
+arguments
+	meshpts
+	facetPtIDs
+	datanorm
+	tol(1,1) double = 1e-6
+	maxnormQ(1,1) logical = false
+end
 %--------------------------------------------------------------------------
 % Author: Sterling Baird
 %
@@ -30,12 +37,6 @@ function [dataProj,facetPts,dataBary,facetIDs,tvals] = ...
 % 			continue
 % 		end
 %--------------------------------------------------------------------------
-usual = 4;
-if nargin - usual == 1
-	maxnormQ = varargin{1};
-else
-	maxnormQ = false;
-end
 
 invmethod = 'mldivide'; %'pinv', 'mldivide', 'extendedCross'
 
@@ -51,8 +52,10 @@ dmat = cell(adjSize(1),1);
 
 for j = 1:adjSize(1) %loop through facets
 	for k = 1:adjSize(2) %loop through vertices of facet
+		%package vertices
 		p{j,k} = meshpts(facetPtIDs(j,k),:);
 	end
+	%package vertex matrix
 	nmatTemp{j} = vertcat(p{j,:});
 	dmat{j} = nmatTemp{j};
 	for k = 1:adjSize(2)
