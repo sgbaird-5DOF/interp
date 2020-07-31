@@ -66,7 +66,7 @@ dataopts = meshopts;
 %mesh parameters
 meshopts.res = 12.5;
 meshopts.nint = 1; % 1 == zero subdivisions, 2 == one subdivision, etc.
-meshopts.octsubdiv = 2;
+meshopts.octsubdiv = 1;
 meshopts.ocuboOpts.n = []; % # of octonions to generate, [] also ok if sidelength specified
 meshopts.ocuboOpts.method = 'uniform'; % 'random' or 'uniform' cubochoric sampling
 meshopts.ocuboOpts.sidelength = 4; %sidelength of cubochoric grid (only specify if 'uniform', [] ok)
@@ -92,8 +92,8 @@ pseudoOpts.ocuboOpts.seed = 25; %integer or 'shuffle' OK
 
 T = true; %just makes it easier to switch back and forth between true and false
 F = false;
-meshloadQ = T;
-dataloadQ = T;
+meshloadQ = F;
+dataloadQ = F;
 pseudoloadQ = T;
 meshdataloadQ = F; %whether to check for and load intersection & barycentric data from previous run
 
