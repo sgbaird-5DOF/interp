@@ -3,6 +3,7 @@ arguments
 	pts double {mustBeFinite,mustBeReal}
 	tol(1,1) double {mustBeFinite,mustBeReal} = 1e-6
 	usv struct = struct.empty
+	nforceQ(1,1) logical = false
 	nforce double = double.empty
 end
 %--------------------------------------------------------------------------
@@ -36,12 +37,12 @@ if nforce >= d
 	error(['nforce should be less than d == ' int2str(size(pts,2))])
 end
 
-if isempty(nforce)
-	nforce = 1;
-	nforceQ = false;
-else
-	nforceQ = true;
-end
+% if isempty(nforce)
+% 	nforce = 1;
+% 	nforceQ = false;
+% else
+% 	nforceQ = true;
+% end
 
 if ~isempty(usv)
 	%unpackage
