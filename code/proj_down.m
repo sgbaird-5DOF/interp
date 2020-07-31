@@ -29,6 +29,9 @@ end
 %	repeatedly with different usv matrices. Shouldn't be an issue if you
 %	keep use the same usv matrices.
 %
+% References:
+%  https://www.mathworks.com/matlabcentral/answers/352830
+%
 %--------------------------------------------------------------------------
 %dimensionality
 d = size(pts,2);
@@ -47,10 +50,10 @@ end
 if ~isempty(usv)
 	%unpackage
 	V = usv.V;
-	avg = usv.avg;
+% 	avg = usv.avg;
 	
 	%projection
-	projpts = (pts-avg)/V';
+	projpts = pts/V';
 	
 	if all(abs(projpts(:,end-nforce+1:end)) < tol,'all')
 		%remove last column
@@ -78,15 +81,17 @@ elseif isempty(usv)
 	usv(1) = struct();
 	
 	%take average of points
-	avg = mean(pts);
+% 	avg = mean(pts);
+% 	avg = 0;
 	
 	%project to d-1 dimensional space
-	[U,S,V]=svd(bsxfun(@minus,pts,avg),0);
+% 	[U,S,V]=svd(bsxfun(@minus,pts,avg),0);
+	[U,S,V] = svd(pts,0);
 	
 	usv.U = U;
 	usv.S = S;
 	usv.V = V;
-	usv.avg = avg;
+% 	usv.avg = avg;
 	
 	%number of degenerate dimensions
 	ndegdim = sum(abs(diag(S)) < tol);

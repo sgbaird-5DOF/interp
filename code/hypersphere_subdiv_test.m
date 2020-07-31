@@ -117,65 +117,72 @@ switch test
 		end
 		
 	case 4
-		
+		%set random number generator
 		seed = 10;
 		rng(seed);
 		
 		d = 3;
-		%get points along an arc in 3D
+		%get points along an arc in 3D, plus origin
 		endpts = normr(rand(2,d));
 		nmeshpts = 10;
-		meshpts = [0 0 0; endpts; normr(endpts(1,:) + rand(nmeshpts,1)*(endpts(2,:) - endpts(1,:)))];
+		meshpts = [endpts; normr(endpts(1,:) + rand(nmeshpts,1)*(endpts(2,:) - endpts(1,:)))];
 		
+		%get datapoints along same 3D arc
 		ndatapts = 2;
 		datapts = normr(endpts(1,:) + rand(ndatapts,1)*(endpts(2,:) - endpts(1,:)));
 		
+		%figure setup
 		fig = figure;
 		fig.Position = [231.0000  155.5000  789.5000  611.5000];
 		tiledlayout(2,2)
 		
+		%plot points along arc and origin
 		nexttile
 		t1=n2c(meshpts);
 		t2=n2c(datapts);
 		plot3(t1{:},'k*',t2{:},'r*')
 		axis equal
 		
+		%remove degenerate dimension (and keep origin point)
 		a = [meshpts; datapts];
-% 		a = projfacet2hyperplane(normr(mean(meshpts)),a);
+		% 		a = projfacet2hyperplane(normr(mean(meshpts)),a); %turns out this is unnecessary (maybe even a bad idea)
 		[a,usv] = proj_down(a,1e-6);
 		
-		zeropt = a(1,:);
-		meshpts = a(1:end-ndatapts,:)-zeropt;
-		datapts = a(end-ndatapts+1:end,:)-zeropt;
+		%recenter rest of data relative to origin
+		meshpts = a(1:end-ndatapts,:);
+		datapts = a(end-ndatapts+1:end,:);
 		
 		
 % 		[pts,usv] = proj_down(pts,1000);
 % 		pts = normr(proj_up(pts,usv));
 % 		avg = normr(mean(pts));
 		
-
+		%plot the 2D points
 		nexttile
 		t1=n2c(round(meshpts,15));
 		t2=n2c(round(datapts,15));
 		plot(t1{:},'k*',t2{:},'r*')
 		
+		%plot the 2D triangulation
 		hold on
-		K = sphconvhulln(meshpts(2:end,:));
-		x = meshpts(2:end,1);
-		y = meshpts(2:end,2);
+		K = sphconvhulln(meshpts);
+		x = meshpts(:,1);
+		y = meshpts(:,2);
 		for i = 1:size(K,1)
 			plot(x(K(i,:)),y(K(i,:)),'k-')
 		end
-% 		plot(x(K),y(K)) %only works for closed polygon & corresponding convex hull I suppose
 		ax = gca;
-		ax.XLim(find(min(abs(ax.XLim)))) = 0;
-		ax.YLim(find(min(abs(ax.YLim)))) = 0;
+% 		ax.XLim(min(abs(ax.XLim))) = 0;
+% 		ax.YLim(min(abs(ax.YLim))) = 0;
  		plot(0,0,'k*')
 		axis equal
 		
+		%subdivide the 2D arc
 		nint = 2;
-		[Ktr,K,meshpts] = hypersphere_subdiv(meshpts(2:end,:),K,nint);
+		[Ktr,K,meshpts] = hypersphere_subdiv(meshpts,K,nint);
 		
+		%plot subdivision
+		%--2D arc points 
 		nexttile(4)
 		t1=n2c(meshpts);
 		t2=n2c(datapts);
@@ -184,6 +191,7 @@ switch test
 		title(mytitle)
 		axis equal
 		
+		%--2D arc triangulation
 		hold on
 		x = meshpts(:,1);
 		y = meshpts(:,2);
@@ -192,19 +200,23 @@ switch test
 		end
 		plot(0,0,'k*')
 		
-		meshpts = meshpts+zeropt;
-		datapts = datapts+zeropt;
+		%uncenter the 2D arc points (using projected origin point) and add
+		%projected origin back in
 		meshpts = proj_up(meshpts,usv);
 		datapts = proj_up(datapts,usv);
 		
+		%plot the reprojected 3D arc
 		nexttile(3)
 		t1=n2c(meshpts);
 		t2=n2c(datapts);
 		plot3(t1{:},'k*',t2{:},'r*')
 		title(mytitle)
 		axis equal
-		hold on
-		plot3(0,0,0,'k*')
-		
+		hold on		
 		
 end
+
+%----------------------------CODE GRAVEYARD--------------------------------
+%{
+% 		plot(x(K),y(K)) %only works for closed polygon & corresponding convex hull I suppose
+%}
