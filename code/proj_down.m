@@ -1,10 +1,10 @@
-function [projpts,usv] = proj_down(pts,tol,usv,nforce)
+function [projpts,usv] = proj_down(pts,tol,usv,nforce,nforceQ)
 arguments
 	pts double {mustBeFinite,mustBeReal}
 	tol(1,1) double {mustBeFinite,mustBeReal} = 1e-6
 	usv struct = struct.empty
-	nforceQ(1,1) logical = false
 	nforce double = 1
+	nforceQ(1,1) logical = false
 end
 %--------------------------------------------------------------------------
 % Author: Sterling Baird

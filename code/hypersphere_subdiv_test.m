@@ -117,6 +117,7 @@ switch test
 		end
 		
 	case 4
+		
 		seed = 10;
 		rng(seed);
 		
@@ -124,7 +125,7 @@ switch test
 		%get points along an arc in 3D
 		endpts = normr(rand(2,d));
 		nmeshpts = 10;
-		meshpts = [endpts; normr(endpts(1,:) + rand(nmeshpts,1)*(endpts(2,:) - endpts(1,:)))];
+		meshpts = [0 0 0; endpts; normr(endpts(1,:) + rand(nmeshpts,1)*(endpts(2,:) - endpts(1,:)))];
 		
 		ndatapts = 2;
 		datapts = normr(endpts(1,:) + rand(ndatapts,1)*(endpts(2,:) - endpts(1,:)));
@@ -137,26 +138,43 @@ switch test
 		t1=n2c(meshpts);
 		t2=n2c(datapts);
 		plot3(t1{:},'k*',t2{:},'r*')
+		axis equal
 		
-		a = [meshpts;datapts];
-		a = projfacet2hyperplane(normr(mean(meshpts)),a);
+		a = [meshpts; datapts];
+% 		a = projfacet2hyperplane(normr(mean(meshpts)),a);
 		[a,usv] = proj_down(a,1e-6);
 		
-		meshpts = a(1:end-ndatapts,:);
-		datapts = a(end-ndatapts+1:end,:);
+		zeropt = a(1,:);
+		meshpts = a(1:end-ndatapts,:)-zeropt;
+		datapts = a(end-ndatapts+1:end,:)-zeropt;
 		
 		
 % 		[pts,usv] = proj_down(pts,1000);
 % 		pts = normr(proj_up(pts,usv));
 % 		avg = normr(mean(pts));
 		
+
 		nexttile
 		t1=n2c(round(meshpts,15));
 		t2=n2c(round(datapts,15));
 		plot(t1{:},'k*',t2{:},'r*')
 		
-		nint = 3;
-		[Ktr,K,meshpts] = hypersphere_subdiv(meshpts,[],nint);	
+		hold on
+		K = sphconvhulln(meshpts(2:end,:));
+		x = meshpts(2:end,1);
+		y = meshpts(2:end,2);
+		for i = 1:size(K,1)
+			plot(x(K(i,:)),y(K(i,:)),'k-')
+		end
+% 		plot(x(K),y(K)) %only works for closed polygon & corresponding convex hull I suppose
+		ax = gca;
+		ax.XLim(find(min(abs(ax.XLim)))) = 0;
+		ax.YLim(find(min(abs(ax.YLim)))) = 0;
+ 		plot(0,0,'k*')
+		axis equal
+		
+		nint = 2;
+		[Ktr,K,meshpts] = hypersphere_subdiv(meshpts(2:end,:),K,nint);
 		
 		nexttile(4)
 		t1=n2c(meshpts);
@@ -164,7 +182,18 @@ switch test
 		plot(t1{:},'k*',t2{:},'r*')
 		mytitle = ['nint == ' int2str(nint)];
 		title(mytitle)
+		axis equal
 		
+		hold on
+		x = meshpts(:,1);
+		y = meshpts(:,2);
+		for i = 1:size(K,1)
+			plot(x(K(i,:)),y(K(i,:)),'k-')
+		end
+		plot(0,0,'k*')
+		
+		meshpts = meshpts+zeropt;
+		datapts = datapts+zeropt;
 		meshpts = proj_up(meshpts,usv);
 		datapts = proj_up(datapts,usv);
 		
@@ -173,6 +202,9 @@ switch test
 		t2=n2c(datapts);
 		plot3(t1{:},'k*',t2{:},'r*')
 		title(mytitle)
+		axis equal
+		hold on
+		plot3(0,0,0,'k*')
 		
 		
 end
