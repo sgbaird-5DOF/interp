@@ -119,7 +119,9 @@ parfor i = 1:nfacets %parfor compatible, uncomment "send" lines if using parfor 
 	end
 	
 % 	%renormalize to unit hypersphere
-%  	mpts2a = normr(mpts2a); %I think this was a source of error before (2020-07-30)
+ 	mpts2a = normr(mpts2a); %I think this was a source of error before (2020-07-30)
+	%I think I just need to always project the origin along with it and
+	%subtract the new origin point when I go back
 	
 	%add subdivision to K-tree
 	KtrtempK{i} = K2a;
