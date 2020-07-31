@@ -4,7 +4,7 @@ arguments
 	tol(1,1) double {mustBeFinite,mustBeReal} = 1e-6
 	usv struct = struct.empty
 	nforceQ(1,1) logical = false
-	nforce double = double.empty
+	nforce double = 1
 end
 %--------------------------------------------------------------------------
 % Author: Sterling Baird
