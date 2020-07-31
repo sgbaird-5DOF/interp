@@ -52,7 +52,7 @@ if ~isempty(usv)
 	%projection
 	projpts = (pts-avg)/V';
 	
-	if all(abs(projpts(:,end-nforce+1:end)) < tol,'all') || nforceQ
+	if all(abs(projpts(:,end-nforce+1:end)) < tol,'all')
 		%remove last column
 		projpts = projpts(:,1:end-nforce);
 		
