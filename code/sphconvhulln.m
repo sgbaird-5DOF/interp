@@ -94,7 +94,15 @@ end
 
 if maxnormQ
 	%check to see if data falls on less than hemisphere
+% 	if size(pts,2) < 5
+% 		opts = {'QJ'};
+% 	else
+% 		opts = {'Qx','QJ'};
+% 	end
+% 	K = convhulln(pts,opts);
+
 	K = convhulln(pts);
+	
 	subhemiQ = false;
 	k = 0;
 	while ~subhemiQ && (k < 10)
@@ -107,14 +115,21 @@ if maxnormQ
 	end
 	
 	if subhemiQ
+		
+		projpts = projfacet2hyperplane(normr(mean(pts)),pts);
+		
+		a = proj_down(projpts,1e-6);
+		
+		K = delaunayn(a);
+		
 		%compute convex hull with extra point
-		extrapt = 0.1*normr(mean(pts)); %assumes points fall on less than a hemisphere
-		K = convhulln([pts;extrapt]);
+		%extrapt = 0.1*normr(mean(pts)); %assumes points fall on less than a hemisphere
+		%K = convhulln([pts;extrapt]);
 		
 		%delete everything connected to extra point
-		npts = size(pts,1);
-		[row,~] = find(K == npts+1);
-		K(row,:) = [];
+		%npts = size(pts,1);
+		%[row,~] = find(K == npts+1);
+		%K(row,:) = [];
 		
 	else
 		K = convhulln(pts); %compute regular convex hull
