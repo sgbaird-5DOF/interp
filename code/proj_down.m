@@ -50,10 +50,9 @@ end
 if ~isempty(usv)
 	%unpackage
 	V = usv.V;
-% 	avg = usv.avg;
 	
 	%projection
-	projpts = pts/V';
+	projpts = pts/V'+avg;
 	
 	if all(abs(projpts(:,end-nforce+1:end)) < tol,'all')
 		%remove last column
@@ -81,17 +80,20 @@ elseif isempty(usv)
 	usv(1) = struct();
 	
 	%take average of points
-% 	avg = mean(pts);
-% 	avg = 0;
+	if avgQ
+		avg = mean(pts);
+	else
+		avg = 0;
+	end
 	
 	%project to d-1 dimensional space
 % 	[U,S,V]=svd(bsxfun(@minus,pts,avg),0);
-	[U,S,V] = svd(pts,0);
+	[U,S,V] = svd(pts-avg,0);
 	
 	usv.U = U;
 	usv.S = S;
 	usv.V = V;
-% 	usv.avg = avg;
+	usv.avg = avg;
 	
 	%number of degenerate dimensions
 	ndegdim = sum(abs(diag(S)) < tol);
