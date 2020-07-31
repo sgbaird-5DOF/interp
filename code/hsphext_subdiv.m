@@ -47,16 +47,25 @@ else
 end
 K = convhulln(projpts,opts);
 
+%reformat pts and K
+IDs = unique(K);
+pts = pts(IDs,:);
+
+for i = 1:length(IDs)
+	ID = IDs(i);
+	K(K==ID) = i;
+end
+
 if nint > 1
 	% subdivide the "edges"
+	
 	[Ktr, K, meshpts] = hypersphere_subdiv(pts,K,nint,tricollapseQ);
 	
 else
 	Ktr.main = K;
-	%only output exterior points (update: 2020-07-30)
-	IDs = unique(K);
-	Ktr.pts = pts(IDs,:);
-	meshpts = pts(IDs,:);
+	%only output exterior points (update: 2020-07-30, realized this didn't preserve indexing, so fixing that)
+	Ktr.pts = K;
+	meshpts = pts;
 end
 
 %------------------------------CODE GRAVEYARD------------------------------

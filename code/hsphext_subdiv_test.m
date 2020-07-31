@@ -36,16 +36,16 @@ switch test
 		
 % 		pts = rand(10,d);
 
-% 		pts = [eye(3); rand(100,d)];
+% 		pts = [eye(3); rand(10000,d)];
 
-		pts = rand(1000,d);
+		pts = rand(100,d);
 		
 		
 		pts = normr(pts);
 		
 		K1 = sphconvhulln(pts);
 		
-		nint = 3;
+		nint = 1;
 		
 		[Ktr,K,meshpts] = hsphext_subdiv(pts,nint,true);
 		
@@ -54,7 +54,7 @@ switch test
 			close(figure(1));
 			fig = figure(1);
 			fig.Position = [247.5000  284.0000  822.0000  360.5000];
-			tiledlayout(1,2)
+			tiledlayout(1,3)
 			ax = nexttile;
 			tmp = num2cell(pts,1);
 			trisurf(K1,tmp{:});
@@ -68,11 +68,32 @@ switch test
 			% 	axis equal tight
 			
 			ax = nexttile;
-			tmp = num2cell(meshpts,1);
- 			plot3(tmp{:},'*')
+			
 			hold on
-			trisurf(K,tmp{:})
+			for i = 1:size(K,1);
+				t1 = meshpts(K(i,1),:);
+				t2 = meshpts(K(i,2),:);
+				tmp = n2c([t1;t2]);
+				% plot3(tmp{:},'-')
+				plot3(tmp{:},'-')
+				plot3(tmp{:},'k*')
+				drawnow
+				pause(0.1)
+			end
+% 			tmp = num2cell(meshpts,1);
+%  			plot3(tmp{:},'*')
+			hold on
+% 			trisurf(K,tmp{:})
 			ax.View = [105 20];
+			axis equal tight
+			
+			nexttile
+			avg = normr(mean(meshpts));
+			a = projfacet2hyperplane(avg,meshpts);
+			b = proj_down([avg;a]);
+% 			b = proj_down(a);
+			t=n2c(b);
+			triplot(delaunayn(b),t{:})
 			axis equal tight
 			
 		end
