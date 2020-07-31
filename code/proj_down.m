@@ -80,11 +80,7 @@ elseif isempty(usv)
 	usv(1) = struct();
 	
 	%take average of points
-	if avgQ
-		avg = mean(pts);
-	else
-		avg = 0;
-	end
+	avg = mean(pts);
 	
 	%project to d-1 dimensional space
 % 	[U,S,V]=svd(bsxfun(@minus,pts,avg),0);
