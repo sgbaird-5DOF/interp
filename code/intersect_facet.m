@@ -80,7 +80,7 @@ nreps2 = nreps;
 
 %% loop through datapts
 %disp('intersect_facet ')
-parfor i  = 1:ndatapts % for parallelized, use parfor
+parfor i  = 1:ndatapts % parfor compatible
 	%% first NN projection
 	data = datalist(i,:);
 	nn = nnList(i);
