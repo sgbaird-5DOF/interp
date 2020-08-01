@@ -1,4 +1,8 @@
 function newpts = proj_up(pts,usv)
+arguments
+	pts double
+	usv struct {mustContainFields(usv,{'V'})}
+end
 %--------------------------------------------------------------------------
 % Author: Sterling Baird
 %
@@ -13,6 +17,13 @@ function newpts = proj_up(pts,usv)
 % Dependencies:
 %
 %--------------------------------------------------------------------------
+% account for "zeropt" being in usv (see proj_down.m)
+if isfield(usv,'zeropt')
+	if ~isempty(usv.zeropt)
+		pts = pts + usv.zeropt;
+	end
+end
+
 V = usv.V;
 avg = usv.avg;
 
