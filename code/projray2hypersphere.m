@@ -1,11 +1,12 @@
 function [dataProj,facetPts,dataBary,facetIDs,tvals] = ...
-	projray2hypersphere(meshpts,facetPtIDs,datanorm,tol,maxnormQ)
+	projray2hypersphere(meshpts,facetPtIDs,datanorm,tol,maxnormQ,invmethod)
 arguments
 	meshpts
 	facetPtIDs
 	datanorm
 	tol(1,1) double = 1e-6
 	maxnormQ(1,1) logical = false
+	invmethod char {mustBeMember(invmethod,{'mldivide','pinv','extendedCross'})} = 'mldivide'
 end
 %--------------------------------------------------------------------------
 % Author: Sterling Baird
@@ -38,7 +39,7 @@ end
 % 		end
 %--------------------------------------------------------------------------
 
-invmethod = 'mldivide'; %'pinv', 'mldivide', 'extendedCross'
+% invmethod = 'mldivide'; %'pinv', 'mldivide', 'extendedCross'
 
 adjSize = size(facetPtIDs);
 %%
@@ -102,7 +103,7 @@ for j = 1:adjSize(1)
 			case 'extendedCross'
 				%compute numerically stable barycentric coordinates
 				lambda{j} = numStabBary(nmatTemp{j},a{j});
-				disp(lambda{j})
+% 				disp(lambda{j})
 				posQ(j) = all(lambda{j} >= -tol) && (sum(lambda{j}) >= 1-tol);
 		end
 	end

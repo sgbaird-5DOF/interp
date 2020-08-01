@@ -1,9 +1,10 @@
-function [projpts,usv] = proj_down(pts,tol,usv,nforce)
+function [projpts,usv] = proj_down(pts,tol,usv,nforce,nforceQ)
 arguments
 	pts double {mustBeFinite,mustBeReal}
 	tol(1,1) double {mustBeFinite,mustBeReal} = 1e-6
 	usv struct = struct.empty
-	nforce double = double.empty
+	nforce double = 1
+	nforceQ(1,1) logical = false
 end
 %--------------------------------------------------------------------------
 % Author: Sterling Baird
@@ -28,6 +29,9 @@ end
 %	repeatedly with different usv matrices. Shouldn't be an issue if you
 %	keep use the same usv matrices.
 %
+% References:
+%  https://www.mathworks.com/matlabcentral/answers/352830
+%
 %--------------------------------------------------------------------------
 %dimensionality
 d = size(pts,2);
@@ -36,12 +40,12 @@ if nforce >= d
 	error(['nforce should be less than d == ' int2str(size(pts,2))])
 end
 
-if isempty(nforce)
-	nforce = 1;
-	nforceQ = false;
-else
-	nforceQ = true;
-end
+% if isempty(nforce)
+% 	nforce = 1;
+% 	nforceQ = false;
+% else
+% 	nforceQ = true;
+% end
 
 if ~isempty(usv)
 	%unpackage
@@ -51,7 +55,7 @@ if ~isempty(usv)
 	%projection
 	projpts = (pts-avg)/V';
 	
-	if all(abs(projpts(:,end-nforce+1:end)) < tol,'all') || nforceQ
+	if all(abs(projpts(:,end-nforce+1:end)) < tol,'all')
 		%remove last column
 		projpts = projpts(:,1:end-nforce);
 		
@@ -80,7 +84,8 @@ elseif isempty(usv)
 	avg = mean(pts);
 	
 	%project to d-1 dimensional space
-	[U,S,V]=svd(bsxfun(@minus,pts,avg),0);
+% 	[U,S,V]=svd(bsxfun(@minus,pts,avg),0);
+	[U,S,V] = svd(pts-avg,0);
 	
 	usv.U = U;
 	usv.S = S;

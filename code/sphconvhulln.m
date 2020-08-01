@@ -94,6 +94,32 @@ end
 
 if maxnormQ
 	%check to see if data falls on less than hemisphere
+% 	if size(pts,2) < 5
+% 		opts = {'QJ'};
+% 	else
+% 		opts = {'Qx','QJ'};
+% 	end
+% 	K = convhulln(pts,opts);
+	
+	%---------------
+% 	K = convhulln(pts);
+% 	K2 = NaN(size(K));
+% 	intfacetIDs = zeros(size(K,1),1);
+% 	parfor i = 1:size(K,1)
+% 		facet = K(i,:);
+% 		avgpt = mean(pts(facet,:));
+% 		intfacetID = intersect_facet(pts,K,avgpt,1e-6,true);
+% 		ID = intfacetID{1};
+% 		
+% 		% 		if ~any(ismember(intfacetIDs,ID))
+% % 		intfacetIDs(i) = ID;
+% 		K2(i,:) = K(ID,:);
+% 		% 		end
+% 	end
+% 	K = unique(K2,'rows');
+	%----------------
+	
+	%----------------
 	K = convhulln(pts);
 	subhemiQ = false;
 	k = 0;
@@ -107,24 +133,32 @@ if maxnormQ
 	end
 	
 	if subhemiQ
-		%compute convex hull with extra point
-		extrapt = 0.1*normr(mean(pts)); %assumes points fall on less than a hemisphere
+		
+		% projpts = projfacet2hyperplane(normr(mean(pts)),pts);
+		% a = proj_down(projpts,1e-6);
+		% K = delaunayn(a);
+		
+		%compute convex hull with extra point (faster, 2020-07-31)
+		scl = -0.1; % negative scale factor removes "undercut" facets. Small positive keeps them (e.g. 0.1)
+		extrapt = scl*normr(mean(pts)); %assumes points fall on less than a hemisphere
+
 		K = convhulln([pts;extrapt]);
 		
-		%delete everything connected to extra point
+		%remove everything connected to extra point
 		npts = size(pts,1);
 		[row,~] = find(K == npts+1);
 		K(row,:) = [];
-		
+				
 	else
 		K = convhulln(pts); %compute regular convex hull
 	end
-	
+	%----------------
+ 	
 	return
 end
 
 if maxnormQ == false
-	disp('maxnormQ == false might not be working correctly (2020-07-29)')
+% 	disp('maxnormQ == false might not be working correctly (2020-07-29)')
 end
 
 %% add orthoplex points (if not in pts) to prevent "undercut facets"

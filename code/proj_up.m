@@ -26,5 +26,7 @@ ndegdim = d2-d1; %number of degenerate dimensions
 % ndegdim = sum(abs(diag(S)) < 1E-6);
 
 newpts = padarray(pts,[0 ndegdim],'post')*V'+avg;
+% newpts = padarray(pts,[0 ndegdim],'post')*V';
+
 
 end
