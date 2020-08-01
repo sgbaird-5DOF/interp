@@ -5,7 +5,7 @@ d = 3;
 seed = 10;
 rng(seed);
 
-load_type = 'axPlane2'; %'misFZ', 'uppHem','nonnegOrth','octant', '2xoctant','sphCone', 'axPlane', 'axPlane2'
+load_type = 'uppHem'; %'misFZ', 'uppHem','nonnegOrth','octant', '2xoctant','sphCone', 'axPlane', 'axPlane2'
 
 switch load_type
 	case 'misFZ'
