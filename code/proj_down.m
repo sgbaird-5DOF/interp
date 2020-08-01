@@ -1,10 +1,11 @@
-function [projpts,usv] = proj_down(pts,tol,usv,nforce,nforceQ)
+function [projpts,usv,zeropt] = proj_down(pts,tol,usv,NV)
 arguments
 	pts double {mustBeFinite,mustBeReal}
 	tol(1,1) double {mustBeFinite,mustBeReal} = 1e-6
 	usv struct = struct.empty
-	nforce double = 1
-	nforceQ(1,1) logical = false
+	NV.nforce double = 1
+	NV.nforceQ(1,1) logical = false
+	NV.zeroQ(1,1) logical = false
 end
 %--------------------------------------------------------------------------
 % Author: Sterling Baird
@@ -33,6 +34,17 @@ end
 %  https://www.mathworks.com/matlabcentral/answers/352830
 %
 %--------------------------------------------------------------------------
+% unpackage name value pairs
+nforce = NV.nforce;
+nforceQ = NV.nforceQ;
+
+% --if zeropt is requested as output, then zeroQ == true
+if nargout == 3
+	zeroQ = true;
+else
+	zeroQ = NV.zeroQ;
+end
+
 %dimensionality
 d = size(pts,2);
 
@@ -40,29 +52,35 @@ if nforce >= d
 	error(['nforce should be less than d == ' int2str(size(pts,2))])
 end
 
-% if isempty(nforce)
-% 	nforce = 1;
-% 	nforceQ = false;
-% else
-% 	nforceQ = true;
-% end
-
 if ~isempty(usv)
-	%unpackage
+	%unpackage usv
 	V = usv.V;
+	S = usv.S;
 	avg = usv.avg;
 	
 	%projection
 	projpts = (pts-avg)/V';
 	
-	if all(abs(projpts(:,end-nforce+1:end)) < tol,'all')
-		%remove last column
-		projpts = projpts(:,1:end-nforce);
+	%number of degenerate dimensions
+	if nforceQ
+		ndegdim = nforce;
+
+	elseif size(S,1) == size(S,2)
+		ndegdim = sum(abs(diag(S)) < tol);
+		
+	else
+		%check for columns of all zeros within tolerance
+		ndegdim = sum(all(S < tol));
+	end
+	
+	if all(abs(projpts(:,end-ndegdim+1:end)) < tol,'all')
+		%remove last column(s)
+		projpts = projpts(:,1:end-ndegdim);
 		
 	elseif nforceQ
-		projpts = projpts(:,1:end-nforce);
+		projpts = projpts(:,1:end-ndegdim);
 		disp(['Nonzero last column. E.g. ' num2str(pts([1 2],end)) ...
-			'. Forcing projection ' int2str(nforce) ' dimensions.'])
+			'. Forcing projection ' int2str(ndegdim) ' dimensions.'])
 		
 	elseif ~nforceQ
 		projpts = pts;
@@ -84,7 +102,6 @@ elseif isempty(usv)
 	avg = mean(pts);
 	
 	%project to d-1 dimensional space
-% 	[U,S,V]=svd(bsxfun(@minus,pts,avg),0);
 	[U,S,V] = svd(pts-avg,0);
 	
 	usv.U = U;
@@ -93,16 +110,25 @@ elseif isempty(usv)
 	usv.avg = avg;
 	
 	%number of degenerate dimensions
-	ndegdim = sum(abs(diag(S)) < tol);
+	if nforceQ
+		ndegdim = nforce;
+		
+	elseif size(S,1) == size(S,2)
+		ndegdim = sum(abs(diag(S)) < tol);
+		
+	else
+		%check for columns of all zeros within tolerance
+		ndegdim = sum(all(S < tol));
+	end
 	
 	if (ndegdim > 0) || nforceQ
-	%project to lower dimension (i.e. rotation)
-		projpts = U*S(:,1:size(S,1)-nforce);
+		%project to lower dimension (i.e. rotation)
+		projpts = U*S(:,1:d-ndegdim);
 		if (ndegdim == 0) && nforceQ
 			warning(['ndegdim == 0, tol == ' num2str(tol) ...
 				', min(diag(S)) == ' num2str(min(diag(S))) ...
 				', max(diag(S)) == ' num2str(max(diag(S))) ...
-				'. Forcing projection ' int2str(nforce) ' dimensions'])
+				'. Forcing projection ' int2str(ndegdim) ' dimensions'])
 		end
 	else
 		warning(['ndegdim == 0, tol == ' num2str(tol) ...
@@ -114,9 +140,28 @@ elseif isempty(usv)
 	end
 end
 
+if zeroQ
+	zeropt = (zeros(1,d)-avg)/V';
+	zeropt = zeropt(1:d-ndegdim);
+	projpts = projpts-zeropt;
+	
+	usv.zeropt = zeropt;
+end
+
 end %proj_down
 
 %-----------------------------CODE GRAVEYARD-------------------------------
 %{
 	% ndegdim = sum(abs(diag(S)) < tol);
+
+% if isempty(nforce)
+% 	nforce = 1;
+% 	nforceQ = false;
+% else
+% 	nforceQ = true;
+% end
+
+% 	[U,S,V]=svd(bsxfun(@minus,pts,avg),0);
+
+
 %}
