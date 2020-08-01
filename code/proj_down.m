@@ -50,6 +50,7 @@ end
 if ~isempty(usv)
 	%unpackage
 	V = usv.V;
+	avg = usv.avg;
 	
 	%projection
 	projpts = pts/V'+avg;
