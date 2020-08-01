@@ -184,7 +184,7 @@ switch sampleMethod
 	case {'5DOF_exterior_hsphext','5DOF_exterior_hsphext_pseudo'}
 		featureType = 'exterior';
 		
-	case {'ocubo'}
+	case {'ocubo','ocubo_hsphext'}
 		featureType = 'ocubo';
 		%unpack options
 		n = opts.ocuboOpts.n;
