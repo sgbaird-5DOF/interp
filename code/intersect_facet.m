@@ -1,4 +1,4 @@
-function [intfacetIDs,dataBary] = intersect_facet(pts,K,datalist,tol,maxnormQ,baryMethod)
+function [intfacetIDs,dataBary] = intersect_facet(pts,K,datalist,tol,maxnormQ,baryMethod,invmethod)
 arguments
 	pts double {mustBeFinite,mustBeReal}
 	K double {mustBeFinite,mustBeReal}
@@ -6,6 +6,7 @@ arguments
 	tol(1,1) double {mustBeFinite,mustBeReal} = 1e-6
 	maxnormQ(1,1) logical = false
 	baryMethod char {mustBeMember(baryMethod,{'planar','spherical'})} = 'planar'
+	invmethod char {mustBeMember(invmethod,{'mldivide','pinv','extendedCross'})} = 'mldivide'
 end
 %--------------------------------------------------------------------------
 % Author: Sterling Baird
@@ -80,7 +81,7 @@ nreps2 = nreps;
 
 %% loop through datapts
 %disp('intersect_facet ')
-parfor i  = 1:ndatapts % for parallelized, use parfor
+parfor i  = 1:ndatapts % parfor compatible
 	%% first NN projection
 	data = datalist(i,:);
 	nn = nnList(i);
@@ -95,7 +96,7 @@ parfor i  = 1:ndatapts % for parallelized, use parfor
 	switch baryMethod
 		case 'planar'
             [dataProj{i},facetPts{i},dataBary{i},subfacetIDs{i},t{i}] = ...
-				projray2hypersphere(pts,facetPtIDs,data,tol,maxnormQ);
+				projray2hypersphere(pts,facetPtIDs,data,tol,maxnormQ,invmethod);
 		case 'spherical'
 			[dataBary{i},subfacetIDs{i}] = sphbary_setup(pts,facetPtIDs,data,tol); %I think this is buggy 2020-07-16
 				
@@ -105,7 +106,8 @@ parfor i  = 1:ndatapts % for parallelized, use parfor
 	ptsTemp = pts; %dummy variable to be able to sift through new NN's
 	k = 0;
 	oldrow = row;
-	nnMax = 5; %nnMax = nmeshpts;
+	nnMax = 5; %# of nearest neighbors to consider before exiting loop
+% 	nnMax = size(pts,1);
 	while isempty(subfacetIDs{i}) && k < nnMax
 		k = k+1;
 		%remove previous NN
@@ -127,12 +129,16 @@ parfor i  = 1:ndatapts % for parallelized, use parfor
 			switch baryMethod
 				case 'planar'
                     [dataProj{i},facetPts{i},dataBary{i},subfacetIDs{i},t{i}] = ...
-						projray2hypersphere(pts,facetPtIDsNext,data,tol,maxnormQ);
+						projray2hypersphere(pts,facetPtIDsNext,data,tol,maxnormQ,invmethod);
 				case 'spherical'
 					[dataBary{i},subfacetIDs{i}] = sphbary_setup(pts,facetPtIDs,data,tol);
 			end
 		end
 	end
+	
+% 	while isempty(subfacetIDs{i})
+% 		%look at facets connected to exterior vertices
+% 	end
 	
 	if k > 0
 		row = rownext; %correct for indexing if the while loop was entered into

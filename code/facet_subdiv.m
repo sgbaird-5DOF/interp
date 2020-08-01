@@ -49,21 +49,35 @@ end
 
 tol = 1e-6;
 
-%project to d-1 dimensional space
-[U,S,V]=svd(bsxfun(@minus,pts,mean(pts)),0);
+% [a,usv] = proj_down([0 0 0; pts],1e-6);
+% 
+% zeropt = a(1,:);
+% projpts = a(2:end,:)-zeropt;
 
-ndegdim = sum(abs(diag(S)) < tol); %number of degenerate dimensions
-% 2020-07-22 changed to only go down a single dimension or none
+[projpts,usv] = proj_down(pts,tol);
 
-if ndegdim > 1
-% 	disp('more than one degenerate dimension')
+if size(projpts,2) < size(pts,2) - 1
+	disp('more than one degenerate dimension')
  	newpts = [];
  	TRI = [];
  	return
 end
 
+%project to d-1 dimensional space
+% [U,S,V]=svd(pts-mean(pts),0);
+
+% ndegdim = sum(abs(diag(S)) < tol); %number of degenerate dimensions
+% 2020-07-22 changed to only go down a single dimension or none
+
+% if ndegdim > 1
+% % 	disp('more than one degenerate dimension')
+%  	newpts = [];
+%  	TRI = [];
+%  	return
+% end
+
 %project to lower dimension
-projpts = U*S(:,1:d-ndegdim);
+% projpts = U*S(:,1:d-ndegdim);
 
 %find columns with constant values (i.e. degenerate)
 avgpts = mean(projpts);
@@ -89,9 +103,16 @@ end
 
 nnew = size(subdivpts,1); %number of new points
 
+
 %compute the delaunay triangulation
 if delaunayQ
+	% Create rotation matrix
+% 	theta = 22.5; % to rotate 90 counterclockwise
+% 	R = [cosd(theta) -sind(theta); sind(theta) cosd(theta)];
+% 	TRI = delaunayn((R*subdivpts.').');
 	TRI = delaunayn(subdivpts);
+% 	t=n2c(subdivpts);
+% 	triplot(TRI,t{:})
 else
 	TRI = 1:d;
 end
@@ -112,8 +133,10 @@ if zeroQ
 	end
 end
 
+newpts = proj_up(subdivpts,usv);
+
 %project back into d-dimensional space
-newpts = padarray(subdivpts,[0 ndegdim],'post')*V'+mean(pts);
+% newpts = padarray(subdivpts,[0 ndegdim],'post')*V'+mean(pts);
 
 end
 
