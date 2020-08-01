@@ -54,14 +54,16 @@ tol = 1e-6;
 % zeropt = a(1,:);
 % projpts = a(2:end,:)-zeropt;
 
-[projpts,usv] = proj_down(pts,tol);
+% [projpts,usv] = proj_down(pts,tol,struct.empty,'zeroQ',true);
+[projpts,usv] = proj_down(pts);
 
-if size(projpts,2) < size(pts,2) - 1
-	disp('more than one degenerate dimension')
- 	newpts = [];
- 	TRI = [];
- 	return
-end
+
+% if size(projpts,2) < size(pts,2) - 1
+% 	disp('more than one degenerate dimension')
+%  	newpts = [];
+%  	TRI = [];
+%  	return
+% end
 
 %project to d-1 dimensional space
 % [U,S,V]=svd(pts-mean(pts),0);
@@ -80,19 +82,19 @@ end
 % projpts = U*S(:,1:d-ndegdim);
 
 %find columns with constant values (i.e. degenerate)
-avgpts = mean(projpts);
-ids = find(all(projpts - avgpts < tol,1));
+% avgpts = mean(projpts);
+% ids = find(all(projpts - avgpts < tol,1));
 
-if ~isempty(ids)
-	splice_vals = avgpts(ids);
-	projpts(:,ids) = []; %remove constant columns
-	idstemp = ids + 1 - (1:length(ids));
-	zeroQ = true;
-	d = size(pts,2);
-
-else
-	zeroQ = false;
-end
+% if ~isempty(ids)
+% 	splice_vals = avgpts(ids);
+% 	projpts(:,ids) = []; %remove constant columns
+% 	idstemp = ids + 1 - (1:length(ids));
+% 	zeroQ = true;
+% 	d = size(pts,2);
+% 
+% else
+% 	zeroQ = false;
+% end
 
 %subdivide the facet turned into simplex
 if nint > 1
@@ -124,14 +126,14 @@ else
 	varargout{1} = 1:d-1;
 end
 
-if zeroQ
-	%add columns of zeros back
-	for i = 1:length(idstemp)
-		id = idstemp(i);
-		splice_cols = splice_vals(i)*ones(nnew,1);
-		subdivpts = [subdivpts(:,1:id-1) splice_cols subdivpts(:,id:end)];
-	end
-end
+% if zeroQ
+% 	%add columns of zeros back
+% 	for i = 1:length(idstemp)
+% 		id = idstemp(i);
+% 		splice_cols = splice_vals(i)*ones(nnew,1);
+% 		subdivpts = [subdivpts(:,1:id-1) splice_cols subdivpts(:,id:end)];
+% 	end
+% end
 
 newpts = proj_up(subdivpts,usv);
 
