@@ -97,7 +97,7 @@ elseif isempty(usv)
 	
 	if (ndegdim > 0) || nforceQ
 	%project to lower dimension (i.e. rotation)
-		projpts = U*S(:,1:d-nforce);
+		projpts = U*S(:,1:size(S,1)-nforce);
 		if (ndegdim == 0) && nforceQ
 			warning(['ndegdim == 0, tol == ' num2str(tol) ...
 				', min(diag(S)) == ' num2str(min(diag(S))) ...

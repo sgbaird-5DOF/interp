@@ -20,7 +20,7 @@ avg = usv.avg;
 d1 = size(pts,2);
 
 %higher dimension
-d2 = size(V,1);
+d2 = size(V,2);
 
 ndegdim = d2-d1; %number of degenerate dimensions
 % ndegdim = sum(abs(diag(S)) < 1E-6);
