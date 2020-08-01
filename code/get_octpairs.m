@@ -151,7 +151,7 @@ end
 
 %compute spherical convex hull
 tol = 1e-3;
-[octvtx2,usv] = proj_down(octvtx,tol);
+[octvtx2,usv] = proj_down(octvtx,tol,'zeroQ',true);
 
 %package output
 oref1 = o1;
