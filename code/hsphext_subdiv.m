@@ -34,9 +34,10 @@ end
 %--------------------------------------------------------------------------
 
 % projpts = sphere_stereograph(pts);
-projpts = projfacet2hyperplane(normr(mean(pts)),pts); %valid for max arc length < pi
+projpts = projfacet2hyperplane(mean(pts),pts); %valid for max arc length < pi
 
-[projpts,usv] = proj_down(projpts,1e-6);
+projpts = proj_down(projpts);
+
 
 % get exterior
 %joggle input so that coplanar facets aren't merged (because of stereographic projection)
@@ -60,6 +61,7 @@ if nint > 1
 	% subdivide the "edges"
 	
 	[Ktr, K, meshpts] = hypersphere_subdiv(pts,K,nint,tricollapseQ);
+
 	
 else
 	Ktr.main = K;
