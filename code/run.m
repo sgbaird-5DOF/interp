@@ -55,7 +55,7 @@ addpathdir({'misFZfeatures.mat','PGnames.mat','nlt.m','q2rod.m',...
 %'Olmsted2004','5DOF_vtx','5DOF_misFZfeatures',
 %'5DOF_interior','5DOF_exterior', '5DOF_oct_vtx','5DOF_hsphext'
 %'5DOF_exterior_hsphext', 'ocubo'
-meshMethod = 'ocubo';
+meshMethod = 'ocubo_hsphext';
 dataMethod = 'ocubo';
 pseudoMethod = [meshMethod '_pseudo'];
 
@@ -66,8 +66,8 @@ dataopts = meshopts;
 %mesh parameters
 meshopts.res = 12.5;
 meshopts.nint = 1; % 1 == zero subdivisions, 2 == one subdivision, etc.
-meshopts.octsubdiv = 1;
-meshopts.ocuboOpts.n = 300; % # of octonions to generate, [] also ok if sidelength specified
+meshopts.octsubdiv = 2;
+meshopts.ocuboOpts.n = 30; % # of octonions to generate, [] also ok if sidelength specified
 meshopts.ocuboOpts.method = 'random'; % 'random' or 'uniform' cubochoric sampling
 meshopts.ocuboOpts.sidelength = []; %sidelength of cubochoric grid (only specify if 'uniform', [] ok)
 meshopts.ocuboOpts.seed = 15; %sidelength of cubochoric grid (only specify if 'uniform', [] ok)
@@ -204,7 +204,7 @@ for i = []
 end
 
 %project mesh and data together
-tol = 1e-3;
+tol = 1e-2; %this is a fairly low tolerance.. consider not doing quaternion renormalization in datagen
 [a,usv] = proj_down([mesh.pts;data.pts],tol);
 
 if size(a,2) <= 7
@@ -213,7 +213,13 @@ if size(a,2) <= 7
 	
 	data.ppts = normr(data.ppts); %not normalizing produced 100% non-intersections (2020-07-29)
 	mesh.ppts = normr(mesh.ppts);
+else
+	error('no degenerate dimension found')
 end
+
+meshtmp = projfacet2hyperplane(mean(mesh.ppts),mesh.ppts);
+meshtmp = proj_down(meshtmp);
+mesh.sphK = delaunayn(meshtmp);
 
 %compute intersecting facet IDs (might be zero, might have more than one)
 inttol = 1e-2;
