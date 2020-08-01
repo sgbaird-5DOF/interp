@@ -24,6 +24,10 @@ end
 
 %		normr.m
 %--------------------------------------------------------------------------
+nm = vecnorm(pts,2,2);
+avgnm = mean(nm);
+tol = 1e-6;
+assert(all(abs(nm - avgnm) < tol),['pts do not lie on a hypersphere within tol == ' num2str(tol)])
 
 %% compute top-level convex hull
 if isempty(K) % && tricollapseQ
@@ -168,7 +172,10 @@ if nint > 1
 	lvltwo = vertcat(Ktr.sub{:});
 	lvltwo = vertcat(lvltwo.main);
 	lvltwoK = vertcat(lvltwo.K);
-	lvltwoPts = normr(vertcat(lvltwo.pts));
+	lvltwoPts = vertcat(lvltwo.pts);
+	
+	%project points back to hypersphere
+% 	lvltwoPts = normr(lvltwoPts)*avgnm; %seems to introduce some numerical error within ~1e-12, also throws quaternions off
 	
 else
 	lvltwoK = K;
@@ -186,7 +193,7 @@ else
 	K_out = [];
 end
 
-assert(sum(ismembertol(pts,newpts,'ByRows',true)) == npts,...
+assert(sum(ismembertol(round(pts,15),round(newpts,15),1e-6,'ByRows',true)) == npts,...
 	'points lost during subdiv. check facet_subdiv input degeneracy')
 
 end %hypersphere_subdiv
