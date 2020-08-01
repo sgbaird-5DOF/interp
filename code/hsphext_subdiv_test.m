@@ -20,7 +20,6 @@ switch test
 		octsubdiv = 3; %single subdivision (distinct from levels in K-tree)
 		
 		[Ktr, K3, meshpts] = hsphext_subdiv(pts,octsubdiv);
-
 		
 	case 2
 		seed = 10;
@@ -29,26 +28,18 @@ switch test
 		d = 3;
 		
 % 		pts = [eye(3); 1 1 1; 0 -1 0];
-		
 % 		pts = [eye(3); 1 1 1; 0 -1 0; -0.5 0 0.5];
-		
 % 		pts = [eye(3); 0 -1 0; -1 0 0]; %produces a 2D ring
-		
 % 		pts = rand(10,d);
-
 % 		pts = [eye(3); rand(10000,d)];
-
 		pts = rand(100,d);
-		
 		
 		pts = normr(pts);
 		
 		K1 = sphconvhulln(pts);
 		
 		nint = 1;
-		
 		[Ktr,K,meshpts] = hsphext_subdiv(pts,nint,true);
-		
 		
 		if d == 3
 			close(figure(1));
@@ -70,7 +61,7 @@ switch test
 			ax = nexttile;
 			
 			hold on
-			for i = 1:size(K,1);
+			for i = 1:size(K,1)
 				t1 = meshpts(K(i,1),:);
 				t2 = meshpts(K(i,2),:);
 				tmp = n2c([t1;t2]);
