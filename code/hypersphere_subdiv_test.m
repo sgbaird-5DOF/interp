@@ -122,27 +122,49 @@ switch test
 		rng(seed);
 		
 		d = 4;
-		%get points along an arc in 3D, plus origin
-		endpts = normr(rand(d-1,d));
+		%get points along an arc in 3D, plus origin		
+		
 		nmeshpts = 100;
-		
-		v = endpts(2:d-1,:) - endpts(1,:);
-		
-		%get random perturbations
-		randvals = rand(nmeshpts,d-2);
-		randpts = normr(randvals*v + endpts(1,:));
-		meshpts = [endpts; randpts];
-		
-		% 		meshpts = [endpts; normr(endpts(1,:) + rand(nmeshpts,1)*(endpts(2,:) - endpts(1,:)))];
-		
-		%get datapoints along same 3D arc
 		ndatapts = 100;
+		method = 'vec'; %'nonnegOrth','vec'
 		
-		%get random perturbations
-		randvals = rand(ndatapts,d-2);
-		datapts = normr(randvals*v + endpts(1,:));
-		% 		datapts = normr(endpts(1,:) + rand(ndatapts,1)*(endpts(2,:) - endpts(1,:)));
-		
+		switch method
+			case 'nonnegOrth'
+				endpts = eye(d);
+				endpts(1,:) = [];
+				
+				meshpts = [endpts; mean(endpts)];
+				meshpts = normr(meshpts);
+				
+% 				meshpts = rand(nmeshpts,d-1);
+				datapts = rand(nmeshpts,d-1);
+% 				
+% 				meshpts = normr([zeros(nmeshpts,1) meshpts]);
+				datapts = normr([zeros(nmeshpts,1) datapts]);
+				
+ 			case 'vec'
+% 				endpts = eye(d);
+% 				endpts(1,:) = [];
+				endpts = normr(rand(d-1,d));
+				%create basis vectors
+				v = endpts(2:d-1,:) - endpts(1,:);
+				
+				%get random coefficients
+				randvals = rand(nmeshpts,d-2);
+				randvals = rand(ndatapts,1).*(randvals./sum(randvals,2));
+				randpts = normr(randvals*v + endpts(1,:));
+				meshpts = [endpts; randpts];
+				
+				% 		meshpts = [endpts; normr(endpts(1,:) + rand(nmeshpts,1)*(endpts(2,:) - endpts(1,:)))];
+				
+				%get datapoints along same 3D arc
+				
+				%--get random perturbations
+				randvals = rand(ndatapts,d-2);
+				randvals = rand(ndatapts,1).*(randvals./sum(randvals,2));
+				datapts = normr(randvals*v + endpts(1,:));
+				% 		datapts = normr(endpts(1,:) + rand(ndatapts,1)*(endpts(2,:) - endpts(1,:)));
+		end
 		if d == 3
 			%figure setup
 			fig = figure;
@@ -162,21 +184,29 @@ switch test
 		%remove degenerate dimension (and keep origin point)
 		a = [zeros(1,d); meshpts; datapts];
 		% 		a = projfacet2hyperplane(normr(mean(meshpts)),a); %turns out this is unnecessary (maybe even a bad idea)
-		[a,usv] = proj_down(a,1e-6,struct.empty,1,false,true);
+		[a,usv] = proj_down(a,1e-6);
 		
-		a(2:end,:) = a(2:end,:) - a(1,:);
+		azero = a(1,:);
+		%recenter rest of data relative to origin
+		a(2:end,:) = a(2:end,:) - azero;
 		a(1,:) = [];
 		
-		%recenter rest of data relative to origin
 		meshpts = a(1:end-ndatapts,:);
 		datapts = a(end-ndatapts+1:end,:);
 		
+		if d == 4
+			t1=n2c(meshpts(1:d-1,:));
+			t2=n2c(meshpts(d:end,:));
+% 			plot3(t1{:},'ko',t2{:},'k*')
+		end
+			
 		
 		% 		[pts,usv] = proj_down(pts,1000);
 		% 		pts = normr(proj_up(pts,usv));
 		% 		avg = normr(mean(pts));
 		
-		K = sphconvhulln(meshpts);
+% 		K = sphconvhulln(meshpts);
+		K = convhulln(meshpts);
 		
 		if d == 3
 			%plot the 2D points
@@ -197,11 +227,38 @@ switch test
 			% 		ax.YLim(min(abs(ax.YLim))) = 0;
 			plot(0,0,'k*')
 			axis equal
+			legend('meshpts')
 		end
 		
 		%subdivide the 2D arc
-		nint = 2;
-		[Ktr,K,meshpts] = hypersphere_subdiv(meshpts,K,nint);
+		nint = 5;
+		[~,~,meshpts] = hsphext_subdiv(meshpts,nint,false);
+		
+		meshpts = projfacet2hyperplane(mean(meshpts),meshpts);
+		[a1,usv1] = proj_down(meshpts,1e-6);
+% 		zero1 = a1(1,:);
+% 		meshpts = a1(2:end,:)-zero1;
+		meshpts = a1;
+		[A,b] = vert2con(meshpts);
+		options.method = 'gibbs';
+		options.isotropic = 2;
+		options.discard = 10;
+		options.runup = 100;
+% 		options.ortho = 1;
+		meshpts = [meshpts; cprnd(100,A,b,options)];
+		meshpts = proj_up(meshpts,usv1);
+		meshpts = normr(meshpts);
+		K = sphconvhulln(meshpts);
+		
+% 		meshpts = normr([mean(meshpts); meshpts]);
+% 		nint = 2;
+% 		[Ktr,K,meshpts] = hypersphere_subdiv(meshpts,[],nint,true);
+% 		K = sphconvhulln(meshpts);
+% 		meshpts = normr([mean(meshpts); meshpts]);
+% 		K = sphconvhulln(meshpts);
+% 		[Ktr,K,meshpts] = hypersphere_subdiv(meshpts,[],nint);
+		
+% 		K = sphconvhulln(meshpts,true);
 		
 		if d == 3
 			%plot subdivision
@@ -224,14 +281,33 @@ switch test
 			axis equal
 		end
 		
-		intfacetIDs = intersect_facet(meshpts,K,datapts,1e-1,true,'planar','mldivide');
+		disp('intersect_facet')
+		intfacetIDs = intersect_facet(meshpts,K,datapts,1e-6,true,'planar','mldivide');
 		
-		if d == 3
-			%uncenter the 2D arc points (using projected origin point) and add
-			%projected origin back in
-			meshpts = proj_up(meshpts,usv);
-			datapts = proj_up(datapts,usv);
+		nonintIDs = find(cellfun(@isempty,intfacetIDs));
+		nnonints = length(nonintIDs);
+		disp(['# non-intersections == ' int2str(nnonints) '/' int2str(length(intfacetIDs))])
+		
+		if d == 4
+			hold on
+			t1=n2c(meshpts);
+			trisurf(K,t1{:},'FaceColor','none')
 			
+			t2=n2c(datapts);
+			plot3(t2{:},'c*')
+			t3=n2c(datapts(nonintIDs,:));
+			plot3(t3{:},'r*')
+			axis equal
+			
+% 			legend({'meshpts','datapts','meshTRI'})
+		end
+		
+		%uncenter the 2D arc points (using projected origin point) and add
+		%projected origin back in
+		meshpts = proj_up(meshpts+azero,usv);
+		datapts = proj_up(datapts+azero,usv);
+		
+		if d == 3			
 			%plot the reprojected 3D arc
 			nexttile(3)
 			t1=n2c(meshpts);
@@ -242,8 +318,7 @@ switch test
 			plot3(0,0,0,'k*')
 			axis equal
 		end
-		nonints = sum(cellfun(@isempty,intfacetIDs));
-		disp(['# non-intersections == ' int2str(nonints) '/' int2str(length(intfacetIDs))])
+			
 		
 end
 
