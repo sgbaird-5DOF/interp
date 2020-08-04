@@ -1,4 +1,10 @@
-function [newpts,TRI,varargout] = facet_subdiv(pts,nint,delaunayQ,varargin)
+function [newpts,TRI,varargout] = facet_subdiv(pts,nint,delaunayQ,convhullQ)
+arguments
+	pts {mustBeReal,mustBeFinite}
+	nint(1,1) double = 1
+	delaunayQ(1,1) logical = true
+	convhullQ(1,1) logical = false
+end
 %--------------------------------------------------------------------------
 % Author: Sterling Baird
 %
@@ -39,23 +45,47 @@ function [newpts,TRI,varargout] = facet_subdiv(pts,nint,delaunayQ,varargin)
 %		trifacet_area3D.m, plot_dmatrix.m
 %--------------------------------------------------------------------------
 d = size(pts,2);
-npts = size(pts,1);
 
-if nargin == 4
-	convhullQ = varargin{1};
+[projpts,usv] = proj_down(pts);
+
+%subdivide the facet turned into simplex
+if nint > 1
+	subdivpts = simplex_subdiv(projpts,nint);
 else
-	convhullQ = false;
+	subdivpts = projpts;
 end
 
-tol = 1e-6;
+nnew = size(subdivpts,1); %number of new points
 
-% [a,usv] = proj_down([0 0 0; pts],1e-6);
-% 
-% zeropt = a(1,:);
-% projpts = a(2:end,:)-zeropt;
+%compute the delaunay triangulation
+if delaunayQ
+	TRI = delaunayn(subdivpts);
+else
+	TRI = 1:d;
+end
 
-% [projpts,usv] = proj_down(pts,tol,struct.empty,'zeroQ',true);
-[projpts,usv] = proj_down(pts);
+%compute the convex hull
+if convhullQ && (nnew > d-1)
+	varargout{1} = convhulln(subdivpts);
+else
+	varargout{1} = 1:d-1;
+end
+
+newpts = proj_up(subdivpts,usv);
+
+end
+
+
+%------------------------------CODE GRAVEYARD------------------------------
+%{
+% if abs(S(end,end)) < tol
+% 	ndegdim = 1;
+% else
+% 	ndegdim = 0;
+% 	warning('ndegdim == 0')
+% end
+
+
 
 
 % if size(projpts,2) < size(pts,2) - 1
@@ -96,35 +126,25 @@ tol = 1e-6;
 % 	zeroQ = false;
 % end
 
-%subdivide the facet turned into simplex
-if nint > 1
-	subdivpts = simplex_subdiv(projpts,nint);
-else
-	subdivpts = projpts;
-end
 
-nnew = size(subdivpts,1); %number of new points
+% [a,usv] = proj_down([0 0 0; pts],1e-6);
+% 
+% zeropt = a(1,:);
+% projpts = a(2:end,:)-zeropt;
+
+% [projpts,usv] = proj_down(pts,tol,struct.empty,'zeroQ',true);
 
 
-%compute the delaunay triangulation
-if delaunayQ
 	% Create rotation matrix
 % 	theta = 22.5; % to rotate 90 counterclockwise
 % 	R = [cosd(theta) -sind(theta); sind(theta) cosd(theta)];
 % 	TRI = delaunayn((R*subdivpts.').');
-	TRI = delaunayn(subdivpts);
+
+
 % 	t=n2c(subdivpts);
 % 	triplot(TRI,t{:})
-else
-	TRI = 1:d;
-end
 
-%compute the convex hull
-if convhullQ && (nnew > d-1)
-	varargout{1} = convhulln(subdivpts);
-else
-	varargout{1} = 1:d-1;
-end
+
 
 % if zeroQ
 % 	%add columns of zeros back
@@ -134,22 +154,16 @@ end
 % 		subdivpts = [subdivpts(:,1:id-1) splice_cols subdivpts(:,id:end)];
 % 	end
 % end
-
-newpts = proj_up(subdivpts,usv);
-
 %project back into d-dimensional space
 % newpts = padarray(subdivpts,[0 ndegdim],'post')*V'+mean(pts);
 
+npts = size(pts,1);
+
+if nargin == 4
+	convhullQ = varargin{1};
+else
+	convhullQ = false;
 end
 
-
-%------------------------------CODE GRAVEYARD------------------------------
-%{
-% if abs(S(end,end)) < tol
-% 	ndegdim = 1;
-% else
-% 	ndegdim = 0;
-% 	warning('ndegdim == 0')
-% end
 %}
 
