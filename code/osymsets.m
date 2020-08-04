@@ -52,9 +52,13 @@ end
 %initialize
 osets = cell(1,ndatapts);
 
+%unpack quaternions
+qAlist = oct(:,1:4);
+qBlist = oct(:,5:8);
+
 %normalize quaternions
-qAlist = normr(oct(:,1:4));
-qBlist = normr(oct(:,5:8));
+qAlist = normr(qAlist);
+qBlist = normr(qBlist);
 
 %loop through quaternion pairs
 parfor i = 1:ndatapts
