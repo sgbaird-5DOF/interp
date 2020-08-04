@@ -25,14 +25,19 @@ switch test
 		seed = 10;
 		rng(seed);
 		
-		d = 3;
+		d = 7;
 		
 % 		pts = [eye(3); 1 1 1; 0 -1 0];
 % 		pts = [eye(3); 1 1 1; 0 -1 0; -0.5 0 0.5];
 % 		pts = [eye(3); 0 -1 0; -1 0 0]; %produces a 2D ring
 % 		pts = rand(10,d);
 % 		pts = [eye(3); rand(10000,d)];
-		pts = rand(100,d);
+		npts = 100;
+		pts = rand(npts,d);
+		
+% 		pts = get_ocubo(npts);
+% 		pts = get_octpairs(pts);
+% 		pts = proj_down(pts);
 		
 		pts = normr(pts);
 		
@@ -40,6 +45,8 @@ switch test
 		
 		nint = 1;
 		[Ktr,K,meshpts] = hsphext_subdiv(pts,nint,true);
+		
+		disp(['d: ' int2str(d) ', points kept: ' int2str(size(meshpts,1)) '/' int2str(npts)])
 		
 		if d == 3
 			close(figure(1));
