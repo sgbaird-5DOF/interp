@@ -55,9 +55,8 @@ addpathdir({'misFZfeatures.mat','PGnames.mat','nlt.m','q2rod.m',...
 %'Olmsted2004','5DOF_vtx','5DOF_misFZfeatures',
 %'5DOF_interior','5DOF_exterior', '5DOF_oct_vtx','5DOF_hsphext'
 %'5DOF_exterior_hsphext', 'ocubo'
-meshMethod = 'ocubo_hsphext';
+meshMethod = 'ocubo';
 dataMethod = 'ocubo';
-pseudoMethod = [meshMethod '_pseudo'];
 
 %initialize
 meshopts = struct();
@@ -66,35 +65,25 @@ dataopts = meshopts;
 %mesh parameters
 meshopts.res = 12.5;
 meshopts.nint = 1; % 1 == zero subdivisions, 2 == one subdivision, etc.
-meshopts.octsubdiv = 2;
-meshopts.ocuboOpts.n = 30; % # of octonions to generate, [] also ok if sidelength specified
+meshopts.octsubdiv = 1;
+meshopts.ocuboOpts.n = 100; % # of octonions to generate, [] also ok if sidelength specified
 meshopts.ocuboOpts.method = 'random'; % 'random' or 'uniform' cubochoric sampling
 meshopts.ocuboOpts.sidelength = []; %sidelength of cubochoric grid (only specify if 'uniform', [] ok)
-meshopts.ocuboOpts.seed = 16; %sidelength of cubochoric grid (only specify if 'uniform', [] ok)
+meshopts.ocuboOpts.seed = 15; %sidelength of cubochoric grid (only specify if 'uniform', [] ok)
 
 %data parameters
 dataopts.res = 12.5;
 dataopts.nint = 1;
 dataopts.octsubdiv = 1;
-dataopts.ocuboOpts.n = 10; % # of octonions to generate, [] also ok if sidelength specified
+dataopts.ocuboOpts.n = 100; % # of octonions to generate, [] also ok if sidelength specified
 dataopts.ocuboOpts.method = 'random'; % 'random' or 'uniform' cubochoric sampling
 dataopts.ocuboOpts.sidelength = []; %sidelength of cubochoric grid (only specify if 'uniform', [] ok)
 dataopts.ocuboOpts.seed = 20; %integer or 'shuffle' OK
 
-%psuedo mesh parameters
-pseudoOpts.res = meshopts.res;
-pseudoOpts.nint = meshopts.nint;
-pseudoOpts.octsubdiv = 1;
-pseudoOpts.ocuboOpts.n = 1; % # of octonions to generate, [] also ok if sidelength specified
-pseudoOpts.ocuboOpts.method = 'random'; % 'random' or 'uniform' cubochoric sampling
-pseudoOpts.ocuboOpts.sidelength = []; %sidelength of cubochoric grid (only specify if 'uniform', [] ok)
-pseudoOpts.ocuboOpts.seed = 25; %integer or 'shuffle' OK
-
 T = true; %just makes it easier to switch back and forth between true and false
 F = false;
 meshloadQ = F;
-dataloadQ = F;
-pseudoloadQ = T;
+dataloadQ = T;
 meshdataloadQ = F; %whether to check for and load intersection & barycentric data from previous run
 
 %% generate mesh
@@ -110,144 +99,25 @@ ndatapts = size(data.pts,1);
 
 toc; disp(' ')
 
-%% generate pseudomesh
-disp('generating pseudo mesh')
-pseudo = datagen_setup(pseudoMethod,pseudoOpts,pseudoloadQ);
-
-toc; disp(' ')
-
 %% find intersecting facet of datapoints
 disp('find intersecting facet for each datapoint')
 
-% r = 0.1; %Euclidean distance
-if exist('r','var') ~= 0
-	meshdata.fname = ['mesh_' mesh.fname(1:end-4) '_data_' data.fname(1:end-4) '_100r--' int2str(100*r) '.mat'];
-else
-	meshdata.fname = ['mesh_' mesh.fname(1:end-4) '_data_' data.fname];
-end
-%find symmetrically equivalent octonions inside convex hull
-% 	xyz = mesh.Ktr.main.pts;
-% 	tess = mesh.Ktr.main.K;
-
-% 	xyz = mesh.pts;
-% 	tess = mesh.sphK;
-% 	pts = data.pts;
-% 	usv = mesh.usv;
-% 	five = data.five;
-% 	savename = [meshdata.fname(1:end-4) '_oint.mat'];
-% 	oint = inhull_setup(pts,usv,xyz,tess,five,savename);
-
-%% find nearest vertex of mesh to datapoint
-disp('--nearest neighbor search for all datapoints')
-% 	if ~isempty(mesh.usv) && (size(mesh.pts,2) == 8)
-% 		ptstemp = proj_down(mesh.pts,1e-6,mesh.usv);
-% 	else
-% 		ptstemp = mesh.pts;
-% 	end
-% [nnList,nndistList] = dsearchn(mesh.pts,data.pts);
-nnList = dsearchn(mesh.pts,data.pts);
-
-
-%remember to have each quaternion normalized to 1 before using get_omega
-meshtemp = sqrt2norm(mesh.pts(nnList,:),'oct');
-datatemp = sqrt2norm(data.pts,'oct');
-nndistList = get_omega(meshtemp,datatemp);
-% 	disp('convert mesh to 5DOF FZ')
-%	meshfiveFZ = tofiveFZ(mesh.five,mesh.pts);
-
-% 	disp('convert data to 5DOF FZ')
-%	datafiveFZ = tofiveFZ(data.five,datapts);
-
-% 	d_all = vertcat(meshfiveFZ.d);
-% 	Y = vertcat(datafiveFZ.d);
-d_all = q2rod(disorientation(vertcat(pseudo.five.q),'cubic'));
-Y = q2rod(disorientation(vertcat(data.five.q),'cubic'));
-
-%check for points within specified distance
-%[idxlist,D] = rangesearch(d_all,Y,r);
-%[idxlist,D] = knnsearch(d_all,Y,'K',1000);
-%idxlist = num2cell(idxlist,2);
-
-%find nearest vertex of pseudomesh to datapoint
-psdata.pts = zeros(size(data.pts));
-psdata.five(ndatapts) = struct;
-psdata.wmin = zeros(size(data.pts,1),1);
-%for i = 1:ndatapts
-for i = []
-	%unpack point
-	pt = data.pts(i,:);
-	
-	idx = idxlist{i};
-	disp([int2str(length(idx)) ' octonion inputs to GBdist'])
-	%olist = pseudo.pts(idx,:);
-	olist = mesh.pts(idx,:);
-    %  		olist = pseudo.pts;
-	%olist = mesh.pts;
-	
-	ptrep = repmat(pt,size(olist,1),1); % matrix of repeated rows (pt)
-	olistnorm = sqrt2norm(olist,'oct');
-	ptrepnorm = sqrt2norm(ptrep,'oct');
-	
-	omega = GBdist([olistnorm ptrepnorm],32,false,false);
-	
-	[mintemp,minID] = min(omega);
-	ptstemp = olist(minID,:);
-	disp(mintemp)
-	
-	psdata.wmin(i) = mintemp;
-	psdata.pts(i,:) = ptstemp;
-	
-	if mod(i,10) == 0
-		disp(['i = ' int2str(i)])
-	end
-
-end
-
-o1tmp = mesh.pts(1,:);
-o2 = mesh.pts(2:end,:);
-o1rep = repmat(o1tmp,size(o2,1),1);
-[~,o2] = GBdist4(o1rep,o2,32,'norm');
-mesh.pts = [o1tmp;vertcat(o2{:})];
-mesh.pts = normr(mesh.pts);
 % mesh.pts = get_octpairs(mesh.pts);
-
-%add extra points to interior
-% [A,b] = vert2con(mesh.pts);
-% extrapts = cprnd(100,A,b);
-% extrapts = get_octpairs(extrapts);
-% mesh.pts = [mesh.pts;extrapts];
-% fivetmp = GBoct2five(extrapts);
-% extraprops = GB5DOF_setup(fivetmp);
-% mesh.props = [mesh.props;extraprops];
-
-% o1tmp = data.pts(1,:);
-o2 = data.pts;
-o1rep = repmat(o1tmp,size(o2,1),1);
-[~,o2] = GBdist4(o1rep,o2,32,'norm');
-data.pts = vertcat(o2{:});
-data.pts = normr(data.pts);
 % data.pts = get_octpairs(data.pts);
+
 %project mesh and data together
 tol = 1e-2; %this is a fairly weak tolerance.. consider not doing quaternion renormalization in datagen
-[a,usv] = proj_down([mesh.pts;data.pts],tol);
+[a,usv] = proj_down([mesh.pts;data.pts],tol,'zeroQ',false); %better to not have zeroQ enabled (2020-08-04)
 
 if size(a,2) <= 7
-	data.ppts = proj_down(data.pts,tol,usv);
-	mesh.ppts = proj_down(mesh.pts,tol,usv);
+	data.ppts = proj_down(data.pts,tol,usv,'zeroQ',false);
+	mesh.ppts = proj_down(mesh.pts,tol,usv,'zeroQ',false);
 else
 	data.ppts = data.pts;
 	mesh.ppts = mesh.pts;
-% 	error('no degenerate dimension found')
 end
 
-data.ppts = normr(data.ppts); %not normalizing produced 100% non-intersections (2020-07-29)
-mesh.ppts = normr(mesh.ppts);
-
-% [Ktr,K,mesh.pts] = hypersphere_subdiv(mesh.pts,[],2,true);
-% mesh.pts = get_octpairs(mesh.pts);
-% fivetmp = GBoct2five(mesh.pts);
-% mesh.props = GB5DOF_setup(fivetmp);
-
+%compute triangulation
 meshtmp = projfacet2hyperplane(mean(mesh.ppts),mesh.ppts);
 meshtmp = proj_down(meshtmp);
 mesh.sphK = delaunayn(meshtmp);
@@ -265,7 +135,7 @@ toc; disp(' ')
 
 
 %% plotting
-interpplot(meshdata.fname)
+% interpplot(meshdata.fname)
 
 
 %%
@@ -366,5 +236,184 @@ disp(['# non-intersections: ' int2str(sum(~isnan((nnID)))) '/' int2str(ndatapts)
 % parity plot
 % xmin = min(data.props);
 % xmax = max(data.props);
+
+
+
+
+pseudoMethod = [meshMethod '_pseudo'];
+
+%psuedo mesh parameters
+pseudoOpts.res = meshopts.res;
+pseudoOpts.nint = meshopts.nint;
+pseudoOpts.octsubdiv = 1;
+pseudoOpts.ocuboOpts.n = 1; % # of octonions to generate, [] also ok if sidelength specified
+pseudoOpts.ocuboOpts.method = 'random'; % 'random' or 'uniform' cubochoric sampling
+pseudoOpts.ocuboOpts.sidelength = []; %sidelength of cubochoric grid (only specify if 'uniform', [] ok)
+pseudoOpts.ocuboOpts.seed = 25; %integer or 'shuffle' OK
+
+pseudoloadQ = T;
+
+%% generate pseudomesh
+disp('generating pseudo mesh')
+pseudo = datagen_setup(pseudoMethod,pseudoOpts,pseudoloadQ);
+
+toc; disp(' ')
+
+% r = 0.1; %Euclidean distance
+if exist('r','var') ~= 0
+	meshdata.fname = ['mesh_' mesh.fname(1:end-4) '_data_' data.fname(1:end-4) '_100r--' int2str(100*r) '.mat'];
+else
+	meshdata.fname = ['mesh_' mesh.fname(1:end-4) '_data_' data.fname];
+end
+
+
+%find symmetrically equivalent octonions inside convex hull
+% 	xyz = mesh.Ktr.main.pts;
+% 	tess = mesh.Ktr.main.K;
+
+% 	xyz = mesh.pts;
+% 	tess = mesh.sphK;
+% 	pts = data.pts;
+% 	usv = mesh.usv;
+% 	five = data.five;
+% 	savename = [meshdata.fname(1:end-4) '_oint.mat'];
+% 	oint = inhull_setup(pts,usv,xyz,tess,five,savename);
+
+% 	if ~isempty(mesh.usv) && (size(mesh.pts,2) == 8)
+% 		ptstemp = proj_down(mesh.pts,1e-6,mesh.usv);
+% 	else
+% 		ptstemp = mesh.pts;
+% 	end
+% [nnList,nndistList] = dsearchn(mesh.pts,data.pts);
+
+
+% 	disp('convert mesh to 5DOF FZ')
+%	meshfiveFZ = tofiveFZ(mesh.five,mesh.pts);
+
+% 	disp('convert data to 5DOF FZ')
+%	datafiveFZ = tofiveFZ(data.five,datapts);
+
+% 	d_all = vertcat(meshfiveFZ.d);
+% 	Y = vertcat(datafiveFZ.d);
+d_all = q2rod(disorientation(vertcat(pseudo.five.q),'cubic'));
+Y = q2rod(disorientation(vertcat(data.five.q),'cubic'));
+
+%check for points within specified distance
+%[idxlist,D] = rangesearch(d_all,Y,r);
+%[idxlist,D] = knnsearch(d_all,Y,'K',1000);
+%idxlist = num2cell(idxlist,2);
+
+%find nearest vertex of pseudomesh to datapoint
+psdata.pts = zeros(size(data.pts));
+psdata.five(ndatapts) = struct;
+psdata.wmin = zeros(size(data.pts,1),1);
+
+% %for i = 1:ndatapts
+% for i = []
+% 	%unpack point
+% 	pt = data.pts(i,:);
+% 	
+% 	idx = idxlist{i};
+% 	disp([int2str(length(idx)) ' octonion inputs to GBdist'])
+% 	%olist = pseudo.pts(idx,:);
+% 	olist = mesh.pts(idx,:);
+%     %  		olist = pseudo.pts;
+% 	%olist = mesh.pts;
+% 	
+% 	ptrep = repmat(pt,size(olist,1),1); % matrix of repeated rows (pt)
+% 	olistnorm = sqrt2norm(olist,'oct');
+% 	ptrepnorm = sqrt2norm(ptrep,'oct');
+% 	
+% 	omega = GBdist([olistnorm ptrepnorm],32,false,false);
+% 	
+% 	[mintemp,minID] = min(omega);
+% 	ptstemp = olist(minID,:);
+% 	disp(mintemp)
+% 	
+% 	psdata.wmin(i) = mintemp;
+% 	psdata.pts(i,:) = ptstemp;
+% 	
+% 	if mod(i,10) == 0
+% 		disp(['i = ' int2str(i)])
+% 	end
+% 
+% end
+
+
+%1
+% o1tmp = mesh.pts(1,:);
+% o2 = mesh.pts(2:end,:);
+% o1rep = repmat(o1tmp,size(o2,1),1);
+% [~,o2] = GBdist4(o1rep,o2,32,'norm');
+% mesh.pts = [o1tmp;vertcat(o2{:})];
+% mesh.pts = normr(mesh.pts);
+
+%2
+% mesh.pts = get_octpairs(mesh.pts);
+% mesh.pts = sqrt2norm(mesh.pts,'quat');
+% mesh.pts = normr(mesh.pts);
+
+%add extra points to interior
+% [A,b] = vert2con(mesh.pts);
+% extrapts = cprnd(100,A,b);
+% extrapts = get_octpairs(extrapts);
+% mesh.pts = [mesh.pts;extrapts];
+% fivetmp = GBoct2five(extrapts);
+% extraprops = GB5DOF_setup(fivetmp);
+% mesh.props = [mesh.props;extraprops];
+
+%1
+% o2 = data.pts;
+% o1rep = repmat(o1tmp,size(o2,1),1);
+% [~,o2] = GBdist4(o1rep,o2,32,'norm');
+% data.pts = vertcat(o2{:});
+% data.pts = normr(data.pts);
+
+%2
+% data.pts = get_octpairs(data.pts);
+% data.pts = sqrt2norm(data.pts,'quat');
+% data.pts = normr(data.pts);
+
+% mesh.ppts = [mean(mesh.ppts);mesh.ppts];
+
+% [Ktr,K,mesh.pts] = hypersphere_subdiv(mesh.pts,[],2,true);
+% mesh.pts = get_octpairs(mesh.pts);
+% fivetmp = GBoct2five(mesh.pts);
+% mesh.props = GB5DOF_setup(fivetmp);
+
+% [~,mesh.sphK,mesh.ppts] = hypersphere_subdiv(mesh.ppts,mesh.sphK,2,true);
+% mesh.ppts = normr(mesh.ppts);
+
+% mesh.pts = proj_up(mesh.ppts,mesh.usv);
+% mesh.five = GBoct2five(mesh.pts,false);
+% mesh.props = GB5DOF_setup(mesh.five);
+
+
+% 	error('no degenerate dimension found')
+
+
+
+
+
+nnList = dsearchn(mesh.pts,data.pts);
+
+% %remember to have each quaternion normalized to 1 before using get_omega
+% meshtemp = sqrt2norm(mesh.pts(nnList,:),'oct');
+% datatemp = sqrt2norm(data.pts,'oct');
+% nndistList = get_omega(meshtemp,datatemp);
+
+
+
+% find nearest vertex of mesh to datapoint
+disp('--nearest neighbor search for all datapoints')
+%filename
+meshdata.fname = ['mesh_' mesh.fname(1:end-4) '_data_' data.fname];
+
+
+
+%renormalize projected points
+data.ppts = normr(data.ppts); %not normalizing produced 100% non-intersections (2020-07-29)
+mesh.ppts = normr(mesh.ppts);
+
 
 %}
