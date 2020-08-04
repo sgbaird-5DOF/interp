@@ -39,13 +39,15 @@ projpts = projfacet2hyperplane(mean(pts),pts); %valid for max arc length < pi
 projpts = proj_down(projpts);
 
 % get exterior
-%joggle input so that coplanar facets aren't merged
-if size(pts,2) < 5
-	opts = {'QJ'};
-else
-	opts = {'Qx','QJ'};
-end
-K = convhulln(projpts,opts);
+%joggling input makes it so that coplanar facets aren't merged
+% if size(pts,2) < 5
+% 	opts = {'QJ'};
+% else
+% 	opts = {'Qx','QJ'};
+% end
+% K = convhulln(projpts,opts);
+
+K = convhulln(projpts);
 
 %reformat pts and K
 IDs = unique(K);
