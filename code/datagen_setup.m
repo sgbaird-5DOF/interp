@@ -17,10 +17,6 @@ function S = datagen_setup(sampleMethod,opts,loadQ)
 %
 %		var_names.m
 %--------------------------------------------------------------------------
-% res = opts.res;
-% nint = opts.nint;
-% octsubdiv = opts.octsubdiv;
-% ocuboOpts = opts.ocuboOpts;
 fname = get_fname(sampleMethod,opts);
 
 if loadQ && (exist(fname,'file') ~= 0)
@@ -75,3 +71,12 @@ else
 end
 
 end
+
+
+%---------------------------------CODE GRAVEYARD---------------------------
+%{
+% res = opts.res;
+% nint = opts.nint;
+% octsubdiv = opts.octsubdiv;
+% ocuboOpts = opts.ocuboOpts;
+%}

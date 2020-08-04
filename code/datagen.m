@@ -55,13 +55,6 @@ end
 %--------------------------------------------------------------------------
 
 %% setup
-pseudoQ = contains(sampleMethod,'pseudo');
-
-if pseudoQ
-	str_id = strfind(sampleMethod,'_pseudo');
-	sampleMethod = sampleMethod(1:str_id-1); %assumes _pseudo is at end, and remove it
-end
-
 %get filenames, if any
 switch sampleMethod
 	case 'Kim2011'
@@ -79,8 +72,8 @@ end
 %% generate data
 switch sampleMethod
 	case 'random'
-% 		seed = 10;
-% 		rng(seed)
+		% 		seed = 10;
+		% 		rng(seed)
 		rng('shuffle')
 		
 		%transpose to preserve rng sequence of pts with different number of datapts
@@ -200,7 +193,7 @@ end
 %5DOF cases
 if contains(sampleMethod,'5DOF')
 	ctrcuspQ = false;
-	[five,sept,o] = mesh5DOF(featureType,ctrcuspQ,opts.res,opts.nint);
+	[five,sept] = mesh5DOF(featureType,ctrcuspQ,opts.res,opts.nint);
 	meshList = sept;
 end
 
@@ -211,9 +204,6 @@ meshList = meshList(IA,:);
 %pare down five to a unique set of points
 five = five(IA);
 
-%originally implemented for just '5DOF_oct_vtx' and 'hsphext'
-%get symmetrized octonions with respect to two points ('O' and
-%'interior', both +z)
 if contains(sampleMethod,'5DOF_')
 	savename = [sampleMethod(6:end) '_pairmin.mat'];
 else
@@ -224,47 +214,35 @@ if size(meshList,2) == 7
 	meshList = [meshList zeros(size(meshList,1),1)];
 end
 
-if ~pseudoQ
-	if contains(sampleMethod,'oct_vtx')
-		NVpairs = {'o2addQ',true,'method','pairwise','wtol',1e-3}; %method can be 'standard' or 'pairwise'
-	else
-		NVpairs = {'o2addQ',false,'method','pairwise','wtol',1e-3};
-	end
-	
-	%1
-% 	[meshList,~,five,~] = get_octpairs(meshList,savename,NVpairs{:}); %find a way to not call this for 'data'
-	
-	%2
-	o1tmp = meshList(1,:);
-	o2 = meshList(2:end,:);
-	o1rep = repmat(o1tmp,size(o2,1),1);
-	[~,o2] = GBdist4(o1rep,meshList(2:end,:),32,'norm');
-	meshList = [o1tmp;vertcat(o2{:})];
-	five = GBoct2five(meshList);
-	
-	[meshList,usv] = proj_down(meshList,1e-6,struct.empty,'zeroQ',true);
-	
-	% 	if strcmp(sampleMethod,'ocubo') %might need a way to correlate back to original dataset for e.g. Rohrer2009
-	%reduce to unique set of points
-	[~,IA] = uniquetol(round(meshList,6),1e-3,'ByRows',true);
-	meshList = meshList(IA,:);
-	%pare down five to a unique set of points
-	five = five(IA);
-	% 	end
+if contains(sampleMethod,'oct_vtx')
+	NVpairs = {'o2addQ',true,'method','pairwise','wtol',1e-3}; %method can be 'standard' or 'pairwise'
 else
-	try
-		load(savename,'octvtx','usv')
-		% 	meshListTemp = proj_down(meshList,1e-6,usv);
-		[meshList,usv] = proj_down(octvtx,1e-6,usv,'zeroQ',true);
-	catch
-		warning("error with meshList = proj_down(octvtx,1e-6,usv,'zeroQ',true); or load")
-		[meshList,usv] = proj_down(meshList,1e-6,struct.empty,'zeroQ',true);
-	end
-	% 	if isempty(meshListTemp)
-	% 		warning('creating new usv')
-	% 		[meshList,usv] = proj_down(meshList,1e-6);
-	% 	end
+	NVpairs = {'o2addQ',false,'method','pairwise','wtol',1e-3};
 end
+
+method = 1;
+switch method
+	case 1
+		[meshList,~,five,~] = get_octpairs(meshList,savename,NVpairs{:}); %find a way to not call this for 'data'
+		
+	case 2
+		o1tmp = meshList(1,:);
+		o2 = meshList(2:end,:);
+		o1rep = repmat(o1tmp,size(o2,1),1);
+		[~,o2] = GBdist4(o1rep,meshList(2:end,:),32,'norm');
+		meshList = [o1tmp;vertcat(o2{:})];
+		five = GBoct2five(meshList);
+end
+
+[meshList,usv] = proj_down(meshList,1e-5,struct.empty,'zeroQ',true);
+
+% 	if strcmp(sampleMethod,'ocubo') %might need a way to correlate back to original dataset for e.g. Rohrer2009
+%reduce to unique set of points
+[~,IA] = uniquetol(round(meshList,6),1e-3,'ByRows',true);
+meshList = meshList(IA,:);
+%pare down five to a unique set of points
+five = five(IA);
+% 	end
 if size(meshList,2) == 7
 	projupQ = true;
 else
@@ -280,54 +258,42 @@ if opts.octsubdiv > 1
 			tricollapseQ = false;
 			[Ktr,K,meshList] = hsphext_subdiv(meshList,opts.octsubdiv,tricollapseQ);
 		end
-	elseif pseudoQ
-		tricollapseQ = false;
-		[~,K,meshList] = hypersphere_subdiv(meshList,[],opts.octsubdiv,tricollapseQ);
-		Ktr = [];
 	else
 		[Ktr,K,meshList] = hypersphere_subdiv(meshList,[],opts.octsubdiv,true); %originally had sphK
 	end
-	
-	% 	if any([strcmp(sampleMethod,'5DOF_oct_vtx'),contains(sampleMethod,'hsphext')])
-	%restore null dimensions for oct --> five
 	
 	if projupQ
 		meshList = proj_up(meshList,usv);
 		projupQ = false;
 	end
+		
+	%renormalize each quaternion (i.e. bring back into space of rotations, only for GBoct2five)
+	meshList(:,1:4) = normr(meshList(:,1:4));
+	meshList(:,5:8) = normr(meshList(:,5:8));
 	
-	%renormalize each quaternion (i.e. bring back into space of rotations)
-	meshListTmp(:,1:4) = normr(meshList(:,1:4));
-	meshListTmp(:,5:8) = normr(meshList(:,5:8));
-	% 	end
+	meshList = get_octpairs(meshList);
 	
-	five = GBoct2five(meshListTmp,false);
+	% 	meshListTmp = get_octpairs(meshListTmp);
+	five = GBoct2five(meshList,false);
 	
 elseif (exist('sphK','var') ~= 0)
 	%create K if it exists & is empty
-	if ~pseudoQ
-		if isempty(opts.sphK)
-			if contains(sampleMethod,'hsphext')
-				[Ktr,K,meshList] = hsphext_subdiv(meshList,1);
-			else
-				K = sphconvhulln(meshList);
-			end
+	if isempty(opts.sphK)
+		if contains(sampleMethod,'hsphext')
+			[Ktr,K,meshList] = hsphext_subdiv(meshList,1);
 		else
-			K = opts.sphK;
+			K = sphconvhulln(meshList);
 		end
 	else
-		K = [];
+		K = opts.sphK;
 	end
 	
 else
-	if ~pseudoQ
-		K = sphconvhulln(meshList);
-	else
-		K = [];
-	end
+	K = sphconvhulln(meshList);
 end
 
 if projupQ
+	%project up
 	meshList = proj_up(meshList,usv);
 end
 
@@ -346,25 +312,18 @@ disp(' ')
 disp(['total of ' int2str(size(meshList,1)) ' after oct subdivision.'])
 
 %% Compute GB Energies
-
-% save('temp.mat')
-
 if strcmp(sampleType,'data')
 	if contains(sampleMethod,{'5DOF','ocubo','Rohrer2009','Olmsted2004'})
-		
 		disp('GB5DOF')
 		propList = GB5DOF_setup(five);
-		
 	else
 		propList = [];
 		warning('propList is empty. Ok if sampleType == mesh. Otherwise, did you add to switch case, or is "five" empty?')
 	end
 end
-
 if exist('usv','var') == 0
 	usv = [];
 end
-
 if exist('Ktr','var') == 0
 	Ktr = [];
 end
@@ -535,5 +494,59 @@ end
 	%checking to see if this increases the interpolation accuracy - it did not
 	NV = {'o2addQ',false,'method','pairwise','wtol',1e-3};
 	meshList = get_octpairs(meshList,savename,NV{:});
+
+
+	% 	if any([strcmp(sampleMethod,'5DOF_oct_vtx'),contains(sampleMethod,'hsphext')])
+	%restore null dimensions for oct --> five
+
+% save('temp.mat')
+
+
+
+	% 	if isempty(meshListTemp)
+	% 		warning('creating new usv')
+	% 		[meshList,usv] = proj_down(meshList,1e-6);
+	% 	end
+
+
+%originally implemented for just '5DOF_oct_vtx' and 'hsphext'
+%get symmetrized octonions with respect to two points ('O' and
+%'interior', both +z)
+if contains(sampleMethod,'5DOF_')
+	savename = [sampleMethod(6:end) '_pairmin.mat'];
+else
+	savename = [sampleMethod '_pairmin.mat'];
+end
+
+
+
+
+pseudoQ = contains(sampleMethod,'pseudo');
+
+if pseudoQ
+	str_id = strfind(sampleMethod,'_pseudo');
+	sampleMethod = sampleMethod(1:str_id-1); %assumes _pseudo is at end, and remove it
+end
+
+
+	elseif pseudoQ
+		tricollapseQ = false;
+		[~,K,meshList] = hypersphere_subdiv(meshList,[],opts.octsubdiv,tricollapseQ);
+		Ktr = [];
+
+
+
+if ~pseudoQ
+	else
+	try
+		load(savename,'octvtx','usv')
+		% 	meshListTemp = proj_down(meshList,1e-6,usv);
+		[meshList,usv] = proj_down(octvtx,1e-6,usv,'zeroQ',true);
+	catch
+		warning("error with meshList = proj_down(octvtx,1e-6,usv,'zeroQ',true); or load")
+		[meshList,usv] = proj_down(meshList,1e-6,struct.empty,'zeroQ',true);
+	end
+end
+
 
 %}
