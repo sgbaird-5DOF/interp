@@ -1,10 +1,10 @@
 function [octvtx,usv,five,omega3] = get_octpairs(pts,savename,NV)
 arguments
 	pts(:,8) double {mustBeSqrt2Norm}
-	savename string
-	NV.o2addQ(1,1) logical = true
+	savename string = 'temp.mat'
+	NV.o2addQ(1,1) logical = false
 	NV.plotQ(1,1) logical = false
-	NV.method char {mustBeMember(NV.method,{'standard','pairwise'})} = 'standard'
+	NV.method char {mustBeMember(NV.method,{'standard','pairwise'})} = 'pairwise'
 	NV.pgnum(1,1) double = 32
 	NV.wtol(1,1) double = 1e-6
 end
@@ -71,7 +71,7 @@ fiveref1.geometry = name1;
 o1 = GBfive2oct(qA,nA); %input
 o2 = GBfive2oct(qB,nB);
 % o2 = [-1 0 0 0 1 0 0 0]; %input
-% o2 = [1 0 0 0 0 0 0 0]; %certainly seems to speed things up
+% o2 = sqrt(2)*[1 0 0 0 0 0 0 0]; %certainly seems to speed things up
 
 [omega0,oct_sym0] = GBdist4(o1,o2,32,'norm',NV.wtol);
 % [omega0,oct_sym0,zeta0] = GBdist2([o1 o2],32,false);
