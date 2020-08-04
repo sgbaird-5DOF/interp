@@ -110,10 +110,12 @@ ids = ~isnan(datainterp);
 interpSE = (data.props(ids)-datainterp(ids)).^2;
 nnSE = (data.props(ilist)-mesh.props(nnID)).^2;
 totSE = [interpSE;nnSE];
+allnnSE = (data.props-mesh.props(nnList)).^2;
 
 interpRMSE = sqrt(mean(interpSE));
 nnRMSE = sqrt(mean(nnSE));
 totRMSE = sqrt(mean(totSE));
+allnnRMSE = sqrt(mean(allnnSE));
 
 fpath = fullfile('data',savename);
 save(fpath)
@@ -122,7 +124,8 @@ disp(' ')
 disp(['# non-intersections: ' int2str(sum(~isnan((nnID)))) '/' int2str(ndatapts)])
 disp(' ')
 disp(['RMSE (J/m^2): interp == ' num2str(interpRMSE,'%3.4f') ', NN == ' num2str(nnRMSE,'%3.4f')])
-disp(['total RMSE: ' num2str(totRMSE,'%3.4f')])
+disp(' ')
+disp(['total RMSE: ' num2str(totRMSE,'%3.4f') ', all NN RMSE comparison: ' num2str(allnnRMSE,'%3.4f')])
 varargout = {nndistList,nonintDists,intfacetIDs};
 
 end
