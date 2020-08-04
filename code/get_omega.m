@@ -42,15 +42,15 @@ assert(normcheck,errmsg)
 
 end
 
-function quatNormsMustBeOne(val)
-
-tol = 0.1;
-qAcheck = abs(norm(val(1,1:4))-1) < tol;
-qBcheck = abs(norm(val(1,5:8))-1) < tol;
-errmsg = ['quaternion norms must be equal to 1 within tol = ' num2str(tol)];
-assert(qAcheck && qBcheck,errmsg)
-
-end
+% function quatNormsMustBeOne(val)
+% 
+% tol = 0.1;
+% qAcheck = abs(norm(val(1,1:4))-1) < tol;
+% qBcheck = abs(norm(val(1,5:8))-1) < tol;
+% errmsg = ['quaternion norms must be equal to 1 within tol = ' num2str(tol)];
+% assert(qAcheck && qBcheck,errmsg)
+% 
+% end
 
 
 %----------------------------CODE GRAVEYARD--------------------------------
