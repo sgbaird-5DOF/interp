@@ -146,7 +146,7 @@ disp(['barytype: ' barytype ', barytol: ' num2str(barytol)])
 toc; disp(' ')
 
 %% plotting
-% interpplot(meshdata.fname)
+interpplot(meshdata.fname)
 
 
 %%

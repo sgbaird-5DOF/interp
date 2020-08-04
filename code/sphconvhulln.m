@@ -76,6 +76,7 @@ if subhemiQ
 			% but will be lessened by not normalizing mean(pts)
 			projpts = projfacet2hyperplane(mean(pts),pts);
 			a = proj_down(projpts,1e-6);
+			disp('--delaunayn')
 			K = delaunayn(a);
 			
 		case 'high'
