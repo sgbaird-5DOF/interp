@@ -65,7 +65,7 @@ dataopts = meshopts;
 %mesh parameters
 meshopts.res = 12.5;
 meshopts.nint = 1; % 1 == zero subdivisions, 2 == one subdivision, etc.
-meshopts.octsubdiv = 1;
+meshopts.octsubdiv = 2;
 meshopts.ocuboOpts.n = 50; % # of octonions to generate, [] also ok if sidelength specified
 meshopts.ocuboOpts.method = 'random'; % 'random' or 'uniform' cubochoric sampling
 meshopts.ocuboOpts.sidelength = []; %sidelength of cubochoric grid (only specify if 'uniform', [] ok)
@@ -119,13 +119,14 @@ end
 meshtmp = projfacet2hyperplane(mean(mesh.ppts),mesh.ppts);
 meshtmp = proj_down(meshtmp);
 % --delaunay triangulation
+disp('--delaunayn')
 mesh.sphK = delaunayn(meshtmp);
 
 %compute intersecting facet IDs (might be zero, might have more than one)
 inttol = 1e-2;
 inttype = 'planar';
 disp(['inttype: ' inttype ', inttol: ' num2str(inttol)])
-intfacetIDs = intersect_facet(mesh.ppts,mesh.sphK,data.ppts,inttol,'inttype',inttype);
+intfacetIDs = intersect_facet(mesh.ppts,mesh.sphK,data.ppts,inttol,'inttype',inttype,'nnMax',10);
 
 barytype = 'spherical';
 
