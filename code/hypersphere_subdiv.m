@@ -37,6 +37,7 @@ end
 %% Ktree top-level
 npts = size(pts,1);
 nfacets = size(K,1);
+nK = size(K,2);
 Ktr.main.K = K;
 Ktr.main.pts = pts;
 Ktr.sub = cell(1,nfacets);
@@ -91,9 +92,14 @@ if nint > 1
 		delaunayQ = true;
 		[mpts2a,K2a] = facet_subdiv(mpts2,nint,delaunayQ);
 		
-		%add subdivision to K-tree
-		KtrtempK{i} = K2a;
-		KtrtempPts{i} = mpts2a;
+		if size(K2a,2) == nK
+			%add subdivision to K-tree
+			KtrtempK{i} = K2a;
+			KtrtempPts{i} = mpts2a;
+		else
+			KtrtempK{i} = [];
+			KtrtempPts{i} = [];
+		end
 	end
 	
 	disp(' ')
