@@ -15,10 +15,10 @@ end
 % Description: get barycentric interpolation values
 %
 % Inputs:
-%		a -	a
+%	a - a
 %
 % Outputs:
-%		b -	b
+%	b - b
 %
 % Usage:
 %		a = b(a);
@@ -100,8 +100,8 @@ for i = 1:ndatapts
 		nonintDists(i) = nndistList(i);
 		
 		nndistList(i) = NaN; %to distinguish interp vs. NN distances in plotting
-		nnID = [nnID nnList(i)]; %nearest neighbor indices
-		ilist = [ilist i]; % possible to separate out making baryOK a logical array & using 2 for loops
+		nnID = [nnID nnList(i)]; %#ok<AGROW> %nearest neighbor indices
+		ilist = [ilist i]; %#ok<AGROW> % possible to separate out making baryOK a logical array & using 2 for loops
 		% 			datainterp(i) = mesh.props(k(i));
 	end
 end
