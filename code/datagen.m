@@ -259,7 +259,7 @@ if opts.octsubdiv > 1
 			[Ktr,K,meshList] = hsphext_subdiv(meshList,opts.octsubdiv,tricollapseQ);
 		end
 	else
-		[Ktr,K,meshList] = hypersphere_subdiv(meshList,[],opts.octsubdiv,true); %originally had sphK
+		[Ktr,K,meshList] = hypersphere_subdiv(meshList,[],opts.octsubdiv); %originally had sphK
 	end
 	
 	if projupQ
