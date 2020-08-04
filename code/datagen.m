@@ -230,8 +230,19 @@ if ~pseudoQ
 	else
 		NVpairs = {'o2addQ',false,'method','pairwise','wtol',1e-3};
 	end
-	[meshList,usv,five,~] = get_octpairs(meshList,savename,NVpairs{:}); %find a way to not call this for 'data'
-	[meshList,usv] = proj_down(meshList,1e-6,usv,'zeroQ',true);
+	
+	%1
+% 	[meshList,~,five,~] = get_octpairs(meshList,savename,NVpairs{:}); %find a way to not call this for 'data'
+	
+	%2
+	o1tmp = meshList(1,:);
+	o2 = meshList(2:end,:);
+	o1rep = repmat(o1tmp,size(o2,1),1);
+	[~,o2] = GBdist4(o1rep,meshList(2:end,:),32,'norm');
+	meshList = [o1tmp;vertcat(o2{:})];
+	five = GBoct2five(meshList);
+	
+	[meshList,usv] = proj_down(meshList,1e-6,struct.empty,'zeroQ',true);
 	
 	% 	if strcmp(sampleMethod,'ocubo') %might need a way to correlate back to original dataset for e.g. Rohrer2009
 	%reduce to unique set of points
@@ -286,11 +297,11 @@ if opts.octsubdiv > 1
 	end
 	
 	%renormalize each quaternion (i.e. bring back into space of rotations)
-	meshList(:,1:4) = normr(meshList(:,1:4));
-	meshList(:,5:8) = normr(meshList(:,5:8));
+	meshListTmp(:,1:4) = normr(meshList(:,1:4));
+	meshListTmp(:,5:8) = normr(meshList(:,5:8));
 	% 	end
 	
-	five = GBoct2five(meshList,false);
+	five = GBoct2five(meshListTmp,false);
 	
 elseif (exist('sphK','var') ~= 0)
 	%create K if it exists & is empty
