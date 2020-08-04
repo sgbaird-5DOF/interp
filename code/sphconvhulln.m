@@ -1,6 +1,8 @@
-function K = sphconvhulln(pts)
+function K = sphconvhulln(pts,subhemiQ,dimtype)
 arguments
 	pts double {mustBeFinite,mustBeReal}
+	subhemiQ logical = false
+	dimtype char {mustBeMember(dimtype,{'low','high'})} = 'low'
 end
 %--------------------------------------------------------------------------
 % Author: Sterling Baird
@@ -54,8 +56,9 @@ if d >= 7 && size(pts,1) > 400
 	end
 end
 
-K = convhulln(pts);
-subhemiQ = false; %initialize
+if ~subhemiQ
+	K = convhulln(pts);
+end
 k = 0;
 while ~subhemiQ && (k < 10)
 	rid = randi(size(K,1));
@@ -66,11 +69,12 @@ while ~subhemiQ && (k < 10)
 end
 
 if subhemiQ
-	dimtype = 'high'; %'low','high'
 	switch dimtype
 		case 'low'
-			% slower, but might be able to handle more points b.c. dimension is lower
-			projpts = projfacet2hyperplane(normr(mean(pts)),pts);
+			% probably can handle more points b.c. dimension is lower not sure
+			% to what extent it will cause distortions in the triangulation,
+			% but will be lessened by not normalizing mean(pts)
+			projpts = projfacet2hyperplane(mean(pts),pts);
 			a = proj_down(projpts,1e-6);
 			K = delaunayn(a);
 			
