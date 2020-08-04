@@ -1,10 +1,11 @@
-function [dmin, o2minsyms] = GBdist4(o1,o2,pgnum,dtype,wtol)
+function [dmin, o2minsyms] = GBdist4(o1,o2,pgnum,dtype,wtol,waitbarQ)
 arguments
 	o1(:,8) double {mustBeFinite,mustBeReal,mustBeSqrt2Norm}
 	o2(:,8) double {mustBeFinite,mustBeReal,mustBeSqrt2Norm}
 	pgnum(1,1) double {mustBeInteger} = 32 % default == cubic Oh point group
-	dtype char {mustBeMember(dtype,{'omega','norm'})} = 'omega'
-	wtol(1,1) double {mustBeFinite,mustBeReal} = 1e-6
+	dtype char {mustBeMember(dtype,{'omega','norm'})} = 'norm'
+	wtol(1,1) double {mustBeFinite,mustBeReal} = 1e-6 %omega tolerance
+	waitbarQ logical = false
 end
 %--------------------------------------------------------------------------
 % Author: Sterling Baird
@@ -58,10 +59,7 @@ npts = size(o1,1);
 grainexchangeQ = true;
 doublecoverQ = true;
 %get symmetric octonions (SEOs)
-osets = osymsets(o2,pgnum,struct,grainexchangeQ,doublecoverQ);
-
-%number of CSEOs
-nsets = size(osets{1},1);
+% osets = osymsets(o2,pgnum,struct,grainexchangeQ,doublecoverQ); %out of memory 2020-08-03
 
 %assign distance fn to handle
 switch dtype
@@ -74,17 +72,54 @@ end
 dmin = zeros(1,npts);
 o2minsyms = cell(1,npts);
 
+%textwaitbar setup
+D = parallel.pool.DataQueue;
+afterEach(D, @nUpdateProgress);
+nsets = npts;
+ninterval = 20;
+N=nsets;
+p=1;
+reverseStr = '';
+if nsets > ninterval
+	nreps2 = floor(nsets/ninterval);
+	nreps = nreps2;
+else
+	nreps2 = 1;
+	nreps = nreps2;
+end
+
+function nUpdateProgress(~)
+	percentDone = 100*p/N;
+	msg = sprintf('%3.0f ', percentDone); %Don't forget this semicolon
+	fprintf([reverseStr, msg]);
+	reverseStr = repmat(sprintf('\b'), 1, length(msg));
+	p = p + nreps;
+end
+
 %loop through octonion pairs
 parfor i = 1:npts %parfor compatible
-	%% setup
+	%text waitbar
+	if mod(i,nreps2) == 0
+		if waitbarQ
+			send(D,i);
+		end
+	end
+	
+	%% setup	
+	%unpack SEOs
+	oset = osymsets(o2(i,:),pgnum,struct,grainexchangeQ,doublecoverQ);
+	o2tmp = oset{1};
+	% 	o2tmp = osets{i};
+	
+	%number of CSEOs
+	nsets = size(o2tmp,1);
+% 	nsets = size(osets{i},1);
+	
 	%unpack first octonion (held constant)
 	o1tmp = o1(i,:);
 	
 	%copy octonion
 	o1rep = repmat(o1tmp,nsets,1);
-	
-	%unpack SEOs
-	o2tmp = osets{i};
 	
 	%unpack quaternions
 	qSC = o2tmp(:,1:4);
@@ -121,14 +156,14 @@ parfor i = 1:npts %parfor compatible
 	
 	%compute all distances
 	dlist = distfn(o1rep,o2syms); %#ok<PFBNS> %either omega or euclidean norm (see disttype arg)
-	
+
 	%% find minimum distances & octonions
 	%get first instance of minimum omega
 	dmin(i) = min(dlist);
 	
 	%find logical indices of all minimum omegas
 	minIDs = ismembertol(dlist,dmin(i),wtol,'DataScale',1); %loosened tol for min omegas, 2020-07-28
-	
+
 	%find corresponding symmetrized octonions (with duplicates)
 	o2minsymsTmp = o2syms(minIDs,:);
 	
