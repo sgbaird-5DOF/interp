@@ -55,7 +55,7 @@ addpathdir({'misFZfeatures.mat','PGnames.mat','nlt.m','q2rod.m',...
 %'Olmsted2004','5DOF_vtx','5DOF_misFZfeatures',
 %'5DOF_interior','5DOF_exterior', '5DOF_oct_vtx','5DOF_hsphext'
 %'5DOF_exterior_hsphext', 'ocubo'
-meshMethod = 'ocubo';
+meshMethod = 'ocubo_hsphext';
 dataMethod = 'ocubo';
 
 %initialize
@@ -65,17 +65,17 @@ dataopts = meshopts;
 %mesh parameters
 meshopts.res = 12.5;
 meshopts.nint = 1; % 1 == zero subdivisions, 2 == one subdivision, etc.
-meshopts.octsubdiv = 1;
-meshopts.ocuboOpts.n = []; % # of octonions to generate, [] also ok if sidelength specified
-meshopts.ocuboOpts.method = 'uniform'; % 'random' or 'uniform' cubochoric sampling
-meshopts.ocuboOpts.sidelength = 4; %sidelength of cubochoric grid (only specify if 'uniform', [] ok)
+meshopts.octsubdiv = 2;
+meshopts.ocuboOpts.n = 10; % # of octonions to generate, [] also ok if sidelength specified
+meshopts.ocuboOpts.method = 'random'; % 'random' or 'uniform' cubochoric sampling
+meshopts.ocuboOpts.sidelength = []; %sidelength of cubochoric grid (only specify if 'uniform', [] ok)
 meshopts.ocuboOpts.seed = 15; %sidelength of cubochoric grid (only specify if 'uniform', [] ok)
 
 %data parameters
 dataopts.res = 12.5;
 dataopts.nint = 1;
 dataopts.octsubdiv = 1;
-dataopts.ocuboOpts.n = 100; % # of octonions to generate, [] also ok if sidelength specified
+dataopts.ocuboOpts.n = 10; % # of octonions to generate, [] also ok if sidelength specified
 dataopts.ocuboOpts.method = 'random'; % 'random' or 'uniform' cubochoric sampling
 dataopts.ocuboOpts.sidelength = []; %sidelength of cubochoric grid (only specify if 'uniform', [] ok)
 dataopts.ocuboOpts.seed = 20; %integer or 'shuffle' OK
@@ -83,7 +83,7 @@ dataopts.ocuboOpts.seed = 20; %integer or 'shuffle' OK
 T = true; %just makes it easier to switch back and forth between true and false
 F = false;
 meshloadQ = F;
-dataloadQ = T;
+dataloadQ = F;
 meshdataloadQ = F; %whether to check for and load intersection & barycentric data from previous run
 
 %% generate mesh
@@ -106,29 +106,47 @@ disp('find intersecting facet for each datapoint')
 % data.pts = get_octpairs(data.pts);
 
 %project mesh and data together
-tol = 1e-2; %this is a fairly weak tolerance.. consider not doing quaternion renormalization in datagen
-[a,usv] = proj_down([mesh.pts;data.pts],tol,'zeroQ',false); %better to not have zeroQ enabled (2020-08-04)
+tol = 1e-4; %consider not doing quaternion renormalization in datagen
+zeroQ = false;
+[a,usv] = proj_down([mesh.pts;data.pts],tol,'zeroQ',zeroQ); %better to not have zeroQ enabled (2020-08-04)
 
 if size(a,2) <= 7
-	data.ppts = proj_down(data.pts,tol,usv,'zeroQ',false);
-	mesh.ppts = proj_down(mesh.pts,tol,usv,'zeroQ',false);
+	mesh.ppts = proj_down(mesh.pts,tol,usv,'zeroQ',zeroQ);
+	data.ppts = proj_down(data.pts,tol,usv,'zeroQ',zeroQ);
 else
-	data.ppts = data.pts;
 	mesh.ppts = mesh.pts;
+	data.ppts = data.pts;
 end
 
 %compute triangulation
 meshtmp = projfacet2hyperplane(mean(mesh.ppts),mesh.ppts);
 meshtmp = proj_down(meshtmp);
+% --delaunay triangulation
 mesh.sphK = delaunayn(meshtmp);
 
 %compute intersecting facet IDs (might be zero, might have more than one)
 inttol = 1e-2;
 maxnormQ = true;
-intfacetIDs = intersect_facet(mesh.ppts,mesh.sphK,data.ppts,inttol,maxnormQ);
+inttype = 'planar';
+disp(['inttype: ' inttype ', inttol: ' num2str(inttol)])
+intfacetIDs = intersect_facet(mesh.ppts,mesh.sphK,data.ppts,inttol,maxnormQ,inttype);
 
-barytype = 'planar';
-barytol = 1e-6; %0.2 gets most intersections for spherical
+% if strcmp(barytype,'spherical')
+% 	mesh.ppts = proj_down(mesh.pts,tol,usv,'zeroQ',true);
+% 	data.ppts = proj_down(data.pts,tol,usv,'zeroQ',true);
+% end
+
+barytype = 'spherical';
+
+switch barytype
+	case 'planar'
+		barytol = 1e-6;
+	case 'spherical'
+		barytol = 0.2;
+		mesh.ppts = normr(mesh.ppts);
+		data.ppts = normr(data.ppts);
+end
+disp(['barytype: ' barytype ', barytol: ' num2str(barytol)])
 [datainterp,databary,meshdata.fname] = get_interp(mesh,data,intfacetIDs,barytype,barytol);
 
 toc; disp(' ')
