@@ -251,13 +251,9 @@ end
 %% Subdivide octonions, convex hull
 if opts.octsubdiv > 1
 	
+	tricollapseQ = true;
 	if contains(sampleMethod,'hsphext')
-		if ~pseudoQ
-			[Ktr,K,meshList] = hsphext_subdiv(meshList,opts.octsubdiv,true);
-		else
-			tricollapseQ = false;
-			[Ktr,K,meshList] = hsphext_subdiv(meshList,opts.octsubdiv,tricollapseQ);
-		end
+		[Ktr,K,meshList] = hsphext_subdiv(meshList,opts.octsubdiv);
 	else
 		[Ktr,K,meshList] = hypersphere_subdiv(meshList,[],opts.octsubdiv); %originally had sphK
 	end

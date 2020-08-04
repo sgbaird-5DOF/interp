@@ -31,8 +31,7 @@ assert(all(abs(nm - avgnm) < tol),['pts do not lie on a hypersphere within tol =
 
 %% compute top-level convex hull
 if isempty(K) % && tricollapseQ
-	maxnormQ = true;
-	K = sphconvhulln(pts,maxnormQ);
+	K = sphconvhulln(pts);
 end
 
 %% Ktree top-level
