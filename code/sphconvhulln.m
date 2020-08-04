@@ -1,7 +1,7 @@
 function K = sphconvhulln(pts,subhemiQ,dimtype)
 arguments
 	pts double {mustBeFinite,mustBeReal}
-	subhemiQ logical = false
+	subhemiQ logical = true
 	dimtype char {mustBeMember(dimtype,{'low','high'})} = 'low'
 end
 %--------------------------------------------------------------------------
