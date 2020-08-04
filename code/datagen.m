@@ -262,9 +262,9 @@ if opts.octsubdiv > 1
 		projupQ = false;
 	end
 		
-	%renormalize each quaternion (i.e. bring back into space of rotations, only for GBoct2five)
-	meshList(:,1:4) = normr(meshList(:,1:4));
-	meshList(:,5:8) = normr(meshList(:,5:8));
+	%renormalize each quaternion (i.e. bring back into space of rotations)
+% 	meshList(:,1:4) = normr(meshList(:,1:4));
+% 	meshList(:,5:8) = normr(meshList(:,5:8));
 	
 	meshList = get_octpairs(meshList);
 	
