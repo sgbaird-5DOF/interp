@@ -7,11 +7,11 @@ onorm = norm(o(1,:));
 errmsg = ['octonion norm == ' num2str(onorm) ' ~= sqrt(2) == 1.4142'];
 assert(onorm - sqrt(2) <= 1e-1, errmsg)
 
-qnorm = norm(o(1,1:4));
-errmsg = ['quaternion norm == ' num2str(qnorm) ' ~= 1'];
-assert(qnorm - 1 <= 1e-1, errmsg);
+% qnorm = norm(o(1,1:4));
+% errmsg = ['quaternion norm == ' num2str(qnorm) ' ~= 1'];
+% assert(qnorm - 1 <= 1e-1, errmsg);
 
-qnorm = norm(o(1,5:8));
-errmsg = ['quaternion norm == ' num2str(qnorm) ' ~= 1'];
-assert(qnorm - 1 <= 1e-1, errmsg);
+% qnorm = norm(o(1,5:8));
+% errmsg = ['quaternion norm == ' num2str(qnorm) ' ~= 1'];
+% assert(qnorm - 1 <= 1e-1, errmsg);
 end %mustBeSqrt2Norm
