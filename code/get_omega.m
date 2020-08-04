@@ -1,7 +1,7 @@
 function omega = get_omega(o1,o2)
 arguments
-	o1 (:,8) double {normMustBeSqrt2(o1),quatNormsMustBeOne(o1)}
-	o2 (:,8) double {normMustBeSqrt2(o2),quatNormsMustBeOne(o2)}
+	o1 (:,8) double {mustBeReal,mustBeFinite,normMustBeSqrt2(o1)}
+	o2 (:,8) double {mustBeReal,mustBeFinite,normMustBeSqrt2(o2)}
 end
 %--------------------------------------------------------------------------
 % Author: Sterling Baird
@@ -25,7 +25,7 @@ qD = o2(:,5:8);
 dot1 = dot(qA,qC,2);
 dot2 = dot(qB,qD,2);
 
-omega = 2*acos(abs(dot1+dot2)/2);
+omega = real(2*acos(abs(dot1+dot2)/2)); %added real() 2020-08-03
 
 end
 %----------------------------END get_omega()-------------------------------
@@ -51,3 +51,20 @@ errmsg = ['quaternion norms must be equal to 1 within tol = ' num2str(tol)];
 assert(qAcheck && qBcheck,errmsg)
 
 end
+
+
+%----------------------------CODE GRAVEYARD--------------------------------
+%{
+% adjust values that are close to 1 or -1
+tol = 1e-6;
+dot1(abs(dot1 - 1) < tol) = 1;
+dot2(abs(dot2 - 1) < tol) = 1;
+dot1(dot1 > 1) = 1;
+dot2(dot2 > 1) = 1;
+
+dot1(dot1 < -1) = -1;
+dot2(dot2 < -1) = -1;
+
+dot1(abs(dot1 + 1) < tol) = -1;
+dot2(abs(dot2 + 1) < tol) = -1;
+%}
