@@ -1,4 +1,4 @@
-%OSLERP_setup3
+%get_octpairs test
 %--------------------------------------------------------------------------
 % Author: Sterling Baird
 %
