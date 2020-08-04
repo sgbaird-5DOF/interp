@@ -255,20 +255,6 @@ if contains(sampleMethod,'hsphext')
 elseif opts.octsubdiv > 1
 	[Ktr,K,meshList] = hypersphere_subdiv(meshList,[],opts.octsubdiv); %originally had sphK
 	
-	if projupQ
-		meshList = proj_up(meshList,usv);
-		projupQ = false;
-	end
-	
-	%renormalize each quaternion (i.e. bring back into space of rotations)
-	% 	meshList(:,1:4) = normr(meshList(:,1:4));
-	% 	meshList(:,5:8) = normr(meshList(:,5:8));
-	
-	meshList = get_octpairs(meshList);
-	
-	% 	meshListTmp = get_octpairs(meshListTmp);
-	five = GBoct2five(meshList,false);
-	
 elseif (exist('sphK','var') ~= 0)
 	%create K if it exists & is empty
 	if isempty(opts.sphK)
@@ -288,6 +274,11 @@ end
 if projupQ
 	%project up
 	meshList = proj_up(meshList,usv);
+end
+
+if contains(sampleMethod,'hsphext') || opts.octsubdiv > 1
+	meshList = get_octpairs(meshList);
+	five = GBoct2five(meshList,false);
 end
 
 %package geometry into "five" (e.g. 'A', 'O', 'AC', etc.)
@@ -539,6 +530,18 @@ if ~pseudoQ
 		warning("error with meshList = proj_down(octvtx,1e-6,usv,'zeroQ',true); or load")
 		[meshList,usv] = proj_down(meshList,1e-6,struct.empty,'zeroQ',true);
 	end
+end
+
+if contains(sampleMethod,'hsphext') || opts.octsubdiv > 1
+	%renormalize each quaternion (i.e. bring back into space of rotations)
+	% 	meshList(:,1:4) = normr(meshList(:,1:4));
+	% 	meshList(:,5:8) = normr(meshList(:,5:8));
+	
+		% 	meshListTmp = get_octpairs(meshListTmp);
+
+	
+	meshList = get_octpairs(meshList);
+	five = GBoct2five(meshList,false);
 end
 
 
