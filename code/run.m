@@ -70,13 +70,13 @@ meshopts.octsubdiv = 2;
 meshopts.ocuboOpts.n = 30; % # of octonions to generate, [] also ok if sidelength specified
 meshopts.ocuboOpts.method = 'random'; % 'random' or 'uniform' cubochoric sampling
 meshopts.ocuboOpts.sidelength = []; %sidelength of cubochoric grid (only specify if 'uniform', [] ok)
-meshopts.ocuboOpts.seed = 15; %sidelength of cubochoric grid (only specify if 'uniform', [] ok)
+meshopts.ocuboOpts.seed = 16; %sidelength of cubochoric grid (only specify if 'uniform', [] ok)
 
 %data parameters
 dataopts.res = 12.5;
 dataopts.nint = 1;
 dataopts.octsubdiv = 1;
-dataopts.ocuboOpts.n = 100; % # of octonions to generate, [] also ok if sidelength specified
+dataopts.ocuboOpts.n = 10; % # of octonions to generate, [] also ok if sidelength specified
 dataopts.ocuboOpts.method = 'random'; % 'random' or 'uniform' cubochoric sampling
 dataopts.ocuboOpts.sidelength = []; %sidelength of cubochoric grid (only specify if 'uniform', [] ok)
 dataopts.ocuboOpts.seed = 20; %integer or 'shuffle' OK
@@ -203,19 +203,50 @@ for i = []
 
 end
 
+o1tmp = mesh.pts(1,:);
+o2 = mesh.pts(2:end,:);
+o1rep = repmat(o1tmp,size(o2,1),1);
+[~,o2] = GBdist4(o1rep,o2,32,'norm');
+mesh.pts = [o1tmp;vertcat(o2{:})];
+mesh.pts = normr(mesh.pts);
+% mesh.pts = get_octpairs(mesh.pts);
+
+%add extra points to interior
+% [A,b] = vert2con(mesh.pts);
+% extrapts = cprnd(100,A,b);
+% extrapts = get_octpairs(extrapts);
+% mesh.pts = [mesh.pts;extrapts];
+% fivetmp = GBoct2five(extrapts);
+% extraprops = GB5DOF_setup(fivetmp);
+% mesh.props = [mesh.props;extraprops];
+
+% o1tmp = data.pts(1,:);
+o2 = data.pts;
+o1rep = repmat(o1tmp,size(o2,1),1);
+[~,o2] = GBdist4(o1rep,o2,32,'norm');
+data.pts = vertcat(o2{:});
+data.pts = normr(data.pts);
+% data.pts = get_octpairs(data.pts);
 %project mesh and data together
-tol = 1e-2; %this is a fairly low tolerance.. consider not doing quaternion renormalization in datagen
+tol = 1e-2; %this is a fairly weak tolerance.. consider not doing quaternion renormalization in datagen
 [a,usv] = proj_down([mesh.pts;data.pts],tol);
 
 if size(a,2) <= 7
 	data.ppts = proj_down(data.pts,tol,usv);
 	mesh.ppts = proj_down(mesh.pts,tol,usv);
-	
-	data.ppts = normr(data.ppts); %not normalizing produced 100% non-intersections (2020-07-29)
-	mesh.ppts = normr(mesh.ppts);
 else
-	error('no degenerate dimension found')
+	data.ppts = data.pts;
+	mesh.ppts = mesh.pts;
+% 	error('no degenerate dimension found')
 end
+
+data.ppts = normr(data.ppts); %not normalizing produced 100% non-intersections (2020-07-29)
+mesh.ppts = normr(mesh.ppts);
+
+% [Ktr,K,mesh.pts] = hypersphere_subdiv(mesh.pts,[],2,true);
+% mesh.pts = get_octpairs(mesh.pts);
+% fivetmp = GBoct2five(mesh.pts);
+% mesh.props = GB5DOF_setup(fivetmp);
 
 meshtmp = projfacet2hyperplane(mean(mesh.ppts),mesh.ppts);
 meshtmp = proj_down(meshtmp);
