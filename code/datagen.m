@@ -249,22 +249,20 @@ else
 	projupQ = false;
 end
 %% Subdivide octonions, convex hull
-if opts.octsubdiv > 1
+if contains(sampleMethod,'hsphext')
+	[Ktr,K,meshList] = hsphext_subdiv(meshList,opts.octsubdiv);
 	
-	if contains(sampleMethod,'hsphext')
-		[Ktr,K,meshList] = hsphext_subdiv(meshList,opts.octsubdiv);
-	else
-		[Ktr,K,meshList] = hypersphere_subdiv(meshList,[],opts.octsubdiv); %originally had sphK
-	end
+elseif opts.octsubdiv > 1
+	[Ktr,K,meshList] = hypersphere_subdiv(meshList,[],opts.octsubdiv); %originally had sphK
 	
 	if projupQ
 		meshList = proj_up(meshList,usv);
 		projupQ = false;
 	end
-		
+	
 	%renormalize each quaternion (i.e. bring back into space of rotations)
-% 	meshList(:,1:4) = normr(meshList(:,1:4));
-% 	meshList(:,5:8) = normr(meshList(:,5:8));
+	% 	meshList(:,1:4) = normr(meshList(:,1:4));
+	% 	meshList(:,5:8) = normr(meshList(:,5:8));
 	
 	meshList = get_octpairs(meshList);
 	
