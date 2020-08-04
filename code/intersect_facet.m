@@ -107,8 +107,8 @@ parfor i  = 1:ndatapts % parfor compatible
 	ptsTemp = pts; %dummy variable to be able to sift through new NN's
 	k = 0;
 	oldrow = row;
-	% 	nnMax = 5; %# of nearest neighbors to consider before exiting loop
-	nnMax = size(pts,1);
+	nnMax = 100; %# of nearest neighbors to consider before exiting loop
+% 	nnMax = size(pts,1);
 	while isempty(subfacetIDs{i}) && k < nnMax
 		k = k+1;
 		%remove previous NN
