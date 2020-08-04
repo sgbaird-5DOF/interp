@@ -1,8 +1,8 @@
-function zm = zeta_min2(o1,o2)
-arguments
-	o1(:,8) double {mustBeFinite,mustBeReal}
-	o2(:,8) double {mustBeFinite,mustBeReal}
-end
+function zm = zeta_min2_r2018a(o1,o2)
+% arguments
+% 	o1(:,8) double {mustBeFinite,mustBeReal}
+% 	o2(:,8) double {mustBeFinite,mustBeReal}
+% end
 %--------------------------------------------------------------------------
 % Date: 2020-07-27
 %

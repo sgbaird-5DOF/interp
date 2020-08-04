@@ -1,9 +1,9 @@
 function [dataProj,facetPts,dataBary,facetIDs,tvals] = ...
 	projray2hypersphere(meshpts,facetPtIDs,datanorm,tol,maxnormQ,invmethod)
 arguments
-	meshpts
-	facetPtIDs
-	datanorm
+	meshpts double
+	facetPtIDs double
+	datanorm double
 	tol(1,1) double = 1e-6
 	maxnormQ(1,1) logical = false
 	invmethod char {mustBeMember(invmethod,{'mldivide','pinv','extendedCross'})} = 'mldivide'
