@@ -46,7 +46,7 @@ end
 %--------------------------------------------------------------------------
 d = size(pts,2);
 
-[projpts,usv] = proj_down(pts);
+[projpts,usv] = proj_down(pts,1e-6,struct.empty,'zeroQ',false);
 
 %subdivide the facet turned into simplex
 if nint > 1
