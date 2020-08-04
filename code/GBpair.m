@@ -4,7 +4,7 @@ arguments
 	o2(:,8) double {mustBeFinite,mustBeReal}
 	o3 %can be empty if method == standard
 	pgnum(1,1) double {mustBeInteger} = 32 %default == Oh cubic
-	method char {mustBeMember(method,{'standard','pairwise'})} = 'standard'
+	method char {mustBeMember(method,{'standard','pairwise'})} = 'pairwise'
 	wtol(1,1) double {mustBeFinite,mustBeReal} = 1e-6
 end
 %--------------------------------------------------------------------------
@@ -54,83 +54,42 @@ end
 %
 %--------------------------------------------------------------------------
 if strcmp(method,'pairwise') && isempty(o3)
-	error("o3 must be specified if pairwise method is used. Did you mean GBpair(o1,o2)?")
+	error(["o3 must be specified if pairwise method is used." ...
+		"Did you mean GBpair(o1,o2)?"])
 end
 
 prec = 6;
 tol = 1e-6;
 
+%% GBdist4
 switch method
 	case 'standard'
-		% o3 with respect to o1 and o2, output o3
-		
-		%calculate distances
-		[omega1, minsyms1] = GBdist4(o1,o3,pgnum,'omega');
-		[omega2, minsyms2] = GBdist4(o2,o3,pgnum,'omega');
+		% get single output from GBdist4
+		[~, minsyms1] = GBdist4(o1,o2,pgnum,'norm');
 		
 	case 'pairwise'
 		%both with respect to o1, output o2 and o3
-		
-		%calculate distances
 		[~, minsyms1] = GBdist4(o1,o2,pgnum,'norm');
 		[~, minsyms2] = GBdist4(o1,o3,pgnum,'norm');
 end
 
+%% parsing output
 switch method
 	case 'standard'
-		skipQ = true;
-		if skipQ
-			omega3 = omega2;
-			o3_out = minsyms1{1}(1,:);
-			
-			%calculate distance again using GBdist (for comparison)
-			omega3_GBdist = omega2;
-			return
-		end
-		%output o3. o1 and o2 kept constant
-		
-		%get omega values corresponding to unique rows
-% 		w1 = wveclist1(minIA1);
-% 		w2 = wveclist2(minIA2);
-		
-		%find o3 values that are the same
-		[min3,ia,ib] = intersect(minsyms1{1},minsyms2{1},'rows');
-		
-		%take o3's with minimum summed distance
-% 		wveclist3 = w1(ia)+w2(ib);
-		
-% 		[omega3,ic] = min(wveclist3);
-% 		minIDs3 = find(ismembertol(wveclist3,omega3,tol,'DataScale',1));
-% 		symlist3 = min3(minIDs3,:);
-		
-		symlist3 = min3;
-		
-		if size(symlist3,1) ~= 1
-			warning(['size(symlist3,1) == ' int2str(size(symlist3,1))])
-		end
-		
-		% parse output
 		% qA_0 > qB_0 convention added based on discussion with Toby Francis
-		if (symlist3(1,1) > symlist3(1,5)) || (size(symlist3,1) == 1)
-			o3_out = symlist3(1,:);
+		if (minsyms1{1}(1,1) > minsyms1{1}(1,5)) || (size(minsyms1{1},1) == 1)
+			o3_out = minsyms1{1}(1,:);
 		else
-			o3_out = symlist3(2,:);
+			o3_out = minsyms1{1}(2,:);
 		end
 		
 		%calculate distance again using GBdist (for comparison)
 		wTemp1 = GBdist([o1 o3_out],32,false,false);
 		wTemp2 = GBdist([o2 o3_out],32,false,false);
-		omega3_GBdist = wTemp1+wTemp2;
-		
-		%display results
-% 		mat = [omega1;omega2;omega3];
-% 		T = array2table(mat,'VariableNames',{'values'},...
-% 			'RowName',{'Omega1','Omega2','Omega3'});
-% 		disp(T);
+		omega3 = wTemp1+wTemp2;
 		
 	case 'pairwise'
 		%output o2 and o3 with respect to o1
-		
 		%% get omega values of combinations of second octonions
 		%create combinations
 		minsyms1tmp = num2cell(minsyms1{1},2);
@@ -149,7 +108,7 @@ switch method
 		omega3 = min(round(wveclist3,prec));
 		
 		%corresponding octonions
-		ids = find(abs(round(wveclist3-omega3,prec)) < wtol); %loosened tolerance, 2020-07-28
+		ids = find(abs(round(wveclist3-omega3,prec)) < wtol);
 		o12 = minsympairs1(ids,:);
 		o13 = minsympairs2(ids,:);
 		
@@ -157,28 +116,23 @@ switch method
 		o12 = uniquetol(round(o12,prec),tol,'ByRows',true,'DataScale',1);
 		o13 = uniquetol(round(o13,prec),tol,'ByRows',true,'DataScale',1);
 		
-% 		if size(o13,1) > 1
-% 			warning('more than one octonion found')
-% 		end
+		% qA_0 > qB_0 convention added based on discussion with Toby Francis
+		if (o12(1,1) > o12(1,5)) || (size(o12,1) == 1)
+			o2_out = o12(1,:);
+		else
+			o2_out = o12(2,:);
+		end
 		
-		o3_out = o13;
-		
-		%% wrap-up
-		%calculate distance again using GBdist (for comparison)
-% 		omega3_GBdist = GBdist([o12 o13],32); %consider removing this
-		
-		%package output
-		o2_out = o12;
-		
-		%display results
-% 		mat = [omega1;omega2;omega3;omega3_GBdist];
-% 		T = array2table(mat,'VariableNames',{'values'},...
-% 			'RowName',{'Omega1','Omega2','Omega3','Omega3_GBdist'});
-% 		disp(T);
+		if (o13(1,1) > o13(1,5)) || (size(o13,1) == 1)
+			o3_out = o13(1,:);
+		else
+			o3_out = o13(2,:);
+		end
 end
 
 if strcmp(method,'pairwise') && exist('o12','var') == 0
-	warning("o2 and/or omega3_GBdist output specified, but 'standard' selected. Remove output or change to 'pairwise'.")
+	warning(["o2 and/or omega3_GBdist output specified," ...
+		"but 'standard' selected. Remove output or change to 'pairwise'."])
 end
 
 
@@ -252,6 +206,13 @@ min2 = octpairsymlist2(minIA2,:);
 % 		end
 
 
+% 		%output o3. o1 and o2 kept constant
+		
+% 		%find o3 values that are the same
+% 		min3 = intersect(minsyms1{1},minsyms2{1},'rows');
+% 		symlist3 = min3;
+
+
 		o12 = minlist1(ids,:);
 		o13 = minlist2(ids,:);
 
@@ -260,6 +221,71 @@ min2 = octpairsymlist2(minIA2,:);
 
 		%calculate distance again using GBdist (for comparison)
 		[omega3_GBdist,oct_sym3,zeta3] = GBdist([o2_out o3_out],32);
+
+		skipQ = true;
+		if skipQ
+			omega3 = omega2;
+			o3_out = minsyms1{1}(1,:);
+			
+			%calculate distance again using GBdist (for comparison)
+			omega3 = omega2;
+			return
+		end
+
+
+
+		[~, minsyms1] = GBdist4(o1,o3,pgnum,'norm');
+
+
+		
+		if size(symlist3,1) ~= 1
+			warning(['size(symlist3,1) == ' int2str(size(symlist3,1))])
+		end
+
+
+		%get omega values corresponding to unique rows
+% 		w1 = wveclist1(minIA1);
+% 		w2 = wveclist2(minIA2);
+		
+		%find o3 values that are the same
+		[min3,ia,ib] = intersect(minsyms1{1},minsyms2{1},'rows');
+		
+		%take o3's with minimum summed distance
+% 		wveclist3 = w1(ia)+w2(ib);
+		
+% 		[omega3,ic] = min(wveclist3);
+% 		minIDs3 = find(ismembertol(wveclist3,omega3,tol,'DataScale',1));
+% 		symlist3 = min3(minIDs3,:);
+
+
+
+
+% 		if size(o13,1) > 1
+% 			warning('more than one octonion found')
+% 		end
+		
+% 		o3_out = o13;
+		
+		%% wrap-up
+		%calculate distance again using GBdist (for comparison)
+% 		omega3_GBdist = GBdist([o12 o13],32); %consider removing this
+		
+		%package output
+% 		o2_out = o12;
+		
+		%display results
+% 		mat = [omega1;omega2;omega3;omega3_GBdist];
+% 		T = array2table(mat,'VariableNames',{'values'},...
+% 			'RowName',{'Omega1','Omega2','Omega3','Omega3_GBdist'});
+% 		disp(T);
+
+
+		%display results
+% 		mat = [omega1;omega2;omega3];
+% 		T = array2table(mat,'VariableNames',{'values'},...
+% 			'RowName',{'Omega1','Omega2','Omega3'});
+% 		disp(T);
+
 
 
 %}

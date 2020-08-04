@@ -33,13 +33,6 @@ assert(all(abs(nm - avgnm) < tol),['pts do not lie on a hypersphere within tol =
 if isempty(K) % && tricollapseQ
 	maxnormQ = true;
 	K = sphconvhulln(pts,maxnormQ);
-	% 	K = convhulln(pts);
-	% elseif isempty(K)
-	% 	K = sphconvhulln(pts);
-	% 	if isempty(K)
-	% 		K = convhulln(pts);
-	% 		disp('computing regular convex hull instead.')
-	% 	end
 end
 
 %% Ktree top-level
@@ -53,18 +46,11 @@ KtrtempPts = cell(1,nfacets);
 KtrtempK = KtrtempPts;
 
 %% Ktree level 2
-%initialize counter variables
-% nptsrm = 0;
 tic
-
-% sphbaryQ = false;
-
 %textwaitbar setup
 waitbarQ = true;
 if waitbarQ
-	%comment these lines & the function "nUpdateProgress", and set waitbarQ
-	%== false if you want to add variables during debugging
-	
+	%comment function "nUpdateProgress" if you want to add variables during debugging
 	D = parallel.pool.DataQueue;
 	afterEach(D, @nUpdateProgress);
 	N=nfacets;
@@ -91,75 +77,35 @@ K2temp = num2cell(K,2);
 ptstemp = cellfun(@(K2) pts(K2,:),K2temp,'UniformOutput',false);
 
 if nint > 1
-	parfor i = 1:nfacets %parfor compatible, uncomment "send" lines if using parfor (enables text waitbar)
-		%extract facet IDs and pts
-		% 	K2 = K(i,:);
-		% 	mpts2 = pts(K2,:);
-		
-		mpts2 = ptstemp{i};
-		
-		% 	if sphbaryQ
-		% 		mpts2 = projfacet2hyperplane(mean(mpts2),mpts2);
-		% 	end
-		
-		%subdivide facet
-		% 		if nint > 1
-		% 		if i == 1
-		delaunayQ = true;
-		[mpts2a,K2a] = facet_subdiv(mpts2,nint,delaunayQ);
-		% 			mpts2a = normr(mpts2a); %see note below
-		% 			K2a = sphconvhulln(mpts2a);
-		% 		else
-		% 			delaunayQ = false;
-		% 			delaunayQ = true;
-		% 			[mpts2a,K2a] = facet_subdiv(mpts2,nint,delaunayQ); %assumes K2a can apply to next set of pts, probably only valid if data lies on hyperhemisphere
-		% 			K2a = [];
-		% 		end
-		% 		else
-		% 			mpts2a = mpts2;
-		% 			K2a = 1:size(mpts2a,2);
-		% 		end
-		
-		% 	if ~isempty(mpts2a)
-		% 		if sum(myismember(mpts2,mpts2a)) ~= size(mpts2,1)
-		% 			1+1;
-		% 		end
-		% 	end
-		
-		% 	%renormalize to unit hypersphere
-		%  	mpts2a = normr(mpts2a); %I think this was a source of error before (2020-07-30)
-		%I think I just need to always project the origin along with it and
-		%subtract the new origin point when I go back
-		
-		%add subdivision to K-tree
-		KtrtempK{i} = K2a;
-		KtrtempPts{i} = mpts2a;
-		
+	parfor i = 1:nfacets %parfor compatible
+		%text waitbar
 		if waitbarQ
 			if mod(i,nreps2) == 0
 				send(D,i);
 			end
 		end
+		
+		%unpackage points
+		mpts2 = ptstemp{i};
+		
+		%subdivide
+		delaunayQ = true;
+		[mpts2a,K2a] = facet_subdiv(mpts2,nint,delaunayQ);
+		
+		%add subdivision to K-tree
+		KtrtempK{i} = K2a;
+		KtrtempPts{i} = mpts2a;
 	end
 	
 	disp(' ')
 	toc
 	disp(' ')
 	
-	% K2a = KtrtempK{1};
-	% K2a = [];
-	
 	%update counter for index
 	nptstemp = size(KtrtempPts{1},1);
 	for i = 1:nfacets
 		%unpackage pts
 		mpts2a = KtrtempPts{i};
-		
-		%update K2a triangulation values (i.e. add constant) so that IDs of new
-		%vertices are unique
-		% 	if i ~= 1
-		% 		K2a = K2a+nptstemp;
-		% 	end
 		
 		K2a = KtrtempK{i}+nptstemp*(i-1);
 		
@@ -173,9 +119,7 @@ if nint > 1
 	lvltwo = vertcat(lvltwo.main);
 	lvltwoK = vertcat(lvltwo.K);
 	lvltwoPts = vertcat(lvltwo.pts);
-	
-	%project points back to hypersphere
-% 	lvltwoPts = normr(lvltwoPts)*avgnm; %seems to introduce some numerical error within ~1e-12, also throws quaternions off
+	lvltwoPts = normr(lvltwoPts)*avgnm;
 	
 else
 	lvltwoK = K;
@@ -188,7 +132,8 @@ if tricollapseQ
 	[K_out, newpts] = tricollapse(lvltwoK,lvltwoPts);
 else
 	disp('uniquetol')
-	[~,ia] = uniquetol(round(lvltwoPts,12),'ByRows',true); %careful to not output the rounded values directly
+	%don't output rounded values directly
+	[~,ia] = uniquetol(round(lvltwoPts,12),'ByRows',true);
 	newpts = lvltwoPts(ia,:);
 	K_out = [];
 end
@@ -300,5 +245,71 @@ elseif isempty(K)
 % 		disp('computing regular convex hull instead.')
 % 	end
 end
+
+
+
+
+	% 	K = convhulln(pts);
+	% elseif isempty(K)
+	% 	K = sphconvhulln(pts);
+	% 	if isempty(K)
+	% 		K = convhulln(pts);
+	% 		disp('computing regular convex hull instead.')
+	% 	end
+
+		%extract facet IDs and pts
+		% 	K2 = K(i,:);
+		% 	mpts2 = pts(K2,:);
+		
+				% 	if sphbaryQ
+		% 		mpts2 = projfacet2hyperplane(mean(mpts2),mpts2);
+		% 	end
+		
+		%subdivide facet
+		% 		if nint > 1
+		% 		if i == 1
+
+
+		%update K2a triangulation values (i.e. add constant) so that IDs of new
+		%vertices are unique
+		% 	if i ~= 1
+		% 		K2a = K2a+nptstemp;
+		% 	end
+
+		% 			mpts2a = normr(mpts2a); %see note below
+		% 			K2a = sphconvhulln(mpts2a);
+		% 		else
+		% 			delaunayQ = false;
+		% 			delaunayQ = true;
+		% 			[mpts2a,K2a] = facet_subdiv(mpts2,nint,delaunayQ); %assumes K2a can apply to next set of pts, probably only valid if data lies on hyperhemisphere
+		% 			K2a = [];
+		% 		end
+		% 		else
+		% 			mpts2a = mpts2;
+		% 			K2a = 1:size(mpts2a,2);
+		% 		end
+		
+		% 	if ~isempty(mpts2a)
+		% 		if sum(myismember(mpts2,mpts2a)) ~= size(mpts2,1)
+		% 			1+1;
+		% 		end
+		% 	end
+		
+		% 	%renormalize to unit hypersphere
+		%  	mpts2a = normr(mpts2a); %I think this was a source of error before (2020-07-30)
+		%I think I just need to always project the origin along with it and
+		%subtract the new origin point when I go back
+
+
+
+
+	%project points back to hypersphere
+% 	lvltwoPts = normr(lvltwoPts)*avgnm; %seems to introduce some numerical error within ~1e-12, also throws quaternions off
+
+
+
+	
+	% K2a = KtrtempK{1};
+	% K2a = [];
 
 %}

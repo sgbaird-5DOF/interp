@@ -33,14 +33,13 @@ end
 %		sphere_stereograph.m is used)
 %--------------------------------------------------------------------------
 
-% projpts = sphere_stereograph(pts);
+% project points to hyperplane (introduce deg dimension)
 projpts = projfacet2hyperplane(mean(pts),pts); %valid for max arc length < pi
-
+% rotate to remove newly introduced deg dimension
 projpts = proj_down(projpts);
 
-
 % get exterior
-%joggle input so that coplanar facets aren't merged (because of stereographic projection)
+%joggle input so that coplanar facets aren't merged
 if size(pts,2) < 5
 	opts = {'QJ'};
 else
@@ -58,14 +57,11 @@ for i = 1:length(IDs)
 end
 
 if nint > 1
-	% subdivide the "edges"
-	
+	% subdivide the "edges" (i.e. d-2 facets)
 	[Ktr, K, meshpts] = hypersphere_subdiv(pts,K,nint,tricollapseQ);
-
-	
 else
 	Ktr.main = K;
-	%only output exterior points (update: 2020-07-30, realized this didn't preserve indexing, so fixing that)
+	%only output exterior points
 	Ktr.pts = K;
 	meshpts = pts;
 end
@@ -93,4 +89,10 @@ end
 % meshpts2 = proj_up(meshpts,usv);
 % 
 % meshpts3 = sphere_stereograph_inverse(meshpts2);
+
+% projpts = sphere_stereograph(pts);
+
+	%only output exterior points (update: 2020-07-30, realized this didn't
+	%preserve indexing, so fixing that)
+
 %}
