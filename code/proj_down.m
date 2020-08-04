@@ -5,7 +5,7 @@ arguments
 	usv struct = struct.empty
 	NV.nforce double = 1
 	NV.nforceQ(1,1) logical = false
-	NV.zeroQ(1,1) logical = false
+	NV.zeroQ(1,1) logical = true
 end
 %--------------------------------------------------------------------------
 % Author: Sterling Baird
