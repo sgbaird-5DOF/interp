@@ -102,9 +102,6 @@ toc; disp(' ')
 %% find intersecting facet of datapoints
 disp('find intersecting facet for each datapoint')
 
-% mesh.pts = get_octpairs(mesh.pts);
-% data.pts = get_octpairs(data.pts);
-
 %project mesh and data together
 tol = 1e-4; %consider not doing quaternion renormalization in datagen
 zeroQ = false;
@@ -126,15 +123,8 @@ mesh.sphK = delaunayn(meshtmp);
 
 %compute intersecting facet IDs (might be zero, might have more than one)
 inttol = 1e-2;
-maxnormQ = true;
-inttype = 'planar';
 disp(['inttype: ' inttype ', inttol: ' num2str(inttol)])
-intfacetIDs = intersect_facet(mesh.ppts,mesh.sphK,data.ppts,inttol,maxnormQ,inttype);
-
-% if strcmp(barytype,'spherical')
-% 	mesh.ppts = proj_down(mesh.pts,tol,usv,'zeroQ',true);
-% 	data.ppts = proj_down(data.pts,tol,usv,'zeroQ',true);
-% end
+intfacetIDs = intersect_facet(mesh.ppts,mesh.sphK,data.ppts,inttol,'inttype','planar');
 
 barytype = 'spherical';
 
@@ -433,5 +423,14 @@ meshdata.fname = ['mesh_' mesh.fname(1:end-4) '_data_' data.fname];
 data.ppts = normr(data.ppts); %not normalizing produced 100% non-intersections (2020-07-29)
 mesh.ppts = normr(mesh.ppts);
 
+
+% if strcmp(barytype,'spherical')
+% 	mesh.ppts = proj_down(mesh.pts,tol,usv,'zeroQ',true);
+% 	data.ppts = proj_down(data.pts,tol,usv,'zeroQ',true);
+% end
+
+
+% mesh.pts = get_octpairs(mesh.pts);
+% data.pts = get_octpairs(data.pts);
 
 %}

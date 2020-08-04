@@ -1,12 +1,14 @@
-function [intfacetIDs,dataBary] = intersect_facet(pts,K,datalist,tol,maxnormQ,baryMethod,invmethod)
+function [intfacetIDs,dataBary] = ...
+	intersect_facet(pts,K,datalist,tol,NV)
 arguments
 	pts double {mustBeFinite,mustBeReal}
 	K double {mustBeFinite,mustBeReal}
 	datalist double {mustBeFinite,mustBeReal}
 	tol(1,1) double {mustBeFinite,mustBeReal} = 1e-6
-	maxnormQ(1,1) logical = false
-	baryMethod char {mustBeMember(baryMethod,{'planar','spherical'})} = 'planar'
-	invmethod char {mustBeMember(invmethod,{'mldivide','pinv','extendedCross'})} = 'mldivide'
+	NV.maxnormQ(1,1) logical = true
+	NV.inttype char {mustBeMember(NV.inttype,{'planar','spherical'})} = 'planar'
+	NV.invmethod char {mustBeMember(NV.invmethod,{'mldivide','pinv','extendedCross'})} = 'mldivide'
+	NV.nnMax(1,1) double {mustBeInteger} = size(pts,1)
 end
 %--------------------------------------------------------------------------
 % Author: Sterling Baird
@@ -44,6 +46,10 @@ end
 % Notes:
 %
 %--------------------------------------------------------------------------
+maxnormQ = NV.maxnormQ;
+inttype = NV.inttype;
+invmethod = NV.invmethod;
+nnMax = NV.nnMax;
 
 %% find nearest vertex for each datapoint
 nnList = dsearchn(pts,datalist);
@@ -94,7 +100,7 @@ parfor i  = 1:ndatapts % parfor compatible
 	facetPtIDs= K(row,:);
 	
 	%compute projections
-	switch baryMethod
+	switch inttype
 		case 'planar'
 			[dataProj{i},facetPts{i},dataBary{i},subfacetIDs{i},t{i}] = ...
 				projray2hypersphere(pts,facetPtIDs,data,tol,maxnormQ,invmethod);
@@ -107,8 +113,6 @@ parfor i  = 1:ndatapts % parfor compatible
 	ptsTemp = pts; %dummy variable to be able to sift through new NN's
 	k = 0;
 	oldrow = row;
-	nnMax = 10; %# of nearest neighbors to consider before exiting loop
-% 	nnMax = size(pts,1);
 	while isempty(subfacetIDs{i}) && k < nnMax
 		k = k+1;
 		%remove previous NN
@@ -127,7 +131,7 @@ parfor i  = 1:ndatapts % parfor compatible
 			facetPtIDsNext= K(rownext,:);
 			
 			%compute projections
-			switch baryMethod
+			switch inttype
 				case 'planar'
 					[dataProj{i},facetPts{i},dataBary{i},subfacetIDs{i},t{i}] = ...
 						projray2hypersphere(pts,facetPtIDsNext,data,tol,maxnormQ,invmethod);
@@ -207,4 +211,8 @@ end
 %
 %		Something wrong with 'spherical' still I think (too many
 %		intersections) 2020-07-21
+
+
+% 	nnMax = 10; %# of nearest neighbors to consider before exiting loop
+% 	nnMax = size(pts,1);
 %}
