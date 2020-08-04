@@ -42,17 +42,6 @@ end
 %			numStabBary.m (optional)
 %
 % Notes:
-%		To relax the requirement that pts need to close to on the unit
-%		sphere, then there's a set of lines in projray2hypersphere.m that can
-%		be changed or removed.
-%
-% 		if (t(j) <= 0.1) || (t(j) >= 2.1)
-% 			posQ(j) = 0;
-% 			continue
-% 		end
-%
-%		Something wrong with 'spherical' still I think (too many
-%		intersections) 2020-07-21
 %
 %--------------------------------------------------------------------------
 
@@ -76,12 +65,24 @@ afterEach(D, @nUpdateProgress);
 N=ndatapts;
 p=1;
 reverseStr = '';
-nreps = floor(N/20);
-nreps2 = nreps;
+nreps2 = floor(N/20);
+nreps = nreps2;
+
+	function nUpdateProgress(~)
+		percentDone = 100*p/N;
+		msg = sprintf('%3.0f', percentDone); %Don't forget this semicolon
+		fprintf([reverseStr, msg]);
+		reverseStr = repmat(sprintf('\b'), 1, length(msg));
+		p = p + nreps;
+	end
 
 %% loop through datapts
-%disp('intersect_facet ')
 parfor i  = 1:ndatapts % parfor compatible
+	%text waitbar
+	if mod(i,nreps2) == 0
+		send(D,i);
+	end
+	
 	%% first NN projection
 	data = datalist(i,:);
 	nn = nnList(i);
@@ -89,24 +90,24 @@ parfor i  = 1:ndatapts % parfor compatible
 	rownext = []; %initialize (used in while loop)
 	
 	%find vertices of facets attached to NN vertex (or use all facets)
-	[row,col]=find(K==nn);
+	[row,~]=find(K==nn);
 	facetPtIDs= K(row,:);
 	
 	%compute projections
 	switch baryMethod
 		case 'planar'
-            [dataProj{i},facetPts{i},dataBary{i},subfacetIDs{i},t{i}] = ...
+			[dataProj{i},facetPts{i},dataBary{i},subfacetIDs{i},t{i}] = ...
 				projray2hypersphere(pts,facetPtIDs,data,tol,maxnormQ,invmethod);
 		case 'spherical'
 			[dataBary{i},subfacetIDs{i}] = sphbary_setup(pts,facetPtIDs,data,tol); %I think this is buggy 2020-07-16
-				
+			
 	end
 	
 	%% keep using next NNs if facet not found
 	ptsTemp = pts; %dummy variable to be able to sift through new NN's
 	k = 0;
 	oldrow = row;
-% 	nnMax = 5; %# of nearest neighbors to consider before exiting loop
+	% 	nnMax = 5; %# of nearest neighbors to consider before exiting loop
 	nnMax = size(pts,1);
 	while isempty(subfacetIDs{i}) && k < nnMax
 		k = k+1;
@@ -128,7 +129,7 @@ parfor i  = 1:ndatapts % parfor compatible
 			%compute projections
 			switch baryMethod
 				case 'planar'
-                    [dataProj{i},facetPts{i},dataBary{i},subfacetIDs{i},t{i}] = ...
+					[dataProj{i},facetPts{i},dataBary{i},subfacetIDs{i},t{i}] = ...
 						projray2hypersphere(pts,facetPtIDsNext,data,tol,maxnormQ,invmethod);
 				case 'spherical'
 					[dataBary{i},subfacetIDs{i}] = sphbary_setup(pts,facetPtIDs,data,tol);
@@ -136,49 +137,20 @@ parfor i  = 1:ndatapts % parfor compatible
 		end
 	end
 	
-% 	while isempty(subfacetIDs{i})
-% 		%look at facets connected to exterior vertices
-% 	end
-	
 	if k > 0
 		row = rownext; %correct for indexing if the while loop was entered into
-		%NOTE: not having this was a serious source of error (2020-07-29),
+		%NOTE: not having this was a major source of error (2020-07-29),
 		%i.e. only datapoints which did not enter the while loop had the
 		%correct output for the intersecting facet ID
 	end
 	
 	if ~isempty(subfacetIDs{i})
-		intfacetIDs{i} = row(subfacetIDs{i}); %convert from facetPtIDs or facetPtIDsNext index to K index (possible bug 2020-07-29)
+		%convert from facetPtIDs or facetPtIDsNext index to K index
+		intfacetIDs{i} = row(subfacetIDs{i});
 	else
 		intfacetIDs{i} = [];
 	end
-	
-	% 	%info about next NN search
-	% 	if k > 1 && k < nmeshpts-1
-	% 		disp(['---datapoint ',int2str(i)])
-	% 		disp(['intersection repeated up to ' int2str(k) '-th nearest neighhor'])
-	% 		disp(' ')
-	% 	elseif k == nmeshpts
-	% 		disp('Looped through all facets.')
-	% 		if isempty(dataProj{i})
-	% 			disp('no intersecting facet found')
-	% 		end
-	% 		disp(' ')
-	% 	end
-	
-	% 	disp(t{i})
-	if mod(i,nreps2) == 0
-		send(D,i);
-	end
 end
-
-	function nUpdateProgress(~)
-		percentDone = 100*p/N;
-		msg = sprintf('%3.0f', percentDone); %Don't forget this semicolon
-		fprintf([reverseStr, msg]);
-		reverseStr = repmat(sprintf('\b'), 1, length(msg));
-		p = p + nreps;
-	end
 
 end
 
@@ -202,4 +174,37 @@ end
 %		Alternatively, keep track of which facets have already been
 %		considered and remove them from the list of intersecting facets
 %		before doing the projection.
+
+
+
+		
+% 	while isempty(subfacetIDs{i})
+% 		%look at facets connected to exterior vertices
+% 	end
+
+	% 	%info about next NN search
+	% 	if k > 1 && k < nmeshpts-1
+	% 		disp(['---datapoint ',int2str(i)])
+	% 		disp(['intersection repeated up to ' int2str(k) '-th nearest neighhor'])
+	% 		disp(' ')
+	% 	elseif k == nmeshpts
+	% 		disp('Looped through all facets.')
+	% 		if isempty(dataProj{i})
+	% 			disp('no intersecting facet found')
+	% 		end
+	% 		disp(' ')
+	% 	end
+
+
+%		To relax the requirement that pts need to be close to on the unit
+%		sphere, then there's a set of lines in projray2hypersphere.m that can
+%		be changed or removed.
+%
+% 		if (t(j) <= 0.1) || (t(j) >= 2.1)
+% 			posQ(j) = 0;
+% 			continue
+% 		end
+%
+%		Something wrong with 'spherical' still I think (too many
+%		intersections) 2020-07-21
 %}
