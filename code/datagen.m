@@ -251,7 +251,6 @@ end
 %% Subdivide octonions, convex hull
 if opts.octsubdiv > 1
 	
-	tricollapseQ = true;
 	if contains(sampleMethod,'hsphext')
 		[Ktr,K,meshList] = hsphext_subdiv(meshList,opts.octsubdiv);
 	else
