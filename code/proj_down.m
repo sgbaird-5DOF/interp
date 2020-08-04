@@ -1,7 +1,7 @@
 function [projpts,usv,zeropt] = proj_down(pts,tol,usv,NV)
 arguments
 	pts double {mustBeFinite,mustBeReal}
-	tol(1,1) double {mustBeFinite,mustBeReal} = 1e-6
+	tol(1,1) double {mustBeFinite,mustBeReal} = 1e-5
 	usv struct = struct.empty
 	NV.nforce double = 1
 	NV.nforceQ(1,1) logical = false
