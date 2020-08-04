@@ -17,7 +17,7 @@ end
 % two reference GBs
 %
 % Inputs:
-%		pts - 
+%		pts -
 %
 %		o2addQ ===	logical, whether to add o2 (in this case, point 'O' with
 %						nA = [0 0 1]) to "five", and if not, then get rid of
@@ -53,7 +53,7 @@ name2 = 'O';
 qB = normr(qlist.(name2));
 % qB = normr(qB+0.05*rand(1,4));
 
-%load normals (both should just be [0 0 1])
+%load normals (both are arbitrary set to [0 0 1])
 [~,RA] = symaxis(qA,name1);
 nA = (RA*[0 0 1].').';
 
@@ -73,7 +73,7 @@ o2 = GBfive2oct(qB,nB);
 % o2 = [-1 0 0 0 1 0 0 0]; %input
 % o2 = sqrt(2)*[1 0 0 0 0 0 0 0]; %certainly seems to speed things up
 
-[omega0,oct_sym0] = GBdist4(o1,o2,32,'norm',NV.wtol);
+[~,oct_sym0] = GBdist4(o1,o2,32,'norm',NV.wtol);
 % [omega0,oct_sym0,zeta0] = GBdist2([o1 o2],32,false);
 % [omega0,oct_sym0,zeta0] = GBdist([o1 o2],32,false);
 
@@ -95,7 +95,6 @@ octvtx{1} = oct_sym0{1};
 
 % octvtx{1} = oct_sym0(9:16);
 
-
 %textwaitbar setup
 D = parallel.pool.DataQueue;
 afterEach(D, @nUpdateProgress);
@@ -105,34 +104,36 @@ reverseStr = '';
 nreps2 = floor(N/20);
 nreps = nreps2;
 
+	function nUpdateProgress(~)
+		percentDone = 100*p/N;
+		msg = sprintf('%3.0f', percentDone); %Don't forget this semicolon
+		fprintf([reverseStr, msg]);
+		reverseStr = repmat(sprintf('\b'), 1, length(msg));
+		p = p + nreps;
+	end
+
 disp('get_octpairs ')
 parfor i = 1:npts %parfor compatible
 	
+	%text waitbar
 	if mod(i,nreps2) == 0
 		send(D,i);
 	end
-
+	
 	%unpack other octonion in pair
-	%(o2 and o3 form a pair, each is compared to o1)
 	o3 = pts(i,:); %input
+	%symmetrized pairs
 	[octvtx{i+1},omega3(i+1)] = GBpair(o1,o2,o3,NV.pgnum,NV.method,NV.wtol);
 end
 disp(' ')
-
-function nUpdateProgress(~)
-	percentDone = 100*p/N;
-	msg = sprintf('%3.0f', percentDone); %Don't forget this semicolon
-	fprintf([reverseStr, msg]);
-	reverseStr = repmat(sprintf('\b'), 1, length(msg));
-	p = p + nreps;
-end
 
 if ~NV.o2addQ
 	octvtx{1} = [];
 end
 
+% repackage octonions
 octvtx = vertcat(octvtx{:});
-
+% compute 5DOF representation
 five = GBoct2five(octvtx,true);
 
 if NV.plotQ
@@ -402,7 +403,7 @@ end
 % default_o2addQ = true;
 % defaultplotQ = false;
 % defaultmethod = 2;
-% 
+%
 % P = inputParser;
 % addRequired(P,'pts',@isnumeric);
 % addRequired(P,'five',@isstruct);
@@ -411,7 +412,7 @@ end
 % addParameter(P,'method',defaultmethod,@isscalar);
 % addParameter(P,'o2addQ',default_o2addQ,@islogical);
 % parse(P,pts,five,savename,varargin{:});
-% 
+%
 % plotQ = P.Results.plotQ;
 % method = P.Results.method;
 % o2addQ = P.Results.o2addQ;
