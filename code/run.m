@@ -66,9 +66,9 @@ dataopts = meshopts;
 meshopts.res = 12.5;
 meshopts.nint = 1; % 1 == zero subdivisions, 2 == one subdivision, etc.
 meshopts.octsubdiv = 1;
-meshopts.ocuboOpts.n = 100; % # of octonions to generate, [] also ok if sidelength specified
-meshopts.ocuboOpts.method = 'random'; % 'random' or 'uniform' cubochoric sampling
-meshopts.ocuboOpts.sidelength = []; %sidelength of cubochoric grid (only specify if 'uniform', [] ok)
+meshopts.ocuboOpts.n = []; % # of octonions to generate, [] also ok if sidelength specified
+meshopts.ocuboOpts.method = 'uniform'; % 'random' or 'uniform' cubochoric sampling
+meshopts.ocuboOpts.sidelength = 4; %sidelength of cubochoric grid (only specify if 'uniform', [] ok)
 meshopts.ocuboOpts.seed = 15; %sidelength of cubochoric grid (only specify if 'uniform', [] ok)
 
 %data parameters

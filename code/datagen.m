@@ -234,7 +234,7 @@ switch method
 		five = GBoct2five(meshList);
 end
 
-[meshList,usv] = proj_down(meshList,1e-5,struct.empty,'zeroQ',true);
+[meshList,usv] = proj_down(meshList,1e-4,struct.empty,'zeroQ',true);
 
 % 	if strcmp(sampleMethod,'ocubo') %might need a way to correlate back to original dataset for e.g. Rohrer2009
 %reduce to unique set of points
