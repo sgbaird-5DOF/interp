@@ -65,7 +65,6 @@ for i = 1:ndatapts
 		vtxIDs = mesh.sphK(intfacetID,:);
 		facet = meshpts(vtxIDs,:); %vertices of facet
 		facetprops(i,:) = mesh.props(vtxIDs).'; %properties of vertices of facet
-		prop = data.props(i,:);
 		
 		%% barycentric coordinates
 		switch barytype
@@ -142,4 +141,7 @@ end
 maxnormQ = false;
 disp('get intersecting facets')
 intfacetIDs = intersect_facet(meshpts,mesh.K,datapts,inttol,maxnormQ);
+
+% 		prop = data.props(i,:);
+
 %}
