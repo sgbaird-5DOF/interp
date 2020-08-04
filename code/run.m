@@ -115,12 +115,14 @@ else
 	data.ppts = data.pts;
 end
 
-%compute triangulation
-meshtmp = projfacet2hyperplane(mean(mesh.ppts),mesh.ppts);
-meshtmp = proj_down(meshtmp);
-% --delaunay triangulation
-disp('--delaunayn')
-mesh.sphK = delaunayn(meshtmp);
+if contains(meshMethod,'hsphext')
+	%compute triangulation
+	meshtmp = projfacet2hyperplane(mean(mesh.ppts),mesh.ppts);
+	meshtmp = proj_down(meshtmp);
+	% --delaunay triangulation
+	disp('--delaunayn')
+	mesh.sphK = delaunayn(meshtmp);
+end
 
 %compute intersecting facet IDs (might be zero, might have more than one)
 inttol = 1e-2;
