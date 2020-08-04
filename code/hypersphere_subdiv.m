@@ -26,7 +26,7 @@ end
 %--------------------------------------------------------------------------
 nm = vecnorm(pts,2,2);
 avgnm = mean(nm);
-tol = 1e-6;
+tol = 1e-3;
 assert(all(abs(nm - avgnm) < tol),['pts do not lie on a hypersphere within tol == ' num2str(tol)])
 
 %% compute top-level convex hull
