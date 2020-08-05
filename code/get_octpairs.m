@@ -150,7 +150,6 @@ if NV.plotQ
 	title(['disQ == ' int2str(disQ)])
 end
 
-%compute spherical convex hull
 tol = 1e-3;
 [octvtx2,usv] = proj_down(octvtx,tol,'zeroQ',true);
 
