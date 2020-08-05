@@ -40,7 +40,7 @@ if loadQ && (exist(fname,'file') ~= 0)
 			usv = S.usv;
 			Ktr = S.Ktr;
 	end
-	if ~contains(sampleMethod,'pseudo') && any(cellfun(@isempty,{pts,sphK,props}))
+	if ~contains(sampleMethod,'pseudo') && any(cellfun(@isempty,{pts,props}))
 		computeQ = true;
 	else
 		computeQ = false;

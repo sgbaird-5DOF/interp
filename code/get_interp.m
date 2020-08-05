@@ -118,7 +118,7 @@ totRMSE = sqrt(mean(totSE));
 allnnRMSE = sqrt(mean(allnnSE));
 
 fpath = fullfile('data',savename);
-save(fpath)
+save(fpath,'-v7.3')
 
 disp(' ')
 disp(['# non-intersections: ' int2str(sum(~isnan((nnID)))) '/' int2str(ndatapts)])
