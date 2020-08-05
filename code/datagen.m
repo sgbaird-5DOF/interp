@@ -226,6 +226,7 @@ switch method
 		[meshList,~,five,~] = get_octpairs(meshList,savename,NVpairs{:}); %find a way to not call this for 'data'
 		
 	case 2
+		% change so that it references a single interior point
 		o1tmp = meshList(1,:);
 		o2 = meshList(2:end,:);
 		o1rep = repmat(o1tmp,size(o2,1),1);
@@ -249,26 +250,30 @@ else
 	projupQ = false;
 end
 %% Subdivide octonions, convex hull
-if contains(sampleMethod,'hsphext')
-	[Ktr,K,meshList] = hsphext_subdiv(meshList,opts.octsubdiv);
-	
-elseif opts.octsubdiv > 1
-	[Ktr,K,meshList] = hypersphere_subdiv(meshList,[],opts.octsubdiv); %originally had sphK
-	
-elseif (exist('sphK','var') ~= 0)
-	%create K if it exists & is empty
-	if isempty(opts.sphK)
-		if contains(sampleMethod,'hsphext')
-			[Ktr,K,meshList] = hsphext_subdiv(meshList,1);
+if opts.delaunayQ
+	if contains(sampleMethod,'hsphext')
+		[Ktr,K,meshList] = hsphext_subdiv(meshList,opts.octsubdiv);
+		
+	elseif opts.octsubdiv > 1
+		[Ktr,K,meshList] = hypersphere_subdiv(meshList,[],opts.octsubdiv); %originally had sphK
+		
+	elseif (exist('sphK','var') ~= 0)
+		%create K if it exists & is empty
+		if isempty(opts.sphK)
+			if contains(sampleMethod,'hsphext')
+				[Ktr,K,meshList] = hsphext_subdiv(meshList,1);
+			else
+				K = sphconvhulln(meshList);
+			end
 		else
-			K = sphconvhulln(meshList);
+			K = opts.sphK;
 		end
+		
 	else
-		K = opts.sphK;
+		K = sphconvhulln(meshList);
 	end
-	
 else
-	K = sphconvhulln(meshList);
+	K = [];
 end
 
 if projupQ
