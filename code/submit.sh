@@ -26,7 +26,8 @@ mkdir -pv $TMPDIR 2>&1
 
 module load matlab/r2019b
 #pc_opts="pc=parcluster('local'); pc.JobStorageLocation = '$TMPDIR'; parpool(pc,$cores);"
-pc_opts="pc=parcluster('local'); pc.JobStorageLocation = '$TMPDIR'; parpool(pc,$cores,'SpmdEnabled',false)" #spmd parameter set to false so loop continues even if worker aborts
+#pc_opts="pc=parcluster('local'); pc.JobStorageLocation = '$TMPDIR'; parpool(pc,$cores,'SpmdEnabled',false)" #spmd parameter set to false so loop continues even if worker aborts
+pc_opts="pc=parcluster('local'); pc.JobStorageLocation = '$TMPDIR'; parpool(pc,12,'SpmdEnabled',false)" #spmd parameter set to false so loop continues even if worker aborts
 echo $pc_opts
 matlab -nodisplay -nosplash -r "$pc_opts; run; exit"
 
