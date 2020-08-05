@@ -56,7 +56,7 @@ if computeQ
 		Ktr = [];
 	end
 	fpath = fullfile('data',fname);
-   save(fpath,'pts','props','sphK','five','usv','Ktr','opts','sampleMethod','fname')
+   save(fpath,'pts','props','sphK','five','usv','Ktr','opts','sampleMethod','fname','-v7.3')
 	disp(fname)
 end
 
