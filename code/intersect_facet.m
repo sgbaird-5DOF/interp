@@ -67,6 +67,7 @@ t = dataProj;
 
 %textwaitbar setup
 D = parallel.pool.DataQueue;
+K = parallel.pool.Constant(K);
 afterEach(D, @nUpdateProgress);
 N=ndatapts;
 p=1;
@@ -96,8 +97,8 @@ parfor i  = 1:ndatapts % parfor compatible
 	rownext = []; %initialize (used in while loop)
 	
 	%find vertices of facets attached to NN vertex (or use all facets)
-	[row,~]=find(K==nn);
-	facetPtIDs= K(row,:);
+	[row,~]=find(K.Value==nn);
+	facetPtIDs= K.Value(row,:);
 	
 	%compute projections
 	switch inttype
@@ -122,13 +123,13 @@ parfor i  = 1:ndatapts % parfor compatible
 		nn = dsearchn(ptsTemp,data);
 		
 		%find facets attached to next NN
-		[row,~]=find(K==nn);
+		[row,~]=find(K.Value==nn);
 		
 		rownext = setdiff(row,oldrow); %this seems problematic for indexing later (2020-07-29)
 		oldrow = [row;oldrow];
 		
 		if ~isempty(rownext)
-			facetPtIDsNext= K(rownext,:);
+			facetPtIDsNext= K.Value(rownext,:);
 			
 			%compute projections
 			switch inttype
