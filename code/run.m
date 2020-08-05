@@ -84,8 +84,8 @@ dataopts.delaunayQ = false;
 
 T = true; %just makes it easier to switch back and forth between true and false
 F = false;
-meshloadQ = T;
-dataloadQ = T;
+meshloadQ = F;
+dataloadQ = F;
 meshdataloadQ = F; %whether to check for and load intersection & barycentric data from previous run
 
 %% generate mesh
@@ -126,6 +126,12 @@ if contains(meshMethod,'hsphext')
 	disp('--delaunayn')
 	mesh.sphK = delaunayn(meshtmp);
 end
+
+%might be able to replace intersect_facet with the following
+% [a,usv] = proj_down(projfacet2hyperplane(mean([mesh.ppts;data.ppts]),[mesh.ppts;data.ppts]));
+% meshpts = a(1:size(mesh.pts,1),:);
+% datapts = a(size(mesh.pts,1)+1:end,:);
+% intfacetIDs = tsearchn(meshpts,mesh.sphK,datapts);
 
 %compute intersecting facet IDs (might be zero, might have more than one)
 inttol = 1e-2;
