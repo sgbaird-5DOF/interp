@@ -137,6 +137,7 @@ elseif isempty(usv)
 			'. Setting projpts == pts'])
 		projpts = pts;
 		usv = struct.empty;
+		zeroQ = false; %override zeroQ
 	end
 end
 
