@@ -29,8 +29,6 @@ fig = figure;
 fig.Position = [125,125,1000,600];
 
 t = tiledlayout(2,3);
-
-%
 nexttile(1)
 
 xmin = min([mesh.props(nnID);data.props],[],'all');
@@ -45,13 +43,6 @@ hold on
 % axis tight
 scatter(data.props(ilist),mesh.props(nnID),2,'r','filled','markerfacealpha',alphaval);
 
-%calculate SE and RMSE values
-% ids = ~isnan(datainterp);
-% interpSE = (data.props(ids)-datainterp(ids)).^2;
-% nnSE = (data.props(ilist)-mesh.props(nnID)).^2;
-% interpRMSE = sqrt(mean(interpSE));
-% nnRMSE = sqrt(mean(nnSE));
-
 xlabel('BRK Energy')
 ylabel('interpolated BRK Energy')
 title(['RMSE (J/m^2): interp == ' num2str(interpRMSE,'%3.4f') ', NN == ' num2str(nnRMSE,'%3.4f')])
@@ -64,28 +55,14 @@ legend({'interp data','NN data'},'Location','northoutside')
 
 % distance histogram
 nexttile(4)
-% interpSE = [interpSE; NaN(length(nnSE),1)];
-% histogram(interpSE,'Normalization','probability');
-% hold on
-% nnSE = [nnSE; NaN(length(interpSE),1)];
-% histogram(nnSE,'Normalization','probability');
-
 
 % specify number of bins and edges of those bins; this example evenly spaces bins
 nbins = 20;
 edges = linspace(0,max([interpSE;nnSE]),nbins);
-% use histcounts and specify your bins
-% cntA = histcounts(interpSE,'BinEdges',edges);
-% cntB = histcounts(nnSE,'BinEdges',edges);
 
 histogram(interpSE,edges);
 hold on
 histogram(nnSE,edges);
-
-% % convert bin edges into bin centers
-% b = edges(1:end-1)+diff(edges)/2;
-% % use bar
-% bar(b,[cntA',cntB'],'stacked')
 
 title(['# non-intersections: ' int2str(length(nnSE)) ...
 	'/' int2str(length(nnSE)+length(interpSE))]);
@@ -154,4 +131,27 @@ ax2 = histogram(nonintDists);
 legend('intersecting','non-intersecting','Location','northoutside')
 xlabel('multi-GB symmetrized \omega (rad)')
 ylabel('counts')
+
+%calculate SE and RMSE values
+% ids = ~isnan(datainterp);
+% interpSE = (data.props(ids)-datainterp(ids)).^2;
+% nnSE = (data.props(ilist)-mesh.props(nnID)).^2;
+% interpRMSE = sqrt(mean(interpSE));
+% nnRMSE = sqrt(mean(nnSE));
+
+% interpSE = [interpSE; NaN(length(nnSE),1)];
+% histogram(interpSE,'Normalization','probability');
+% hold on
+% nnSE = [nnSE; NaN(length(interpSE),1)];
+% histogram(nnSE,'Normalization','probability');
+
+% use histcounts and specify your bins
+% cntA = histcounts(interpSE,'BinEdges',edges);
+% cntB = histcounts(nnSE,'BinEdges',edges);
+
+% % convert bin edges into bin centers
+% b = edges(1:end-1)+diff(edges)/2;
+% % use bar
+% bar(b,[cntA',cntB'],'stacked')
+
 %}
