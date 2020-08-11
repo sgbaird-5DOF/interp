@@ -34,9 +34,9 @@ five(1).d = [];
 five(1).geometry = '';
 
 %textwaitbar setup
-waitbarQ = true;
-slurmQ = true;
+waitbarQ = false;
 if waitbarQ
+	slurmQ = true;
 	D = parallel.pool.DataQueue;
 	afterEach(D, @nUpdateProgress);
 	N=npts;
@@ -59,8 +59,8 @@ else
 	nreps2 = 0;
 end
 %convert subdivided points to 5DOF
-disp(' ')
-disp('GBoct2five ')
+% disp(' ')
+% disp('GBoct2five ')
 parfor i = 1:npts %parfor compatible
 	%textwaitbar
 	if waitbarQ
