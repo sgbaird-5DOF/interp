@@ -1,7 +1,7 @@
 # octonion-mesh
  code related to meshing and interpolation of grain boundary octonions
 
-dir() and addpath() commands are used to locate functions in my custom function addpathdir(). This could give anomalous behavior if the directory structure is changed such that filenames are non-unique in sub-folders of the parent folder where addpathdir() (a custom function I wrote) gets called, or if files with the same name are present elsewhere on the user's MATLAB path.
+dir() and addpath() commands are used to locate functions in my custom function addpathdir(). This could give anomalous behavior if the directory structure is changed such that filenames are non-unique in sub-folders of the parent folder where addpathdir() gets called, or if files with the same name are present elsewhere on the user's MATLAB path.
 
 I suggest starting by looking at run.m, which is the top-level function for creating a mesh, importing/generating data, triangulating a mesh, identifying the intersecting facet for datapoints, and finally, computing an interpolation.
 
