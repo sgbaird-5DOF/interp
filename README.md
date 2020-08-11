@@ -3,7 +3,7 @@
 
 dir() and addpath() commands are used to locate functions in my custom function addpathdir(). This could give anomalous behavior if the directory structure is changed such that filenames are non-unique in sub-folders of the parent folder where addpathdir() gets called, or if files with the same name are present elsewhere on the user's MATLAB path.
 
-I suggest starting by looking at run.m, which is the top-level function for creating a mesh, importing/generating data, triangulating a mesh, identifying the intersecting facet for datapoints, and finally, computing an interpolation.
+I suggest starting by looking at run.m, which is the top-level workflow function for creating a mesh, importing/generating data, triangulating a mesh, identifying the intersecting facet for datapoints, and finally, computing an interpolation.
 
 Most functions have a corresponding "test" function (e.g. hsphext_subdiv.m -> hsphext_subdiv_test.m) which gives simple usage example(s). These are useful for debugging, visualizations, and understanding the functions without having to do a full run which could be time-consuming. The various test functions generally run to completion within a few seconds, and the parameters may be changed freely (e.g. dimension, number of points, etc.) where applicable.
 
