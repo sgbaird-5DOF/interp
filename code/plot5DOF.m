@@ -1,12 +1,9 @@
-function plot5DOF(five,lbl,varargin)
-
-if nargin == 3
-	opts = varargin{1};
-end
-
-if nargin == 4
-	opts = varargin{1};
-	ilist = varargin{2};
+function plot5DOF(five,lbl,opts,ilist)
+arguments
+	five struct
+	lbl char {mustBeMember(lbl,{'mesh','data','OSLERP','ocubo'})} = 'mesh'
+	opts = struct.empty
+	ilist = []
 end
 
 %plotting
@@ -26,7 +23,7 @@ hold on
 
 d_all = vertcat(five.d);
 
-Q1 = strcmp(lbl,'mesh') || (exist('ilist','var') == 0);
+Q1 = strcmp(lbl,'mesh') || isempty(ilist);
 Q2 = strcmp(lbl,'mesh');
 
 if strcmp(lbl,'ocubo')
@@ -62,7 +59,7 @@ end
 
 % legend('intersecting','non-intersecting')
 
-if (exist('opts','var') ~= 0) && ~isempty(opts)
+if ~isempty(opts)
 	title([lbl '_res' int2str(opts.res)],'interpreter','none')
 else
 	title(lbl)
@@ -131,8 +128,23 @@ end
 
 axis equal tight vis3d off
 
-if (exist('opts','var') ~= 0) && ~isempty(opts)
+if ~isempty(opts)
 	title([lbl '_nint' int2str(opts.nint)],'interpreter','none')
 else
 	title(lbl)
 end
+
+
+%--------------------------------CODE GRAVEYARD----------------------------
+%{
+
+% if nargin == 3
+% 	opts = varargin{1};
+% end
+% 
+% if nargin == 4
+% 	opts = varargin{1};
+% 	ilist = varargin{2};
+% end
+
+%}
