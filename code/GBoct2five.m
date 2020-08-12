@@ -89,7 +89,10 @@ end
 
 %call to disorientation might be expensive
 if disQ
-	geometry = findgeometry(disorientation(vertcat(five.q),'cubic'));
+	qlist = disorientation(vertcat(five.q),'cubic');
+% 	qlist2 = num2cell(qlist,2);
+% 	[five.q] = qlist2{:};
+	geometry = findgeometry(qlist);
 else
 	geometry = findgeometry(vertcat(five.q));
 end
