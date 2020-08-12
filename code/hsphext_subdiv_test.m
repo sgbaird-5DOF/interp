@@ -33,7 +33,7 @@ switch test
 		if d == 7
 			pts = get_ocubo(npts,'random',[],seed);
 			pts = get_octpairs(pts);
-			[pts,usv] = proj_down(pts);
+			[pts,usv] = proj_down(pts,1e-4);
 		else
 			pts = rand(npts,d);
 		end
