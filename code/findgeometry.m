@@ -45,7 +45,7 @@ for qnum = 1:nq
 	
 	%create helper function to compare values
 % 	precision = 3;
-	r = @(n1,n2) round(n1-n2,precision);
+	r = @(n1,n2) round(n1-n2,precision); %consider changing to ~ismembertol(round(n1-n2),precision), functionality might still hold
 	
 	%find geometry
 	switch crystal
