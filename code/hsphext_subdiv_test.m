@@ -33,11 +33,14 @@ switch test
 % 		pts = rand(10,d);
 % 		pts = [eye(3); rand(10000,d)];
 		npts = 100;
-		pts = rand(npts,d);
 		
-% 		pts = get_ocubo(npts);
-% 		pts = get_octpairs(pts);
-% 		pts = proj_down(pts);
+		if d == 7
+			pts = get_ocubo(npts,'random',[],seed);
+			pts = get_octpairs(pts);
+			[pts,usv] = proj_down(pts);
+		else
+			pts = rand(npts,d);
+		end
 		
 		pts = normr(pts);
 		
@@ -94,6 +97,16 @@ switch test
 			triplot(delaunayn(b),t{:})
 			axis equal tight
 			
+		end
+		
+		if d == 7
+			exto = proj_up(meshpts,usv); %exterior octonions
+			five = GBoct2five(exto);
+			five = correctdis(five);
+			fig=figure;
+			fig.Position=[162.0000  385.0000  893.0000  384.5000];
+			tiledlayout(1,2)
+			plot5DOF(five)
 		end
 		
 	case 3
