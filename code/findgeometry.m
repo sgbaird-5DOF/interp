@@ -1,4 +1,8 @@
-function geometry = findgeometry(qlist)
+function geometry = findgeometry(qlist,precision)
+arguments
+	qlist(:,4) double {mustBeReal,mustBeFinite}
+	precision(1,1) double {mustBeInteger} = 3
+end
 %-------------------------------------------------------------------------
 % Author: Sterling Baird
 %
@@ -28,6 +32,7 @@ function geometry = findgeometry(qlist)
 %		distributions, Philos. Mag. 93 (2013) 524–573.
 %		https://doi.org/10.1080/14786435.2012.722700.
 %--------------------------------------------------------------------------
+
 nq = size(qlist,1);
 geometry = cell(1,nq);
 for qnum = 1:nq
@@ -39,7 +44,7 @@ for qnum = 1:nq
 	crystal = 'FCC';
 	
 	%create helper function to compare values
-	precision = 3;
+% 	precision = 3;
 	r = @(n1,n2) round(n1-n2,precision);
 	
 	%find geometry
