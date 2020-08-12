@@ -36,7 +36,7 @@ end
 % project points to hyperplane (introduce deg dimension)
 projpts = projfacet2hyperplane(mean(pts),pts); %valid for max arc length < pi
 % rotate to remove newly introduced deg dimension
-projpts = proj_down(projpts);
+projpts = proj_down(projpts,1e-4);
 
 % get exterior
 %joggling input makes it so that coplanar facets aren't merged

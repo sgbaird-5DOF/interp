@@ -2,19 +2,15 @@
 clear; close all
 
 test = 2;
+
+addpathdir({'q2rod.m','cu2qu.m','GBfive2oct.m'})
+
 switch test
 	case 1
 		fname = '5DOF_oct_vtx_octsubdiv1.mat';
 		
 		%load data
 		load(fname,'pts');
-		
-		fnamelist = {'q2rod.m'};
-		for i = 1:length(fnamelist)
-			fname = fnamelist{i};
-			file = dir(fullfile('**',fname));
-			addpath(file.folder);
-		end
 		
 		%parameters
 		octsubdiv = 3; %single subdivision (distinct from levels in K-tree)
@@ -32,7 +28,7 @@ switch test
 % 		pts = [eye(3); 0 -1 0; -1 0 0]; %produces a 2D ring
 % 		pts = rand(10,d);
 % 		pts = [eye(3); rand(10000,d)];
-		npts = 100;
+		npts = 2000;
 		
 		if d == 7
 			pts = get_ocubo(npts,'random',[],seed);
@@ -91,7 +87,7 @@ switch test
 			nexttile
 			avg = normr(mean(meshpts));
 			a = projfacet2hyperplane(avg,meshpts);
-			b = proj_down([avg;a]);
+			b = proj_down([avg;a],1e-4);
 % 			b = proj_down(a);
 			t=n2c(b);
 			triplot(delaunayn(b),t{:})
@@ -101,8 +97,11 @@ switch test
 		
 		if d == 7
 			exto = proj_up(meshpts,usv); %exterior octonions
-			five = GBoct2five(exto);
+			five = GBoct2five(exto,true);
 			five = correctdis(five);
+			geometry = findgeometry(vertcat(five.q),2);
+			ninterior = sum(ismember(geometry,'interior')) %#ok<NOPTS>
+			[five.geometry] = geometry{:};
 			fig=figure;
 			fig.Position=[162.0000  385.0000  893.0000  384.5000];
 			tiledlayout(1,2)
@@ -133,3 +132,13 @@ switch test
 		datapts = normr(rand(ndatapts,d));
 		dataprops = datapts*randpoly;
 end
+
+%---------------------------CODE GRAVEYARD---------------------------------
+%{
+		fnamelist = {'q2rod.m'};
+		for i = 1:length(fnamelist)
+			fname = fnamelist{i};
+			file = dir(fullfile('**',fname));
+			addpath(file.folder);
+		end
+%}
