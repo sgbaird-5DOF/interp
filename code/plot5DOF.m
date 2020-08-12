@@ -1,9 +1,10 @@
-function plot5DOF(five,lbl,opts,ilist)
+function plot5DOF(five,lbl,opts,ilist,NV)
 arguments
 	five struct
 	lbl char {mustBeMember(lbl,{'mesh','data','OSLERP','ocubo'})} = 'mesh'
 	opts = struct.empty
 	ilist = []
+	NV.quiverQ(1,1) logical = false
 end
 
 %plotting
@@ -39,10 +40,12 @@ if Q1
 	
 	zero = num2cell(zeros(size(d_all,1),3),1);
 	tmp = num2cell(d_all,1);
-% 	quiver3(tmp{1},zero{1:3},tmp{2},zero{1},'Color','k','ShowArrowhead','off',...
-% 		'LineStyle',':','AutoScale','off')
-% 	quiver3(tmp{1:2},zero{:},tmp{3},'Color','k','ShowArrowhead','off',...
-% 		'LineStyle',':','AutoScale','off')
+	if NV.quiverQ
+		quiver3(tmp{1},zero{1:3},tmp{2},zero{1},'Color','k','ShowArrowhead','off',...
+			'LineStyle',':','AutoScale','off')
+		quiver3(tmp{1:2},zero{:},tmp{3},'Color','k','ShowArrowhead','off',...
+			'LineStyle',':','AutoScale','off')
+	end
 	
 	if strcmp(lbl,'OSLERP')
 		plot3(tmp{:})
