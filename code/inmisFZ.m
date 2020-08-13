@@ -3,7 +3,7 @@ arguments
 	dlist(:,3) double
 	A = []
 	b = []
-	tol = 1e-6
+	tol = 1e-3
 end
 %--------------------------------------------------------------------------
 % Author(s): Sterling Baird
@@ -22,8 +22,8 @@ end
 %
 % Usage:
 %	[A,b] = misFZcon(); %pre-compute constraints
-%  TF = inmisFZ(A,b,dlist,1e-3); %faster when A and b are specified and
-%											%there is more than one dlist entry
+%  TF = inmisFZ(A,b,dlist,1e-3); %faster when A and b are specified if
+%											%inmisFZ is called multiple times
 %
 % Dependencies:
 %  misFZcon.m
