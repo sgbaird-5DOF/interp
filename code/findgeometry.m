@@ -45,7 +45,8 @@ for qnum = 1:nq
 	
 	%create helper function to compare values
 % 	r = @(n1,n2) round(n1-n2,precision);
-	r = @(n1,n2) ismembertol(round(n1,12),round(n2,12),tol,'DataScale',1);
+% 	r = @(n1,n2) ismembertol(round(n1,12),round(n2,12),tol,'DataScale',1);
+	r = @(n1,n2) abs(round(n1,12)-round(n2,12)) <= tol;
 	
 	%find geometry
 	switch crystal
