@@ -54,7 +54,7 @@ for qnum = 1:nq
 			d = q2rod(q);
 
 			[A,b] = misFZcon();
-			misFZ = inmisFZ(d,A,b,1e-3);
+			misFZ = inmisFZ(d,A,b,tol);
 			
 			if misFZ
 				
