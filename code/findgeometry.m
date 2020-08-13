@@ -1,7 +1,7 @@
-function geometry = findgeometry(qlist,precision)
+function geometry = findgeometry(qlist,tol)
 arguments
 	qlist(:,4) double {mustBeReal,mustBeFinite}
-	precision(1,1) double {mustBeInteger} = 3
+	tol(1,1) double = 1e-3
 end
 %-------------------------------------------------------------------------
 % Author: Sterling Baird
@@ -44,15 +44,17 @@ for qnum = 1:nq
 	crystal = 'FCC';
 	
 	%create helper function to compare values
-% 	precision = 3;
-	r = @(n1,n2) round(n1-n2,precision); %consider changing to ~ismembertol(round(n1-n2),precision), functionality might still hold
+% 	r = @(n1,n2) round(n1-n2,precision);
+	r = @(n1,n2) ismembertol(round(n1,12),round(n2,12),tol,'DataScale',1);
 	
 	%find geometry
 	switch crystal
 		case {'FCC','BCC'}
 			
 			d = q2rod(q);
-			misFZ = InCubicFZ(d);
+
+			[A,b] = misFZcon();
+			misFZ = inmisFZ(d,A,b,1e-3);
 			
 			if misFZ
 				
@@ -75,26 +77,28 @@ for qnum = 1:nq
 					'OB','CE','ED','OE','OA','AC',... lines
 					'B','E','A','C','O','D'}; %points
 				checklist = {... surfaces
-					[r(q3,0)==0,r(q1,q2)~=0,r(q2,0)~=0], ... %OAB
-					[r(q1,q2)==0,r(q3,0)~=0,r(q3,q1)~=0,r(2*q1+q3,q0)~=0], ... %OBCE
-					[r(q2,q3)==0,r(q2,0)~=0,r(q1,q2)~=0,r(q1+2*q2,q0)~=0], ... %OADE
-					[r(q1+q2+q3,q0)==0,r(q1,q2)~=0,r(q2,q3)~=0],... %CDE
+					[r(q3,0),~r(q1,q2),~r(q2,0)], ... %OAB
+					[r(q1,q2),~r(q3,0),~r(q3,q1),~r(2*q1+q3,q0)], ... %OBCE
+					[r(q2,q3),~r(q2,0),~r(q1,q2),~r(q1+2*q2,q0)], ... %OADE
+					[r(q1+q2+q3,q0),~r(q1,q2),~r(q2,q3)],... %CDE
 					... lines
-					[r(q1,q2)==0,r(q3,0)==0,r(q2-1/sqrt(2)*sin(pi/4),0)~=0,r(q0,1)~=0],... %OB
-					[r(q1,q2)==0,r(2*q1+q3,q0)==0,r(q3,1/(2*sqrt(3)))~=0],... %CE
-					[r(q2,q3)==0,r(q1+2*q2,q0)==0,r(q3,1/(2*sqrt(3)))~=0],... %ED
-					[r(q1,q2)==0,r(q2,q3)==0,r(q3,1/(2*sqrt(3)))~=0,r(q0,1)~=0],... %OE
-					[r(q2,0)==0,r(q3,0)==0,r(q1,sin(pi/8))~=0,r(q0,1)~=0],... %OA
-					[r(q1,(sqrt(2)-1)*q0)==0,r(q3,(sqrt(2)-1)*q2)==0,r(q1,q2)~=0,r(q1,0)~=0],... %AC
+					[r(q1,q2),r(q3,0),~r(q2-1/sqrt(2)*sin(pi/4),0),~r(q0,1)],... %OB
+					[r(q1,q2),r(2*q1+q3,q0),~r(q3,1/(2*sqrt(3)))],... %CE
+					[r(q2,q3),r(q1+2*q2,q0),~r(q3,1/(2*sqrt(3)))],... %ED
+					[r(q1,q2),r(q2,q3),~r(q3,1/(2*sqrt(3))),~r(q0,1)],... %OE
+					[r(q2,0),r(q3,0),~r(q1,sin(pi/8)),~r(q0,1)],... %OA
+					[r(q1,(sqrt(2)-1)*q0),r(q3,(sqrt(2)-1)*q2),~r(q1,q2),~r(q1,0)],... %AC
 					... points
-					[r(q,qB)==0],... %B
-					[r(q,qE)==0],... %E
-					[r(q,qA)==0],... %A
-					[r(q,qC)==0],... %C
-					[r(q0,1)==0],...
-					[r(q,qD)==0]}; %O
+					[r(q,qB)],... %B
+					[r(q,qE)],... %E
+					[r(q,qA)],... %A
+					[r(q,qC)],... %C
+					[r(q0,1)],... %O
+					[r(q,qD)]}; %D
 				
-				for i = 1:length(checklist)
+				ncheck = length(checklist);
+				check = zeros(1,ncheck);
+				for i = 1:ncheck
 					check(i) = all(checklist{i});
 				end
 				
@@ -120,3 +124,30 @@ for qnum = 1:nq
 end
 
 end
+
+
+%---------------------------CODE GRAVEYARD---------------------------------
+%{
+				checklist = {... surfaces
+					[r(q3,0)==0,r(q1,q2)~=0,r(q2,0)~=0], ... %OAB
+					[r(q1,q2)==0,r(q3,0)~=0,r(q3,q1)~=0,r(2*q1+q3,q0)~=0], ... %OBCE
+					[r(q2,q3)==0,r(q2,0)~=0,r(q1,q2)~=0,r(q1+2*q2,q0)~=0], ... %OADE
+					[r(q1+q2+q3,q0)==0,r(q1,q2)~=0,r(q2,q3)~=0],... %CDE
+					... lines
+					[r(q1,q2)==0,r(q3,0)==0,r(q2-1/sqrt(2)*sin(pi/4),0)~=0,r(q0,1)~=0],... %OB
+					[r(q1,q2)==0,r(2*q1+q3,q0)==0,r(q3,1/(2*sqrt(3)))~=0],... %CE
+					[r(q2,q3)==0,r(q1+2*q2,q0)==0,r(q3,1/(2*sqrt(3)))~=0],... %ED
+					[r(q1,q2)==0,r(q2,q3)==0,r(q3,1/(2*sqrt(3)))~=0,r(q0,1)~=0],... %OE
+					[r(q2,0)==0,r(q3,0)==0,r(q1,sin(pi/8))~=0,r(q0,1)~=0],... %OA
+					[r(q1,(sqrt(2)-1)*q0)==0,r(q3,(sqrt(2)-1)*q2)==0,r(q1,q2)~=0,r(q1,0)~=0],... %AC
+					... points
+					[r(q,qB)==0],... %B
+					[r(q,qE)==0],... %E
+					[r(q,qA)==0],... %A
+					[r(q,qC)==0],... %C
+					[r(q0,1)==0],...
+					[r(q,qD)==0]}; %O
+
+% 			misFZ = InCubicFZ(d);
+% 			misFZ = true;
+%}

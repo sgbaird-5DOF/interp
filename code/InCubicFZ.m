@@ -1,4 +1,8 @@
-function misFZ_ids = InCubicFZ(R)
+function misFZ_ids = InCubicFZ(R,tol)
+arguments
+	R(:,3) double
+	tol(1,1) double = 1e-3
+end
 %--------------------------------------------------------------------------
 % Authors: Eric Homer, Sterling Baird
 %
@@ -27,8 +31,6 @@ assert(size(R,2) == 3,['input must be a rodrigues vector of 3 elements, not ' in
 R1 = R(:,1);
 R2 = R(:,2);
 R3 = R(:,3);
-
-tol = 1e-3;
 
 negcheck = (R3 < -tol) | (R2 < R3-tol) | (R1 < R2-tol);
 
