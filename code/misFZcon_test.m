@@ -7,3 +7,6 @@ pts = cprnd(10000,A,b);
 plotFZrodriguez_vtx();
 t=n2c(pts);
 plot3(t{:},'*')
+
+
+misFZ = inmisFZ(dlist)
