@@ -33,6 +33,11 @@ end
 %		https://doi.org/10.1080/14786435.2012.722700.
 %--------------------------------------------------------------------------
 
+dlist = q2rod(qlist);
+
+[A,b] = misFZcon();
+misFZ = inmisFZ(dlist,A,b,tol);
+
 nq = size(qlist,1);
 geometry = cell(1,nq);
 for qnum = 1:nq
@@ -51,13 +56,9 @@ for qnum = 1:nq
 	%find geometry
 	switch crystal
 		case {'FCC','BCC'}
+			d = dlist(i,:);
 			
-			d = q2rod(q);
-
-			[A,b] = misFZcon();
-			misFZ = inmisFZ(d,A,b,tol);
-			
-			if misFZ
+			if misFZ(i)
 				
 				%define points
 				k = sqrt(2)-1;
@@ -90,12 +91,12 @@ for qnum = 1:nq
 					[r(q2,0),r(q3,0),~r(q1,sin(pi/8)),~r(q0,1)],... %OA
 					[r(q1,(sqrt(2)-1)*q0),r(q3,(sqrt(2)-1)*q2),~r(q1,q2),~r(q1,0)],... %AC
 					... points
-					[r(q,qB)],... %B
-					[r(q,qE)],... %E
-					[r(q,qA)],... %A
-					[r(q,qC)],... %C
-					[r(q0,1)],... %O
-					[r(q,qD)]}; %D
+					r(q,qB),... %B
+					r(q,qE),... %E
+					r(q,qA),... %A
+					r(q,qC),... %C
+					r(q0,1),... %O
+					r(q,qD)}; %D
 				
 				ncheck = length(checklist);
 				check = zeros(1,ncheck);
