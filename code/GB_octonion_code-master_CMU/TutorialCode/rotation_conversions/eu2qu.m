@@ -35,7 +35,7 @@ delta = 0.5*(aphi1-aphi2);
 c = cos(aPhi/2);
 s = sin(aPhi/2);
 
-q = [c*cos(sigma); -epsijk*s*cos(delta); -epsijk*s*sin(delta); -epsijk*c*sin(sigma)];
+q = [c.*cos(sigma), -epsijk*s.*cos(delta), -epsijk*s.*sin(delta), -epsijk*c.*sin(sigma)];
 
 ids = q(:,1) >= 0;
 q(ids,:) = -q(ids,:);
