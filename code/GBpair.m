@@ -65,7 +65,7 @@ tol = 1e-6;
 switch method
 	case 'standard'
 		% get single output from GBdist4
-		[~, minsyms1] = GBdist4(o1,o2,pgnum,'norm');
+		[~, minsyms1] = GBdist4(o1,o3,pgnum,'norm');
 		
 	case 'pairwise'
 		%both with respect to o1, output o2 and o3
