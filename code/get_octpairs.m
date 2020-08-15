@@ -1,4 +1,4 @@
-function [octvtx,usv,five,omega3] = get_octpairs(pts,savename,NV)
+function [octvtx,usv,five] = get_octpairs(pts,savename,NV)
 arguments
 	pts(:,8) double {mustBeSqrt2Norm}
 	savename string = 'temp.mat'
@@ -47,19 +47,9 @@ load('misFZfeatures.mat','qlist')
 name1 = 'interior';
 qA = qlist.(name1);
 
-%unpack no boundary point
-name2 = 'O';
-% disp(['name2 = ' name2])
-qB = normr(qlist.(name2));
-% qB = normr(qB+0.05*rand(1,4));
-
 %load normals (both are arbitrary set to [0 0 1])
 [~,RA] = symaxis(qA,name1);
 nA = (RA*[0 0 1].').';
-
-[~,RB] = symaxis(qB,name2);
-nB = normr((RB*[0 0 1].').');
-% nB = normr(nB+0.05*rand(1,3));
 
 %package some "five" output for saving
 fiveref1.q =qA;
@@ -69,70 +59,17 @@ fiveref1.geometry = name1;
 
 %convert to octonions
 o1 = GBfive2oct(qA,nA); %input
-o2 = GBfive2oct(qB,nB);
-% o2 = [-1 0 0 0 1 0 0 0]; %input
-% o2 = sqrt(2)*[1 0 0 0 0 0 0 0]; %certainly seems to speed things up
-
-[~,oct_sym0] = GBdist4(o1,o2,32,'norm',NV.wtol);
-% [omega0,oct_sym0,zeta0] = GBdist2([o1 o2],32,false);
-% [omega0,oct_sym0,zeta0] = GBdist([o1 o2],32,false);
-
-%take the symmetrized versions for comparison
-o2 = oct_sym0{1}(1,:);
-
-% o1 = oct_sym0(1:8);
-% o2 = oct_sym0(9:16);
 
 %% get minimized distance octonions relative to oct pairs
-% o3 = pts(1,:);
-% [octvtx(1,:),~,omega23_pair(1),omega23_GBdist(1)] = GBpair(o1,o2,o3);
-
-%loop through pairs relative to interior point. Each pair contains (+z) origin point
-npts = size(pts,1);
-
-octvtx = cell(1,npts);
-octvtx{1} = oct_sym0{1};
-
-% octvtx{1} = oct_sym0(9:16);
-
-%textwaitbar setup
-D = parallel.pool.DataQueue;
-afterEach(D, @nUpdateProgress);
-N=npts;
-p=1;
-reverseStr = '';
-nreps2 = floor(N/20);
-nreps = nreps2;
-
-	function nUpdateProgress(~)
-		percentDone = 100*p/N;
-		msg = sprintf('%3.0f', percentDone); %Don't forget this semicolon
-		fprintf([reverseStr, msg]);
-		reverseStr = repmat(sprintf('\b'), 1, length(msg));
-		p = p + nreps;
-	end
-
 disp('get_octpairs ')
-parfor i = 1:npts %parfor compatible
-	
-	%text waitbar
-	if mod(i,nreps2) == 0
-		send(D,i);
-	end
-	
-	%unpack other octonion in pair
-	o3 = pts(i,:); %input
-	%symmetrized pairs
-	[octvtx{i+1},omega3(i+1)] = GBpair(o1,o2,o3,NV.pgnum,NV.method,NV.wtol);
-end
-disp(' ')
-
-if ~NV.o2addQ
-	octvtx{1} = [];
-end
-
-% repackage octonions
+o1rep = repmat(o1,size(pts,1),1);
+[~,octvtx] = GBdist4(o1rep,pts,32,'norm',1e-6,true);
 octvtx = vertcat(octvtx{:});
+
+if NV.o2addQ
+	octvtx = [o1; octvtx];
+end
+
 % compute 5DOF representation
 five = GBoct2five(octvtx,true);
 
@@ -155,12 +92,11 @@ tol = 1e-3;
 
 %package output
 oref1 = o1;
-oref2 = o2;
 
 pts = octvtx2;
 savepath = fullfile('data',savename);
 disp(savepath)
-save(savepath,'pts','usv','oref1','oref2','five','fiveref1','octvtx')
+save(savepath,'pts','usv','oref1','five','fiveref1','octvtx')
 
 end
 
@@ -415,5 +351,83 @@ end
 % plotQ = P.Results.plotQ;
 % method = P.Results.method;
 % o2addQ = P.Results.o2addQ;
+
+
+
+% [~,oct_sym0] = GBdist4(o1,o2,32,'norm',NV.wtol);
+
+%unpack no boundary point
+% name2 = 'O';
+% disp(['name2 = ' name2])
+% qB = normr(qlist.(name2));
+% qB = normr(qB+0.05*rand(1,4));
+
+% [~,RB] = symaxis(qB,name2);
+% nB = normr((RB*[0 0 1].').');
+% nB = normr(nB+0.05*rand(1,3));
+% o2 = GBfive2oct(qB,nB);
+% o2 = [-1 0 0 0 1 0 0 0]; %input
+% o2 = sqrt(2)*[1 0 0 0 0 0 0 0]; %certainly seems to speed things up
+
+% [omega0,oct_sym0,zeta0] = GBdist2([o1 o2],32,false);
+% [omega0,oct_sym0,zeta0] = GBdist([o1 o2],32,false);
+
+%take the symmetrized versions for comparison
+% o2 = oct_sym0{1}(1,:);
+
+% o1 = oct_sym0(1:8);
+% o2 = oct_sym0(9:16);
+
+
+% octvtx{1} = oct_sym0(9:16);
+
+%textwaitbar setup
+% D = parallel.pool.DataQueue;
+% afterEach(D, @nUpdateProgress);
+% N=npts;
+% p=1;
+% reverseStr = '';
+% nreps2 = floor(N/20);
+% nreps = nreps2;
+
+% 	function nUpdateProgress(~)
+% 		percentDone = 100*p/N;
+% 		msg = sprintf('%3.0f', percentDone); %Don't forget this semicolon
+% 		fprintf([reverseStr, msg]);
+% 		reverseStr = repmat(sprintf('\b'), 1, length(msg));
+% 		p = p + nreps;
+% 	end
+
+
+% parfor i = 1:npts %parfor compatible
+% 	%text waitbar
+% 	if mod(i,nreps2) == 0
+% 		send(D,i);
+% 	end
+% 	
+% 	%unpack other octonion in pair
+% 	o3 = pts(i,:); %input
+% 	%symmetrized pairs
+% 	[octvtx{i+1},omega3(i+1)] = GBpair(o1,o2,o3,NV.pgnum,NV.method,NV.wtol);
+% end
+
+% o3 = pts(1,:);
+% [octvtx(1,:),~,omega23_pair(1),omega23_GBdist(1)] = GBpair(o1,o2,o3);
+
+%loop through pairs relative to interior point. Each pair contains (+z) origin point
+
+
+% npts = size(pts,1);
+
+% octvtx = cell(1,npts);
+% octvtx{1} = o1;
+% t = num2cell(o2,2);
+% [octvtx{2:end}] = t{:};
+% 
+% if ~NV.o2addQ
+% 	octvtx{1} = [];
+% end
+% octvtx = vertcat(octvtx{:});
+
 
 %}

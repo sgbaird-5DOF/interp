@@ -77,11 +77,15 @@ end
 switch method
 	case 'standard'
 		% qA_0 > qB_0 convention added based on discussion with Toby Francis
-		if (minsyms1{1}(1,1) > minsyms1{1}(1,5)) || (size(minsyms1{1},1) == 1)
-			o3_out = minsyms1{1}(1,:);
-		else
-			o3_out = minsyms1{1}(2,:);
-		end
+% 		if (minsyms1{1}(1,1) > minsyms1{1}(1,5)) || (size(minsyms1{1},1) == 1)
+% 			o3_out = minsyms1{1}(1,:);
+% 		else
+% 			o3_out = minsyms1{1}(2,:);
+% 		end
+
+		o3_out = minsyms1{1}(1,:);
+		
+		assert(size(minsyms1{1},1) == 1, 'more than one octonion found')
 		
 		%calculate distance again using GBdist (for comparison)
 		wTemp1 = GBdist([o1 o3_out],32,false,false);

@@ -25,7 +25,7 @@ fname = '5DOF_vtx_octsubdiv1.mat';
 load(fname,'pts')
 savename = 'octvtx_pairmin.mat';
 NV = {'o2addQ',true,'plotQ',true,'method','pairwise'};
-[octvtx,usv,five,omega23_pair,omega23_GBdist] = get_octpairs(pts,savename,NV{:});
+[octvtx,usv,five] = get_octpairs(pts,savename,NV{:});
 % [octvtx,usv,five,omega23_pair,omega23_GBdist] = get_octpairs2(pts,five,savename,o2addQ,plotQ);
 
 [vtxnames,ia] = sort({five.geometry});
