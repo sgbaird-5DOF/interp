@@ -65,7 +65,6 @@ o1rep = repmat(o1,size(pts,1),1);
 [~,octvtx] = GBdist4(o1rep,pts,32,'norm',1e-6,true);
 ids = cellfun(@(oct) size(oct,1),octvtx) > 1;
 nids = sum(ids);
-keyboard
 if nids > 0
 	disp(['nids: ' int2str(nids)])
 	[octvtx{ids}] = octvtx{ids}(1,:);
