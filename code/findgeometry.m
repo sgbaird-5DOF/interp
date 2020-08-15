@@ -40,8 +40,8 @@ misFZ = inmisFZ(dlist,A,b,tol);
 
 nq = size(qlist,1);
 geometry = cell(1,nq);
-for qnum = 1:nq
-	q = qlist(qnum,:);
+for i = 1:nq
+	q = qlist(i,:);
 	%assign dummy variables for each of the quaternion components
 	qcell = num2cell(q);
 	[q0,q1,q2,q3] = qcell{:};
@@ -100,8 +100,8 @@ for qnum = 1:nq
 				
 				ncheck = length(checklist);
 				check = zeros(1,ncheck);
-				for i = 1:ncheck
-					check(i) = all(checklist{i});
+				for j = 1:ncheck
+					check(j) = all(checklist{j});
 				end
 				
 				geomID = find(check);
@@ -112,13 +112,13 @@ for qnum = 1:nq
 					%same feature type, e.g. a true for 2 separate lines. If a point
 					%and a line register as true, the point will be taken since it is
 					%the finer feature.)
-					geometry{qnum} = checknames{geomID(end)};
+					geometry{i} = checknames{geomID(end)};
 				else
-					geometry{qnum} = 'interior';
+					geometry{i} = 'interior';
 				end
 				
 			else
-				geometry{qnum} = 'exterior';
+				geometry{i} = 'exterior';
 			end
 			
 	end
