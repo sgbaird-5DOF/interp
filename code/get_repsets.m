@@ -1,18 +1,25 @@
-function repsets = get_repsets(pts)
+function repsets = get_repsets(pts,n)
+arguments
+	pts
+	n(1,1) double {mustBeInteger} = 1
+end
 %--------------------------------------------------------------------------
 % Author: Sterling Baird
 %
 % Date: 2020-06-30
 %
-% Description: Find sets of non-unique (i.e. degenerate) points
+% Description: Find sets of points with at least a degeneracy of n
 %
 % Inputs:
-%		pts				===	set of points (rows) that may or may not contain
+%		pts - set of points (rows) that may or may not contain
 %									duplicate values
 %
+%		n - minimum multiplicity
+%
 % Outputs:
-%		irepset			===	cell array that contains sets of indices
-%									of a unique point in pts.
+%		repsets - cell array that contains sets of points that have a
+%		multiplicity of at least n, i.e. at least n points that are identical
+%		within tolerance
 %
 % % Example:
 % pts = [...
@@ -49,8 +56,8 @@ end
 
 %use histcounts to sort out repeats
 iaNum = numel(ia);
-[N, ~, icount] = histcounts(ic,iaNum);
-irep = find(N(icount) >= 1);
+[bincts, ~, icount] = histcounts(ic,iaNum);
+irep = find(bincts(icount) >= n);
 
 % extract the cases
 ic_rep = icount(irep);
@@ -63,7 +70,7 @@ repsets = cell(1,iculength);
 D = parallel.pool.DataQueue;
 afterEach(D, @nUpdateProgress);
 imax = iculength; %change this to the last index of for loop
-N=imax; 
+N=imax;
 p=1;
 reverseStr = '';
 ninterval = 20;
