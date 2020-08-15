@@ -4,7 +4,6 @@ arguments
 	savename string = 'temp.mat'
 	NV.o2addQ(1,1) logical = false
 	NV.plotQ(1,1) logical = false
-	NV.method char {mustBeMember(NV.method,{'standard','pairwise'})} = 'pairwise'
 	NV.pgnum(1,1) double = 32
 	NV.wtol(1,1) double = 1e-6
 end
@@ -64,6 +63,12 @@ o1 = GBfive2oct(qA,nA); %input
 disp('get_octpairs ')
 o1rep = repmat(o1,size(pts,1),1);
 [~,octvtx] = GBdist4(o1rep,pts,32,'norm',1e-6,true);
+ids = cellfun(@(oct) size(oct,1),octvtx) > 1;
+nids = sum(ids);
+if nids > 0
+	disp(['nids: ' int2str(nids)])
+	[octvtx{ids}] = octvtx{ids}(1,:);
+end
 octvtx = vertcat(octvtx{:});
 
 if NV.o2addQ
@@ -428,6 +433,9 @@ end
 % 	octvtx{1} = [];
 % end
 % octvtx = vertcat(octvtx{:});
+
+
+	NV.method char {mustBeMember(NV.method,{'standard','pairwise'})} = 'pairwise'
 
 
 %}
