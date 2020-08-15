@@ -89,6 +89,29 @@ switch sampleMethod
 		meshTable = readtable(filelist{1},'HeaderLines',9,'ReadVariableNames',true);
 		varNames = meshTable.Properties.VariableNames; %Euler angles (misorientation), the polar & azimuth (inclination), GBE (mJ/m^2)
 		datatemp = table2array(meshTable);
+		npts = size(datatemp,1);
+		
+		%extract 5DOF parameters
+		datatemp2 = datatemp(:,1:end-1);
+		t=n2c(datatemp2);
+		[phi1,Phi,phi2,pol,az] = t{:};
+		eulist = [phi1 Phi phi2]; %euler angles
+		
+		%convert to quaternions & cartesian normal pairs
+		setGlobal_epsijk(-1);  %Kim references Bunge notation, so using that convention for rotation conversion
+		qlist = eu2qu(eulist);
+		[x,y,z] = sph2cart(az,90-pol,ones(npts,1));
+		nAlist = [x y z];
+		
+		%package q & nA pairs
+		five = struct('q',qlist,'nA',nAlist);
+		
+		%get mesh and properties
+		meshList = GBfive2oct(qlist,nAlist);
+		meshListFull = get_octpairs(meshList);
+		meshList = uniquetol(meshListFull);
+		disp(['# unique pts: ' int2str(npts)])
+		propList = datatemp(:,end);
 		
 		meshList = datatemp(:,1:end-1);
 		propList = datatemp(:,end);
