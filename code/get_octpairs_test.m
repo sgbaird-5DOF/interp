@@ -24,7 +24,7 @@ addpathdir({'q2rod.m','GBfive2oct.m','ax2qu.m'})
 fname = '5DOF_vtx_octsubdiv1.mat';
 load(fname,'pts')
 savename = 'octvtx_pairmin.mat';
-NV = {'o2addQ',false,'plotQ',true};
+NV = {'o2addQ',false,'plotQ',false};
 [octvtx,usv,five] = get_octpairs(pts,savename,NV{:});
 % [octvtx,usv,five,omega23_pair,omega23_GBdist] = get_octpairs2(pts,five,savename,o2addQ,plotQ);
 
