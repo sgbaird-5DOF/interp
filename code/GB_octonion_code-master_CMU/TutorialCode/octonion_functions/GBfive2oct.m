@@ -1,4 +1,8 @@
 function o = GBfive2oct(qmis,nA)
+arguments
+	qmis(:,4) double {mustBeReal,mustBeFinite}
+	nA(:,3) double {mustBeReal,mustBeFinite}
+end
 %% INPUT DATA 
 
 % qmis: misorientation quaternion
@@ -9,13 +13,15 @@ function o = GBfive2oct(qmis,nA)
 
 %% OUTPUT
 % o, octonion in GB plane reference frame
+npts = size(qmis,1);
+assert(npts == size(nA,1),['# quaternions: ' int2str(npts) ', # normals: ' int2str(size(nA,1))]);
+Zero = zeros(npts,1);
+mA0 = qmult((qmis),qmult([Zero nA],qinv(qmis)));
+mA = mA0(:,2:4);
 
-mA0 = qmult((qmis),qmult([0 nA],qinv(qmis)));
-mA = mA0(2:4);
+phiA = acos((mA(:,3)));
 
-phiA = acos((mA(3)));
-
-axisA = normr([mA(2) -mA(1) 0]);
+axisA = normr([mA(:,2) -mA(:,1) Zero]);
 
 pA = ax2qu([axisA phiA]);
 
