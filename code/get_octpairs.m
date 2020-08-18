@@ -63,6 +63,8 @@ o1 = GBfive2oct(qA,nA); %input
 disp('get_octpairs ')
 o1rep = repmat(o1,size(pts,1),1);
 [~,octvtx] = GBdist4(o1rep,pts,32,'norm',1e-6,true);
+
+%take first octonion if multiple found (rare, have only seen once 2020-08-17)
 ids = cellfun(@(oct) size(oct,1),octvtx) > 1;
 nids = sum(ids);
 if nids > 0
