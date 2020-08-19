@@ -16,7 +16,7 @@ end
 npts = size(qmis,1);
 assert(npts == size(nA,1),['# quaternions: ' int2str(npts) ', # normals: ' int2str(size(nA,1))]);
 Zero = zeros(npts,1);
-mA0 = qmult((qmis),qmult([Zero nA],qinv(qmis)));
+mA0 = qmult(qmis,qmult([Zero nA],qinv(qmis)));
 mA = mA0(:,2:4);
 
 phiA = acos((mA(:,3)));
