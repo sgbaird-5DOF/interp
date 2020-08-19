@@ -5,7 +5,7 @@ function q = eu2qu(eu)
 % Description:  from Euler angles to quaternions
 % 
 % Inputs:
-%  eu - euler angles (XYZ convention I think?)
+%  eu - euler angles (ZXZ Bunge convention I think), in radians
 %
 % Outputs:
 %  q - quaternion (convention depends on epsijk value, see Notes)
@@ -26,7 +26,7 @@ function q = eu2qu(eu)
 global epsijk
 if isempty(epsijk)
 	epsijk = -1;
-	warning(['global variable epsijk not set. Using Bunge convention: epsijk == ' int2str(epsijk)])
+	warning(['global variable epsijk not set. Using non-Morawiec convention: epsijk == ' int2str(epsijk)])
 end
 
 %unpack angles
