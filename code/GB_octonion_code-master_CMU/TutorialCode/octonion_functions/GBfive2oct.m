@@ -3,7 +3,7 @@ arguments
 	qmis(:,4) double {mustBeReal,mustBeFinite}
 	nA(:,3) double {mustBeReal,mustBeFinite}
 end
-%% INPUT DATA 
+%% INPUT DATA
 
 % qmis: misorientation quaternion
 % nA: boundary planes in respective crystal frames of upper or lower grain
@@ -16,8 +16,13 @@ end
 npts = size(qmis,1);
 assert(npts == size(nA,1),['# quaternions: ' int2str(npts) ', # normals: ' int2str(size(nA,1))]);
 Zero = zeros(npts,1);
+
 mA0 = qmult(qmis,qmult([Zero nA],qinv(qmis)));
+% mA0 = qmult(qmis,[0 Lpr(qmis,nA)]); %this attempt still produce different mA values
+
 mA = mA0(:,2:4);
+
+% disp(['mA = ' num2str(mA)])
 
 %set mA(:,3) values that are close to -1 or 1 to -1 or 1, respectively
 tol = 1e-6;
@@ -37,9 +42,9 @@ qB = pA;
 
 o = [qA qB];
 
-if ~isreal(o);
-	1+1;
-end
+% if ~isreal(o)
+% 	1+1;
+% end
 
 end
 
