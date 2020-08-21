@@ -1,10 +1,10 @@
 function symocts = osymset(qA,qB,Spairs,grainexchangeQ,doublecoverQ)
 arguments
-	qA(1,4) double {mustBeNumeric,mustBeFinite}
-	qB(1,4) double {mustBeNumeric,mustBeFinite}
-	Spairs(:,8) double {mustBeNumeric} = get_sympairs(qA,qB)
-	grainexchangeQ logical = false
-	doublecoverQ logical = false
+    qA(1,4) double {mustBeNumeric,mustBeFinite}
+    qB(1,4) double {mustBeNumeric,mustBeFinite}
+    Spairs(:,8) double {mustBeNumeric} = get_sympairs(qA,qB)
+    grainexchangeQ logical = false
+    doublecoverQ logical = false
 end
 %--------------------------------------------------------------------------
 % Author: Sterling Baird
@@ -48,32 +48,32 @@ qSA = qmult(SAlist,qArep);
 qSB = qmult(SBlist,qBrep);
 
 if grainexchangeQ && doublecoverQ
-	%apply grain exchange & double cover
-	symocts = [...
-		qSA	 qSB
-		qSA	-qSB
-		-qSA	 qSB
-		-qSA	-qSB
-		qSB	 qSA
-		qSB	-qSA
-		-qSB	 qSA
-		-qSB	-qSA];
-	
+    %apply grain exchange & double cover
+    symocts = [...
+        qSA     qSB
+        qSA     -qSB
+        -qSA    qSB
+        -qSA    -qSB
+        qSB     qSA
+        qSB     -qSA
+        -qSB	 qSA
+        -qSB	-qSA];
+    
 elseif grainexchangeQ && ~doublecoverQ
-	symocts = [...
-		qSA qSB
-		qSB qSA];
-	
+    symocts = [...
+        qSA qSB
+        qSB qSA];
+    
 elseif ~grainexchangeQ && doublecoverQ
-	symocts = [...
-		qSA qSB
-		-qSA qSB
-		qSA -qSB
-		-qSA -qSB];
-	
+    symocts = [...
+        qSA qSB
+        -qSA qSB
+        qSA -qSB
+        -qSA -qSB];
+    
 elseif ~(grainexchangeQ || doublecoverQ)
-	symocts = [...
-		qSA qSB];
+    symocts = [...
+        qSA qSB];
 end
 
 %reduce to unique set of octonions
