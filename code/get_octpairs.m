@@ -16,32 +16,34 @@ end
 % two reference GBs
 %
 % Inputs:
-%		pts -
+%  pts - rows of octonions
 %
-%		o2addQ ===	logical, whether to add o2 (in this case, point 'O' with
-%						nA = [0 0 1]) to "five", and if not, then get rid of
-%						pts(1,:) which corresponds to the same.
+%  o2addQ -	logical, whether to add o2 (in this case, point 'O' with
+%		nA = [0 0 1]) to "five", and if not, then get rid
+%       of pts(1,:) which corresponds to the same.
 %
 % Outputs:
+%  octvtx - rows of octonions that form a mesh
 %
+%  usv - struct to use with proj_down.m and proj_up.m
+%
+%  five - struct containing misorientation quaternions (q), BP normals (nA,
+%  grain A reference frame), rodrigues vectors (d), and misorientation
+%  fundamental zone feature type (geometry)
+
 % Dependencies:
-%		sphconvhulln.m
-%
-%		5DOF_vtx_deleteOz_octsubdiv1.mat
-%
-%		misFZfeatures.mat
-%
-%		GBdist.m
-%
-%		GBdist2.m
+%  sphconvhulln.m
+%  5DOF_vtx_deleteOz_octsubdiv1.mat
+%  misFZfeatures.mat
+%  GBdist4.m
+%  mustBeSqrt2Norm.m (argument validation function)
 %--------------------------------------------------------------------------
 fnames = {'PGnames.mat','olist.mat','misFZfeatures.mat'};
 addpathdir(fnames)
 
 load('misFZfeatures.mat','qlist')
 
-%% get two reference octonions (o1 and o2)
-
+%% get reference octonion
 %unpack interior point
 name1 = 'interior';
 qA = qlist.(name1);
@@ -57,23 +59,29 @@ fiveref1.d = q2rod(qA);
 fiveref1.geometry = name1;
 
 %convert to octonions
-o1 = GBfive2oct(qA,nA); %input
+o1 = GBfive2oct(qA,nA);
 
 %% get minimized distance octonions relative to oct pairs
 disp('get_octpairs ')
-o1rep = repmat(o1,size(pts,1),1);
+npts = size(pts,1);
+o1rep = repmat(o1,npts,1);
 [~,octvtx] = GBdist4(o1rep,pts,32,'norm',1e-6,true);
 
-%take first octonion if multiple found (rare, have only seen once 2020-08-17)
+%check if multiple octonions found (rare, have only seen once ever out of
+%tens of thousands 2020-08-17)
 ids = cellfun(@(oct) size(oct,1),octvtx) > 1;
 nids = sum(ids);
 if nids > 0
+    %display the id since it's a rare occurrence
 	disp(['nids: ' int2str(nids)])
+    %replace octonions with first octonion
 	[octvtx{ids}] = octvtx{ids}(1,:);
 end
+%catenate
 octvtx = vertcat(octvtx{:});
 
 if NV.o2addQ
+    %add reference octonion
 	octvtx = [o1; octvtx];
 end
 
@@ -100,6 +108,7 @@ tol = 1e-3;
 %package output
 oref1 = o1;
 
+%save data
 pts = octvtx2;
 if exist('./data','dir') == 7
     savepath = fullfile('data',savename);
