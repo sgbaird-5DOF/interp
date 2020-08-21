@@ -1,5 +1,30 @@
 function propList = GB5DOF_setup(five)
-%Compute 5DOF GB energy from BRK function
+%--------------------------------------------------------------------------
+% Author(s): Oliver Johnson, Sterling Baird
+%
+% Date: 2020-07-27
+%
+% Description: Compute 5DOF GB energy from BRK function
+% 
+% Inputs:
+%  five - struct containing at minimum misorientation quaternions (q) and
+%  boundary plane normals in crystal reference frame of grain A (nA)
+%  pointing towards grain B.
+%
+% Outputs:
+%  propList - grain boundary energies computed at each grain boundary in
+%  five
+%
+% Usage:
+%  propList = GB5DOF_setup(five)
+%
+% Dependencies:
+%  constructGBMatrices.m
+%  GB5DOF.m
+%
+% Notes:
+%  Find a good verification/ground truth
+%--------------------------------------------------------------------------
 
 % Compute GB matrices
 qB_Lab = vertcat(five.q);
