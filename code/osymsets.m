@@ -40,7 +40,7 @@ end
 %% load symmetry operator combinations
 Spairs = get_sympairs(pgnum);
 
-%% reformat data (if applicable)
+%% reformat data to 8D (if applicable)
 ndatapts = size(oct,1);
 if size(oct,2) == 7 && ~isempty(fields(usv))
 	oct = proj_up(oct,usv);
