@@ -61,7 +61,7 @@ qAlist = normr(qAlist);
 qBlist = normr(qBlist);
 
 %loop through quaternion pairs
-parfor i = 1:ndatapts
+parfor i = 1:ndatapts %parfor compatible
 	%unpack quaternions
 	qA = qAlist(i,:);
 	qB = qBlist(i,:);
