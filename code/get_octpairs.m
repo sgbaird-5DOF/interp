@@ -101,7 +101,11 @@ tol = 1e-3;
 oref1 = o1;
 
 pts = octvtx2;
-savepath = fullfile('data',savename);
+if exist('./data','dir') == 7
+    savepath = fullfile('data',savename);
+else
+    savepath = savename;
+end
 disp(savepath)
 save(savepath,'pts','usv','oref1','five','fiveref1','octvtx')
 
