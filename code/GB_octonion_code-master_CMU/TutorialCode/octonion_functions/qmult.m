@@ -1,9 +1,14 @@
 function out = qmult(pp,qq)
-
-global epsijk
-if isempty(epsijk)
-	error('need to specify epsijk as global variable, e.g. via setGlobal_epsijk.m')
+arguments
+   pp(:,4) double {mustBeReal,mustBeFinite}
+   qq(:,4) double {mustBeReal,mustBeFinite}
 end
+epsijk = 1;
+% global epsijk
+% if isempty(epsijk)
+%     setGlobal_epsijk(1)
+% end
+
 % multiply lists of quaternion pairs (input: rows of quaternions),
 % vectorized by SGB 2020-07-27
 p = pp(:,2:4); q = qq(:,2:4);
