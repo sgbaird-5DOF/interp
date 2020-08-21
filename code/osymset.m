@@ -36,8 +36,8 @@ end
 nsyms = size(Spairs,1);
 
 %vertically stack copies of quaternions
-qArep = repmat(qA,nsyms);
-qBrep = repmat(qB,nsyms);
+qArep = repmat(qA,nsyms,1);
+qBrep = repmat(qB,nsyms,1);
 
 %unpack pairs
 SAlist = Spairs(:,1:4);
