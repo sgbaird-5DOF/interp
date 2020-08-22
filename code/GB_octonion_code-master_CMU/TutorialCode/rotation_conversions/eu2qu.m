@@ -23,11 +23,12 @@ function q = eu2qu(eu)
 %--------------------------------------------------------------------------
 
 %epsijk setup/check
-global epsijk
-if isempty(epsijk)
-	epsijk = -1;
-	warning(['global variable epsijk not set. Using non-Morawiec convention: epsijk == ' int2str(epsijk)])
-end
+% global epsijk
+% if isempty(epsijk)
+% 	epsijk = 1;
+% 	warning(['global variable epsijk not set. Using Morawiec convention: epsijk == ' int2str(epsijk)])
+% end
+epsijk = 1;
 
 %unpack angles
 aphi1 = eu(:,1);
