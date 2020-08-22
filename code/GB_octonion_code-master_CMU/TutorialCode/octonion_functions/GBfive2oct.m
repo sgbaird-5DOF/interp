@@ -25,7 +25,7 @@ mA = mA0(:,2:4);
 % disp(['mA = ' num2str(mA)])
 
 %set mA(:,3) values that are close to -1 or 1 to -1 or 1, respectively
-tol = 1e-6;
+tol = 1e-4; %reduced tolerance 2020-08-22 b.c. a single value was complex (mA(:,3) had a value greater than 1)
 ids1 = abs(mA(:,3) + 1) < tol; %close to -1 ids
 ids2 = abs(mA(:,3) - 1) < tol; %close to 1 ids
 mA(ids1,3) = -1;
