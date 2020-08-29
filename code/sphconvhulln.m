@@ -1,8 +1,9 @@
-function K = sphconvhulln(pts,subhemiQ,dimtype)
+function K = sphconvhulln(pts,subhemiQ,dimtype,tol)
 arguments
 	pts double {mustBeFinite,mustBeReal}
 	subhemiQ logical = true
 	dimtype char {mustBeMember(dimtype,{'low','high'})} = 'low'
+    tol(1,1) double = 1e-4
 end
 %--------------------------------------------------------------------------
 % Author: Sterling Baird
@@ -38,11 +39,6 @@ end
 %% setup
 d = size(pts,2); %dimension
 
-% helper functions
-prec = 12;
-r = @(a) round(a,prec);
-tol = 1e-6;
-
 % check complexity
 if d >= 7 && size(pts,1) > 400
 	warning(['d = ' int2str(d) ' and npts = ' ...
@@ -58,24 +54,15 @@ end
 
 if ~subhemiQ
 	K = convhulln(pts);
-end
-k = 0;
-while ~subhemiQ && (k < 10)
-	rid = randi(size(K,1));
-	avg1 = mean(pts(K(rid,:),:));
-	[~,~,~,intTemp,~] = projray2hypersphere(pts,K,avg1,1e-6,false);
-	subhemiQ = length(intTemp) > 1;
-	k = k+1;
-end
-
-if subhemiQ
+    
+elseif subhemiQ
 	switch dimtype
 		case 'low'
 			% probably can handle more points b.c. dimension is lower not sure
 			% to what extent it will cause distortions in the triangulation,
 			% but will be lessened by not normalizing mean(pts)
 			projpts = projfacet2hyperplane(mean(pts),pts);
-			a = proj_down(projpts,1e-6);
+			a = proj_down(projpts,tol);
 			disp('--delaunayn')
 			K = delaunayn(a);
 			
@@ -368,6 +355,13 @@ mymembercheck = @(a,b) ismembertol(r(a),r(b),tol,'ByRows',true);
 % if isempty(K)
 % 	warning('Convex hull is empty. Too many facets removed.')
 % end
+
+
+
+% helper functions
+% prec = 12;
+% r = @(a) round(a,prec);
+
 
 
 %}
