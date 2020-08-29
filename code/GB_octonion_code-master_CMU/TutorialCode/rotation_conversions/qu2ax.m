@@ -8,7 +8,7 @@ function q = qu2ax(qq)
 %  qq - rows of quaternions
 %
 % Outputs:
-%  q - rows of axis-angle pairs
+%  q - rows of axis-angle pairs (first 3 columns, axis, last column angle)
 %
 % Usage:
 %  q = qu2ax(qq);
@@ -21,12 +21,14 @@ omega = 2*acos(qq(:,1));
 
 ids = omega < thr;
 if any(ids)
-    q(ids,:) = [0, 0, 1, 0];
+    nids = sum(ids);
+    q(ids,:) = repmat([0, 0, 1, 0],nids,1);
 end
 
 ids2 = ~ids & (qq(:,1) < thr);
 if any(ids2)
-    q(ids2,:) = [qq(2), qq(3), qq(4), pi];
+    nids2 = sum(ids2);
+    q(ids2,:) = [qq(ids2,2), qq(ids2,3), qq(ids2,4), repelem(pi,nids2,1)];
 end
 
 if any(~ids2)
@@ -72,4 +74,6 @@ elseif (abs(q(2))-0)<thr
 elseif (abs(q(3))-0)<thr
     q(3)=0;
 end
+
+    s = (qq(~ids2,1)./abs(qq(~ids2,1)))./sqrt(qq(~ids2,2).^2+qq(~ids2,3).^2+qq(~ids2,4).^2);
 %}
