@@ -1,11 +1,11 @@
 function [datainterp,databary,savename,varargout] = ...
 	get_interp(mesh,data,intfacetIDs,barytype,barytol)
 arguments
-	mesh struct {mustContainFields(mesh,{'pts','props','sphK','fname'})}
-	data struct {mustContainFields(data,{'pts','props','fname'})}
+	mesh struct {mustContainFields(mesh,{'pts','ppts','props','sphK','fname'})}
+	data struct {mustContainFields(data,{'pts','ppts','props','fname'})}
 	intfacetIDs cell
 	barytype char {mustBeMember(barytype,{'planar','spherical'})} = 'planar'
-	barytol(1,1) double {mustBeReal,mustBeFinite,mustBeNonnegative} = 1e-6
+	barytol double = double.empty
 end
 %--------------------------------------------------------------------------
 % Author: Sterling Baird
@@ -29,6 +29,15 @@ end
 % Notes:
 %		consider adding option for 'bary' vs. 'knn' interpolation
 %--------------------------------------------------------------------------
+if isempty(barytol)
+    switch barytype
+        case 'spherical'
+            barytol = 0.2;
+        case 'planar'
+            barytol = 1e-6;
+    end
+end
+
 meshpts = mesh.ppts;
 datapts = data.ppts;
 
