@@ -95,12 +95,17 @@ qB = normr(o(:,5:8));
 
 %misorientation quaternion
 qm = qmult(qB,qinv(qA));
+pm = qm;
 
 %grain A quaternion in sample frame
-pA = normr(qmult(qm,qA)); %normr added 2020-07-16 to avoid NaN values in qu2ax
+pA = qinv(pm);
+rho = normr(qmult(qm,qA));
+% pA = normr(qmult(qm,qA)); %normr added 2020-07-16 to avoid NaN values in qu2ax
 
 %axis-angle pair
-ax = qu2ax(pA);
+% ax = qu2ax(pA);
+
+ax = qu2ax(rho);
 axisA = ax(:,1:3);
 phiA = ax(:,4);
 
@@ -111,9 +116,74 @@ mA0(:,2) = -axisA(:,2).*scl;
 mA0(:,3) = axisA(:,1).*scl;
 mA0(:,4) = cos(phiA);
 
+% mA0(:,3) = axisA(:,1);
+% mA0(:,2) = -axisA(:,2);
+% mA0(:,4) = cos(phiA);
+
+% phiA = 2*acos(rho(:,1));
+% mA0(:,3) = rho(:,2)./sin(phiA/2);
+% mA0(:,2) = -rho(:,3)./sin(phiA/2);
+% mA0(:,4) = cos(phiA);
+
 %BP normal in grain A crystal frame
 nA = qmult(qinv(qm),qmult(mA0,qm));
 nA = normr(nA(:,2:4));
+
+end
+
+function [qm,nA] = GBoct2five_vec2(o)
+%--------------------------------------------------------------------------
+% Author: Sterling Baird
+%
+% Date: 2020-08-21
+%
+% Description: Convert from octonion to quaternion & boundary plane normal
+% (vectorized)
+%
+% Inputs:
+%  o - rows of octonions
+%
+% Outputs:
+%  qm - rows of misorientation quaternions
+%  nA - rows of boundary plane normals in grain A frame
+%
+% Dependencies:
+%  qu2ax.m
+%  qmult.m
+%  normr.m
+%  qinv.m
+%--------------------------------------------------------------------------
+npts = size(o,1);
+
+%unpack quaternions & normalize
+qA = normr(o(:,1:4)); %has to be normalized, otherwise it's doesn't go back to same 5DOF parameters
+qB = normr(o(:,5:8));
+
+%misorientation quaternion
+qm = qmult(qB,qinv(qA));
+
+Z = repmat([0 0 0 1],npts,1);
+nA = qmult(-qA,qmult(Z,qinv(qA)));
+nA = nA(:,2:4);
+
+% %grain A quaternion in sample frame
+% pA = normr(qmult(qm,qA)); %normr added 2020-07-16 to avoid NaN values in qu2ax
+% 
+% %axis-angle pair
+% ax = qu2ax(pA);
+% axisA = ax(:,1:3);
+% phiA = ax(:,4);
+% 
+% %BP normal in sample frame?
+% mA0(:,1) = zeros(npts,1);
+% scl = sqrt(1-cos(phiA).^2);
+% mA0(:,2) = -axisA(:,2).*scl;
+% mA0(:,3) = axisA(:,1).*scl;
+% mA0(:,4) = cos(phiA);
+% 
+% %BP normal in grain A crystal frame
+% nA = qmult(qinv(qm),qmult(mA0,qm));
+% nA = normr(nA(:,2:4));
 
 end
 
