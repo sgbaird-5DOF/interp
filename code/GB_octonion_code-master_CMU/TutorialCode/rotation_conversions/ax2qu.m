@@ -9,7 +9,8 @@ thr = 1e-10;
 ids = abs(ax(:,4)) < thr;
 
 if any(ids)
-	q(ids,:) = [ 1.0, 0.0, 0.0, 0.0 ];
+    nids = sum(ids);
+	q(ids,:) = repmat([ 1.0, 0.0, 0.0, 0.0 ],nids,1);
 end
 
 if any(~ids)
