@@ -58,9 +58,11 @@ end
 %get filenames, if any
 switch sampleMethod
 	case 'Kim2011'
-		filelist = {'Kim2011_FeGBEnergy.txt'};
+        filelist = {'Kim2011_Fe_oct_GBE.txt'};
 	case 'Olmsted2004'
 		filelist = {'olm_octonion_list.txt','olm_properties.txt'};
+    case 'Rohrer2009'
+        filelist = {'Rohrer2009_Ni_oct.txt'};
 end
 
 %add filename directories to path, if any
@@ -86,80 +88,32 @@ switch sampleMethod
 		propList = datatemp(:,end);
 		
 	case 'Kim2011'
-		meshTable = readtable(filelist{1},'HeaderLines',9,'ReadVariableNames',true);
-		varNames = meshTable.Properties.VariableNames; %Euler angles (misorientation), the polar & azimuth (inclination), GBE (mJ/m^2)
-		datatemp = table2array(meshTable);
-		npts = size(datatemp,1);
+        if exist(filelist{1},'file') ~= 2
+            Kim2oct();
+        end
+        datatmp = readmatrix(filelist{1},'NumHeaderLines',6);
 		
-		%extract 5DOF parameters
-		datatemp2 = datatemp(:,1:end-1);
-		t=n2c(datatemp2);
-		[phi1,Phi,phi2,pol,az] = t{:};
-		eulist = [phi1 Phi phi2]; %euler angles
-		
-		%convert to quaternions & cartesian normal pairs
-		setGlobal_epsijk(-1);  %Kim references Bunge notation, so using that convention for rotation conversion
-		qlist = eu2qu(eulist);
-		[x,y,z] = sph2cart(az,90-pol,ones(npts,1));
-		nAlist = [x y z];
-		
-		%package q & nA pairs
-		five = struct('q',qlist,'nA',nAlist);
-		
-		%get mesh and properties
-		meshList = GBfive2oct(qlist,nAlist);
-		meshListFull = get_octpairs(meshList);
-		meshList = uniquetol(meshListFull);
-		disp(['# unique pts: ' int2str(npts)])
-		propList = datatemp(:,end);
-		
-		meshList = datatemp(:,1:end-1);
-		propList = datatemp(:,end);
+        meshList = datatmp(:,1:end-1);
+        propList = datatmp(:,end);
 		
 	case 'Rohrer2009'
-		%for now (2020-07-02) just gets the meshpoints of the grid they used,
-		%rather than the triple junction, and then later assigns GB energy
-		%based on BRK function
-		
-		step = 10; %degrees
-		phi1_list = 0:step:90;
-		cap_phi_list = cos(phi1_list);
-		phi2_list = phi1_list;
-		theta_list = cap_phi_list;
-		phi_list = phi1_list;
-		
-		meshList = allcomb(phi1_list,cap_phi_list,phi2_list,theta_list,phi_list);
-		
-		%initialize
-		npts = length(meshList);
-		five(npts) = struct;
-		five(1).q = [];
-		five(1).nA = [];
-		
-		%convert to q,nA representation
-		for i = 1:length(meshList)
-			phi1 = meshList(i,1);
-			cap_phi = meshList(i,2);
-			phi2 = meshList(i,3);
-			theta = meshList(i,4);
-			phi = meshList(i,5);
-			
-			%the next few lines need to be checked to get them consistent with
-			%convention used in Rohrer for angles
-			five(i).q = rod2q([phi1,cap_phi,phi2]);
-			[x,y,z] = sph2cart(theta,phi);
-			five(i).nA = [x,y,z];
-		end
-		
+        if exist(filelist{1},'file') ~= 2
+            Rohrer2oct_tri();
+        end
+        datatmp = readmatrix(filelist{1},'NumHeaderLines',7);
+        
+        meshList = datatmp(:,1:end-1);
+        propList = datatmp(:,end);
+        
 	case 'Olmsted2004'
 		
 		meshList = readmatrix(filelist{1},'NumHeaderLines',1,'Delimiter',' ');
-		meshList = meshList(:,1:8); %octonion representation, gets rid of a random NaN column..
+		meshList = meshList(:,1:8); %octonion representation, gets rid of a random NaN column in 9th column..
 		
-		% 		propList = readmatrix(filelist{2},'NumHeaderLines',1,'Delimiter',' '); %properties
-		% 		propList = propList(:,1); %1st column == GB energy
+        proptmp = readmatrix(filelist{2},'NumHeaderLines',1,'Delimiter',' '); %properties
+        propList = proptmp(:,1); %1st column == GB energy (J/m^2)
 		
-		five = GBoct2five(meshList,false);
+		five = GBoct2five(meshList);
 		
 	case '5DOF'
 		%resolution in misorientation FZ
@@ -571,6 +525,78 @@ if contains(sampleMethod,'hsphext') || opts.octsubdiv > 1
 	meshList = get_octpairs(meshList);
 	five = GBoct2five(meshList,false);
 end
+
+
+
+
+		meshTable = readtable(filelist{1},'HeaderLines',9,'ReadVariableNames',true);
+		varNames = meshTable.Properties.VariableNames; %Euler angles (misorientation), the polar & azimuth (inclination), GBE (mJ/m^2)
+		datatemp = table2array(meshTable);
+		npts = size(datatemp,1);
+		
+		%extract 5DOF parameters
+		datatemp2 = datatemp(:,1:end-1);
+		t=n2c(datatemp2);
+		[phi1,Phi,phi2,pol,az] = t{:};
+		eulist = [phi1 Phi phi2]; %euler angles
+		
+		%convert to quaternions & cartesian normal pairs
+		setGlobal_epsijk(-1);  %Kim references Bunge notation, so using that convention for rotation conversion
+		qlist = eu2qu(eulist);
+		[x,y,z] = sph2cart(az,90-pol,ones(npts,1));
+		nAlist = [x y z];
+		
+		%package q & nA pairs
+		five = struct('q',qlist,'nA',nAlist);
+		
+		%get mesh and properties
+		meshList = GBfive2oct(qlist,nAlist);
+		meshListFull = get_octpairs(meshList);
+		meshList = uniquetol(meshListFull);
+		disp(['# unique pts: ' int2str(npts)])
+		propList = datatemp(:,end);
+		
+		meshList = datatemp(:,1:end-1);
+		propList = datatemp(:,end);
+
+
+
+		%for now (2020-07-02) just gets the meshpoints of the grid they used,
+		%rather than the triple junction, and then later assigns GB energy
+		%based on BRK function
+		
+		step = 10; %degrees
+		phi1_list = 0:step:90;
+		cap_phi_list = cos(phi1_list);
+		phi2_list = phi1_list;
+		theta_list = cap_phi_list;
+		phi_list = phi1_list;
+		
+		meshList = allcomb(phi1_list,cap_phi_list,phi2_list,theta_list,phi_list);
+		
+		%initialize
+		npts = length(meshList);
+		five(npts) = struct;
+		five(1).q = [];
+		five(1).nA = [];
+		
+		%convert to q,nA representation
+		for i = 1:length(meshList)
+			phi1 = meshList(i,1);
+			cap_phi = meshList(i,2);
+			phi2 = meshList(i,3);
+			theta = meshList(i,4);
+			phi = meshList(i,5);
+			
+			%the next few lines need to be checked to get them consistent with
+			%convention used in Rohrer for angles
+			five(i).q = rod2q([phi1,cap_phi,phi2]);
+			[x,y,z] = sph2cart(theta,phi);
+			five(i).nA = [x,y,z];
+		end
+
+
+% 		filelist = {'Kim2011_FeGBEnergy.txt'};
 
 
 %}
