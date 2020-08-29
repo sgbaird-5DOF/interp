@@ -2,7 +2,7 @@ function o = get_ocubo(n,method,sidelength,seed)
 arguments
 	n {mustBeNonNegIntegerOrEmpty} = 1
 	method char {mustBeMember(method,{'random','uniform'})} = 'random'
-	sidelength {mustBeNonNegIntegerOrEmpty} = double.empty
+	sidelength {mustBeNonNegIntegerOrEmpty} = []
 	seed = 'shuffle'
 end
 %--------------------------------------------------------------------------
@@ -45,6 +45,9 @@ end
 %		o = get_ocubo([],'uniform',5) %generate all combinations of
 %		quaternion pairs (i.e. octonions) using 5^3 == 125 uniformly sampled
 %		quaternions (15625 octonions)
+%
+%       o = get_ocubo(100,'random',[],10) %generate 100 random octonions
+%       using a random number generator seed of 10
 %
 % Dependencies:
 %		allcomb.m (optional if nboQ == false)
