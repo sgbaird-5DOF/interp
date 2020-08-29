@@ -20,7 +20,6 @@ clear; close all;
 
 fname = get_fname('5DOF_exterior_hsphext',13,2,2); %res,nint,octsubdiv
 
-
 % S = load('misFZfeatures.mat');
 
 %load data
