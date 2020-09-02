@@ -110,12 +110,12 @@ for i = 1:ndatapts
 		nndistList(i) = NaN; %to distinguish interp vs. NN distances in plotting
 		nnID = [nnID nnList(i)]; %#ok<AGROW> %nearest neighbor indices
 		ilist = [ilist i]; %#ok<AGROW> % possible to separate out making baryOK a logical array & using 2 for loops
-		% 			datainterp(i) = mesh.props(k(i));
+		datainterp(i) = mesh.props(nnList(i)); %assign NN value
 	end
 end
 
 %calculate SE and RMSE values
-ids = ~isnan(datainterp);
+ids = setdiff(1:ndatapts,ilist); %ids = ~isnan(datainterp);
 interpSE = (data.props(ids)-datainterp(ids)).^2;
 nnSE = (data.props(ilist)-mesh.props(nnID)).^2;
 totSE = [interpSE;nnSE];
