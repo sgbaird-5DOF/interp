@@ -15,7 +15,7 @@
 %        operation of quaternion inversion.
 %-------------------------------------------------------------------------%
 
-function qi = qinv(q)
+function qi = qinv_johnson(q)
 
 %---check inputs---%
 assert((size(q,2) == 4),'q must be an npts-by-4 array.')
