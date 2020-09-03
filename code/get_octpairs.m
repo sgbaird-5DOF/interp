@@ -32,8 +32,6 @@ end
 %  fundamental zone feature type (geometry)
 
 % Dependencies:
-%  sphconvhulln.m
-%  5DOF_vtx_deleteOz_octsubdiv1.mat
 %  misFZfeatures.mat
 %  GBdist4.m
 %  mustBeSqrt2Norm.m (argument validation function)
