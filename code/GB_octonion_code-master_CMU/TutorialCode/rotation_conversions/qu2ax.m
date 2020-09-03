@@ -16,7 +16,7 @@ function q = qu2ax(qq)
 % Notes:
 %  Vectorized by SGB (2020-08-21)
 %--------------------------------------------------------------------------
-thr = 1e-8;
+thr = 1e-10;
 omega = 2*acos(qq(:,1));
 
 ids = omega < thr;
