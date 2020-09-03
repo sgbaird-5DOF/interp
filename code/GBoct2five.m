@@ -39,7 +39,7 @@ five(1).d = [];
 five(1).geometry = '';
 
 %get quaternion and BP normal
-[q,nA] = GBoct2five_vec(octlist);
+[q,nA] = GBoct2five_vec2(octlist);
 
 %convert to rodrigues vectors
 d = q2rod(q);
@@ -160,11 +160,11 @@ qA = normr(o(:,1:4)); %has to be normalized, otherwise it's doesn't go back to s
 qB = normr(o(:,5:8));
 
 %misorientation quaternion
-qm = qmult(qB,qinv(qA));
+qm = normr(qmult(qB,qinv(qA)));
 
 Z = repmat([0 0 0 1],npts,1);
 nA = qmult(-qA,qmult(Z,qinv(qA)));
-nA = nA(:,2:4);
+nA = normr(nA(:,2:4));
 
 % %grain A quaternion in sample frame
 % pA = normr(qmult(qm,qA)); %normr added 2020-07-16 to avoid NaN values in qu2ax
