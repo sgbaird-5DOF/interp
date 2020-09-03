@@ -6,8 +6,8 @@ function out = qinv(q)
 
 q0 = q(:,1);
 q = q(:,2:4);
-out1 = [q0 -q];
-out = normr(out1);
+out = [q0 -q];
+% out = normr(out1);
 % out = out1./vecnorm(out1,2);
 
 % qr = pp(1)*qq(1)-dot(p,q);
