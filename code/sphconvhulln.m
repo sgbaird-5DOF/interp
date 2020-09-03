@@ -21,17 +21,8 @@ end
 %	K === triangulation of pts without "undercut" facets.
 %
 % Dependencies:
-%		hypercube.m
-%			-allcomb.m
-%			-normr.m
-%
-%		orthoplex.m
-%
-%		intersect_facet.m
-%			-projray2hypersphere.m
-%				--numStabBary.m (optional)
-%
-%		normr.m
+%  projectfacet2hyperplane.m
+%   -projectray2hyperplane.m
 %
 % Notes:
 %
@@ -362,6 +353,17 @@ mymembercheck = @(a,b) ismembertol(r(a),r(b),tol,'ByRows',true);
 % prec = 12;
 % r = @(a) round(a,prec);
 
-
+% Dependencies:
+%		hypercube.m
+%			-allcomb.m
+%			-normr.m
+%
+%		orthoplex.m
+%
+%		intersect_facet.m
+%			-projray2hypersphere.m
+%				--numStabBary.m (optional)
+%
+%		normr.m
 
 %}
