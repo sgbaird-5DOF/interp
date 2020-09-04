@@ -1,6 +1,8 @@
 %proj_down test
 clear; close all
 
+seed=10;
+rng(seed)
 test = 1;
 switch test
 	case 1
@@ -19,6 +21,8 @@ switch test
 		pts = [endpts; randpts];
 		
 		if d == 3
+            R = rotationmat3D(deg2rad(20),rand(3,1))*rotationmat3D(deg2rad(20),rand(3,1));
+            pts = (R*(pts.')).';
 			fig=figure;
 			fig.Position = [376.5000  364.0000  560.0000  249.0000];
 			tiledlayout(1,2)
@@ -41,7 +45,7 @@ switch test
 		
 		%remove degenerate dimension (outputting origin point automatically
 		%recenters projpts relative to origin)
-		[downpts,usv,zeropt] = proj_down(pts);
+		[downpts,usv] = proj_down(pts,'zeroQ',true);
 		
 		if d == 3
 			nexttile
@@ -119,9 +123,9 @@ switch test
 end
 
 if ~all(ismembertol(pts,uppts,'ByRows',true))
-	error('proj_down -> proj_up resulted in different points')
+	error('Oops.. proj_down -> proj_up resulted in different points')
 else
-	disp('proj_down -> proj_up resulted in same points within default tolerance')
+	disp('Nice! proj_down -> proj_up resulted in same points within default tolerance')
 end
 
 
