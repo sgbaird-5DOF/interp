@@ -3,7 +3,7 @@ arguments
 	n {mustBeNonNegIntegerOrEmpty} = 1
 	method char {mustBeMember(method,{'random','uniform'})} = 'random'
 	sidelength {mustBeNonNegIntegerOrEmpty} = []
-	seed = 'shuffle'
+    seed = 'shuffle'
 end
 %--------------------------------------------------------------------------
 % Author: Sterling Baird
