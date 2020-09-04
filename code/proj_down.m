@@ -17,9 +17,18 @@ end
 %
 % Date:
 %
-% Description: project down by removing null dimensions (i.e. via rotation)
+% Description: project down by removing null dimensions (i.e. a rotation
+% and translation) via singular value decomposition (SVD).
 %
 % Inputs:
+%   pts - rows of pts to be projected
+%
+%   tol - tolerance for which to consider a dimension "degenerate" in the
+%   square S matrix from SVD.
+%
+%   usv - struct, containing 'U', 'S', 'V' (SVD output), 'avg' (mean of
+%   input points), and possibly 'zeropt' (zeros(1,d) appropriately rotated
+%   and translated via SVD, to preserve circles/spheres, etc.).
 %
 % Outputs:
 %
@@ -38,7 +47,7 @@ end
 nforce = NV.nforce;
 nforceQ = NV.nforceQ;
 
-% --if zeropt is requested as output, then zeroQ == true
+% --if zeropt is requested as output, then set zeroQ = true
 if nargout == 3
 	zeroQ = true;
 else
@@ -58,8 +67,16 @@ if ~isempty(usv)
 	S = usv.S;
 	avg = usv.avg;
 	
-	%projection
-	projpts = (pts-avg)/V';
+    if zeroQ
+        zeropt = usv.zeropt;
+        %projection
+        projptstmp = ([zeropt;pts]-avg)/V';
+        projpts = projptstmp(2:end,:);
+        assert(ismembertol(projptstmp(1,:),zeros(1,d)),['zeropt [' num2str(projptstmp(1,:)) '] did not map back to zeros'])
+    else
+        projpts = (pts-avg)/V';
+    end
+
 	
 	%number of degenerate dimensions
 	if nforceQ
@@ -102,7 +119,13 @@ elseif isempty(usv)
 	avg = mean(pts);
 	
 	%project to d-1 dimensional space
-	[U,S,V] = svd(pts-avg,0);
+    if zeroQ
+        Zero = zeros(1,size(pts,2));
+        ptstmp = [Zero; pts];
+    else
+        ptstmp = pts;
+    end
+	[U,S,V] = svd(ptstmp-avg,0);
 	
 	usv.U = U;
 	usv.S = S;
@@ -122,8 +145,17 @@ elseif isempty(usv)
 	end
 	
 	if (ndegdim > 0) || nforceQ
-		%project to lower dimension (i.e. rotation)
-		projpts = U*S(:,1:d-ndegdim);
+		%project to lower dimension (i.e. rotation and translation)
+		projptstmp = U*S(:,1:d-ndegdim);
+        if zeroQ
+            %unpack
+            projpts = projptstmp(2:end,:);
+            zeropt = projptstmp(1,:);
+            %package
+            usv.zeropt = zeropt;
+        else
+            projpts = projptstmp;
+        end
 		if (ndegdim == 0) && nforceQ
 			warning(['ndegdim == 0, tol == ' num2str(tol) ...
 				', min(diag(S)) == ' num2str(min(diag(S))) ...
@@ -142,11 +174,7 @@ elseif isempty(usv)
 end
 
 if zeroQ
-	zeropt = (zeros(1,d)-avg)/V';
-	zeropt = zeropt(1:d-ndegdim);
-	projpts = projpts-zeropt;
-	
-	usv.zeropt = zeropt;
+    projpts = projpts-zeropt;
 end
 
 end %proj_down
@@ -165,4 +193,11 @@ end %proj_down
 % 	[U,S,V]=svd(bsxfun(@minus,pts,avg),0);
 
 
+% if zeroQ
+% 	zeropt = (zeros(1,d)-avg)/V';
+% 	zeropt = zeropt(1:d-ndegdim);
+% 	projpts = projpts-zeropt;
+% 	
+% 	usv.zeropt = zeropt;
+% end
 %}
