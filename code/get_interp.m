@@ -103,6 +103,8 @@ nonintDists = datainterp;
 nnID = [];
 ilist = [];
 
+meannorm = mean(vecnorm(mesh.ppts,2,2));
+
 ndatapts = size(datapts,1);
 disp('loop through datapoints')
 for i = 1:ndatapts
@@ -120,7 +122,7 @@ for i = 1:ndatapts
 			case 'spherical'
 				databary(i,:) = sphbary(datapt,facet); %need to save for inference input
 				nonNegQ = all(databary(i,:) >= -barytol);
-				greaterThanOneQ = sum(databary(i,:)) >= 1-barytol;
+				greaterThanOneQ = sum(databary(i,:)) >= meannorm-barytol;
 				numcheck = all(~isnan(databary(i,:)) & ~isinf(databary(i,:)));
 				baryOK = nonNegQ && greaterThanOneQ && numcheck;
 				
