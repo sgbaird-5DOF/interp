@@ -43,14 +43,17 @@ for n = 1:ntbls
             t2 = tbl{p};
             
             %% find missing variables
+            nrows1 = height(t1);
+            nrows2 = height(t2);
+            
             %get variable names from t2 that are not in t1
             [missingtmp1,ia1] = setdiff(t2.Properties.VariableNames,t1.Properties.VariableNames);
             %get variable names from t1 that are not in t2
             [missingtmp2,ia2] = setdiff(t1.Properties.VariableNames,t2.Properties.VariableNames);
             
             % cell tables (cell with 0x0 double inside)
-            [celltbl1,creplaceNames1] = replacevartbl(t2,ia1,cell(1));
-            [celltbl2,creplaceNames2] = replacevartbl(t1,ia2,cell(1));
+            [celltbl1,creplaceNames1] = replacevartbl(t2,nrows1,ia1,cell(1));
+            [celltbl2,creplaceNames2] = replacevartbl(t1,nrows2,ia2,cell(1));
             
             % remove values that are represented in cell and struct tables
             missing1 = setdiff(missingtmp1,creplaceNames1,'stable');
@@ -58,8 +61,8 @@ for n = 1:ntbls
             
             %% splice the missing variable tables into original tables
             % matrices of missing elements to splice into original
-            missingmat1 = repelem(missing,height(t1),numel(missing1));
-            missingmat2 = repelem(missing,height(t2),numel(missing2));
+            missingmat1 = repelem(missing,nrows1,numel(missing1));
+            missingmat2 = repelem(missing,nrows2,numel(missing2));
             
             %tables to splice into original tables
             missingtbl1 = array2table(missingmat1,'VariableNames',missing1);
@@ -76,7 +79,7 @@ tblout = vertcat(tbl{:});
 end
 
 %% Replace Variable Table
-function [replacetbl,replaceNames] = replacevartbl(t,ia,replaceval)
+function [replacetbl,replaceNames] = replacevartbl(t,nrows,ia,replaceval)
 %replace type
 replacetype = class(replaceval);
 
@@ -98,7 +101,6 @@ replaceNames = varnames(ID);
 
 %% construct table with replacement values and names
 %table dimensions
-nrows = height(t);
 nvars = length(ID);
 
 if isstruct(replaceval) && isempty(replaceval)
