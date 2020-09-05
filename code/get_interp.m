@@ -83,7 +83,7 @@ datapts = data.ppts;
 
 %check dimensions
 if size(mesh.ppts,2) ~= size(data.ppts,2)
-	errmsg = ['mesh.pts and data.pts dims should be equal, but mesh dim == ' ...
+	errmsg = ['mesh.ppts and data.ppts dims should be equal, but mesh dim == ' ...
 		int2str(size(mesh.ppts,2)) ' and data dim == ' int2str(size(data.ppts,2))];
 	error(errmsg)
 end
