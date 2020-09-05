@@ -23,10 +23,15 @@ end
 % Notes:
 %  See https://www.mathworks.com/matlabcentral/answers/179290-merge-tables-with-different-dimensions
 %
-%  types 'cell' and 'struct' are not supported by missing, and so are
-%  implemented manually.
-%
-%  *variables of the same name must also be of the same datatype
+%  *variables of the same name must also be of the same datatype. Types
+%  'cell' and 'struct' are not supported by missing. Here, cell is
+%  impelemented manually, but struct is not supported. A workaround for
+%  using structs in tables is to wrap them in a cell. To implement struct()
+%  would require at minimum making empty structs that mimic each field so
+%  that they can be vertically catenated. Starting points would be:
+%  https://www.mathworks.com/matlabcentral/answers/96973-how-can-i-concatenate-or-merge-two-structures
+%  https://www.mathworks.com/matlabcentral/answers/315858-how-to-combine-two-or-multiple-structs-with-different-fields
+%  https://www.mathworks.com/matlabcentral/fileexchange/7842-catstruct
 %--------------------------------------------------------------------------
 %number of tables
 ntbls = length(tbl);
@@ -43,18 +48,13 @@ for n = 1:ntbls
             %get variable names from t1 that are not in t2
             [missingtmp2,ia2] = setdiff(t1.Properties.VariableNames,t2.Properties.VariableNames);
             
-            %% make struct and cell tables
-            % struct (technically a table of structs with a 'dummy' field and NaN Value)
-            [structtbl1,sreplaceNames1] = replacevartbl(t2,ia1,struct());
-            [structtbl2,sreplaceNames2] = replacevartbl(t1,ia2,struct());
-            
-            % cell (cell with 0x0 double inside)
+            % cell tables (cell with 0x0 double inside)
             [celltbl1,creplaceNames1] = replacevartbl(t2,ia1,cell(1));
             [celltbl2,creplaceNames2] = replacevartbl(t1,ia2,cell(1));
             
             % remove values that are represented in cell and struct tables
-            missing1 = setdiff(missingtmp1,[sreplaceNames1 creplaceNames1],'stable');
-            missing2 = setdiff(missingtmp2,[sreplaceNames2 creplaceNames2],'stable');
+            missing1 = setdiff(missingtmp1,creplaceNames1,'stable');
+            missing2 = setdiff(missingtmp2,creplaceNames2,'stable');
             
             %% splice the missing variable tables into original tables
             % matrices of missing elements to splice into original
@@ -66,8 +66,8 @@ for n = 1:ntbls
             missingtbl2 = array2table(missingmat2,'VariableNames',missing2);
             
             %perform the splice
-            tbl{n} = [t1, missingtbl1, structtbl1, celltbl1];
-            tbl{p} = [t2 missingtbl2, structtbl2, celltbl2];
+            tbl{n} = [t1, missingtbl1, celltbl1];
+            tbl{p} = [t2 missingtbl2, celltbl2];
         end
     end
 end
@@ -96,7 +96,7 @@ ID = intersect(ia,IDtmp);
 %missing variable names of different types
 replaceNames = varnames(ID);
 
-%% construct table with replacement values 
+%% construct table with replacement values and names
 %table dimensions
 nrows = height(t);
 nvars = length(ID);
