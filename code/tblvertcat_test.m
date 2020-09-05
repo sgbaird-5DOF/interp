@@ -13,9 +13,3 @@ tbl2 = table(chars,cells);
 
 %catenate the tables
 tblout = tblvertcat(tbl1,tbl2)
-
-%simple outerjoin version
-tbl1.ids = (1:3).';
-tbl2.ids = (4:6).';
-tbloutjoin = outerjoin(tbl1,tbl2,'Key',{'ids','chars'},'MergeKeys',true);
-removevars(tbloutjoin,'ids')
