@@ -1,10 +1,11 @@
 %tblvertcat_test
 clear; close all
 
+nrows = 3;
 %define table columns
-doubles = rand(10,1);
-chars = repelem('a',10,1);
-cells = repelem(cell(1,1),10,1);
+doubles = rand(nrows,1);
+chars = repelem('a',nrows,1);
+cells = repelem(cell(1,1),nrows,1);
 
 %make two tables
 tbl1 = table(doubles,chars);
