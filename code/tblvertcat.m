@@ -7,8 +7,8 @@ end
 %
 % Date: 2020-09-04
 %
-% Description: vertically catenate tables with different variables, filling
-% in data where necessary.
+% Description: vertically catenate any number of tables with different
+% variables, filling in dummy values where necessary.
 %
 % Inputs:
 %  tbl - table, where each table can have a different number of rows and
@@ -19,6 +19,7 @@ end
 %
 % Usage:
 %  tblout = tblvertcat(tbl1,tbl2);
+%  tblout = tblvertcat(tbl1,tbl2,tbl3);
 %
 % Notes:
 %  See https://www.mathworks.com/matlabcentral/answers/179290-merge-tables-with-different-dimensions
