@@ -69,10 +69,12 @@ if ~isempty(usv)
 	
     if zeroQ
         zeropt = usv.zeropt;
+        Zero = zeros(1,d);
         %projection
-        projptstmp = ([zeropt;pts]-avg)/V';
+        projptstmp = ([Zero;pts]-avg)/V';
         projpts = projptstmp(2:end,:);
-        assert(ismembertol(projptstmp(1,:),zeros(1,d)),['zeropt [' num2str(projptstmp(1,:)) '] did not map back to zeros'])
+        assert(ismembertol(projptstmp(1,1:d-1),zeropt,'ByRows',true),...
+            ['Zero [' num2str(projptstmp(1,:)) '] did not map back to zeropt [' num2str(zeropt) ']'])
     else
         projpts = (pts-avg)/V';
     end
