@@ -36,8 +36,36 @@ end
 %--------------------------------------------------------------------------
 %number of tables
 ntbls = length(tbl);
+%% convert all chars to strings
+for n = 1:ntbls
+    t = tbl{n}; %unpack
+    varnames = t.Properties.VariableNames; %variable names
+    vartypes = varfun(@class,t,'OutputFormat','cell'); %variable types
+    chartypeID = strcmp('char',vartypes); %char variables
+    charnames = varnames(chartypeID); %names of 'char' variables
+    %convert chars to strings
+    for p = 1:length(charnames)
+        charname = charnames{p};
+        tbl{n}.(charname)=string(t.(charname));
+    end
+    
+    varlen = varfun(@length,t,'OutputFormat','uniform'); %variable lengths
+    cellarrayID = (varlen > 1) & strcmp('cell',vartypes); %cell variables
+    cellnames = varnames(cellarrayID); %names of 'char' variables
+    %convert chars to strings
+    for p = 1:length(cellnames)
+        cellname = cellnames{p};
+        cellnametmp = matlab.lang.makeUniqueStrings(cellname,varnames);
+        t.Properties.VariableNames = strrep(varnames,cellname,cellnametmp);
+        t.(cellname) = num2cell(t.(cellnametmp),2);
+        t = removevars(t,cellnametmp);
+    end
+    tbl{n} = t;
+end
+%% nested loop through table pairs
 for n = 1:ntbls
     for p = n:ntbls
+        %skip self
         if p ~= n
             %% unpack table pair
             t1 = tbl{n};
@@ -155,4 +183,11 @@ if isstruct(replaceval)
             sfield = sfields{j};
             sfieldtype = 
             replaceval.(sfield) = 
+
+        for k = 1:height(t)
+            t = removevars(t,cellname);
+            tbl{n} = addvars(t,
+            tbl{n}.(cellname)(k) = {t.(cellname)(k)};
+        end
+
 %}
