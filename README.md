@@ -25,7 +25,7 @@ See [cloning a repository](https://docs.github.com/en/github/creating-cloning-an
 
 ### Step3: open MATLAB and call [interp5DOF_test.m](code/interp5DOF_test.m) or [run.m](code/run.m)
 `matlab`
->> `interp5DOF_test`
+\>\> `interp5DOF_test`
 
 ## Accessing functions via addpathdir()
 dir() and addpath() commands are used to locate functions in subfolders of the current working directory via a custom function [code/addpathdir.m](https://github.com/sgbaird/octonion-inference/blob/master/code/addpathdir.m). This could give anomalous behavior if the directory structure is changed such that filenames are non-unique in sub-folders of the parent folder where addpathdir() gets called, or if files with the same name are present elsewhere on the user's MATLAB path. This is also the only function that is shadowed (to my knowledge) within this repository ([by octonion-mesh](code/octonion-mesh/)); however, the functionality is fairly basic, and I don't anticipate any changes to the functionality. In other words, it shouldn't matter which one gets called.
