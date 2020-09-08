@@ -90,7 +90,7 @@ end
 
 function nUpdateProgress(~)
 	percentDone = 100*p/N;
-	msg = sprintf('%3.0f ', percentDone); %Don't forget this semicolon
+	msg = sprintf('%3.0f', percentDone); %Don't forget this semicolon
 	fprintf([reverseStr, msg]);
 	reverseStr = repmat(sprintf('\b'), 1, length(msg));
 	p = p + nreps;
