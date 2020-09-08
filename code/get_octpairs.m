@@ -1,4 +1,4 @@
-function [octvtx,usv,five] = get_octpairs(pts,savename,NV)
+function [octvtx,oref] = get_octpairs(pts,savename,NV)
 arguments
 	pts(:,8) double {mustBeSqrt2Norm}
 	savename string = 'temp.mat'
@@ -7,7 +7,6 @@ arguments
 	NV.pgnum(1,1) double = 32
 	NV.wtol(1,1) double = 1e-6
 end
-%--------------------------------------------------------------------------
 % Author: Sterling Baird
 %
 % Date: 2020-07-27
@@ -83,38 +82,32 @@ if NV.o2addQ
 	octvtx = [o1; octvtx];
 end
 
-% compute 5DOF representation
-five = GBoct2five(octvtx,true);
-
 if NV.plotQ
-	figure
+    % compute 5DOF representation
+    five = GBoct2five(octvtx,true);
+    figure
 	plotFZrodriguez_vtx();
 	hold on
-	disQ = true;
-	if disQ
-		t = num2cell(q2rod(disorientation(vertcat(five.q),'cubic')),1);
-	else
-		t=num2cell(vertcat(five.d),1);
-	end
+    t = num2cell(q2rod(disorientation(vertcat(five.q),'cubic')),1);
 	plot3(t{:},'*')
 	title(['disQ == ' int2str(disQ)])
 end
 
-tol = 1e-3;
-[octvtx2,usv] = proj_down(octvtx,tol,'zeroQ',true);
+% tol = 1e-3;
+% [octvtx2,usv] = proj_down(octvtx,tol,'zeroQ',true);
 
 %package output
-oref1 = o1;
+oref = o1;
 
 %save data
-pts = octvtx2;
+% pts = octvtx2;
 if exist('./data','dir') == 7
     savepath = fullfile('data',savename);
 else
     savepath = savename;
 end
 disp(savepath)
-save(savepath,'pts','usv','oref1','five','fiveref1','octvtx')
+save(savepath,'pts','oref','fiveref1','octvtx')
 
 end
 
