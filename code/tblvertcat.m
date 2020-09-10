@@ -39,28 +39,47 @@ ntbls = length(tbl);
 %% convert all chars to strings
 for n = 1:ntbls
     t = tbl{n}; %unpack
-    varnames = t.Properties.VariableNames; %variable names
-    vartypes = varfun(@class,t,'OutputFormat','cell'); %variable types
-    chartypeID = strcmp('char',vartypes); %char variables
-    charnames = varnames(chartypeID); %names of 'char' variables
-    %convert chars to strings
-    for p = 1:length(charnames)
-        charname = charnames{p};
-        tbl{n}.(charname)=string(t.(charname));
-    end
     
-    varlen = varfun(@length,t,'OutputFormat','uniform'); %variable lengths
-    cellarrayID = (varlen > 1) & strcmp('cell',vartypes); %cell variables
-    cellnames = varnames(cellarrayID); %names of 'char' variables
-    %convert chars to strings
-    for p = 1:length(cellnames)
-        cellname = cellnames{p};
-        cellnametmp = matlab.lang.makeUniqueStrings(cellname,varnames);
-        t.Properties.VariableNames = strrep(varnames,cellname,cellnametmp);
-        t.(cellname) = num2cell(t.(cellnametmp),2);
-        t = removevars(t,cellnametmp);
-    end
+    t = changestruct(t,'cell', @(x) num2cell(x,2), @(x) ~isscalar(x)); %cell vector to cell scalar
+    t = changestruct(t,'char', @string); %char vector to string
+    t = changestruct(t,'struct', @(x) num2cell(x,2)); %struct to {struct} (cell scalar)
+    
     tbl{n} = t;
+    
+%     varnames = t.Properties.VariableNames; %variable names
+%     vartypes = varfun(@class,t,'OutputFormat','cell'); %variable types
+%     chartypeID = strcmp('char',vartypes); %char variables
+%     charnames = varnames(chartypeID); %names of 'char' variables
+%     %convert chars to strings
+%     for p = 1:length(charnames)
+%         charname = charnames{p};
+%         tbl{n}.(charname)=string(t.(charname));
+%     end
+%     
+%     varlen = varfun(@length,t,'OutputFormat','uniform'); %variable lengths
+%     cellarrayID = (varlen > 1) & strcmp('cell',vartypes); %cell variables
+%     cellnames = varnames(cellarrayID); %names of 'char' variables
+%     %convert cell vectors to cell scalars
+%     for p = 1:length(cellnames)
+%         cellname = cellnames{p};
+%         cellnametmp = matlab.lang.makeUniqueStrings(cellname,varnames);
+%         t.Properties.VariableNames = strrep(varnames,cellname,cellnametmp);
+%         t.(cellname) = num2cell(t.(cellnametmp),2);
+%         t = removevars(t,cellnametmp);
+%     end
+%     tbl{n} = t;
+%     
+%     structID = (varlen > 1) & strcmp('struct',vartypes); %cell variables
+%     structnames = varnames(structID); %names of 'char' variables
+%     %convert cell vectors to cell scalars
+%     for p = 1:length(structnames)
+%         structname = structnames{p};
+%         structnametmp = matlab.lang.makeUniqueStrings(structname,varnames);
+%         t.Properties.VariableNames = strrep(varnames,structname,structnametmp);
+%         t.(structname) = num2cell(t.(structnametmp),2);
+%         t = removevars(t,structnametmp);
+%     end
+    
 end
 %% nested loop through table pairs
 for n = 1:ntbls
@@ -107,38 +126,53 @@ end
 tblout = vertcat(tbl{:});
 end
 
-%% Replace Variable Table
+%% REPLACE VARIABLE TABLE
 function [replacetbl,replaceNames] = replacevartbl(t,nrows,ia,replaceval)
 %replace type
 replacetype = class(replaceval);
-
 %% missing variable IDs and names
 %variable names
 varnames = t.Properties.VariableNames;
-
 %variable types
 vartypes=varfun(@class,t,'OutputFormat','cell');
-
 %variable IDs of some type
 IDtmp = find(strcmp(replacetype,vartypes));
-
 %missing variable IDs of different types
 ID = intersect(ia,IDtmp);
-
 %missing variable names of different types
 replaceNames = varnames(ID);
 
 %% construct table with replacement values and names
 %table dimensions
 nvars = length(ID);
-
 if isstruct(replaceval) && isempty(replaceval)
     error('if type struct, cannot be empty. Instead supply struct with no fields via struct()')
 end
-
 replacemat = repelem(replaceval,nrows,nvars);
 replacetbl = array2table(replacemat);
 replacetbl.Properties.VariableNames = replaceNames;
+
+end
+
+%% CHANGESTRUCT
+function t = changestruct(t,type,changefn,checkfn)
+arguments
+    t table
+    type char = 'char'
+    changefn = @string
+    checkfn = @(x) 1
+end
+varnames = t.Properties.VariableNames; %variable names
+vartypes = varfun(@class,t,'OutputFormat','cell'); %variable types
+varprop = varfun(checkfn,t,'OutputFormat','uniform'); %variable lengths
+ID = varprop & strcmp(type,vartypes); %cell variables
+
+names = varnames(ID); %names of 'char' variables
+%convert to new type
+for p = 1:length(names)
+    name = names{p};
+    t.(name) = changefn(t.(name));
+end
 
 end
 
@@ -189,5 +223,15 @@ if isstruct(replaceval)
             tbl{n} = addvars(t,
             tbl{n}.(cellname)(k) = {t.(cellname)(k)};
         end
+
+
+%convert to new type
+for p = 1:length(names)
+    name = names{p};
+%     nametmp = matlab.lang.makeUniqueStrings(name,varnames);
+%     t.Properties.VariableNames = strrep(varnames,name,nametmp);
+    t.(name) = changefn(t.(name));
+%     t = removevars(t,nametmp);
+end
 
 %}
