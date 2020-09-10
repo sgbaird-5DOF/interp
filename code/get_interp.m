@@ -1,8 +1,8 @@
-function [datainterp,databary,facetprops,savename,varargout] = ...
+function [datainterp,databary,facetprops,varargout] = ...
 	get_interp(mesh,data,intfacetIDs,barytype,barytol)
 arguments
-	mesh struct {mustContainFields(mesh,{'pts','ppts','props','sphK','fname'})}
-	data struct {mustContainFields(data,{'pts','ppts','props','fname'})}
+	mesh struct {mustContainFields(mesh,{'pts','ppts','props','sphK'})}
+	data struct {mustContainFields(data,{'pts','ppts','props'})}
 	intfacetIDs cell
 	barytype char {mustBeMember(barytype,{'planar','spherical'})} = 'planar'
 	barytol double = double.empty
@@ -89,7 +89,7 @@ if size(mesh.ppts,2) ~= size(data.ppts,2)
 end
 
 %save name
-savename = ['mesh_' mesh.fname(1:end-4) '_data_' data.fname];
+% savename = ['mesh_' mesh.fname(1:end-4) '_data_' data.fname];
 
 %nearest neighbor list
 nnList = dsearchn(meshpts,datapts);
@@ -168,8 +168,8 @@ nnRMSE = sqrt(mean(nnSE));
 totRMSE = sqrt(mean(totSE));
 allnnRMSE = sqrt(mean(allnnSE));
 
-fpath = fullfile('data',savename);
-save(fpath,'-v7.3')
+% fpath = fullfile('data',savename);
+% save(fpath,'-v7.3')
 
 disp(' ')
 disp(['# non-intersections: ' int2str(sum(~isnan((nnID)))) '/' int2str(ndatapts)])
