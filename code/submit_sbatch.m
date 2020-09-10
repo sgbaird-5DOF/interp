@@ -1,4 +1,4 @@
-function submit_sbatch(jbinfo,sbopts)
+function sbatch_submit(jbinfo,sbopts)
 %--------------------------------------------------------------------------
 % Author: Sterling Baird
 %
