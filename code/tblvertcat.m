@@ -3,7 +3,7 @@ arguments (Repeating)
     tbl table
 end
 %--------------------------------------------------------------------------
-% Author(s): Sterling Baird
+% Author(s): Sterling Baird 
 %
 % Date: 2020-09-04
 %
