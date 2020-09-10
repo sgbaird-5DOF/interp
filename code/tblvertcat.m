@@ -43,7 +43,7 @@ for n = 1:ntbls
     t = changestruct(t,'cell', @(x) num2cell(x,2), @(x) ~isscalar(x)); %cell vector to cell scalar
     t = changestruct(t,'char', @string); %char vector to string
     t = changestruct(t,'struct', @(x) num2cell(x,2)); %struct to {struct} (cell scalar)
-    t = changestruct(t,'logical', @double);
+    t = changestruct(t,'logical', @double); 
     
     tbl{n} = t;
     
