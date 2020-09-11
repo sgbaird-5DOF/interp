@@ -41,9 +41,9 @@ five(1).geometry = '';
 
 %get quaternion and BP normal
 switch method
-    case 1
+    case 'reverse'
         [q,nA] = GBoct2five_vec(octlist); %reverse steps of GBfive2oct.m
-    case 2
+    case 'simple'
         [q,nA] = GBoct2five_vec2(octlist); %as discussed in CMU octonion paper
 end
 
