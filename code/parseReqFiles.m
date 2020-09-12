@@ -14,7 +14,7 @@ for i = 1:nfiles
     f = flist{i}; %file
     [fpath{i},names{i},ext{i}] = fileparts(f);
     [~,endidx] = regexp(fpath{1},'interp-5DOF*');
-    fpathshort{i} = fpath{i}(endidx:end);
+    fpathshort{i} = [fpath{i}(endidx+2:end) filesep()];
     nameExt{i} = [names{i},ext{i}];
 end
 end
