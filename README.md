@@ -27,8 +27,8 @@ See [cloning a repository](https://docs.github.com/en/github/creating-cloning-an
 
 `git clone --recurse-submodules https://github.com/sgbaird/octonion-inference.git`
 
-### Step1: navigate to [octonion-inference/code/](code/)
-`cd octonion-inference/code/`
+### Step1: navigate to [interp-5DOF/code/](code/)
+`cd interp-5DOF/code/`
 
 ### Step3: open MATLAB and call [interp5DOF_test.m](code/interp5DOF_test.m) or [run.m](code/run.m)
 `matlab`
