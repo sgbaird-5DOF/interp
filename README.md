@@ -1,5 +1,5 @@
 # Five Degree-of-Freedom (5DOF) Interpolation
- code related to meshing and interpolation of grain boundaries by representing 5DOF by octonions and forming a closed mesh.
+ code related to meshing and interpolation of grain boundaries by representing 5DOF of grain boundaries as octonions and forming a closed mesh.
  
  See
  * [GB_octonion_code](https://github.com/ichesser/GB_octonion_code)
