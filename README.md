@@ -1,4 +1,4 @@
-# Five Degree-of-Freedom (5DOF) Interpolation via Octonion Mesh
+# Octonion-based Five Degree-of-Freedom (5DOF) Interpolation
  code related to meshing and interpolation of grain boundaries by representing 5DOF by octonions and forming a closed mesh.
  
  See
