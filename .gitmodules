@@ -1,0 +1,3 @@
+[submodule "code/MATslurm"]
+	path = code/MATslurm
+	url = git@github.com:sgbaird/MATslurm.git

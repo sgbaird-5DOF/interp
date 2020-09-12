@@ -1,0 +1,109 @@
+get_octpairs 
+  2  6 10 14 18 22 26 30 34 38 42 46 50 54 58 62 66 70 74 78 82 86 90 94 98data\temp.mat
+get_octpairs 
+  2  6 10 14 18 22 26 30 34 38 42 46 50 54 58 62 66 70 74 78 82 86 90 94 98data\temp.mat
+Copying objective function to workers...
+Done copying objective function to workers.
+|===============================================================================================================|
+| Iter | Active  | Eval   | Objective:  | Objective   | BestSoFar   | BestSoFar   |        Sigma |  KernelScale |
+|      | workers | result | log(1+loss) | runtime     | (observed)  | (estim.)    |              |              |
+|===============================================================================================================|
+|    1 |       2 | Accept |    0.011638 |     0.27645 |    0.011638 |    0.011637 |       1.0046 |    0.0012009 |
+|    2 |       2 | Best   |    0.011638 |     0.24145 |    0.011638 |    0.011637 |      0.48553 |     0.047715 |
+|    3 |       2 | Accept |    0.011638 |     0.27532 |    0.011638 |    0.011637 |    0.0030874 |     0.012706 |
+|    4 |       2 | Accept |     0.02048 |     0.23047 |    0.011638 |    0.011637 |   0.00032056 |       0.3848 |
+|    5 |       2 | Accept |    0.011638 |     0.20431 |    0.011638 |    0.011637 |    0.0019761 |    0.0011245 |
+|    6 |       6 | Best   |    0.011638 |     0.27993 |    0.011638 |    0.011632 |       1.0422 |      0.04742 |
+|    7 |       2 | Accept |    0.011638 |     0.28487 |    0.011638 |    0.011635 |    0.0022158 |   0.00040207 |
+|    8 |       2 | Accept |    0.011638 |     0.33475 |    0.011638 |    0.011635 |   0.00038268 |   0.00043729 |
+|    9 |       2 | Accept |    0.011638 |     0.24222 |    0.011638 |    0.011635 |      0.01968 |    0.0025307 |
+|   10 |       2 | Accept |    0.011638 |     0.30941 |    0.011638 |    0.011635 |    0.0077194 |     0.011256 |
+|   11 |       2 | Accept |    0.012935 |     0.21911 |    0.011638 |    0.011635 |   0.00019093 |      0.15128 |
+|   12 |       6 | Best   |    0.011633 |     0.16514 |    0.011633 |    0.011636 |   0.00029106 |     0.027367 |
+|   13 |       2 | Best   |   0.0097081 |     0.21311 |   0.0097081 |    0.010421 |     0.013342 |     0.079475 |
+|   14 |       2 | Accept |    0.011638 |     0.25282 |   0.0097081 |    0.010421 |    0.0011328 |    0.0018027 |
+|   15 |       2 | Accept |    0.010026 |     0.18399 |   0.0097081 |    0.010421 |   0.00028482 |     0.066432 |
+|   16 |       2 | Accept |   0.0099615 |     0.15369 |   0.0097081 |    0.010421 |     0.050669 |     0.080822 |
+|   17 |       2 | Accept |    0.011637 |     0.21672 |   0.0097081 |    0.010421 |      0.12477 |     0.080902 |
+|   18 |       6 | Accept |    0.011638 |      0.2281 |   0.0097081 |    0.010154 |   0.00012681 |    0.0053155 |
+|   19 |       2 | Accept |   0.0097909 |     0.20563 |   0.0097081 |   0.0098694 |   0.00010546 |     0.072628 |
+|   20 |       2 | Accept |    0.011638 |     0.25207 |   0.0097081 |   0.0098694 |   0.00024809 |    0.0011493 |
+|===============================================================================================================|
+| Iter | Active  | Eval   | Objective:  | Objective   | BestSoFar   | BestSoFar   |        Sigma |  KernelScale |
+|      | workers | result | log(1+loss) | runtime     | (observed)  | (estim.)    |              |              |
+|===============================================================================================================|
+|   21 |       2 | Accept |    0.011638 |     0.27378 |   0.0097081 |   0.0098694 |    0.0093829 |    0.0017361 |
+|   22 |       2 | Accept |    0.011638 |     0.23123 |   0.0097081 |   0.0098694 |      0.40132 |    0.0015141 |
+|   23 |       2 | Accept |    0.011638 |     0.42832 |   0.0097081 |   0.0098694 |    0.0068325 |    0.0075159 |
+|   24 |       6 | Accept |   0.0097106 |      0.1607 |   0.0097081 |   0.0098084 |   0.00010031 |     0.076196 |
+|   25 |       2 | Accept |   0.0098458 |     0.32563 |   0.0097081 |    0.009831 |   0.00010427 |     0.070862 |
+|   26 |       2 | Accept |    0.014101 |     0.18105 |   0.0097081 |    0.009831 |    0.0089425 |      0.16873 |
+|   27 |       2 | Accept |    0.011638 |     0.20117 |   0.0097081 |    0.009831 |   0.00087288 |   0.00061813 |
+|   28 |       2 | Accept |      0.0118 |     0.24269 |   0.0097081 |    0.009831 |   0.00070406 |      0.13331 |
+|   29 |       2 | Accept |    0.011638 |     0.24146 |   0.0097081 |    0.009831 |      0.39847 |      0.33619 |
+|   30 |       6 | Accept |    0.011638 |     0.18791 |   0.0097081 |   0.0098325 |       1.0613 |      0.01974 |
+|   31 |       2 | Accept |   0.0099931 |     0.31976 |   0.0097081 |   0.0098136 |    0.0040723 |     0.067199 |
+|   32 |       2 | Accept |    0.012893 |     0.19995 |   0.0097081 |   0.0098136 |     0.011967 |      0.14894 |
+|   33 |       2 | Accept |    0.011638 |     0.26774 |   0.0097081 |   0.0098136 |      0.01354 |   0.00055277 |
+|   34 |       2 | Accept |    0.011638 |     0.27499 |   0.0097081 |   0.0098136 |     0.020352 |    0.0037958 |
+|   35 |       2 | Accept |    0.011638 |     0.31634 |   0.0097081 |   0.0098136 |   0.00015687 |    0.0058743 |
+|   36 |       6 | Best   |   0.0096733 |     0.21173 |   0.0096733 |   0.0098129 |    0.0018628 |      0.07937 |
+
+__________________________________________________________
+Optimization completed.
+MaxObjectiveEvaluations of 36 reached.
+Total function evaluations: 36
+Total elapsed time: 9.4823 seconds.
+Total objective function evaluation time: 8.834
+
+Best observed feasible point:
+      <strong>Sigma</strong>      <strong>KernelScale</strong>
+    <strong>_________</strong>    <strong>___________</strong>
+
+    0.0018628      0.07937  
+
+Observed objective function value = 0.0096733
+Estimated objective function value = 0.0096985
+Function evaluation time = 0.21173
+
+Best estimated feasible point (according to models):
+      <strong>Sigma</strong>       <strong>KernelScale</strong>
+    <strong>__________</strong>    <strong>___________</strong>
+
+    0.00010546     0.072628  
+
+Estimated objective function value = 0.0098129
+Estimated function evaluation time = 0.22212
+
+
+gprMdl = 
+
+  <a href="matlab: helpPopup RegressionGP">RegressionGP</a>
+                         ResponseName: 'Y'
+                CategoricalPredictors: []
+                    ResponseTransform: 'none'
+                      NumObservations: 50
+    HyperparameterOptimizationResults: [1×1 BayesianOptimization]
+                       KernelFunction: 'SquaredExponential'
+                    KernelInformation: [1×1 struct]
+                        BasisFunction: 'Constant'
+                                 Beta: 1.1706
+                                Sigma: 0.0011
+                    PredictorLocation: []
+                       PredictorScale: []
+                                Alpha: [50×1 double]
+                     ActiveSetVectors: [50×7 double]
+                        PredictMethod: 'Exact'
+                        ActiveSetSize: 50
+                            FitMethod: 'FIC'
+                      ActiveSetMethod: 'Entropy'
+                    IsActiveSetVector: [50×1 logical]
+                        LogLikelihood: 43.3198
+                     ActiveSetHistory: [1×1 struct]
+                       BCDInformation: []
+
+
+  <a href="matlab: properties('RegressionGP')">Properties</a>, <a href="matlab: methods('RegressionGP')">Methods</a>
+
+RMSE = 0.10837 J/m^2
+MAE = 0.076702 J/m^2
