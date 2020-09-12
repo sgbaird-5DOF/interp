@@ -52,7 +52,7 @@ If the parallel computing toolbox is not installed, the parfor loops will execut
 To debug within a parfor loop, simply change it to a for loop while debugging. I added "parfor compatible" as a comment next to the parfor statements. Thus, you can use MATLAB [find files](https://www.mathworks.com/help/matlab/matlab_env/finding-files-and-folders.html#:~:text=To%20open%20the%20Find%20Files,on%20the%20MATLAB%20search%20path.) (Ctrl+Shift+F) to search for the keyword "parfor compatible" (including quotes) in order to keep track of which parfor loops have been changed to for loops.
 
 ## File dependencies
-Take a look at [parseMyFiles_test.m](code/parseMyFiles_test.m) for generating a list of file dependencies for [interp5DOF.m](code/inter5DOF.m) or other files.
+Take a look at [parseMyFiles_test.m](code/parseMyFiles_test.m) for generating a list of file dependencies for [interp5DOF.m](code/inter5DOF.m) (below) or other files.
 
 1. [addpathdir.m](octonion-inference\codeaddpathdir.m)
 1. [interp5DOF.m](octonion-inference\codeinterp5DOF.m)

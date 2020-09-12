@@ -1,7 +1,8 @@
-function five = GBoct2five(octlist,disQ)
+function five = GBoct2five(octlist,disQ,method)
 arguments
 	octlist(:,8) double {mustBeNumeric,mustBeFinite}
 	disQ(1,1) logical = true
+    method char {mustBeMember(method,{'reverse','simple'})} = 'reverse'
 end
 %--------------------------------------------------------------------------
 % Author: Sterling Baird
@@ -39,7 +40,12 @@ five(1).d = [];
 five(1).geometry = '';
 
 %get quaternion and BP normal
-[q,nA] = GBoct2five_vec2(octlist);
+switch method
+    case 'reverse'
+        [q,nA] = GBoct2five_vec(octlist); %reverse steps of GBfive2oct.m
+    case 'simple'
+        [q,nA] = GBoct2five_vec2(octlist); %as discussed in CMU octonion paper
+end
 
 %convert to rodrigues vectors
 d = q2rod(q);
