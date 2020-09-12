@@ -5,3 +5,4 @@
 **/slurm-*.out
 *.node
 code/data/*.mat
+code/data/randOctParity/*.mat
