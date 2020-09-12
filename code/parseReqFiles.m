@@ -13,8 +13,8 @@ nameExt = init1;
 for i = 1:nfiles
     f = flist{i}; %file
     [fpath{i},names{i},ext{i}] = fileparts(f);
-    startidx = regexp(fpath{1},'octonion-inference*');
-    fpathshort{i} = fpath{i}(startidx:end);
+    [~,endidx] = regexp(fpath{1},'interp-5DOF*');
+    fpathshort{i} = fpath{i}(endidx:end);
     nameExt{i} = [names{i},ext{i}];
 end
 end
