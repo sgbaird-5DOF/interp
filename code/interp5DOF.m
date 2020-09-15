@@ -176,7 +176,8 @@ else
     predinput = '5dof';
     otmp = GBfive2oct(qm,nA);
 end
-o = get_octpairs(otmp);
+wtol = 1e-3;
+o = get_octpairs(otmp,'wtol',wtol);
 nmeshpts = size(o,1);
 
 %query points
@@ -187,7 +188,7 @@ else
     queryinput = '5dof';
     otmp2 = GBfive2oct(qm2,nA2);
 end
-o2 = get_octpairs(otmp2);
+o2 = get_octpairs(otmp2,'wtol',wtol);
 ndatapts = size(o2,1);
 
 disp(['nmeshpts = ' int2str(nmeshpts) ', ndatapts = ' int2str(ndatapts)])
@@ -195,17 +196,23 @@ disp(['nmeshpts = ' int2str(nmeshpts) ', ndatapts = ' int2str(ndatapts)])
 %% projection
 %important to project both sets together so they use same SVD decomposition
 projtol = 1e-4;
-zeroQ = true;
+zeroQ = false;
 o = normr(o);
 o2 = normr(o2);
-[a,usv] = proj_down([o;o2],projtol,struct.empty,'zeroQ',zeroQ);
-if size(a,2) ~= 7
+rng(10);
+[a,usv] = proj_down([o;o2],projtol,'zeroQ',zeroQ);
+
+%projected points
+if size(a,2) == 7
+    ppts = proj_down(o,projtol,usv,'zeroQ',zeroQ);
+	ppts2 = proj_down(o2,projtol,usv,'zeroQ',zeroQ);
+else
     error("Input doesn't have degenerate dimension or has too few (i.e. check input data), or try reducing proj_down tolerance input (tol)")
 end
 
-%projected points
-ppts = a(1:nmeshpts,:);
-ppts2 = a(nmeshpts+1:end,:);
+% %projected points
+% ppts = a(1:nmeshpts,:);
+% ppts2 = a(nmeshpts+1:end,:);
 
 %% mesh and data struct setup
 %mesh
@@ -259,11 +266,13 @@ switch method
     case {'sphbary','pbary'}
         if isempty(NV.databary)
             %% get triangulation
-            K = sphconvhulln(ppts);
+            [pptstmp,usvtri] = proj_down(o,projtol,'zeroQ',true);
+            K = sphconvhulln(pptstmp);
+            mesh.pts = proj_up(pptstmp,usvtri);
             
             %% compute intersecting facet IDs
-            nnMax = 5;
-            inttol = 0.1;
+            nnMax = 10;
+            inttol = 0.01;
             disp('intersect_facet')
             intfacetIDs = intersect_facet(ppts,K,ppts2,inttol,'inttype','planar','nnMax',nnMax);
 %             intfacetcell = {intfacetIDs};
@@ -279,7 +288,9 @@ switch method
             disp('interpolation')
             switch method
                 case 'sphbary'
-                    barytol = 0.1;
+                    barytol = 0.2;
+                    mesh.ppts = normr(mesh.ppts);
+                    data.ppts = normr(data.ppts);
                     [propOut,databary,facetprops] = get_interp(mesh,data,intfacetIDs,'spherical',barytol);
                     mdlcmd = @(mesh,data,intfacetIDs,barytol) ...
                         get_interp(mesh,data,intfacetIDs,'spherical',barytol);
@@ -493,6 +504,8 @@ mdlparsgen.runtime = runtime;
 mdl = structcat(mdlgen,mdlspec);
 %model parameters
 mdlpars = structcat(mdlparsgen,mdlparsspec);
+
+end
 
 %%
 %---------------------------FUNCTION DEPENDENCIES--------------------------
