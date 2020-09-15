@@ -62,17 +62,21 @@ o1 = GBfive2oct(qA,nA);
 disp('get_octpairs ')
 npts = size(pts,1);
 o1rep = repmat(o1,npts,1);
-[~,octvtx] = GBdist4(o1rep,pts,32,'norm',1e-6,true);
+[~,octvtx] = GBdist4(o1rep,pts,32,'norm',NV.wtol,true);
 
 %check if multiple octonions found (rare, have only seen once ever out of
 %tens of thousands 2020-08-17)
-ids = cellfun(@(oct) size(oct,1),octvtx) > 1;
-nids = sum(ids);
+idstmp = cellfun(@(oct) size(oct,1),octvtx) > 1;
+nids = sum(idstmp);
 if nids > 0
     %display the id since it's a rare occurrence
 	disp(['nids: ' int2str(nids)])
     %replace octonions with first octonion
-	[octvtx{ids}] = octvtx{ids}(1,:);
+    ids = find(idstmp);
+    for i = 1:length(ids)
+        id = ids(i);
+        octvtx{id} = octvtx{id}(1,:);
+    end
 end
 %catenate
 octvtx = vertcat(octvtx{:});
