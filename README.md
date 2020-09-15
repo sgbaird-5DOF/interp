@@ -22,6 +22,7 @@ the beginning of functions, which is used extensively throughout). For users of 
 See [File dependencies](https://github.com/sgbaird/octonion-mesh/blob/master/README.md#file-dependencies)
 
 ## Usage
+Linux-specific commands given.
 ### Step0: download the code
 See [cloning a repository](https://docs.github.com/en/github/creating-cloning-and-archiving-repositories/cloning-a-repository) and [git submodules](https://git-scm.com/book/en/v2/Git-Tools-Submodules) for more information or other options such as using GitHub Desktop (Windows, Linux, etc.) or downloading a .zip file.
 
