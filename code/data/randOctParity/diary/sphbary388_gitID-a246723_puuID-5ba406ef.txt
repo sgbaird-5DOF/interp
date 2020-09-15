@@ -1,0 +1,132 @@
+get_octpairs 
+<a href="matlab: opentoline('C:\Users\sterg\Documents\GitHub\infer-5DOF\code\interp-5DOF\code\osymset.m',82,1)">82  </a>end %osymset
+size(symocts)
+
+ans =
+
+        4608           8
+
+dbup
+In workspace belonging to <a href="matlab:matlab.internal.language.introspective.errorDocCallback('osymsets', 'C:\Users\sterg\Documents\GitHub\infer-5DOF\code\interp-5DOF\code\osymsets.m', 70)" style="font-weight:bold">osymsets</a> (<a href="matlab: opentoline('C:\Users\sterg\Documents\GitHub\infer-5DOF\code\interp-5DOF\code\osymsets.m',70,0)">line 70</a>)
+qAlist
+
+qAlist =
+
+   -0.4154   -0.4073    0.7731    0.2526
+
+qBlist
+
+qBlist =
+
+    0.6085   -0.7936    0.0022         0
+
+disorientation(qAlist,'cubic')
+
+ans =
+
+    0.9242    0.2644    0.2562    0.1015
+
+dbup
+In workspace belonging to <a href="matlab:matlab.internal.language.introspective.errorDocCallback('GBdist4', 'C:\Users\sterg\Documents\GitHub\infer-5DOF\code\interp-5DOF\code\GBdist4.m', 110)" style="font-weight:bold">GBdist4</a> (<a href="matlab: opentoline('C:\Users\sterg\Documents\GitHub\infer-5DOF\code\interp-5DOF\code\GBdist4.m',110,0)">line 110</a>)
+o2(i,:)
+
+ans =
+
+   -0.4154   -0.4073    0.7731    0.2526    0.6085   -0.7936    0.0022         0
+
+i
+
+i =
+
+     1
+
+dbup
+In workspace belonging to <a href="matlab:matlab.internal.language.introspective.errorDocCallback('get_octpairs', 'C:\Users\sterg\Documents\GitHub\infer-5DOF\code\interp-5DOF\code\get_octpairs.m', 65)" style="font-weight:bold">get_octpairs</a> (<a href="matlab: opentoline('C:\Users\sterg\Documents\GitHub\infer-5DOF\code\interp-5DOF\code\get_octpairs.m',65,0)">line 65</a>)
+dbdown
+In workspace belonging to <a href="matlab:matlab.internal.language.introspective.errorDocCallback('GBdist4', 'C:\Users\sterg\Documents\GitHub\infer-5DOF\code\interp-5DOF\code\GBdist4.m', 110)" style="font-weight:bold">GBdist4</a> (<a href="matlab: opentoline('C:\Users\sterg\Documents\GitHub\infer-5DOF\code\interp-5DOF\code\GBdist4.m',110,0)">line 110</a>)
+dbdown
+In workspace belonging to <a href="matlab:matlab.internal.language.introspective.errorDocCallback('osymsets', 'C:\Users\sterg\Documents\GitHub\infer-5DOF\code\interp-5DOF\code\osymsets.m', 70)" style="font-weight:bold">osymsets</a> (<a href="matlab: opentoline('C:\Users\sterg\Documents\GitHub\infer-5DOF\code\interp-5DOF\code\osymsets.m',70,0)">line 70</a>)
+dbdown
+In workspace belonging to <a href="matlab:matlab.internal.language.introspective.errorDocCallback('osymset', 'C:\Users\sterg\Documents\GitHub\infer-5DOF\code\interp-5DOF\code\osymset.m', 82)" style="font-weight:bold">osymset</a> (<a href="matlab: opentoline('C:\Users\sterg\Documents\GitHub\infer-5DOF\code\interp-5DOF\code\osymset.m',82,0)">line 82</a>)
+size(symocts)
+
+ans =
+
+        4608           8
+
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+qAlist
+
+qAlist =
+
+   -0.4154   -0.4073    0.7731    0.2526
+
+disorientation(qAlist,'cubic')
+
+ans =
+
+    0.9242    0.2644    0.2562    0.1015
+
+dbup
+In workspace belonging to <a href="matlab:matlab.internal.language.introspective.errorDocCallback('GBdist4', 'C:\Users\sterg\Documents\GitHub\infer-5DOF\code\interp-5DOF\code\GBdist4.m', 110)" style="font-weight:bold">GBdist4</a> (<a href="matlab: opentoline('C:\Users\sterg\Documents\GitHub\infer-5DOF\code\interp-5DOF\code\GBdist4.m',110,0)">line 110</a>)
+o2(i,:)
+
+ans =
+
+   -0.4154   -0.4073    0.7731    0.2526    0.6085   -0.7936    0.0022         0
+
+i
+
+i =
+
+     1
+
+dbup
+In workspace belonging to <a href="matlab:matlab.internal.language.introspective.errorDocCallback('get_octpairs', 'C:\Users\sterg\Documents\GitHub\infer-5DOF\code\interp-5DOF\code\get_octpairs.m', 65)" style="font-weight:bold">get_octpairs</a> (<a href="matlab: opentoline('C:\Users\sterg\Documents\GitHub\infer-5DOF\code\interp-5DOF\code\get_octpairs.m',65,0)">line 65</a>)
+o21
+{Unrecognized function or variable 'o21'.
+} 
+o1
+
+o1 =
+
+    0.7713   -0.5377   -0.3366   -0.0513    0.9416   -0.2730   -0.1973         0
+
+o2
+{Unrecognized function or variable 'o2'.
+} 
+pts(1,:)
+
+ans =
+
+   -0.4154   -0.4073    0.7731    0.2526    0.6085   -0.7936    0.0022         0
+
+pts(2,:)
+
+ans =
+
+   -0.5844    0.4741   -0.3625    0.5499    0.8160    0.4650    0.3435         0
+
+dbup
+In workspace belonging to <a href="matlab:matlab.internal.language.introspective.errorDocCallback('interp5DOF', 'C:\Users\sterg\Documents\GitHub\infer-5DOF\code\interp-5DOF\code\interp5DOF.m', 180)" style="font-weight:bold">interp5DOF</a> (<a href="matlab: opentoline('C:\Users\sterg\Documents\GitHub\infer-5DOF\code\interp-5DOF\code\interp5DOF.m',180,0)">line 180</a>)
+otmp(1,:)
+
+ans =
+
+   -0.4154   -0.4073    0.7731    0.2526    0.6085   -0.7936    0.0022         0
+
+predinput
+
+predinput =
+
+    '5dof'
+
+if system_dependent('IsDebugMode')==1, dbquit; end
+open randOctParityData.m
+open interp5DOF.m
+randOctParityData
+max_walltime = 59 minutes
+saving parameter file

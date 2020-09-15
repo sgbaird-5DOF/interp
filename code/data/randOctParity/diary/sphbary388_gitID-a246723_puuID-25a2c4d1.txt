@@ -1,0 +1,12 @@
+get_octpairs 
+  0  5 10 15 20 25 30 35 39 44 49 54 59 64 69 74 79 84 88 93nids: 2
+data\temp.mat
+get_octpairs 
+  0  5 10 15 20 25 30 35 40 45 50 55 60 65 70 75 80 85 90 95nids: 11
+data\temp.mat
+nmeshpts = 388, ndatapts = 500
+<a href="matlab: opentoline('C:\Users\sterg\Documents\GitHub\infer-5DOF\code\interp-5DOF\code\interp5DOF.m',206,1)">206 </a>if size(a,2) == 7
+if system_dependent('IsDebugMode')==1, dbquit all; end
+randOctParityData
+max_walltime = 59 minutes
+saving parameter file

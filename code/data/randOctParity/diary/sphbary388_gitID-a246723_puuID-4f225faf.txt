@@ -1,0 +1,97 @@
+get_octpairs 
+  0  5 10 15 20 25 30 35 39 44 49 54 59 64 69 74 79 84 88 93nids: 3
+data\temp.mat
+get_octpairs 
+  0  5 10 15 20 25 30 35 40 45 50 55 60 65 70 75 80 85 90 95nids: 6
+data\temp.mat
+nmeshpts = 388, ndatapts = 500
+--delaunayn
+intersect_facet
+  0  5 10 15 20 25 30 35 40 45 50 55 60 65 70 75 80 85 90 95interpolation
+loop through datapoints
+i == 20; no valid intersection, taking NN with dist = 0.1775
+i == 22; no valid intersection, taking NN with dist = 0.18112
+i == 23; no valid intersection, taking NN with dist = 0.19056
+i == 44; no valid intersection, taking NN with dist = 0.17063
+i == 56; no valid intersection, taking NN with dist = 0.09812
+i == 77; no valid intersection, taking NN with dist = 0.1131
+i == 85; no valid intersection, taking NN with dist = 0.10947
+i == 91; no valid intersection, taking NN with dist = 0.2098
+i == 104; no valid intersection, taking NN with dist = 0.089755
+i == 110; no valid intersection, taking NN with dist = 0.16797
+i == 117; no valid intersection, taking NN with dist = 0.15633
+i == 119; no valid intersection, taking NN with dist = 0.13598
+i == 124; no valid intersection, taking NN with dist = 0.1399
+i == 133; no valid intersection, taking NN with dist = 0.15469
+i == 144; no valid intersection, taking NN with dist = 0.1391
+i == 145; no valid intersection, taking NN with dist = 0.08552
+i == 167; no valid intersection, taking NN with dist = 0.082417
+i == 183; no valid intersection, taking NN with dist = 0.19362
+i == 186; no valid intersection, taking NN with dist = 0.17349
+i == 192; no valid intersection, taking NN with dist = 0.056563
+i == 198; no valid intersection, taking NN with dist = 0.13148
+i == 200; no valid intersection, taking NN with dist = 0.21576
+i == 202; no valid intersection, taking NN with dist = 0.147
+i == 205; no valid intersection, taking NN with dist = 0.14573
+i == 209; no valid intersection, taking NN with dist = 0.21137
+i == 211; no valid intersection, taking NN with dist = 0.14756
+i == 234; no valid intersection, taking NN with dist = 0.1554
+i == 235; no valid intersection, taking NN with dist = 0.14548
+i == 236; no valid intersection, taking NN with dist = 0.075615
+i == 255; no valid intersection, taking NN with dist = 0.17547
+i == 305; no valid intersection, taking NN with dist = 0.19622
+i == 306; no valid intersection, taking NN with dist = 0.17
+i == 310; no valid intersection, taking NN with dist = 0.11549
+i == 316; no valid intersection, taking NN with dist = 0.19429
+i == 322; no valid intersection, taking NN with dist = 0.15326
+i == 327; no valid intersection, taking NN with dist = 0.22926
+i == 333; no valid intersection, taking NN with dist = 0.17022
+i == 344; no valid intersection, taking NN with dist = 0.15726
+i == 357; no valid intersection, taking NN with dist = 0.14085
+i == 390; no valid intersection, taking NN with dist = 0.18624
+i == 397; no valid intersection, taking NN with dist = 0.17419
+i == 401; no valid intersection, taking NN with dist = 0.13258
+i == 409; no valid intersection, taking NN with dist = 0.13873
+i == 413; no valid intersection, taking NN with dist = 0.12921
+i == 425; no valid intersection, taking NN with dist = 0.11742
+i == 432; no valid intersection, taking NN with dist = 0.14239
+i == 433; no valid intersection, taking NN with dist = 0.13187
+i == 435; no valid intersection, taking NN with dist = 0.11131
+i == 441; no valid intersection, taking NN with dist = 0.1544
+i == 445; no valid intersection, taking NN with dist = 0.11721
+i == 451; no valid intersection, taking NN with dist = 0.1018
+i == 456; no valid intersection, taking NN with dist = 0.14334
+i == 459; no valid intersection, taking NN with dist = 0.1976
+i == 460; no valid intersection, taking NN with dist = 0.16668
+i == 462; no valid intersection, taking NN with dist = 0.15166
+ 
+# non-intersections: 55/500
+ 
+RMSE (J/m^2): interp == 0.0917, NN == 0.1650
+ 
+total RMSE: 0.1024, all NN RMSE comparison: 0.1233
+<a href="matlab: opentoline('C:\Users\sterg\Documents\GitHub\infer-5DOF\code\interp-5DOF\code\interp5DOF.m',508,1)">508 </a>end
+mdlpars
+
+mdlpars = 
+
+  <a href="matlab:helpPopup struct" style="font-weight:bold">struct</a> with fields:
+
+          brkQ: 1
+        method: 'sphbary'
+       projtol: 1.0000e-04
+         zeroQ: 0
+     starttime: 15-Sep-2020 00:28:40
+      nmeshpts: 388
+      ndatapts: 500
+        ncores: 3
+     gitcommit: 'a246723'
+          uuid: '4710dfdb'
+     predinput: '5dof'
+    queryinput: '5dof'
+       runtime: 67.8831
+       barytol: 0.2000
+
+if system_dependent('IsDebugMode')==1, dbcont; end
+RMSE = 0.1024 J/m^2
+MAE = 0.071673 J/m^2

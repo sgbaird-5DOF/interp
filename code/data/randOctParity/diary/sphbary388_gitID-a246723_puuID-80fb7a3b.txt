@@ -1,0 +1,7 @@
+get_octpairs 
+<a href="matlab: opentoline('C:\Users\sterg\Documents\GitHub\infer-5DOF\code\interp-5DOF\code\osymset.m',82,1)">82  </a>end %osymset
+if system_dependent('IsDebugMode')==1, dbcont; end
+if system_dependent('IsDebugMode')==1, dbquit all; end
+randOctParityData
+max_walltime = 59 minutes
+saving parameter file

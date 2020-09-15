@@ -1,0 +1,744 @@
+get_octpairs 
+  0  5 10 15 20 25 30 35 39 44 49 54 59 64 69 74 79 84 88 93nids: 2
+<a href="matlab: opentoline('C:\Users\sterg\Documents\GitHub\infer-5DOF\code\interp-5DOF\code\get_octpairs.m',78,1)">78  </a>        1+1;
+ids
+
+ids =
+
+  1×388 <a href="matlab:helpPopup logical" style="font-weight:bold">logical</a> array
+
+  Columns 1 through 20
+
+   0   0   0   0   0   1   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+
+  Columns 21 through 40
+
+   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   1
+
+  Columns 41 through 60
+
+   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+
+  Columns 61 through 80
+
+   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+
+  Columns 81 through 100
+
+   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+
+  Columns 101 through 120
+
+   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+
+  Columns 121 through 140
+
+   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+
+  Columns 141 through 160
+
+   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+
+  Columns 161 through 180
+
+   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+
+  Columns 181 through 200
+
+   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+
+  Columns 201 through 220
+
+   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+
+  Columns 221 through 240
+
+   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+
+  Columns 241 through 260
+
+   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+
+  Columns 261 through 280
+
+   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+
+  Columns 281 through 300
+
+   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+
+  Columns 301 through 320
+
+   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+
+  Columns 321 through 340
+
+   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+
+  Columns 341 through 360
+
+   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+
+  Columns 361 through 380
+
+   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+
+  Columns 381 through 388
+
+   0   0   0   0   0   0   0   0
+
+octvtx
+
+octvtx =
+
+  1×388 <a href="matlab:helpPopup cell" style="font-weight:bold">cell</a> array
+
+  Columns 1 through 5
+
+    {1×8 double}    {1×8 double}    {1×8 double}    {1×8 double}    {1×8 double}
+
+  Columns 6 through 10
+
+    {2×8 double}    {1×8 double}    {1×8 double}    {1×8 double}    {1×8 double}
+
+  Columns 11 through 15
+
+    {1×8 double}    {1×8 double}    {1×8 double}    {1×8 double}    {1×8 double}
+
+  Columns 16 through 20
+
+    {1×8 double}    {1×8 double}    {1×8 double}    {1×8 double}    {1×8 double}
+
+  Columns 21 through 25
+
+    {1×8 double}    {1×8 double}    {1×8 double}    {1×8 double}    {1×8 double}
+
+  Columns 26 through 30
+
+    {1×8 double}    {1×8 double}    {1×8 double}    {1×8 double}    {1×8 double}
+
+  Columns 31 through 35
+
+    {1×8 double}    {1×8 double}    {1×8 double}    {1×8 double}    {1×8 double}
+
+  Columns 36 through 40
+
+    {1×8 double}    {1×8 double}    {1×8 double}    {1×8 double}    {2×8 double}
+
+  Columns 41 through 45
+
+    {1×8 double}    {1×8 double}    {1×8 double}    {1×8 double}    {1×8 double}
+
+  Columns 46 through 50
+
+    {1×8 double}    {1×8 double}    {1×8 double}    {1×8 double}    {1×8 double}
+
+  Columns 51 through 55
+
+    {1×8 double}    {1×8 double}    {1×8 double}    {1×8 double}    {1×8 double}
+
+  Columns 56 through 60
+
+    {1×8 double}    {1×8 double}    {1×8 double}    {1×8 double}    {1×8 double}
+
+  Columns 61 through 65
+
+    {1×8 double}    {1×8 double}    {1×8 double}    {1×8 double}    {1×8 double}
+
+  Columns 66 through 70
+
+    {1×8 double}    {1×8 double}    {1×8 double}    {1×8 double}    {1×8 double}
+
+  Columns 71 through 75
+
+    {1×8 double}    {1×8 double}    {1×8 double}    {1×8 double}    {1×8 double}
+
+  Columns 76 through 80
+
+    {1×8 double}    {1×8 double}    {1×8 double}    {1×8 double}    {1×8 double}
+
+  Columns 81 through 85
+
+    {1×8 double}    {1×8 double}    {1×8 double}    {1×8 double}    {1×8 double}
+
+  Columns 86 through 90
+
+    {1×8 double}    {1×8 double}    {1×8 double}    {1×8 double}    {1×8 double}
+
+  Columns 91 through 95
+
+    {1×8 double}    {1×8 double}    {1×8 double}    {1×8 double}    {1×8 double}
+
+  Columns 96 through 100
+
+    {1×8 double}    {1×8 double}    {1×8 double}    {1×8 double}    {1×8 double}
+
+  Columns 101 through 105
+
+    {1×8 double}    {1×8 double}    {1×8 double}    {1×8 double}    {1×8 double}
+
+  Columns 106 through 110
+
+    {1×8 double}    {1×8 double}    {1×8 double}    {1×8 double}    {1×8 double}
+
+  Columns 111 through 115
+
+    {1×8 double}    {1×8 double}    {1×8 double}    {1×8 double}    {1×8 double}
+
+  Columns 116 through 120
+
+    {1×8 double}    {1×8 double}    {1×8 double}    {1×8 double}    {1×8 double}
+
+  Columns 121 through 125
+
+    {1×8 double}    {1×8 double}    {1×8 double}    {1×8 double}    {1×8 double}
+
+  Columns 126 through 130
+
+    {1×8 double}    {1×8 double}    {1×8 double}    {1×8 double}    {1×8 double}
+
+  Columns 131 through 135
+
+    {1×8 double}    {1×8 double}    {1×8 double}    {1×8 double}    {1×8 double}
+
+  Columns 136 through 140
+
+    {1×8 double}    {1×8 double}    {1×8 double}    {1×8 double}    {1×8 double}
+
+  Columns 141 through 145
+
+    {1×8 double}    {1×8 double}    {1×8 double}    {1×8 double}    {1×8 double}
+
+  Columns 146 through 150
+
+    {1×8 double}    {1×8 double}    {1×8 double}    {1×8 double}    {1×8 double}
+
+  Columns 151 through 155
+
+    {1×8 double}    {1×8 double}    {1×8 double}    {1×8 double}    {1×8 double}
+
+  Columns 156 through 160
+
+    {1×8 double}    {1×8 double}    {1×8 double}    {1×8 double}    {1×8 double}
+
+  Columns 161 through 165
+
+    {1×8 double}    {1×8 double}    {1×8 double}    {1×8 double}    {1×8 double}
+
+  Columns 166 through 170
+
+    {1×8 double}    {1×8 double}    {1×8 double}    {1×8 double}    {1×8 double}
+
+  Columns 171 through 175
+
+    {1×8 double}    {1×8 double}    {1×8 double}    {1×8 double}    {1×8 double}
+
+  Columns 176 through 180
+
+    {1×8 double}    {1×8 double}    {1×8 double}    {1×8 double}    {1×8 double}
+
+  Columns 181 through 185
+
+    {1×8 double}    {1×8 double}    {1×8 double}    {1×8 double}    {1×8 double}
+
+  Columns 186 through 190
+
+    {1×8 double}    {1×8 double}    {1×8 double}    {1×8 double}    {1×8 double}
+
+  Columns 191 through 195
+
+    {1×8 double}    {1×8 double}    {1×8 double}    {1×8 double}    {1×8 double}
+
+  Columns 196 through 200
+
+    {1×8 double}    {1×8 double}    {1×8 double}    {1×8 double}    {1×8 double}
+
+  Columns 201 through 205
+
+    {1×8 double}    {1×8 double}    {1×8 double}    {1×8 double}    {1×8 double}
+
+  Columns 206 through 210
+
+    {1×8 double}    {1×8 double}    {1×8 double}    {1×8 double}    {1×8 double}
+
+  Columns 211 through 215
+
+    {1×8 double}    {1×8 double}    {1×8 double}    {1×8 double}    {1×8 double}
+
+  Columns 216 through 220
+
+    {1×8 double}    {1×8 double}    {1×8 double}    {1×8 double}    {1×8 double}
+
+  Columns 221 through 225
+
+    {1×8 double}    {1×8 double}    {1×8 double}    {1×8 double}    {1×8 double}
+
+  Columns 226 through 230
+
+    {1×8 double}    {1×8 double}    {1×8 double}    {1×8 double}    {1×8 double}
+
+  Columns 231 through 235
+
+    {1×8 double}    {1×8 double}    {1×8 double}    {1×8 double}    {1×8 double}
+
+  Columns 236 through 240
+
+    {1×8 double}    {1×8 double}    {1×8 double}    {1×8 double}    {1×8 double}
+
+  Columns 241 through 245
+
+    {1×8 double}    {1×8 double}    {1×8 double}    {1×8 double}    {1×8 double}
+
+  Columns 246 through 250
+
+    {1×8 double}    {1×8 double}    {1×8 double}    {1×8 double}    {1×8 double}
+
+  Columns 251 through 255
+
+    {1×8 double}    {1×8 double}    {1×8 double}    {1×8 double}    {1×8 double}
+
+  Columns 256 through 260
+
+    {1×8 double}    {1×8 double}    {1×8 double}    {1×8 double}    {1×8 double}
+
+  Columns 261 through 265
+
+    {1×8 double}    {1×8 double}    {1×8 double}    {1×8 double}    {1×8 double}
+
+  Columns 266 through 270
+
+    {1×8 double}    {1×8 double}    {1×8 double}    {1×8 double}    {1×8 double}
+
+  Columns 271 through 275
+
+    {1×8 double}    {1×8 double}    {1×8 double}    {1×8 double}    {1×8 double}
+
+  Columns 276 through 280
+
+    {1×8 double}    {1×8 double}    {1×8 double}    {1×8 double}    {1×8 double}
+
+  Columns 281 through 285
+
+    {1×8 double}    {1×8 double}    {1×8 double}    {1×8 double}    {1×8 double}
+
+  Columns 286 through 290
+
+    {1×8 double}    {1×8 double}    {1×8 double}    {1×8 double}    {1×8 double}
+
+  Columns 291 through 295
+
+    {1×8 double}    {1×8 double}    {1×8 double}    {1×8 double}    {1×8 double}
+
+  Columns 296 through 300
+
+    {1×8 double}    {1×8 double}    {1×8 double}    {1×8 double}    {1×8 double}
+
+  Columns 301 through 305
+
+    {1×8 double}    {1×8 double}    {1×8 double}    {1×8 double}    {1×8 double}
+
+  Columns 306 through 310
+
+    {1×8 double}    {1×8 double}    {1×8 double}    {1×8 double}    {1×8 double}
+
+  Columns 311 through 315
+
+    {1×8 double}    {1×8 double}    {1×8 double}    {1×8 double}    {1×8 double}
+
+  Columns 316 through 320
+
+    {1×8 double}    {1×8 double}    {1×8 double}    {1×8 double}    {1×8 double}
+
+  Columns 321 through 325
+
+    {1×8 double}    {1×8 double}    {1×8 double}    {1×8 double}    {1×8 double}
+
+  Columns 326 through 330
+
+    {1×8 double}    {1×8 double}    {1×8 double}    {1×8 double}    {1×8 double}
+
+  Columns 331 through 335
+
+    {1×8 double}    {1×8 double}    {1×8 double}    {1×8 double}    {1×8 double}
+
+  Columns 336 through 340
+
+    {1×8 double}    {1×8 double}    {1×8 double}    {1×8 double}    {1×8 double}
+
+  Columns 341 through 345
+
+    {1×8 double}    {1×8 double}    {1×8 double}    {1×8 double}    {1×8 double}
+
+  Columns 346 through 350
+
+    {1×8 double}    {1×8 double}    {1×8 double}    {1×8 double}    {1×8 double}
+
+  Columns 351 through 355
+
+    {1×8 double}    {1×8 double}    {1×8 double}    {1×8 double}    {1×8 double}
+
+  Columns 356 through 360
+
+    {1×8 double}    {1×8 double}    {1×8 double}    {1×8 double}    {1×8 double}
+
+  Columns 361 through 365
+
+    {1×8 double}    {1×8 double}    {1×8 double}    {1×8 double}    {1×8 double}
+
+  Columns 366 through 370
+
+    {1×8 double}    {1×8 double}    {1×8 double}    {1×8 double}    {1×8 double}
+
+  Columns 371 through 375
+
+    {1×8 double}    {1×8 double}    {1×8 double}    {1×8 double}    {1×8 double}
+
+  Columns 376 through 380
+
+    {1×8 double}    {1×8 double}    {1×8 double}    {1×8 double}    {1×8 double}
+
+  Columns 381 through 385
+
+    {1×8 double}    {1×8 double}    {1×8 double}    {1×8 double}    {1×8 double}
+
+  Columns 386 through 388
+
+    {1×8 double}    {1×8 double}    {1×8 double}
+
+size(ids)
+
+ans =
+
+     1   388
+
+nids
+
+nids =
+
+     2
+
+find(ids)
+
+ans =
+
+     6    40
+
+octvtx{ids}(1,:)
+{Expected one output from a curly brace or dot indexing expression, but there were 2
+results.
+} 
+octvtx{ids}
+
+ans =
+
+    0.6736   -0.7285   -0.1207    0.0307    0.9040   -0.2797   -0.2002   -0.2539
+    0.7702   -0.6137   -0.1406   -0.1025    0.7781   -0.4533   -0.4296   -0.0675
+
+
+ans =
+
+    0.7202   -0.5369   -0.3092   -0.3121    0.9293   -0.1796   -0.2269    0.2293
+    0.8642   -0.4674   -0.1717   -0.0718    0.9870   -0.1219    0.0440   -0.0956
+
+ids
+
+ids =
+
+  1×388 <a href="matlab:helpPopup logical" style="font-weight:bold">logical</a> array
+
+  Columns 1 through 20
+
+   0   0   0   0   0   1   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+
+  Columns 21 through 40
+
+   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   1
+
+  Columns 41 through 60
+
+   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+
+  Columns 61 through 80
+
+   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+
+  Columns 81 through 100
+
+   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+
+  Columns 101 through 120
+
+   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+
+  Columns 121 through 140
+
+   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+
+  Columns 141 through 160
+
+   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+
+  Columns 161 through 180
+
+   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+
+  Columns 181 through 200
+
+   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+
+  Columns 201 through 220
+
+   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+
+  Columns 221 through 240
+
+   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+
+  Columns 241 through 260
+
+   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+
+  Columns 261 through 280
+
+   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+
+  Columns 281 through 300
+
+   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+
+  Columns 301 through 320
+
+   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+
+  Columns 321 through 340
+
+   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+
+  Columns 341 through 360
+
+   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+
+  Columns 361 through 380
+
+   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+
+  Columns 381 through 388
+
+   0   0   0   0   0   0   0   0
+
+octvtx{ids}
+
+ans =
+
+    0.6736   -0.7285   -0.1207    0.0307    0.9040   -0.2797   -0.2002   -0.2539
+    0.7702   -0.6137   -0.1406   -0.1025    0.7781   -0.4533   -0.4296   -0.0675
+
+
+ans =
+
+    0.7202   -0.5369   -0.3092   -0.3121    0.9293   -0.1796   -0.2269    0.2293
+    0.8642   -0.4674   -0.1717   -0.0718    0.9870   -0.1219    0.0440   -0.0956
+
+octvtx(ids)
+
+ans =
+
+  1×2 <a href="matlab:helpPopup cell" style="font-weight:bold">cell</a> array
+
+    {2×8 double}    {2×8 double}
+
+octvtx(ids){1}
+{Error: Indexing with parentheses '()' must appear as the last operation of a valid
+indexing expression.
+} 
+cellfun(@(oct) oct(1,:),octvtx{ids})
+{Error using <a href="matlab:matlab.internal.language.introspective.errorDocCallback('cellfun')" style="font-weight:bold">cellfun</a>
+Input #2 expected to be a cell array, was double instead.
+} 
+octvtx{ids}
+
+ans =
+
+    0.6736   -0.7285   -0.1207    0.0307    0.9040   -0.2797   -0.2002   -0.2539
+    0.7702   -0.6137   -0.1406   -0.1025    0.7781   -0.4533   -0.4296   -0.0675
+
+
+ans =
+
+    0.7202   -0.5369   -0.3092   -0.3121    0.9293   -0.1796   -0.2269    0.2293
+    0.8642   -0.4674   -0.1717   -0.0718    0.9870   -0.1219    0.0440   -0.0956
+
+octvtx(ids)
+
+ans =
+
+  1×2 <a href="matlab:helpPopup cell" style="font-weight:bold">cell</a> array
+
+    {2×8 double}    {2×8 double}
+
+cellfun(@(oct) oct(1,:),octvtx(ids))
+{Error using <a href="matlab:matlab.internal.language.introspective.errorDocCallback('cellfun')" style="font-weight:bold">cellfun</a>
+Non-scalar in Uniform output, at index 1, output 1.
+Set 'UniformOutput' to false.
+} 
+cellfun(@(oct) oct(1,:),octvtx(ids),'UniformOutput',false)
+
+ans =
+
+  1×2 <a href="matlab:helpPopup cell" style="font-weight:bold">cell</a> array
+
+    {1×8 double}    {1×8 double}
+
+[octvtx{ids}] = cellfun(@(oct) oct(1,:),octvtx(ids),'UniformOutput',false)
+{Insufficient number of outputs from right hand side of equal sign to satisfy
+assignment.
+
+Error in <a href="matlab:matlab.internal.language.introspective.errorDocCallback('get_octpairs>@(oct)oct(1,:)')" style="font-weight:bold">get_octpairs>@(oct)oct(1,:)</a>
+} 
+octvtx{ids}
+
+ans =
+
+    0.6736   -0.7285   -0.1207    0.0307    0.9040   -0.2797   -0.2002   -0.2539
+    0.7702   -0.6137   -0.1406   -0.1025    0.7781   -0.4533   -0.4296   -0.0675
+
+
+ans =
+
+    0.7202   -0.5369   -0.3092   -0.3121    0.9293   -0.1796   -0.2269    0.2293
+    0.8642   -0.4674   -0.1717   -0.0718    0.9870   -0.1219    0.0440   -0.0956
+
+id = find(ids);
+ids = find(idstmp);
+{Unrecognized function or variable 'idstmp'.
+} 
+i = 1
+
+i =
+
+     1
+
+id = ids(i);
+octvtx{id} = octvtx{id}(1,:);
+{Expected one output from a curly brace or dot indexing expression, but there were 0
+results.
+} 
+octvtx(id) = octvtx{id}(1,:);
+{Expected one output from a curly brace or dot indexing expression, but there were 0
+results.
+} 
+octvtx{id}
+id
+
+id =
+
+  <a href="matlab:helpPopup logical" style="font-weight:bold">logical</a>
+
+   0
+
+ids
+
+ids =
+
+  1×388 <a href="matlab:helpPopup logical" style="font-weight:bold">logical</a> array
+
+  Columns 1 through 20
+
+   0   0   0   0   0   1   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+
+  Columns 21 through 40
+
+   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   1
+
+  Columns 41 through 60
+
+   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+
+  Columns 61 through 80
+
+   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+
+  Columns 81 through 100
+
+   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+
+  Columns 101 through 120
+
+   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+
+  Columns 121 through 140
+
+   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+
+  Columns 141 through 160
+
+   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+
+  Columns 161 through 180
+
+   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+
+  Columns 181 through 200
+
+   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+
+  Columns 201 through 220
+
+   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+
+  Columns 221 through 240
+
+   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+
+  Columns 241 through 260
+
+   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+
+  Columns 261 through 280
+
+   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+
+  Columns 281 through 300
+
+   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+
+  Columns 301 through 320
+
+   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+
+  Columns 321 through 340
+
+   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+
+  Columns 341 through 360
+
+   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+
+  Columns 361 through 380
+
+   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+
+  Columns 381 through 388
+
+   0   0   0   0   0   0   0   0
+
+find(idstmp)
+{Unrecognized function or variable 'idstmp'.
+} 
+idstmp = cellfun(@(oct) size(oct,1),octvtx) > 1;
+ids = find(idstmp);
+id = ids(i);
+octvtx(id) = octvtx{id}(1,:);
+{Conversion to cell from double is not possible.
+} 
+octvtx{id} = octvtx{id}(1,:);
+octvtx{id}
+
+ans =
+
+    0.6736   -0.7285   -0.1207    0.0307    0.9040   -0.2797   -0.2002   -0.2539
+
+if system_dependent('IsDebugMode')==1, dbquit all; end
+randOctParityData
+max_walltime = 59 minutes
+saving parameter file

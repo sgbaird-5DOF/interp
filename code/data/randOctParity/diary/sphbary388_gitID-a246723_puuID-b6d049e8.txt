@@ -1,0 +1,231 @@
+get_octpairs 
+  0  5 10 15 20 25 30 35 39 44 49 54 59 64 69 74 79 84 88 93nids: 2
+data\temp.mat
+get_octpairs 
+  0  5 10 15 20 25 30 35 40 45 50 55 60 65 70 75 80 85 90 95nids: 11
+data\temp.mat
+nmeshpts = 388, ndatapts = 500
+--delaunayn
+intersect_facet
+  0  5 10 15 20 25 30 35 40 45 50 55 60 65 70 75 80 85 90 95interpolation
+loop through datapoints
+i == 1; no valid intersection, taking NN with dist = 0.10667
+i == 13; no valid intersection, taking NN with dist = 0.20654
+i == 18; no valid intersection, taking NN with dist = 0.23177
+i == 23; no valid intersection, taking NN with dist = 0.16642
+i == 38; no valid intersection, taking NN with dist = 0.18149
+i == 46; no valid intersection, taking NN with dist = 0.23552
+i == 49; no valid intersection, taking NN with dist = 0.18957
+i == 53; no valid intersection, taking NN with dist = 0.11321
+i == 55; no valid intersection, taking NN with dist = 0.10239
+i == 78; no valid intersection, taking NN with dist = 0.12369
+i == 84; no valid intersection, taking NN with dist = 0.14363
+i == 92; no valid intersection, taking NN with dist = 0.135
+i == 93; no valid intersection, taking NN with dist = 0.14158
+i == 102; no valid intersection, taking NN with dist = 0.11609
+i == 114; no valid intersection, taking NN with dist = 0.17448
+i == 119; no valid intersection, taking NN with dist = 0.18812
+i == 133; no valid intersection, taking NN with dist = 0.14318
+i == 144; no valid intersection, taking NN with dist = 0.11309
+i == 145; no valid intersection, taking NN with dist = 0.16304
+i == 162; no valid intersection, taking NN with dist = 0.24757
+i == 165; no valid intersection, taking NN with dist = 0.22203
+i == 180; no valid intersection, taking NN with dist = 0.15793
+i == 189; no valid intersection, taking NN with dist = 0.1274
+i == 191; no valid intersection, taking NN with dist = 0.20563
+i == 196; no valid intersection, taking NN with dist = 0.13375
+i == 200; no valid intersection, taking NN with dist = 0.10604
+i == 228; no valid intersection, taking NN with dist = 0.21625
+i == 235; no valid intersection, taking NN with dist = 0.29474
+i == 240; no valid intersection, taking NN with dist = 0.20691
+i == 244; no valid intersection, taking NN with dist = 0.11638
+i == 258; no valid intersection, taking NN with dist = 0.21712
+i == 260; no valid intersection, taking NN with dist = 0.22227
+i == 263; no valid intersection, taking NN with dist = 0.19631
+i == 276; no valid intersection, taking NN with dist = 0.19624
+i == 277; no valid intersection, taking NN with dist = 0.17164
+i == 281; no valid intersection, taking NN with dist = 0.077175
+i == 284; no valid intersection, taking NN with dist = 0.11048
+i == 295; no valid intersection, taking NN with dist = 0.14357
+i == 300; no valid intersection, taking NN with dist = 0.11798
+i == 329; no valid intersection, taking NN with dist = 0.16867
+i == 330; no valid intersection, taking NN with dist = 0.11115
+i == 333; no valid intersection, taking NN with dist = 0.24975
+i == 357; no valid intersection, taking NN with dist = 0.16344
+i == 366; no valid intersection, taking NN with dist = 0.18985
+i == 383; no valid intersection, taking NN with dist = 0.11759
+i == 384; no valid intersection, taking NN with dist = 0.14379
+i == 387; no valid intersection, taking NN with dist = 0.15736
+i == 388; no valid intersection, taking NN with dist = 0.14005
+i == 390; no valid intersection, taking NN with dist = 0.22794
+i == 401; no valid intersection, taking NN with dist = 0.11669
+i == 404; no valid intersection, taking NN with dist = 0.060288
+i == 412; no valid intersection, taking NN with dist = 0.12552
+i == 415; no valid intersection, taking NN with dist = 0.16535
+i == 416; no valid intersection, taking NN with dist = 0.17906
+i == 427; no valid intersection, taking NN with dist = 0.13363
+i == 443; no valid intersection, taking NN with dist = 0.15808
+i == 451; no valid intersection, taking NN with dist = 0.24559
+i == 457; no valid intersection, taking NN with dist = 0.098376
+i == 461; no valid intersection, taking NN with dist = 0.12369
+i == 470; no valid intersection, taking NN with dist = 0.12895
+i == 472; no valid intersection, taking NN with dist = 0.26022
+i == 480; no valid intersection, taking NN with dist = 0.069519
+i == 490; no valid intersection, taking NN with dist = 0.12249
+ 
+# non-intersections: 63/500
+ 
+RMSE (J/m^2): interp == 0.1025, NN == 0.1310
+ 
+total RMSE: 0.1065, all NN RMSE comparison: 0.1332
+<a href="matlab: opentoline('C:\Users\sterg\Documents\GitHub\infer-5DOF\code\interp-5DOF\code\interp5DOF.m',512,1)">512 </a>end
+if system_dependent('IsDebugMode')==1, dbquit all; end
+tmp = get_ocubo(388,'random',[],8);
+ls
+
+.                                    ismembc_test.m                       
+..                                   knninterp.m                          
+.gitignore                           knninterp_test.m                     
+DisplayRequiredFunctions.m           license.txt                          
+GB5DOF.m                             mesh5DOF.m                           
+GB5DOF_setup.m                       meshBP.m                             
+GB5DOF_setup_test.m                  meshBP_test.m                        
+GB_octonion_code-master_CMU          meshFZ.m                             
+GBdist2.m                            meshgen.m                            
+GBdist3.m                            meshgen_test.m                       
+GBdist4.m                            misFZcon.m                           
+GBdist4_r2018a.m                     misFZcon_test.m                      
+GBdistEucl.m                         misFZfeatures_pairmin.mat            
+GBdistdis.m                          mustBeSqrt2Norm.m                    
+GBoct2five.m                         mustContainFields.m                  
+GBoct2five_r2018a.m                  myismember.m                         
+GBoct2five_test.m                    n2c.m                                
+GBoct2five_test2.m                   n2cplot.m                            
+GBpair.m                             normr.m                              
+GBpair2.m                            numStabBary.m                        
+GBpair_r2018a.m                      numStabBary_example.m                
+GBpair_test.m                        numSubplots.m                        
+InCubicFZ.m                          numSubplots_license.txt              
+Kim2011_FeGBEnergy.txt               numeric-relation-operators           
+MATslurm                             oct_vtx_pairmin.mat                  
+OSLERP_setup.m                       ocubo_pairmin.mat                    
+OSLERP_setup2.m                      olmsted_octonions.txt                
+Oh_pg.m                              optimize_zeta.m                      
+Olmsted2004_pairmin.mat              optimize_zeta_r2018a.m               
+RotMatrix.m                          optimize_zeta_test.m                 
+RotMatrix_license.txt                optimize_zeta_test_r2018a.m          
+addpathdir.m                         orthoplex.m                          
+allcomb.m                            orthoplex_test.m                     
+allcomb_license.txt                  osymset.m                            
+axpolytope.m                         osymset_r2018a.m                     
+axpolytope_test.m                    osymsets.m                           
+chebycenter.m                        osymsets_r2018a.m                    
+check_local_convexity.txt            parameters                           
+constant_colorbar.m                  parseReqFiles.m                      
+constructGBMatrices.m                parseReqFiles_test.m                 
+correctdis.m                         pd_sse.m                             
+cprnd.m                              pd_sse_r2018a.m                      
+cprnd_chebycenter_license.txt        plot5DOF.m                           
+data                                 plotFZrodriguez.m                    
+datagen.m                            plotFZrodriguez_test.m               
+datagen_setup.m                      plotFZrodriguez_vtx.m                
+datagen_test.m                       proj_down.m                          
+degdelaunayn.m                       proj_down_r2018a.m                   
+disorientation.m                     proj_down_test.m                     
+dynamicCellExample.m                 proj_up.m                            
+facet_subdiv.m                       projfacet2hyperplane.m               
+facet_subdiv_test.m                  projfacet2hyperplane_test.m          
+figures                              projray2hyperplane.m                 
+findgeometry.m                       projray2hyperplane_test.m            
+findgeometry_test.m                  projray2hypersphere.m                
+fz_inserter.m                        projray2hypersphere_test.m           
+gcfpos.m                             quaternions                          
+generate.sh                          randOctParityData.m                  
+get_cmd.m                            readNODE.m                           
+get_cmd_test.m                       rescale_test.m                       
+get_cubo.m                           rotationmat3D.m                      
+get_cubo_r2018a.m                    roundp.m                             
+get_failed.m                         run.m                                
+get_failed_test.m                    run2.m                               
+get_fname.m                          sbatch_setup.m                       
+get_interp.m                         sbatch_submit.sh                     
+get_octpairs.m                       simplex_subdiv.m                     
+get_octpairs2.m                      slightRot.m                          
+get_octpairs_r2018a.m                slightRot_test.m                     
+get_octpairs_test.m                  sphbary.m                            
+get_ocubo.m                          sphbary_setup.m                      
+get_ocubo_r2018a.m                   sphbary_test.m                       
+get_ocubo_test.m                     sphconvhulln.m                       
+get_omega.m                          sphconvhulln_test.m                  
+get_omega_r2018a.m                   sphere_stereograph.m                 
+get_repsets.m                        sphere_stereograph_inverse.m         
+get_repsets_test.m                   sphere_stereograph_test.m            
+get_sympairs.m                       sphere_stereographic_inverse_test.m  
+get_sympairs_r2018a.m                sphtri_subdiv.m                      
+hsphext_subdiv.m                     sphtri_subdiv_test.m                 
+hsphext_subdiv_test.m                sqrt2norm.m                          
+hypercube.m                          sqrt2norm_r2018a.m                   
+hypercube_test.m                     submit.sh                            
+hyperquadrant.m                      submit_sbatch.m                      
+hypersphere.m                        submit_sbatch_test.m                 
+hypersphereSetup.m                   symaxis.m                            
+hypersphere_subdiv.m                 symaxis_test.m                       
+hypersphere_subdiv_test.m            tblvertcat.m                         
+inBPFZ.m                             tblvertcat_test.m                    
+infer.sh                             testForGBFZSymmetryPlot.m            
+inhull.m                             tetgen1.5.1                          
+inhull_setup.m                       tmp.mat                              
+inmisFZ.m                            toBPFZ.m                             
+inmisFZ_test.m                       tofiveFZ.m                           
+insertrows.m                         tricollapse.m                        
+insertrows_license.txt               var_names.m                          
+interior_pairmin.mat                 vecpair2rmat.m                       
+interp5DOF.m                         vert2con.m                           
+interp5DOF_requiredFiles.txt         vert2lcon.m                          
+interp5DOF_requiredFilesGitHub.txt   vert2lcon_license.txt                
+interp5DOF_setup.m                   write_video.m                        
+interp5DOF_test.m                    write_video_test.m                   
+interpplot.m                         zeta_min2.m                          
+intersect_facet.m                    zeta_min2_r2018a.m                   
+intersect_facet_test.m               
+
+save('tmp2.mat',
+ save('tmp2.mat',
+                 ↑
+{Error: Invalid expression. When calling a function or indexing a variable, use
+parentheses. Otherwise, check for mismatched delimiters.
+} 
+save('tmp2.mat','tmp')
+whos
+  Name                 Size            Bytes  Class              Attributes
+
+  N                    1x1                 8  double                       
+  Ntrim                1x1                 8  double                       
+  argoutnames          1x4               466  cell                         
+  diaryfolder          1x24               48  char                         
+  diarynamefn          1x1                32  function_handle              
+  diarypathfn          1x1                32  function_handle              
+  env                  1x5                10  char                         
+  execfn               1x1                32  function_handle              
+  inputtype            1x1               120  cell                         
+  jid                  1x1                 8  double                       
+  jobwalltimes         1x1                 8  double                       
+  method               1x1               118  cell                         
+  ndatapts             1x1                 8  double                       
+  npredpts             1x1                 8  double                       
+  parcombsets          1x1              1540  cell                         
+  parpath              1x28               56  char                         
+  pars                 1x1               926  struct                       
+  runtype              1x4                 8  char                         
+  savefolder           1x25               50  char                         
+  savenamefn           1x1                32  function_handle              
+  savenamematch        1x56              112  char                         
+  savepathfn           1x1                32  function_handle              
+  savepathgen          1x44               88  char                         
+  tid                  1x1                 8  double                       
+  tmp                388x8             24832  double                       
+  walltimefn           1x1                32  function_handle              
+
+randOctParityData
+max_walltime = 59 minutes
+saving parameter file

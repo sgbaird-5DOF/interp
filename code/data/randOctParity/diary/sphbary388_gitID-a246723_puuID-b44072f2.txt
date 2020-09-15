@@ -1,0 +1,86 @@
+get_octpairs 
+  0  5 10 15 20 25 30 35 39 44 49 54 59 64 69 74 79 84 88 93nids: 2
+<a href="matlab: opentoline('C:\Users\sterg\Documents\GitHub\infer-5DOF\code\interp-5DOF\code\get_octpairs.m',84,1)">84  </a>if NV.o2addQ
+if system_dependent('IsDebugMode')==1, dbcont; end
+data\temp.mat
+o(1,:)
+
+ans =
+
+    0.6160   -0.5923   -0.5115   -0.0905    0.9872   -0.1305    0.0106    0.0906
+
+o(1,:)
+
+ans =
+
+    0.6160   -0.5923   -0.5115   -0.0905    0.9872   -0.1305    0.0106    0.0906
+
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+get_octpairs 
+  0  5 10 15 20 25 30 35 40 45 50 55 60 65 70 75 80 85 90 95nids: 11
+data\temp.mat
+<a href="matlab: opentoline('C:\Users\sterg\Documents\GitHub\infer-5DOF\code\interp-5DOF\code\interp5DOF.m',192,1)">192 </a>ndatapts = size(o2,1);
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+nmeshpts = 388, ndatapts = 500
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+o(1,:)
+
+ans =
+
+    0.4355   -0.4188   -0.3617   -0.0640    0.6981   -0.0923    0.0075    0.0640
+
+if system_dependent('IsDebugMode')==1, dbstep; end
+o2(1,:)
+
+ans =
+
+    0.5059   -0.4482   -0.1948    0.0721    0.6520   -0.0707   -0.2528   -0.0772
+
+if system_dependent('IsDebugMode')==1, dbstep; end
+a(1,:)
+
+ans =
+
+   -0.0087   -0.1651    0.0344    0.0971   -0.1384   -0.0030    0.0080
+
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+ppts(1,:)
+
+ans =
+
+   -0.0087   -0.1651    0.0344    0.0971   -0.1384   -0.0030    0.0080
+
+o(2,:)
+
+ans =
+
+    0.4421   -0.4180   -0.3604   -0.0007    0.6603   -0.1438   -0.1991    0.0605
+
+data.pts(2,:)
+{Unable to resolve the name data.pts.
+} 
+o2(2,:)
+
+ans =
+
+    0.4467   -0.4914   -0.1915   -0.1495    0.6834   -0.0754   -0.1535    0.0606
+
+a(1,:)
+
+ans =
+
+   -0.0087   -0.1651    0.0344    0.0971   -0.1384   -0.0030    0.0080
+
+if system_dependent('IsDebugMode')==1, dbquit; end
+randOctParityData
+max_walltime = 59 minutes
+saving parameter file

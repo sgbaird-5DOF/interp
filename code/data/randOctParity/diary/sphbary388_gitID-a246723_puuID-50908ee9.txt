@@ -1,0 +1,139 @@
+get_octpairs 
+  0  5 10 15 20 25 30 35 39 44 49 54 59 64 69 74 79 84 88 93nids: 2
+<a href="matlab: opentoline('C:\Users\sterg\Documents\GitHub\infer-5DOF\code\interp-5DOF\code\get_octpairs.m',75,1)">75  </a>	[octvtx{ids}] = octvtx{ids}(1,:);
+size(ids)
+
+ans =
+
+     1   388
+
+nids
+
+nids =
+
+     2
+
+ids(1)
+
+ans =
+
+  <a href="matlab:helpPopup logical" style="font-weight:bold">logical</a>
+
+   0
+
+ids(2)
+
+ans =
+
+  <a href="matlab:helpPopup logical" style="font-weight:bold">logical</a>
+
+   0
+
+size(octvtx)
+
+ans =
+
+     1   388
+
+octvtx{1}
+
+ans =
+
+    0.6160   -0.5923   -0.5115   -0.0905    0.9872   -0.1305    0.0106    0.0906
+
+octvtx{2}
+
+ans =
+
+    0.6252   -0.5911   -0.5097   -0.0011    0.9338   -0.2034   -0.2815    0.0856
+
+ids
+
+ids =
+
+  1×388 <a href="matlab:helpPopup logical" style="font-weight:bold">logical</a> array
+
+  Columns 1 through 20
+
+   0   0   0   0   0   1   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+
+  Columns 21 through 40
+
+   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   1
+
+  Columns 41 through 60
+
+   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+
+  Columns 61 through 80
+
+   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+
+  Columns 81 through 100
+
+   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+
+  Columns 101 through 120
+
+   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+
+  Columns 121 through 140
+
+   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+
+  Columns 141 through 160
+
+   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+
+  Columns 161 through 180
+
+   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+
+  Columns 181 through 200
+
+   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+
+  Columns 201 through 220
+
+   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+
+  Columns 221 through 240
+
+   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+
+  Columns 241 through 260
+
+   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+
+  Columns 261 through 280
+
+   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+
+  Columns 281 through 300
+
+   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+
+  Columns 301 through 320
+
+   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+
+  Columns 321 through 340
+
+   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+
+  Columns 341 through 360
+
+   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+
+  Columns 361 through 380
+
+   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+
+  Columns 381 through 388
+
+   0   0   0   0   0   0   0   0
+
+if system_dependent('IsDebugMode')==1, dbquit all; end
+randOctParityData
+max_walltime = 59 minutes
+saving parameter file
