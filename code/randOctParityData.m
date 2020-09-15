@@ -50,7 +50,7 @@ walltimefn = @() 600; %can set to constant or to depend on parameters
     writeparfile(pars,execfn,argoutnames,walltimefn,'diarypathfn',diarypathfn,'savepathfn',savepathfn);
 
 %% job submission
-env = 'local'; %'slurm', 'local'
+env = 'slurm'; %'slurm', 'local'
 switch env
     case 'slurm'
         %setup
