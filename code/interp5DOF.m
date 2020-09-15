@@ -199,7 +199,6 @@ projtol = 1e-4;
 zeroQ = false;
 o = normr(o);
 o2 = normr(o2);
-rng(10);
 [a,usv] = proj_down([o;o2],projtol,'zeroQ',zeroQ);
 
 %projected points
