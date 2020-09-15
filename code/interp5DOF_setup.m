@@ -31,6 +31,7 @@ five2 = GBoct2five(o2,true,oct2fivemethod);
 
 %get BRK function values
 propList = GB5DOF_setup(five);
+dataprops = GB5DOF_setup(five2);
 
 switch inputtype
     case '5dof'
@@ -44,7 +45,8 @@ switch inputtype
 end
 
 %% interpolation
-[propOut,interpfn,mdl,mdlpars] = interp5DOF(qm,nA,propList,qm2,nA2,method,'uuid',uuid,'o',o,'o2',o2);
+[propOut,interpfn,mdl,mdlpars] = interp5DOF(qm,nA,propList,qm2,nA2,method,...
+    'uuid',uuid,'o',o,'o2',o2,'dataprops',dataprops);
 
 %% error values
 proptrue = mdl.data.props;
