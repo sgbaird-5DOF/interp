@@ -1,13 +1,13 @@
 clear; close all
 
-addpathdir('var_names.m')
+addpathdir({'var_names.m','writeparfile.m'})
 runtype = 'test'; %'test','full'
 switch runtype
     case 'test'
         ndatapts = 388;
-        npredpts = 100;
+        npredpts = 500;
         method = {'sphbary','gpr'};
-        inputtype = {'5dof','octonion'};
+        inputtype = {'5dof','octonion'}; %'5dof','octonion'
     case 'full'
         ndatapts = [10000 20000 50000];
         npredpts = 1000;
