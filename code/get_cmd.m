@@ -49,7 +49,7 @@ disp([walltimestr ' = ' getenv(walltimestr)])
 walltime = walltimes(jid);
 tidstr_list = ['1-',int2str(N_trim(jid))];
 
-setenv('nworkers',sprintf(int2str(nworkers)))
+% setenv('nworkers',sprintf(int2str(nworkers)))
 %----------sbatch options-----------
 arrayopt = ['sbatch -a ' tidstr_list]; %consider implementing tid_list batching
 coreopt = ['-c ',int2str(cores)];
