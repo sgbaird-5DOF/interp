@@ -9,9 +9,9 @@ switch runtype
         method = {'sphbary','gpr'};
         inputtype = {'5dof','octonion'}; %'5dof','octonion'
     case 'full'
-        ndatapts = [50000];
+        ndatapts = [10000 20000 50000];
         npredpts = 10000;
-        method = {'gpr'}; %'sphbary','pbary','gpr','nn'
+        method = {'sphbary','pbary','nn'}; %'sphbary','pbary','gpr','nn'
         inputtype = {'5dof'};
 end
 
@@ -44,7 +44,7 @@ execfn = @(ndatapts,npredpts,method,inputtype) ...
 argoutnames = {'propOut','interpfn','mdl','mdlpars'};
 %i.e. [propOut,interpfn,mdl,mdlpars] = interp5DOF_setup(ndatapts,npredpts,method);
 
-walltimefn = @() 600; %can set to constant or to depend on parameters
+walltimefn = @() 300; %can set to constant or to depend on parameters
 
 %% parameter file
 [parpath, parcombsets, Ntrim, jobwalltimes] = ...
@@ -55,8 +55,8 @@ env = 'slurm'; %'slurm', 'local'
 switch env
     case 'slurm'
         %setup
-        cores = 6;
-        mem = 1024*12*cores; %total memory of job, MB
+        cores = 24;
+        mem = 1024*4*cores; %total memory of job, MB
         qosopt = 'standby'; %'', 'test', 'standby'
         scriptfpath = fullfile('MATslurm','code','submit.sh');
         %submission
