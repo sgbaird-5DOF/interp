@@ -9,7 +9,7 @@ switch runtype
         method = {'sphbary','gpr'};
         inputtype = {'5dof','octonion'}; %'5dof','octonion'
     case 'full'
-        ndatapts = [10000 20000];
+        ndatapts = [50000];
         npredpts = 10000;
         method = {'gpr'}; %'sphbary','pbary','gpr','nn'
         inputtype = {'5dof'};
@@ -56,7 +56,7 @@ switch env
     case 'slurm'
         %setup
         cores = 6;
-        mem = 1024*8*cores; %total memory of job, MB
+        mem = 1024*12*cores; %total memory of job, MB
         qosopt = 'standby'; %'', 'test', 'standby'
         scriptfpath = fullfile('MATslurm','code','submit.sh');
         %submission
