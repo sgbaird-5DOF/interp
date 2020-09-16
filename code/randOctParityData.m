@@ -54,7 +54,7 @@ env = 'slurm'; %'slurm', 'local'
 switch env
     case 'slurm'
         %setup
-        cores = 12;
+        cores = 24;
         mem = 1024*4*cores; %total memory of job, MB
         qosopt = 'standby'; %'', 'test', 'standby'
         %submission
