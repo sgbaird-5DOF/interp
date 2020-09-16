@@ -57,8 +57,9 @@ switch env
         cores = 24;
         mem = 1024*4*cores; %total memory of job, MB
         qosopt = 'standby'; %'', 'test', 'standby'
+        scriptfpath = fullfile('MATslurm','code','submit.sh');
         %submission
-        submit_sbatch(parpath,cores,mem,qosopt,'submit.sh'); %submit.sh --> exec_combs.m --> execfn (defined above)
+        submit_sbatch(parpath,cores,mem,qosopt,scriptfpath); %submit.sh --> exec_combs.m --> execfn (defined above)
         
     case 'local'
         %nested loop through jobs and tasks to generate results
