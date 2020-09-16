@@ -1,0 +1,69 @@
+Starting parallel pool (parpool) using the 'local' profile ...
+
+{Operation terminated by user during parallel.internal.getJavaFutureResult (line 15)
+
+
+In parallel.internal.pool.InteractiveClient/waitForSessionCreation (line 638)
+                [gotSession, session] = parallel.internal.getJavaFutureResult(...
+
+In parallel.internal.pool.InteractiveClient/start (line 350)
+                    obj.Session = obj.waitForSessionCreation(sessionFuture, connectionCounter, ...
+
+In parallel.Pool>iStartClient (line 796)
+spmdInitialized = client.start(poolType , numWorkers, cluster, ...
+
+In parallel.Pool.hBuildPool (line 585)
+                iStartClient(client, 'pool', cluster, guiMode, supportRestart, argsList);
+
+In parallel.internal.pool.doParpool (line 18)
+    pool = parallel.Pool.hBuildPool(constructorArgs{:});
+
+In parpool (line 98)
+    pool = parallel.internal.pool.doParpool(varargin{:});
+
+In parallel.internal.pool.PoolArrayManager.getOrAutoCreateWithCleanup (line 60)
+                        cleanPool = parpool(varargin{:});
+
+In pctTryCreatePoolIfNecessary (line 23)
+    pool = parallel.internal.pool.PoolArrayManager.getOrAutoCreateWithCleanup();
+
+In parallel_function (line 418)
+    [isPoolRunning, pool] = pctTryCreatePoolIfNecessary();
+
+In GB5DOF_setup (line 41)
+parfor k = 1:nGB
+
+In interp5DOF_setup (line 33)
+propList = GB5DOF_setup(five);
+
+In randOctParityData>@(ndatapts,npredpts,method,inputtype)interp5DOF_setup(ndatapts,npredpts,method,get_uuid(),inputtype) (line 43)
+    interp5DOF_setup(ndatapts,npredpts,method,get_uuid(),inputtype); %names need to match pars fields
+
+In exec_argfn (line 50)
+[argout{:}] = fn(argvals{:});
+
+In exec_combs (line 60)
+    out = exec_argfn(execfn,parcombs,argoutnames);
+
+In randOctParityData (line 69)
+                outtmp = exec_combs(parpath, jid, tid);
+} 
+parpool(24)
+Starting parallel pool (parpool) using the 'local' profile ...
+Connected to the parallel pool (number of workers: 24).
+
+ans = 
+
+ Pool with properties: 
+
+            Connected: true
+           NumWorkers: 24
+              Cluster: local
+        AttachedFiles: {}
+    AutoAddClientPath: true
+          IdleTimeout: 30 minutes (30 minutes remaining)
+          SpmdEnabled: true
+
+randOctParityData
+max_walltime = 59 minutes
+saving parameter file

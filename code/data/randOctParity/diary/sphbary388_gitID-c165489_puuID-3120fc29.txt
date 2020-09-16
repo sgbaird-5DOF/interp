@@ -1,0 +1,276 @@
+get_octpairs 
+  0  5 10 15 20 25 30 35 39 44 49 54 59 64 69 74 79 84 88 93data/temp.mat
+get_octpairs 
+  0  5 10 15 20 25 30 35 40 45 50 55 60 65 70 75 80 85 90 95data/temp.mat
+nmeshpts = 388, ndatapts = 500
+--delaunayn
+intersect_facet
+  0  5 10 15 20 25 30 35 40 45 50 55 60 65 70 75 80 85 90 95interpolation
+loop through datapoints
+0.029    0.046    -0.12     0.32   -0.017  -0.0061   -0.045 ... sum == 0.2065948071
+i == 5; no valid intersection, taking NN with dist = 0.16271
+0.29    -0.15    0.012     0.08   -0.038    0.073   -0.066 ... sum == 0.1999855783
+i == 6; no valid intersection, taking NN with dist = 0.17167
+0.08    -0.13     0.11    0.072   0.0017    0.052    0.035 ... sum == 0.2135230914
+i == 8; no valid intersection, taking NN with dist = 0.14918
+-0.14    0.015    0.046    -0.19   -0.014  -0.0029     0.46 ... sum == 0.1774541974
+i == 26; no valid intersection, taking NN with dist = 0.12661
+-0.36   -0.052     0.31      0.2   -0.021     0.17  -0.0032 ... sum == 0.2341927736
+i == 31; no valid intersection, taking NN with dist = 0.16694
+0.042  -0.0084     -0.2   -0.037     0.49   -0.085    0.033 ... sum == 0.2255655973
+i == 52; no valid intersection, taking NN with dist = 0.16046
+0.3   -0.031   -0.019     0.14    -0.07    -0.13    0.036 ... sum == 0.2259027432
+i == 60; no valid intersection, taking NN with dist = 0.14367
+0.13   0.0084   -0.019    0.034    -0.11     0.18 -0.00018 ... sum == 0.2194210778
+i == 64; no valid intersection, taking NN with dist = 0.10384
+-0.068   -0.098    -0.12    0.015     0.24    0.032     0.23 ... sum == 0.2342233175
+i == 67; no valid intersection, taking NN with dist = 0.12101
+-0.13   -0.031   -0.087   -0.057     0.43    0.004    0.068 ... sum == 0.1992103671
+i == 73; no valid intersection, taking NN with dist = 0.1878
+-0.038     0.29    -0.28   -0.073   -0.012  -0.0056     0.37 ... sum == 0.2531851025
+i == 75; no valid intersection, taking NN with dist = 0.21438
+0.00079    0.035    0.028    0.062   -0.046  -0.0058   0.0099 ... sum == 0.08377223575
+i == 87; no valid intersection, taking NN with dist = 0.13701
+-0.016    -0.26    0.078     0.24    0.041    0.016     0.14 ... sum == 0.241100868
+i == 91; no valid intersection, taking NN with dist = 0.17478
+0.06    0.027    0.041    -0.08     0.25     0.16    -0.19 ... sum == 0.2671614767
+i == 92; no valid intersection, taking NN with dist = 0.096106
+-1.2   0.0098     0.71      0.7     0.18    -0.12    -0.08 ... sum == 0.1951079707
+i == 97; no valid intersection, taking NN with dist = 0.20197
+0.044 -0.00062   0.0013    0.034  -0.0049     0.01   0.0043 ... sum == 0.08825673483
+i == 98; no valid intersection, taking NN with dist = 0.13476
+0.011    0.031   0.0018    -0.21    0.035     0.39   -0.006 ... sum == 0.2493628567
+i == 111; no valid intersection, taking NN with dist = 0.16797
+0.0036    -0.11    0.047   -0.026     0.14    0.074    0.085 ... sum == 0.2093992955
+i == 118; no valid intersection, taking NN with dist = 0.14199
+-0.17    -0.26     0.27    0.038    0.024     0.24    0.066 ... sum == 0.203856835
+i == 120; no valid intersection, taking NN with dist = 0.097307
+-0.038   -0.059    -0.26    -0.12  -0.0034    -0.26     0.96 ... sum == 0.2122269625
+i == 121; no valid intersection, taking NN with dist = 0.10609
+-0.11   -0.012  -0.0043   -0.036     0.28    0.079    0.033 ... sum == 0.2284479022
+i == 123; no valid intersection, taking NN with dist = 0.11516
+-0.02   0.0089     0.13   -0.047     0.25    0.044     -0.1 ... sum == 0.2586091145
+i == 124; no valid intersection, taking NN with dist = 0.1399
+-0.15     0.03   0.0028   0.0075     0.21    0.093    0.002 ... sum == 0.1996556372
+i == 131; no valid intersection, taking NN with dist = 0.11514
+-0.17  -0.0042   -0.034    -0.71      0.7    -0.18     0.62 ... sum == 0.2208751654
+i == 132; no valid intersection, taking NN with dist = 0.18753
+-0.37     0.77     0.01    0.018   -0.097     -0.2     0.12 ... sum == 0.2445436995
+i == 133; no valid intersection, taking NN with dist = 0.15469
+0.2    -0.31    0.097   -0.017     0.11     0.37    -0.21 ... sum == 0.2504021625
+i == 136; no valid intersection, taking NN with dist = 0.16051
+0.22    0.021     0.02  -0.0096    0.024    -0.11    0.077 ... sum == 0.2366486559
+i == 145; no valid intersection, taking NN with dist = 0.08552
+0.2    -0.01    0.027    0.089    -0.11   -0.022    0.018 ... sum == 0.1912684239
+i == 150; no valid intersection, taking NN with dist = 0.14342
+0.047     0.16   0.0096     0.38    -0.16     0.98     -1.3 ... sum == 0.1521684386
+i == 159; no valid intersection, taking NN with dist = 0.16601
+0.059     0.34   -0.018    0.083    0.012    -0.12    -0.14 ... sum == 0.2187170711
+i == 160; no valid intersection, taking NN with dist = 0.15476
+0.44    0.022     -0.2   -0.015     -0.1    -0.01    0.053 ... sum == 0.1859201542
+i == 165; no valid intersection, taking NN with dist = 0.17648
+-0.12   -0.027    -0.11   -0.022    -0.19   0.0042     0.65 ... sum == 0.1965644818
+i == 168; no valid intersection, taking NN with dist = 0.085247
+0.5    -0.26    0.021    -0.19    -0.21     0.18     0.13 ... sum == 0.1611326118
+i == 169; no valid intersection, taking NN with dist = 0.18085
+0.13   -0.071     0.22    -0.12  0.00083  -0.0012    0.032 ... sum == 0.1827367997
+i == 176; no valid intersection, taking NN with dist = 0.16082
+0.029   0.0096    0.046   0.0015  -0.0047    0.004 -0.00011 ... sum == 0.0845842671
+i == 179; no valid intersection, taking NN with dist = 0.11814
+-0.21   -0.015     0.19    0.041    0.048     0.18   0.0059 ... sum == 0.2361644792
+i == 180; no valid intersection, taking NN with dist = 0.18676
+0.26    -0.11    0.087    0.068    -0.11    0.023   0.0095 ... sum == 0.2159935646
+i == 186; no valid intersection, taking NN with dist = 0.13226
+0.043     0.62    -0.12    0.013   -0.017    -0.03     -0.3 ... sum == 0.1944826544
+i == 196; no valid intersection, taking NN with dist = 0.16152
+-0.17   -0.025    0.039   -0.022    -0.11    0.045     0.48 ... sum == 0.2365111896
+i == 198; no valid intersection, taking NN with dist = 0.13148
+0.1   -0.035   -0.031    -0.13    -0.33    -0.58      1.3 ... sum == 0.2666270414
+i == 200; no valid intersection, taking NN with dist = 0.21576
+0.017   0.0048    -0.21   -0.052     0.55     0.11    -0.17 ... sum == 0.2458189413
+i == 205; no valid intersection, taking NN with dist = 0.14573
+-0.11    0.045    -0.13    -0.12      1.2   -0.033     -0.6 ... sum == 0.2319749317
+i == 209; no valid intersection, taking NN with dist = 0.1729
+0.022     0.12     0.38   -0.047    -0.63    0.041     0.29 ... sum == 0.1856233402
+i == 212; no valid intersection, taking NN with dist = 0.14395
+-0.036    0.013     0.17    -0.18     0.35    0.066    -0.16 ... sum == 0.2185929338
+i == 219; no valid intersection, taking NN with dist = 0.168
+-0.77        1    -0.12    -0.65     0.25     0.72     -0.2 ... sum == 0.2221663374
+i == 230; no valid intersection, taking NN with dist = 0.18059
+-0.18    0.068   -0.068   0.0085      0.2     0.19    0.015 ... sum == 0.2356095001
+i == 235; no valid intersection, taking NN with dist = 0.14548
+0.083     0.21     0.14   -0.016    -0.17   -0.013   -0.033 ... sum == 0.1989134883
+i == 242; no valid intersection, taking NN with dist = 0.13736
+0.026      0.2    0.018     0.05    0.051    -0.13  -0.0035 ... sum == 0.2143721455
+i == 244; no valid intersection, taking NN with dist = 0.14131
+0.0058     0.41    -0.16   -0.037     0.12   0.0014    -0.11 ... sum == 0.2174027299
+i == 247; no valid intersection, taking NN with dist = 0.16888
+0.042    0.032   -0.019    -0.15 -0.00023     0.35  -0.0036 ... sum == 0.2499757463
+i == 255; no valid intersection, taking NN with dist = 0.17547
+0.012   -0.043    -0.11     0.18    0.037     0.19   -0.055 ... sum == 0.2127805706
+i == 256; no valid intersection, taking NN with dist = 0.11903
+0.011    0.024  -0.0063    0.021   0.0024  0.00076    0.033 ... sum == 0.08591046227
+i == 260; no valid intersection, taking NN with dist = 0.11029
+0.082   -0.019   -0.006  -0.0081    0.019     0.31    -0.16 ... sum == 0.2148565533
+i == 264; no valid intersection, taking NN with dist = 0.10279
+0.071    -0.22     0.23     0.04    -0.15     0.15     0.12 ... sum == 0.2401874664
+i == 276; no valid intersection, taking NN with dist = 0.1535
+-0.18    0.035     0.18    0.045     0.32    -0.17  -0.0089 ... sum == 0.2213793089
+i == 280; no valid intersection, taking NN with dist = 0.1653
+0.22   -0.051     -1.5    -0.24     0.22      1.7    -0.17 ... sum == 0.1793345531
+i == 281; no valid intersection, taking NN with dist = 0.15665
+-0.22    -0.11  -0.0089     0.01    0.087     0.44    0.045 ... sum == 0.2342498384
+i == 282; no valid intersection, taking NN with dist = 0.09968
+0.098    0.071    0.018    -0.14     0.17    0.027    -0.03 ... sum == 0.2109609204
+i == 283; no valid intersection, taking NN with dist = 0.16317
+0.054    -0.12    0.039    0.063     -0.1   -0.013     0.26 ... sum == 0.1783037079
+i == 285; no valid intersection, taking NN with dist = 0.14326
+-0.1    0.079    0.068    0.031    0.086  -0.0051   -0.012 ... sum == 0.1425324853
+i == 291; no valid intersection, taking NN with dist = 0.1321
+0.059   0.0049   -0.097     0.21   0.0029    -0.11    0.053 ... sum == 0.1212499639
+i == 301; no valid intersection, taking NN with dist = 0.14481
+0.24    0.048   -0.034   -0.043   -0.052    -0.22     0.27 ... sum == 0.2182441249
+i == 304; no valid intersection, taking NN with dist = 0.211
+-0.089    -0.18  -0.0082      0.4      0.4    -0.27  -0.0056 ... sum == 0.2533610493
+i == 305; no valid intersection, taking NN with dist = 0.19622
+0.11    0.031    0.039     0.16    -0.15    0.048    0.035 ... sum == 0.2751874101
+i == 306; no valid intersection, taking NN with dist = 0.17
+0.18   -0.063    0.097   -0.021     -0.1    -0.04     0.11 ... sum == 0.1564116028
+i == 320; no valid intersection, taking NN with dist = 0.13013
+0.31     0.17   -0.071    0.031   -0.062     0.03    -0.19 ... sum == 0.2184519696
+i == 328; no valid intersection, taking NN with dist = 0.1667
+-0.22   -0.048   -0.019      0.1    0.054   -0.037     0.39 ... sum == 0.2282385285
+i == 330; no valid intersection, taking NN with dist = 0.10842
+0.015    0.037     0.31    0.015    0.026    -0.14  -0.0048 ... sum == 0.2643458012
+i == 333; no valid intersection, taking NN with dist = 0.17022
+-0.0098    0.049    0.044    0.031     -0.2     0.26    0.024 ... sum == 0.1999841663
+i == 334; no valid intersection, taking NN with dist = 0.18714
+0.027   -0.037   -0.019     0.18    -0.31     0.39    0.026 ... sum == 0.2565951202
+i == 348; no valid intersection, taking NN with dist = 0.15689
+0.15      0.1    0.024   -0.052    -0.12    -0.02    0.091 ... sum == 0.1765725508
+i == 352; no valid intersection, taking NN with dist = 0.15809
+0.098      0.2    0.014    0.079    -0.12   0.0058   -0.027 ... sum == 0.2435657762
+i == 357; no valid intersection, taking NN with dist = 0.14085
+-0.66     0.48     0.83    0.069   0.0051    0.051     -0.6 ... sum == 0.1908384406
+i == 361; no valid intersection, taking NN with dist = 0.13899
+-0.21    0.025    0.042    0.034    0.016    0.038     0.26 ... sum == 0.1997781067
+i == 362; no valid intersection, taking NN with dist = 0.15184
+0.14   -0.036    0.033    0.066    -0.15     0.12   0.0028 ... sum == 0.1793346885
+i == 365; no valid intersection, taking NN with dist = 0.18351
+-0.25    0.028   -0.025     0.17     0.21     0.06     0.05 ... sum == 0.2473196314
+i == 371; no valid intersection, taking NN with dist = 0.10816
+-0.12     -0.1   -0.058   -0.063    0.011      0.4     0.13 ... sum == 0.2014821355
+i == 377; no valid intersection, taking NN with dist = 0.14756
+-0.13   -0.019    -0.41      0.5    -0.01    -0.07      0.4 ... sum == 0.2547540679
+i == 386; no valid intersection, taking NN with dist = 0.18311
+0.098   -0.087     -0.2    -0.68    0.028     0.22     0.83 ... sum == 0.2043194074
+i == 387; no valid intersection, taking NN with dist = 0.16037
+-0.14   -0.013   0.0045    0.048   -0.018   -0.034     0.38 ... sum == 0.2258927269
+i == 393; no valid intersection, taking NN with dist = 0.10053
+0.018     0.13   -0.074    -0.13     0.26    0.043    0.001 ... sum == 0.2462689779
+i == 402; no valid intersection, taking NN with dist = 0.18938
+0.42    0.053    0.097    0.074    0.013    -0.11    -0.33 ... sum == 0.2158235014
+i == 405; no valid intersection, taking NN with dist = 0.10552
+-0.43     0.37    -0.14    -0.33    0.029     0.44     0.28 ... sum == 0.2191695979
+i == 406; no valid intersection, taking NN with dist = 0.15497
+0.19    -0.19   -0.022   -0.066   0.0024  -0.0032     0.33 ... sum == 0.2412395655
+i == 409; no valid intersection, taking NN with dist = 0.13873
+-0.12    0.025  -0.0011    0.053     -0.1     0.29    0.033 ... sum == 0.1758289383
+i == 411; no valid intersection, taking NN with dist = 0.10673
+-0.3    -0.15   -0.093    0.044    -0.48   -0.029      1.2 ... sum == 0.210506467
+i == 414; no valid intersection, taking NN with dist = 0.14018
+0.24    0.047     0.06   -0.049    0.052    0.041     -0.2 ... sum == 0.1932464607
+i == 423; no valid intersection, taking NN with dist = 0.078453
+0.41     0.22    -0.19   -0.018    -0.16   -0.045   -0.022 ... sum == 0.1980351674
+i == 424; no valid intersection, taking NN with dist = 0.14741
+0.08    -0.13     0.11    0.092     0.06    0.038    0.015 ... sum == 0.2600576122
+i == 433; no valid intersection, taking NN with dist = 0.13187
+-0.014     0.11     -0.3   -0.028     0.05     0.41    0.036 ... sum == 0.2523321442
+i == 440; no valid intersection, taking NN with dist = 0.19144
+0.15    0.036     0.16    0.043     -0.2   -0.043    0.012 ... sum == 0.1571574237
+i == 443; no valid intersection, taking NN with dist = 0.12015
+0.044      0.3    0.025    0.011   -0.013    -0.11   -0.026 ... sum == 0.2299718594
+i == 445; no valid intersection, taking NN with dist = 0.11721
+-0.015  -0.0068    0.011     0.29     -0.1   0.0039    0.025 ... sum == 0.2084121583
+i == 449; no valid intersection, taking NN with dist = 0.11636
+0.19   -0.067   -0.077     0.08    -0.22     0.29  -0.0066 ... sum == 0.20041915
+i == 458; no valid intersection, taking NN with dist = 0.11301
+0.061     0.14    -0.47    -0.79     -0.1      1.6    -0.24 ... sum == 0.2075773399
+i == 461; no valid intersection, taking NN with dist = 0.15266
+-0.028    0.098    -0.12      0.1    -0.08     0.27   -0.028 ... sum == 0.2186333034
+i == 467; no valid intersection, taking NN with dist = 0.14618
+0.99    -0.96    -0.97     -2.6     0.88      0.6      2.2 ... sum == 0.1751818555
+i == 468; no valid intersection, taking NN with dist = 0.17128
+0.097    0.016    -0.11    0.028    0.012     0.18  -0.0031 ... sum == 0.2253293171
+i == 471; no valid intersection, taking NN with dist = 0.12118
+0.013   -0.018    0.083   -0.019  -0.0093    0.018   0.0037 ... sum == 0.07167442781
+i == 476; no valid intersection, taking NN with dist = 0.16135
+-0.00017     0.26    -0.02   -0.091      0.1    0.061    -0.11 ... sum == 0.2074780299
+i == 479; no valid intersection, taking NN with dist = 0.13845
+0.042     0.35   -0.041    0.015     0.03    -0.17   0.0036 ... sum == 0.2361435064
+i == 481; no valid intersection, taking NN with dist = 0.15082
+0.22     0.12    -0.07   -0.014    -0.12   -0.029    0.099 ... sum == 0.210296381
+i == 483; no valid intersection, taking NN with dist = 0.15818
+-0.021     0.31      0.3  -0.0075     0.13    -0.16    -0.33 ... sum == 0.2258040252
+i == 490; no valid intersection, taking NN with dist = 0.16774
+-0.022    -0.11    0.097    -0.06  -0.0037   -0.017     0.33 ... sum == 0.2156578251
+i == 493; no valid intersection, taking NN with dist = 0.16665
+0.0073    0.041    -0.11    -0.03     0.81   -0.068    -0.43 ... sum == 0.2208171677
+i == 496; no valid intersection, taking NN with dist = 0.10355
+-0.012  -0.0026     0.16    -0.21    -0.48     0.77 -0.00031 ... sum == 0.2258663234
+i == 499; no valid intersection, taking NN with dist = 0.17437
+ 
+# non-intersections: 106/500
+ 
+RMSE (J/m^2): interp == 0.9353, NN == 0.1245
+ 
+total RMSE: 0.8322, all NN RMSE comparison: 0.1278
+RMSE = 0.83224 J/m^2
+MAE = 0.74743 J/m^2
+{Error using save
+Cannot create 'sphbary388_gitID-c165489_puuID-3120fc29.mat' because 'data/randOctParity/pcombs' does not exist.
+
+Error in exec_combs (line 64)
+    save(savepath,'out','-v7.3')
+
+Error in randOctParityData (line 69)
+                outtmp = exec_combs(parpath, jid, tid);
+} 
+ls
+DisplayRequiredFunctions.m   constant_colorbar.m	    get_omega.m				license.txt		     parseReqFiles.m		  sphconvhulln_test.m
+GB5DOF.m		     constructGBMatrices.m	    get_omega_r2018a.m			mesh5DOF.m		     parseReqFiles_test.m	  sphere_stereograph.m
+GB5DOF_setup.m		     correctdis.m		    get_repsets.m			meshBP.m		     pd_sse.m			  sphere_stereograph_inverse.m
+GB5DOF_setup_test.m	     cprnd.m			    get_repsets_test.m			meshBP_test.m		     pd_sse_r2018a.m		  sphere_stereograph_test.m
+GB_octonion_code-master_CMU  cprnd_chebycenter_license.txt  get_sympairs.m			meshFZ.m		     plot5DOF.m			  sphere_stereographic_inverse_test.m
+GBdist2.m		     data			    get_sympairs_r2018a.m		meshgen.m		     plotFZrodriguez.m		  sphtri_subdiv.m
+GBdist3.m		     datagen.m			    hsphext_subdiv.m			meshgen_test.m		     plotFZrodriguez_test.m	  sphtri_subdiv_test.m
+GBdist4.m		     datagen_setup.m		    hsphext_subdiv_test.m		misFZcon.m		     plotFZrodriguez_vtx.m	  sqrt2norm.m
+GBdist4_r2018a.m	     datagen_test.m		    hypercube.m				misFZcon_test.m		     proj_down.m		  sqrt2norm_r2018a.m
+GBdistEucl.m		     degdelaunayn.m		    hypercube_test.m			misFZfeatures_pairmin.mat    proj_down_r2018a.m		  submit.sh
+GBdistdis.m		     disorientation.m		    hyperquadrant.m			mustBeSqrt2Norm.m	     proj_down_test.m		  submit_sbatch.m
+GBoct2five.m		     dynamicCellExample.m	    hypersphere.m			mustContainFields.m	     proj_up.m			  submit_sbatch_test.m
+GBoct2five_r2018a.m	     facet_subdiv.m		    hypersphereSetup.m			myismember.m		     projfacet2hyperplane.m	  symaxis.m
+GBoct2five_test.m	     facet_subdiv_test.m	    hypersphere_subdiv.m		n2c.m			     projfacet2hyperplane_test.m  symaxis_test.m
+GBoct2five_test2.m	     figures			    hypersphere_subdiv_test.m		n2cplot.m		     projray2hyperplane.m	  tblvertcat.m
+GBpair.m		     findgeometry.m		    inBPFZ.m				normr.m			     projray2hyperplane_test.m	  tblvertcat_test.m
+GBpair2.m		     findgeometry_test.m	    infer.sh				numStabBary.m		     projray2hypersphere.m	  testForGBFZSymmetryPlot.m
+GBpair_r2018a.m		     fz_inserter.m		    inhull.m				numStabBary_example.m	     projray2hypersphere_test.m   tetgen1.5.1
+GBpair_test.m		     gcfpos.m			    inhull_setup.m			numSubplots.m		     quaternions		  toBPFZ.m
+InCubicFZ.m		     generate.sh		    inmisFZ.m				numSubplots_license.txt      randOctParityData.m	  tofiveFZ.m
+Kim2011_FeGBEnergy.txt	     get_cmd.m			    inmisFZ_test.m			numeric-relation-operators   readNODE.m			  tricollapse.m
+MATslurm		     get_cmd_test.m		    insertrows.m			oct_vtx_pairmin.mat	     rescale_test.m		  var_names.m
+OSLERP_setup.m		     get_cubo.m			    insertrows_license.txt		ocubo_pairmin.mat	     rotationmat3D.m		  vecpair2rmat.m
+OSLERP_setup2.m		     get_cubo_r2018a.m		    interior_pairmin.mat		olmsted_octonions.txt	     roundp.m			  vert2con.m
+Oh_pg.m			     get_failed.m		    interp5DOF.m			optimize_zeta.m		     run.m			  vert2lcon.m
+Olmsted2004_pairmin.mat      get_failed_test.m		    interp5DOF_requiredFiles.txt	optimize_zeta_r2018a.m	     run2.m			  vert2lcon_license.txt
+RotMatrix.m		     get_fname.m		    interp5DOF_requiredFilesGitHub.txt	optimize_zeta_test.m	     sbatch_setup.m		  write_video.m
+RotMatrix_license.txt	     get_interp.m		    interp5DOF_setup.m			optimize_zeta_test_r2018a.m  sbatch_submit.sh		  write_video_test.m
+addpathdir.m		     get_octpairs.m		    interp5DOF_test.m			orthoplex.m		     simplex_subdiv.m		  zeta_min2.m
+allcomb.m		     get_octpairs2.m		    interpplot.m			orthoplex_test.m	     slightRot.m		  zeta_min2_r2018a.m
+allcomb_license.txt	     get_octpairs_r2018a.m	    intersect_facet.m			osymset.m		     slightRot_test.m
+axpolytope.m		     get_octpairs_test.m	    intersect_facet_test.m		osymset_r2018a.m	     sphbary.m
+axpolytope_test.m	     get_ocubo.m		    ismembc_test.m			osymsets.m		     sphbary_setup.m
+chebycenter.m		     get_ocubo_r2018a.m		    knninterp.m				osymsets_r2018a.m	     sphbary_test.m
+check_local_convexity.txt    get_ocubo_test.m		    knninterp_test.m			parameters		     sphconvhulln.m
+
+exit

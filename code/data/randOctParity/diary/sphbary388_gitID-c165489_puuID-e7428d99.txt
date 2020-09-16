@@ -1,0 +1,511 @@
+get_octpairs 
+  0  5 10 15 20 25 30 35 39 44 49 54 59 64 69 74 79 84 88 93data/temp.mat
+get_octpairs 
+  0  5 10 15 20 25 30 35 40 45 50 55 60 65 70 75 80 85 90 95data/temp.mat
+nmeshpts = 388, ndatapts = 500
+--delaunayn
+intersect_facet
+  0  5 10 15 20 25 30 35 40 45 50 55 60 65 70 75 80 85 90 95interpolation
+loop through datapoints
+0.1    -0.18    -0.22      1.1    0.027    -0.16     0.32 ... sum == 1
+i == 1; no valid intersection, taking NN with dist = 0.10667
+0.32    -0.19    0.044     0.49     0.04     0.12     0.18 ... sum == 1
+i == 6; no valid intersection, taking NN with dist = 0.21452
+-0.14    -0.16    0.016     -0.1     0.07    0.016      1.3 ... sum == 1
+i == 8; no valid intersection, taking NN with dist = 0.15195
+-0.14    0.012   -0.036    0.058      1.1   -0.034   0.0085 ... sum == 1
+i == 9; no valid intersection, taking NN with dist = 0.16143
+-1.4    0.023    -0.26     0.11      1.3      1.6    -0.42 ... sum == 1
+i == 10; no valid intersection, taking NN with dist = 0.17816
+0.11   -0.057    -0.27      0.8    -0.03     0.36    0.082 ... sum == 1
+i == 12; no valid intersection, taking NN with dist = 0.092942
+0.089    0.053    0.067      0.2    -0.18     0.53     0.23 ... sum == 1
+i == 13; no valid intersection, taking NN with dist = 0.20654
+-0.43     0.14     0.45     0.72    0.061    0.022    0.026 ... sum == 1
+i == 14; no valid intersection, taking NN with dist = 0.19978
+-0.11      1.5    -0.16    -0.13     0.13    -0.59     0.34 ... sum == 1
+i == 18; no valid intersection, taking NN with dist = 0.23177
+-0.4      1.5     -1.6     0.81     0.73    0.012   -0.063 ... sum == 1
+i == 21; no valid intersection, taking NN with dist = 0.16473
+-0.11      0.5   0.0029      0.6     0.19    -0.15   -0.039 ... sum == 1
+i == 22; no valid intersection, taking NN with dist = 0.17987
+-0.072     0.18     0.35     0.72     0.06   -0.098    -0.13 ... sum == 1
+i == 23; no valid intersection, taking NN with dist = 0.16642
+-0.053    -0.13  -0.0003      1.3   0.0084   -0.077   -0.081 ... sum == 1
+i == 25; no valid intersection, taking NN with dist = 0.10941
+-0.059   -0.077    -0.13     0.99   0.0081   -0.047     0.31 ... sum == 1
+i == 26; no valid intersection, taking NN with dist = 0.09771
+-0.13   -0.076     0.18   -0.007    -0.15   -0.039      1.2 ... sum == 1
+i == 27; no valid intersection, taking NN with dist = 0.15487
+0.019    -0.13    0.066     0.04    0.091     0.87    0.048 ... sum == 1
+i == 30; no valid intersection, taking NN with dist = 0.066266
+0.42    0.039    -0.23    0.013     0.49      0.2     0.07 ... sum == 1
+i == 35; no valid intersection, taking NN with dist = 0.1499
+-0.064   -0.017    0.091      1.3    -0.14    -0.12   -0.059 ... sum == 1
+i == 36; no valid intersection, taking NN with dist = 0.18308
+0.053      0.5    -0.23      1.2    -0.16     -0.1    -0.25 ... sum == 1
+i == 38; no valid intersection, taking NN with dist = 0.18149
+0.089     0.68     -0.3    0.028    0.066     0.87    -0.44 ... sum == 1
+i == 39; no valid intersection, taking NN with dist = 0.13061
+-0.27     0.88    0.081    0.011   -0.066     0.22     0.14 ... sum == 1
+i == 40; no valid intersection, taking NN with dist = 0.128
+0.044     0.49     0.74    0.033    -0.59     0.15     0.13 ... sum == 1
+i == 41; no valid intersection, taking NN with dist = 0.24013
+0.048    -0.26     0.39      0.6   -0.015     0.17    0.072 ... sum == 1
+i == 45; no valid intersection, taking NN with dist = 0.11414
+-11      -10       21     -4.2      -14      5.4       14 ... sum == 1
+i == 49; no valid intersection, taking NN with dist = 0.18957
+0.31   -0.056      1.3    -0.43    0.038    -0.15   0.0046 ... sum == 1
+i == 50; no valid intersection, taking NN with dist = 0.12922
+-0.28   -0.045      0.5     0.04     0.92    0.041    -0.18 ... sum == 1
+i == 51; no valid intersection, taking NN with dist = 0.16637
+0.39    0.054   0.0034    -0.19     0.12     0.64   -0.019 ... sum == 1
+i == 52; no valid intersection, taking NN with dist = 0.2268
+-0.011   -0.019     0.65    -0.19     0.55    0.094   -0.078 ... sum == 1
+i == 53; no valid intersection, taking NN with dist = 0.11321
+0.36      0.1   -0.017    -0.15   -0.055     0.74    0.017 ... sum == 1
+i == 59; no valid intersection, taking NN with dist = 0.19338
+-0.035    0.074     0.15     0.15    -0.12     0.59     0.19 ... sum == 1
+i == 61; no valid intersection, taking NN with dist = 0.19258
+0.17   0.0022    0.084    0.084     0.57     0.33    -0.24 ... sum == 1
+i == 66; no valid intersection, taking NN with dist = 0.1342
+-0.29     -0.1   -0.024     0.62    0.011    -0.34      1.1 ... sum == 1
+i == 67; no valid intersection, taking NN with dist = 0.26231
+4.1    -0.51     -0.3      0.3     -2.3    -0.16    -0.12 ... sum == 1
+i == 68; no valid intersection, taking NN with dist = 0.16765
+1    -0.05    -0.22   -0.074     0.43    -0.15    0.028 ... sum == 1
+i == 70; no valid intersection, taking NN with dist = 0.13291
+0.13      1.4    -0.32     -0.2    -0.74     0.58      0.2 ... sum == 1
+i == 72; no valid intersection, taking NN with dist = 0.1768
+0.53    -0.18   -0.092   0.0059     0.39    0.038     0.31 ... sum == 1
+i == 75; no valid intersection, taking NN with dist = 0.15942
+-0.0072   -0.084   -0.078   -0.081      1.5   -0.083    -0.18 ... sum == 1
+i == 76; no valid intersection, taking NN with dist = 0.10469
+0.71     0.16     0.33    -0.39   -0.029     0.17    0.039 ... sum == 1
+i == 78; no valid intersection, taking NN with dist = 0.12369
+0.21    -0.15     -0.2    -0.14   -0.025      1.3    -0.05 ... sum == 1
+i == 82; no valid intersection, taking NN with dist = 0.14386
+0.059     0.11     0.71     0.39    0.049    -0.27   -0.048 ... sum == 1
+i == 84; no valid intersection, taking NN with dist = 0.14363
+-0.048     0.82     0.59    -0.12    -0.13   -0.094   -0.014 ... sum == 1
+i == 86; no valid intersection, taking NN with dist = 0.2045
+0.49    -0.13     -0.1   -0.058   -0.026     0.46     0.37 ... sum == 1
+i == 88; no valid intersection, taking NN with dist = 0.16133
+0.32     0.15    -0.23   -0.078   -0.026     0.27     0.59 ... sum == 1
+i == 91; no valid intersection, taking NN with dist = 0.22508
+0.0012     0.12    0.064      1.1    -0.15   -0.084   -0.036 ... sum == 1
+i == 92; no valid intersection, taking NN with dist = 0.11367
+0.072     0.37    -0.26     -0.4      0.3     0.73     0.18 ... sum == 1
+i == 97; no valid intersection, taking NN with dist = 0.16464
+0.048     -0.2   -0.075   -0.047      1.4   -0.033   -0.079 ... sum == 1
+i == 98; no valid intersection, taking NN with dist = 0.13364
+0.12    -0.33    -0.15   0.0032     0.11     0.51     0.74 ... sum == 1
+i == 102; no valid intersection, taking NN with dist = 0.11609
+0.31    -0.11     0.27    -0.36     0.89    0.098   -0.099 ... sum == 1
+i == 103; no valid intersection, taking NN with dist = 0.13053
+-0.15     0.53     0.67   -0.058  0.00037     0.15    -0.14 ... sum == 1
+i == 104; no valid intersection, taking NN with dist = 0.21792
+0.48     0.11    0.029    -0.21     0.42      0.1     0.07 ... sum == 1
+i == 105; no valid intersection, taking NN with dist = 0.075792
+1.2   -0.097    -0.29    -0.05     0.13    0.014    0.072 ... sum == 1
+i == 107; no valid intersection, taking NN with dist = 0.09864
+0.035    -0.17     0.17     0.88     0.45    -0.26     -0.1 ... sum == 1
+i == 111; no valid intersection, taking NN with dist = 0.23933
+1.4      1.4     0.23     0.26    -0.84    -0.77    -0.75 ... sum == 1
+i == 112; no valid intersection, taking NN with dist = 0.15237
+0.69     0.64    -0.82     0.48    -0.24    -0.18     0.43 ... sum == 1
+i == 116; no valid intersection, taking NN with dist = 0.15212
+0.0047    0.019   -0.018    -0.27    0.074    0.068      1.1 ... sum == 1
+i == 117; no valid intersection, taking NN with dist = 0.16022
+-0.11    -0.15     0.31   -0.052     0.56    0.053     0.39 ... sum == 1
+i == 119; no valid intersection, taking NN with dist = 0.18812
+0.27     0.08    -0.19     0.98     0.48     -0.5    -0.11 ... sum == 1
+i == 120; no valid intersection, taking NN with dist = 0.18105
+-0.081    0.047    0.048     -0.2     0.47    0.028     0.68 ... sum == 1
+i == 121; no valid intersection, taking NN with dist = 0.10488
+-0.2     0.16    -0.74    0.044   -0.073   0.0019      1.8 ... sum == 1
+i == 125; no valid intersection, taking NN with dist = 0.17902
+0.99    -0.43    0.011    -0.26   -0.054     0.22     0.52 ... sum == 1
+i == 127; no valid intersection, taking NN with dist = 0.17626
+0.03     0.51     0.14    -0.21      1.4    -0.54    -0.31 ... sum == 1
+i == 129; no valid intersection, taking NN with dist = 0.16118
+0.079    -0.34   -0.084      1.2    -0.19    -0.08     0.41 ... sum == 1
+i == 133; no valid intersection, taking NN with dist = 0.18129
+0.2      1.9      0.7     -3.2      2.7      1.1     -2.4 ... sum == 1
+i == 135; no valid intersection, taking NN with dist = 0.11549
+0.044     0.28     0.72    0.074    0.082    -0.17   -0.031 ... sum == 1
+i == 136; no valid intersection, taking NN with dist = 0.21323
+1.1     -0.4      0.3   -0.096   -0.069     0.09    0.032 ... sum == 1
+i == 137; no valid intersection, taking NN with dist = 0.14941
+0.06     0.87    0.048   0.0037     0.26    -0.27    0.017 ... sum == 1
+i == 139; no valid intersection, taking NN with dist = 0.13532
+-0.26    -0.19   -0.027   -0.027    -0.15      1.9    -0.26 ... sum == 1
+i == 140; no valid intersection, taking NN with dist = 0.13378
+0.56     0.53   -0.038      0.1     0.16    -0.16    -0.15 ... sum == 1
+i == 141; no valid intersection, taking NN with dist = 0.22619
+-0.21    -0.15     0.46     0.13   -0.088    -0.19      1.1 ... sum == 1
+i == 142; no valid intersection, taking NN with dist = 0.17945
+-0.11   -0.041     0.34    0.081     0.77     0.21    -0.25 ... sum == 1
+i == 145; no valid intersection, taking NN with dist = 0.16304
+-0.51     0.44    -0.32   -0.079     -1.7        3      0.2 ... sum == 1
+i == 146; no valid intersection, taking NN with dist = 0.11879
+-1     0.29    -0.16   -0.087    -0.14      2.4    -0.27 ... sum == 1
+i == 147; no valid intersection, taking NN with dist = 0.12878
+1.4     0.18     0.44     0.58    -0.14     -1.4   -0.006 ... sum == 1
+i == 153; no valid intersection, taking NN with dist = 0.16676
+0.0057     0.46     0.65   -0.023    0.037    -0.19     0.06 ... sum == 1
+i == 154; no valid intersection, taking NN with dist = 0.24128
+0.44     0.41     0.14   0.0035    0.053    0.088    -0.13 ... sum == 1
+i == 155; no valid intersection, taking NN with dist = 0.15079
+0.16    -0.18     0.53    -0.02   0.0019   -0.033     0.53 ... sum == 1
+i == 158; no valid intersection, taking NN with dist = 0.17262
+-10      7.7      1.6     -2.2    -0.21      1.2      3.4 ... sum == 1
+i == 161; no valid intersection, taking NN with dist = 0.12679
+0.0005    -0.27     0.75    -0.16     0.47   -0.061     0.26 ... sum == 1
+i == 162; no valid intersection, taking NN with dist = 0.24757
+0.091    -0.32     0.03     0.52    0.045     0.69   -0.053 ... sum == 1
+i == 165; no valid intersection, taking NN with dist = 0.20811
+0.16     0.15    0.072    0.095   -0.099     0.97    -0.35 ... sum == 1
+i == 172; no valid intersection, taking NN with dist = 0.3043
+0.54     0.12     0.29   -0.094    -0.24    -0.11      0.5 ... sum == 1
+i == 173; no valid intersection, taking NN with dist = 0.21979
+0.68     -2.4    -0.16      5.3    -0.24       -1     -1.3 ... sum == 1
+i == 175; no valid intersection, taking NN with dist = 0.14797
+0.7   -0.099    -0.14    -0.11     0.31     0.38   -0.046 ... sum == 1
+i == 177; no valid intersection, taking NN with dist = 0.14391
+0.86     0.55    -0.23    -0.88     0.81    -0.13    0.029 ... sum == 1
+i == 179; no valid intersection, taking NN with dist = 0.23783
+0.085    0.093     0.17     -0.3     0.23      0.7    0.022 ... sum == 1
+i == 184; no valid intersection, taking NN with dist = 0.12405
+0.13     0.05     0.32     0.62     0.13     0.14    -0.39 ... sum == 1
+i == 185; no valid intersection, taking NN with dist = 0.141
+-0.88   -0.022     0.58    -0.13     -0.4      1.9   -0.091 ... sum == 1
+i == 186; no valid intersection, taking NN with dist = 0.27995
+0.74     0.22     0.14  -0.0095     0.18    0.055    -0.32 ... sum == 1
+i == 187; no valid intersection, taking NN with dist = 0.13313
+0.49    0.093    -0.32     0.74   0.0061   -0.072    0.063 ... sum == 1
+i == 188; no valid intersection, taking NN with dist = 0.24903
+-0.11      0.3    0.015     0.82    0.066    0.014   -0.097 ... sum == 1
+i == 189; no valid intersection, taking NN with dist = 0.1274
+0.49     0.72   0.0095  -0.0022    -0.34     0.13   -0.015 ... sum == 1
+i == 190; no valid intersection, taking NN with dist = 0.23453
+0.24     0.37     0.19     -2.3      2.3      1.2     -1.1 ... sum == 1
+i == 191; no valid intersection, taking NN with dist = 0.20563
+-0.21    -0.63     0.35   -0.018    -0.18    -0.11      1.8 ... sum == 1
+i == 193; no valid intersection, taking NN with dist = 0.11686
+2.8     -0.6       -3     0.12    -0.42        2    0.096 ... sum == 1
+i == 194; no valid intersection, taking NN with dist = 0.20058
+0.028     0.11    -0.29      0.3     0.91   -0.045  -0.0054 ... sum == 1
+i == 195; no valid intersection, taking NN with dist = 0.055739
+0.14     0.41     0.29  -0.0027     0.74   -0.091    -0.49 ... sum == 1
+i == 196; no valid intersection, taking NN with dist = 0.13375
+-0.083     0.63     0.47     0.18    0.088    -0.23   -0.047 ... sum == 1
+i == 197; no valid intersection, taking NN with dist = 0.11622
+-0.067     0.88     0.23     0.14    -0.17     0.21    -0.22 ... sum == 1
+i == 198; no valid intersection, taking NN with dist = 0.17553
+-0.14     0.75   -0.056    -0.18     0.12     0.29     0.21 ... sum == 1
+i == 199; no valid intersection, taking NN with dist = 0.19874
+0.31     -0.1    -0.26     0.48     0.33     0.72    -0.48 ... sum == 1
+i == 202; no valid intersection, taking NN with dist = 0.13355
+0.5    -0.48     0.69    0.057    0.065     0.06      0.1 ... sum == 1
+i == 203; no valid intersection, taking NN with dist = 0.19303
+0.51     0.49    -0.27     0.14     0.18     -0.2     0.16 ... sum == 1
+i == 204; no valid intersection, taking NN with dist = 0.15344
+-0.069    0.019    -0.67     0.96  -0.0053    0.063     0.71 ... sum == 1
+i == 205; no valid intersection, taking NN with dist = 0.15694
+0.037     0.39    0.049    0.042    -0.36     0.87   -0.029 ... sum == 1
+i == 207; no valid intersection, taking NN with dist = 0.12559
+0.13     0.44     0.43   -0.035   -0.073     0.71     -0.6 ... sum == 1
+i == 211; no valid intersection, taking NN with dist = 0.23529
+0.81     0.17    0.076    -0.38   -0.024  -0.0047     0.36 ... sum == 1
+i == 212; no valid intersection, taking NN with dist = 0.21216
+0.069    0.065     0.72    -0.14    0.035     0.17    0.084 ... sum == 1
+i == 213; no valid intersection, taking NN with dist = 0.14809
+0.91   -0.046     0.63     0.21    0.059    -0.21    -0.56 ... sum == 1
+i == 216; no valid intersection, taking NN with dist = 0.22927
+0.64    0.037    -0.17    -0.05    0.089     0.45   0.0085 ... sum == 1
+i == 219; no valid intersection, taking NN with dist = 0.19264
+0.03    0.028   0.0067     0.25    -0.12      0.3      0.5 ... sum == 1
+i == 221; no valid intersection, taking NN with dist = 0.171
+0.049     0.39   -0.062    -0.37    -0.13      1.1    0.035 ... sum == 1
+i == 222; no valid intersection, taking NN with dist = 0.16619
+-0.23    0.053   0.0016     0.72    -0.41      0.3     0.56 ... sum == 1
+i == 224; no valid intersection, taking NN with dist = 0.1741
+0.15     0.64    0.093    -0.58     0.33    0.027     0.33 ... sum == 1
+i == 225; no valid intersection, taking NN with dist = 0.1755
+0.18  -0.0022    -0.12     0.45    0.034   -0.047      0.5 ... sum == 1
+i == 228; no valid intersection, taking NN with dist = 0.21625
+-0.31     0.92     0.19     0.54   -0.016    -0.26   -0.062 ... sum == 1
+i == 229; no valid intersection, taking NN with dist = 0.14358
+0.4     -0.3   -0.066     0.96     0.24 -0.00097    -0.25 ... sum == 1
+i == 232; no valid intersection, taking NN with dist = 0.11019
+-0.12     0.33    0.096     0.24    0.066    0.065     0.32 ... sum == 1
+i == 234; no valid intersection, taking NN with dist = 0.1148
+0.75   -0.031    -0.36      0.5     0.09    0.097   -0.047 ... sum == 1
+i == 235; no valid intersection, taking NN with dist = 0.29474
+0.63   -0.093    -0.32     0.14    0.081     0.24     0.32 ... sum == 1
+i == 236; no valid intersection, taking NN with dist = 0.13742
+-0.27  -0.0077   -0.082      1.3    0.081    0.074   -0.095 ... sum == 1
+i == 242; no valid intersection, taking NN with dist = 0.065544
+0.0036        1   -0.052    -0.19    0.041      0.2   -0.021 ... sum == 1
+i == 244; no valid intersection, taking NN with dist = 0.11638
+0.17   -0.065    -0.23     0.01     0.69    0.031     0.39 ... sum == 1
+i == 246; no valid intersection, taking NN with dist = 0.13672
+-0.14      1.6     0.56      -27       20    -0.94      6.7 ... sum == 1
+i == 247; no valid intersection, taking NN with dist = 0.14897
+2.1    -0.92     0.71     -3.1      2.3    -0.27    0.097 ... sum == 1
+i == 248; no valid intersection, taking NN with dist = 0.14316
+0.02     0.34     0.45    -0.12     0.38   -0.055    -0.02 ... sum == 1
+i == 250; no valid intersection, taking NN with dist = 0.17084
+1.4      0.6    0.076     0.03    -0.52    -0.65    0.081 ... sum == 1
+i == 252; no valid intersection, taking NN with dist = 0.14798
+0.23     0.44    -0.11    0.093     -0.1     0.56     -0.1 ... sum == 1
+i == 255; no valid intersection, taking NN with dist = 0.21748
+0.11   -0.026    -0.27      1.1     0.26   -0.097   -0.081 ... sum == 1
+i == 256; no valid intersection, taking NN with dist = 0.24538
+-1.1    -0.22     0.33   -0.021    -0.04      1.9     0.15 ... sum == 1
+i == 257; no valid intersection, taking NN with dist = 0.21387
+0.056     0.35     0.15    -0.14     0.37     0.59    -0.37 ... sum == 1
+i == 258; no valid intersection, taking NN with dist = 0.21712
+0.2     0.62     0.77   0.0046    -0.36    -0.13    -0.11 ... sum == 1
+i == 260; no valid intersection, taking NN with dist = 0.22227
+0.65     0.41    0.054     0.12    -0.21     0.61    -0.63 ... sum == 1
+i == 262; no valid intersection, taking NN with dist = 0.17902
+0.013    0.037    0.098     0.63    -0.45     0.65    0.019 ... sum == 1
+i == 263; no valid intersection, taking NN with dist = 0.19631
+3.3      0.1     -2.1    -0.01     0.12     -1.4      1.1 ... sum == 1
+i == 267; no valid intersection, taking NN with dist = 0.17775
+-0.12     0.19    -0.27   -0.031    0.089     0.12        1 ... sum == 1
+i == 270; no valid intersection, taking NN with dist = 0.14809
+1.7     0.28    -0.52    -0.64     0.53     0.48    -0.83 ... sum == 1
+i == 273; no valid intersection, taking NN with dist = 0.10678
+-0.16    0.022    0.013   -0.041      1.1    0.074    0.029 ... sum == 1
+i == 274; no valid intersection, taking NN with dist = 0.16865
+1.7    0.047    -0.11    -0.46    -0.12    0.064     -0.1 ... sum == 1
+i == 275; no valid intersection, taking NN with dist = 0.14205
+-0.99      2.3     -0.1     -0.9     0.23     0.25     0.17 ... sum == 1
+i == 276; no valid intersection, taking NN with dist = 0.19624
+0.0028      1.8     -1.4     0.99    -0.23    -0.21    0.082 ... sum == 1
+i == 278; no valid intersection, taking NN with dist = 0.19056
+-0.042   -0.018    -0.14   -0.029     0.91    0.066     0.26 ... sum == 1
+i == 279; no valid intersection, taking NN with dist = 0.099592
+-0.67   -0.054   -0.098     0.04        2    -0.14   -0.065 ... sum == 1
+i == 280; no valid intersection, taking NN with dist = 0.1441
+-0.32   -0.054     0.11      1.2 -0.00064    0.071    0.028 ... sum == 1
+i == 282; no valid intersection, taking NN with dist = 0.14988
+-0.059     0.12     0.31    0.073    -0.37     0.27     0.65 ... sum == 1
+i == 283; no valid intersection, taking NN with dist = 0.15143
+0.039     0.51    0.065    0.099     0.33    -0.39     0.35 ... sum == 1
+i == 286; no valid intersection, taking NN with dist = 0.17251
+1.1      1.5    0.016    -0.31     -0.7   0.0041    -0.53 ... sum == 1
+i == 287; no valid intersection, taking NN with dist = 0.15397
+-0.15        1  -0.0067    -0.23     0.43   -0.026   -0.014 ... sum == 1
+i == 288; no valid intersection, taking NN with dist = 0.18528
+0.016    0.043    0.032     0.57     0.23    -0.13     0.23 ... sum == 1
+i == 289; no valid intersection, taking NN with dist = 0.17089
+0.47    -0.28     0.13   -0.081    0.019     0.42     0.32 ... sum == 1
+i == 290; no valid intersection, taking NN with dist = 0.16989
+0.55      0.2     0.56    -0.37     -0.1    0.067      0.1 ... sum == 1
+i == 293; no valid intersection, taking NN with dist = 0.12416
+0.26     0.16    -0.47     0.15    0.064  -0.0078     0.85 ... sum == 1
+i == 295; no valid intersection, taking NN with dist = 0.14357
+0.48    0.097     -0.8    -0.23     0.91     0.19     0.35 ... sum == 1
+i == 297; no valid intersection, taking NN with dist = 0.13474
+0.56     0.53     0.13    -0.25  -0.0029     0.15    -0.12 ... sum == 1
+i == 302; no valid intersection, taking NN with dist = 0.1834
+0.057    -0.23     -1.4    -0.26   -0.012    0.043      2.8 ... sum == 1
+i == 304; no valid intersection, taking NN with dist = 0.18072
+0.031   -0.032     0.64    -0.19     0.55    0.043   -0.041 ... sum == 1
+i == 305; no valid intersection, taking NN with dist = 0.22941
+-0.17    -0.36    0.025   -0.025      1.4    0.066      0.1 ... sum == 1
+i == 306; no valid intersection, taking NN with dist = 0.13301
+0.34     0.16    -0.11     0.52   -0.045    0.016     0.12 ... sum == 1
+i == 307; no valid intersection, taking NN with dist = 0.15241
+-0.057      0.3    0.011    -0.13     0.43  0.00022     0.44 ... sum == 1
+i == 308; no valid intersection, taking NN with dist = 0.17502
+-0.038      0.5   -0.047     0.81     0.14    -0.41    0.045 ... sum == 1
+i == 310; no valid intersection, taking NN with dist = 0.22004
+0.51    -0.73      2.7     0.27     0.56    0.012     -2.3 ... sum == 1
+i == 311; no valid intersection, taking NN with dist = 0.18668
+0.047     0.54    -0.44     0.14     0.68    0.041   -0.014 ... sum == 1
+i == 314; no valid intersection, taking NN with dist = 0.13258
+-0.11     0.39     0.37    0.093   0.0048    0.064     0.19 ... sum == 1
+i == 316; no valid intersection, taking NN with dist = 0.11895
+-0.47    -0.35      0.2     0.32        1      0.1     0.15 ... sum == 1
+i == 319; no valid intersection, taking NN with dist = 0.21287
+-0.078   -0.089    -0.12     0.37     0.88   -0.038    0.084 ... sum == 1
+i == 320; no valid intersection, taking NN with dist = 0.14179
+-0.76    -0.24     0.77    -0.23     -0.5     -0.2      2.2 ... sum == 1
+i == 323; no valid intersection, taking NN with dist = 0.2233
+-0.26     0.24  -0.0092      1.2      0.1     -0.4    0.082 ... sum == 1
+i == 327; no valid intersection, taking NN with dist = 0.19629
+0.11    -0.34      0.4     0.31    0.014     0.51   -0.017 ... sum == 1
+i == 329; no valid intersection, taking NN with dist = 0.19038
+0.053     -0.1     0.31      0.4   -0.028     0.45   -0.074 ... sum == 1
+i == 333; no valid intersection, taking NN with dist = 0.24975
+0.15   -0.024    -0.18    -0.15    -0.08      1.4    -0.12 ... sum == 1
+i == 336; no valid intersection, taking NN with dist = 0.084163
+0.72      0.4    -0.18     0.13   -0.041     0.25    -0.27 ... sum == 1
+i == 341; no valid intersection, taking NN with dist = 0.18709
+-0.3     0.19     0.24     0.64    0.057    0.047     0.12 ... sum == 1
+i == 343; no valid intersection, taking NN with dist = 0.15749
+0.34     0.48     0.31      1.5     0.17    -0.22     -1.6 ... sum == 1
+i == 349; no valid intersection, taking NN with dist = 0.1213
+-0.077    0.095     0.66    0.022   -0.048     0.79    -0.44 ... sum == 1
+i == 350; no valid intersection, taking NN with dist = 0.18501
+-0.042    -0.15    0.023    0.038      1.1    0.036    0.029 ... sum == 1
+i == 352; no valid intersection, taking NN with dist = 0.1271
+-1.2    0.014     0.84    -0.14     0.58    0.036     0.85 ... sum == 1
+i == 353; no valid intersection, taking NN with dist = 0.18076
+0.15   -0.098     0.61   -0.044     0.59   -0.098    -0.11 ... sum == 1
+i == 354; no valid intersection, taking NN with dist = 0.21256
+0.52     0.16     0.55     0.19  -0.0072     -0.4   -0.018 ... sum == 1
+i == 356; no valid intersection, taking NN with dist = 0.15105
+0.54     0.22    -0.11     0.36   0.0037    0.022   -0.041 ... sum == 1
+i == 359; no valid intersection, taking NN with dist = 0.18961
+-0.089      1.1     0.39    -0.09    -0.14     -0.1   -0.041 ... sum == 1
+i == 360; no valid intersection, taking NN with dist = 0.12898
+0.004     0.87   -0.031   -0.086    -0.11      0.3     0.04 ... sum == 1
+i == 362; no valid intersection, taking NN with dist = 0.080593
+-0.071     0.32     0.98       -1   -0.074    0.047      0.8 ... sum == 1
+i == 366; no valid intersection, taking NN with dist = 0.18985
+0.37     0.51     0.32     0.23   -0.012    -0.18    -0.23 ... sum == 1
+i == 370; no valid intersection, taking NN with dist = 0.13495
+0.15      1.3     0.53     -2.2      1.7     0.78     -1.3 ... sum == 1
+i == 371; no valid intersection, taking NN with dist = 0.11223
+-0.13    -0.23   -0.044   -0.051   -0.077      1.5   -0.013 ... sum == 1
+i == 373; no valid intersection, taking NN with dist = 0.11466
+0.35    0.047    0.087     0.04    0.047     0.53     -0.1 ... sum == 1
+i == 374; no valid intersection, taking NN with dist = 0.11419
+0.27    -0.12     0.58      1.4    -0.21    -0.77    -0.19 ... sum == 1
+i == 376; no valid intersection, taking NN with dist = 0.17
+1.8     0.17     -1.9   -0.029     -0.3      1.5    -0.18 ... sum == 1
+i == 379; no valid intersection, taking NN with dist = 0.19608
+-0.37     0.02      1.3      0.4     0.12    -0.39    -0.12 ... sum == 1
+i == 381; no valid intersection, taking NN with dist = 0.17433
+-1.6     0.44    0.065      2.2   -0.063   -0.046   -0.054 ... sum == 1
+i == 382; no valid intersection, taking NN with dist = 0.11167
+0.1     0.82     0.14      0.5    0.054    -0.16    -0.46 ... sum == 1
+i == 383; no valid intersection, taking NN with dist = 0.11759
+-0.066    0.062   -0.023      1.2    -0.45    -0.14     0.39 ... sum == 1
+i == 385; no valid intersection, taking NN with dist = 0.11732
+-0.23      0.3     0.72    0.054     0.11     0.27    -0.22 ... sum == 1
+i == 389; no valid intersection, taking NN with dist = 0.19815
+-0.4     0.37    0.054   -0.014      1.1     0.12    -0.26 ... sum == 1
+i == 391; no valid intersection, taking NN with dist = 0.22945
+-0.14      1.4    -0.36     -0.3    0.029     0.27      0.1 ... sum == 1
+i == 392; no valid intersection, taking NN with dist = 0.15089
+-0.39     0.14   -0.051    0.053     0.29   -0.036     0.98 ... sum == 1
+i == 396; no valid intersection, taking NN with dist = 0.19059
+0.6     0.11    0.037      0.4     0.25    -0.21    -0.18 ... sum == 1
+i == 399; no valid intersection, taking NN with dist = 0.16845
+-0.23    0.038     -0.1     0.98   -0.079    -0.07     0.46 ... sum == 1
+i == 402; no valid intersection, taking NN with dist = 0.094898
+-0.095    -0.57     -0.2      1.4     0.25   -0.035     0.24 ... sum == 1
+i == 405; no valid intersection, taking NN with dist = 0.20993
+2     0.53    -0.93   -0.014    -0.15     0.09     -0.5 ... sum == 1
+i == 406; no valid intersection, taking NN with dist = 0.12015
+0.021    0.066     0.26     0.33   -0.014     0.47    -0.13 ... sum == 1
+i == 407; no valid intersection, taking NN with dist = 0.17861
+1.5     -1.9   -0.072   -0.038   -0.093     0.29      1.3 ... sum == 1
+i == 409; no valid intersection, taking NN with dist = 0.13012
+-0.1   -0.028    -0.13      1.2    0.012    0.078   0.0088 ... sum == 1
+i == 410; no valid intersection, taking NN with dist = 0.1163
+0.99      0.1    0.092   -0.056    -0.28    0.076    0.072 ... sum == 1
+i == 411; no valid intersection, taking NN with dist = 0.091969
+-0.042     0.88    -0.04      0.4    0.029    -0.22   -0.011 ... sum == 1
+i == 412; no valid intersection, taking NN with dist = 0.12552
+-1.2     0.21     0.35    -0.28       -1    -0.28      3.2 ... sum == 1
+i == 413; no valid intersection, taking NN with dist = 0.11215
+-0.26     0.77     0.15     -0.2    -0.31     0.82    0.032 ... sum == 1
+i == 415; no valid intersection, taking NN with dist = 0.16535
+-0.24    -0.09     0.23     0.58    0.046     0.46    0.018 ... sum == 1
+i == 418; no valid intersection, taking NN with dist = 0.13473
+-0.16      0.1     0.84    -0.32     0.64   -0.015   -0.098 ... sum == 1
+i == 419; no valid intersection, taking NN with dist = 0.14956
+0.83  -0.0083   -0.034    -0.16    0.025     0.32    0.035 ... sum == 1
+i == 420; no valid intersection, taking NN with dist = 0.16663
+-0.1     0.44     0.15     0.16     0.79    -0.49    0.048 ... sum == 1
+i == 423; no valid intersection, taking NN with dist = 0.13689
+1.6   0.0024     -0.4     0.29    -0.26    -0.22    0.017 ... sum == 1
+i == 424; no valid intersection, taking NN with dist = 0.20963
+0.052     0.41      0.3     0.33    -0.23    0.099    0.037 ... sum == 1
+i == 425; no valid intersection, taking NN with dist = 0.12269
+2.4     0.66   -0.051     0.04    -0.36     -1.2     -0.5 ... sum == 1
+i == 429; no valid intersection, taking NN with dist = 0.11644
+-0.77      2.2   -0.058     -0.1   -0.086    0.085    -0.24 ... sum == 1
+i == 432; no valid intersection, taking NN with dist = 0.17693
+-0.0048    -0.44    -0.08    -0.08    -0.13      1.5      0.2 ... sum == 1
+i == 433; no valid intersection, taking NN with dist = 0.22803
+0.24     0.61     0.08     0.25    0.029    -0.28     0.08 ... sum == 1
+i == 435; no valid intersection, taking NN with dist = 0.1634
+-0.79        2   -0.076    -0.14    0.085     0.02   -0.068 ... sum == 1
+i == 438; no valid intersection, taking NN with dist = 0.12576
+-0.0012    0.083    -0.19    -0.26      1.4    0.098   -0.098 ... sum == 1
+i == 440; no valid intersection, taking NN with dist = 0.16675
+0.0021      0.1    -0.11      1.1    0.085     0.08    -0.28 ... sum == 1
+i == 444; no valid intersection, taking NN with dist = 0.11496
+0.024    0.034    0.073    -0.14     0.37     0.27     0.37 ... sum == 1
+i == 445; no valid intersection, taking NN with dist = 0.27456
+-0.54     0.58     0.37     0.55    0.096   -0.041   -0.013 ... sum == 1
+i == 447; no valid intersection, taking NN with dist = 0.092673
+0.34   -0.035     0.16     0.11     0.11     -0.2     0.51 ... sum == 1
+i == 449; no valid intersection, taking NN with dist = 0.17298
+0.14     0.28    -0.18        1    -0.44     0.13    0.021 ... sum == 1
+i == 451; no valid intersection, taking NN with dist = 0.24559
+-0.15        1    0.071   -0.001    -0.11  0.00099     0.15 ... sum == 1
+i == 455; no valid intersection, taking NN with dist = 0.17352
+0.065      0.2   -0.027    0.023     0.49     0.39    -0.14 ... sum == 1
+i == 458; no valid intersection, taking NN with dist = 0.16474
+0.32     0.63     0.29    0.083    0.055    -0.32   -0.056 ... sum == 1
+i == 459; no valid intersection, taking NN with dist = 0.17204
+0.049     0.15    -0.38   -0.021     0.87   0.0041     0.33 ... sum == 1
+i == 464; no valid intersection, taking NN with dist = 0.11937
+0.079     0.71     0.36    -0.09    -0.78     0.15     0.57 ... sum == 1
+i == 465; no valid intersection, taking NN with dist = 0.16789
+0.048     0.27      0.7   -0.081    -0.31     0.42   -0.048 ... sum == 1
+i == 467; no valid intersection, taking NN with dist = 0.15128
+0.31     0.44     0.23    0.058    0.064    -0.19    0.089 ... sum == 1
+i == 468; no valid intersection, taking NN with dist = 0.15224
+-0.34     0.94   -0.063     0.13     0.14   -0.026     0.21 ... sum == 1
+i == 470; no valid intersection, taking NN with dist = 0.21249
+-0.066    -0.43   0.0069   0.0081      1.5   0.0044    -0.05 ... sum == 1
+i == 471; no valid intersection, taking NN with dist = 0.17676
+-0.024   -0.033    -0.21   -0.043    -0.04     0.87     0.48 ... sum == 1
+i == 472; no valid intersection, taking NN with dist = 0.26022
+0.073    -0.14   -0.086    0.054    -0.44     0.77     0.77 ... sum == 1
+i == 478; no valid intersection, taking NN with dist = 0.13684
+-0.13   -0.059      1.2     0.16    -0.25     0.35    -0.24 ... sum == 1
+i == 479; no valid intersection, taking NN with dist = 0.17969
+-0.12    0.094    0.039     0.19     0.37     0.41    0.013 ... sum == 1
+i == 481; no valid intersection, taking NN with dist = 0.21977
+0.95    0.025   0.0067    -0.13    0.058     0.03    0.057 ... sum == 1
+i == 482; no valid intersection, taking NN with dist = 0.21886
+2.2     0.46    -0.35    0.057     -1.1   -0.016     -0.3 ... sum == 1
+i == 484; no valid intersection, taking NN with dist = 0.086817
+0.52    -0.22     0.17    0.007     0.13    0.083      0.3 ... sum == 1
+i == 487; no valid intersection, taking NN with dist = 0.17093
+0.69    -0.21    0.033    0.023   -0.022     0.62    -0.13 ... sum == 1
+i == 488; no valid intersection, taking NN with dist = 0.19785
+0.63     0.14    0.014   -0.042   0.0092     -0.1     0.35 ... sum == 1
+i == 489; no valid intersection, taking NN with dist = 0.13437
+0.18    0.082        1    -0.05    -0.17   -0.071  -0.0014 ... sum == 1
+i == 491; no valid intersection, taking NN with dist = 0.18226
+0.019     0.76   -0.046  -0.0017    -0.16     0.41    0.027 ... sum == 1
+i == 492; no valid intersection, taking NN with dist = 0.23197
+-0.0031    -0.57    -0.06    0.065     0.97     0.46     0.14 ... sum == 1
+i == 493; no valid intersection, taking NN with dist = 0.14504
+0.14    0.027      0.2     0.66  -0.0065     0.23    -0.25 ... sum == 1
+i == 494; no valid intersection, taking NN with dist = 0.12137
+0.4   -0.068    0.045    -0.12      1.1    0.045    -0.44 ... sum == 1
+i == 497; no valid intersection, taking NN with dist = 0.12529
+-0.058   -0.019   -0.059   -0.027      1.1    -0.13      0.2 ... sum == 1
+i == 500; no valid intersection, taking NN with dist = 0.14025
+ 
+# non-intersections: 247/500
+ 
+RMSE (J/m^2): interp == 0.1056, NN == 0.1499
+ 
+total RMSE: 0.1294, all NN RMSE comparison: 0.1374
+RMSE = 0.1294 J/m^2
+MAE = 0.08779 J/m^2

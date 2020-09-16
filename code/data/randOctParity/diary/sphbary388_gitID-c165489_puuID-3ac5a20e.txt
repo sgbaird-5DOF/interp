@@ -1,0 +1,38 @@
+get_octpairs 
+  0  5 10 15 20 25 30 35 39 44 49 54 59 64 69 74 79 84 88 93data/temp.mat
+get_octpairs 
+  0  5 10 15 20 25 30 35 40 45 50 55 60 65 70 75 80 85 90 95data/temp.mat
+nmeshpts = 388, ndatapts = 500
+--delaunayn
+intersect_facet
+  0  5 10 15 20{Operation terminated by user during distcomp.remoteparfor/getCompleteIntervals (line 374)
+
+
+In parallel_function>distributed_execution (line 745)
+        [tags, out] = P.getCompleteIntervals(chunkSize);
+
+In parallel_function (line 577)
+    R = distributed_execution(...
+
+In intersect_facet (line 87)
+parfor i  = 1:ndatapts % parfor compatible
+
+In interp5DOF (line 270)
+            intfacetIDs = intersect_facet(ppts,K,ppts2,inttol,'inttype','planar','nnMax',nnMax);
+
+In interp5DOF_setup (line 47)
+[propOut,interpfn,mdl,mdlpars] = interp5DOF(qm,nA,propList,qm2,nA2,method,'puuid',puuid,'o',o,'o2',o2);
+
+In randOctParityData>@(ndatapts,npredpts,method,inputtype)interp5DOF_setup(ndatapts,npredpts,method,get_uuid(),inputtype) (line 43)
+    interp5DOF_setup(ndatapts,npredpts,method,get_uuid(),inputtype); %names need to match pars fields
+
+In exec_argfn (line 50)
+[argout{:}] = fn(argvals{:});
+
+In exec_combs (line 60)
+    out = exec_argfn(execfn,parcombs,argoutnames);
+
+In randOctParityData (line 69)
+                outtmp = exec_combs(parpath, jid, tid);
+} 
+exit
