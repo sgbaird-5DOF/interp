@@ -1,7 +1,7 @@
 clear; close all
 
 addpathdir({'var_names.m','writeparfile.m'})
-runtype = 'test'; %'test','full'
+runtype = 'full'; %'test','full'
 switch runtype
     case 'test'
         ndatapts = 388;
@@ -12,6 +12,7 @@ switch runtype
         ndatapts = [10000 20000 50000];
         npredpts = 1000;
         method = {'gpr'}; %'sphbary','pbary','gpr','nn'
+        inputtype = {'5dof'};
 end
 
 %% functions to generate save filepaths
@@ -54,8 +55,8 @@ env = 'slurm'; %'slurm', 'local'
 switch env
     case 'slurm'
         %setup
-        cores = 24;
-        mem = 1024*4*cores; %total memory of job, MB
+        cores = 12;
+        mem = 1024*8*cores; %total memory of job, MB
         qosopt = 'standby'; %'', 'test', 'standby'
         scriptfpath = fullfile('MATslurm','code','submit.sh');
         %submission
