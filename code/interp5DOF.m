@@ -361,11 +361,11 @@ switch method
             maxhyperobj = ncores*6;
             gprParallelQ = true;
             hyperoptimizer = 'bayesopt';
-            if ndatapts > 10000
-                PredictMethod = 'bcd'; %'exact', 'bcd'
-            else
-                PredictMethod = 'exact';
-            end
+            %if ndatapts > 10000
+            %    PredictMethod = 'bcd'; %'exact', 'bcd'
+            %else
+            PredictMethod = 'exact';
+            %end
             ActiveSetMethod = 'entropy';
             FitMethod = 'fic';
             hyperopts = struct('UseParallel',gprParallelQ,'Optimizer',hyperoptimizer,'MaxObjectiveEvaluations',maxhyperobj);
