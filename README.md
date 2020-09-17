@@ -15,7 +15,6 @@ the beginning of functions, which is used extensively throughout). For users of 
 - [Statistics and Machine Learning Toolbox](https://www.mathworks.com/products/statistics.html) (for Gaussian Process Regression: [fitrgp()](https://www.mathworks.com/help/stats/fitrgp.html), [fitrgp.predict()](https://www.mathworks.com/help/stats/compactregressiongp.predict.html))
 - [Parallel Computing Toolbox](https://www.mathworks.com/products/parallel-computing.html) (optional, but for fitrgp() may need to change `hyperopts = struct('UseParallel',true,'Optimizer','bayesopt','MaxObjectiveEvaluations',maxhyperobj);` to `hyperopts = struct('UseParallel',false,'Optimizer','bayesopt','MaxObjectiveEvaluations',maxhyperobj);` in [interp5DOF.m](code/interp5DOF.m) under "method-specific interpolation" section --> 'gpr' case.)
 - [Symbolic Math Toolbox](https://www.mathworks.com/products/symbolic.html) (optional, for [numStabBary.m](code/numStabBary.m))
-- [Signal Processing Toolbox](https://www.mathworks.com/products/symbolic.html)
 
 ### Files
 See [File dependencies](https://github.com/sgbaird/octonion-mesh/blob/master/README.md#file-dependencies)
