@@ -61,12 +61,7 @@ else
 end
 
 % legend('intersecting','non-intersecting')
-
-if ~isempty(opts)
-	title([lbl '_res' int2str(opts.res)],'interpreter','none')
-else
-	title(lbl)
-end
+title([lbl ' misFZ'])
 
 nexttile
 hold on
@@ -131,12 +126,7 @@ end
 
 axis equal tight vis3d off
 
-if ~isempty(opts)
-	title([lbl '_nint' int2str(opts.nint)],'interpreter','none')
-else
-	title(lbl)
-end
-
+title([lbl ' BP Normal'])
 
 %--------------------------------CODE GRAVEYARD----------------------------
 %{
@@ -150,4 +140,17 @@ end
 % 	ilist = varargin{2};
 % end
 
+
+if ~isempty(opts)
+	title([lbl '_res' int2str(opts.res)],'interpreter','none')
+else
+	title(lbl)
+end
+
+
+if ~isempty(opts)
+	title([lbl '_nint' int2str(opts.nint)],'interpreter','none')
+else
+	title(lbl)
+end
 %}

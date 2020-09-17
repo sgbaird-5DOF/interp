@@ -1,11 +1,13 @@
-function [datainterp,databary,facetprops,varargout] = ...
-	get_interp(mesh,data,intfacetIDs,barytype,barytol)
+function [datainterp,databary,facetprops,nndistList,nonintDists] = ...
+	get_interp(mesh,data,intfacetIDs,barytype,barytol,NV)
 arguments
 	mesh struct {mustContainFields(mesh,{'pts','ppts','props','sphK'})}
 	data struct {mustContainFields(data,{'pts','ppts','props'})}
 	intfacetIDs cell
 	barytype char {mustBeMember(barytype,{'planar','spherical'})} = 'planar'
 	barytol double = double.empty
+    NV.saveQ logical = false
+    NV.savename char = 'temp.mat'
 end
 %--------------------------------------------------------------------------
 % Author: Sterling Baird
@@ -177,7 +179,10 @@ disp(' ')
 disp(['RMSE (J/m^2): interp == ' num2str(interpRMSE,'%3.4f') ', NN == ' num2str(nnRMSE,'%3.4f')])
 disp(' ')
 disp(['total RMSE: ' num2str(totRMSE,'%3.4f') ', all NN RMSE comparison: ' num2str(allnnRMSE,'%3.4f')])
-varargout = {nndistList,nonintDists};
+
+if NV.saveQ
+    save(NV.savename)
+end
 
 end
 

@@ -1,4 +1,7 @@
 function interpplot(fname)
+arguments
+   fname char
+end
 %--------------------------------------------------------------------------
 % Author: Sterling Baird
 %
@@ -19,7 +22,7 @@ function interpplot(fname)
 %--------------------------------------------------------------------------
 
 %load info
-addpathdir({fname})
+addpathdir(fname)
 vars = {'mesh','data','datainterp','nnID','ilist','nndistList','nonintDists',...
 	'interpSE','nnSE','interpRMSE','nnRMSE'};
 load(fname,vars{:})
