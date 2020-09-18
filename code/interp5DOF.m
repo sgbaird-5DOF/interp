@@ -358,7 +358,7 @@ switch method
         %gpr options
         if isempty(NV.gpropts)
             % interp5DOF's default gpr options
-            maxhyperobj = ncores*6;
+            maxhyperobj = ncores*2;
             gprParallelQ = true;
             hyperoptimizer = 'bayesopt';
             %if ndatapts > 10000
