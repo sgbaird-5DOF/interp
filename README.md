@@ -25,7 +25,7 @@ Linux-specific commands given.
 ### Step0: download the code
 See [cloning a repository](https://docs.github.com/en/github/creating-cloning-and-archiving-repositories/cloning-a-repository) and [git submodules](https://git-scm.com/book/en/v2/Git-Tools-Submodules) for more information or other options such as using GitHub Desktop (Windows, Linux, etc.) or downloading a .zip file.
 
-`git clone --recurse-submodules https://github.com/sgbaird/octonion-inference.git`
+`git clone --recurse-submodules https://github.com/sgbaird-5DOF/interp.git`
 
 Verify that MATslurm is not an empty directory. If you're using GitHub Desktop, you may need to clone the directory with the above command using Git Bash, which can be opened via ``` Ctrl-` ``` or on the toolbar via Repository-->"Open in Git Bash".
 
