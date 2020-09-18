@@ -4,14 +4,8 @@ arguments
 	method char {mustBeMember(method,{'random','uniform'})} = 'random'
 	sidelength {mustBeNonNegIntegerOrEmpty} = double.empty
 end
+% GET_OCUBO  get n quaternions from randomly or uniformly sampled cubochoric points
 %--------------------------------------------------------------------------
-% Author: Sterling Baird
-%
-% Date: 2020-07-25
-%
-% Description: get n quaternions from randomly or uniformly sampled
-% cubochoric points
-%
 % Inputs:
 %		n - # of octonions to output (re-calculated if using 'uniform' method
 %		and sidelength is specified
@@ -27,6 +21,15 @@ end
 %
 % Dependencies: cu2qu.m (De Graef CMU group, see GB Octonion code)
 %
+% References:
+% [1] Singh, S., & De Graef, M. (2016). Orientation sampling for 
+% dictionary-based diffraction pattern indexing methods. Modelling and
+% Simulation in Materials Science and Engineering, 24(8).
+% https://doi.org/10.1088/0965-0393/24/8/085013
+%
+% Author: Sterling Baird
+%
+% Date: 2020-07-25
 %--------------------------------------------------------------------------
 if strcmp(method,'uniform') && isempty(sidelength)
 	sidelength = ceil(n^(1/3)); % auto-calculate sidelength
