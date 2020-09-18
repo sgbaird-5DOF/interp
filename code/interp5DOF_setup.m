@@ -25,7 +25,7 @@ genseed = 10;
 rng(genseed);
 
 %convert to 5DOF
-oct2fivemethod = 'simple'; %'reverse', 'simple'
+oct2fivemethod = 'reverse'; %'reverse', 'simple'
 five = GBoct2five(o,true,oct2fivemethod);
 five2 = GBoct2five(o2,true,oct2fivemethod);
 
