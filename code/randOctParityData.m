@@ -1,5 +1,6 @@
 clear; close all
-
+%loop through different combinations of parameters using random,
+%octochorically sampled octonions
 addpathdir({'var_names.m','writeparfile.m'})
 runtype = 'full'; %'test','full'
 switch runtype
