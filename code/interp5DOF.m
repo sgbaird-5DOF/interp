@@ -363,24 +363,32 @@ switch method
     case 'gpr'
         %gpr options
         if isempty(NV.gpropts)
-            % interp5DOF's default gpr options
-            maxhyperobj = ncores*2;
+            %% interp5DOF's default gpr options
+            %maxhyperobj = ncores*2;
+            %gprParallelQ = true;
+            %hyperoptimizer = 'bayesopt';
+            %%if ndatapts > 10000
+            %%    PredictMethod = 'bcd'; %'exact', 'bcd'
+            %%else
+            %PredictMethod = 'exact';
+            %%end
+            %ActiveSetMethod = 'entropy';
+            %FitMethod = 'fic';
+            %hyperopts = struct('UseParallel',gprParallelQ,'Optimizer',hyperoptimizer,'MaxObjectiveEvaluations',maxhyperobj);
+            %gpropts = { ...
+            %'OptimizeHyperparameters',{'KernelScale','Sigma'},...
+            %'HyperparameterOptimizationOptions',hyperopts,...
+            %'PredictMethod',PredictMethod,...
+            %'ActiveSetMethod',ActiveSetMethod,...
+            %'FitMethod',FitMethod};
+
+            maxhyperobj = 30; %default
             gprParallelQ = true;
-            hyperoptimizer = 'bayesopt';
-            %if ndatapts > 10000
-            %    PredictMethod = 'bcd'; %'exact', 'bcd'
-            %else
-            PredictMethod = 'exact';
-            %end
-            ActiveSetMethod = 'entropy';
-            FitMethod = 'fic';
-            hyperopts = struct('UseParallel',gprParallelQ,'Optimizer',hyperoptimizer,'MaxObjectiveEvaluations',maxhyperobj);
+            [hyperoptimizer,PredictMethod,ActiveSetMethod,FitMethod]=deal('default');
+            hyperopts = struct('UseParallel',gprParallelQ);
             gpropts = { ...
-                'OptimizeHyperparameters',{'KernelScale','Sigma'},...
-                'HyperparameterOptimizationOptions',hyperopts,...
-                'PredictMethod',PredictMethod,...
-                'ActiveSetMethod',ActiveSetMethod,...
-                'FitMethod',FitMethod};
+            'OptimizeHyperparameters',{'KernelScale','Sigma'},...
+            'HyperparameterOptimizationOptions',hyperopts)};
         else
             % user-supplied gpr options
             gpropts = NV.gpropts;
