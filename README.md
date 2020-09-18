@@ -40,7 +40,7 @@ Verify that MATslurm is not an empty directory. If you're using GitHub Desktop, 
 \>\> `run`
 
 #### Simple Example Data
-Separate from [interp5DOF_test.m](code/interp5DOF_test.m) and [run.m](code/run.m)
+Separate from [interp5DOF_test.m](code/interp5DOF_test.m) or [run.m](code/run.m)
 ```
 npts = 100;
 qm = get_cubo(npts); nA = normr(rand(npts,3)); %random (qm,nA) pairs
