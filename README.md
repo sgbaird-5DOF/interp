@@ -37,6 +37,14 @@ Verify that MATslurm is not an empty directory. If you're using GitHub Desktop, 
 
 \>\> `interp5DOF_test`
 
+#### Simple Example Data
+```
+npts = 100;
+qm = get_cubo(npts); nA = normr(rand(npts,3)); %random (qm,nA) pairs
+propList = 1:npts; %property values
+qm2 = get_cubo(npts); nA2 = normr(rand(npts,3)); %random (qm,nA) pairs
+```
+
 ## Accessing functions via addpathdir()
 dir() and addpath() commands are used to locate functions in subfolders of the current working directory via a custom function [addpathdir.m](code/addpathdir.m). This could give anomalous behavior if the directory structure is changed such that filenames are non-unique in sub-folders of the parent folder where addpathdir() gets called, or if files with the same name are present elsewhere on the user's MATLAB path. This is also the only function that is shadowed (to my knowledge) within this repository (it's shadowed by [octonion-mesh](code/octonion-mesh/)); however, the functionality is fairly basic, and I don't anticipate any changes to the functionality. In other words, it shouldn't matter which one gets called.
 
