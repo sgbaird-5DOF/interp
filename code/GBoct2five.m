@@ -2,7 +2,7 @@ function five = GBoct2five(octlist,disQ,method)
 arguments
 	octlist(:,8) double {mustBeNumeric,mustBeFinite}
 	disQ(1,1) logical = true
-    method char {mustBeMember(method,{'reverse','simple'})} = 'reverse'
+    method char = 'NA'
 end
 %--------------------------------------------------------------------------
 % Author: Sterling Baird
@@ -22,13 +22,8 @@ end
 %		normal, rodrigues vector, and misFZ geometry type, respectively)
 %
 % Dependencies:
-%  findgeometry.m
-%  q2rod.m
-%  GBoct2five_vec() (helper function)
-%   --qu2ax.m
-%   --qmult.m
-%   --normr.m
-%   --qinv.m
+%		findgeometry.m
+%
 %--------------------------------------------------------------------------
 npts = size(octlist,1);
 
@@ -39,157 +34,113 @@ five(1).nA = [];
 five(1).d = [];
 five(1).geometry = '';
 
-%get quaternion and BP normal
-switch method
-    case 'reverse'
-        [q,nA] = GBoct2five_vec(octlist); %reverse steps of GBfive2oct.m
-    case 'simple'
-        [q,nA] = GBoct2five_vec2(octlist); %as discussed in CMU octonion paper
+%textwaitbar setup
+waitbarQ = false;
+if waitbarQ
+	slurmQ = true;
+	D = parallel.pool.DataQueue;
+	afterEach(D, @nUpdateProgress);
+	N=npts;
+	p=1;
+	reverseStr = '';
+	if slurmQ
+		nintervals = 20;
+	else
+		nintervals = 100;
+	end
+	if npts > nintervals
+		nreps = floor(npts/nintervals);
+		nreps2 = floor(npts/nintervals);
+	else
+		nreps = 1;
+		nreps2 = 1;
+	end
+else
+	D = [];
+	nreps2 = 0;
 end
-
-%convert to rodrigues vectors
-d = q2rod(q);
-
-%package
-t = num2cell(q,2);
-[five.q] = t{:};
-t = num2cell(nA,2);
-[five.nA] = t{:};
-t = num2cell(d,2);
-[five.d] = t{:};
+%convert subdivided points to 5DOF
+% disp(' ')
+% disp('GBoct2five ')
+parfor i = 1:npts %parfor compatible
+	%textwaitbar
+	if waitbarQ
+		if mod(i,nreps2) == 0
+			send(D,i);
+		end
+	end
+	
+	%unpack octonion
+	oct = octlist(i,:);
+	
+	%get quaternion and BP normal
+	[q,nA] = GBoct2five_once(oct);
+	
+	%convert
+	d = q2rod(q);
+	
+	%package
+	five(i).q = q;
+	five(i).nA = nA;
+	five(i).d = d;	
+end
+if waitbarQ
+	disp(' ')
+end
 
 %call to disorientation might be expensive
 if disQ
-	qlist = disorientation(vertcat(five.q),'cubic');
-	geometry = findgeometry(qlist);
+	geometry = findgeometry(disorientation(vertcat(five.q),'cubic'));
 else
 	geometry = findgeometry(vertcat(five.q));
 end
 
 [five.geometry] = geometry{:};
 
+	function nUpdateProgress(~)
+		percentDone = 100*p/N;
+		msg = sprintf('%3.0f', percentDone); %Don't forget this semicolon
+		fprintf([reverseStr, msg]);
+		reverseStr = repmat(sprintf('\b'), 1, length(msg));
+		p = p + nreps;
+	end
+
 end
 
-%---------------------------HELPER FUNCTION(S)-----------------------------
-function [qm,nA] = GBoct2five_vec(o)
+function [qm,nA] = GBoct2five_once(o)
 %--------------------------------------------------------------------------
 % Author: Sterling Baird
 %
-% Date: 2020-08-21
+% Date:
 %
-% Description: Convert from octonion to quaternion & boundary plane normal
-% (vectorized)
+% Description:
 %
 % Inputs:
-%  o - rows of octonions
 %
 % Outputs:
-%  qm - rows of misorientation quaternions
-%  nA - rows of boundary plane normals in grain A frame
 %
 % Dependencies:
-%  qu2ax.m
-%  qmult.m
-%  normr.m
-%  qinv.m
+%
 %--------------------------------------------------------------------------
-npts = size(o,1);
+qA = normr(o(1:4)); %has to be normalized, otherwise it's doesn't go back to same 5DOF parameters
+qB = normr(o(5:8));
 
-%unpack quaternions & normalize
-qA = normr(o(:,1:4)); %has to be normalized, otherwise it's doesn't go back to same 5DOF parameters
-qB = normr(o(:,5:8));
-
-%misorientation quaternion
 qm = qmult(qB,qinv(qA));
-pm = qm;
 
-%grain A quaternion in sample frame
-pA = qinv(pm);
-rho = normr(qmult(qm,qA));
-% pA = normr(qmult(qm,qA)); %normr added 2020-07-16 to avoid NaN values in qu2ax
+pA = normr(qmult(qm,qA)); %normr added 2020-07-16 to avoid NaN values in qu2ax
+ax = qu2ax(pA);
 
-%axis-angle pair
-% ax = qu2ax(pA);
+axisA = ax(1:3);
+phiA = ax(4);
 
-ax = qu2ax(rho);
-axisA = ax(:,1:3);
-phiA = ax(:,4);
+mA0(1) = 0;
+scl = sqrt(1-cos(phiA)^2);
+mA0(2) = -axisA(2)*scl;
+mA0(3) = axisA(1)*scl;
+mA0(4) = cos(phiA);
 
-%BP normal in sample frame?
-mA0(:,1) = zeros(npts,1);
-scl = sqrt(1-cos(phiA).^2);
-mA0(:,2) = -axisA(:,2).*scl;
-mA0(:,3) = axisA(:,1).*scl;
-mA0(:,4) = cos(phiA);
-
-% mA0(:,3) = axisA(:,1);
-% mA0(:,2) = -axisA(:,2);
-% mA0(:,4) = cos(phiA);
-
-% phiA = 2*acos(rho(:,1));
-% mA0(:,3) = rho(:,2)./sin(phiA/2);
-% mA0(:,2) = -rho(:,3)./sin(phiA/2);
-% mA0(:,4) = cos(phiA);
-
-%BP normal in grain A crystal frame
 nA = qmult(qinv(qm),qmult(mA0,qm));
-nA = normr(nA(:,2:4));
-
-end
-
-function [qm,nA] = GBoct2five_vec2(o)
-%--------------------------------------------------------------------------
-% Author: Sterling Baird
-%
-% Date: 2020-08-21
-%
-% Description: Convert from octonion to quaternion & boundary plane normal
-% (vectorized)
-%
-% Inputs:
-%  o - rows of octonions
-%
-% Outputs:
-%  qm - rows of misorientation quaternions
-%  nA - rows of boundary plane normals in grain A frame
-%
-% Dependencies:
-%  qu2ax.m
-%  qmult.m
-%  normr.m
-%  qinv.m
-%--------------------------------------------------------------------------
-npts = size(o,1);
-
-%unpack quaternions & normalize
-qA = normr(o(:,1:4)); %has to be normalized, otherwise it's doesn't go back to same 5DOF parameters
-qB = normr(o(:,5:8));
-
-%misorientation quaternion
-qm = normr(qmult(qB,qinv(qA)));
-
-Z = repmat([0 0 0 1],npts,1);
-nA = qmult(-qA,qmult(Z,qinv(qA)));
-nA = normr(nA(:,2:4));
-
-% %grain A quaternion in sample frame
-% pA = normr(qmult(qm,qA)); %normr added 2020-07-16 to avoid NaN values in qu2ax
-% 
-% %axis-angle pair
-% ax = qu2ax(pA);
-% axisA = ax(:,1:3);
-% phiA = ax(:,4);
-% 
-% %BP normal in sample frame?
-% mA0(:,1) = zeros(npts,1);
-% scl = sqrt(1-cos(phiA).^2);
-% mA0(:,2) = -axisA(:,2).*scl;
-% mA0(:,3) = axisA(:,1).*scl;
-% mA0(:,4) = cos(phiA);
-% 
-% %BP normal in grain A crystal frame
-% nA = qmult(qinv(qm),qmult(mA0,qm));
-% nA = normr(nA(:,2:4));
+nA = normr(nA(2:4));
 
 end
 
@@ -265,119 +216,5 @@ end
 	if ~disQ
 		five(i).geometry = findgeometry(q);
 	end
-
-%textwaitbar setup
-waitbarQ = false;
-if waitbarQ
-	slurmQ = true;
-	D = parallel.pool.DataQueue;
-	afterEach(D, @nUpdateProgress);
-	N=npts;
-	p=1;
-	reverseStr = '';
-	if slurmQ
-		nintervals = 20;
-	else
-		nintervals = 100;
-	end
-	if npts > nintervals
-		nreps = floor(npts/nintervals);
-		nreps2 = floor(npts/nintervals);
-	else
-		nreps = 1;
-		nreps2 = 1;
-	end
-else
-	D = [];
-	nreps2 = 0;
-end
-%convert subdivided points to 5DOF
-% disp(' ')
-% disp('GBoct2five ')
-
-
-
-% function [qm,nA] = GBoct2five_once(o)
-% %--------------------------------------------------------------------------
-% % Author: Sterling Baird
-% %
-% % Date:
-% %
-% % Description:
-% %
-% % Inputs:
-% %
-% % Outputs:
-% %
-% % Dependencies:
-% %
-% % Notes:
-% %  consider vectorizing
-% %--------------------------------------------------------------------------
-% %unpack quaternions & normalize
-% qA = normr(o(1:4)); %has to be normalized, otherwise it's doesn't go back to same 5DOF parameters
-% qB = normr(o(5:8));
-% 
-% %misorientation quaternion
-% qm = qmult(qB,qinv(qA));
-% 
-% %grain A quaternion in sample frame
-% pA = normr(qmult(qm,qA)); %normr added 2020-07-16 to avoid NaN values in qu2ax
-% 
-% ax = qu2ax(pA);
-% 
-% axisA = ax(1:3);
-% phiA = ax(4);
-% 
-% %mA0(2:4)
-% mA0(1) = 0;
-% scl = sqrt(1-cos(phiA)^2);
-% mA0(2) = -axisA(2)*scl;
-% mA0(3) = axisA(1)*scl;
-% mA0(4) = cos(phiA);
-% 
-% nA = qmult(qinv(qm),qmult(mA0,qm));
-% nA = normr(nA(2:4));
-% 
-% end
-
-
-% parfor i = 1:npts %parfor compatible
-% 	%textwaitbar
-% 	if waitbarQ
-% 		if mod(i,nreps2) == 0
-% 			send(D,i);
-% 		end
-% 	end
-% 	
-% 	%unpack octonion
-% 	oct = octlist(i,:);
-% 	
-% 	%get quaternion and BP normal
-% 	[q,nA] = GBoct2five_once(oct);
-% 	
-% 	%convert
-% 	d = q2rod(q);
-% 	
-% 	%package
-% 	five(i).q = q;
-% 	five(i).nA = nA;
-% 	five(i).d = d;	
-% end
-% if waitbarQ
-% 	disp(' ')
-% end
-
-% 	function nUpdateProgress(~)
-% 		percentDone = 100*p/N;
-% 		msg = sprintf('%3.0f', percentDone); %Don't forget this semicolon
-% 		fprintf([reverseStr, msg]);
-% 		reverseStr = repmat(sprintf('\b'), 1, length(msg));
-% 		p = p + nreps;
-% 	end
-
-
-%unpack octonion
-% oct = octlist(i,:);
 
 %}
