@@ -24,10 +24,17 @@ dataprops = datapts*randpoly;
 
 interpvals = knninterp(meshpts,meshprops,datapts);
 
-disp(['RMSE == ' num2str(sqrt(immse(interpvals,dataprops)))])
+disp(['RMSE == ' num2str(get_errmetrics(interpvals,dataprops,'rmse'))])
 
 if d == 3
 	t = num2cell(meshpts,1);
 	K = sphconvhulln(meshpts);
 	trisurf(K,t{:})
 end
+
+%--------------------------CODE GRAVEYARD----------------------------------
+%{
+disp(['RMSE == ' num2str(sqrt(immse(interpvals,dataprops)))])
+
+sqrt(immse(interpvals,dataprops))
+%}
