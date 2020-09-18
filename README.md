@@ -43,6 +43,8 @@ npts = 100;
 qm = get_cubo(npts); nA = normr(rand(npts,3)); %random (qm,nA) pairs
 propList = 1:npts; %property values
 qm2 = get_cubo(npts); nA2 = normr(rand(npts,3)); %random (qm,nA) pairs
+method = 'gpr'; %interpolation method
+[propOut,interpfn,mdl,mdlpars] = interp5DOF(qm,nA,propList,qm2,nA2,method)
 ```
 
 ## Accessing functions via addpathdir()
