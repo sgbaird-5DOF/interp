@@ -45,6 +45,6 @@ parityplot(propOut,propList2)
 
 %-----------------------------CODE GRAVEYARD-------------------------------
 %{
-        rmse = sqrt(immse(propList2,propOut));
-        mae = mean(abs(propList2-propOut));
+%         rmse = sqrt(immse(propList2,propOut));
+%         mae = mean(abs(propList2-propOut));
 %}
