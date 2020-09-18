@@ -388,7 +388,7 @@ switch method
             hyperopts = struct('UseParallel',gprParallelQ);
             gpropts = { ...
             'OptimizeHyperparameters',{'KernelScale','Sigma'},...
-            'HyperparameterOptimizationOptions',hyperopts)};
+            'HyperparameterOptimizationOptions',hyperopts};
         else
             % user-supplied gpr options
             gpropts = NV.gpropts;
