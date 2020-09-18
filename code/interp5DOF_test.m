@@ -32,11 +32,19 @@ switch testnum
         [propOut,gprMdl] = interp5DOF(qm,nA,propList,qm2,nA2,'gpr');
 %         [propOut,databary] = interp5DOF(qm,nA,propList,qm2,nA2,'pbary');
         
-        rmse = sqrt(immse(propList2,propOut));
-        mae = mean(abs(propList2-propOut));
+        errmetrics = get_errmetrics(propOut,propList2);
+        rmse = errmetrics.rmse;
+        mae = errmetrics.mae;
         disp(['RMSE = ' num2str(rmse) ' J/m^2'])
         disp(['MAE = ' num2str(mae) ' J/m^2'])
 end
 
 figure
 parityplot(propOut,propList2)
+
+
+%-----------------------------CODE GRAVEYARD-------------------------------
+%{
+%         rmse = sqrt(immse(propList2,propOut));
+%         mae = mean(abs(propList2-propOut));
+%}

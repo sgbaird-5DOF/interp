@@ -29,6 +29,10 @@ end
 %
 %  allcomb.m
 %
+%  get_errmetrics.m
+%
+% see also PDIST
+%
 % Notes:
 %	It's generally more efficient to supply pdtrue rather than calculate it
 %	each time, especially if the function call is expensive, as in GBdist
@@ -68,15 +72,20 @@ switch dtype
 		pd = vecnorm(o1-o2,2,2);
 end
 
-%mean error
-switch errtype
-	case 'rmse'
-		err = sqrt(immse(pd,pdtrue));
-	case 'mse'
-		err = immse(pd,pdtrue);
-% 		err = mean((pd-pdtrue).^2)
-	case 'me'
-		err = mean(pd-pdtrue);
+%get error
+err = get_errmetrics(pd,pdtrue,errtype);
 end
 
-end
+%---------------------------------CODE GRAVEYARD---------------------------
+%{
+% switch errtype
+% 	case 'rmse'
+% 		err = sqrt(immse(pd,pdtrue));
+% 	case 'mse'
+% 		err = immse(pd,pdtrue);
+% % 		err = mean((pd-pdtrue).^2)
+% 	case 'me'
+% 		err = mean(pd-pdtrue);
+% end
+
+%}
