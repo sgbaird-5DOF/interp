@@ -6,12 +6,12 @@ switch runtype
     case 'test'
         ndatapts = 388;
         npredpts = 500;
-        method = {'sphbary','gpr'};
-        inputtype = {'5dof','octonion'}; %'5dof','octonion'
+        method = {'gpr'}; % 'sphbary', 'pbary', 'gpr', 'nn'
+        inputtype = {'5dof'}; %'5dof','octonion'
     case 'full'
-        ndatapts = [10000 20000 50000];
+        ndatapts = [10000];
         npredpts = 10000;
-        method = {'sphbary','pbary','nn'}; %'sphbary','pbary','gpr','nn'
+        method = {'gpr'}; %'sphbary','pbary','gpr','nn'
         inputtype = {'5dof'};
 end
 
