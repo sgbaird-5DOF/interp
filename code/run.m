@@ -4,41 +4,19 @@ clear; close all force
 %
 % Date: 2020-07-01
 %
-% Description:
+% Description: script to generate an octonion data and mesh set and
+% interpolate grain boundary values based on the specified properties.
+% Using interp5DOF.m instead of run.m is preferred because it has been
+% better maintained and interp5DOF.m was written to act as a
+% "plug-and-play" style function for grain boundary interpolation. See
+% interp5DOF_test.m. This workflow does, however, incorporate things like
+% looking at the perimeter of an octonion mesh, generating high- vs.
+% low-symmetry grain boundaries, and 
 %
 % References:
 %		Check if ray intersects internals of D-facet:
 %		https://math.stackexchange.com/q/1256236
 %--------------------------------------------------------------------------
-
-%{
-Generate an approximated sphere using gridded matrix points and
-hypersphere(), normalize the vectors, and compute a convex hull for
-triangulation and interpolation. Barycentric coordinates can be output as
-well, and these can be extended into spherical barycentric coordinates by
-projecting all vertices onto a hyperplane tangent to the point of interest
-and using the barycentric coordinates of that hyperplane.
-
-n: odd values preferred to reduce chance of single points in separate plane
-which could mess up centering. I think centering formula also needs to
-change if using even numbers. n = 15 gives "out of memory" on 4 GB RAM
-surface pro 4 i5 processor using 7D sphere embedded in 8D. n = 13 for same
-gives ~0.9 GB matrix for s, and an extra few hundred MB for other variables
-combined. 1.6E6 points for n = 13 in 7Dsphere@8D case.
-
-convhulln() for a hypersphere with n = 5 and d = 7 (d === dimension), takes
-~4 min (2982 vertices,1082756 facets) n = 7, d = 7 gives 30578 vertices,
-and 2.8591e13 facets, or 2.64e7 x more facets Given 1e4 vertices in 7D, we
-get 1e12 facets, and might take ~7 years to compute..
-
-Once the dimension & # vertices gets high enough (e.g. 10,000 pts in 7D
-cartesian, it would probably make more sense to use a k-nearest neighbor
-approach and fit a hyperplane using griddatan. Or, I could do a subdivision
-scheme once I've found the containing facet. This way, I can triangulate it
-in a sort of r-tree indexing scheme. Start out with a coarse mesh and
-refine it.
-%}
-
 tic
 %% Setup
 
@@ -49,7 +27,7 @@ rng(seed);
 %mesh and data types
 
 addpathdir({'misFZfeatures.mat','PGnames.mat','nlt.m','q2rod.m',...
-	'GBfive2oct.m','qu2ax.m','readNODE.m'})
+	'GBfive2oct.m','qu2ax.m','readNODE.m','var_names.m'})
 
 %'hypersphereGrid', 'Rohrer2009', 'Kim2011', '5DOF',
 %'Olmsted2004','5DOF_vtx','5DOF_misFZfeatures',
@@ -150,13 +128,14 @@ switch barytype
 		data.ppts = normr(data.ppts);
 end
 disp(['barytype: ' barytype ', barytol: ' num2str(barytol)])
-[datainterp,databary,meshdata.fname] = get_interp(mesh,data,intfacetIDs,barytype,barytol);
+[datainterp,databary,facetprops,nndistList,nonintDists] = ...
+    get_interp(mesh,data,intfacetIDs,barytype,barytol,'saveQ',true,'savename','ocubo.mat');
 
 toc; disp(' ')
 
 %% plotting
-interpplot(meshdata.fname)
-
+interpplot('temp.mat') %need to update to pass get_interp arguments
+% into interpplot
 
 %%
 toc
@@ -165,6 +144,7 @@ disp(' ')
 %%
 %-----------------------------CODE GRAVEYARD-------------------------------
 %{
+
 mesh.sphK = convhulln(meshpts); % check to see if % of intersections increases at all
 
 	maxnormQ = true;
@@ -444,5 +424,35 @@ mesh.ppts = normr(mesh.ppts);
 
 % mesh.pts = get_octpairs(mesh.pts);
 % data.pts = get_octpairs(data.pts);
+
+%{
+Generate an approximated sphere using gridded matrix points and
+hypersphere(), normalize the vectors, and compute a convex hull for
+triangulation and interpolation. Barycentric coordinates can be output as
+well, and these can be extended into spherical barycentric coordinates by
+projecting all vertices onto a hyperplane tangent to the point of interest
+and using the barycentric coordinates of that hyperplane.
+
+n: odd values preferred to reduce chance of single points in separate plane
+which could mess up centering. I think centering formula also needs to
+change if using even numbers. n = 15 gives "out of memory" on 4 GB RAM
+surface pro 4 i5 processor using 7D sphere embedded in 8D. n = 13 for same
+gives ~0.9 GB matrix for s, and an extra few hundred MB for other variables
+combined. 1.6E6 points for n = 13 in 7Dsphere@8D case.
+
+convhulln() for a hypersphere with n = 5 and d = 7 (d === dimension), takes
+~4 min (2982 vertices,1082756 facets) n = 7, d = 7 gives 30578 vertices,
+and 2.8591e13 facets, or 2.64e7 x more facets Given 1e4 vertices in 7D, we
+get 1e12 facets, and might take ~7 years to compute..
+
+Once the dimension & # vertices gets high enough (e.g. 10,000 pts in 7D
+cartesian, it would probably make more sense to use a k-nearest neighbor
+approach and fit a hyperplane using griddatan. Or, I could do a subdivision
+scheme once I've found the containing facet. This way, I can triangulate it
+in a sort of r-tree indexing scheme. Start out with a coarse mesh and
+refine it.
+%}
+
+
 
 %}

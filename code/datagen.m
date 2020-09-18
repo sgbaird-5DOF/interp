@@ -192,16 +192,16 @@ if size(meshList,2) == 7
 end
 
 if contains(sampleMethod,'oct_vtx')
-	NVpairs = {'o2addQ',true,'method','pairwise','wtol',1e-3}; %method can be 'standard' or 'pairwise'
+	NVpairs = {'o2addQ',true,'wtol',1e-3}; %method can be 'standard' or 'pairwise'
 else
-	NVpairs = {'o2addQ',false,'method','pairwise','wtol',1e-3};
+	NVpairs = {'o2addQ',false,'wtol',1e-3};
 end
 
 method = 1;
 switch method
 	case 1
-		[meshList,~,five,~] = get_octpairs(meshList,savename,NVpairs{:}); %find a way to not call this for 'data'
-		
+		meshList = get_octpairs(meshList,savename,NVpairs{:}); %find a way to not call this for 'data'
+		five = GBoct2five(meshList);
 	case 2
 		% change so that it references a single interior point
 		o1tmp = meshList(1,:);

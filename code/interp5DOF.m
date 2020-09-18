@@ -16,17 +16,12 @@ arguments
     NV.o = []
     NV.o2 = []
 end
-%----------------------------PREAMBLE--------------------------------------
-% Author(s): Sterling Baird
-%
-% Date: 2020-09-03
-%
-% Description: Convert misorientation and boundary plane normal 5DOF input
+% INTERP5DOF  Convert misorientation and boundary plane normal 5DOF input
 % data to a closed, octonion, hyperspherical mesh and interpolate property
 % values for arbitrary grain boundaries using spherical barycentric
 % coordinates, planar barycentric coordinates, or a Gaussian process
 % regression.
-%
+%--------------------------------------------------------------------------
 % Inputs:
 %  qm - list of misorientation quaternions (data), as in qmult(qB,qinv(qA))
 %  for grains A and B, where qA and qB are in the sample frame (same for
@@ -103,6 +98,13 @@ end
 %  [propOut,databary,fname] = interp5DOF(qm,nA,propList,qm2,nA2,'sphbary')
 %  [propOut,databary,fname] = interp5DOF(qm,nA,propList,qm2,nA2,'pbary')
 %
+% Simple Example Data
+%  npts = 100;
+%  qm = get_cubo(npts); nA = normr(rand(npts,3)); %random (qm,nA) pairs
+%  propList = rand(npts); %random property values
+%  qm2 = get_cubo(npts); nA2 = normr(rand(npts,3)); %random (qm,nA) pairs
+%  %(I suggest you look at interp5DOF_test.m instead)
+%
 % Dependencies:
 %  MATLAB 2019b or higher (mainly for the "arguments" syntax checking at
 %  the beginning of functions, which is used extensively throughout)
@@ -149,6 +151,10 @@ end
 %
 %  You can minimize this preamble text in MATLAB by clicking the "minus"
 %  symbol at the top-left.
+%
+% Author(s): Sterling Baird
+%
+% Date: 2020-09-03
 %--------------------------------------------------------------------------
 
 % additional input checking
