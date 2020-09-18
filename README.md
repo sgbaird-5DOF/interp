@@ -39,8 +39,16 @@ Verify that MATslurm is not an empty directory. If you're using GitHub Desktop, 
 
 \>\> `run`
 
-#### Simple Example Data
-Separate from [interp5DOF_test.m](code/interp5DOF_test.m) or [run.m](code/run.m)
+## Accessing functions via addpathdir()
+dir() and addpath() commands are used to locate functions in subfolders of the current working directory via a custom function [addpathdir.m](code/addpathdir.m). This could give anomalous behavior if the directory structure is changed such that filenames are non-unique in sub-folders of the parent folder where addpathdir() gets called, or if files with the same name are present elsewhere on the user's MATLAB path. This is also the only function that is shadowed (to my knowledge) within this repository (it's shadowed by [octonion-mesh](code/octonion-mesh/)); however, the functionality is fairly basic, and I don't anticipate any changes to the functionality. In other words, it shouldn't matter which one gets called.
+
+## Getting started
+Look at [interp5DOF.m](code/interp5DOF.m), which is a top-level function for creating a mesh, importing/generating data, triangulating a mesh, identifying the intersecting facet for datapoints, and finally, computing an interpolation. Also consider looking at [run.m](code/run.m) which is a script that contains more options, but may be less portable than the interp5DOF() function.
+
+interp5DOF.m can be called in other functions/scripts to produce interpolation results using 5DOF misorientation/boundary plane normal pairs (qm/nA) and grain boundary property values. It was written with loosely similar input/output structure to the MATLAB built-in function [interpn()](https://www.mathworks.com/help/matlab/ref/interpn.html) involving input points, input values, query points, and query values.
+
+### Simple Example Data
+Separate from [interp5DOF_test.m](code/interp5DOF_test.m) or [run.m](code/run.m), the following is just to show the basic input/output format of interp5DOF.m. See also [get_cubo.m](code/get_cubo.m)
 ```
 npts = 100;
 qm = get_cubo(npts); nA = normr(rand(npts,3)); %random (qm,nA) pairs
@@ -49,14 +57,6 @@ qm2 = get_cubo(npts); nA2 = normr(rand(npts,3)); %random (qm,nA) pairs
 method = 'gpr'; %interpolation method
 [propOut,interpfn,mdl,mdlpars] = interp5DOF(qm,nA,propList,qm2,nA2,method)
 ```
-
-## Accessing functions via addpathdir()
-dir() and addpath() commands are used to locate functions in subfolders of the current working directory via a custom function [addpathdir.m](code/addpathdir.m). This could give anomalous behavior if the directory structure is changed such that filenames are non-unique in sub-folders of the parent folder where addpathdir() gets called, or if files with the same name are present elsewhere on the user's MATLAB path. This is also the only function that is shadowed (to my knowledge) within this repository (it's shadowed by [octonion-mesh](code/octonion-mesh/)); however, the functionality is fairly basic, and I don't anticipate any changes to the functionality. In other words, it shouldn't matter which one gets called.
-
-## Getting started
-Look at [interp5DOF.m](code/interp5DOF.m), which is a top-level function for creating a mesh, importing/generating data, triangulating a mesh, identifying the intersecting facet for datapoints, and finally, computing an interpolation. Also consider looking at [run.m](code/run.m) which is a script that contains more options, but may be less portable than the interp5DOF() function.
-
-interp5DOF.m can be called in other functions/scripts to produce interpolation results using 5DOF misorientation/boundary plane normal pairs (qm/nA) and grain boundary property values. It was written with loosely similar input/output structure to the MATLAB built-in function [interpn()](https://www.mathworks.com/help/matlab/ref/interpn.html) involving input points, input values, query points, and query values.
 
 ## Test functions
 Most functions have a corresponding "test" function (e.g. hsphext_subdiv.m --> hsphext_subdiv_test.m) which gives simple usage example(s). These are useful for debugging, visualizations, and understanding the functions without having to do a full run which could be time-consuming. This also allows for the non-test function code to be more succinct, as different plotting routines can be moved to the test function instead. The various test functions generally run to completion within a few seconds, and the parameters may be changed freely (e.g. dimension, number of points, etc.) where applicable. Some test functions have specific plotting routines for 1-sphere (2D) and 2-sphere (3D) cases since a 7-sphere is difficult to visualize and interpret ([n-sphere](https://en.wikipedia.org/wiki/N-sphere)).
