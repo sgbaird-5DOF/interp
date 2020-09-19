@@ -1,3 +1,5 @@
 [submodule "code/MATslurm"]
 	path = code/MATslurm
-	url = git@github.com:sgbaird-5dof/MATslurm.git
+	url = ../MATslurm.git #relative path
+
+	#url = git@github.com:sgbaird-5dof/MATslurm.git
