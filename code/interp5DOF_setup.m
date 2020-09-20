@@ -14,13 +14,13 @@ addpathdir({'cu2qu.m','q2rod.m','qmult.m','get_ocubo.m'})
 
 %random octonions
 ocubotype = 'random';
-ocuboseed1 = 8;
-ocuboseed2 = 15;
-o = get_ocubo(ndatapts,ocubotype,[],ocuboseed1);
-o2 = get_ocubo(npredpts,ocubotype,[],ocuboseed2);
+%ocuboseed1 = 8;
+%ocuboseed2 = 15;
+%o = get_ocubo(ndatapts,ocubotype,[],ocuboseed1);
+%o2 = get_ocubo(npredpts,ocubotype,[],ocuboseed2);
 
-% o = get_ocubo(ndatapts,'random');
-% o2 = get_ocubo(npredpts,'random');
+o = get_ocubo(ndatapts,'random');
+o2 = get_ocubo(npredpts,'random');
 genseed = 10;
 rng(genseed);
 

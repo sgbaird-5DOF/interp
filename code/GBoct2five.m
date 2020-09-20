@@ -1,8 +1,7 @@
-function five = GBoct2five(octlist,disQ,method)
+function five = GBoct2five(octlist,disQ)
 arguments
 	octlist(:,8) double {mustBeNumeric,mustBeFinite}
 	disQ(1,1) logical = true
-    method char = 'NA'
 end
 %--------------------------------------------------------------------------
 % Author: Sterling Baird
