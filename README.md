@@ -22,17 +22,24 @@ See [File dependencies](https://github.com/sgbaird/octonion-mesh/blob/master/REA
 ## Usage
 Linux-specific commands given.
 
-### Step0: download the code
-See [cloning a repository](https://docs.github.com/en/github/creating-cloning-and-archiving-repositories/cloning-a-repository) and [git submodules](https://git-scm.com/book/en/v2/Git-Tools-Submodules) for more information or other options such as using GitHub Desktop (Windows, Linux, etc.) or downloading a .zip file.
+See [cloning a repository](https://docs.github.com/en/github/creating-cloning-and-archiving-repositories/cloning-a-repository) and [git submodules](https://git-scm.com/book/en/v2/Git-Tools-Submodules) for more information or other options such as using GitHub Desktop (Windows, Linux, etc.) or downloading a .zip file. [Forking](https://docs.github.com/en/github/getting-started-with-github/fork-a-repo) and pull requests are welcome/encouraged.
 
+### Basic steps:
+* Step 0: download the [code](https://github.com/sgbaird-5DOF/interp.git) (with --recurse-submodules if using command line)
+* Step 1: navigate to [interp-5DOF/code/](code/)
+* Step 2: open MATLAB and call [interp5DOF_test.m](code/interp5DOF_test.m) or [run.m](code/run.m)
+
+### Platform-specific directions
+#### Linux
+##### Step 0: download the code
 `git clone --recurse-submodules https://github.com/sgbaird-5DOF/interp.git`
 
 Verify that MATslurm is not an empty directory. If you're using GitHub Desktop, you may need to clone the directory with the above command using Git Bash, which can be opened via ``` Ctrl-` ``` or on the toolbar via Repository-->"Open in Git Bash".
 
-### Step1: navigate to [interp-5DOF/code/](code/)
+##### Step 1: navigate to [interp-5DOF/code/](code/)
 `cd interp-5DOF/code/`
 
-### Step3: open MATLAB and call [interp5DOF_test.m](code/interp5DOF_test.m) or [run.m](code/run.m)
+##### Step 2: open MATLAB and call [interp5DOF_test.m](code/interp5DOF_test.m) or [run.m](code/run.m)
 `matlab`
 
 \>\> `interp5DOF_test`
