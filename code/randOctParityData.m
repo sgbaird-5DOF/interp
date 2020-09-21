@@ -11,7 +11,7 @@ switch runtype
         inputtype = {'5dof'}; %'5dof','octonion'
     case 'full'
         ndatapts = [10000];
-        npredpts = 10000;
+        npredpts = 50000;
         method = {'gpr'}; %'sphbary','pbary','gpr','nn'
         inputtype = {'5dof'};
 end
