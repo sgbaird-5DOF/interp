@@ -1,7 +1,8 @@
-function five = GBoct2five(octlist,disQ)
+function five = GBoct2five(octlist,disQ,method)
 arguments
 	octlist(:,8) double {mustBeNumeric,mustBeFinite}
 	disQ(1,1) logical = true
+    method {mustBeMember(method,'reverse')} = 'reverse'
 end
 %--------------------------------------------------------------------------
 % Author: Sterling Baird
