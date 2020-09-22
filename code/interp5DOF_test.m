@@ -3,7 +3,7 @@ clear; close all
 
 testnum = 1;
 
-addpathdir({'cu2qu.m','q2rod.m','qmult.m'})
+addpathdir({'cu2qu.m','q2rod.m','qmult.m','get_uuid.m'})
 
 switch testnum
     case 1
