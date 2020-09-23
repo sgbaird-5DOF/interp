@@ -1,7 +1,7 @@
 function oAB = GBlab2oct(qA_Lab,qB_Lab,nA_Lab,convention)
 arguments
-   qA_Lab(:,4) double {mustBeReal,mustBeFinite,mustBeRowNormalized}
-   qB_Lab(:,4) double {mustBeReal,mustBeFinite,mustBeRowNormalized}
+   qA_Lab(:,4) double {mustBeReal,mustBeFinite,mustBeRowNormalized(qA_Lab,1e-6)}
+   qB_Lab(:,4) double {mustBeReal,mustBeFinite,mustBeRowNormalized(qB_Lab,1e-6)}
    nA_Lab(:,3) double {mustBeReal,mustBeFinite}
    convention char {mustBeMember(convention,'francis')} = 'francis'
 end
@@ -114,10 +114,9 @@ oAB = [qA_R, qB_R];
 end
 
 %% Argument Validation Function(s)
-function mustBeRowNormalized(X)
+function mustBeRowNormalized(X,tol)
 nrows = size(X,1);
-tol = 1e-6;
-e = norm(X,2)-1; %error
+e = vecnorm(X,2,2)-1; %error
 ae = abs(e); %absolute error
 tolOK = ae < tol; %tolerance check
 badIDs = find(~tolOK); %number of "bad" rows
