@@ -13,7 +13,7 @@ end
 % octonion code), and package into "five" structure
 %
 % Inputs:
-%		octlist - list of octonions (rows)
+%		octlist - list of octonions (rows), can be norm==1 or norm==sqrt(2)
 %
 %		opts - structure with fields parforQ and disQ
 %
@@ -125,7 +125,7 @@ function [qm,nA] = GBoct2five_once(o)
 qA = normr(o(1:4)); %has to be normalized, otherwise it's doesn't go back to same 5DOF parameters
 qB = normr(o(5:8));
 
-qm = qmult(qB,qinv(qA));
+qm = qmult(qB,qinv_francis(qA));
 
 pA = normr(qmult(qm,qA)); %normr added 2020-07-16 to avoid NaN values in qu2ax
 ax = qu2ax(pA);
@@ -139,7 +139,7 @@ mA0(2) = -axisA(2)*scl;
 mA0(3) = axisA(1)*scl;
 mA0(4) = cos(phiA);
 
-nA = qmult(qinv(qm),qmult(mA0,qm));
+nA = qmult(qinv_francis(qm),qmult(mA0,qm));
 nA = normr(nA(2:4));
 
 end
