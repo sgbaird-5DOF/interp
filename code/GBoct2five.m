@@ -1,13 +1,14 @@
-function five = GBoct2five(octlist,disQ,method)
+function five = GBoct2five(octlist,disQ,method,qmconvention)
 arguments
 	octlist(:,8) double {mustBeNumeric,mustBeFinite}
 	disQ(1,1) logical = true
     method {mustBeMember(method,'reverse')} = 'reverse'
+    qmconvention char {mustBeMember(qmconvention,{'francis','johnson'})} = 'johnson'
 end
 %--------------------------------------------------------------------------
 % Author: Sterling Baird
 %
-% Date:
+% Date: 2020-09-23
 %
 % Description: Do the inverse operation of GBfive2oct.m (CMU group,
 % octonion code), and package into "five" structure
@@ -37,7 +38,7 @@ five(1).geometry = '';
 %textwaitbar setup
 waitbarQ = false;
 if waitbarQ
-	slurmQ = true;
+	slurmQ = true; %#ok<*UNRCH>
 	D = parallel.pool.DataQueue;
 	afterEach(D, @nUpdateProgress);
 	N=npts;
@@ -74,7 +75,7 @@ parfor i = 1:npts %parfor compatible
 	oct = octlist(i,:);
 	
 	%get quaternion and BP normal
-	[q,nA] = GBoct2five_once(oct);
+	[q,nA] = GBoct2five_once(oct,qmconvention);
 	
 	%convert
 	d = q2rod(q);
@@ -107,25 +108,37 @@ end
 
 end
 
-function [qm,nA] = GBoct2five_once(o)
+%% HELPER FUNCTIONS
+function [qm,nA] = GBoct2five_once(o,qmconvention)
+arguments
+    o(:,8) double
+    qmconvention char {mustBeMember(qmconvention,{'francis','johnson'})} = 'johnson'
+end
+% GBOCT2FIVE_ONCE  convert octonions to 5DOF, (qm,nA) pairs
 %--------------------------------------------------------------------------
 % Author: Sterling Baird
-%
-% Date:
-%
-% Description:
+% Date: 2020-09-23
 %
 % Inputs:
+%  o - octonion (with norm == 1 or sqrt(2))
 %
 % Outputs:
+%  qm - misorientation quaternion
 %
 % Dependencies:
+%  normr.m
+%  qu2ax.m
+%  qlab2qm.m
+%  qmult.m
+%  qinv_francis.m
 %
+% Note:
+%  already vectorized, so probably better to splice into main function
 %--------------------------------------------------------------------------
 qA = normr(o(1:4)); %has to be normalized, otherwise it's doesn't go back to same 5DOF parameters
 qB = normr(o(5:8));
 
-qm = qmult(qB,qinv_francis(qA));
+qm = qlab2qm(qA,qB,qmconvention);
 
 pA = normr(qmult(qm,qA)); %normr added 2020-07-16 to avoid NaN values in qu2ax
 ax = qu2ax(pA);
@@ -139,13 +152,12 @@ mA0(2) = -axisA(2)*scl;
 mA0(3) = axisA(1)*scl;
 mA0(4) = cos(phiA);
 
-nA = qmult(qinv_francis(qm),qmult(mA0,qm));
-nA = normr(nA(2:4));
-
+nA = qmA2nA(qm,mA0,convention);
 end
 
 %------------------------CODE GRAVEYARD------------------------------------
 %{
+
 
 %*norm([axisA(2),axisA(1)])
  %*norm([axisA(2),axisA(1)])
@@ -216,5 +228,44 @@ end
 	if ~disQ
 		five(i).geometry = findgeometry(q);
 	end
+
+
+
+% function [qm,nA] = GBoct2five_once(o)
+% %--------------------------------------------------------------------------
+% % Author: Sterling Baird
+% %
+% % Date:
+% %
+% % Description:
+% %
+% % Inputs:
+% %
+% % Outputs:
+% %
+% % Dependencies:
+% %
+% %--------------------------------------------------------------------------
+% qA = normr(o(1:4)); %has to be normalized, otherwise it's doesn't go back to same 5DOF parameters
+% qB = normr(o(5:8));
+% 
+% qm = qmult(qB,qinv_francis(qA));
+% 
+% pA = normr(qmult(qm,qA)); %normr added 2020-07-16 to avoid NaN values in qu2ax
+% ax = qu2ax(pA);
+% 
+% axisA = ax(1:3);
+% phiA = ax(4);
+% 
+% mA0(1) = 0;
+% scl = sqrt(1-cos(phiA)^2);
+% mA0(2) = -axisA(2)*scl;
+% mA0(3) = axisA(1)*scl;
+% mA0(4) = cos(phiA);
+% 
+% nA = qmult(qinv_francis(qm),qmult(mA0,qm));
+% nA = normr(nA(2:4));
+% 
+% end
 
 %}
