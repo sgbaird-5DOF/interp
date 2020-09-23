@@ -1,10 +1,13 @@
+function q = gmat2q(g)
+arguments
+    g(3,3,:) double
+end
+% GMAT2Q converts rotation matrices to their equivalent quaternion
+% representation.
 %-------------------------------------------------------------------------%
 %Filename:  gmat2q.m
 %Author:    Oliver Johnson
 %Date:      3/28/2020
-%
-% GMAT2Q converts rotation matrices to their equivalent quaternion
-% representation.
 %
 % Inputs:
 %   g - A 3-by-3-by-npts array of rotation matrices.
@@ -22,8 +25,6 @@
 % better method to assign the signs consistently. Take a look at MTEX's
 % mat2quat function.
 %-------------------------------------------------------------------------%
-
-function q = gmat2q(g)
 
 %---pre-allocate---%
 npts = size(g,3);
