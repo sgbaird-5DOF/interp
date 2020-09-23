@@ -1,8 +1,10 @@
 function q = qu2ax(qq)
+arguments
+    qq(:,4) double
+end
+% QU2AX Convert from quaternions to axis-angle pair
 %--------------------------------------------------------------------------
 % Date: 2020-08-21
-%
-% Description: from quaternions to axis-angle pair
 % 
 % Inputs:
 %  qq - rows of quaternions
