@@ -10,6 +10,10 @@ end
 % corresponding GB normals to the GB octonion defined by Francis [1] and 
 % required by the GBdist function [2].
 %-------------------------------------------------------------------------%
+% Filename: GBlab2oct.m
+% Author: Oliver Johnson, Refactored by Sterling Baird
+% Date: 9/22/2020
+%
 % NOTE: The convention used by [1] and required for proper use of the 
 % GBdist function [2] is that the GB plane reference frame is defined such 
 % that the GB plane lies in the zR = 0 plane, with grain A occupying zR > 0
@@ -57,10 +61,6 @@ end
 %     octonion metric for grain boundaries, Acta Mater. 166 (2019) 135–147.
 %     doi:10.1016/j.actamat.2018.12.034.
 % [2] https://github.com/ichesser/GB_octonion_code
-%
-% Filename: GBlab2oct.m
-% Author: Oliver Johnson, Refactored by Sterling Baird
-% Date: 9/22/2020
 %-------------------------------------------------------------------------%
 
 %% Setup
@@ -97,15 +97,15 @@ yR = cross(zR,xR,2); % cross z with x to define y-axis
 yR = normr(yR);
 
 % make rotation matrices
-gR = [permute(xR,[1,3,2]),permute(yR,[1,3,2]),permute(zR,[1,3,2])];
+gR = [permute(xR.',[1,3,2]),permute(yR.',[1,3,2]),permute(zR.',[1,3,2])];
 
 % convert to quaternions
 qR = gmat2q(gR);
 
 %% Construct qA_R and qB_R (quaternions in the GB reference frame)
 
-qA_R = qmultiply(qA_Lab,qinv(qR)); % note this is using Toby's misorientation convention, these should not be used with our code directly
-qB_R = qmultiply(qB_Lab,qinv(qR));
+qA_R = qmultiply(qA_Lab,qinv_johnson(qR)); % note this is using Toby's misorientation convention, these should not be used with our code directly
+qB_R = qmultiply(qB_Lab,qinv_johnson(qR));
 
 %% Convert to octonion
 
@@ -114,15 +114,17 @@ oAB = [qA_R, qB_R];
 end
 
 %% Argument Validation Function(s)
-function mustBeRowNormalized(X,tol)
-e = X-normr(X); %error
+function mustBeRowNormalized(X)
+nrows = size(X,1);
+tol = 1e-6;
+e = norm(X,2)-1; %error
 ae = abs(e); %absolute error
-tolcheck = ae < tol; %tolerance check
-badIDs = find(tolcheck); %number of "bad" rows
-nbad = length(badIDs);
-if ~isempty(nbad)
+tolOK = ae < tol; %tolerance check
+badIDs = find(~tolOK); %number of "bad" rows
+if ~isempty(badIDs)
+    nbad = length(badIDs);
     avgnm = mean(norm(X,2));
-    error([int2str(nbad) ' rows where norm ~= 1 starting at element ' ...
+    error([int2str(nbad) '/' int2str(nrows) ' rows where norm ~= 1 starting at element ' ...
         int2str(badIDs(1)) ', avgnm == ' int2str(avgnm)])
 end
 end
@@ -140,4 +142,7 @@ assert(size(nA_Lab,1) == 3,'nA_Lab must be a 3-by-n array of vectors.')
 %         xR = xR./sqrt(sum(xR.^2,1));
 
 yR = yR./sqrt(sum(yR.^2,1));
+
+% make rotation matrices
+gR = [permute(xR,[1,3,2]),permute(yR,[1,3,2]),permute(zR,[1,3,2])];
 %}
