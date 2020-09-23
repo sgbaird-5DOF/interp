@@ -1,8 +1,7 @@
 function q = eu2qu(eu)
+% EU2QU  from Euler angles to quaternions
 %--------------------------------------------------------------------------
 % Date: 2020-08-15
-%
-% Description:  from Euler angles to quaternions
 % 
 % Inputs:
 %  eu - euler angles (ZXZ Bunge convention I think), in radians
@@ -17,17 +16,11 @@ function q = eu2qu(eu)
 %  
 %
 % Notes:
-%  Vectorized by SGB 2020-08-15 epsijk can be set using the script
-%  setGlobal_epsijk.m, which controls whether the Morawiec convention is
-%  used or not.
+%  Vectorized by SGB 2020-08-15, epsijk used to control whether the Morawiec convention is
+%  used or not. Now it defaults to Morawiec convention
+%
+% see also SETGLOBAL_EPSIJK
 %--------------------------------------------------------------------------
-
-%epsijk setup/check
-% global epsijk
-% if isempty(epsijk)
-% 	epsijk = 1;
-% 	warning(['global variable epsijk not set. Using Morawiec convention: epsijk == ' int2str(epsijk)])
-% end
 epsijk = 1;
 
 %unpack angles
@@ -82,5 +75,14 @@ elseif (abs(q(4))-0)<thr
     q(4)=0.0;    
 end
 
+
+
+
+%epsijk setup/check
+% global epsijk
+% if isempty(epsijk)
+% 	epsijk = 1;
+% 	warning(['global variable epsijk not set. Using Morawiec convention: epsijk == ' int2str(epsijk)])
+% end
 
 %}
