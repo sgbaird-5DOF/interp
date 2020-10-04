@@ -1,9 +1,8 @@
+% QCONJ takes the conjugate of quaternions.
 %-------------------------------------------------------------------------%
 %Filename:  qconj.m
 %Author:    Oliver Johnson
 %Date:      2/23/2011
-%
-% QCONJ takes the conjugate of quaternions.
 %
 % Inputs:
 %   q - An npts-by-4 array containing quaternion components in 4-vector 

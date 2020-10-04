@@ -1,8 +1,11 @@
-% from quaternions to rotation matrix
+function q = qu2om(qq,epsijk)
+arguments
+    qq(:,4) double
+    epsijk(1,1) double = 1
+end
+% QU2OM  from quaternions to rotation matrix
 
-function q = qu2om(qq)
-
-global epsijk
+% global epsijk
 
 qbar = qq(1)*qq(1)-(qq(2)*qq(2)+qq(3)*qq(3)+qq(4)*qq(4));
 

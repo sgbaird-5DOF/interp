@@ -1,8 +1,11 @@
-% from quaternions to Euler angles 
+function q = qu2eu(qq,epsijk)
+arguments
+   qq(:,4) double
+   epsijk(1,1) double = 1
+end
+% QU2EU  from quaternions to Euler angles 
 
-function q = qu2eu(qq)
-
-global epsijk
+% global epsijk
 
 q0 = qq(1);
 q1 = qq(2);

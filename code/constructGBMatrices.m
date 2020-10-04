@@ -1,12 +1,18 @@
+function [gA_R,gB_R] = constructGBMatrices(qA_Lab,qB_Lab,nA_Lab,convention)
+arguments
+    qA_Lab(:,4)
+    qB_Lab(:,4)
+    nA_Lab(3,:)
+    convention char {mustBeMember(convention,{'olmsted','livermore'})} = 'livermore'
+end
+% CONSTRUCTGBMATRICES  Convert the crystal orientations (expressed as 
+% quaternions) of grains meeting at a grain boundary (GB) together with the
+% corresponding GB normals to the pair of GB matrices defined by Olmsted
+% [1] and required by the GB5DOF function [2].
 %-------------------------------------------------------------------------%
 % Filename: constructGBMatrices.m
 % Author: Oliver Johnson
 % Date: 3/11/2020
-%
-% CONSTRUCTGBMATRICES will convert the crystal orientations (expressed as 
-% quaternions) of grains meeting at a grain boundary (GB) together with the
-% corresponding GB normals to the pair of GB matrices defined by Olmsted
-% [1] and required by the GB5DOF function [2].
 %
 % NOTE: Olmsted's GB matrices are defined such that the GB plane lies in
 % the z = 0 plane of the reference frame. However, the GB5DOF matrices are
@@ -65,13 +71,6 @@
 %     function for fcc metals. Acta Materialia, 65, 161–175. 
 %     https://doi.org/10.1016/j.actamat.2013.10.057
 %-------------------------------------------------------------------------%
-
-function [gA_R,gB_R] = constructGBMatrices(qA_Lab,qB_Lab,nA_Lab,convention)
-
-%% Ensure proper formatting of inputs
-
-assert(size(qA_Lab,2) == 4 && size(qB_Lab,2) == 4,'qA_Lab and qB_Lab must be n-by-4 arrays of quaternions.')
-assert(size(nA_Lab,1) == 3,'nA_Lab must be a 3-by-n array of vectors.')
 
 % number of GBs
 Ngb = size(qA_Lab,1);
@@ -158,3 +157,10 @@ end
 % quiver3(0,0,0,0,0,1,0,'b--');
 % 
 % quiver3(0,0,0,1,0,0,0,'k','linewidth',2);
+
+%% CODE GRAVEYARD
+%{
+%% Ensure proper formatting of inputs
+assert(size(qA_Lab,2) == 4 && size(qB_Lab,2) == 4,'qA_Lab and qB_Lab must be n-by-4 arrays of quaternions.')
+assert(size(nA_Lab,1) == 3,'nA_Lab must be a 3-by-n array of vectors.')
+%}

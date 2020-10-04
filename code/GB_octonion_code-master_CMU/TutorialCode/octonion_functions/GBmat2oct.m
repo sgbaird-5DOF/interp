@@ -17,7 +17,7 @@ pB = om2qu(OB); nB = OB(:,3)';
 % disp(pB)
 
 %transform BP vectors from crystal frames into sample frame 
-mA0 = qmult(qinv(pA),qmult([0 nA],(pA))); mA = mA0(2:4);
+mA0 = qmult(qinv_francis(pA),qmult([0 nA],(pA))); mA = mA0(2:4);
 %mB0 = qmult(qinv(pB),qmult([0 nB],(pB))); mB = mB0(2:4);
 
 %transform BP vector in sample frame to GB frame (aligned with z = [0 0 1])

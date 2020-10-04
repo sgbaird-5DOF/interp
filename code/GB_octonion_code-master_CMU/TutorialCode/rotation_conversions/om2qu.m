@@ -1,8 +1,11 @@
-% from rotation matrix to quaternions
+function q = om2qu(om,epsijk)
+arguments
+   om(3,3) double
+   epsijk(1,1) double = 1
+end
+% OM2QU  from rotation matrix to quaternions
 
-function q = om2qu(om)
-
-global epsijk
+% global epsijk
 
 thr = 1e-10;
 
