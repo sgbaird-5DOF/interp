@@ -112,7 +112,7 @@ end
 function [qm,nA] = GBoct2five_once(o,qmconvention)
 arguments
     o(:,8) double
-    qmconvention char {mustBeMember(qmconvention,{'francis','johnson'})} = 'johnson'
+    qmconvention char {mustBeMember(qmconvention,{'francis','johnson'})} = 'francis'
 end
 % GBOCT2FIVE_ONCE  convert octonions to 5DOF, (qm,nA) pairs
 %--------------------------------------------------------------------------
