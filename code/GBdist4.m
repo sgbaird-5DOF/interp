@@ -7,48 +7,32 @@ arguments
 	wtol(1,1) double {mustBeFinite,mustBeReal} = 1e-6 %omega tolerance
 	waitbarQ logical = false
 end
-%--------------------------------------------------------------------------
-% Author: Sterling Baird
-%
-% Date: 2020-07-27
-%
-% Description: modified version of GBdist function by CMU group. Keeps o1
+% GBDIST4  modified version of GBdist function by CMU group. Keeps o1
 % constant.
-%
+%--------------------------------------------------------------------------
 % Inputs:
 %		o1, o2 -	octonions
-%
 %		pgnum - point group number
-%
 %		dtype - distance type ('omega' arc length or euclidean 'norm')
-%
 % Outputs:
 %		dmin -	minimized distance metric
-%
 %		o2minsyms - minimized octonions
-%
 % Usage:
-%
 %		[dmin, o2minsyms] = GBdist4(o1,o2);
-%
 %		[dmin, o2minsyms] = GBdist4(o1,o2,32);
-%
 %		[dmin, o2minsyms] = GBdist4(o1,o2,32,'norm');
-%
 %		[dmin, o2minsyms] = GBdist4(o1,o2,32,'omega');
 %
 % Dependencies:
 %		osymsets.m
 %			--osymset.m
 %				--qmult.m
-%
 %		get_omega.m
-%
 %		zeta_min2.m (naming distinct from 'zeta_min' to prevent conflicts in
-%						GBdist.m)
-%
+%		GBdist.m)
 % Notes:
-%
+% Author: Sterling Baird
+% Date: 2020-07-27
 %--------------------------------------------------------------------------
 prec = 12; %precision
 tol = 1e-6; %tolerance
@@ -109,11 +93,9 @@ parfor i = 1:npts %parfor compatible
 	%unpack SEOs
 	oset = osymsets(o2(i,:),pgnum,struct,grainexchangeQ,doublecoverQ);
 	o2tmp = oset{1};
-	% 	o2tmp = osets{i};
 	
 	%number of CSEOs
 	nsets = size(o2tmp,1);
-% 	nsets = size(osets{i},1);
 	
 	%unpack first octonion (held constant)
 	o1tmp = o1(i,:);
@@ -136,17 +118,6 @@ parfor i = 1:npts %parfor compatible
 	
 	%package quaternions
 	o2syms = [qCz qDz];
-	
-	%package quaternions
-% 	o2syms = [...
-% 		qCz	qDz
-% 		-qCz	qDz
-% 		qCz	-qDz
-% 		-qCz	-qDz
-% 		qDz	qCz
-% 		-qDz	qCz
-% 		qDz	-qCz
-% 		-qDz	-qCz];
 	
 	%% compute distances
 	%give the octonions a norm of sqrt(2)
@@ -291,5 +262,21 @@ end %GBdist4.m
 
 
 % 	o1rep = repmat(o1rep,4,1); % expand to total rows == nsets*16
+
+
+	%package quaternions
+% 	o2syms = [...
+% 		qCz	qDz
+% 		-qCz	qDz
+% 		qCz	-qDz
+% 		-qCz	-qDz
+% 		qDz	qCz
+% 		-qDz	qCz
+% 		qDz	-qCz
+% 		-qDz	-qCz];
+
+	% 	o2tmp = osets{i};
+
+% 	nsets = size(osets{i},1);
 
 %}

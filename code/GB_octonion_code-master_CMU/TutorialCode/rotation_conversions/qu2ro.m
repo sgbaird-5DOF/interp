@@ -27,11 +27,7 @@ if ~isempty(ib)
 	id = find(s >= thr);
 	if ~isempty(id)
 		t(id) = tan(acos(qq(id,1)));
-		try
 		q(id,:) = [q(id,1)./s(id), q(id,2)./s(id), q(id,3)./s(id), t(id)];
-		catch
-			1+1;
-		end
 	end
 	
 	for i = 1:4
