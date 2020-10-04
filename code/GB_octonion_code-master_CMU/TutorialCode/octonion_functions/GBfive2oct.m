@@ -17,31 +17,37 @@ end
 % o, octonion in GB plane reference frame
 npts = size(qmis,1);
 assert(npts == size(nA,1),['# quaternions: ' int2str(npts) ', # normals: ' int2str(size(nA,1))]);
-Zero = zeros(npts,1);
 
-mA = qmA2nA(qmis,nA,qmconvention);
-
-%set mA(:,3) values that are close to -1 or 1 to -1 or 1, respectively
-tol = 1e-4; %reduced tolerance 2020-08-22 b.c. a single value was complex (mA(:,3) had a value greater than 1)
-ids1 = abs(mA(:,3) + 1) < tol; %close to -1 ids
-ids2 = abs(mA(:,3) - 1) < tol; %close to 1 ids
-mA(ids1,3) = -1;
-mA(ids2,3) = 1;
-
-phiA = acos((mA(:,3)));
-
-axisA = normr([mA(:,2) -mA(:,1) Zero]);
-
-pA = ax2qu([axisA phiA]);
-
-qA = qlab2qm(qmis,pA,qmconvention);
-qB = pA;
-
-o = [qA qB];
-
+o = GBlab2oct([1 0 0 0],qmis,nA,qmconvention);
 
 %% Code Graveyard
 %{
+% Zero = zeros(npts,1);
+% 
+% mA = qmA2nA(qmis,nA,qmconvention);
+% 
+% %set mA(:,3) values that are close to -1 or 1 to -1 or 1, respectively
+% tol = 1e-4; %reduced tolerance 2020-08-22 b.c. a single value was complex (mA(:,3) had a value greater than 1)
+% ids1 = abs(mA(:,3) + 1) < tol; %close to -1 ids
+% ids2 = abs(mA(:,3) - 1) < tol; %close to 1 ids
+% mA(ids1,3) = -1;
+% mA(ids2,3) = 1;
+% 
+% phiA = acos((mA(:,3)));
+% 
+% axisA = normr([mA(:,2) -mA(:,1) Zero]);
+% 
+% pA = ax2qu([axisA phiA]);
+% 
+% qA = qlab2qm(qmis,pA,qmconvention);
+% qB = pA;
+% 
+% o = [qA qB];
+
+
+
+
+
 
 % qA = qmult(qinv_francis(qmis),pA);
 
