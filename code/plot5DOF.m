@@ -54,9 +54,9 @@ else
 	% ilist specified
 	intIDs = setdiff(1:size(d_all,1),ilist);
 	tmp = num2cell(d_all(intIDs,:),1);
-	ax1 = scatter3(tmp{:},5,'b','filled','markerfacealpha',0.2);
+	ax1 = scatter3(tmp{:},5,'b','filled','markerfacealpha',0.25);
 	tmp = num2cell(d_all(ilist,:),1);
-	ax2 = scatter3(tmp{:},5,'r','filled','markerfacealpha',0.2);
+	ax2 = scatter3(tmp{:},5,'r','filled','markerfacealpha',0.25);
 	legend([ax1 ax2],{'intersecting','non-intersecting'},'location','southoutside');
 end
 
