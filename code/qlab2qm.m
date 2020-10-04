@@ -4,7 +4,7 @@ arguments
    qBlab(:,4) double
    convention char {mustBeMember(convention,{'francis','johnson'})} = 'johnson'
 end
-% QLAB2FIVE Convert lab/sample frame quaternions of grain A and grain B and
+% QLAB2QM  Convert lab/sample frame quaternions of grain A and grain B and
 % and compute misorientation quaternion according to Toby Francis's or
 % Oliver Johnson's convention
 %--------------------------------------------------------------------------

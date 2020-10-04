@@ -3,7 +3,7 @@ arguments
 	octlist(:,8) double {mustBeNumeric,mustBeFinite}
 	disQ(1,1) logical = true
     method {mustBeMember(method,'reverse')} = 'reverse'
-    qmconvention char {mustBeMember(qmconvention,{'francis','johnson'})} = 'johnson'
+    qmconvention char {mustBeMember(qmconvention,{'francis','johnson'})} = 'francis'
 end
 %--------------------------------------------------------------------------
 % Author: Sterling Baird
@@ -63,7 +63,7 @@ end
 %convert subdivided points to 5DOF
 % disp(' ')
 % disp('GBoct2five ')
-parfor i = 1:npts %parfor compatible
+for i = 1:npts %parfor compatible
 	%textwaitbar
 	if waitbarQ
 		if mod(i,nreps2) == 0
@@ -146,17 +146,24 @@ ax = qu2ax(pA);
 axisA = ax(1:3);
 phiA = ax(4);
 
+scl = sqrt(1-cos(phiA)^2);
+mA(1) = -axisA(2)*scl;
+mA(2) = axisA(1)*scl;
+mA(3) = cos(phiA);
+
+nA = qmA2nA(qm,mA,qmconvention);
+end
+
+%------------------------CODE GRAVEYARD------------------------------------
+%{
+
+
+
 mA0(1) = 0;
 scl = sqrt(1-cos(phiA)^2);
 mA0(2) = -axisA(2)*scl;
 mA0(3) = axisA(1)*scl;
 mA0(4) = cos(phiA);
-
-nA = qmA2nA(qm,mA0,convention);
-end
-
-%------------------------CODE GRAVEYARD------------------------------------
-%{
 
 
 %*norm([axisA(2),axisA(1)])
