@@ -56,8 +56,8 @@ fiveref1.d = q2rod(qA);
 fiveref1.geometry = name1;
 
 %convert to octonions
-o1 = GBfive2oct(qA,nA);
-% o1 = get_ocubo(1,'random',[],10);
+% o1 = GBfive2oct(qA,nA);
+o1 = get_ocubo(1,'random',[],10);
 
 %% get minimized distance octonions relative to oct pairs
 disp('get_octpairs ')
