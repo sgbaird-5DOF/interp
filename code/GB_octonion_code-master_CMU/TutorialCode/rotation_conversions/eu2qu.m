@@ -1,4 +1,8 @@
-function q = eu2qu(eu)
+function q = eu2qu(eu,epsijk)
+arguments
+   eu(:,3) double
+   epsijk(1,1) double = 1
+end
 % EU2QU  from Euler angles to quaternions
 %--------------------------------------------------------------------------
 % Date: 2020-08-15
@@ -12,16 +16,12 @@ function q = eu2qu(eu)
 % Usage:
 %  q = eu2qu(eu);
 %
-% Dependencies:
-%  
-%
 % Notes:
 %  Vectorized by SGB 2020-08-15, epsijk used to control whether the Morawiec convention is
 %  used or not. Now it defaults to Morawiec convention
 %
 % see also SETGLOBAL_EPSIJK
 %--------------------------------------------------------------------------
-epsijk = 1;
 
 %unpack angles
 aphi1 = eu(:,1);

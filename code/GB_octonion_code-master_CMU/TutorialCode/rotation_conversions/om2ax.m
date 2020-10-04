@@ -1,8 +1,11 @@
-% from rotation matrix to axis-angle pair
+function q = om2ax(om,epsijk)
+arguments
+   om(3,3) double
+   epsijk(1,1) double = 1
+end
+% OM2AX  from rotation matrix to axis-angle pair
 
-function q = om2ax(om)
-
-global epsijk
+% global epsijk
 
 
 q = zeros(1,4);
