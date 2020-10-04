@@ -70,6 +70,11 @@ o2a = GBmat2oct(om3a,om4a)
 
 OmegaTest4 = rad2deg(GBdist4(o1a,o2a,32,'omega'))
 
+% [omcheck1a,omcheck2a] = constructGBMatrices(o1(1:4),o1(5:8),[0 0 1].','livermore');
+% [omcheck1b,omcheck2b] = constructGBMatrices(o2(1:4),o2(5:8),[0 0 1].','livermore');
+% 
+% GB5DOF
+
 qA = o1(1:4);
 qB = o1(5:8);
 qC = o2(1:4);
