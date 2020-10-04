@@ -18,7 +18,8 @@ end
 npts = size(qmis,1);
 assert(npts == size(nA,1),['# quaternions: ' int2str(npts) ', # normals: ' int2str(size(nA,1))]);
 
-o = GBlab2oct([1 0 0 0],qmis,nA,qmconvention);
+Zero = repmat([1 0 0 0],npts,1);
+o = GBlab2oct(Zero,qmis,nA,qmconvention);
 
 %% Code Graveyard
 %{
