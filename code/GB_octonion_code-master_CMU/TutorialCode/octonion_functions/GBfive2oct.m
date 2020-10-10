@@ -1,9 +1,10 @@
-function o = GBfive2oct(qmis,nA,method,qmconvention)
+function o = GBfive2oct(qmis,nA,qmconvention,NV)
 arguments
     qmis(:,4) double {mustBeReal,mustBeFinite}
     nA(:,3) double {mustBeReal,mustBeFinite}
     method char {mustBeMember(method,{'francis','johnson'})} = 'johnson'
     qmconvention char {mustBeMember(qmconvention,{'francis','johnson'})} = 'francis'
+    NV.five struct {mustContainFields(NV.five,{'q','nA'})} = struct.empty
 end
 
 %% INPUT DATA
