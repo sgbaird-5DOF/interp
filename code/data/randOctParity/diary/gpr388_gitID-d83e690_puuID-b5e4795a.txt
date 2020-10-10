@@ -1,0 +1,38 @@
+get_octpairs 
+Starting parallel pool (parpool) using the 'local' profile ...
+Connected to the parallel pool (number of workers: 6).
+  0  5 10 15 20 25 30 35 39 44 49 54 59 64 69 74 79 84 88 93data\temp.mat
+get_octpairs 
+  0  5 10 15 20 25 30 35 40 45 50 55 60 65 70 75 80 85 90 95data\temp.mat
+{'qmA2nA' is not found in the current folder or on the MATLAB path, but exists in:
+    C:\Users\sterg\Documents\GitHub\infer\code
+
+<a href = "matlab:matlab.internal.language.commandline.executeCode('cd ''C:\Users\sterg\Documents\GitHub\infer\code''')">Change the MATLAB current folder</a> or <a href = "matlab:matlab.internal.language.commandline.executeCode('addpath ''C:\Users\sterg\Documents\GitHub\infer\code''')">add its folder to the MATLAB path</a>.
+
+Error in <a href="matlab:matlab.internal.language.introspective.errorDocCallback('GBoct2five>GBoct2five_once', 'C:\Users\sterg\Documents\GitHub\infer\code\interp\code\GBoct2five.m', 154)" style="font-weight:bold">GBoct2five>GBoct2five_once</a> (<a href="matlab: opentoline('C:\Users\sterg\Documents\GitHub\infer\code\interp\code\GBoct2five.m',154,0)">line 154</a>)
+nA = qmA2nA(qm,mA,qmconvention);
+
+Error in <a href="matlab:matlab.internal.language.introspective.errorDocCallback('GBoct2five', 'C:\Users\sterg\Documents\GitHub\infer\code\interp\code\GBoct2five.m', 78)" style="font-weight:bold">GBoct2five</a> (<a href="matlab: opentoline('C:\Users\sterg\Documents\GitHub\infer\code\interp\code\GBoct2five.m',78,0)">line 78</a>)
+	[q,nA] = GBoct2five_once(oct,qmconvention);
+
+Error in <a href="matlab:matlab.internal.language.introspective.errorDocCallback('interp5DOF_setup', 'C:\Users\sterg\Documents\GitHub\infer\code\interp\code\interp5DOF_setup.m', 33)" style="font-weight:bold">interp5DOF_setup</a> (<a href="matlab: opentoline('C:\Users\sterg\Documents\GitHub\infer\code\interp\code\interp5DOF_setup.m',33,0)">line 33</a>)
+five = GBoct2five(o,true,oct2fivemethod);
+
+Error in
+<a href="matlab:matlab.internal.language.introspective.errorDocCallback('randOctParityData>@(ndatapts,npredpts,method,inputtype)interp5DOF_setup(ndatapts,npredpts,method,get_uuid(),inputtype)', 'C:\Users\sterg\Documents\GitHub\infer\code\interp\code\randOctParityData.m', 47)" style="font-weight:bold">randOctParityData>@(ndatapts,npredpts,method,inputtype)interp5DOF_setup(ndatapts,npredpts,method,get_uuid(),inputtype)</a>
+(<a href="matlab: opentoline('C:\Users\sterg\Documents\GitHub\infer\code\interp\code\randOctParityData.m',47,0)">line 47</a>)
+    interp5DOF_setup(ndatapts,npredpts,method,get_uuid(),inputtype); %names need to match pars
+    fields
+
+Error in <a href="matlab:matlab.internal.language.introspective.errorDocCallback('exec_argfn', 'C:\Users\sterg\Documents\GitHub\infer\code\interp\code\MATslurm\code\exec_argfn.m', 50)" style="font-weight:bold">exec_argfn</a> (<a href="matlab: opentoline('C:\Users\sterg\Documents\GitHub\infer\code\interp\code\MATslurm\code\exec_argfn.m',50,0)">line 50</a>)
+[argout{:}] = fn(argvals{:});
+
+Error in <a href="matlab:matlab.internal.language.introspective.errorDocCallback('exec_combs', 'C:\Users\sterg\Documents\GitHub\infer\code\interp\code\MATslurm\code\exec_combs.m', 60)" style="font-weight:bold">exec_combs</a> (<a href="matlab: opentoline('C:\Users\sterg\Documents\GitHub\infer\code\interp\code\MATslurm\code\exec_combs.m',60,0)">line 60</a>)
+    out = exec_argfn(execfn,parcombs,argoutnames);
+
+Error in <a href="matlab:matlab.internal.language.introspective.errorDocCallback('randOctParityData', 'C:\Users\sterg\Documents\GitHub\infer\code\interp\code\randOctParityData.m', 73)" style="font-weight:bold">randOctParityData</a> (<a href="matlab: opentoline('C:\Users\sterg\Documents\GitHub\infer\code\interp\code\randOctParityData.m',73,0)">line 73</a>)
+                outtmp = exec_combs(parpath, jid, tid);
+} 
+opentoline('C:\Users\sterg\Documents\GitHub\infer\code\interp\code\interp5DOF_setup.m',33,0)
+IdleTimeout has been reached.
+Parallel pool using the 'local' profile is shutting down.
