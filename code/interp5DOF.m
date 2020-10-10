@@ -319,7 +319,8 @@ switch method
 %             gprParallelQ = true;
             [ActiveSetMethod,FitMethod]=deal('default');
 %             hyperopts = struct('UseParallel',gprParallelQ);
-            gpropts = {'PredictMethod','fic'};
+            PredictMethod = 'fic';
+            gpropts = {'PredictMethod',PredictMethod};
         else
             % user-supplied gpr options
             gpropts = NV.gpropts;
@@ -395,7 +396,7 @@ switch method
                 mdlparsspec = struct(gproptstruct{end-1},gproptshort.gproptstruct{end});
             end
         else
-            mdlparsspec = var_names(maxhyperobj,gprParallelQ,hyperoptimizer,PredictMethod,ActiveSetMethod,FitMethod);
+            mdlparsspec = var_names(PredictMethod);
         end
         
     case 'nn'
@@ -677,5 +678,10 @@ end
 %             gprParallelQ = true;
 %             [hyperoptimizer,PredictMethod,ActiveSetMethod,FitMethod]=deal('default');
 %             hyperopts = struct('UseParallel',gprParallelQ);
+
+            mdlparsspec = var_names(maxhyperobj,gprParallelQ,hyperoptimizer,PredictMethod,ActiveSetMethod,FitMethod);
+
+
+
 
 %}
