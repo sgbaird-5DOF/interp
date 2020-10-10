@@ -7,7 +7,7 @@ arguments
     nA2
     method = 'gpr'
     NV.databary = []
-    NV.facetprops = []
+    NV.intfacetIDs = []
     NV.dataprops = []
     NV.modelparsspec = struct()
     NV.brkQ(1,1) logical = true
@@ -93,7 +93,7 @@ end
 %  [propOut,gprMdl] = interp5DOF(qm,nA,propList,qm2,nA2,'gpr')
 %  [propOut,gprMdl,ysd,yint] = interp5DOF(qm,nA,propList,qm2,nA2,'gpr')
 %
-%  [propOut] = interp5DOF(qm,nA,propList,qm2,nA2,'sphbary','gpr','gpropts',gpropts);
+%  [propOut] = interp5DOF(qm,nA,propList,qm2,nA2,'gpr','gpropts',gpropts);
 %
 %  [propOut,databary,fname] = interp5DOF(qm,nA,propList,qm2,nA2,'sphbary')
 %  [propOut,databary,fname] = interp5DOF(qm,nA,propList,qm2,nA2,'pbary')
@@ -157,21 +157,12 @@ end
 % Date: 2020-09-03
 %--------------------------------------------------------------------------
 
-% additional input checking
-if sum([isempty(NV.databary) isempty(NV.facetprops)]) == 1
-    error('both databary and facetprops should be supplied simultaneously')
-end
-
-if ~all(size(NV.databary) == size(NV.facetprops))
-    error('databary and facetprops must have the same dimensions')
-end
-
 %unpack (some) name-value pairs
 brkQ = NV.brkQ;
 uuid = NV.uuid;
 
 % add relevant folders to path (by searching subfolders for functions)
-addpathdir({'normr.m','GB5DOF_setup.m','cu2qu.m','q2rod.m','GBfive2oct.m','correctdis.m'})
+addpathdir({'normr.m','GB5DOF_setup.m','cu2qu.m','q2rod.m','GBfive2oct.m','correctdis.m','interp_gpr.m'})
 
 %% convert to octonions & symmetrize
 %predictor points
@@ -262,9 +253,6 @@ mdlparsgen = var_names(brkQ,method,projtol,zeroQ,starttime,nmeshpts,...
 %function to concatenate structures with all different fields (no common)
 structcat = @(S1,S2) table2struct([struct2table(S1,'AsArray',true),struct2table(S2,'AsArray',true)]);
 
-get_pts = @(qm,nA) get_octpairs(GBfive2oct(qm,nA));
-get_ppts = @(qm,nA) proj_down(get_octpairs(GBfive2oct(qm,nA)),projtol,usv);
-
 %% method-specific interpolation
 tic
 switch method
@@ -280,14 +268,9 @@ switch method
             inttol = 0.01;
             disp('intersect_facet')
             intfacetIDs = intersect_facet(ppts,K,ppts2,inttol,'inttype','planar','nnMax',nnMax);
-%             intfacetcell = {intfacetIDs};
             
             %% mesh triangulation and filename
             mesh.sphK = K;
-%             mesh.fname = 'meshtemp.mat';
-            
-            %assigning query point properties
-%             data.fname = 'datatemp.mat';
             
             %% interpolation
             disp('interpolation')
@@ -297,61 +280,29 @@ switch method
                     mesh.ppts = normr(mesh.ppts);
                     data.ppts = normr(data.ppts);
                     [propOut,databary,facetprops] = get_interp(mesh,data,intfacetIDs,'spherical',barytol);
-                    mdlcmd = @(mesh,data,intfacetIDs,barytol) ...
-                        get_interp(mesh,data,intfacetIDs,'spherical',barytol);
+
                 case 'pbary'
                     barytol = 0.1;
                     [propOut,databary,facetprops] = get_interp(mesh,data,intfacetIDs,'planar',barytol);
-                    mdlcmd = @(mesh,data,intfacetIDs,barytol) ...
-                        get_interp(mesh,data,intfacetIDs,'planar',barytol);
             end
-            interpfn = @(qm2,nA2) mdlcmd(mesh,...
-                struct('pts',get_pts(qm2,nA2),'ppts',get_ppts(qm2,nA2),'props',GB5DOF_setup(GBoct2five(get_pts(qm2,nA2))),'fname','temp.mat'),...
-                intersect_facet(mesh.ppts,mesh.sphK,get_ppts(qm2,nA2),inttol,'inttype','planar','nnMax',nnMax),...
-                barytol);
+            barytype = method; %for clarity of input to interp_bary
+            interpfn = @(qm2,nA2) interp_bary(mesh,[],qm2,nA2,usv,barytype,barytol,projtol,nnMax,brkQ);
             
             %model-specific variables
             mdlspec = var_names(databary,facetprops,barytol,inttol,intfacetIDs,nnMax);
-%             mdlspec.intfacetcell = intfacetcell;
             
             %model-specific parameters
             mdlparsspec = var_names(barytol);
             
         else
             databary = NV.databary;
-            facetprops = NV.facetprops;
-            
-            %find NaN values & replace with NN values (NN extrapolation)
-            [NNextrapID,~] = isnan(databary);
-            nnList = dsearchn(ppts2(NNextrapID),ppts);
-            d = size(databary,2);
-            
-            % e.g. databary == [NaN NaN NaN], facetprops == [NaN NaN NaN]
-            % --> [1 0 0], [1.213 0 0], such that dot([1 0 0],[1.213 0 0])
-            % == 1.213, where 1.213 is the extrapolated NN value
-            databary(NNextrapID,1) = 1;
-            databary(NNextrapID,2:d) = 0;
-            facetprops(NNextrapID,1) = propList(nnList);
-            facetprops(NNextrapID,2:d) = 0;
-            
-            switch NV.modelparsspec.method
-                case 'sphbary'
-                    getinterpmethod = 'spherical';
-                case 'pbary'
-                    getinterpmethod = 'planar';
-            end
+            intfacetIDs = NV.intfacetIDs;
             
             %interpolate using supplied barycentric coordinates
-            propOut = dot(databary,facetprops,2);
+            [propOut,facetprops,NNextrapID,nnList] = interp_bary(mesh,intfacetIDs,'databary',databary);
+            
             mdlcmd = @(databary,facetprops) dot(databary,facetprops,2);
-            interpfn = @(qm2,nA2) get_interp(mesh,...
-                ... ---data---
-                structcat(rmfield(data,{'pts','ppts'}),...
-                struct('pts',get_pts(qm2,nA2),'ppts',get_ppts(qm2,nA2))),...
-                ... ^^^data^^^
-                intersect_facet(mesh.ppts,mesh.K,get_ppts(qm2,nA2),...
-                NV.modelparsspec.inttol,'inttype','planar','nnMax',NV.modelparsspec.nnMax),...
-                getinterpmethod,NV.modelparsspec.barytol);
+            interpfn = @(propList) interp_bary(mesh,intfacetIDs,'databary',databary,'propList',propList);
             
             %model-specific variables
             mdlspec = var_names(databary,facetprops,NNextrapID,nnList);
@@ -364,31 +315,11 @@ switch method
         %gpr options
         if isempty(NV.gpropts)
             %% interp5DOF's default gpr options
-            %maxhyperobj = ncores*2;
-            %gprParallelQ = true;
-            %hyperoptimizer = 'bayesopt';
-            %%if ndatapts > 10000
-            %%    PredictMethod = 'bcd'; %'exact', 'bcd'
-            %%else
-            %PredictMethod = 'exact';
-            %%end
-            %ActiveSetMethod = 'entropy';
-            %FitMethod = 'fic';
-            %hyperopts = struct('UseParallel',gprParallelQ,'Optimizer',hyperoptimizer,'MaxObjectiveEvaluations',maxhyperobj);
-            %gpropts = { ...
-            %'OptimizeHyperparameters',{'KernelScale','Sigma'},...
-            %'HyperparameterOptimizationOptions',hyperopts,...
-            %'PredictMethod',PredictMethod,...
-            %'ActiveSetMethod',ActiveSetMethod,...
-            %'FitMethod',FitMethod};
-
-            maxhyperobj = 30; %default
-            gprParallelQ = true;
-            [hyperoptimizer,PredictMethod,ActiveSetMethod,FitMethod]=deal('default');
-            hyperopts = struct('UseParallel',gprParallelQ);
-            gpropts = { ...
-            'OptimizeHyperparameters',{'KernelScale','Sigma'},...
-            'HyperparameterOptimizationOptions',hyperopts};
+%             maxhyperobj = 30; %default
+%             gprParallelQ = true;
+            [ActiveSetMethod,FitMethod]=deal('default');
+%             hyperopts = struct('UseParallel',gprParallelQ);
+            gpropts = {'PredictMethod','fic'};
         else
             % user-supplied gpr options
             gpropts = NV.gpropts;
@@ -440,9 +371,9 @@ switch method
         else
             propOut = predict(gprMdl,ppts2);
         end
-        %command to do interpolation
+        
         mdlcmd = @(gprMdl,ppts2) predict(gprMdl,ppts2);
-        interpfn = @(qm2,nA2) mdlcmd(compact(gprMdl),get_ppts(qm2,nA2));
+        interpfn = @(qm2,nA2) interp_gpr(gprMdl,qm2,nA2,projtol,usv);
         
         %model-specific variables
         if ~strcmp(PredictMethod,'bcd')
@@ -470,8 +401,9 @@ switch method
     case 'nn'
         %nearest neighbors (NN)
         nnList = dsearchn(ppts,ppts2);
+        
         mdlcmd = @(ppts,ppts2,propList) propList(dsearchn(ppts,ppts2));
-        interpfn = @(qm2,nA2) mdlcmd(ppts,get_ppts(qm2,nA2),propList);
+        interpfn = @(qm2,nA2) interp_nn(ppts,qm2,nA2,projtol,usv,propList);
         
         %assign NN property values
         propOut = propList(nnList);
@@ -497,7 +429,7 @@ switch method
         % update the documentation
         %
         % consider suggesting as an addition in the GitHub repository via
-        % GitHub issue or pull request
+        % GitHub issue or preferably pull request
 end
 runtime = toc; %time elapsed to do the interpolation (method-specific portion)
 
@@ -650,17 +582,100 @@ end
 
 %         mdlcmd = @(ppts,propList,gpropts) predict(fitrgp(ppts,propList,gpropts{:}),ppts2);
 
-
-            gpropts = struct(...
-                'OptimizeHyperparameters',{'KernelScale','Sigma'},...
-                'HyperparameterOptimizationOptions',hyperopts,...
-                'PredictMethod','exact',...
-                'ActiveSetMethod','entropy',...
-                'FitMethod','fic');
-            %namedargs2cell(gpropts)
+% 
+%             gpropts = struct(...
+%                 'OptimizeHyperparameters',{'KernelScale','Sigma'},...
+%                 'HyperparameterOptimizationOptions',hyperopts,...
+%                 'PredictMethod','exact',...
+%                 'ActiveSetMethod','entropy',...
+%                 'FitMethod','fic');
+%             %namedargs2cell(gpropts)
 
 
             structcat(rmfield(data,{'pts','ppts'}),...
                 struct('pts',get_pts(qm2,nA2),'ppts',get_ppts(qm2,nA2))),...
+
+            %maxhyperobj = ncores*2;
+            %gprParallelQ = true;
+            %hyperoptimizer = 'bayesopt';
+            %%if ndatapts > 10000
+            %%    PredictMethod = 'bcd'; %'exact', 'bcd'
+            %%else
+            %PredictMethod = 'exact';
+            %%end
+            %ActiveSetMethod = 'entropy';
+            %FitMethod = 'fic';
+            %hyperopts = struct('UseParallel',gprParallelQ,'Optimizer',hyperoptimizer,'MaxObjectiveEvaluations',maxhyperobj);
+            %gpropts = { ...
+            %'OptimizeHyperparameters',{'KernelScale','Sigma'},...
+            %'HyperparameterOptimizationOptions',hyperopts,...
+            %'PredictMethod',PredictMethod,...
+            %'ActiveSetMethod',ActiveSetMethod,...
+            %'FitMethod',FitMethod};
+
+%             mesh.fname = 'meshtemp.mat';
+            
+            %assigning query point properties
+%             data.fname = 'datatemp.mat';
+
+
+
+%             mdlspec.intfacetcell = intfacetcell;
+
+
+%             facetprops = NV.facetprops;
+%             
+%             %find NaN values & replace with NN values (NN extrapolation)
+%             [NNextrapID,~] = isnan(databary);
+%             nnList = dsearchn(ppts2(NNextrapID),ppts);
+%             d = size(databary,2);
+%             
+%             % e.g. databary == [NaN NaN NaN], facetprops == [NaN NaN NaN]
+%             % --> [1 0 0], [1.213 0 0], such that dot([1 0 0],[1.213 0 0])
+%             % == 1.213, where 1.213 is the extrapolated NN value
+%             databary(NNextrapID,1) = 1;
+%             databary(NNextrapID,2:d) = 0;
+%             facetprops(NNextrapID,1) = propList(nnList);
+%             facetprops(NNextrapID,2:d) = 0;
+            
+%             switch NV.modelparsspec.method
+%                 case 'sphbary'
+%                     getinterpmethod = 'spherical';
+%                 case 'pbary'
+%                     getinterpmethod = 'planar';
+%             end
+
+
+%             propOut = dot(databary,facetprops,2);
+            %             interpfn = @(propList) dot(databary,facetprops,2);
+
+%             intfacetcell = {intfacetIDs};
+
+
+
+            % additional input checking
+%             if sum([isempty(NV.databary) isempty(NV.facetprops)]) == 1
+%                 error('both databary and facetprops should be supplied simultaneously')
+%             end
+%             
+%             if ~all(size(NV.databary) == size(NV.facetprops))
+%                 error('databary and facetprops must have the same dimensions')
+%             end
+%             
+%             if sum([isempty(NV.databary) isempty(NV.facetprops)])==1
+%                 error('both databary and facetprops should be defined or neither')
+%             end
+
+
+%             gpropts = { ...
+%             'OptimizeHyperparameters',{'KernelScale','Sigma'},...
+%             'HyperparameterOptimizationOptions',hyperopts};
+
+
+
+%             maxhyperobj = 30; %default
+%             gprParallelQ = true;
+%             [hyperoptimizer,PredictMethod,ActiveSetMethod,FitMethod]=deal('default');
+%             hyperopts = struct('UseParallel',gprParallelQ);
 
 %}
