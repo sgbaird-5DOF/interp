@@ -19,8 +19,13 @@ ocuboseed2 = 15;
 %ocuboseed1 = 'shuffle';
 %ocuboseed2 = 'shuffle';
 
-o = get_ocubo(ndatapts,ocubotype,[],ocuboseed1);
-o2 = get_ocubo(npredpts,ocubotype,[],ocuboseed2);
+five = get_five(ndatapts);
+five2 = get_five(npredpts);
+
+o = GBfive2oct(five);
+
+% o = get_ocubo(ndatapts,ocubotype,[],ocuboseed1);
+% o2 = get_ocubo(npredpts,ocubotype,[],ocuboseed2);
 
 o = get_octpairs(o);
 o2 = get_octpairs(o2);
@@ -29,9 +34,9 @@ genseed = 10;
 rng(genseed);
 
 %convert to 5DOF
-oct2fivemethod = 'reverse'; %'reverse', 'simple'
-five = GBoct2five(o,true,oct2fivemethod);
-five2 = GBoct2five(o2,true,oct2fivemethod);
+% oct2fivemethod = 'reverse'; %'reverse', 'simple'
+% five = GBoct2five(o,true,oct2fivemethod);
+% five2 = GBoct2five(o2,true,oct2fivemethod);
 
 %get BRK function values
 propList = GB5DOF_setup(five);

@@ -93,7 +93,7 @@ end
 %  [propOut,gprMdl] = interp5DOF(qm,nA,propList,qm2,nA2,'gpr')
 %  [propOut,gprMdl,ysd,yint] = interp5DOF(qm,nA,propList,qm2,nA2,'gpr')
 %
-%  [propOut] = interp5DOF(qm,nA,propList,qm2,nA2,'sphbary','gpr','gpropts',gpropts);
+%  [propOut] = interp5DOF(qm,nA,propList,qm2,nA2,'gpr','gpropts',gpropts);
 %
 %  [propOut,databary,fname] = interp5DOF(qm,nA,propList,qm2,nA2,'sphbary')
 %  [propOut,databary,fname] = interp5DOF(qm,nA,propList,qm2,nA2,'pbary')
@@ -233,7 +233,11 @@ data.npts = ndatapts;
 
 if isempty(NV.dataprops)
     if NV.brkQ
-        data.props = GB5DOF_setup(GBoct2five(o2));
+        for i = 1:data.npts
+            om1 = qu2om(o2(i,1:4));
+            om2 = qu2om(o2(i,:5:8));
+            data.props(i) = GB5DOF(om1,om2,'Ni');
+        end
     else
         data.props = nan(size(ppts2,1),1);
     end
@@ -383,12 +387,13 @@ switch method
             %'FitMethod',FitMethod};
 
             maxhyperobj = 30; %default
-            gprParallelQ = true;
-            [hyperoptimizer,PredictMethod,ActiveSetMethod,FitMethod]=deal('default');
-            hyperopts = struct('UseParallel',gprParallelQ);
-            gpropts = { ...
-            'OptimizeHyperparameters',{'KernelScale','Sigma'},...
-            'HyperparameterOptimizationOptions',hyperopts};
+            gprParallelQ = false;
+            [hyperoptimizer,ActiveSetMethod,FitMethod]=deal('default');
+%             hyperopts = struct('UseParallel',gprParallelQ);
+%             gpropts = { ...
+%             'OptimizeHyperparameters',{'KernelScale','Sigma'},...
+%             'HyperparameterOptimizationOptions',hyperopts};
+            gpropts = {'PredictMethod','fic'};
         else
             % user-supplied gpr options
             gpropts = NV.gpropts;
@@ -432,8 +437,11 @@ switch method
         end
         
         %Gaussian process regression
-        gprMdl = fitrgp(ppts,propList,gpropts{:}) %#ok<NOPRT>
-        
+        if ~isempty(gpropts)
+            gprMdl = fitrgp(ppts,propList,gpropts{:}) %#ok<NOPRT>
+        else
+            gprMdl = fitrgp(ppts,propList);
+        end
         %predictions ("interpolated" points)
         if ~strcmp(PredictMethod,'bcd')
             [propOut,ysd,yint] = predict(gprMdl,ppts2);

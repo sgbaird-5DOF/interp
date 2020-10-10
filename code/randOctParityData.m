@@ -2,7 +2,7 @@ clear; close all
 %loop through different combinations of parameters using random,
 %octochorically sampled octonions
 addpathdir({'var_names.m','writeparfile.m'})
-runtype = 'full'; %'test','full'
+runtype = 'test'; %'test','full'
 switch runtype
     case 'test'
         ndatapts = 388;
@@ -15,6 +15,9 @@ switch runtype
         method = {'gpr'}; %'sphbary','pbary','gpr','nn'
         inputtype = {'5dof'};
 end
+
+% job submission environment
+env = 'local'; %'slurm', 'local'
 
 %% functions to generate save filepaths
 %diary
@@ -52,7 +55,6 @@ walltimefn = @() 300; %can set to constant or to depend on parameters
     writeparfile(pars,execfn,argoutnames,walltimefn,'diarypathfn',diarypathfn,'savepathfn',savepathfn);
 
 %% job submission
-env = 'slurm'; %'slurm', 'local'
 switch env
     case 'slurm'
         %setup
