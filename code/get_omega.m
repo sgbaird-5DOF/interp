@@ -1,7 +1,7 @@
 function omega = get_omega(o1,o2)
 arguments
-	o1 (:,8) double {mustBeReal,mustBeFinite,normMustBeSqrt2(o1)}
-	o2 (:,8) double {mustBeReal,mustBeFinite,normMustBeSqrt2(o2)}
+	o1 (:,8) double {mustBeReal,mustBeFinite}
+	o2 (:,8) double {mustBeReal,mustBeFinite}
 end
 %--------------------------------------------------------------------------
 % Author: Sterling Baird
@@ -17,10 +17,17 @@ end
 % Dependencies:
 %
 %--------------------------------------------------------------------------
-qA = o1(:,1:4);
-qB = o1(:,5:8);
-qC = o2(:,1:4);
-qD = o2(:,5:8);
+
+% enables use as custom distance function to e.g. pdist2
+if size(o1,1) == 1
+    npts = size(o2,1);
+    o1 = repmat(o1,npts,1);
+end
+
+qA = normr(o1(:,1:4));
+qB = normr(o1(:,5:8));
+qC = normr(o2(:,1:4));
+qD = normr(o2(:,5:8));
 
 dot1 = dot(qA,qC,2);
 dot2 = dot(qB,qD,2);
@@ -31,16 +38,16 @@ end
 %----------------------------END get_omega()-------------------------------
 
 
-%--------------------------VALIDATION FUNCTIONS----------------------------
-% Custom validation function
-function normMustBeSqrt2(val)
-
-tol = 0.1;
-normcheck = abs(norm(val(1,:))-sqrt(2)) < tol;
-errmsg = ['octonion norm must be equal to sqrt(2) within tol = ' num2str(tol)];
-assert(normcheck,errmsg)
-
-end
+% %--------------------------VALIDATION FUNCTIONS----------------------------
+% % Custom validation function
+% function normMustBeSqrt2(val)
+% 
+% tol = 0.1;
+% normcheck = abs(norm(val(1,:))-sqrt(2)) < tol;
+% errmsg = ['octonion norm must be equal to sqrt(2) within tol = ' num2str(tol)];
+% assert(normcheck,errmsg)
+% 
+% end
 
 % function quatNormsMustBeOne(val)
 % 
@@ -67,4 +74,8 @@ dot2(dot2 < -1) = -1;
 
 dot1(abs(dot1 + 1) < tol) = -1;
 dot2(abs(dot2 + 1) < tol) = -1;
+
+,normMustBeSqrt2(o1)
+,normMustBeSqrt2(o2)
+
 %}
