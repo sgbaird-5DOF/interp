@@ -7,7 +7,7 @@ arguments
     nA2
     method = 'gpr'
     NV.databary = []
-    NV.intfacetIDs = []
+    NV.facetIDs = []
     NV.dataprops = []
     NV.modelparsspec = struct()
     NV.brkQ(1,1) logical = true
@@ -173,7 +173,7 @@ else
     predinput = '5dof';
     otmp = GBfive2oct(qm,nA);
 end
-wtol = 1e-3;
+wtol = 1e-6;
 o = get_octpairs(otmp,'wtol',wtol);
 nmeshpts = size(o,1);
 
@@ -192,7 +192,14 @@ disp(['nmeshpts = ' int2str(nmeshpts) ', ndatapts = ' int2str(ndatapts)])
 
 %% projection
 %important to project both sets together so they use same SVD decomposition
+
 projtol = 1e-4;
+switch method
+    case {'sphgpr','gpr'}
+        projQ = false;
+    otherwise
+        projQ = true;
+end
 zeroQ = false;
 o = normr(o);
 o2 = normr(o2);
@@ -205,10 +212,6 @@ if size(a,2) == 7
 else
     error("Input doesn't have degenerate dimension or has too few (i.e. check input data), or try reducing proj_down tolerance input (tol)")
 end
-
-% %projected points
-% ppts = a(1:nmeshpts,:);
-% ppts2 = a(nmeshpts+1:end,:);
 
 %% mesh and data struct setup
 %mesh
@@ -226,7 +229,7 @@ if isempty(NV.dataprops)
     if NV.brkQ
         for i = 1:data.npts
             om1 = qu2om(o2(i,1:4));
-            om2 = qu2om(o2(i,:5:8));
+            om2 = qu2om(o2(i,5:8));
             data.props(i) = GB5DOF(om1,om2,'Ni');
         end
     else
@@ -248,10 +251,10 @@ gitcommit = get_gitcommit();
 %% package into struct
 %general model variables 
 mdlgen = var_names(brkQ,method,projtol,zeroQ,usv,starttime,ncores,...
-    gitcommit,uuid,predinput,queryinput);
+    gitcommit,uuid,predinput,queryinput,projQ);
 %general parameters
 mdlparsgen = var_names(brkQ,method,projtol,zeroQ,starttime,nmeshpts,...
-    ndatapts,ncores,gitcommit,uuid,predinput,queryinput);
+    ndatapts,ncores,gitcommit,uuid,predinput,queryinput,projQ);
 
 %% helper functions
 %function to concatenate structures with all different fields (no common)
@@ -278,50 +281,83 @@ switch method
             
             %% interpolation
             disp('interpolation')
+            %method-specific parameters
             switch method
                 case 'sphbary'
                     barytol = 0.2;
+                    barytype = 'spherical';
                     mesh.ppts = normr(mesh.ppts);
                     data.ppts = normr(data.ppts);
-                    [propOut,databary,facetprops] = get_interp(mesh,data,intfacetIDs,'spherical',barytol);
-
+                    
                 case 'pbary'
                     barytol = 0.1;
-                    [propOut,databary,facetprops] = get_interp(mesh,data,intfacetIDs,'planar',barytol);
+                    barytype = 'planar';
             end
-            barytype = method; %for clarity of input to interp_bary
-            interpfn = @(qm2,nA2) interp_bary(mesh,[],qm2,nA2,usv,barytype,barytol,projtol,nnMax,brkQ);
+            %interpolation
+            [propOut,databary,facetprops,facetIDs,barypars] = get_interp(mesh,data,intfacetIDs,barytype,barytol);
+            
+            %model command and interpolation function
+            mdlcmd = @(mesh,data,intfacetIDs,barytype,barytol) get_interp(mesh,data,intfacetIDs,barytype,barytol);
+            interpfn = @(qm2,nA2) interp_bary(mesh,[],qm2,nA2,usv,zeroQ,barytype,barytol,projtol,nnMax,brkQ);
+            
+            %unpack intersection metrics
+            nints = barypars.nints;
+            numnonints = barypars.numnonints;
+            int_fraction = barypars.int_fraction;
+            
+            %unpack NN extrapolation RMSE and MAE values
+            nn_rmse = barypars.nn_errmetrics.rmse;
+            nn_mae = barypars.nn_errmetrics.mae;        
             
             %model-specific variables
-            mdlspec = var_names(databary,facetprops,barytol,inttol,intfacetIDs,nnMax);
-            
+            mdlspec = var_names(databary,facetprops,barytol,barytype,inttol,...
+                intfacetIDs,nnMax,facetIDs,barypars,nn_rmse,nn_mae);
+                        
             %model-specific parameters
-            mdlparsspec = var_names(barytol);
+            mdlparsspec = var_names(barytol,barytype,inttol,nnMax,...
+                nn_rmse,nn_mae,nints,numnonints,int_fraction);
             
         else
+            %unpack
             databary = NV.databary;
-            intfacetIDs = NV.intfacetIDs;
+            facetIDs = NV.facetIDs;
             
             %interpolate using supplied barycentric coordinates
-            [propOut,facetprops,NNextrapID,nnList] = interp_bary(mesh,intfacetIDs,'databary',databary);
+            [propOut,facetprops,NNextrapID,nnList] = interp_bary_fast(ppts,ppts2,meshprops,databary,facetIDs);
             
+            %model command and interp function
             mdlcmd = @(databary,facetprops) dot(databary,facetprops,2);
-            interpfn = @(propList) interp_bary(mesh,intfacetIDs,'databary',databary,'propList',propList);
+            interpfn = @(propList) interp_bary_fast(ppts,ppts2,meshprops,databary,facetIDs);
             
             %model-specific variables
-            mdlspec = var_names(databary,facetprops,NNextrapID,nnList);
+            mdlspec = var_names(databary,facetprops,NNextrapID,nnList,facetIDs);
+            
             %model-specific parameters
             mdlparsspec = NV.modelparsspec;
             
         end
         
-    case 'gpr'
+    case {'sphgpr','gpr'}
+        if projQ
+            X = ppts;
+            X2 = ppts2;
+        else
+            X = o;
+            X2 = o2;
+        end
+        
         %gpr options
         if isempty(NV.gpropts)
             %% interp5DOF's default gpr options
-            [ActiveSetMethod,FitMethod]=deal('default');
             PredictMethod = 'fic';
+            
             gpropts = {'PredictMethod',PredictMethod};
+            if strcmp(method,'sphgpr')
+                %squared exponential kernel function with octonion distance
+                kfcn = @(XN,XM,theta) (exp(theta(2))^2)*exp(-(pdist2(XN,XM,@get_omega).^2)/(2*exp(theta(1))^2));
+                theta0 = [deg2rad(10), std(propList)/sqrt(2)]; %initial length scale and noise
+                gpropts = [gpropts,{'KernelFunction',kfcn,'KernelParameters',theta0}];
+            end
             
         else
             % user-supplied gpr options
@@ -365,20 +401,20 @@ switch method
             end
         end
         
-        %Gaussian process regression
+        %Gaussian process regression        
         if ~isempty(gpropts)
-            gprMdl = fitrgp(ppts,propList,gpropts{:}) %#ok<NOPRT>
+            gprMdl = fitrgp(X,propList,gpropts{:}) %#ok<NOPRT>
         else
-            gprMdl = fitrgp(ppts,propList);
+            gprMdl = fitrgp(X,propList);
         end
         %predictions ("interpolated" points)
         if ~strcmp(PredictMethod,'bcd')
-            [propOut,ysd,yint] = predict(gprMdl,ppts2);
+            [propOut,ysd,yint] = predict(gprMdl,X2);
         else
-            propOut = predict(gprMdl,ppts2);
+            propOut = predict(gprMdl,X2);
         end
         
-        mdlcmd = @(gprMdl,ppts2) predict(gprMdl,ppts2);
+        mdlcmd = @(gprMdl,X2) predict(gprMdl,X2);
         interpfn = @(qm2,nA2) interp_gpr(gprMdl,qm2,nA2,projtol,usv);
         
         %model-specific variables
@@ -416,6 +452,18 @@ switch method
         
         %model-specific variables
         mdlspec.nnList = nnList;
+        %model-specific parameters
+        mdlparsspec = struct();
+        
+    case 'avg'
+        % "interpolation" (just constant model)
+        [propOut,yavg] = interp_avg(propList,ndatapts);
+        
+        mdlcmd = @(propList,ndatapts) interp_avg(propList,ndatapts);
+        interpfn = @(qm2,nA2) repelem(yavg,ndatapts,1); %any new point gets assigned yavg
+        
+        %model-specific variables
+        mdlspec.yavg = yavg;
         %model-specific parameters
         mdlparsspec = struct();
         
@@ -687,6 +735,10 @@ end
             mdlparsspec = var_names(maxhyperobj,gprParallelQ,hyperoptimizer,PredictMethod,ActiveSetMethod,FitMethod);
 
 
+%             [ActiveSetMethod,FitMethod]=deal('default');
 
+% %projected points
+% ppts = a(1:nmeshpts,:);
+% ppts2 = a(nmeshpts+1:end,:);
 
 %}

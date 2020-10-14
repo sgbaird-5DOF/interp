@@ -1,10 +1,9 @@
-function o = GBfive2oct(qmis,nA,qmconvention,NV)
+function o = GBfive2oct(qmisOrFive,nA,method,qmconvention)
 arguments
-    qmis(:,4) double {mustBeReal,mustBeFinite}
-    nA(:,3) double {mustBeReal,mustBeFinite}
+    qmisOrFive
+    nA(:,3) double {mustBeReal,mustBeFinite} = []
     method char {mustBeMember(method,{'francis','johnson'})} = 'johnson'
     qmconvention char {mustBeMember(qmconvention,{'francis','johnson'})} = 'francis'
-    NV.five struct {mustContainFields(NV.five,{'q','nA'})} = struct.empty
 end
 
 %% INPUT DATA
@@ -17,6 +16,21 @@ end
 
 %% OUTPUT
 % o, octonion in GB plane reference frame
+
+% Usage:
+%  o = GBfive2oct(five);
+%  o = GBfive2oct(five.q,five.nA);
+%  o = GBfive2oct(vertcat(five.q),vertcat(five.nA));
+
+if isnumeric(qmisOrFive) && ~isempty(nA)
+    %qmisOrFive is qmis
+    qmis = qmisOrFive;
+elseif isstruct(qmisOrFive)
+    %qmisOrFive is five
+    mustContainFields(qmisOrFive,{'q','nA'});
+    qmis = vertcat(qmisOrFive.q);
+    nA = vertcat(qmisOrFive.nA);
+end
 
 npts = size(qmis,1);
 assert(npts == size(nA,1),['# quaternions: ' int2str(npts) ', # normals: ' int2str(size(nA,1))]);

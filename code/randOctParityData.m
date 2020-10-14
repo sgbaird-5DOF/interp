@@ -3,11 +3,12 @@ clear; close all
 %octochorically sampled octonions
 addpathdir({'var_names.m','writeparfile.m'})
 runtype = 'test'; %'test','full'
+nreps = 10;
 switch runtype
     case 'test'
-        ndatapts = 388;
+        ndatapts = 1000;
         npredpts = 500;
-        method = {'gpr'}; % 'sphbary', 'pbary', 'gpr', 'nn'
+        method = {'sphgpr','gpr','sphbary','pbary','nn','avg'}; % 'sphbary', 'pbary', 'gpr', 'sphgpr', 'nn', 'avg'
         inputtype = {'5dof'}; %'5dof','octonion'
     case 'full'
         ndatapts = [50000];
@@ -19,13 +20,23 @@ end
 % job submission environment
 env = 'local'; %'slurm', 'local'
 
+T = true;
+F = false;
+%whether to skip running the jobs and just compile results
+if strcmp(env,'local')
+    dryrunQ = F;
+    disp(['dryrunQ == ' int2str(dryrunQ)])
+end
+
 %% functions to generate save filepaths
 %diary
-diaryfolder = fullfile('data','randOctParity','diary');
+files = dir(fullfile('**','data','randOctParity','diary'));
+diaryfolder = files(1).folder;
 diarynamefn = @(method,ndatapts,gitcommit,puuid) [method int2str(ndatapts) '_gitID-' gitcommit(1:7) '_puuID-' puuid '.txt'];
 diarypathfn = @(method,ndatapts,gitcommit,puuid) fullfile(diaryfolder,diarynamefn(method,ndatapts,gitcommit,puuid));
 %data
-savefolder = fullfile('data','randOctParity','pcombs');
+files = dir(fullfile('**','data','randOctParity','pcombs'));
+savefolder = files(1).folder;
 savenamefn = @(method,ndatapts,gitcommit,puuid) [method int2str(ndatapts) '_gitID-' gitcommit(1:7) '_puuID-' puuid '.mat'];
 
 savepathgen = fullfile(savefolder,'*gitID-*puuID*.mat'); %for use with dir
@@ -51,9 +62,10 @@ argoutnames = {'propOut','interpfn','mdl','mdlpars'};
 walltimefn = @() 300; %can set to constant or to depend on parameters
 
 %% parameter file
-[parpath, parcombsets, Ntrim, jobwalltimes] = ...
-    writeparfile(pars,execfn,argoutnames,walltimefn,'diarypathfn',diarypathfn,'savepathfn',savepathfn);
-
+if ~dryrunQ
+    [parpath, parcombsets, Ntrim, jobwalltimes] = ...
+        writeparfile(pars,execfn,argoutnames,walltimefn,'diarypathfn',diarypathfn,'savepathfn',savepathfn,'nreps',nreps);
+end
 %% job submission
 switch env
     case 'slurm'
@@ -66,11 +78,13 @@ switch env
         submit_sbatch(parpath,cores,mem,qosopt,scriptfpath); %submit.sh --> exec_combs.m --> execfn (defined above)
         
     case 'local'
-        %nested loop through jobs and tasks to generate results
-        for jid = 1:length(Ntrim)
-            N = Ntrim(jid);
-            for tid = 1:N
-                outtmp = exec_combs(parpath, jid, tid);
+        if ~dryrunQ
+            %nested loop through jobs and tasks to generate results
+            for jid = 1:length(Ntrim)
+                N = Ntrim(jid);
+                for tid = 1:N
+                    outtmp = exec_combs(parpath, jid, tid);
+                end
             end
         end
         %get names and folders from files that match general savepath
@@ -104,6 +118,7 @@ switch env
         
         %concatenate models and parameters
         mdlcat = structvertcat(mdllist{:});
+        mdltbl = struct2table(mdlcat);
         mdlparscat = structvertcat(mdlparslist{:});
         mdlparstbl = struct2table(mdlparscat,'AsArray',true);
         
@@ -114,6 +129,7 @@ switch env
             'mdlparslist','mdlcat','mdlparscat','mdlparstbl','outlist',...
             '-v7.3','-nocompression')
         writetable(mdlparstbl,[fpath(1:end-4) '.xlsx'])
+        disp(mdlparstbl)
         
         %         %nested loop through jobs and tasks to load results
         %         S = load(parpath);
@@ -209,4 +225,7 @@ memfn = @(method,ndatapts) ...
                 outtmp = exec_combs(parpath, jid, tid);
             end
         end
+
+diaryfolder = fullfile('data','randOctParity','diary');
+savefolder = fullfile('data','randOctParity','pcombs');
 %}
