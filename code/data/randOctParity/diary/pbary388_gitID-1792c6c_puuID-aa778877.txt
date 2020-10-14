@@ -1,0 +1,77 @@
+get_octpairs 
+  0  5 10 15 20 25 30 35 39 44 49 54 59 64 69 74 79 84 88 93data\temp.mat
+get_octpairs 
+  0  5 10 15 20 25 30 35 40 45 50 55 60 65 70 75 80 85 90 95data\temp.mat
+nmeshpts = 388, ndatapts = 500
+--delaunayn
+intersect_facet
+  0  5 10 15 20 25 30 35 40 45 50 55 60 65 70 75 80 85 90 95interpolation
+loop through datapoints
+i == 11; no valid intersection, taking NN with dist = 0.18356
+i == 14; no valid intersection, taking NN with dist = 0.15959
+i == 23; no valid intersection, taking NN with dist = 0.18614
+i == 25; no valid intersection, taking NN with dist = 0.15368
+i == 38; no valid intersection, taking NN with dist = 0.1278
+i == 41; no valid intersection, taking NN with dist = 0.15966
+i == 55; no valid intersection, taking NN with dist = 0.17574
+i == 64; no valid intersection, taking NN with dist = 0.15001
+i == 67; no valid intersection, taking NN with dist = 0.16516
+i == 84; no valid intersection, taking NN with dist = 0.10444
+i == 91; no valid intersection, taking NN with dist = 0.19616
+i == 110; no valid intersection, taking NN with dist = 0.10118
+i == 127; no valid intersection, taking NN with dist = 0.15886
+i == 136; no valid intersection, taking NN with dist = 0.1576
+i == 152; no valid intersection, taking NN with dist = 0.072672
+i == 169; no valid intersection, taking NN with dist = 0.149
+i == 173; no valid intersection, taking NN with dist = 0.13384
+i == 178; no valid intersection, taking NN with dist = 0.20493
+i == 187; no valid intersection, taking NN with dist = 0.072119
+i == 189; no valid intersection, taking NN with dist = 0.12016
+i == 208; no valid intersection, taking NN with dist = 0.29238
+i == 209; no valid intersection, taking NN with dist = 0.17188
+i == 212; no valid intersection, taking NN with dist = 0.17873
+i == 215; no valid intersection, taking NN with dist = 0.17544
+i == 221; no valid intersection, taking NN with dist = 0.22311
+i == 243; no valid intersection, taking NN with dist = 0.19421
+i == 245; no valid intersection, taking NN with dist = 0.16575
+i == 270; no valid intersection, taking NN with dist = 0.18803
+i == 272; no valid intersection, taking NN with dist = 0.17148
+i == 286; no valid intersection, taking NN with dist = 0.15211
+i == 290; no valid intersection, taking NN with dist = 0.181
+i == 297; no valid intersection, taking NN with dist = 0.16157
+i == 299; no valid intersection, taking NN with dist = 0.14625
+i == 301; no valid intersection, taking NN with dist = 0.096231
+i == 305; no valid intersection, taking NN with dist = 0.17552
+i == 321; no valid intersection, taking NN with dist = 0.25751
+i == 344; no valid intersection, taking NN with dist = 0.1335
+i == 345; no valid intersection, taking NN with dist = 0.15446
+i == 349; no valid intersection, taking NN with dist = 0.22178
+i == 351; no valid intersection, taking NN with dist = 0.11661
+i == 358; no valid intersection, taking NN with dist = 0.18489
+i == 361; no valid intersection, taking NN with dist = 0.14681
+i == 370; no valid intersection, taking NN with dist = 0.12468
+i == 374; no valid intersection, taking NN with dist = 0.11915
+i == 390; no valid intersection, taking NN with dist = 0.13276
+i == 401; no valid intersection, taking NN with dist = 0.03881
+i == 408; no valid intersection, taking NN with dist = 0.22865
+i == 412; no valid intersection, taking NN with dist = 0.14395
+i == 423; no valid intersection, taking NN with dist = 0.13834
+i == 428; no valid intersection, taking NN with dist = 0.12395
+i == 431; no valid intersection, taking NN with dist = 0.16003
+i == 435; no valid intersection, taking NN with dist = 0.11784
+i == 437; no valid intersection, taking NN with dist = 0.15698
+i == 439; no valid intersection, taking NN with dist = 0.15941
+i == 442; no valid intersection, taking NN with dist = 0.11072
+i == 462; no valid intersection, taking NN with dist = 0.12847
+i == 464; no valid intersection, taking NN with dist = 0.17988
+i == 474; no valid intersection, taking NN with dist = 0.17521
+i == 477; no valid intersection, taking NN with dist = 0.16146
+i == 483; no valid intersection, taking NN with dist = 0.22873
+ 
+# non-intersections: 60/500
+ 
+RMSE (J/m^2): interp == 0.0986, NN == 0.1556
+ 
+total RMSE: 0.1070, all NN RMSE comparison: 0.1156
+RMSE = 0.10705 J/m^2
+MAE = 0.076375 J/m^2

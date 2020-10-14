@@ -1,0 +1,35 @@
+get_octpairs 
+  0  5 10 15 20 25 30 35 39 44 49 54 59 64 69 74 79 84 88 93data\temp.mat
+get_octpairs 
+  0  5 10 15 20 25 30 35 40 45 50 55 60 65 70 75 80 85 90 95data\temp.mat
+nmeshpts = 388, ndatapts = 500
+--delaunayn
+intersect_facet
+  0  5 10 15 20 25 30 35 40 45 50 55 60 65 70 75 80 85 90 95interpolation
+{Error using <a href="matlab:matlab.internal.language.introspective.errorDocCallback('get_interp')" style="font-weight:bold">get_interp</a>
+Invalid argument at position 4. Value must be a member of this set:
+    'planar'
+    'spherical'
+
+
+Error in <a href="matlab:matlab.internal.language.introspective.errorDocCallback('interp5DOF', 'C:\Users\sterg\Documents\GitHub\infer\code\interp\code\interp5DOF.m', 287)" style="font-weight:bold">interp5DOF</a> (<a href="matlab: opentoline('C:\Users\sterg\Documents\GitHub\infer\code\interp\code\interp5DOF.m',287,0)">line 287</a>)
+            [propOut,databary,facetprops,facetIDs] = get_interp(mesh,data,intfacetIDs,method,barytol);
+
+Error in <a href="matlab:matlab.internal.language.introspective.errorDocCallback('interp5DOF_setup', 'C:\Users\sterg\Documents\GitHub\infer\code\interp\code\interp5DOF_setup.m', 43)" style="font-weight:bold">interp5DOF_setup</a> (<a href="matlab: opentoline('C:\Users\sterg\Documents\GitHub\infer\code\interp\code\interp5DOF_setup.m',43,0)">line 43</a>)
+[propOut,interpfn,mdl,mdlpars] = interp5DOF(qm,nA,propList,qm2,nA2,method,...
+
+Error in <a href="matlab:matlab.internal.language.introspective.errorDocCallback('randOctParityData>@(ndatapts,npredpts,method,inputtype)interp5DOF_setup(ndatapts,npredpts,method,get_uuid(),inputtype)', 'C:\Users\sterg\Documents\GitHub\infer\code\interp\code\randOctParityData.m', 49)" style="font-weight:bold">randOctParityData>@(ndatapts,npredpts,method,inputtype)interp5DOF_setup(ndatapts,npredpts,method,get_uuid(),inputtype)</a> (<a href="matlab: opentoline('C:\Users\sterg\Documents\GitHub\infer\code\interp\code\randOctParityData.m',49,0)">line 49</a>)
+    interp5DOF_setup(ndatapts,npredpts,method,get_uuid(),inputtype); %names need to match pars fields
+
+Error in <a href="matlab:matlab.internal.language.introspective.errorDocCallback('exec_argfn', 'C:\Users\sterg\Documents\GitHub\infer\code\interp\code\MATslurm\code\exec_argfn.m', 50)" style="font-weight:bold">exec_argfn</a> (<a href="matlab: opentoline('C:\Users\sterg\Documents\GitHub\infer\code\interp\code\MATslurm\code\exec_argfn.m',50,0)">line 50</a>)
+[argout{:}] = fn(argvals{:});
+
+Error in <a href="matlab:matlab.internal.language.introspective.errorDocCallback('exec_combs', 'C:\Users\sterg\Documents\GitHub\infer\code\interp\code\MATslurm\code\exec_combs.m', 60)" style="font-weight:bold">exec_combs</a> (<a href="matlab: opentoline('C:\Users\sterg\Documents\GitHub\infer\code\interp\code\MATslurm\code\exec_combs.m',60,0)">line 60</a>)
+    out = exec_argfn(execfn,parcombs,argoutnames);
+
+Error in <a href="matlab:matlab.internal.language.introspective.errorDocCallback('randOctParityData', 'C:\Users\sterg\Documents\GitHub\infer\code\interp\code\randOctParityData.m', 75)" style="font-weight:bold">randOctParityData</a> (<a href="matlab: opentoline('C:\Users\sterg\Documents\GitHub\infer\code\interp\code\randOctParityData.m',75,0)">line 75</a>)
+                outtmp = exec_combs(parpath, jid, tid);
+} 
+randOctParityData
+max_walltime = 59 minutes
+saving parameter file

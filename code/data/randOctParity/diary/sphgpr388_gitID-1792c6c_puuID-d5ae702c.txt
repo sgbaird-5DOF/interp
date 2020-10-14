@@ -1,0 +1,130 @@
+get_octpairs 
+  0  5 10 15 20 25 30 35 39 44 49 54 59 64 69 74 79 84 88 93data\temp.mat
+get_octpairs 
+  0  5 10 15 20 25 30 35 40 45 50 55 60 65 70 75 80 85 90 95data\temp.mat
+nmeshpts = 388, ndatapts = 500
+<a href="matlab: opentoline('C:\Users\sterg\Documents\GitHub\infer\code\interp\code\interp5DOF.m',390,1)">390 </a>        if ~isempty(gpropts)
+if system_dependent('IsDebugMode')==1, dbstep; end
+<a href="matlab: opentoline('C:\Users\sterg\Documents\GitHub\infer\code\interp\code\interp5DOF.m',391,1)">391 </a>            gprMdl = fitrgp(o,propList,gpropts{:}) %#ok<NOPRT>
+gprMdl = fitrgp(o,propList,gpropts{:})
+{Error using <a href="matlab:matlab.internal.language.introspective.errorDocCallback('pdist2', 'C:\Program Files\MATLAB\R2020b\toolbox\stats\stats\pdist2.m', 672)" style="font-weight:bold">pdist2</a> (<a href="matlab: opentoline('C:\Program Files\MATLAB\R2020b\toolbox\stats\stats\pdist2.m',672,0)">line 672</a>)
+Error evaluating distance function 'get_omega'.
+
+Error in <a href="matlab:matlab.internal.language.introspective.errorDocCallback('interp5DOF>@(XN,XM,theta)(exp(theta(2))^2)*exp(-(pdist2(XN,XM,@get_omega).^2)/(2*exp(theta(1))^2))', 'C:\Users\sterg\Documents\GitHub\infer\code\interp\code\interp5DOF.m', 342)" style="font-weight:bold">interp5DOF>@(XN,XM,theta)(exp(theta(2))^2)*exp(-(pdist2(XN,XM,@get_omega).^2)/(2*exp(theta(1))^2))</a> (<a href="matlab: opentoline('C:\Users\sterg\Documents\GitHub\infer\code\interp\code\interp5DOF.m',342,0)">line 342</a>)
+                kfcn = @(XN,XM,theta) (exp(theta(2))^2)*exp(-(pdist2(XN,XM,@get_omega).^2)/(2*exp(theta(1))^2));
+
+Error in <a href="matlab:matlab.internal.language.introspective.errorDocCallback('classreg.learning.gputils.CustomKernel/makeKernelAsFunctionOfTheta/f', 'C:\Program Files\MATLAB\R2020b\toolbox\stats\classreg\+classreg\+learning\+gputils\CustomKernel.m', 138)" style="font-weight:bold">classreg.learning.gputils.CustomKernel/makeKernelAsFunctionOfTheta/f</a> (<a href="matlab: opentoline('C:\Program Files\MATLAB\R2020b\toolbox\stats\classreg\+classreg\+learning\+gputils\CustomKernel.m',138,0)">line 138</a>)
+                KNM = customFcn(XN,XM,theta);
+
+Error in <a href="matlab:matlab.internal.language.introspective.errorDocCallback('classreg.learning.impl.GPImpl/makeNegativeProfiledLogLikelihoodExact/f1', 'C:\Program Files\MATLAB\R2020b\toolbox\stats\classreg\+classreg\+learning\+impl\GPImpl.m', 975)" style="font-weight:bold">classreg.learning.impl.GPImpl/makeNegativeProfiledLogLikelihoodExact/f1</a> (<a href="matlab: opentoline('C:\Program Files\MATLAB\R2020b\toolbox\stats\classreg\+classreg\+learning\+impl\GPImpl.m',975,0)">line 975</a>)
+                [V,DK]       = kfcn(theta);
+
+Error in <a href="matlab:matlab.internal.language.introspective.errorDocCallback('classreg.learning.gputils.fminqn', 'C:\Program Files\MATLAB\R2020b\toolbox\stats\classreg\+classreg\+learning\+gputils\fminqn.m', 214)" style="font-weight:bold">classreg.learning.gputils.fminqn</a> (<a href="matlab: opentoline('C:\Program Files\MATLAB\R2020b\toolbox\stats\classreg\+classreg\+learning\+gputils\fminqn.m',214,0)">line 214</a>)
+                        f     = fun(x);
+
+Error in <a href="matlab:matlab.internal.language.introspective.errorDocCallback('classreg.learning.impl.GPImpl/doMinimization', 'C:\Program Files\MATLAB\R2020b\toolbox\stats\classreg\+classreg\+learning\+impl\GPImpl.m', 3013)" style="font-weight:bold">classreg.learning.impl.GPImpl/doMinimization</a> (<a href="matlab: opentoline('C:\Program Files\MATLAB\R2020b\toolbox\stats\classreg\+classreg\+learning\+impl\GPImpl.m',3013,0)">line 3013</a>)
+                        [phiHat,fHat,~,exitFlag] = classreg.learning.gputils.fminqn(objFun,phi0,'Options',opts,'InitialStepSize',initialStepSize);
+
+Error in <a href="matlab:matlab.internal.language.introspective.errorDocCallback('classreg.learning.impl.GPImpl/estimateThetaHatSigmaHatExact', 'C:\Program Files\MATLAB\R2020b\toolbox\stats\classreg\+classreg\+learning\+impl\GPImpl.m', 860)" style="font-weight:bold">classreg.learning.impl.GPImpl/estimateThetaHatSigmaHatExact</a> (<a href="matlab: opentoline('C:\Program Files\MATLAB\R2020b\toolbox\stats\classreg\+classreg\+learning\+impl\GPImpl.m',860,0)">line 860</a>)
+                [phiHat,nloglikHat,cause] = doMinimization(this,objFun,phi0,haveGrad);
+
+Error in <a href="matlab:matlab.internal.language.introspective.errorDocCallback('classreg.learning.impl.GPImpl/doFitMethodExact', 'C:\Program Files\MATLAB\R2020b\toolbox\stats\classreg\+classreg\+learning\+impl\GPImpl.m', 427)" style="font-weight:bold">classreg.learning.impl.GPImpl/doFitMethodExact</a> (<a href="matlab: opentoline('C:\Program Files\MATLAB\R2020b\toolbox\stats\classreg\+classreg\+learning\+impl\GPImpl.m',427,0)">line 427</a>)
+            [this.ThetaHat,this.SigmaHat,this.LogLikelihoodHat] =
+            estimateThetaHatSigmaHatExact(this,this.X,this.y,this.Beta0,this.Theta0,this.Sigma0);
+
+Error in <a href="matlab:matlab.internal.language.introspective.errorDocCallback('classreg.learning.impl.GPImpl/doFit', 'C:\Program Files\MATLAB\R2020b\toolbox\stats\classreg\+classreg\+learning\+impl\GPImpl.m', 367)" style="font-weight:bold">classreg.learning.impl.GPImpl/doFit</a> (<a href="matlab: opentoline('C:\Program Files\MATLAB\R2020b\toolbox\stats\classreg\+classreg\+learning\+impl\GPImpl.m',367,0)">line 367</a>)
+                    this = doFitMethodExact(this);
+
+Error in <a href="matlab:matlab.internal.language.introspective.errorDocCallback('classreg.learning.impl.GPImpl.make', 'C:\Program Files\MATLAB\R2020b\toolbox\stats\classreg\+classreg\+learning\+impl\GPImpl.m', 268)" style="font-weight:bold">classreg.learning.impl.GPImpl.make</a> (<a href="matlab: opentoline('C:\Program Files\MATLAB\R2020b\toolbox\stats\classreg\+classreg\+learning\+impl\GPImpl.m',268,0)">line 268</a>)
+            this = doFit(this);
+
+Error in <a href="matlab:matlab.internal.language.introspective.errorDocCallback('RegressionGP', 'C:\Program Files\MATLAB\R2020b\toolbox\stats\classreg\RegressionGP.m', 277)" style="font-weight:bold">RegressionGP</a> (<a href="matlab: opentoline('C:\Program Files\MATLAB\R2020b\toolbox\stats\classreg\RegressionGP.m',277,0)">line 277</a>)
+            this.Impl = classreg.learning.impl.GPImpl.make(...
+
+Error in <a href="matlab:matlab.internal.language.introspective.errorDocCallback('classreg.learning.FitTemplate/fit', 'C:\Program Files\MATLAB\R2020b\toolbox\stats\classreg\+classreg\+learning\FitTemplate.m', 263)" style="font-weight:bold">classreg.learning.FitTemplate/fit</a> (<a href="matlab: opentoline('C:\Program Files\MATLAB\R2020b\toolbox\stats\classreg\+classreg\+learning\FitTemplate.m',263,0)">line 263</a>)
+            [varargout{1:nargout}] = this.MakeFitObject(X,Y,W,this.ModelParams,fitArgs{:});
+
+Error in <a href="matlab:matlab.internal.language.introspective.errorDocCallback('RegressionGP.fit', 'C:\Program Files\MATLAB\R2020b\toolbox\stats\classreg\RegressionGP.m', 308)" style="font-weight:bold">RegressionGP.fit</a> (<a href="matlab: opentoline('C:\Program Files\MATLAB\R2020b\toolbox\stats\classreg\RegressionGP.m',308,0)">line 308</a>)
+            this = fit(temp,X,Y);
+
+Error in <a href="matlab:matlab.internal.language.introspective.errorDocCallback('fitrgp', 'C:\Program Files\MATLAB\R2020b\toolbox\stats\classreg\fitrgp.m', 469)" style="font-weight:bold">fitrgp</a> (<a href="matlab: opentoline('C:\Program Files\MATLAB\R2020b\toolbox\stats\classreg\fitrgp.m',469,0)">line 469</a>)
+    obj = RegressionGP.fit(X,Y,RemainingArgs{:});
+
+Caused by:
+    Error using <a href="matlab:matlab.internal.language.introspective.errorDocCallback('get_omega')" style="font-weight:bold">get_omega</a>
+    Invalid argument at position 1. octonion norm must be equal to sqrt(2) within tol = 0.1
+} 
+open get_omega
+open get_omega
+try open('sqrt2norm'); catch edit('sqrt2norm'); end
+open get_omega
+dbstack
+> In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('interp5DOF', 'C:\Users\sterg\Documents\GitHub\infer\code\interp\code\interp5DOF.m', 391)" style="font-weight:bold">interp5DOF</a> (<a href="matlab: opentoline('C:\Users\sterg\Documents\GitHub\infer\code\interp\code\interp5DOF.m',391,0)">line 391</a>)
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('interp5DOF_setup', 'C:\Users\sterg\Documents\GitHub\infer\code\interp\code\interp5DOF_setup.m', 43)" style="font-weight:bold">interp5DOF_setup</a> (<a href="matlab: opentoline('C:\Users\sterg\Documents\GitHub\infer\code\interp\code\interp5DOF_setup.m',43,0)">line 43</a>)
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('randOctParityData>@(ndatapts,npredpts,method,inputtype)interp5DOF_setup(ndatapts,npredpts,method,get_uuid(),inputtype)', 'C:\Users\sterg\Documents\GitHub\infer\code\interp\code\randOctParityData.m', 49)" style="font-weight:bold">randOctParityData>@(ndatapts,npredpts,method,inputtype)interp5DOF_setup(ndatapts,npredpts,method,get_uuid(),inputtype)</a> (<a href="matlab: opentoline('C:\Users\sterg\Documents\GitHub\infer\code\interp\code\randOctParityData.m',49,0)">line 49</a>)
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('exec_argfn', 'C:\Users\sterg\Documents\GitHub\infer\code\interp\code\MATslurm\code\exec_argfn.m', 50)" style="font-weight:bold">exec_argfn</a> (<a href="matlab: opentoline('C:\Users\sterg\Documents\GitHub\infer\code\interp\code\MATslurm\code\exec_argfn.m',50,0)">line 50</a>)
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('exec_combs', 'C:\Users\sterg\Documents\GitHub\infer\code\interp\code\MATslurm\code\exec_combs.m', 60)" style="font-weight:bold">exec_combs</a> (<a href="matlab: opentoline('C:\Users\sterg\Documents\GitHub\infer\code\interp\code\MATslurm\code\exec_combs.m',60,0)">line 60</a>)
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('randOctParityData', 'C:\Users\sterg\Documents\GitHub\infer\code\interp\code\randOctParityData.m', 75)" style="font-weight:bold">randOctParityData</a> (<a href="matlab: opentoline('C:\Users\sterg\Documents\GitHub\infer\code\interp\code\randOctParityData.m',75,0)">line 75</a>)
+opentoline('C:\Users\sterg\Documents\GitHub\infer\code\interp\code\interp5DOF.m',391,0)
+gprMdl = fitrgp(o,propList,gpropts{:})
+
+gprMdl = 
+
+  <a href="matlab: helpPopup RegressionGP">RegressionGP</a>
+             ResponseName: 'Y'
+    CategoricalPredictors: []
+        ResponseTransform: 'none'
+          NumObservations: 388
+           KernelFunction: @(XN,XM,theta)(exp(theta(2))^2)*exp(-(pdist2(XN,XM,@get_omega).^2)/(2*exp(theta(1))^2))
+        KernelInformation: [1×1 struct]
+            BasisFunction: 'Constant'
+                     Beta: 1.1475
+                    Sigma: 0.0569
+        PredictorLocation: []
+           PredictorScale: []
+                    Alpha: [388×1 double]
+         ActiveSetVectors: [388×8 double]
+            PredictMethod: 'FIC'
+            ActiveSetSize: 388
+                FitMethod: 'Exact'
+          ActiveSetMethod: 'Random'
+        IsActiveSetVector: [388×1 logical]
+            LogLikelihood: 320.6882
+         ActiveSetHistory: [1×1 struct]
+           BCDInformation: []
+
+
+  <a href="matlab: properties('RegressionGP')">Properties</a>, <a href="matlab: methods('RegressionGP')">Methods</a>
+
+if system_dependent('IsDebugMode')==1, dbcont; end
+
+gprMdl = 
+
+  <a href="matlab: helpPopup RegressionGP">RegressionGP</a>
+             ResponseName: 'Y'
+    CategoricalPredictors: []
+        ResponseTransform: 'none'
+          NumObservations: 388
+           KernelFunction: @(XN,XM,theta)(exp(theta(2))^2)*exp(-(pdist2(XN,XM,@get_omega).^2)/(2*exp(theta(1))^2))
+        KernelInformation: [1×1 struct]
+            BasisFunction: 'Constant'
+                     Beta: 1.1475
+                    Sigma: 0.0569
+        PredictorLocation: []
+           PredictorScale: []
+                    Alpha: [388×1 double]
+         ActiveSetVectors: [388×8 double]
+            PredictMethod: 'FIC'
+            ActiveSetSize: 388
+                FitMethod: 'Exact'
+          ActiveSetMethod: 'Random'
+        IsActiveSetVector: [388×1 logical]
+            LogLikelihood: 320.6882
+         ActiveSetHistory: [1×1 struct]
+           BCDInformation: []
+
+
+  <a href="matlab: properties('RegressionGP')">Properties</a>, <a href="matlab: methods('RegressionGP')">Methods</a>
+
+RMSE = 0.088426 J/m^2
+MAE = 0.06379 J/m^2

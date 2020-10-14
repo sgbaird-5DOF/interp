@@ -1,0 +1,36 @@
+get_octpairs 
+  0  5 10 15 20 25 30 35 39 44 49 54 59 64 69 74 79 84 88 93data\temp.mat
+get_octpairs 
+  0  5 10 15 20 25 30 35 40 45 50 55 60 65 70 75 80 85 90 95data\temp.mat
+nmeshpts = 388, ndatapts = 500
+
+gprMdl = 
+
+  <a href="matlab: helpPopup RegressionGP">RegressionGP</a>
+             ResponseName: 'Y'
+    CategoricalPredictors: []
+        ResponseTransform: 'none'
+          NumObservations: 388
+           KernelFunction: @(XN,XM,theta)(exp(theta(2))^2)*exp(-(pdist2(XN,XM,@get_omega).^2)/(2*exp(theta(1))^2))
+        KernelInformation: [1×1 struct]
+            BasisFunction: 'Constant'
+                     Beta: 1.1534
+                    Sigma: 0.0566
+        PredictorLocation: []
+           PredictorScale: []
+                    Alpha: [388×1 double]
+         ActiveSetVectors: [388×8 double]
+            PredictMethod: 'FIC'
+            ActiveSetSize: 388
+                FitMethod: 'Exact'
+          ActiveSetMethod: 'Random'
+        IsActiveSetVector: [388×1 logical]
+            LogLikelihood: 326.2266
+         ActiveSetHistory: [1×1 struct]
+           BCDInformation: []
+
+
+  <a href="matlab: properties('RegressionGP')">Properties</a>, <a href="matlab: methods('RegressionGP')">Methods</a>
+
+RMSE = 0.087778 J/m^2
+MAE = 0.063716 J/m^2

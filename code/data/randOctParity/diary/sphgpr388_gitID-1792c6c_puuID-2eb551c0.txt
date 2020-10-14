@@ -1,0 +1,15 @@
+get_octpairs 
+  0  5 10 15 20 25 30 35 39 44 49 54 59 64 69 74 79 84 88 93data\temp.mat
+get_octpairs 
+  0  5 10 15 20 25 30 35 40 45 50 55 60 65 70 75 80 85 90 95data\temp.mat
+nmeshpts = 388, ndatapts = 500
+<a href="matlab: opentoline('C:\Users\sterg\Documents\GitHub\infer\code\interp\code\interp5DOF.m',340,1)">340 </a>            if strcmp(method,'sphgpr')
+if system_dependent('IsDebugMode')==1, dbcont; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+gprMdl = fitrgp(pts,propList,gpropts{:})
+{Unrecognized function or variable 'pts'.
+} 
+if system_dependent('IsDebugMode')==1, dbquit all; end
+randOctParityData
+max_walltime = 59 minutes
+saving parameter file
