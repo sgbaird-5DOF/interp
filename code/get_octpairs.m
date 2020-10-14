@@ -66,7 +66,7 @@ o1rep = repmat(o1,npts,1);
 [~,octvtx] = GBdist4(o1rep,pts,32,'norm',NV.wtol,true);
 
 %check if multiple octonions found (rare, have only seen once ever out of
-%tens of thousands 2020-08-17)
+%tens of thousands 2020-08-17, otherwise might indicate an error)
 idstmp = cellfun(@(oct) size(oct,1),octvtx) > 1;
 nids = sum(idstmp);
 if nids > 0

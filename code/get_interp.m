@@ -1,4 +1,4 @@
-function [datainterp,databary,facetprops,nndistList,nonintDists] = ...
+function [datainterp,databary,facetprops,facetIDs,barypars] = ...
 	get_interp(mesh,data,intfacetIDs,barytype,barytol,NV)
 arguments
 	mesh struct {mustContainFields(mesh,{'pts','ppts','props','sphK'})}
@@ -98,12 +98,9 @@ nnList = dsearchn(meshpts,datapts);
 nndistList = get_omega(sqrt2norm(mesh.pts(nnList,:)),sqrt2norm(data.pts));
 
 %initialize
-databary = NaN(size(datapts));
-facetprops = databary;
-datainterp = NaN(size(datapts,1),1);
-nonintDists = datainterp;
-nnID = [];
-ilist = [];
+[databary,facetIDs,facetprops] = deal(nan(size(datapts)));
+[datainterp,nonintDists] = deal(nan(size(datapts,1),1));
+[nnID,ilist] = deal([]);
 
 meannorm = mean(vecnorm(mesh.ppts,2,2));
 
@@ -117,6 +114,7 @@ for i = 1:ndatapts
 		intfacetID = intfacetIDs{i}(1); %take only the first intersecting facet? Average values? Use oSLERP instead?
 		vtxIDs = mesh.sphK(intfacetID,:);
 		facet = meshpts(vtxIDs,:); %vertices of facet
+        facetIDs(i,:) = vtxIDs;
 		facetprops(i,:) = mesh.props(vtxIDs).'; %properties of vertices of facet
 		
 		%% barycentric coordinates
@@ -158,17 +156,29 @@ for i = 1:ndatapts
 	end
 end
 
-%calculate SE and RMSE values
+%% Error Metrics
 ids = setdiff(1:ndatapts,ilist); %ids = ~isnan(datainterp);
-interpSE = (data.props(ids)-datainterp(ids)).^2;
-nnSE = (data.props(ilist)-mesh.props(nnID)).^2;
-totSE = [interpSE;nnSE];
-allnnSE = (data.props-mesh.props(nnList)).^2;
 
-interpRMSE = sqrt(mean(interpSE));
-nnRMSE = sqrt(mean(nnSE));
-totRMSE = sqrt(mean(totSE));
-allnnRMSE = sqrt(mean(allnnSE));
+interp_errmetrics = get_errmetrics(datainterp(ids),data.props(ids));
+nn_errmetrics = get_errmetrics(mesh.props(nnID),data.props(ilist));
+
+errmetrics = get_errmetrics(...
+    [datainterp(ids);mesh.props(nnID)],...
+    [data.props(ids);data.props(ilist)]);
+
+allnn_errmetrics = get_errmetrics(mesh.props(nnList),data.props);
+
+interpRMSE = interp_errmetrics.rmse;
+nnRMSE = nn_errmetrics.rmse;
+totRMSE = errmetrics.rmse;
+allnnRMSE = allnn_errmetrics.rmse;
+
+nints = length(ids);
+numnonints = length(ilist);
+int_fraction = nints/(nints+numnonints);
+
+barypars = var_names(errmetrics,interp_errmetrics,nn_errmetrics,allnn_errmetrics,...
+    ilist,ids,nnList,nndistList,nonintDists,nints,numnonints,int_fraction);
 
 % fpath = fullfile('data',savename);
 % save(fpath,'-v7.3')
@@ -180,6 +190,7 @@ disp(['RMSE (J/m^2): interp == ' num2str(interpRMSE,'%3.4f') ', NN == ' num2str(
 disp(' ')
 disp(['total RMSE: ' num2str(totRMSE,'%3.4f') ', all NN RMSE comparison: ' num2str(allnnRMSE,'%3.4f')])
 
+%% Saving
 if NV.saveQ
     save(NV.savename)
 end
@@ -215,4 +226,15 @@ intfacetIDs = intersect_facet(meshpts,mesh.K,datapts,inttol,maxnormQ);
 % nnID = [];
 % ilist = [];
 
+
+% interpSE = (data.props(ids)-datainterp(ids)).^2;
+% nnSE = (data.props(ilist)-mesh.props(nnID)).^2;
+% totSE = [interpSE;nnSE];
+% allnnSE = (data.props-mesh.props(nnList)).^2;
+% interpRMSE = sqrt(mean(interpSE));
+% nnRMSE = sqrt(mean(nnSE));
+% totRMSE = sqrt(mean(totSE));
+% allnnRMSE = sqrt(mean(allnnSE));
+
+%calculate SE and RMSE values
 %}
