@@ -1,7 +1,8 @@
-function props = interp_gpr(gprMdl,qm2,nA2,projtol,usv)
+function props = interp_gpr(gprMdl,qm2,nA2,projtol,usv,zeroQ)
 
-ppts2 = get_ppts(qm2,nA2,projtol,usv);
-props = predict(gprMdl,ppts2);
+pts2 = get_pts(qm2,nA2);
+% ppts2 = get_ppts(pts2,projtol,usv,zeroQ);
+props = predict(gprMdl,pts2);
 
 end
 
