@@ -37,7 +37,7 @@ end
 % Notes:
 %	Small numerical errors can accumulate by calling proj_down & proj_up
 %	repeatedly with different usv matrices. Shouldn't be an issue if you
-%	keep use the same usv matrices.
+%	keep using the same usv matrices.
 %
 % References:
 %  https://www.mathworks.com/matlabcentral/answers/352830
