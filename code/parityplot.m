@@ -57,9 +57,11 @@ assert(all(size(ypred)==size(yactual)),['y1 [' num2str(size(ypred)) '] and y2 ['
 
 %% scatter
 if NV.fillQ
-    ax1 = scatter(yactual,ypred,NV.sz,NV.c,NV.mkr,'filled');
+    ax1 = plot(yactual,ypred,NV.mkr);
+%     ax1 = scatter(yactual,ypred,NV.sz,NV.c,NV.mkr,'filled');
 else
-    ax1 = scatter(yactual,ypred,NV.sz,NV.c,NV.mkr);
+    ax1 = plot(yactual,ypred,NV.mkr);
+%     ax1 = scatter(yactual,ypred,NV.sz,NV.c,NV.mkr);
 end
 
 scatterNames = fields(NV.scatterOpts);
@@ -78,7 +80,7 @@ for i = 1:length(reflineNames)
     ax2.(reflineName) = NV.scatterOpts.(reflineName);
 end
 
-axis square
+axis square tight
 
 %% axes
 xlbl = strjoin({NV.xname,NV.units},' ');
