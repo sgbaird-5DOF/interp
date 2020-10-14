@@ -12,31 +12,19 @@ end
 %% setup
 addpathdir({'cu2qu.m','q2rod.m','qmult.m','get_ocubo.m'})
 
-%random octonions
-ocubotype = 'random';
-ocuboseed1 = 8;
-ocuboseed2 = 15;
-%ocuboseed1 = 'shuffle';
-%ocuboseed2 = 'shuffle';
-
+%random 5dof parameters
 five = get_five(ndatapts);
 five2 = get_five(npredpts);
 
+%convert to octonions
 o = GBfive2oct(five);
+o2 = GBfive2oct(five2);
 
-% o = get_ocubo(ndatapts,ocubotype,[],ocuboseed1);
-% o2 = get_ocubo(npredpts,ocubotype,[],ocuboseed2);
-
-o = get_octpairs(o);
-o2 = get_octpairs(o2);
-
-genseed = 10;
-rng(genseed);
-
-%convert to 5DOF
-% oct2fivemethod = 'reverse'; %'reverse', 'simple'
-% five = GBoct2five(o,true,oct2fivemethod);
-% five2 = GBoct2five(o2,true,oct2fivemethod);
+%seed
+rng('shuffle'); %to prevent getting '10' as the seed
+pause(5)
+seedstruct = rng('shuffle');
+genseed = seedstruct.Seed;
 
 %get BRK function values
 propList = GB5DOF_setup(five);
@@ -60,19 +48,16 @@ end
 %% error values
 proptrue = mdl.data.props;
 
-e = proptrue-propOut; %error
-ae = abs(e); %absolute error
-mae = mean(ae); %mean absolute error
-se = e.^2; %square error
-mse = mean(se); %mean square error
-rmse = sqrt(mse); %root mean square error
+errmetrics = get_errmetrics(propOut,proptrue);
+
+rmse = errmetrics.rmse;
+mae = errmetrics.mae;
 disp(['RMSE = ' num2str(rmse) ' J/m^2'])
 disp(['MAE = ' num2str(mae) ' J/m^2'])
-errmetrics = var_names(e,ae,mae,se,mse,rmse);
 
 %% repackage model and parameters
-mdlparsextra = var_names(ocubotype,ocuboseed1,ocuboseed2,genseed,errmetrics,rmse,mae,oct2fivemethod);
-mdlextra = var_names(ocubotype,ocuboseed1,ocuboseed2,genseed,errmetrics,rmse,mae,oct2fivemethod);
+mdlparsextra = var_names(genseed,errmetrics,rmse,mae);
+mdlextra = var_names(genseed,errmetrics,rmse,mae,seedstruct);
 
 %function to concatenate structures with all different fields
 structcat = @(S1,S2) table2struct([struct2table(S1,'AsArray',true),struct2table(S2,'AsArray',true)]);
@@ -106,4 +91,40 @@ end
 
 
 %o2 = get_ocubo(npredpts,'random');
+
+
+e = proptrue-propOut; %error
+ae = abs(e); %absolute error
+mae = mean(ae); %mean absolute error
+se = e.^2; %square error
+mse = mean(se); %mean square error
+rmse = sqrt(mse); %root mean square error
+errmetrics = var_names(e,ae,mae,se,mse,rmse);
+
+
+
+%convert to 5DOF
+% oct2fivemethod = 'reverse'; %'reverse', 'simple'
+% five = GBoct2five(o,true,oct2fivemethod);
+% five2 = GBoct2five(o2,true,oct2fivemethod);
+
+
+% ocubotype = 'random';
+% ocuboseed1 = 8;
+% ocuboseed2 = 15;
+%ocuboseed1 = 'shuffle';
+%ocuboseed2 = 'shuffle';
+
+
+% o = get_ocubo(ndatapts,ocubotype,[],ocuboseed1);
+% o2 = get_ocubo(npredpts,ocubotype,[],ocuboseed2);
+% genseed = 10;
+% rng(genseed);
+
+mdlparsextra = var_names(ocubotype,ocuboseed1,ocuboseed2,genseed,errmetrics,rmse,mae,oct2fivemethod);
+mdlextra = var_names(ocubotype,ocuboseed1,ocuboseed2,genseed,errmetrics,rmse,mae,oct2fivemethod);
+
+% o = get_octpairs(o);
+% o2 = get_octpairs(o2);
+
 %}
