@@ -1,4 +1,4 @@
-function [propOut,interpfn,mdl,mdlpars] = interp5DOF_setup(ndatapts,npredpts,method,uuid,inputtype)
+function [ypred,interpfn,mdl,mdlpars] = interp5DOF_setup(ndatapts,npredpts,method,uuid,inputtype)
 arguments
    ndatapts
    npredpts
@@ -42,13 +42,13 @@ switch inputtype
 end
 
 %% interpolation
-[propOut,interpfn,mdl,mdlpars] = interp5DOF(qm,nA,propList,qm2,nA2,method,...
+[ypred,interpfn,mdl,mdlpars] = interp5DOF(qm,nA,propList,qm2,nA2,method,...
     'uuid',uuid,'o',o,'o2',o2,'dataprops',dataprops);
 
 %% error values
 proptrue = mdl.data.props;
 
-errmetrics = get_errmetrics(propOut,proptrue);
+errmetrics = get_errmetrics(ypred,proptrue);
 
 rmse = errmetrics.rmse;
 mae = errmetrics.mae;
