@@ -3,8 +3,8 @@ clear; close all
 %loop through different combinations of parameters using random,
 %octochorically sampled octonions
 addpathdir({'var_names.m','writeparfile.m','walltimefns'})
-runtype = 'full'; %'test','full'
-nreps = 10;
+runtype = 'test'; %'test','full'
+nreps = 1;
 switch runtype
     case 'test'
         ndatapts = [100 388 500 1000 5000 10000 20000 50000];
@@ -79,8 +79,8 @@ execfn = @(ndatapts,npredpts,method) ...
 argoutnames = {'propOut','interpfn','mdl','mdlpars'};
 %i.e. [propOut,interpfn,mdl,mdlpars] = interp5DOF_setup(ndatapts,npredpts,method);
 
-walltimefn = @() 300; %can set to constant or to depend on parameters, probably fine when using standby queue
-% walltimefn = @(ndatapts,npredpts,method,cores) get_walltimefn(ndatapts,npredpts,method,cores);
+% walltimefn = @() 300; %can set to constant or to depend on parameters, probably fine when using standby queue
+walltimefn = @(ndatapts,npredpts,method,cores) get_walltimefn(ndatapts,npredpts,method,cores);
 
 %% parameter file
 if ~dryrunQ
