@@ -4,7 +4,7 @@ clear; close all
 %octochorically sampled octonions
 addpathdir({'var_names.m','writeparfile.m','walltimefns'})
 runtype = 'test'; %'test','full'
-nreps = 1;
+nreps = 9;
 switch runtype
     case 'test'
         ndatapts = [100 388 500 1000 5000 10000 20000 50000];
