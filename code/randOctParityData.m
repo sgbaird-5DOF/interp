@@ -9,12 +9,17 @@ switch runtype
         ndatapts = 1000;
         npredpts = 500;
         method = {'sphgpr','gpr','sphbary','pbary','nn','avg'}; % 'sphbary', 'pbary', 'gpr', 'sphgpr', 'nn', 'avg'
-        inputtype = {'5dof'}; %'5dof','octonion'
     case 'full'
         ndatapts = [50000];
         npredpts = 50000;
         method = {'gpr'}; %'sphbary','pbary','gpr','nn'
         inputtype = {'5dof'};
+end
+
+comment = 'paper-data';
+m = input(['default comment: ' comment '. Continue (y) or override (n)? '],'s');
+if ~strcmp(m,'y') && ~strcmp(m,'Y')
+    comment = input('new comment: ','s');
 end
 
 % job submission environment
@@ -52,14 +57,15 @@ savepathfn = @(method,ndatapts,gitcommit,puuid) fullfile(savefolder,savenamefn(m
 
 %% parameter file setup
 %parameters
-pars = var_names(ndatapts,npredpts,method,inputtype); %add all parameters here (see runtype switch statement)
+pars = var_names(ndatapts,npredpts,method); %add all parameters here (see runtype switch statement)
 %function to execute and output arguments from function
-execfn = @(ndatapts,npredpts,method,inputtype) ...
-    interp5DOF_setup(ndatapts,npredpts,method,get_uuid(),inputtype); %names need to match pars fields
+execfn = @(ndatapts,npredpts,method) ...
+    interp5DOF_setup(ndatapts,npredpts,method,get_uuid(),'5dof'); %names need to match pars fields
 argoutnames = {'propOut','interpfn','mdl','mdlpars'};
 %i.e. [propOut,interpfn,mdl,mdlpars] = interp5DOF_setup(ndatapts,npredpts,method);
 
-walltimefn = @() 300; %can set to constant or to depend on parameters
+% walltimefn = @() 300; %can set to constant or to depend on parameters
+walltimefn = get_walltimefn(ndatapts,npredpts,method);
 
 %% parameter file
 if ~dryrunQ
@@ -122,7 +128,7 @@ switch env
         mdlparscat = structvertcat(mdlparslist{:});
         mdlparstbl = struct2table(mdlparscat,'AsArray',true);
         
-        gitcommit = get_gitcommit();
+%         gitcommit = get_gitcommit();
         %save models and parameters
         fpath = fullfile(savefolder,['gitID-' get_gitcommit '_uuID-' get_uuid() '.mat']);
         save(fpath,'propOutlist','interpfnlist','mdllist',...
