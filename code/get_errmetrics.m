@@ -1,7 +1,7 @@
-function errout = get_errmetrics(predicted,measured,type)
+function errout = get_errmetrics(ypred,ytrue,type)
 arguments
-    predicted double {mustBeReal,mustBeFinite}
-    measured double {mustBeReal,mustBeFinite}
+    ypred double {mustBeReal,mustBeFinite}
+    ytrue double {mustBeReal,mustBeFinite}
     type char {mustBeMember(type,{'e','ae','mae','se','rmse','all'})} = 'all'
 end
 % GET_ERRMETRICS  get various error metrics for measured data relative to
@@ -37,12 +37,12 @@ end
 %--------------------------------------------------------------------------
 
 %additional argument validation
-szpred = size(predicted);
-szmeas = size(measured);
+szpred = size(ypred);
+szmeas = size(ytrue);
 assert(all(szpred==szmeas),['predicted size: ' num2str(szpred), ', measured size: ' num2str(szmeas)])
 
 %error metrics
-e = predicted-measured; %error
+e = ypred-ytrue; %error
 ae = abs(e); %absolute error
 mae = mean(ae,'all'); %mean absolute error
 se = e.^2; %square error
@@ -50,7 +50,7 @@ mse = mean(se,'all'); %mean square error
 rmse = sqrt(mse); %root mean square error
 
 %compile into struct
-errmetrics = var_names(e,ae,mae,se,mse,rmse);
+errmetrics = var_names(ypred,ytrue,e,ae,mae,se,mse,rmse);
 
 %assign output error value(s)
 switch type
