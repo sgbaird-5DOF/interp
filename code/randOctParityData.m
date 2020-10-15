@@ -1,4 +1,5 @@
 clear; close all
+%% parameters
 %loop through different combinations of parameters using random,
 %octochorically sampled octonions
 addpathdir({'var_names.m','writeparfile.m'})
@@ -7,7 +8,7 @@ nreps = 10;
 switch runtype
     case 'test'
         ndatapts = 1000;
-        npredpts = 500;
+        npredpts = 1000;
         method = {'sphgpr','gpr','sphbary','pbary','nn','avg'}; % 'sphbary', 'pbary', 'gpr', 'sphgpr', 'nn', 'avg'
     case 'full'
         ndatapts = [50000];
@@ -16,11 +17,8 @@ switch runtype
         inputtype = {'5dof'};
 end
 
-comment = 'paper-data';
-m = input(['default comment: ' comment '. Continue (y) or override (n)? '],'s');
-if ~strcmp(m,'y') && ~strcmp(m,'Y')
-    comment = input('new comment: ','s');
-end
+%comment = 'paper-data';
+comment = 'timing-data';
 
 % job submission environment
 env = 'local'; %'slurm', 'local'
@@ -29,8 +27,13 @@ T = true;
 F = false;
 %whether to skip running the jobs and just compile results
 if strcmp(env,'local')
-    dryrunQ = F;
+    dryrunQ = T;
     disp(['dryrunQ == ' int2str(dryrunQ)])
+end
+
+m = input(['default comment: ' comment '. Continue (y) or override (n)? '],'s');
+if ~strcmp(m,'y') && ~strcmp(m,'Y')
+    comment = input('new comment: ','s');
 end
 
 %% functions to generate save filepaths
@@ -64,8 +67,16 @@ execfn = @(ndatapts,npredpts,method) ...
 argoutnames = {'propOut','interpfn','mdl','mdlpars'};
 %i.e. [propOut,interpfn,mdl,mdlpars] = interp5DOF_setup(ndatapts,npredpts,method);
 
+% # cores
+switch env
+    case 'slurm'
+        cores = 12;
+    case 'local'
+        p = gcp;
+        cores = p.NumWorkers;
+end
 % walltimefn = @() 300; %can set to constant or to depend on parameters
-walltimefn = get_walltimefn(ndatapts,npredpts,method);
+walltimefn = @(ndatapts,npredpts,method,cores) get_walltimefn(ndatapts,npredpts,method,cores);
 
 %% parameter file
 if ~dryrunQ
@@ -76,7 +87,6 @@ end
 switch env
     case 'slurm'
         %setup
-        cores = 12;
         mem = 1024*12*cores; %total memory of job, MB
         qosopt = 'standby'; %'', 'test', 'standby'
         scriptfpath = fullfile('MATslurm','code','submit.sh');
@@ -130,7 +140,7 @@ switch env
         
 %         gitcommit = get_gitcommit();
         %save models and parameters
-        fpath = fullfile(savefolder,['gitID-' get_gitcommit '_uuID-' get_uuid() '.mat']);
+        fpath = fullfile(savefolder,['gitID-' get_gitcommit '_uuID-' get_uuid() '_' comment '.mat']);
         save(fpath,'propOutlist','interpfnlist','mdllist',...
             'mdlparslist','mdlcat','mdlparscat','mdlparstbl','outlist',...
             '-v7.3','-nocompression')
