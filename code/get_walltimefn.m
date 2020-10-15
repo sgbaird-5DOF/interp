@@ -9,13 +9,13 @@ walltimeBuffer = 5;
 
 switch method
     case {'sphgpr','gpr'}
-        walltime = gprwalltimefn(ndatapts,cores) + walltimeBuffer;
+        walltimefn = gprwalltimefn(ndatapts,cores) + walltimeBuffer;
     case {'pbary','sphbary'}
-        walltime = barywalltimefn(ndatapts,npredpts,cores) + walltimeBuffer;
+        walltimefn = barywalltimefn(ndatapts,npredpts,cores) + walltimeBuffer;
     case {'nn'}
-        walltime = walltimeBuffer;
+        walltimefn = walltimeBuffer;
     case {'avg'}
-        walltime = walltimeBuffer;
+        walltimefn = walltimeBuffer;
 end
 
 end

@@ -29,6 +29,15 @@ F = false;
 dryrunQ = F;
 disp(['dryrunQ == ' int2str(dryrunQ)])
 
+% # cores
+switch env
+    case 'slurm'
+        cores = 12;
+    case 'local'
+        p = gcp;
+        cores = p.NumWorkers;
+end
+
 m = input(['default comment: ' comment '. Continue (y) or override (n)? '],'s');
 if ~strcmp(m,'y') && ~strcmp(m,'Y')
     comment = input('new comment: ','s');
@@ -58,21 +67,13 @@ savepathfn = @(method,ndatapts,gitcommit,puuid) fullfile(savefolder,savenamefn(m
 
 %% parameter file setup
 %parameters
-pars = var_names(ndatapts,npredpts,method); %add all parameters here (see runtype switch statement)
+pars = var_names(ndatapts,npredpts,method,cores); %add all parameters here (see runtype switch statement)
 %function to execute and output arguments from function
 execfn = @(ndatapts,npredpts,method) ...
     interp5DOF_setup(ndatapts,npredpts,method,get_uuid(),'5dof'); %names need to match pars fields
 argoutnames = {'propOut','interpfn','mdl','mdlpars'};
 %i.e. [propOut,interpfn,mdl,mdlpars] = interp5DOF_setup(ndatapts,npredpts,method);
 
-% # cores
-switch env
-    case 'slurm'
-        cores = 12;
-    case 'local'
-        p = gcp;
-        cores = p.NumWorkers;
-end
 % walltimefn = @() 300; %can set to constant or to depend on parameters
 walltimefn = @(ndatapts,npredpts,method,cores) get_walltimefn(ndatapts,npredpts,method,cores);
 
@@ -85,7 +86,7 @@ end
 switch env
     case 'slurm'
         %setup
-        mem = 1024*12*cores; %total memory of job, MB
+        mem = 1024*8*cores; %total memory of job, MB
         qosopt = 'standby'; %'', 'test', 'standby'
         scriptfpath = fullfile('MATslurm','code','submit.sh');
         %submission
