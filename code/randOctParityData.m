@@ -129,7 +129,7 @@ switch env
         
         %extract results from files
         for i = 1:nfiles
-            if mod(i,100) == 0
+            if mod(i,10) == 0
                 disp(i)
             end
             folder = folders{i};
@@ -148,8 +148,10 @@ switch env
         end
         
         %concatenate models and parameters
-        mdlcat = structvertcat(mdllist{:});
-        clear mdllist
+        if memconserveQ
+            mdlcat = structvertcat(mdllist{:});
+            clear mdllist
+        end
         %         mdltbl = struct2table(mdlcat,'AsArray',true);
         mdlparscat = structvertcat(mdlparslist{:});
         mdlparstbl = struct2table(mdlparscat,'AsArray',true);
@@ -158,9 +160,13 @@ switch env
         %save models and parameters
         fpath = fullfile(savefolder,['gitID-' get_gitcommit '_uuID-' get_uuid() '_' comment '.mat']);
         if savecatQ
-            save(fpath,'propOutlist','interpfnlist','mdlcat',...
-                'mdlparscat','mdlparstbl','outlist',...
-                '-v7.3','-nocompression')
+            if memconserveQ
+                savevars = {'mdlparscat','mdlparstbl'};
+            else
+                savevars = {'ypredlist','interpfnlist','mdlcat',...
+                'mdlparscat','mdlparstbl','outlist'};
+            end
+            save(fpath,savevars,'-v7.3','-nocompression')
         end
         writetable(mdlparstbl,[fpath(1:end-4) '.csv'])
         disp(mdlparstbl)
