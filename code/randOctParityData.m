@@ -4,7 +4,7 @@ clear; close all
 %octochorically sampled octonions
 addpathdir({'var_names.m','writeparfile.m'})
 runtype = 'test'; %'test','full'
-nreps = 10;
+nreps = 1;
 switch runtype
     case 'test'
         ndatapts = 1000;
@@ -18,18 +18,16 @@ switch runtype
 end
 
 %comment = 'paper-data';
-comment = 'timing-data';
+comment = 'slurm-test';
 
 % job submission environment
-env = 'local'; %'slurm', 'local'
+env = 'slurm'; %'slurm', 'local'
 
 T = true;
 F = false;
 %whether to skip running the jobs and just compile results
-if strcmp(env,'local')
-    dryrunQ = T;
-    disp(['dryrunQ == ' int2str(dryrunQ)])
-end
+dryrunQ = F;
+disp(['dryrunQ == ' int2str(dryrunQ)])
 
 m = input(['default comment: ' comment '. Continue (y) or override (n)? '],'s');
 if ~strcmp(m,'y') && ~strcmp(m,'Y')
