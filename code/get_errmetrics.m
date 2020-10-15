@@ -1,7 +1,7 @@
 function errout = get_errmetrics(ypred,ytrue,type)
 arguments
     ypred double {mustBeReal,mustBeFinite}
-    ytrue double {mustBeReal,mustBeFinite}
+    ytrue double {mustBeReal,mustBeFinite} %or measured
     type char {mustBeMember(type,{'e','ae','mae','se','rmse','all'})} = 'all'
 end
 % GET_ERRMETRICS  get various error metrics for measured data relative to
