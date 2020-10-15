@@ -4,7 +4,7 @@ clear; close all
 %octochorically sampled octonions
 addpathdir({'var_names.m','writeparfile.m','walltimefns'})
 runtype = 'full'; %'test','full'
-nreps = 1;
+nreps = 10;
 switch runtype
     case 'test'
         ndatapts = [100 388 500 1000 5000 10000 20000 50000];
@@ -18,10 +18,11 @@ switch runtype
 end
 
 %comment = 'paper-data';
-comment = 'local-full';
+comment = 'paper-data';
 
 % job submission environment
-env = 'local'; %'slurm', 'local'
+env = 'slurm'; %'slurm', 'local'
+disp(['env = ' env])
 
 T = true;
 F = false;
@@ -33,6 +34,11 @@ if strcmp(env,'local')
     disp(['savecatQ == ' int2str(savecatQ)])
 end
 
+m = input(['default comment: ' comment '. Continue (y) or override (n)? '],'s');
+if ~strcmp(m,'y') && ~strcmp(m,'Y')
+    comment = input('new comment: ','s');
+end
+
 % # cores
 switch env
     case 'slurm'
@@ -40,11 +46,6 @@ switch env
     case 'local'
         p = gcp;
         cores = p.NumWorkers;
-end
-
-m = input(['default comment: ' comment '. Continue (y) or override (n)? '],'s');
-if ~strcmp(m,'y') && ~strcmp(m,'Y')
-    comment = input('new comment: ','s');
 end
 
 %% functions to generate save filepaths
@@ -90,7 +91,7 @@ end
 switch env
     case 'slurm'
         %setup
-        mem = 1024*8*cores; %total memory of job, MB
+        mem = 1024*12*cores; %total memory of job, MB
         qosopt = 'standby'; %'', 'test', 'standby'
         scriptfpath = fullfile('MATslurm','code','submit.sh');
         %submission

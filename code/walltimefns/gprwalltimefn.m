@@ -7,7 +7,7 @@ switch ndatapts
     case num2cell(5001:10000)
         walltime = 12*cores;
     case num2cell(10001:50000)
-        walltime = 20*cores;
+        walltime = 60*cores;
     otherwise
         error('too many datapts, update gprwalltimefn')
 end
