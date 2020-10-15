@@ -121,35 +121,49 @@ switch env
         assert(nfiles ~= 0,'no files matched')
         %initialize
         init1 = cell(nfiles,1);
-        [outlist,ypredlist,mdllist,mdlparslist,interpfnlist] = deal(init1);
+        [Slist,ypredlist,mdllist,mdlparslist,interpfnlist] = deal(init1);
         
         %extract results from files
         for i = 1:nfiles
             folder = folders{i};
             name = names{i};
             fpath = fullfile(folder,name);
-            clear S out
-            S = load(fpath,'out');
-            out = S.out;
-            [ypredlist{i},mdllist{i},mdlparslist{i},interpfnlist{i}] = ...
-                deal(out.propOut, out.mdl, out.mdlpars, out.interpfn);
-            outlist{i} = out;
+            clear S
+            if memconserveQ
+                loadvars = {'mldpars'};
+            else
+                loadvars = {'ypred','mdl','mdlpars','interpfn'};
+            end
+            S = load(fpath,loadvars{:});
+            if memconserveQ
+                mdlparslist{i} = S.mdlpars;
+            else
+                [ypredlist{i},mdllist{i},mdlparslist{i},interpfnlist{i}] = ...
+                    deal(S.ypred, S.mdl, S.mdlpars, S.interpfn);
+            end
+            %             Slist{i} = S;
         end
         
-        %concatenate models and parameters
-        mdlcat = structvertcat(mdllist{:});
-        clear mdllist
-%         mdltbl = struct2table(mdlcat,'AsArray',true);
+        if ~memconserveQ
+            %concatenate models and parameters
+            mdlcat = structvertcat(mdllist{:});
+            clear mdllist
+            %         mdltbl = struct2table(mdlcat,'AsArray',true);
+        end
         mdlparscat = structvertcat(mdlparslist{:});
         mdlparstbl = struct2table(mdlparscat,'AsArray',true);
         
-%         gitcommit = get_gitcommit();
+        %         gitcommit = get_gitcommit();
         %save models and parameters
         fpath = fullfile(savefolder,['gitID-' get_gitcommit '_uuID-' get_uuid() '_' comment '.mat']);
         if savecatQ
-            save(fpath,'propOutlist','interpfnlist','mdlcat',...
-                'mdlparscat','mdlparstbl','outlist',...
-                '-v7.3','-nocompression')
+            if memconserveQ
+                savevars = {'mdlparscat','mdlparstbl'};
+            else
+                savevars = {'ypredlist','interpfnlist','mdlcat',...
+                    'mdlparscat','mdlparstbl'};
+            end
+            save(fpath,savevars{:},'-v7.3','-nocompression')
         end
         writetable(mdlparstbl,[fpath(1:end-4) '.csv'])
         disp(mdlparstbl)
