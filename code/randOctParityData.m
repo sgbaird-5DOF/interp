@@ -2,7 +2,7 @@ clear; close all
 %% parameters
 %loop through different combinations of parameters using random,
 %octochorically sampled octonions
-addpathdir({'var_names.m','writeparfile.m'})
+addpathdir({'var_names.m','writeparfile.m','walltimefns'})
 runtype = 'test'; %'test','full'
 nreps = 1;
 switch runtype
