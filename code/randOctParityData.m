@@ -3,8 +3,8 @@ clear; close all
 %loop through different combinations of parameters using random,
 %octochorically sampled octonions
 addpathdir({'var_names.m','writeparfile.m','walltimefns'})
-runtype = 'full'; %'test','full'
-nreps = 2;
+runtype = 'test'; %'test','full'
+nreps = 10;
 switch runtype
     case 'test'
         ndatapts = [100 388 500 1000 5000 10000 20000 50000];
@@ -22,12 +22,16 @@ comment = 'paper-data';
 
 % job submission environment
 env = 'slurm'; %'slurm', 'local'
-disp(['env = ' env])
-
 T = true;
 F = false;
 %whether to skip running the jobs and just compile results
 dryrunQ = F;
+disp(['env = ' env])
+
+if strcmp(env,'slurm') && dryrunQ
+    error('did you mean to change dryrunQ to false?')
+end
+
 metaQ = T;
 disp(['dryrunQ = ' int2str(dryrunQ)])
 if strcmp(env,'local')
