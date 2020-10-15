@@ -3,7 +3,7 @@ clear; close all
 %loop through different combinations of parameters using random,
 %octochorically sampled octonions
 addpathdir({'var_names.m','writeparfile.m','walltimefns'})
-runtype = 'test'; %'test','full'
+runtype = 'full'; %'test','full'
 nreps = 1;
 switch runtype
     case 'test'
@@ -11,22 +11,23 @@ switch runtype
         npredpts = 10000;
         method = {'sphgpr','gpr','sphbary','pbary','nn','avg'}; % 'sphbary', 'pbary', 'gpr', 'sphgpr', 'nn', 'avg'
     case 'full'
-        ndatapts = [50000];
-        npredpts = 50000;
+        ndatapts = [1000];
+        npredpts = 10000;
         method = {'gpr'}; %'sphbary','pbary','gpr','nn'
         inputtype = {'5dof'};
 end
 
 %comment = 'paper-data';
-comment = 'slurm-time-test';
+comment = 'local-full';
 
 % job submission environment
-env = 'slurm'; %'slurm', 'local'
+env = 'local'; %'slurm', 'local'
 
 T = true;
 F = false;
 %whether to skip running the jobs and just compile results
 dryrunQ = F;
+savecatQ = F;
 disp(['dryrunQ == ' int2str(dryrunQ)])
 
 % # cores
@@ -116,7 +117,7 @@ switch env
         assert(nfiles ~= 0,'no files matched')
         %initialize
         init1 = cell(nfiles,1);
-        [outlist,propOutlist,mdllist,mdlparslist,interpfnlist] = deal(init1);
+        [outlist,ypredlist,mdllist,mdlparslist,interpfnlist] = deal(init1);
         
         %extract results from files
         for i = 1:nfiles
@@ -126,24 +127,27 @@ switch env
             clear S out
             S = load(fpath,'out');
             out = S.out;
-            [propOutlist{i},mdllist{i},mdlparslist{i},interpfnlist{i}] = ...
+            [ypredlist{i},mdllist{i},mdlparslist{i},interpfnlist{i}] = ...
                 deal(out.propOut, out.mdl, out.mdlpars, out.interpfn);
             outlist{i} = out;
         end
         
         %concatenate models and parameters
         mdlcat = structvertcat(mdllist{:});
-        mdltbl = struct2table(mdlcat);
+        clear mdllist
+%         mdltbl = struct2table(mdlcat,'AsArray',true);
         mdlparscat = structvertcat(mdlparslist{:});
         mdlparstbl = struct2table(mdlparscat,'AsArray',true);
         
 %         gitcommit = get_gitcommit();
         %save models and parameters
         fpath = fullfile(savefolder,['gitID-' get_gitcommit '_uuID-' get_uuid() '_' comment '.mat']);
-        save(fpath,'propOutlist','interpfnlist','mdllist',...
-            'mdlparslist','mdlcat','mdlparscat','mdlparstbl','outlist',...
-            '-v7.3','-nocompression')
-        writetable(mdlparstbl,[fpath(1:end-4) '.xlsx'])
+        if savecatQ
+            save(fpath,'propOutlist','interpfnlist','mdlcat',...
+                'mdlparscat','mdlparstbl','outlist',...
+                '-v7.3','-nocompression')
+        end
+        writetable(mdlparstbl,[fpath(1:end-4) '.csv'])
         disp(mdlparstbl)
         
         %         %nested loop through jobs and tasks to load results
