@@ -1,4 +1,4 @@
-function [propOut,interpfn,mdl,mdlpars] = interp5DOF(qm,nA,propList,qm2,nA2,method,NV)
+function [ypred,interpfn,mdl,mdlpars] = interp5DOF(qm,nA,propList,qm2,nA2,method,NV)
 arguments
     qm
     nA
@@ -162,7 +162,7 @@ brkQ = NV.brkQ;
 uuid = NV.uuid;
 
 %display method
-disp(['method == ' method])
+disp(['method = ' method])
 
 % add relevant folders to path (by searching subfolders for functions)
 addpathdir({'normr.m','GB5DOF_setup.m','cu2qu.m','q2rod.m','GBfive2oct.m','correctdis.m','interp_gpr.m'})
@@ -241,6 +241,7 @@ if isempty(NV.dataprops)
 else
     data.props = NV.dataprops;
 end
+ytrue = data.props;
 
 %% additional variables
 % current date and time
@@ -297,7 +298,7 @@ switch method
                     barytype = 'planar';
             end
             %interpolation
-            [propOut,databary,facetprops,facetIDs,barypars] = get_interp(mesh,data,intfacetIDs,barytype,barytol);
+            [ypred,databary,facetprops,facetIDs,barypars] = get_interp(mesh,data,intfacetIDs,barytype,barytol);
             
             %model command and interpolation function
             mdlcmd = @(mesh,data,intfacetIDs,barytype,barytol) get_interp(mesh,data,intfacetIDs,barytype,barytol);
@@ -318,7 +319,7 @@ switch method
                         
             %model-specific parameters
             mdlparsspec = var_names(barytol,barytype,inttol,nnMax,...
-                nn_rmse,nn_mae,nints,numnonints,int_fraction);
+                nn_rmse,nn_mae,nints,numnonints,int_fraction,barypars);
             
         else
             %unpack
@@ -326,7 +327,7 @@ switch method
             facetIDs = NV.facetIDs;
             
             %interpolate using supplied barycentric coordinates
-            [propOut,facetprops,NNextrapID,nnList] = interp_bary_fast(ppts,ppts2,meshprops,databary,facetIDs);
+            [ypred,facetprops,NNextrapID,nnList] = interp_bary_fast(ppts,ppts2,meshprops,databary,facetIDs);
             
             %model command and interp function
             mdlcmd = @(databary,facetprops) dot(databary,facetprops,2);
@@ -352,9 +353,16 @@ switch method
         %gpr options
         if isempty(NV.gpropts)
             %% interp5DOF's default gpr options
-            PredictMethod = 'fic';
-            
-            gpropts = {'PredictMethod',PredictMethod};
+            if nmeshpts <= 50000
+                PredictMethod = 'exact';
+                gpropts = {};
+            else
+                PredictMethod = 'bcd';
+                gpropts = {'BlockSize',10000};
+            end
+            gpropts = [gpropts {'PredictMethod',PredictMethod}];
+%             gpropts = {'PredictMethod',PredictMethod};
+           
             if strcmp(method,'sphgpr')
                 %squared exponential kernel function with octonion distance
                 kfcn = @(XN,XM,theta) (exp(theta(2))^2)*exp(-(pdist2(XN,XM,@get_omega).^2)/(2*exp(theta(1))^2));
@@ -412,9 +420,9 @@ switch method
         end
         %predictions ("interpolated" points)
         if ~strcmp(PredictMethod,'bcd')
-            [propOut,ysd,yint] = predict(gprMdl,X2);
+            [ypred,ysd,yint] = predict(gprMdl,X2);
         else
-            propOut = predict(gprMdl,X2);
+            ypred = predict(gprMdl,X2);
         end
         
         mdlcmd = @(gprMdl,X2) predict(gprMdl,X2);
@@ -451,7 +459,7 @@ switch method
         interpfn = @(qm2,nA2) interp_nn(ppts,qm2,nA2,projtol,usv,propList);
         
         %assign NN property values
-        propOut = propList(nnList);
+        ypred = propList(nnList);
         
         %model-specific variables
         mdlspec.nnList = nnList;
@@ -460,7 +468,7 @@ switch method
         
     case 'avg'
         % "interpolation" (just constant model)
-        [propOut,yavg] = interp_avg(propList,ndatapts);
+        [ypred,yavg] = interp_avg(propList,ndatapts);
         
         mdlcmd = @(propList,ndatapts) interp_avg(propList,ndatapts);
         interpfn = @(qm2,nA2) repelem(yavg,ndatapts,1); %any new point gets assigned yavg
@@ -491,15 +499,21 @@ end
 runtime = toc; %time elapsed to do the interpolation (method-specific portion)
 
 %% append extra general variables
+%parity variables
+parity.ypred = ypred;
+parity.ytrue = ytrue;
+
 %model
-mdlgen.propOut = propOut;
+mdlgen.ypred = ypred;
 mdlgen.mdlcmd = mdlcmd;
 mdlgen.interpfn = interpfn;
 mdlgen.runtime = runtime;
 mdlgen.mesh = mesh;
 mdlgen.data = data;
+mdlgen.parity = parity;
 %parameters
 mdlparsgen.runtime = runtime;
+mdlparsgen.parity = parity;
 
 %% concatenate structs
 %model variables 
