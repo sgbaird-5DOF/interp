@@ -7,8 +7,8 @@ runtype = 'test'; %'test','full'
 nreps = 1;
 switch runtype
     case 'test'
-        ndatapts = 1000;
-        npredpts = 1000;
+        ndatapts = [388 10000 50000];
+        npredpts = 10000;
         method = {'sphgpr','gpr','sphbary','pbary','nn','avg'}; % 'sphbary', 'pbary', 'gpr', 'sphgpr', 'nn', 'avg'
     case 'full'
         ndatapts = [50000];
@@ -18,7 +18,7 @@ switch runtype
 end
 
 %comment = 'paper-data';
-comment = 'slurm-test';
+comment = 'slurm-time-test';
 
 % job submission environment
 env = 'slurm'; %'slurm', 'local'
