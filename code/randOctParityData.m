@@ -21,17 +21,17 @@ end
 comment = 'paper-data';
 
 % job submission environment
-env = 'local'; %'slurm', 'local'
+env = 'slurm'; %'slurm', 'local'
 disp(['env = ' env])
 
 T = true;
 F = false;
 %whether to skip running the jobs and just compile results
-dryrunQ = T;
+dryrunQ = F;
+metaQ = T;
 disp(['dryrunQ = ' int2str(dryrunQ)])
 if strcmp(env,'local')
     savecatQ = F;
-    metaQ = T;
     disp(['savecatQ = ' int2str(savecatQ)])
     disp(['metaQ = ' int2str(metaQ)])
 end
