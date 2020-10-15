@@ -75,8 +75,8 @@ execfn = @(ndatapts,npredpts,method) ...
 argoutnames = {'propOut','interpfn','mdl','mdlpars'};
 %i.e. [propOut,interpfn,mdl,mdlpars] = interp5DOF_setup(ndatapts,npredpts,method);
 
-% walltimefn = @() 300; %can set to constant or to depend on parameters
-walltimefn = @(ndatapts,npredpts,method,cores) get_walltimefn(ndatapts,npredpts,method,cores);
+walltimefn = @() 300; %can set to constant or to depend on parameters, probably fine when using standby queue
+% walltimefn = @(ndatapts,npredpts,method,cores) get_walltimefn(ndatapts,npredpts,method,cores);
 
 %% parameter file
 if ~dryrunQ
