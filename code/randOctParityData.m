@@ -3,17 +3,17 @@ clear; close all
 %loop through different combinations of parameters using random,
 %octochorically sampled octonions
 addpathdir({'var_names.m','writeparfile.m','walltimefns'})
-runtype = 'test'; %'test','full'
-nreps = 9;
+runtype = 'full'; %'test','full'
+nreps = 2;
 switch runtype
     case 'test'
         ndatapts = [100 388 500 1000 5000 10000 20000 50000];
         npredpts = 10000;
         method = {'sphgpr','gpr','sphbary','pbary','nn','avg'}; % 'sphbary', 'pbary', 'gpr', 'sphgpr', 'nn', 'avg'
     case 'full'
-        ndatapts = [1000];
-        npredpts = 10000;
-        method = {'gpr'}; %'sphbary','pbary','gpr','nn'
+        ndatapts = [100];
+        npredpts = 1000;
+        method = {'gpr','nn'}; %'sphbary','pbary','gpr','nn'
         inputtype = {'5dof'};
 end
 
@@ -31,9 +31,9 @@ dryrunQ = T;
 disp(['dryrunQ = ' int2str(dryrunQ)])
 if strcmp(env,'local')
     savecatQ = F;
-    memconserveQ = T;
+    metaQ = T;
     disp(['savecatQ = ' int2str(savecatQ)])
-    disp(['memconserveQ = ' int2str(memconserveQ)])
+    disp(['metaQ = ' int2str(metaQ)])
 end
 
 m = input(['default comment: ' comment '. Continue (y) or override (n)? '],'s');
@@ -63,13 +63,18 @@ files = dir(fullfile('**','data','randOctParity','pcombs'));
 savefolder = files(1).folder;
 savenamefn = @(method,ndatapts,gitcommit,puuid) [method int2str(ndatapts) '_gitID-' gitcommit(1:7) '_puuID-' puuid '.mat'];
 
-savepathgen = fullfile(savefolder,'*gitID-*puuID*.mat'); %for use with dir
+%for use with dir
+if metaQ
+    savepathgen = fullfile(savefolder,'*gitID-*puuID*_meta.mat');
+else
+    savepathgen = fullfile(savefolder,'*gitID-*puuID*.mat'); 
+end
+   
 savenamematch = [... %for use with regexp
     ['(' strjoin(method,'|') ')'] ... match (exactly) any of the method options
     ['(' strjoin(cellfun(@num2str,num2cell(ndatapts),'UniformOutput',false),'|') ')'] ... match (exactly) any of the ndatapts options
     '(_gitID-[a-z0-9]*)' ... match any combination of 0 or more lowercase alphabetic or numeric characters (for git hash)
     '(_puuID-[a-z0-9]+)' ... match any combination of 1 or more lowercase alphabetic or numeric characters (for param combo uuid)
-    '[.mat]' ... %match (exactly) the file-extension
     ]; %e.g. '(sphbary|gpr)(50)(_gitID-)[a-z0-9]*)(_puuID-[a-z0-9]+).mat'
 
 savepathfn = @(method,ndatapts,gitcommit,puuid) fullfile(savefolder,savenamefn(method,ndatapts,gitcommit,puuid));
@@ -125,7 +130,7 @@ switch env
         assert(nfiles ~= 0,'no files matched. Verify files exist and check regexp savenamematch.')
         %initialize
         init1 = cell(nfiles,1);
-        [outlist,ypredlist,mdllist,mdlparslist,interpfnlist] = deal(init1);
+        [Slist,ypredlist,mdllist,mdlparslist,interpfnlist] = deal(init1);
         
         %extract results from files
         for i = 1:nfiles
@@ -135,24 +140,26 @@ switch env
             folder = folders{i};
             name = names{i};
             fpath = fullfile(folder,name);
-            clear S out
-            S = load(fpath,'out');
-            out = S.out;
-            if memconserveQ
-                mdlparslist{i} = out.mdlpars;
+            
+            if metaQ
+                S = load(fpath);
+                mdlparslist{i} = S;
             else
+                loadvars = {'ypred','mdl','mdlpars','interpfn'};
+                S = load(fpath,loadvars{:});
                 [ypredlist{i},mdllist{i},mdlparslist{i},interpfnlist{i}] = ...
-                    deal(out.propOut, out.mdl, out.mdlpars, out.interpfn);
-                outlist{i} = out;
+                    deal(S.ypred, S.mdl, S.mdlpars, S.interpfn);
             end
+            %             Slist{i} = S;
         end
         
-        %concatenate models and parameters
-        if memconserveQ
+        if ~metaQ
+            %concatenate models and parameters
             mdlcat = structvertcat(mdllist{:});
             clear mdllist
+            %         mdltbl = struct2table(mdlcat,'AsArray',true);
         end
-        %         mdltbl = struct2table(mdlcat,'AsArray',true);
+        
         mdlparscat = structvertcat(mdlparslist{:});
         mdlparstbl = struct2table(mdlparscat,'AsArray',true);
         
@@ -160,13 +167,13 @@ switch env
         %save models and parameters
         fpath = fullfile(savefolder,['gitID-' get_gitcommit '_uuID-' get_uuid() '_' comment '.mat']);
         if savecatQ
-            if memconserveQ
+            if metaQ
                 savevars = {'mdlparscat','mdlparstbl'};
             else
                 savevars = {'ypredlist','interpfnlist','mdlcat',...
-                'mdlparscat','mdlparstbl','outlist'};
+                    'mdlparscat','mdlparstbl'};
             end
-            save(fpath,savevars,'-v7.3','-nocompression')
+            save(fpath,savevars{:},'-v7.3','-nocompression')
         end
         writetable(mdlparstbl,[fpath(1:end-4) '.csv'])
         disp(mdlparstbl)

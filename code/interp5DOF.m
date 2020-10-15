@@ -418,21 +418,24 @@ switch method
         else
             gprMdl = fitrgp(X,propList);
         end
+        %compact the model
+        cgprMdl = compact(gprMdl);
+        
         %predictions ("interpolated" points)
         if ~strcmp(PredictMethod,'bcd')
-            [ypred,ysd,yint] = predict(gprMdl,X2);
+            [ypred,ysd,yint] = predict(cgprMdl,X2);
         else
-            ypred = predict(gprMdl,X2);
+            ypred = predict(cgprMdl,X2);
         end
         
-        mdlcmd = @(gprMdl,X2) predict(gprMdl,X2);
-        interpfn = @(qm2,nA2) interp_gpr(gprMdl,qm2,nA2,projtol,usv);
+        mdlcmd = @(gprMdl,X2) predict(cgprMdl,X2);
+        interpfn = @(qm2,nA2) interp_gpr(cgprMdl,qm2,nA2,projtol,usv);
         
         %model-specific variables
         if ~strcmp(PredictMethod,'bcd')
-            mdlspec = var_names(gprMdl,gpropts,ysd,yint);
+            mdlspec = var_names(cgprMdl,gpropts,ysd,yint);
         else
-            mdlspec = var_names(gprMdl,gpropts);
+            mdlspec = var_names(cgprMdl,gpropts);
         end
         %model-specific parameters
         if exist('gproptshort','var') == 1
