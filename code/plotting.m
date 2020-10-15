@@ -9,13 +9,13 @@ yactual = padcat(tbltmp.data.props(barypars.ids),tbltmp.data.props(barypars.ilis
 ypred = padcat(tbltmp.propOut{1}(barypars.ids),tbltmp.propOut{1}(barypars.ilist));
 parityplot(yactual,ypred,'title','sphbary','legend',{'interp','nn'})
 
-%% distance histogram
+%% distance parity
 pd1 = pdist(mdltbl(strcmp(mdltbl.uuid,uuid),:).mesh{1}.pts).';
 pd2 = pdist(mdltbl(strcmp(mdltbl.uuid,uuid),:).mesh{1}.pts,@get_omega).';
 pd3 = pdist(mdltbl(strcmp(mdltbl.uuid,uuid),:).mesh{1}.pts,@get_alen).';
 parityplot(pd1,pd3,'xname','euclidean','yname','arclength','units','')
 
-%% distance histogram
+%% distance parity
 pts = normr(rand(388,3)-0.5);
 pts2 = normr(rand(388,3)-0.5);
 pd1 = pdist(pts);
