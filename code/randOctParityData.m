@@ -21,17 +21,19 @@ end
 comment = 'paper-data';
 
 % job submission environment
-env = 'slurm'; %'slurm', 'local'
+env = 'local'; %'slurm', 'local'
 disp(['env = ' env])
 
 T = true;
 F = false;
 %whether to skip running the jobs and just compile results
-dryrunQ = F;
-disp(['dryrunQ == ' int2str(dryrunQ)])
+dryrunQ = T;
+disp(['dryrunQ = ' int2str(dryrunQ)])
 if strcmp(env,'local')
     savecatQ = F;
-    disp(['savecatQ == ' int2str(savecatQ)])
+    memconserveQ = T;
+    disp(['savecatQ = ' int2str(savecatQ)])
+    disp(['memconserveQ = ' int2str(memconserveQ)])
 end
 
 m = input(['default comment: ' comment '. Continue (y) or override (n)? '],'s');
@@ -44,8 +46,10 @@ switch env
     case 'slurm'
         cores = 12;
     case 'local'
-        p = gcp;
-        cores = p.NumWorkers;
+        if ~dryrunQ
+            p = gcp;
+            cores = p.NumWorkers;
+        end
 end
 
 %% functions to generate save filepaths
@@ -62,7 +66,7 @@ savenamefn = @(method,ndatapts,gitcommit,puuid) [method int2str(ndatapts) '_gitI
 savepathgen = fullfile(savefolder,'*gitID-*puuID*.mat'); %for use with dir
 savenamematch = [... %for use with regexp
     ['(' strjoin(method,'|') ')'] ... match (exactly) any of the method options
-    ['(' strjoin(num2cell(num2str(ndatapts),2),'|') ')'] ... match (exactly) any of the ndatapts options
+    ['(' strjoin(cellfun(@num2str,num2cell(ndatapts),'UniformOutput',false),'|') ')'] ... match (exactly) any of the ndatapts options
     '(_gitID-[a-z0-9]*)' ... match any combination of 0 or more lowercase alphabetic or numeric characters (for git hash)
     '(_puuID-[a-z0-9]+)' ... match any combination of 1 or more lowercase alphabetic or numeric characters (for param combo uuid)
     '[.mat]' ... %match (exactly) the file-extension
@@ -70,20 +74,20 @@ savenamematch = [... %for use with regexp
 
 savepathfn = @(method,ndatapts,gitcommit,puuid) fullfile(savefolder,savenamefn(method,ndatapts,gitcommit,puuid));
 
-%% parameter file setup
-%parameters
-pars = var_names(ndatapts,npredpts,method,cores); %add all parameters here (see runtype switch statement)
-%function to execute and output arguments from function
-execfn = @(ndatapts,npredpts,method) ...
-    interp5DOF_setup(ndatapts,npredpts,method,get_uuid(),'5dof'); %names need to match pars fields
-argoutnames = {'propOut','interpfn','mdl','mdlpars'};
-%i.e. [propOut,interpfn,mdl,mdlpars] = interp5DOF_setup(ndatapts,npredpts,method);
-
-% walltimefn = @() 300; %can set to constant or to depend on parameters, probably fine when using standby queue
-walltimefn = @(ndatapts,npredpts,method,cores) get_walltimefn(ndatapts,npredpts,method,cores);
-
-%% parameter file
 if ~dryrunQ
+    %% parameter file setup
+    %parameters
+    pars = var_names(ndatapts,npredpts,method,cores); %add all parameters here (see runtype switch statement)
+    %function to execute and output arguments from function
+    execfn = @(ndatapts,npredpts,method) ...
+        interp5DOF_setup(ndatapts,npredpts,method,get_uuid(),'5dof'); %names need to match pars fields
+    argoutnames = {'propOut','interpfn','mdl','mdlpars'};
+    %i.e. [propOut,interpfn,mdl,mdlpars] = interp5DOF_setup(ndatapts,npredpts,method);
+    
+    % walltimefn = @() 300; %can set to constant or to depend on parameters, probably fine when using standby queue
+    walltimefn = @(ndatapts,npredpts,method,cores) get_walltimefn(ndatapts,npredpts,method,cores);
+    
+    %% parameter file
     [parpath, parcombsets, Ntrim, jobwalltimes] = ...
         writeparfile(pars,execfn,argoutnames,walltimefn,'diarypathfn',diarypathfn,'savepathfn',savepathfn,'nreps',nreps);
 end
@@ -118,32 +122,39 @@ switch env
         names = namestmp(matchIDs);
         folders = folderstmp(matchIDs);
         nfiles = length(names);
-        assert(nfiles ~= 0,'no files matched')
+        assert(nfiles ~= 0,'no files matched. Verify files exist and check regexp savenamematch.')
         %initialize
         init1 = cell(nfiles,1);
         [outlist,ypredlist,mdllist,mdlparslist,interpfnlist] = deal(init1);
         
         %extract results from files
         for i = 1:nfiles
+            if mod(i,100) == 0
+                disp(i)
+            end
             folder = folders{i};
             name = names{i};
             fpath = fullfile(folder,name);
             clear S out
             S = load(fpath,'out');
             out = S.out;
-            [ypredlist{i},mdllist{i},mdlparslist{i},interpfnlist{i}] = ...
-                deal(out.propOut, out.mdl, out.mdlpars, out.interpfn);
-            outlist{i} = out;
+            if memconserveQ
+                mdlparslist{i} = out.mdlpars;
+            else
+                [ypredlist{i},mdllist{i},mdlparslist{i},interpfnlist{i}] = ...
+                    deal(out.propOut, out.mdl, out.mdlpars, out.interpfn);
+                outlist{i} = out;
+            end
         end
         
         %concatenate models and parameters
         mdlcat = structvertcat(mdllist{:});
         clear mdllist
-%         mdltbl = struct2table(mdlcat,'AsArray',true);
+        %         mdltbl = struct2table(mdlcat,'AsArray',true);
         mdlparscat = structvertcat(mdlparslist{:});
         mdlparstbl = struct2table(mdlparscat,'AsArray',true);
         
-%         gitcommit = get_gitcommit();
+        %         gitcommit = get_gitcommit();
         %save models and parameters
         fpath = fullfile(savefolder,['gitID-' get_gitcommit '_uuID-' get_uuid() '_' comment '.mat']);
         if savecatQ
