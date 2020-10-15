@@ -3,11 +3,11 @@ switch ndatapts
     case num2cell(1:1000)
         walltime0 = 5*cores;
     case num2cell(1001:5000)
-        walltime0 = 10*cores;
-    case num2cell(5001:10000)
         walltime0 = 15*cores;
-    case num2cell(10001:50000)
+    case num2cell(5001:10000)
         walltime0 = 30*cores;
+    case num2cell(10001:50000)
+        walltime0 = 90*cores;
     otherwise
         error('too many datapts, update barywalltimefn')
 end
@@ -25,8 +25,8 @@ end
 %         error('too many predpts, update barywalltimefn')
 % end
 
-scale = 2;
-walltime1 = scale*cores/npredpts; % scale was ~0.7 for 1000 mesh points, 500 data points, 6 cores
+scale = 1;
+walltime1 = scale*npredpts/cores; % scale was ~0.7 for 1000 mesh points, 500 data points, 6 cores
 
 walltime = (walltime0 + walltime1)/cores;
 

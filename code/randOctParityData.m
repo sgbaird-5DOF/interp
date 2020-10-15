@@ -7,7 +7,7 @@ runtype = 'full'; %'test','full'
 nreps = 1;
 switch runtype
     case 'test'
-        ndatapts = [388 10000 50000];
+        ndatapts = [100 388 500 1000 5000 10000 20000 50000];
         npredpts = 10000;
         method = {'sphgpr','gpr','sphbary','pbary','nn','avg'}; % 'sphbary', 'pbary', 'gpr', 'sphgpr', 'nn', 'avg'
     case 'full'
@@ -27,8 +27,11 @@ T = true;
 F = false;
 %whether to skip running the jobs and just compile results
 dryrunQ = F;
-savecatQ = F;
 disp(['dryrunQ == ' int2str(dryrunQ)])
+if strcmp(env,'local')
+    savecatQ = F;
+    disp(['savecatQ == ' int2str(savecatQ)])
+end
 
 % # cores
 switch env
