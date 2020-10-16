@@ -173,7 +173,7 @@ switch env
                 savevars = {'ypredlist','interpfnlist','mdlcat',...
                     'mdlparscat','mdlparstbl'};
             end
-            save(fpath,savevars{:},'-v7.3','-nocompression')
+            save(fpath,savevars{:},'-v7.3')
         end
         writetable(mdlparstbl,[fpath(1:end-4) '.csv'])
         disp(mdlparstbl)
