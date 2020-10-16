@@ -25,7 +25,7 @@ env = 'slurm'; %'slurm', 'local'
 T = true;
 F = false;
 %whether to skip running the jobs and just compile results
-dryrunQ = F;
+dryrunQ = T;
 disp(['env = ' env])
 
 if strcmp(env,'slurm') && dryrunQ
@@ -35,7 +35,7 @@ end
 metaQ = T;
 disp(['dryrunQ = ' int2str(dryrunQ)])
 if strcmp(env,'local')
-    savecatQ = F;
+    savecatQ = T;
     disp(['savecatQ = ' int2str(savecatQ)])
     disp(['metaQ = ' int2str(metaQ)])
 end
