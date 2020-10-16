@@ -86,6 +86,9 @@ for n = 1:ntbls
 end
 %% nested loop through table pairs
 for n = 1:ntbls %not parfor compatible
+    if mod(n,50) == 0
+        disp(n)
+    end
     for p = n:ntbls
         %skip self
         if p ~= n

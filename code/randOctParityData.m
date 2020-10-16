@@ -138,7 +138,7 @@ switch env
         
         %extract results from files
         for i = 1:nfiles
-            if mod(i,10) == 0
+            if mod(i,50) == 0
                 disp(i)
             end
             folder = folders{i};
