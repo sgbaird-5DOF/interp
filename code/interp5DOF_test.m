@@ -29,10 +29,10 @@ switch testnum
         propList = GB5DOF_setup(five);
         propList2 = GB5DOF_setup(five2);
         
-        [propOut,gprMdl] = interp5DOF(qm,nA,propList,qm2,nA2,'gpr');
+        [ypred,gprMdl] = interp5DOF(qm,nA,propList,qm2,nA2,'gpr');
 %         [propOut,databary] = interp5DOF(qm,nA,propList,qm2,nA2,'pbary');
         
-        errmetrics = get_errmetrics(propOut,propList2);
+        errmetrics = get_errmetrics(ypred,propList2);
         rmse = errmetrics.rmse;
         mae = errmetrics.mae;
         disp(['RMSE = ' num2str(rmse) ' J/m^2'])
@@ -40,7 +40,7 @@ switch testnum
 end
 
 figure
-parityplot(propOut,propList2)
+parityplot(ypred,propList2)
 
 
 %-----------------------------CODE GRAVEYARD-------------------------------
