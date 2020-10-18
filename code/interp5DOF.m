@@ -1,20 +1,21 @@
 function [ypred,interpfn,mdl,mdlpars] = interp5DOF(qm,nA,propList,qm2,nA2,method,NV)
 arguments
-    qm
-    nA
-    propList(:,1)
-    qm2
-    nA2
-    method = 'gpr'
-    NV.databary = []
-    NV.facetIDs = []
-    NV.dataprops = []
+    qm %input misorientation quaternions
+    nA %input BP normals
+    propList(:,1) %property values
+    qm2 %query misorientations
+    nA2 %query BP normals
+    method char {mustBeMember(method,{'gpr','sphgpr','pbary','sphbary','idw','nn','avg'})} = 'gpr'
+    NV.databary = [] %for use with bary methods
+    NV.facetIDs = [] %for use with bary methods
+    NV.dataprops = [] %user-specified "true" values for error calculations
     NV.modelparsspec = struct()
-    NV.brkQ(1,1) logical = true
-    NV.gpropts = struct.empty
-    NV.uuid = get_uuid()
-    NV.o = []
-    NV.o2 = []
+    NV.brkQ(1,1) logical = true %whether to compute BRK values as ytrue
+    NV.gpropts = struct.empty %for use with gpr methods 'gpr' or 'sphgpr'
+    NV.r double = [] %for use with 'idw' method
+    NV.uuid(1,8) char = get_uuid() %unique ID associated with this interpolation run
+    NV.o = [] %input octonions, specify these or qm/nA pairs
+    NV.o2 = [] %query octonions, specify these or qm2/nA2 pairs
 end
 % INTERP5DOF  Convert misorientation and boundary plane normal 5DOF input
 % data to a closed, octonion, hyperspherical mesh and interpolate property
@@ -118,7 +119,7 @@ end
 %   GRAVEYARD" section)
 %
 % Notes:
-%  Simpler, plug & play, input/output version of run.m (fewer options)
+%  Simpler, plug & play, input/output version of run.m (different options)
 %
 %  Dependencies updated 2020-09-03 SGB
 %
@@ -428,7 +429,7 @@ switch method
             ypred = predict(cgprMdl,X2);
         end
         
-        mdlcmd = @(gprMdl,X2) predict(cgprMdl,X2);
+        mdlcmd = @(cgprMdl,X2) predict(cgprMdl,X2);
         interpfn = @(qm2,nA2) interp_gpr(cgprMdl,qm2,nA2,projtol,usv);
         
         %model-specific variables
@@ -454,8 +455,32 @@ switch method
             mdlparsspec = var_names(PredictMethod);
         end
         
-    case 'nn'
-        %nearest neighbors (NN)
+    case 'idw' % inverse distance weighting
+        %whether to remove degenerate dimension or not
+        if projQ
+            X = ppts;
+            X2 = ppts2;
+        else
+            X = o;
+            X2 = o2;
+        end
+        
+        r = NV.r;
+
+        L = 2; %norm-power (i.e. L == 2 --> Euclidean norm)
+        %different from Tovar's FEX idw.m implementation, but should be
+        %similar or same output
+        [ypred,W,r,nints,numnonints,int_fraction] = idw(X,X2,propList,r,L);
+        
+        mdlcmd = @(X,X2,propList,r,L) idw(X,X2,propList,r,L);
+        interpfn = @(qm2,nA2) interp_idw(X,qm2,nA2,y,r,L);
+        
+        %model-specific variables
+        mdlspec = var_names(L,W,r,nints,numnonints,int_fraction);
+        %model-specific parameters
+        mdlparsspec = var_names(L,r,nints,numnonints,int_fraction);
+        
+    case 'nn' %nearest neighbors
         nnList = dsearchn(ppts,ppts2);
         
         mdlcmd = @(ppts,ppts2,propList) propList(dsearchn(ppts,ppts2));
@@ -498,6 +523,15 @@ switch method
         %
         % consider suggesting as an addition in the GitHub repository via
         % GitHub issue or preferably pull request
+        %
+        % for use with randOctParityData:
+        % update arguments..end syntax in get_walltimefn
+        % add 'case' for your 'insertnamehere' in get_walltimefn
+        
+        %model-specific variables
+        mdlspec = struct();
+        %model-specific parameters
+        mdlparsspec = struct();
 end
 runtime = toc; %time elapsed to do the interpolation (method-specific portion)
 
