@@ -4,35 +4,37 @@ clear; close all
 %octochorically sampled octonions
 addpathdir({'var_names.m','writeparfile.m','walltimefns'})
 runtype = 'test'; %'test','full'
-nreps = 10;
+nreps = 10; % number of runs or repetitions
+
+%make sure the parameters here correspond with the input to "pars" below
 switch runtype
     case 'test'
         ndatapts = [100 388 500 1000 5000 10000 20000 50000];
         npredpts = 10000;
-        method = {'sphgpr','gpr','sphbary','pbary','nn','avg'}; % 'sphbary', 'pbary', 'gpr', 'sphgpr', 'nn', 'avg'
+        method = {'idw'}; % 'sphbary', 'pbary', 'gpr', 'sphgpr', 'nn', 'avg'
+        
     case 'full'
-        ndatapts = [100];
-        npredpts = 1000;
-        method = {'gpr','nn'}; %'sphbary','pbary','gpr','nn'
-        inputtype = {'5dof'};
+        ndatapts = [100 388 500 1000 5000 10000 20000 50000];
+        npredpts = 10000;
+        method = {'sphgpr','gpr','sphbary','pbary','nn','avg'}; % 'sphbary', 'pbary', 'gpr', 'sphgpr', 'nn', 'avg'
 end
 
-%comment = 'paper-data';
 comment = 'paper-data';
+% comment = 'idw-test';
 
 % job submission environment
 env = 'slurm'; %'slurm', 'local'
 T = true;
 F = false;
 %whether to skip running the jobs and just compile results
-dryrunQ = T;
+dryrunQ = F;
 disp(['env = ' env])
 
 if strcmp(env,'slurm') && dryrunQ
     error('did you mean to change dryrunQ to false?')
 end
 
-metaQ = T;
+metaQ = T; %whether to load full model or only meta-data at end
 disp(['dryrunQ = ' int2str(dryrunQ)])
 if strcmp(env,'local')
     savecatQ = T;
@@ -68,19 +70,20 @@ savefolder = files(1).folder;
 savenamefn = @(method,ndatapts,gitcommit,puuid) [method int2str(ndatapts) '_gitID-' gitcommit(1:7) '_puuID-' puuid '.mat'];
 
 %for use with dir
-if metaQ
-    savepathgen = fullfile(savefolder,'*gitID-*puuID*_meta.mat');
-else
-    savepathgen = fullfile(savefolder,'*gitID-*puuID*.mat'); 
-end
-   
-savenamematch = [... %for use with regexp
+savepathgen = fullfile(savefolder,'*gitID-*puuID*.mat');
+
+savenamematch = [ ...
     ['(' strjoin(method,'|') ')'] ... match (exactly) any of the method options
     ['(' strjoin(cellfun(@num2str,num2cell(ndatapts),'UniformOutput',false),'|') ')'] ... match (exactly) any of the ndatapts options
     '(_gitID-[a-z0-9]*)' ... match any combination of 0 or more lowercase alphabetic or numeric characters (for git hash)
     '(_puuID-[a-z0-9]+)' ... match any combination of 1 or more lowercase alphabetic or numeric characters (for param combo uuid)
-    ]; %e.g. '(sphbary|gpr)(50)(_gitID-)[a-z0-9]*)(_puuID-[a-z0-9]+).mat'
-
+    ]; %e.g. '(sphbary|gpr|nn)(50)(_gitID-)[a-z0-9]*)(_puuID-[a-z0-9]+)' matches sphbary50_gitID-abcd123_puuID-abcd123.mat
+if metaQ
+    savenamematch = [ savenamematch '(_meta.mat)'];
+else
+    savenamematch = [savenamematch '(.mat)'];
+end
+    
 savepathfn = @(method,ndatapts,gitcommit,puuid) fullfile(savefolder,savenamefn(method,ndatapts,gitcommit,puuid));
 
 if ~dryrunQ
@@ -90,7 +93,7 @@ if ~dryrunQ
     %function to execute and output arguments from function
     execfn = @(ndatapts,npredpts,method) ...
         interp5DOF_setup(ndatapts,npredpts,method,get_uuid(),'5dof'); %names need to match pars fields
-    argoutnames = {'propOut','interpfn','mdl','mdlpars'};
+    argoutnames = {'ypred','interpfn','mdl','mdlpars'};
     %i.e. [propOut,interpfn,mdl,mdlpars] = interp5DOF_setup(ndatapts,npredpts,method);
     
     % walltimefn = @() 300; %can set to constant or to depend on parameters, probably fine when using standby queue
@@ -151,6 +154,10 @@ switch env
             else
                 loadvars = {'ypred','mdl','mdlpars','interpfn'};
                 S = load(fpath,loadvars{:});
+                % if you get a "variable not loaded here" warning, you may need to
+                % delete a previous erroneous file you generated with the
+                % wrong variable names. Typically shouldn't be an issue
+                % though..
                 [ypredlist{i},mdllist{i},mdlparslist{i},interpfnlist{i}] = ...
                     deal(S.ypred, S.mdl, S.mdlpars, S.interpfn);
             end
