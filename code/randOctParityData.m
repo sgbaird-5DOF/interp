@@ -23,11 +23,11 @@ comment = 'paper-data';
 % comment = 'idw-test';
 
 % job submission environment
-env = 'slurm'; %'slurm', 'local'
+env = 'local'; %'slurm', 'local'
 T = true;
 F = false;
 %whether to skip running the jobs and just compile results
-dryrunQ = F;
+dryrunQ = T;
 disp(['env = ' env])
 
 if strcmp(env,'slurm') && dryrunQ
@@ -37,7 +37,7 @@ end
 metaQ = T; %whether to load full model or only meta-data at end
 disp(['dryrunQ = ' int2str(dryrunQ)])
 if strcmp(env,'local')
-    savecatQ = T;
+    savecatQ = T; % whether to save the catenated model and/or parameters (depends on metaQ)
     disp(['savecatQ = ' int2str(savecatQ)])
     disp(['metaQ = ' int2str(metaQ)])
 end
