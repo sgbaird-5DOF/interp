@@ -12,7 +12,7 @@ arguments
     NV.modelparsspec = struct()
     NV.brkQ(1,1) logical = true %whether to compute BRK values as ytrue
     NV.gpropts = struct.empty %for use with gpr methods 'gpr' or 'sphgpr'
-    NV.r double = deg2rad(5) %for use with 'idw' method, alternatively set to [] for mean/stddev estimation
+    NV.r double = deg2rad(2.5) %for use with 'idw' method, alternatively set to [] for mean/stddev estimation
     NV.uuid(1,8) char = get_uuid() %unique ID associated with this interpolation run
     NV.o = [] %input octonions, specify these or qm/nA pairs
     NV.o2 = [] %query octonions, specify these or qm2/nA2 pairs
@@ -354,7 +354,7 @@ switch method
         %gpr options
         if isempty(NV.gpropts)
             %% interp5DOF's default gpr options
-            if nmeshpts <= 50000
+            if nmeshpts <= Inf
                 PredictMethod = 'exact';
                 gpropts = {};
             else
