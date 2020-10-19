@@ -27,6 +27,8 @@ end
 %
 % References:
 %		https://math.stackexchange.com/q/1256236/798661
+%       https://math.stackexchange.com/q/3731002
+%       https://github.com/tomilov/quickhull/issues/8
 %
 % Notes:
 %		To relax the requirement that pts need to be close to on the unit
