@@ -3,31 +3,31 @@ clear; close all
 %loop through different combinations of parameters using random,
 %octochorically sampled octonions
 addpathdir({'var_names.m','writeparfile.m','walltimefns'})
-runtype = 'test'; %'test','full'
-nreps = 10; % number of runs or repetitions
+runtype = 'full'; %'test','full'
+nreps = 1; % number of runs or repetitions
 
 %make sure the parameters here correspond with the input to "pars" below
 switch runtype
     case 'test'
-        ndatapts = [100 388 500 1000 5000 10000 20000 50000];
+        ndatapts = [10000]; % 5000 10000 20000 50000];
         npredpts = 10000;
         method = {'idw'}; % 'sphbary', 'pbary', 'gpr', 'sphgpr', 'nn', 'avg'
         
     case 'full'
         ndatapts = [100 388 500 1000 5000 10000 20000 50000];
         npredpts = 10000;
-        method = {'sphgpr','gpr','sphbary','pbary','nn','avg'}; % 'sphbary', 'pbary', 'gpr', 'sphgpr', 'nn', 'avg'
+        method = {'sphgpr','gpr','sphbary','pbary','nn','avg','idw'}; % 'sphbary', 'pbary', 'gpr', 'sphgpr', 'nn', 'avg'
 end
 
 comment = 'paper-data';
-% comment = 'idw-test';
+% comment = 'idw-test-3pt5deg';
 
 % job submission environment
-env = 'slurm'; %'slurm', 'local'
+env = 'local'; %'slurm', 'local'
 T = true;
 F = false;
 %whether to skip running the jobs and just compile results
-dryrunQ = F;
+dryrunQ = T;
 disp(['env = ' env])
 
 if strcmp(env,'slurm') && dryrunQ
