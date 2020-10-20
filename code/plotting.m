@@ -1,31 +1,10 @@
-%% result parity plot
-methodlist = {'sphgpr','gpr','sphbary','pbary','nn','avg'};
-cellfun(@(type) median(mdlparstbl(strcmp(mdlparstbl.method,type),:).rmse),methodlist)
-cellfun(@(type) median(mdlparstbl(strcmp(mdlparstbl.method,type),:).mae),methodlist)
-uuid = 'ad8908c4';
-tbltmp = mdltbl(strcmp(mdltbl.uuid,uuid),:);
-barypars = tbltmp.barypars{1};
-yactual = padcat(tbltmp.data.props(barypars.ids),tbltmp.data.props(barypars.ilist));
-ypred = padcat(tbltmp.propOut{1}(barypars.ids),tbltmp.propOut{1}(barypars.ilist));
-parityplot(yactual,ypred,'title','sphbary','legend',{'interp','nn'})
-
 %split apply & find groups
 fname = 'gitID-76fca8c_uuID-f51500cd_paper-data.mat';
 files = dir(fullfile('**',fname));
 fpath = fullfile(files(1).folder,files(1).name);
 load(fpath);
-tbl1 = mdlparstbl(:,{'method','nmeshpts','ndatapts'});
-[G1,ID1] = findgroups(tbl1);
-parity = splitapply(@(x){x(1)},mdlparstbl.parity,G1);
-nmeshpts = splitapply(@(x)x(1),mdlparstbl.nmeshpts,G1);
-medRMSE = splitapply(@(x)median(x),mdlparstbl.rmse,G1);
-medMAE = splitapply(@(x)median(x),mdlparstbl.mae,G1);
-medruntime = splitapply(@(x)median(x),mdlparstbl.runtime,G1);
 
-tbl2 = mdlparstbl(:,{'method','ndatapts'});
-[G2,ID2] = findgroups(ID1.method);
-nmeshpts1 = splitapply(@(x){x},mdlparstbl.nmeshpts,G2);
-
+slurmQ = 0;
 
 %% parity plot
 methodlist = {'pbary','gpr','idw','nn'};
@@ -37,7 +16,7 @@ for nmeshpts = [388 10000 50000]
     parity3 = splitapply(@(x){x(1)},tbl3.parity,G3);
     
     %plotting
-    multiparity(parity3,ID3)
+    multiparity(parity3,ID3,'titleQ',false)
     
     %extra
     if sgtitleQ
@@ -47,30 +26,61 @@ for nmeshpts = [388 10000 50000]
     %saving
     files = dir(fullfile('**','interp5DOF-paper','figures'));
     folder = files(1).folder;
-    fname = ['brkparity',int2str(nmeshpts)];
-    fpath = fullfile(folder,fname);
-    savefig(fpath)
-    print(fpath,'-dpng')
+    savefigpng(folder,['brkparity',int2str(nmeshpts)]);
 end
-    
 
-%% distance parity
-pd1 = pdist(mdltbl(strcmp(mdltbl.uuid,uuid),:).mesh{1}.pts).';
-pd2 = pdist(mdltbl(strcmp(mdltbl.uuid,uuid),:).mesh{1}.pts,@get_omega).';
-pd3 = pdist(mdltbl(strcmp(mdltbl.uuid,uuid),:).mesh{1}.pts,@get_alen).';
-parityplot(pd1,pd3,'xname','euclidean','yname','arclength','units','')
+%% errors
+methodlist = {'pbary','gpr','idw','nn','avg'};
 
-%% distance parity
-pts = normr(rand(388,3)-0.5);
-pts2 = normr(rand(388,3)-0.5);
-pd1 = pdist(pts);
-pd3 = pdist(pts,@get_alen);
-parityplot(pd1,pd3,'xname','euclidean','yname','arclength','units','','title','388 3D points')
-figure
-t=n2c(pts);
-scatter3(t{:})
-axis equal
+multixyplots(mdlparstbl,methodlist,'nmeshpts',{'rmse','mae'},2,1)
+%saving
+savefigpng(folder,'brkerror')
 
+%% timing
+tbl3 = mdlparstbl(mdlparstbl.ncores==24,:);
+[G3,ID3] = findgroups(tbl3.method);
+multixyplots(mdlparstbl,methodlist,'nmeshpts',{'runtime'},1,1,'YScale','log','yunits','s')
+%saving
+savefigpng(folder,'runtime');
+
+%% arclength vs. euclidean distance parity
+if slurmQ
+    seed = 10; %#ok<*UNRCH>
+    rng(seed);
+    npts = 10000;
+    five = get_five(npts);
+    o = GBfive2oct(five);
+    pts = get_octpairs(o);
+    pts = normr(pts);
+    pd1 = pdist(pts).';
+    pd2 = real(pdist(pts,@get_omega).');
+    pd3 = real(pdist(pts,@get_alen).');
+    figure
+    parityplot(pd1,pd3,'scatter','cscale','linear','xname','Euclidean Distance','yname','Arc Length','xunits','','yunits','rad')
+    %saving
+    fname = 'distance-parity';
+    savefigpng(folder,fname);
+end
+%% distance parity (3D)
+% pts = normr(rand(388,3)-0.5);
+% pts2 = normr(rand(388,3)-0.5);
+% pd1 = pdist(pts);
+% pd3 = pdist(pts,@get_alen);
+% parityplot(pd1,pd3,'xname','euclidean','yname','arclength','units','','title','388 3D points')
+% figure
+% t=n2c(pts);
+% scatter3(t{:})
+% axis equal
+
+%% distance histogram
+seed = 10;
+rng(seed);
+npts = 50000;
+five = get_five(npts);
+o = GBfive2oct(five);
+pts = get_octpairs(o);
+[~,mu,sigma,D] = nnhist(pts,'omega');
+savefigpng(folder,['disthist',int2str(npts)])
 
 %% CODE GRAVEYARD
 %{
@@ -125,5 +135,88 @@ for i = 1:nIDs
     plottype = 'hex';
     parityplot(ptmp.ytrue,ptmp.ypred,plottype,'charlbl',charlbl{i},'title',t{i},'scatterOpts',struct('MarkerEdgeAlpha',0.1))
 end
+
+
+parity = splitapply(@(x){x(1)},mdlparstbl.parity,G1);
+
+
+    % tbl1 = tbl(:,{'method','nmeshpts','ndatapts'});
+
+
+    tbl2 = mdlparstbl(:,{'method','ndatapts'});
+    [G2,ID2] = findgroups(ID1.method);
+    nmeshpts1 = splitapply(@(x){x},mdlparstbl.nmeshpts,G2);
+
+
+fig1 = figure;
+fig1.Position = [489 90.6 330.4 672.4];
+t = tiledlayout(2,1);
+t1 = nexttile;
+hold(t1,'on')
+t1.XScale = 'log';
+t2 = nexttile;
+hold(t2,'on')
+t2.XScale = 'log';
+
+fig2 = figure;
+fig2.Position = [489 90.6 330.4 672.4];
+ax = gca;
+ax.XScale = 'log';
+ax.YScale = 'log';
+hold on
+for method = methodlist
+    tbl = mdlparstbl(ismember(mdlparstbl.method,method),:);
+    [G1,ID1] = findgroups(tbl.nmeshpts);
+    
+    [npts,rmse,mae,runtime] = deal(tbl.nmeshpts,tbl.rmse,tbl.mae,tbl.runtime);
+    
+    nmeshpts = splitapply(@(x)x(1),npts,G1);
+    medRMSE = splitapply(@median,rmse,G1);
+    stdRMSE = splitapply(@std,rmse,G1);
+    medMAE = splitapply(@median,mae,G1);
+    stdMAE = splitapply(@std,mae,G1);
+    medruntime = splitapply(@median,runtime,G1);
+    stdruntime = splitapply(@std,runtime,G1);
+    
+    semilogx(t1,nmeshpts,medRMSE,'-o')
+    xlabel('nmeshpts')
+    ylabel('RMSE (J/m^2)')
+    axis square
+    hold off
+    
+    semilogx(t2,nmeshpts,medMAE,'-o')
+    xlabel('nmeshpts')
+    ylabel('MAE (J/m^2)')
+    axis square
+    hold off
+%     semilogx(nmeshpts,medruntime,'-o')
+
+    figure(fig2)
+    hold on
+    semilogx(nmeshpts,medruntime,'-o')
+    xlabel('nmeshpts')
+    ylabel('runtime (s)')
+    axis square
+    hold off
+end
+
+
+%% result parity plot
+methodlist = {'sphgpr','gpr','sphbary','pbary','nn','avg'};
+cellfun(@(type) median(mdlparstbl(strcmp(mdlparstbl.method,type),:).rmse),methodlist)
+cellfun(@(type) median(mdlparstbl(strcmp(mdlparstbl.method,type),:).mae),methodlist)
+uuid = 'ad8908c4';
+tbltmp = mdltbl(strcmp(mdltbl.uuid,uuid),:);
+barypars = tbltmp.barypars{1};
+yactual = padcat(tbltmp.data.props(barypars.ids),tbltmp.data.props(barypars.ilist));
+ypred = padcat(tbltmp.propOut{1}(barypars.ids),tbltmp.propOut{1}(barypars.ilist));
+parityplot(yactual,ypred,'title','sphbary','legend',{'interp','nn'})
+
+
+pd1 = pdist(mdltbl(strcmp(mdltbl.uuid,uuid),:).mesh{1}.pts).';
+pd2 = pdist(mdltbl(strcmp(mdltbl.uuid,uuid),:).mesh{1}.pts,@get_omega).';
+pd3 = pdist(mdltbl(strcmp(mdltbl.uuid,uuid),:).mesh{1}.pts,@get_alen).';
+parityplot(pd1,pd3,'xname','euclidean','yname','arclength','units','')
+
 
 %}
