@@ -4,6 +4,8 @@ arguments
     ID
     NV.charlblQ(1,1) logical = true
     NV.titleQ(1,1) logical = true
+    NV.xlim = []
+    NV.ylim = []
 end
 
 fig=figure;
@@ -28,5 +30,14 @@ for i = 1:nIDs
         t = repelem({''},length(ID));
     end
     plottype = 'hex';
-    parityplot(ptmp.ytrue,ptmp.ypred,plottype,'charlbl',charlbl{i},'title',t{i},'scatterOpts',struct('MarkerEdgeAlpha',0.1))
+    opts = struct('charlbl',charlbl{i},'title',t{i},'scatterOpts',...
+        struct('MarkerEdgeAlpha',0.1),'xlim',NV.xlim,'ylim',NV.ylim);
+    if isempty(NV.xlim)
+        opts = rmfield(opts,'xlim');
+    end
+    if isempty(NV.ylim)
+        opts = rmfield(opts,'ylim');
+    end
+    optpairs = namedargs2cell(opts);
+    parityplot(ptmp.ytrue,ptmp.ypred,plottype,optpairs{:})
 end
