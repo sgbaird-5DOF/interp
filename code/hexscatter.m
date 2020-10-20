@@ -2,8 +2,8 @@ function h = hexscatter(xdata, ydata, xlim, ylim, res, drawEdges, showZeros, NV)
 arguments
    xdata
    ydata
-   xlim(1,2) double = [min(ydata(:)) max(ydata(:))]
-   ylim(1,2) double = [min(ydata(:)) max(ydata(:))]
+   xlim(1,2) double = [min([xdata(:);ydata(:)]) max([xdata(:);ydata(:)])]
+   ylim(1,2) double = [min([xdata(:);ydata(:)]) max([xdata(:);ydata(:)])]
    res(1,1) double = 50
    drawEdges(1,1) logical = 0
    showZeros(1,1) logical = 0
