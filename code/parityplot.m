@@ -24,8 +24,8 @@ arguments
     NV.res(1,1) double = 50
     NV.drawEdges(1,1) logical = 0
     NV.showZeros(1,1) logical = 0
-    NV.xlim
-    NV.ylim 
+    NV.xlim = []
+    NV.ylim = []
 end
 %--------------------------------------------------------------------------
 % Author(s): Sterling Baird
