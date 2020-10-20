@@ -29,6 +29,7 @@ nmeshpts1 = splitapply(@(x){x},mdlparstbl.nmeshpts,G2);
 
 %% parity plot
 methodlist = {'pbary','gpr','idw','nn'};
+sgtitleQ = false;
 for nmeshpts = [388 10000 50000]
     %extract parity and IDs
     tbl3 = mdlparstbl(ismember(mdlparstbl.method,methodlist) & mdlparstbl.nmeshpts==nmeshpts,:);
@@ -39,7 +40,9 @@ for nmeshpts = [388 10000 50000]
     multiparity(parity3,ID3)
     
     %extra
-    sgtitle(['nmeshpts = ' int2str(nmeshpts)])
+    if sgtitleQ
+        sgtitle(['nmeshpts = ' int2str(nmeshpts)])
+    end
     
     %saving
     files = dir(fullfile('**','interp5DOF-paper','figures'));
