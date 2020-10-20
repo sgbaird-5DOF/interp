@@ -3,11 +3,12 @@ arguments
     yactual double
     ypred double
     plottype char {mustBeMember(plottype,{'hex','scatter'})} = 'hex'
-    NV.units char = 'J/m^2'
+    NV.xunits char = 'J/m^2'
+    NV.yunits char = 'J/m^2'
     NV.xname char = 'actual GBE'
     NV.yname char = 'predicted GBE'
-    NV.title char = '';
-    NV.charlbl char
+    NV.title char = ''
+    NV.charlbl char = ''
     NV.sz(1,1) int32 = 36
     NV.c double = [0 0 1]
     NV.mkr char = 'o'
@@ -24,8 +25,8 @@ arguments
     NV.res(1,1) double = 50
     NV.drawEdges(1,1) logical = 0
     NV.showZeros(1,1) logical = 0
-    NV.xlim = []
-    NV.ylim = []
+    NV.xlim = [min([yactual(:);ypred(:)]) max([yactual(:);ypred(:)])]
+    NV.ylim = [min([yactual(:);ypred(:)]) max([yactual(:);ypred(:)])]
 end
 %--------------------------------------------------------------------------
 % Author(s): Sterling Baird
@@ -67,7 +68,7 @@ assert(all(size(ypred)==size(yactual)),['y1 [' num2str(size(ypred)) '] and y2 ['
 
 switch plottype
     case 'hex'
-        hexscatter(yactual,ypred,[0 1.5],[0 1.5],'cscale','log','cbnds',[1 500]);
+        hexscatter(yactual,ypred,NV.xlim,NV.ylim,'cscale',NV.cscale,'cbnds',[1 500]);
     case 'scatter'
         %% scatter
         if NV.fillQ
@@ -105,8 +106,18 @@ end
 axis square tight
 
 %% axes
-xlbl = strjoin({NV.xname,NV.units},' ');
-ylbl = strjoin({NV.yname,NV.units},' ');
+if ~isempty(NV.xunits)
+    xunits = ['(',NV.xunits,')'];
+else
+    xunits = '';
+end
+if ~isempty(NV.yunits)
+    yunits = ['(',NV.yunits,')'];
+else
+    yunits = '';
+end
+xlbl = strjoin({NV.xname,xunits},' ');
+ylbl = strjoin({NV.yname,yunits},' ');
 xlabel(xlbl,'Interpreter',NV.Interpreter,'FontSize',NV.FontSize)
 ylabel(ylbl,'Interpreter',NV.Interpreter,'FontSize',NV.FontSize)
 title(NV.title,'Interpreter',NV.Interpreter,'FontSize',NV.FontSize)
