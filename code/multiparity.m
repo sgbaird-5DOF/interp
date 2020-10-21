@@ -1,7 +1,8 @@
-function multiparity(parity,ID,NV)
+function multiparity(parity,ID,plottype,NV)
 arguments
     parity(:,1) cell
     ID
+    plottype char {mustBeMember(plottype,{'hex','scatter'})} = 'hex'
     NV.charlblQ(1,1) logical = true
     NV.titleQ(1,1) logical = true
     NV.xlim = []
@@ -29,7 +30,6 @@ for i = 1:nIDs
     else
         t = repelem({''},length(ID));
     end
-    plottype = 'hex';
     opts = struct('charlbl',charlbl{i},'title',t{i},'scatterOpts',...
         struct('MarkerEdgeAlpha',0.1),'xlim',NV.xlim,'ylim',NV.ylim);
     if isempty(NV.xlim)

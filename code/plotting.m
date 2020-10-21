@@ -16,7 +16,7 @@ for nmeshpts = [388 10000 50000]
     parity3 = splitapply(@(x){x(1)},tbl3.parity,G3);
     
     %plotting
-    multiparity(parity3,ID3,'titleQ',false)
+    multiparity(parity3,ID3,'hex','titleQ',true)
     
     %extra
     if sgtitleQ
@@ -26,7 +26,7 @@ for nmeshpts = [388 10000 50000]
     %saving
     files = dir(fullfile('**','interp5DOF-paper','figures'));
     folder = files(1).folder;
-    savefigpng(folder,['brkparity',int2str(nmeshpts)]);
+%     savefigpng(folder,['brkparity',int2str(nmeshpts)]);
 end
 
 %% errors
