@@ -21,9 +21,7 @@ o = GBfive2oct(five);
 o2 = GBfive2oct(five2);
 
 %seed
-rng('shuffle'); %to prevent getting '10' as the seed
-pause(5)
-seedstruct = rng('shuffle');
+seedstruct = rng;
 genseed = seedstruct.Seed;
 
 %get BRK function values
@@ -126,5 +124,8 @@ mdlextra = var_names(ocubotype,ocuboseed1,ocuboseed2,genseed,errmetrics,rmse,mae
 
 % o = get_octpairs(o);
 % o2 = get_octpairs(o2);
+
+% rng('shuffle'); %to prevent getting '10' as the seed
+% pause(5)
 
 %}
