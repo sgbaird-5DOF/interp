@@ -178,7 +178,7 @@ else
     otmp = GBfive2oct(qm,nA);
 end
 wtol = 1e-6;
-o = get_octpairs(otmp,'wtol',wtol);
+[o,oref] = get_octpairs(otmp,'wtol',wtol);
 nmeshpts = size(o,1);
 
 %query points
@@ -189,7 +189,7 @@ else
     queryinput = '5dof';
     otmp2 = GBfive2oct(qm2,nA2);
 end
-o2 = get_octpairs(otmp2,'wtol',wtol);
+[o2,oref2] = get_octpairs(otmp2,'wtol',wtol);
 ndatapts = size(o2,1);
 
 disp(['nmeshpts = ' int2str(nmeshpts) ', ndatapts = ' int2str(ndatapts)])
@@ -256,10 +256,10 @@ gitcommit = get_gitcommit();
 %% package into struct
 %general model variables 
 mdlgen = var_names(brkQ,method,projtol,zeroQ,usv,starttime,ncores,...
-    gitcommit,uuid,predinput,queryinput,projQ);
+    gitcommit,uuid,predinput,queryinput,projQ,oref,oref2);
 %general parameters
 mdlparsgen = var_names(brkQ,method,projtol,zeroQ,starttime,nmeshpts,...
-    ndatapts,ncores,gitcommit,uuid,predinput,queryinput,projQ);
+    ndatapts,ncores,gitcommit,uuid,predinput,queryinput,projQ,oref,oref2);
 
 %% helper functions
 %function to concatenate structures with all different fields (no common)
