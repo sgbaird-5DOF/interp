@@ -61,7 +61,7 @@ end
 %--------------------------------------------------------------------------
 %set random number generator (only if custom seed is specified)
 if ~isempty(seed)
-    startrng = rng; %to be used at end to set rng to initial state (i.e. before calling this function)
+    startseed = rng; %to be used at end to set rng to initial state (i.e. before calling this function)
     rng(seed)
 end
 
@@ -132,7 +132,7 @@ o = o(ia,:);
 
 if ~isempty(seed)
     %reset rng back to what it was before calling the function
-    rng(startrng);
+    rng(startseed);
 end
 
 end %get_ocube.m
