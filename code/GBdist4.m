@@ -4,7 +4,7 @@ arguments
 	o2(:,8) double {mustBeFinite,mustBeReal,mustBeSqrt2Norm}
 	pgnum(1,1) double {mustBeInteger} = 32 % default == cubic Oh point group
 	dtype char {mustBeMember(dtype,{'omega','norm'})} = 'norm'
-	wtol(1,1) double {mustBeFinite,mustBeReal} = 1e-6 %omega tolerance
+	wtol(1,1) double {mustBeFinite,mustBeReal} = 1e-12 %omega tolerance
 	waitbarQ logical = false
 end
 % GBDIST4  modified version of GBdist function by CMU group. Keeps o1
