@@ -9,7 +9,7 @@ nreps = 1; % number of runs or repetitions
 %make sure the parameters here correspond with the input to "pars" below
 switch runtype
     case 'test'
-        ndatapts = [100 388 500]; % 5000 10000 20000 50000];
+        ndatapts = [200]; % 5000 10000 20000 50000];
         npredpts = 10000;
         method = {'idw','gpr','nn'}; % 'sphbary', 'pbary', 'gpr', 'sphgpr', 'nn', 'avg'
         
