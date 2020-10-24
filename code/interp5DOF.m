@@ -192,6 +192,12 @@ end
 [o2,oref2] = get_octpairs(otmp2,'wtol',wtol);
 ndatapts = size(o2,1);
 
+if ~ismembertol(oref,oref2,'ByRows',true)
+    disp(['oref  == ' num2str(oref)])
+    disp(['oref2 == ' num2str(oref2)])
+    warning('oref ~= oref2')
+end
+
 disp(['nmeshpts = ' int2str(nmeshpts) ', ndatapts = ' int2str(ndatapts)])
 
 %% projection
