@@ -4,14 +4,14 @@ clear; close all
 %octochorically sampled octonions
 addpathdir({'var_names.m','writeparfile.m','walltimefns'})
 runtype = 'test'; %'test','full'
-nreps = 1; % number of runs or repetitions
+nreps = 3; % number of runs or repetitions
 
 %make sure the parameters here correspond with the input to "pars" below
 switch runtype
     case 'test'
-        ndatapts = [200]; % 5000 10000 20000 50000];
+        ndatapts = [100 388 500 1000]; % 5000 10000 20000 50000];
         npredpts = 10000;
-        method = {'idw','gpr','nn'}; % 'sphbary', 'pbary', 'gpr', 'sphgpr', 'nn', 'avg'
+        method = {'avg'}; % 'sphbary', 'pbary', 'gpr', 'sphgpr', 'nn', 'avg'
         
     case 'full'
         ndatapts = [100 388 500 1000 5000 10000 20000 50000];
