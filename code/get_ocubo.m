@@ -3,7 +3,7 @@ arguments
 	n {mustBeNonNegIntegerOrEmpty} = 1
 	method char {mustBeMember(method,{'random','uniform'})} = 'random'
 	sidelength {mustBeNonNegIntegerOrEmpty} = []
-    seed = 'shuffle'
+    seed = []
 end
 %--------------------------------------------------------------------------
 % Author: Sterling Baird
@@ -60,7 +60,9 @@ end
 %
 %--------------------------------------------------------------------------
 %set random number generator
-rng(seed)
+if ~isempty(seed)
+    rng(seed)
+end
 
 % argument validation (cont.)
 if strcmp(method,'random') && ~isempty(sidelength)

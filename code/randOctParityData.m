@@ -3,15 +3,15 @@ clear; close all
 %loop through different combinations of parameters using random,
 %octochorically sampled octonions
 addpathdir({'var_names.m','writeparfile.m','walltimefns'})
-runtype = 'full'; %'test','full'
+runtype = 'test'; %'test','full'
 nreps = 1; % number of runs or repetitions
 
 %make sure the parameters here correspond with the input to "pars" below
 switch runtype
     case 'test'
-        ndatapts = [10000]; % 5000 10000 20000 50000];
+        ndatapts = [200]; % 5000 10000 20000 50000];
         npredpts = 10000;
-        method = {'idw'}; % 'sphbary', 'pbary', 'gpr', 'sphgpr', 'nn', 'avg'
+        method = {'idw','gpr','nn'}; % 'sphbary', 'pbary', 'gpr', 'sphgpr', 'nn', 'avg'
         
     case 'full'
         ndatapts = [100 388 500 1000 5000 10000 20000 50000];
@@ -19,15 +19,19 @@ switch runtype
         method = {'sphgpr','gpr','sphbary','pbary','nn','avg','idw'}; % 'sphbary', 'pbary', 'gpr', 'sphgpr', 'nn', 'avg'
 end
 
-comment = 'paper-data';
+%comment (no spaces, used in filename)
+comment = 'paper-data2';
 % comment = 'idw-test-3pt5deg';
+
+% job unique identifier
+% juuid = get_uuid();
 
 % job submission environment
 env = 'local'; %'slurm', 'local'
 T = true;
 F = false;
 %whether to skip running the jobs and just compile results
-dryrunQ = T;
+dryrunQ = F;
 disp(['env = ' env])
 
 if strcmp(env,'slurm') && dryrunQ
@@ -44,6 +48,7 @@ end
 
 m = input(['default comment: ' comment '. Continue (y) or override (n)? '],'s');
 if ~strcmp(m,'y') && ~strcmp(m,'Y')
+    disp('enter a comment without spaces for use in a filename')
     comment = input('new comment: ','s');
 end
 
@@ -62,12 +67,12 @@ end
 %diary
 files = dir(fullfile('**','data','randOctParity','diary'));
 diaryfolder = files(1).folder;
-diarynamefn = @(method,ndatapts,gitcommit,puuid) [method int2str(ndatapts) '_gitID-' gitcommit(1:7) '_puuID-' puuid '.txt'];
+diarynamefn = @(method,ndatapts,gitcommit,puuid) [method int2str(ndatapts) '_gitID-' gitcommit(1:7) '_puuID-' puuid comment '.txt'];
 diarypathfn = @(method,ndatapts,gitcommit,puuid) fullfile(diaryfolder,diarynamefn(method,ndatapts,gitcommit,puuid));
 %data
 files = dir(fullfile('**','data','randOctParity','pcombs'));
 savefolder = files(1).folder;
-savenamefn = @(method,ndatapts,gitcommit,puuid) [method int2str(ndatapts) '_gitID-' gitcommit(1:7) '_puuID-' puuid '.mat'];
+savenamefn = @(method,ndatapts,gitcommit,puuid) [method int2str(ndatapts) '_gitID-' gitcommit(1:7) '_puuID-' puuid comment '.mat'];
 
 %for use with dir
 savepathgen = fullfile(savefolder,'*gitID-*puuID*.mat');
@@ -77,6 +82,7 @@ savenamematch = [ ...
     ['(' strjoin(cellfun(@num2str,num2cell(ndatapts),'UniformOutput',false),'|') ')'] ... match (exactly) any of the ndatapts options
     '(_gitID-[a-z0-9]*)' ... match any combination of 0 or more lowercase alphabetic or numeric characters (for git hash)
     '(_puuID-[a-z0-9]+)' ... match any combination of 1 or more lowercase alphabetic or numeric characters (for param combo uuid)
+    comment ...
     ]; %e.g. '(sphbary|gpr|nn)(50)(_gitID-)[a-z0-9]*)(_puuID-[a-z0-9]+)' matches sphbary50_gitID-abcd123_puuID-abcd123.mat
 if metaQ
     savenamematch = [ savenamematch '(_meta.mat)'];
