@@ -3,8 +3,8 @@ clear; close all
 %loop through different combinations of parameters using random,
 %octochorically sampled octonions
 addpathdir({'var_names.m','writeparfile.m','walltimefns'})
-runtype = 'test'; %'test','full'
-nreps = 3; % number of runs or repetitions
+runtype = 'full'; %'test','full'
+nreps = 10; % number of runs or repetitions
 
 %make sure the parameters here correspond with the input to "pars" below
 switch runtype
