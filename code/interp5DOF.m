@@ -454,6 +454,12 @@ switch method
         else
             mdlparsspec = var_names(PredictMethod);
         end
+        mdlspec.KernelInformation = cgprMdl.KernelInformation;
+        mdlparsspec.KernelType = cgprMdl.KernelInformation.Name;
+        mdlparsspec.KernelParameters = cgprMdl.KernelInformation.KernelParameters;
+        mdlparsspec.KernelParameterNames = cgprMdl.KernelInformation.KernelParameterNames;
+        mdlparsspec.Beta = cgprMdl.Beta;
+        mdlparsspec.Sigma = cgprMdl.Sigma;
         
     case 'idw' % inverse distance weighting
         %whether to remove degenerate dimension or not

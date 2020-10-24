@@ -1,4 +1,4 @@
-function [ax,D,nnpts,idx] = nnhist(pts,dtype)
+function [ax,mu,sigma,D,nnpts,idx] = nnhist(pts,dtype)
 arguments
 	pts
 	dtype char {mustBeMember(dtype,{'omega','norm','alen'})} = 'omega'
@@ -55,8 +55,12 @@ switch dtype
 		xlbl = 'NN \omega = cos^{-1}(p_1 \cdot p_2) (deg)';
 end
 
+mu = mean(D);
+sigma = std(D);
+disp(['mu = ' num2str(mu) ', sigma = ' num2str(sigma)])
+
 %plotting
-ax = histogram(D);
+ax = histfit(D);
 xlabel(xlbl)
 ylabel('counts')
 
