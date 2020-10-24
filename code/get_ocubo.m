@@ -59,8 +59,9 @@ end
 % are two contradictory options.
 %
 %--------------------------------------------------------------------------
-%set random number generator
+%set random number generator (only if custom seed is specified)
 if ~isempty(seed)
+    startrng = rng; %to be used at end to set rng to initial state (i.e. before calling this function)
     rng(seed)
 end
 
@@ -128,6 +129,11 @@ o = [qA qB];
 %get unique list
 [~,ia] = uniquetol(round(o,12),'ByRows',true);
 o = o(ia,:);
+
+if ~isempty(seed)
+    %reset rng back to what it was before calling the function
+    rng(startrng);
+end
 
 end %get_ocube.m
 
