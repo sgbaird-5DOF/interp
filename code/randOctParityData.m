@@ -27,7 +27,7 @@ comment = 'paper-data2';
 % juuid = get_uuid();
 
 % job submission environment
-env = 'local'; %'slurm', 'local'
+env = 'slurm'; %'slurm', 'local'
 T = true;
 F = false;
 %whether to skip running the jobs and just compile results
