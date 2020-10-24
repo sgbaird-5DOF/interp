@@ -67,12 +67,12 @@ end
 %diary
 files = dir(fullfile('**','data','randOctParity','diary'));
 diaryfolder = files(1).folder;
-diarynamefn = @(method,ndatapts,gitcommit,puuid) [method int2str(ndatapts) '_gitID-' gitcommit(1:7) '_puuID-' puuid comment '.txt'];
+diarynamefn = @(method,ndatapts,gitcommit,puuid) [method int2str(ndatapts) '_gitID-' gitcommit(1:7) '_puuID-' puuid '_' comment '.txt'];
 diarypathfn = @(method,ndatapts,gitcommit,puuid) fullfile(diaryfolder,diarynamefn(method,ndatapts,gitcommit,puuid));
 %data
 files = dir(fullfile('**','data','randOctParity','pcombs'));
 savefolder = files(1).folder;
-savenamefn = @(method,ndatapts,gitcommit,puuid) [method int2str(ndatapts) '_gitID-' gitcommit(1:7) '_puuID-' puuid comment '.mat'];
+savenamefn = @(method,ndatapts,gitcommit,puuid) [method int2str(ndatapts) '_gitID-' gitcommit(1:7) '_puuID-' puuid '_' comment '.mat'];
 
 %for use with dir
 savepathgen = fullfile(savefolder,'*gitID-*puuID*.mat');
