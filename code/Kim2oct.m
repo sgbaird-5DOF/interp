@@ -18,7 +18,7 @@
 clear; close all
 %% setup
 
-addpathdir({'eu2qu.m','q2rod.m','get_octpairs.m','GBfive2oct.m'})
+addpathdir({'eu2qu.m','q2rod.m','get_octpairs.m','GBfive2oct.m','Kim'})
 
 folder = 'Kim';
 if exist(folder,'dir') ~= 7
@@ -68,8 +68,17 @@ meshListFull = GBfive2oct(qlist,nAlist);
 %% get property list
 propListFull = datatemp(:,end)/1000; % convert from mJ/m^2 to J/m^2
 
-%% average properties for repeat octonions, remove repeats (except one)
+%% average properties for repeat octonions and remove repeats (except one)
 [meshList,propList] = avgrepeats(meshListFull,propListFull);
+
+%% remove octonions with GBE of 0
+ids = find(propList);
+meshList = meshList(ids,:);
+propList = propList(ids);
+
+%number of points after averaging
+npts2 = size(meshList,1);
+disp(['# pts (after repeat and GBE=0 removal): ' int2str(npts2)])
 
 %% write files
 %write octonions and GB Energy to .txt file
