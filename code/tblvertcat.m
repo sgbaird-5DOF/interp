@@ -38,6 +38,7 @@ end
 %--------------------------------------------------------------------------
 %number of tables
 ntbls = length(tbl);
+[tblvarnames,tbltypes] = deal(cell(ntbls,1));
 %% convert types (e.g. char to string, struct to {struct})
 for n = 1:ntbls
     t = tbl{n}; %unpack
@@ -45,7 +46,11 @@ for n = 1:ntbls
     t = changestruct(t,'cell', @(x) num2cell(x,2), @(x) ~isscalar(x)); %cell vector to cell scalar
     t = changestruct(t,'char', @string); %char vector to string
     t = changestruct(t,'struct', @(x) num2cell(x,2)); %struct to {struct} (cell scalar)
-    t = changestruct(t,'logical', @double); 
+    t = changestruct(t,'logical', @double);
+    t = changestruct(t,'double', @(x) num2cell({x},2), @(x) ~isscalar(x));
+    
+    tblvarnames{n} = t.Properties.VariableNames;
+    tbltypes{n} = varfun(@class,t,'OutputFormat','cell');
     
     tbl{n} = t;
     
@@ -84,67 +89,76 @@ for n = 1:ntbls
 %     end
     
 end
+
+[masternames,ia] = unique(horzcat(tblvarnames{:}));
+tbltypestmp = horzcat(tbltypes{:});
+mastertypes = tbltypestmp(ia);
+
 %% nested loop through table pairs
 for n = 1:ntbls %not parfor compatible
     if mod(n,50) == 0
         disp(n)
     end
-    for p = n:ntbls
+%     for p = n:ntbls
         %skip self
-        if p ~= n
+%         if p ~= n
             %% unpack table pair
             t1 = tbl{n};
-            t2 = tbl{p};
+%             t2 = tbl{p};
             
             %% find missing variables
             nrows1 = height(t1);
-            nrows2 = height(t2);
+%             nrows2 = height(t2);
             
             %dummy vars for variable names
             t1varnames = t1.Properties.VariableNames;
-            t2varnames = t2.Properties.VariableNames;
+%             t2varnames = t2.Properties.VariableNames;
             
             %get variable names from t2 that are not in t1
-            [missingtmp1,ia1] = setdiff(t2varnames,t1varnames);
+            [missingtmp1,ia1] = setdiff(masternames,t1varnames);
             %get variable names from t1 that are not in t2
-            [missingtmp2,ia2] = setdiff(t1varnames,t2varnames);
+%             [missingtmp2,ia2] = setdiff(t1varnames,t2varnames);
             
             % cell tables (cell with 0x0 double inside)
-            [celltbl1,creplaceNames1] = replacevartbl(t2,nrows1,ia1,cell(1),t2varnames);
-            [celltbl2,creplaceNames2] = replacevartbl(t1,nrows2,ia2,cell(1),t1varnames);
+            [celltbl1,creplaceNames1] = replacevartbl(mastertypes,nrows1,ia1,cell(1),masternames);
+%             [celltbl2,creplaceNames2] = replacevartbl(t1,nrows2,ia2,cell(1),t1varnames);
+
+%             [dbltbl,dreplaceNames] = replacevartbl(mastertypes,nrows1,ia1,NaN,masternames);
             
             % remove values that are represented in cell and struct tables
             missing1 = setdiff(missingtmp1,creplaceNames1,'stable');
-            missing2 = setdiff(missingtmp2,creplaceNames2,'stable');
+%                         missing1 = setdiff(missingtmp1,horzcat(creplaceNames1,dreplaceNames),'stable');
+%             missing2 = setdiff(missingtmp2,creplaceNames2,'stable');
             
             %% splice the missing variable tables into original tables
             % matrices of missing elements to splice into original
             missingmat1 = repelem(missing,nrows1,numel(missing1));
-            missingmat2 = repelem(missing,nrows2,numel(missing2));
+%             missingmat2 = repelem(missing,nrows2,numel(missing2));
             
             %tables to splice into original tables
             missingtbl1 = array2table(missingmat1,'VariableNames',missing1);
-            missingtbl2 = array2table(missingmat2,'VariableNames',missing2);
+%             missingtbl2 = array2table(missingmat2,'VariableNames',missing2);
             
             %perform the splice
             tbl{n} = [t1, missingtbl1, celltbl1];
-            tbl{p} = [t2 missingtbl2, celltbl2];
-        end
-    end
+%             tbl{n} = [t1, dbltbl, missingtbl1, celltbl1];
+%             tbl{p} = [t2 missingtbl2, celltbl2];
+%         end
+%     end
 end
 %catenate all tables
 tblout = vertcat(tbl{:});
 end
 
 %% REPLACE VARIABLE TABLE
-function [replacetbl,replaceNames] = replacevartbl(t,nrows,ia,replaceval,varnames)
+function [replacetbl,replaceNames] = replacevartbl(vartypes,nrows,ia,replaceval,varnames)
 %replace type
 replacetype = class(replaceval);
 %% missing variable IDs and names
 %variable names
 % varnames = t.Properties.VariableNames;
 %variable types
-vartypes=varfun(@class,t,'OutputFormat','cell');
+% vartypes=varfun(@class,tvarnames,'OutputFormat','cell');
 %variable IDs of some type
 IDtmp = find(strcmp(replacetype,vartypes));
 %missing variable IDs of different types
@@ -160,7 +174,9 @@ if isstruct(replaceval) && isempty(replaceval)
 end
 replacemat = repelem(replaceval,nrows,nvars);
 replacetbl = array2table(replacemat);
-replacetbl.Properties.VariableNames = replaceNames;
+if ~isempty(replacetbl)
+    replacetbl.Properties.VariableNames = replaceNames;
+end
 
 end
 
