@@ -47,8 +47,8 @@ for n = 1:ntbls
     t = changestruct(t,'char', @string); %char vector to string
     t = changestruct(t,'struct', @(x) num2cell(x,2)); %struct to {struct} (cell scalar)
     t = changestruct(t,'logical', @double);
+    t = changestruct(t,'uint32', @double);
     t = changestruct(t,'double', @(x) num2cell({x},2), @(x) ~isscalar(x));
-    t = changestruct(t,'uint32', @double, @(x) ~isscalar(x));
     
     tblvarnames{n} = t.Properties.VariableNames;
     tbltypes{n} = varfun(@class,t,'OutputFormat','cell');
