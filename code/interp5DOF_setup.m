@@ -5,7 +5,6 @@ arguments
    method = 'gpr'
    datatype char {mustBeMember(datatype,{'brk','kim'})} = 'brk'
    NV.uuid = get_uuid()
-   NV.inputtype char {mustBeMember(NV.inputtype,{'5dof','octonion'})} = '5dof'
 end
 %INTERP5DOF_SETUP  setup for interpolating five-degree-of-freedom property
 %data using random octochorically sampled octonions
@@ -15,44 +14,57 @@ addpathdir({'cu2qu.m','q2rod.m','qmult.m','get_ocubo.m'})
 
 %unpack
 uuid = NV.uuid;
-inputtype = NV.inputtype;
-
-switch datatype
-    case 'kim'
-        addpathdir('')
-        
-    case 'brk'
-        %random 5dof parameters
-        five = get_five(ndatapts);
-        five2 = get_five(npredpts);
-end
-
-%convert to octonions
-o = GBfive2oct(five);
-o2 = GBfive2oct(five2);
 
 %seed
 seedstruct = rng;
 genseed = seedstruct.Seed;
 
-%get BRK function values
-propList = GB5DOF_setup(five);
-dataprops = GB5DOF_setup(five2);
-
-switch inputtype
-    case '5dof'
+switch datatype
+    case 'kim'
+        %load 5dof
+        fname = 'Kim2011_Fe_oct_GBE.mat'; %produced via Kim2oct.m
+        addpathdir({fname})
+        S = load(fname,'five','propList');
+        
         %unpack
-        qm = vertcat(five.q);
-        nA = vertcat(five.nA);
-        qm2 = vertcat(five2.q);
-        nA2 = vertcat(five2.nA);
-    case 'octonion'
-        [qm,nA,qm2,nA2]=deal([]);
+        fivetmp = S.five;
+        qtmp = vertcat(fivetmp.q);
+        nAtmp = vertcat(fivetmp.nA);
+        proptmp = S.propList;
+        
+        %get random IDs
+        npts = size(qtmp,1);
+        id1 = randi(npts,ndatapts,1);
+        id2 = randi(npts,npredpts,1);
+        
+        %5dof
+        five = struct('q',qtmp(id1,:),'nA',nAtmp(id1,:));
+        five2 = struct('q',qtmp(id2,:),'nA',nAtmp(id2,:));
+
+        %properties
+        propList = proptmp(id1);
+        dataprops = proptmp(id2);
+        
+    case 'brk'
+        %random 5dof parameters
+        five = get_five(ndatapts);
+        five2 = get_five(npredpts);
+        
+        %get BRK function values
+        propList = GB5DOF_setup(five);
+        dataprops = GB5DOF_setup(five2);
+        
 end
+
+%unpack
+qm = vertcat(five.q);
+nA = vertcat(five.nA);
+qm2 = vertcat(five2.q);
+nA2 = vertcat(five2.nA);
 
 %% interpolation
 [ypred,interpfn,mdl,mdlpars] = interp5DOF(qm,nA,propList,qm2,nA2,method,...
-    'uuid',uuid,'o',o,'o2',o2,'dataprops',dataprops);
+    'uuid',uuid,'dataprops',dataprops);
 
 %% error values
 proptrue = mdl.data.props;
@@ -138,5 +150,76 @@ mdlextra = var_names(ocubotype,ocuboseed1,ocuboseed2,genseed,errmetrics,rmse,mae
 
 % rng('shuffle'); %to prevent getting '10' as the seed
 % pause(5)
+
+
+
+        %load 5dof
+        fname = 'Kim2011_Fe_oct_GBE.mat'; %produced via Kim2oct.m
+        addpathdir({fname})
+        S = load(fname);
+        
+        %extract
+        fivetmp = S.five;
+        qtmp = vertcat(fivetmp.q);
+        nAtmp = vertcat(fivetmp.nA);
+        
+        %get random IDs
+        npts = size(qtmp,1);
+        id1 = randi(npts,ndatapts,1);
+        id2 = randi(npts,npredpts,1);
+        
+        %5dof parameters (randomly sampled from Kim Fe GBs)
+        five.q = qtmp(id1,:);
+        five.nA = nAtmp(id1,:);
+        
+        %five2
+        five2.q = qtmp(id2,:);
+        five2.nA = nAtmp(id2,:);  
+
+
+
+   NV.inputtype char {mustBeMember(NV.inputtype,{'5dof','octonion'})} = '5dof'
+
+
+inputtype = NV.inputtype;
+'o',o,'o2',o2,
+
+
+        switch inputtype
+            case 'octonion'
+                %octonions
+                o = otmp(id1,:);
+                o2 = otmp(id2,:);
+                
+            case '5dof'
+                o = [];
+                o2 = [];
+        end
+
+
+        switch inputtype
+            case 'octonion'
+                %convert to octonions
+                o = GBfive2oct(five);
+                o2 = GBfive2oct(five2);
+                
+            case '5dof'
+                o = [];
+                o2 = [];
+        end
+
+switch inputtype
+    case '5dof'
+        %unpack
+        qm = vertcat(five.q);
+        nA = vertcat(five.nA);
+        qm2 = vertcat(five2.q);
+        nA2 = vertcat(five2.nA);
+        
+    case 'octonion'
+        [qm,nA,qm2,nA2]=deal([]);
+end
+
+
 
 %}
