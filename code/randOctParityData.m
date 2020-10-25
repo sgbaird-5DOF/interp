@@ -3,16 +3,16 @@ clear; close all
 %loop through different combinations of parameters using random,
 %octochorically sampled octonions
 addpathdir({'var_names.m','writeparfile.m','walltimefns'})
-runtype = 'full'; %'test','full'
-nreps = 10; % number of runs or repetitions
+runtype = 'test'; %'test','full'
+nreps = 1; % number of runs or repetitions
 
 %make sure the parameters here correspond with the input to "pars" below
 switch runtype
     case 'test'
-        ndatapts = [100 388 500 1000]; % 5000 10000 20000 50000];
-        npredpts = 10000;
+        ndatapts = [100]; % 5000 10000 20000 50000];
+        npredpts = 1000;
         method = {'avg'}; % 'sphbary', 'pbary', 'gpr', 'sphgpr', 'nn', 'avg'
-        datatype = {'kim'};
+        datatype = {'brk'};
         
     case 'full'
         ndatapts = [100 388 500 1000 5000 10000 20000 50000];
@@ -22,18 +22,19 @@ switch runtype
 end
 
 %comment (no spaces, used in filename)
-comment = 'paper-data2';
+% comment = 'paper-data2';
+comment = 'test';
 % comment = 'idw-test-3pt5deg';
 
 % job unique identifier
 % juuid = get_uuid();
 
 % job submission environment
-env = 'slurm'; %'slurm', 'local'
+env = 'local'; %'slurm', 'local'
 T = true;
 F = false;
 %whether to skip running the jobs and just compile results
-dryrunQ = F;
+dryrunQ = T;
 disp(['env = ' env])
 
 if strcmp(env,'slurm') && dryrunQ
@@ -100,7 +101,7 @@ if ~dryrunQ
     pars = var_names(ndatapts,npredpts,method,cores,datatype); %**ADD ALL PARAMETERS HERE** (see runtype switch statement)
     %function to execute and output arguments from function
     execfn = @(ndatapts,npredpts,method) ...
-        interp5DOF_setup(ndatapts,npredpts,method,'datatype',datatype); %**NAMES NEED TO MATCH PARS FIELDS** (see above)
+        interp5DOF_setup(ndatapts,npredpts,method,datatype); %**NAMES NEED TO MATCH PARS FIELDS** (see above)
     argoutnames = {'ypred','interpfn','mdl','mdlpars'};
     %i.e. [propOut,interpfn,mdl,mdlpars] = interp5DOF_setup(ndatapts,npredpts,method,'datatype',datatype);
     
