@@ -1,5 +1,6 @@
 %split apply & find groups
-fname = 'gitID-76fca8c_uuID-f51500cd_paper-data.mat';
+% fname = 'gitID-76fca8c_uuID-f51500cd_paper-data.mat';
+fname = 'gitID-396aaa2_uuID-6816f860_paper-data2.mat';
 files = dir(fullfile('**',fname));
 fpath = fullfile(files(1).folder,files(1).name);
 load(fpath);
