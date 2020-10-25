@@ -19,7 +19,8 @@ inputtype = NV.inputtype;
 
 switch datatype
     case 'kim'
-        addpathdir()
+        addpathdir('')
+        
     case 'brk'
         %random 5dof parameters
         five = get_five(ndatapts);
@@ -64,8 +65,8 @@ disp(['RMSE = ' num2str(rmse) ' J/m^2'])
 disp(['MAE = ' num2str(mae) ' J/m^2'])
 
 %% repackage model and parameters
-mdlparsextra = var_names(genseed,errmetrics,rmse,mae);
-mdlextra = var_names(genseed,errmetrics,rmse,mae,seedstruct);
+mdlparsextra = var_names(genseed,errmetrics,rmse,mae,datatype);
+mdlextra = var_names(genseed,errmetrics,rmse,mae,seedstruct,datatype);
 
 %function to concatenate structures with all different fields
 structcat = @(S1,S2) table2struct([struct2table(S1,'AsArray',true),struct2table(S2,'AsArray',true)]);
