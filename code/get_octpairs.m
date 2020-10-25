@@ -3,7 +3,6 @@ arguments
 	pts(:,8) double {mustBeSqrt2Norm}
 	savename string = 'temp.mat'
 	NV.o2addQ(1,1) logical = false
-	NV.plotQ(1,1) logical = false
 	NV.pgnum(1,1) double = 32
 	NV.wtol(1,1) double = 1e-12
     NV.fiveref = []
@@ -54,7 +53,7 @@ end
 disp('get_octpairs ')
 npts = size(pts,1);
 orefrep = repmat(oref,npts,1);
-[~,octvtx] = GBdist4(orefrep,pts,32,'norm',NV.wtol,true);
+[~,octvtx] = GBdist4(orefrep,pts,NV.pgnum,'norm',NV.wtol,true);
 
 %check if multiple octonions found (rare, have only seen once ever out of
 %tens of thousands 2020-08-17, otherwise might indicate an error)
@@ -76,17 +75,6 @@ octvtx = vertcat(octvtx{:});
 if NV.o2addQ
     %add reference octonion
 	octvtx = [oref; octvtx];
-end
-
-if NV.plotQ
-    % compute 5DOF representation
-    five = GBoct2five(octvtx,true);
-    figure
-	plotFZrodriguez_vtx();
-	hold on
-    t = num2cell(q2rod(disorientation(vertcat(five.q),'cubic')),1);
-	plot3(t{:},'*')
-	title(['disQ == ' int2str(disQ)])
 end
 
 %save data
@@ -467,5 +455,20 @@ end
 % load('misFZfeatures.mat','qlist')
 
 fnames = {'PGnames.mat','olist.mat','misFZfeatures.mat'};
+
+
+
+	NV.plotQ(1,1) logical = false
+
+if NV.plotQ
+    % compute 5DOF representation
+    five = GBoct2five(octvtx,true);
+    figure
+	plotFZrodriguez_vtx();
+	hold on
+    t = num2cell(q2rod(disorientation(vertcat(five.q),'cubic')),1);
+	plot3(t{:},'*')
+	title(['disQ == ' int2str(disQ)])
+end
 
 %}
