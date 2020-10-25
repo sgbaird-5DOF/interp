@@ -1,4 +1,4 @@
-function [ypred,interpfn,mdl,mdlpars] = interp5DOF(qm,nA,propList,qm2,nA2,method,NV)
+function [ypred,interpfn,mdl,mdlpars] = interp5DOF(qm,nA,propList,qm2,nA2,method,pgnum,NV)
 arguments
     qm %input misorientation quaternions
     nA %input BP normals
@@ -6,6 +6,7 @@ arguments
     qm2 %query misorientations
     nA2 %query BP normals
     method char {mustBeMember(method,{'gpr','sphgpr','pbary','sphbary','idw','nn','avg'})} = 'gpr'
+    pgnum(1,1) double = 32 %m-3m (i.e. m\overbar{3}m) FCC symmetry default
     NV.databary = [] %for use with bary methods
     NV.facetIDs = [] %for use with bary methods
     NV.dataprops = [] %user-specified "true" values for error calculations
@@ -178,7 +179,7 @@ else
     otmp = GBfive2oct(qm,nA);
 end
 wtol = 1e-6;
-[o,oref] = get_octpairs(otmp,'wtol',wtol);
+[o,oref] = get_octpairs(otmp,'wtol',wtol,'pgnum',pgnum);
 nmeshpts = size(o,1);
 
 %query points
@@ -189,7 +190,7 @@ else
     queryinput = '5dof';
     otmp2 = GBfive2oct(qm2,nA2);
 end
-[o2,oref2] = get_octpairs(otmp2,'wtol',wtol);
+[o2,oref2] = get_octpairs(otmp2,'wtol',wtol,'pgnum',pgnum);
 ndatapts = size(o2,1);
 
 if ~ismembertol(oref,oref2,'ByRows',true)
@@ -215,11 +216,12 @@ o = normr(o);
 o2 = normr(o2);
 [a,usv] = proj_down([o;o2],projtol,'zeroQ',zeroQ);
 
+d = size(a,2);
 %projected points
-if size(a,2) == 7
+if d <= 7
     ppts = proj_down(o,projtol,usv,'zeroQ',zeroQ);
 	ppts2 = proj_down(o2,projtol,usv,'zeroQ',zeroQ);
-else
+else 
     error("Input doesn't have degenerate dimension or has too few (i.e. check input data), or try reducing proj_down tolerance input (tol)")
 end
 
@@ -235,6 +237,7 @@ data.pts = o2;
 data.ppts = ppts2;
 data.npts = ndatapts;
 
+%data property values
 if isempty(NV.dataprops)
     if NV.brkQ
         for i = 1:data.npts
@@ -528,8 +531,8 @@ switch method
         %
         % variables to define:
         %   propOut - interpolated values
-        %   mdl - struct containing model variables
-        %   mdlpars - struct containing model parameters
+        %   mdlspec - struct containing model-specific variables
+        %   mdlparsspec - struct containing model-specific parameters
         %
         % update the documentation
         %
