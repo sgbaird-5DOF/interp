@@ -1,10 +1,11 @@
-function [ypred,interpfn,mdl,mdlpars] = interp5DOF_setup(ndatapts,npredpts,method,uuid,inputtype)
+function [ypred,interpfn,mdl,mdlpars] = interp5DOF_setup(ndatapts,npredpts,method,datatype,NV)
 arguments
    ndatapts
    npredpts
    method = 'gpr'
-   uuid = get_uuid()
-   inputtype char {mustBeMember(inputtype,{'5dof','octonion'})} = '5dof'
+   datatype char {mustBeMember(datatype,{'brk','kim'})} = 'brk'
+   NV.uuid = get_uuid()
+   NV.inputtype char {mustBeMember(NV.inputtype,{'5dof','octonion'})} = '5dof'
 end
 %INTERP5DOF_SETUP  setup for interpolating five-degree-of-freedom property
 %data using random octochorically sampled octonions
@@ -12,9 +13,18 @@ end
 %% setup
 addpathdir({'cu2qu.m','q2rod.m','qmult.m','get_ocubo.m'})
 
-%random 5dof parameters
-five = get_five(ndatapts);
-five2 = get_five(npredpts);
+%unpack
+uuid = NV.uuid;
+inputtype = NV.inputtype;
+
+switch datatype
+    case 'kim'
+        addpathdir()
+    case 'brk'
+        %random 5dof parameters
+        five = get_five(ndatapts);
+        five2 = get_five(npredpts);
+end
 
 %convert to octonions
 o = GBfive2oct(five);
