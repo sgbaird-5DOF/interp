@@ -178,6 +178,7 @@ else
     predinput = '5dof';
     otmp = GBfive2oct(qm,nA);
 end
+%symmetrization
 wtol = 1e-6;
 [o,oref] = get_octpairs(otmp,'wtol',wtol,'pgnum',pgnum);
 nmeshpts = size(o,1);
@@ -190,9 +191,11 @@ else
     queryinput = '5dof';
     otmp2 = GBfive2oct(qm2,nA2);
 end
+%symmetrization
 [o2,oref2] = get_octpairs(otmp2,'wtol',wtol,'pgnum',pgnum);
 ndatapts = size(o2,1);
 
+%make sure that reference octonions are identical within tolerance
 if ~ismembertol(oref,oref2,'ByRows',true)
     disp(['oref  == ' num2str(oref)])
     disp(['oref2 == ' num2str(oref2)])
