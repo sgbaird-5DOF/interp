@@ -14,22 +14,28 @@ folder = files(1).folder;
 
 %% parity plot
 methodlist = {'pbary','gpr','idw','nn'};
+datatypelist = {'brk','kim'};
 sgtitleQ = false;
-for nmeshpts = [388 10000 50000]
-    %extract parity and IDs
-    tbl3 = mdlparstbl(ismember(mdlparstbl.method,methodlist) & mdlparstbl.nmeshpts==nmeshpts,:);
-    [G3,ID3] = findgroups(tbl3.method);
-    parity3 = splitapply(@(x){x(1)},tbl3.parity,G3);
-    
-    %plotting
-    multiparity(parity3,ID3,'hex','titleQ',true)
-    
-    %extra
-    if sgtitleQ
-        sgtitle(['nmeshpts = ' int2str(nmeshpts)])
+for datatype = datatypelist
+    for nmeshpts = [388 10000 50000]
+        %extract parity and IDs
+        tbl3 = mdlparstbl(...
+            ismember(mdlparstbl.method,methodlist) & ...
+            ismember(mdlparstbl.datatype,datatype) & ...
+            mdlparstbl.nmeshpts==nmeshpts,:);
+        [G3,ID3] = findgroups(tbl3.method);
+        parity3 = splitapply(@(x){x(1)},tbl3.parity,G3);
+        
+        %plotting
+        multiparity(parity3,ID3,'hex','titleQ',true)
+        
+        %extra
+        if sgtitleQ
+            sgtitle(['nmeshpts = ' int2str(nmeshpts)])
+        end
+        
+        savefigpng(folder,[datatype 'parity' int2str(nmeshpts)]);
     end
-    
-    savefigpng(folder,['brkparity',int2str(nmeshpts)]);
 end
 
 %% errors
@@ -37,7 +43,7 @@ methodlist = {'pbary','gpr','idw','nn','avg'};
 
 multixyplots(mdlparstbl,methodlist,'nmeshpts',{'rmse','mae'},2,1,'ymin',0,'lgdloc','southwest')
 %saving
-savefigpng(folder,'brkerror')
+savefigpng(folder,[datatype 'error'])
 
 %% timing
 methodlist = {{'pbary','gpr'},{'idw','nn','avg'}};
