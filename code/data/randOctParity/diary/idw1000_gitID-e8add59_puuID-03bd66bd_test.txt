@@ -1,0 +1,84 @@
+method = idw
+get_octpairs 
+  0  5 10 15 20 25 30 35 40 45 50 55 60 65 70 75 80 85 90 95data\temp.mat
+get_octpairs 
+  0  5 10 15 20 25 30 35 40 45 50 55 60 65 70 75 80 85 90 95data\temp.mat
+nmeshpts = 1000, ndatapts = 1000
+[Warning: Working directory not clean (i.e. uncommitted/unpushed) files exist. Use !git commit -am "<message>", then !git push] 
+[> In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('get_gitcommit', 'C:\Users\sterg\Documents\GitHub\infer\code\interp\code\MATslurm\code\get_gitcommit.m', 15)" style="font-weight:bold">get_gitcommit</a> (<a href="matlab: opentoline('C:\Users\sterg\Documents\GitHub\infer\code\interp\code\MATslurm\code\get_gitcommit.m',15,0)">line 15</a>)
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('interp5DOF', 'C:\Users\sterg\Documents\GitHub\infer\code\interp\code\interp5DOF.m', 271)" style="font-weight:bold">interp5DOF</a> (<a href="matlab: opentoline('C:\Users\sterg\Documents\GitHub\infer\code\interp\code\interp5DOF.m',271,0)">line 271</a>)
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('interp5DOF_setup', 'C:\Users\sterg\Documents\GitHub\infer\code\interp\code\interp5DOF_setup.m', 68)" style="font-weight:bold">interp5DOF_setup</a> (<a href="matlab: opentoline('C:\Users\sterg\Documents\GitHub\infer\code\interp\code\interp5DOF_setup.m',68,0)">line 68</a>)
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('randOctParityData>@(ndatapts,npredpts,method)interp5DOF_setup(ndatapts,npredpts,method,datatype,''pgnum'',pgnum)', 'C:\Users\sterg\Documents\GitHub\infer\code\interp\code\randOctParityData.m', 103)" style="font-weight:bold">randOctParityData>@(ndatapts,npredpts,method)interp5DOF_setup(ndatapts,npredpts,method,datatype,'pgnum',pgnum)</a> (<a href="matlab: opentoline('C:\Users\sterg\Documents\GitHub\infer\code\interp\code\randOctParityData.m',103,0)">line 103</a>)
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('exec_argfn', 'C:\Users\sterg\Documents\GitHub\infer\code\interp\code\MATslurm\code\exec_argfn.m', 50)" style="font-weight:bold">exec_argfn</a> (<a href="matlab: opentoline('C:\Users\sterg\Documents\GitHub\infer\code\interp\code\MATslurm\code\exec_argfn.m',50,0)">line 50</a>)
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('exec_combs', 'C:\Users\sterg\Documents\GitHub\infer\code\interp\code\MATslurm\code\exec_combs.m', 64)" style="font-weight:bold">exec_combs</a> (<a href="matlab: opentoline('C:\Users\sterg\Documents\GitHub\infer\code\interp\code\MATslurm\code\exec_combs.m',64,0)">line 64</a>)
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('randOctParityData', 'C:\Users\sterg\Documents\GitHub\infer\code\interp\code\randOctParityData.m', 130)" style="font-weight:bold">randOctParityData</a> (<a href="matlab: opentoline('C:\Users\sterg\Documents\GitHub\infer\code\interp\code\randOctParityData.m',130,0)">line 130</a>)] 
+RMSE = 0.11813 J/m^2
+MAE = 0.088378 J/m^2
+<a href="matlab: opentoline('C:\Users\sterg\Documents\GitHub\infer\code\interp\code\interp5DOF_setup.m',94,1)">94  </a>mdlpars = structvertcat(mdlparspre,mdlpars,mdlparsextra);
+mdlparspre
+
+mdlparspre = 
+
+  <a href="matlab:helpPopup struct" style="font-weight:bold">struct</a> with fields:
+
+    datatype: 'brk'
+
+mdlpars
+
+mdlpars = 
+
+  <a href="matlab:helpPopup struct" style="font-weight:bold">struct</a> with fields:
+
+          method: 'idw'
+         projtol: 1.0000e-04
+           zeroQ: 0
+       starttime: 26-Oct-2020 15:22:23
+        nmeshpts: 1000
+        ndatapts: 1000
+          ncores: 6
+       gitcommit: 'e8add59'
+            uuid: 'd2bc40af'
+       predinput: '5dof'
+      queryinput: '5dof'
+           projQ: 1
+            oref: [0.7319 0.6330 0.2523 -0.0025 0.0939 -0.8641 0.3277 -0.3704]
+           oref2: [0.7319 0.6330 0.2523 -0.0025 0.0939 -0.8641 0.3277 -0.3704]
+            nnmu: 6.4838
+         nnsigma: 1.6714
+      symruntime: 3.8385
+         runtime: 0.0378
+          parity: [1×1 struct]
+               L: 2
+               r: 0.1988
+           nints: 1000
+      numnonints: 0
+    int_fraction: 1
+
+mdparsextra
+{Unrecognized function or variable 'mdparsextra'.
+} 
+mdlparsextra
+
+mdlparsextra = 
+
+  <a href="matlab:helpPopup struct" style="font-weight:bold">struct</a> with fields:
+
+       genseed: 48841
+    errmetrics: [1×1 struct]
+          rmse: 0.1181
+           mae: 0.0884
+
+if system_dependent('IsDebugMode')==1, dbquit all; end
+try open('structvertcat'); catch edit('structvertcat'); end
+randOctParityData
+env = local
+dryrunQ = 0
+savecatQ = 1
+metaQ = 1
+default comment: test. Continue (y) or override (n)? y
+[Warning: Working directory not clean (i.e. uncommitted/unpushed) files exist. Use !git commit -am "<message>", then !git push] 
+[> In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('get_gitcommit', 'C:\Users\sterg\Documents\GitHub\infer\code\interp\code\MATslurm\code\get_gitcommit.m', 15)" style="font-weight:bold">get_gitcommit</a> (<a href="matlab: opentoline('C:\Users\sterg\Documents\GitHub\infer\code\interp\code\MATslurm\code\get_gitcommit.m',15,0)">line 15</a>)
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('writeparfile', 'C:\Users\sterg\Documents\GitHub\infer\code\interp\code\MATslurm\code\writeparfile.m', 124)" style="font-weight:bold">writeparfile</a> (<a href="matlab: opentoline('C:\Users\sterg\Documents\GitHub\infer\code\interp\code\MATslurm\code\writeparfile.m',124,0)">line 124</a>)
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('randOctParityData', 'C:\Users\sterg\Documents\GitHub\infer\code\interp\code\randOctParityData.m', 112)" style="font-weight:bold">randOctParityData</a> (<a href="matlab: opentoline('C:\Users\sterg\Documents\GitHub\infer\code\interp\code\randOctParityData.m',112,0)">line 112</a>)] 
+max_walltime = 59 minutes
+saving parameter file
