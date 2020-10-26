@@ -111,9 +111,9 @@ savefigpng(folder,['knnhist',int2str(npts)])
 
 %% barycentric methods
 proj_down_test(1)
-savefigpng(folder,'baryRemoveDeg')
+savefigpng(folder,'bary-remove-deg')
 proj_down_test(2)
-savefigpng(folder,'baryDelaunay')
+savefigpng(folder,'bary-delaunay')
 
 %% CODE GRAVEYARD
 %{
