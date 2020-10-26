@@ -9,10 +9,6 @@ arguments
    NV.YScale char {mustBeMember(NV.YScale,{'log','linear'})} = 'linear'
    NV.xmin double = []
    NV.ymin double = []
-   NV.lgdloc char = 'best'
-   NV.charlblQ(1,1) logical = false
-   NV.charlbl char = ''
-   NV.charlblnum double = []
 end
 
 ax = gca;
@@ -39,12 +35,7 @@ if ~isempty(NV.ymin)
     ax.YLim(1) = NV.ymin;
 end
 
-legend(xytypes,'Location',NV.lgdloc,'FontSize',9)
-
-% label for figure tiles, e.g. '(a)', '(b)', '(c)', '(d)'
-if NV.charlblQ && ~isempty(NV.charlbl)
-    text(0.025,0.95,NV.charlbl,'Units','normalized','FontSize',12)
-end
+legend(xytypes,'Location','best')
 
 end
 

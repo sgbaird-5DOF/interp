@@ -13,7 +13,7 @@ arguments
     NV.modelparsspec = struct()
     NV.brkQ(1,1) logical = true %whether to compute BRK values as ytrue
     NV.gpropts = struct.empty %for use with gpr methods 'gpr' or 'sphgpr'
-    NV.r double = [] %for use with 'idw' method, alternatively set to [] for automatic estimation
+    NV.r double = deg2rad(2.5) %for use with 'idw' method, alternatively set to [] for mean/stddev estimation
     NV.uuid(1,8) char = get_uuid() %unique ID associated with this interpolation run
     NV.o = [] %input octonions, specify these or qm/nA pairs
     NV.o2 = [] %query octonions, specify these or qm2/nA2 pairs
@@ -170,7 +170,6 @@ disp(['method = ' method])
 addpathdir({'normr.m','GB5DOF_setup.m','cu2qu.m','q2rod.m','GBfive2oct.m','correctdis.m','interp_gpr.m'})
 
 %% convert to octonions & symmetrize
-tic
 %predictor points
 if isempty(qm) && isempty(nA) && ~isempty(NV.o)
     predinput = 'octonion';
@@ -202,9 +201,6 @@ if ~ismembertol(oref,oref2,'ByRows',true)
     disp(['oref2 == ' num2str(oref2)])
     warning('oref ~= oref2')
 end
-symruntime = toc;
-
-[~,~,nnmu,nnsigma] = get_knn(pts,'omega',1);
 
 disp(['nmeshpts = ' int2str(nmeshpts) ', ndatapts = ' int2str(ndatapts)])
 
@@ -272,11 +268,10 @@ gitcommit = get_gitcommit();
 %% package into struct
 %general model variables 
 mdlgen = var_names(brkQ,method,projtol,zeroQ,usv,starttime,ncores,...
-    gitcommit,uuid,predinput,queryinput,projQ,oref,oref2,nnmu,nnsigma,symruntime);
+    gitcommit,uuid,predinput,queryinput,projQ,oref,oref2);
 %general parameters
 mdlparsgen = var_names(brkQ,method,projtol,zeroQ,starttime,nmeshpts,...
-    ndatapts,ncores,gitcommit,uuid,predinput,queryinput,projQ,oref,oref2,nnmu,nnsigma,...
-    symruntime);
+    ndatapts,ncores,gitcommit,uuid,predinput,queryinput,projQ,oref,oref2);
 
 %% helper functions
 %function to concatenate structures with all different fields (no common)

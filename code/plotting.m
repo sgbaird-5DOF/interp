@@ -1,16 +1,11 @@
 %split apply & find groups
 % fname = 'gitID-76fca8c_uuID-f51500cd_paper-data.mat';
-% fname = 'gitID-396aaa2_uuID-6816f860_paper-data2.mat';
-fname = 'gitID-f585733_uuID-edf2fcc7_paper-data2.mat';
+fname = 'gitID-396aaa2_uuID-6816f860_paper-data2.mat';
 files = dir(fullfile('**',fname));
 fpath = fullfile(files(1).folder,files(1).name);
 load(fpath);
 
 slurmQ = 0;
-
-%saving
-files = dir(fullfile('**','interp5DOF-paper','figures'));
-folder = files(1).folder;
 
 %% parity plot
 methodlist = {'pbary','gpr','idw','nn'};
@@ -29,21 +24,23 @@ for nmeshpts = [388 10000 50000]
         sgtitle(['nmeshpts = ' int2str(nmeshpts)])
     end
     
-    savefigpng(folder,['brkparity',int2str(nmeshpts)]);
+    %saving
+    files = dir(fullfile('**','interp5DOF-paper','figures'));
+    folder = files(1).folder;
+%     savefigpng(folder,['brkparity',int2str(nmeshpts)]);
 end
 
 %% errors
 methodlist = {'pbary','gpr','idw','nn','avg'};
 
-multixyplots(mdlparstbl,methodlist,'nmeshpts',{'rmse','mae'},2,1,'ymin',0,'lgdloc','southwest')
+multixyplots(mdlparstbl,methodlist,'nmeshpts',{'rmse','mae'},2,1)
 %saving
 savefigpng(folder,'brkerror')
 
 %% timing
-methodlist = {{'pbary','gpr'},{'idw','nn','avg'}};
 tbl3 = mdlparstbl(mdlparstbl.ncores==24,:);
 [G3,ID3] = findgroups(tbl3.method);
-multixyplots(mdlparstbl,methodlist,'nmeshpts',{'runtime'},2,1,'YScale','linear','yunits','s','lgdloc','north')
+multixyplots(mdlparstbl,methodlist,'nmeshpts',{'runtime'},1,1,'YScale','log','yunits','s')
 %saving
 savefigpng(folder,'runtime');
 
@@ -77,25 +74,14 @@ end
 % axis equal
 
 %% distance histogram
-addpathdir('gmat2q.m')
 seed = 10;
 rng(seed);
 npts = 50000;
 five = get_five(npts);
 o = GBfive2oct(five);
 pts = get_octpairs(o);
-nnhist(pts,'omega');
+[~,mu,sigma,D] = nnhist(pts,'omega');
 savefigpng(folder,['disthist',int2str(npts)])
-
-%% knn distances
-[nnpts,D,mu,sigma] = get_knn(pts,'omega',100);
-fig = figure;
-fig.Position = [460.2 245 498.4 472.8];
-errorbar(mu,sigma)
-xlabel('k-th NN')
-ylbl = 'average \omega (deg)';
-ylabel(ylbl)
-savefigpng(folder,['knnhist',int2str(npts)])
 
 %% CODE GRAVEYARD
 %{
