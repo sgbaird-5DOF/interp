@@ -48,6 +48,12 @@ savefigpng(folder,[datatype 'error'])
 %% timing
 methodlist = {{'pbary','gpr'},{'idw','nn','avg'}};
 tbl3 = mdlparstbl(mdlparstbl.ncores==24,:);
+%{ 
+whether to multiple pbary by # cores since uses parfor (although rest
+might use multiple cores via vectorization..)?
+%}
+% ids = ismember(tbl3.method,'pbary');
+% tbl3(ids,'runtime') = tbl3(ids,'runtime').*tbl3(ids,'cores');
 [G3,ID3] = findgroups(tbl3.method);
 multixyplots(mdlparstbl,methodlist,'nmeshpts',{'runtime'},2,1,'YScale','linear','yunits','s','lgdloc','north')
 %saving
@@ -102,6 +108,12 @@ xlabel('k-th NN')
 ylbl = 'average \omega (deg)';
 ylabel(ylbl)
 savefigpng(folder,['knnhist',int2str(npts)])
+
+%% barycentric methods
+proj_down_test(1)
+savefigpng(folder,'baryRemoveDeg')
+proj_down_test(2)
+savefigpng(folder,'baryDelaunay')
 
 %% CODE GRAVEYARD
 %{
