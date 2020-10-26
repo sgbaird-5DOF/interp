@@ -29,7 +29,7 @@ comment = 'set3';
 % comment = 'idw-test-3pt5deg';
 
 % job submission environment
-env = 'local'; %'slurm', 'local'
+env = 'slurm'; %'slurm', 'local'
 T = true;
 F = false;
 %whether to skip running the jobs and just compile results
