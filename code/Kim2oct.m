@@ -59,9 +59,6 @@ el = 90-pol; %convert polar angle to elevation angle
 [x,y,z] = sph2cart(az,el,ones(npts,1));
 nAlist = [x y z];
 
-%package q & nA pairs
-five = struct('q',qlist,'nA',nAlist);
-
 %get octonion mesh
 meshListFull = GBfive2oct(qlist,nAlist);
 
@@ -79,6 +76,9 @@ propList = propList(ids);
 %number of points after averaging
 npts2 = size(meshList,1);
 disp(['# pts (after repeat and GBE=0 removal): ' int2str(npts2)])
+
+%package q & nA pairs
+five = struct('q',qlist(ids,:),'nA',nAlist(ids,:));
 
 %% write files
 %write octonions and GB Energy to .txt file

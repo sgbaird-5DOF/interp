@@ -7,3 +7,4 @@
 code/data/*.mat
 code/data/randOctParity/*.mat
 code/data/randOctParity/pcombs/*.mat
+code/bugtest.m

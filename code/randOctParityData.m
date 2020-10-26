@@ -9,16 +9,18 @@ nreps = 1; % number of runs or repetitions
 %make sure the parameters here correspond with the input to "pars" below
 switch runtype
     case 'test'
-        ndatapts = [100]; % 5000 10000 20000 50000];
+        ndatapts = [1000]; % 5000 10000 20000 50000];
         npredpts = 1000;
-        method = {'avg'}; % 'sphbary', 'pbary', 'gpr', 'sphgpr', 'nn', 'avg'
+        method = {'idw','gpr'}; % 'sphbary', 'pbary', 'gpr', 'sphgpr', 'nn', 'avg'
         datatype = {'brk'};
+        pgnum = 32; %m-3m (i.e. m\overbar{3}m) FCC symmetry default for e.g. Ni
         
     case 'full'
         ndatapts = [100 388 500 1000 5000 10000 20000 50000];
         npredpts = 10000;
         method = {'sphgpr','gpr','sphbary','pbary','nn','avg','idw'}; % 'sphbary', 'pbary', 'gpr', 'sphgpr', 'nn', 'avg'
         datatype = {'brk','kim'};
+        pgnum = 32; %m-3m (i.e. m\overbar{3}m) FCC symmetry default for e.g. Ni
 end
 
 %comment (no spaces, used in filename)
@@ -26,15 +28,12 @@ end
 comment = 'test';
 % comment = 'idw-test-3pt5deg';
 
-% job unique identifier
-% juuid = get_uuid();
-
 % job submission environment
 env = 'local'; %'slurm', 'local'
 T = true;
 F = false;
 %whether to skip running the jobs and just compile results
-dryrunQ = T;
+dryrunQ = F;
 disp(['env = ' env])
 
 if strcmp(env,'slurm') && dryrunQ
@@ -98,10 +97,10 @@ savepathfn = @(method,ndatapts,gitcommit,puuid) fullfile(savefolder,savenamefn(m
 if ~dryrunQ
     %% parameter file setup
     %parameters
-    pars = var_names(ndatapts,npredpts,method,cores,datatype); %**ADD ALL PARAMETERS HERE** (see runtype switch statement)
+    pars = var_names(ndatapts,npredpts,method,cores,datatype,pgnum); %**ADD ALL PARAMETERS HERE** (see runtype switch statement)
     %function to execute and output arguments from function
     execfn = @(ndatapts,npredpts,method) ...
-        interp5DOF_setup(ndatapts,npredpts,method,datatype); %**NAMES NEED TO MATCH PARS FIELDS** (see above)
+        interp5DOF_setup(ndatapts,npredpts,method,datatype,'pgnum',pgnum); %**NAMES NEED TO MATCH PARS FIELDS** (see above)
     argoutnames = {'ypred','interpfn','mdl','mdlpars'};
     %i.e. [propOut,interpfn,mdl,mdlpars] = interp5DOF_setup(ndatapts,npredpts,method,'datatype',datatype);
     
@@ -164,7 +163,7 @@ switch env
                 loadvars = {'ypred','mdl','mdlpars','interpfn'};
                 S = load(fpath,loadvars{:});
                 % if you get a "variable not loaded here" warning, you may need to
-                % delete a previous erroneous file you generated with the
+                % delete a previous erroneous data file you generated with the
                 % wrong variable names. Typically shouldn't be an issue
                 % though..
                 [ypredlist{i},mdllist{i},mdlparslist{i},interpfnlist{i}] = ...
@@ -295,4 +294,9 @@ memfn = @(method,ndatapts) ...
 
 diaryfolder = fullfile('data','randOctParity','diary');
 savefolder = fullfile('data','randOctParity','pcombs');
+
+
+% job unique identifier
+% juuid = get_uuid();
+
 %}

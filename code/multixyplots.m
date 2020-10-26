@@ -3,7 +3,7 @@ arguments
     tbl
     xytypes cell = {'pbary','gpr','idw','nn'}
     xtype char = 'nmeshpts'
-    ytypes(1,:) cell = {'rmse','mae'}
+    ytypes(1,:) = {'rmse','mae'}
     nrows(1,1) double = []
     ncols(1,1) double = []
     NV.yunits char = 'J/m^2'
@@ -11,9 +11,24 @@ arguments
     NV.YScale char {mustBeMember(NV.YScale,{'log','linear'})} = 'linear'
     NV.xmin double = []
     NV.ymin double = []
+    NV.lgdloc char = 'best'
+    NV.charlblQ(1,1) logical = true
 end
 
-ntypes = length(ytypes);
+if iscell(xytypes{1})
+    ntypes = length(xytypes);
+    loopvar = 'xytypes';
+elseif length(ytypes) > 1
+    ntypes = length(ytypes);
+    loopvar = 'ytypes';
+else
+    loopvar = 'ytypes';
+    ntypes = 1;
+end
+
+if ~iscell(ytypes)
+    ytypes = {ytypes};
+end
 
 fig = figure;
 switch ntypes
@@ -27,19 +42,41 @@ end
 
 if ~isempty(nrows) && ~isempty(ncols)
     assert(nrows*ncols >= ntypes,['too many ytypes(' int2str(nrows*ncols) ')/(' int2str(ntypes) ')too few tiles'])
-    tiledlayout(nrows,ncols);
+        tiledlayout(nrows,ncols,'TileSpacing','compact','Padding','compact');
 else
-    tiledlayout;
+    tiledlayout('TileSpacing','compact','Padding','compact');
+end
+
+if NV.charlblQ
+    alphabet = ('a':'z').';
+    chars = num2cell(alphabet(1:ntypes));
+    chars = chars.';
+    charlbl = strcat('(',chars,')');
+else
+    charlbl = repelem({''},ntypes,1);
 end
 
 for i = 1:ntypes
-    ytype = ytypes{i};
+    switch loopvar
+        case 'ytypes'
+            ytype = ytypes{i};
+        case 'xytypes'
+            subxytypes = xytypes{i};
+    end
+    
     ax1 = nexttile;
     hold(ax1,'on')
     ax1.XScale = NV.XScale;
     ax1.YScale = NV.YScale;
+    NV.charlbl = charlbl{i};
+    NV.charlblnum = i;
     NVpairs = namedargs2cell(NV);
-    xyplots(tbl,xytypes,xtype,ytype,NVpairs{:})
+    switch loopvar
+        case 'ytypes'
+            xyplots(tbl,xytypes,xtype,ytype,NVpairs{:})
+        case 'xytypes'
+            xyplots(tbl,subxytypes,xtype,ytypes{1},NVpairs{:})
+    end
 end
 
 end
