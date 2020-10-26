@@ -12,7 +12,7 @@ end
 %default radius or user-supplied radius
 if isempty(r)
     pdX = pdist(X);
-    mu = mean(pdX)/sqrt(2);
+    mu = mean(pdX)/sqrt(2); %note: since alen = ~0.5*omega, mu in octonion is ~2x this (2*mean(pdX)/sqrt(2))
     r = mu;
     clear pdX
 end
