@@ -12,7 +12,7 @@ switch runtype
         ndatapts = [1000]; % 5000 10000 20000 50000];
         npredpts = 1000;
         method = {'idw','gpr'}; % 'sphbary', 'pbary', 'gpr', 'sphgpr', 'nn', 'avg'
-        datatype = {'brk'};
+        datatype = {'brk','kim'};
         pgnum = 32; %m-3m (i.e. m\overbar{3}m) FCC symmetry default for e.g. Ni
         
     case 'full'
@@ -99,8 +99,8 @@ if ~dryrunQ
     %parameters
     pars = var_names(ndatapts,npredpts,method,cores,datatype,pgnum); %**ADD ALL PARAMETERS HERE** (see runtype switch statement)
     %function to execute and output arguments from function
-    execfn = @(ndatapts,npredpts,method) ...
-        interp5DOF_setup(ndatapts,npredpts,method,datatype,'pgnum',pgnum); %**NAMES NEED TO MATCH PARS FIELDS** (see above)
+    execfn = @(ndatapts,npredpts,method,datatype,pgnum) ... **NAMES NEED TO MATCH PARS FIELDS** (see above)
+        interp5DOF_setup(ndatapts,npredpts,method,datatype,'pgnum',pgnum); %**NAMES NEED TO MATCH PARS FIELDS AND EXECFN ARGUMENTS**
     argoutnames = {'ypred','interpfn','mdl','mdlpars'};
     %i.e. [propOut,interpfn,mdl,mdlpars] = interp5DOF_setup(ndatapts,npredpts,method,'datatype',datatype);
     
