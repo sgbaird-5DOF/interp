@@ -25,7 +25,7 @@ end
 
 %comment (no spaces, used in filename)
 % comment = 'paper-data2';
-comment = 'set3';
+comment = 'set4';
 % comment = 'idw-test-3pt5deg';
 
 % job submission environment
