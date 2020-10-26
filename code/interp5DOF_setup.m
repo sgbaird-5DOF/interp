@@ -2,7 +2,7 @@ function [ypred,interpfn,mdl,mdlpars] = interp5DOF_setup(ndatapts,npredpts,metho
 arguments
    ndatapts
    npredpts
-   method = 'gpr'
+   method char = 'gpr'
    datatype char {mustBeMember(datatype,{'brk','kim'})} = 'brk'
    NV.pgnum(1,1) double = 32 %m-3m (i.e. m\overbar{3}m) FCC symmetry default
    NV.uuid = get_uuid()
@@ -20,6 +20,8 @@ uuid = NV.uuid;
 %seed
 seedstruct = rng;
 genseed = seedstruct.Seed;
+
+disp(['datatype = ' datatype])
 
 switch datatype
     case 'kim'
