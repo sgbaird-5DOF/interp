@@ -1,10 +1,7 @@
-function [ax,mu,sigma,D,nnpts,idx] = nnhist(pts,dtype,K,NV)
+function [ax,mu,sigma,D,nnpts,idx] = nnhist(pts,dtype)
 arguments
-    pts
-    dtype char {mustBeMember(dtype,{'omega','norm','alen'})} = 'omega'
-    K(1,1) double {mustBePositive,mustBeInteger} = 1
-    NV.plotQ(1,1) logical = true
-    NV.dispQ(1,1) logical = true
+	pts
+	dtype char {mustBeMember(dtype,{'omega','norm','alen'})} = 'omega'
 end
 %--------------------------------------------------------------------------
 % Author(s): Sterling Baird
@@ -12,7 +9,7 @@ end
 % Date: 2020-07-27
 %
 % Description: nearest neighbor distance histogram
-%
+% 
 % Inputs:
 %  pts - rows of points (euclidean)
 %
@@ -34,83 +31,41 @@ end
 % Notes:
 %  *
 %--------------------------------------------------------------------------
-%get distances
+%get nearest neighbor IDs and euclidean distances
+[idxtmp,Dtmp] = knnsearch(pts,pts,'K',2);
+idx = idxtmp(:,2);
 
-[nnpts,D,mu,sigma,idx] = get_knn(pts,dtype,K,'dispQ',NV.dispQ);
+%nearest neighbor pts
+nnpts = pts(idx,:);
 
-if NV.plotQ
-    figure
+figure
+
+%get distances for plotting
+switch dtype
+	case 'omega'
+		Drad = get_omega(pts,nnpts);
+		D = rad2deg(Drad);
+		xlbl = 'NN \omega (deg)';
+	case 'norm'
+		D = Dtmp(:,2);
+		xlbl = 'NN euclidean octonion distance';
+	case 'alen' %general arc length formula
+		Drad = real(acos(dot(pts,nnpts,2)));
+		D = rad2deg(Drad);
+		xlbl = 'NN \omega = cos^{-1}(p_1 \cdot p_2) (deg)';
 end
 
-if NV.plotQ
-    %% plotting
-    switch dtype
-        case 'omega'
-            xlbl = 'NN \omega (deg)';
-        case 'norm'
-            xlbl = 'NN euclidean octonion distance';
-        case 'alen' %general arc length formula
-            xlbl = 'NN \omega = cos^{-1}(p_1 \cdot p_2) (deg)';
-    end
-    xlabel(xlbl)
-    ylabel('counts')
-    hold on
-    for k = 1:K
-        histfit(D{k});
-    end
-    hold off
-else
-    ax = [];
-end
+mu = mean(D);
+sigma = std(D);
+disp(['mu = ' num2str(mu) ', sigma = ' num2str(sigma)])
 
-end
+%plotting
+ax = histfit(D);
+xlabel(xlbl)
+ylabel('counts')
+
 %---------------------------------CODE GRAVEYARD---------------------------
 %{
 % pts = uniquetol(pts,'ByRows',true);
-
-    %get distances for plotting
-    switch dtype
-        case 'omega'
-            Drad = get_omega(pts,nnpts);
-            D = rad2deg(Drad);
-            xlbl = 'NN \omega (deg)';
-        case 'norm'
-            D = Dtmp(:,2);
-            xlbl = 'NN euclidean octonion distance';
-        case 'alen' %general arc length formula
-            Drad = real(acos(dot(pts,nnpts,2)));
-            D = rad2deg(Drad);
-            xlbl = 'NN \omega = cos^{-1}(p_1 \cdot p_2) (deg)';
-    end
-
-
-[mu,sigma] = deal(zeros(K,1));
-D = cell(K,1);
-
-for k = 1:K
-    idx = idxtmp(:,k+1);
-    
-    %nearest neighbor pts
-    nnpts = pts(idx,:);
-    
-    %get distances for plotting
-    switch dtype
-        case 'omega'
-            Drad = get_omega(pts,nnpts);
-            D{k} = rad2deg(Drad);
-        case 'norm'
-            D{k} = Dtmp(:,2);
-        case 'alen' %general arc length formula
-            Drad = real(acos(dot(pts,nnpts,2)));
-            D{k} = rad2deg(Drad);
-    end
-    
-    mu(k) = mean(D{k});
-    sigma(k) = std(D{k});
-    
-    if NV.dispQ
-        disp(['nn: ' int2str(k) ', mu = ' num2str(mu(k)) ', sigma = ' num2str(sigma(k))])
-    end
-end
 
 %}

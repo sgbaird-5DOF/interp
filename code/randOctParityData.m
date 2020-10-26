@@ -9,9 +9,9 @@ nreps = 1; % number of runs or repetitions
 %make sure the parameters here correspond with the input to "pars" below
 switch runtype
     case 'test'
-        ndatapts = [1000]; % 5000 10000 20000 50000];
+        ndatapts = [100]; % 5000 10000 20000 50000];
         npredpts = 1000;
-        method = {'idw'}; % 'sphbary', 'pbary', 'gpr', 'sphgpr', 'nn', 'avg'
+        method = {'avg'}; % 'sphbary', 'pbary', 'gpr', 'sphgpr', 'nn', 'avg'
         datatype = {'brk'};
         
     case 'full'
@@ -25,6 +25,9 @@ end
 % comment = 'paper-data2';
 comment = 'test';
 % comment = 'idw-test-3pt5deg';
+
+% job unique identifier
+% juuid = get_uuid();
 
 % job submission environment
 env = 'local'; %'slurm', 'local'
@@ -161,7 +164,7 @@ switch env
                 loadvars = {'ypred','mdl','mdlpars','interpfn'};
                 S = load(fpath,loadvars{:});
                 % if you get a "variable not loaded here" warning, you may need to
-                % delete a previous erroneous data file you generated with the
+                % delete a previous erroneous file you generated with the
                 % wrong variable names. Typically shouldn't be an issue
                 % though..
                 [ypredlist{i},mdllist{i},mdlparslist{i},interpfnlist{i}] = ...
@@ -292,9 +295,4 @@ memfn = @(method,ndatapts) ...
 
 diaryfolder = fullfile('data','randOctParity','diary');
 savefolder = fullfile('data','randOctParity','pcombs');
-
-
-% job unique identifier
-% juuid = get_uuid();
-
 %}
