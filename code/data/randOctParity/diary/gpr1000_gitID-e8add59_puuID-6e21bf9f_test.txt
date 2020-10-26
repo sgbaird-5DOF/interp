@@ -1,0 +1,159 @@
+method = gpr
+get_octpairs 
+  0  5 10 15 20 25 30 35 40 45 50 55 60 65 70 75 80 85 90 95data\temp.mat
+get_octpairs 
+  0  5 10 15 20 25 30 35 40 45 50 55 60 65 70 75 80 85 90 95data\temp.mat
+nmeshpts = 1000, ndatapts = 1000
+[Warning: Working directory not clean (i.e. uncommitted/unpushed) files exist. Use !git commit -am "<message>", then !git push] 
+[> In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('get_gitcommit', 'C:\Users\sterg\Documents\GitHub\infer\code\interp\code\MATslurm\code\get_gitcommit.m', 15)" style="font-weight:bold">get_gitcommit</a> (<a href="matlab: opentoline('C:\Users\sterg\Documents\GitHub\infer\code\interp\code\MATslurm\code\get_gitcommit.m',15,0)">line 15</a>)
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('interp5DOF', 'C:\Users\sterg\Documents\GitHub\infer\code\interp\code\interp5DOF.m', 271)" style="font-weight:bold">interp5DOF</a> (<a href="matlab: opentoline('C:\Users\sterg\Documents\GitHub\infer\code\interp\code\interp5DOF.m',271,0)">line 271</a>)
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('interp5DOF_setup', 'C:\Users\sterg\Documents\GitHub\infer\code\interp\code\interp5DOF_setup.m', 68)" style="font-weight:bold">interp5DOF_setup</a> (<a href="matlab: opentoline('C:\Users\sterg\Documents\GitHub\infer\code\interp\code\interp5DOF_setup.m',68,0)">line 68</a>)
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('randOctParityData>@(ndatapts,npredpts,method)interp5DOF_setup(ndatapts,npredpts,method,datatype,''pgnum'',pgnum)', 'C:\Users\sterg\Documents\GitHub\infer\code\interp\code\randOctParityData.m', 103)" style="font-weight:bold">randOctParityData>@(ndatapts,npredpts,method)interp5DOF_setup(ndatapts,npredpts,method,datatype,'pgnum',pgnum)</a> (<a href="matlab: opentoline('C:\Users\sterg\Documents\GitHub\infer\code\interp\code\randOctParityData.m',103,0)">line 103</a>)
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('exec_argfn', 'C:\Users\sterg\Documents\GitHub\infer\code\interp\code\MATslurm\code\exec_argfn.m', 50)" style="font-weight:bold">exec_argfn</a> (<a href="matlab: opentoline('C:\Users\sterg\Documents\GitHub\infer\code\interp\code\MATslurm\code\exec_argfn.m',50,0)">line 50</a>)
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('exec_combs', 'C:\Users\sterg\Documents\GitHub\infer\code\interp\code\MATslurm\code\exec_combs.m', 64)" style="font-weight:bold">exec_combs</a> (<a href="matlab: opentoline('C:\Users\sterg\Documents\GitHub\infer\code\interp\code\MATslurm\code\exec_combs.m',64,0)">line 64</a>)
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('randOctParityData', 'C:\Users\sterg\Documents\GitHub\infer\code\interp\code\randOctParityData.m', 130)" style="font-weight:bold">randOctParityData</a> (<a href="matlab: opentoline('C:\Users\sterg\Documents\GitHub\infer\code\interp\code\randOctParityData.m',130,0)">line 130</a>)] 
+
+gprMdl = 
+
+  <a href="matlab: helpPopup RegressionGP">RegressionGP</a>
+             ResponseName: 'Y'
+    CategoricalPredictors: []
+        ResponseTransform: 'none'
+          NumObservations: 1000
+           KernelFunction: 'SquaredExponential'
+        KernelInformation: [1×1 struct]
+            BasisFunction: 'Constant'
+                     Beta: 1.1184
+                    Sigma: 0.0554
+        PredictorLocation: []
+           PredictorScale: []
+                    Alpha: [1000×1 double]
+         ActiveSetVectors: [1000×8 double]
+            PredictMethod: 'Exact'
+            ActiveSetSize: 1000
+                FitMethod: 'Exact'
+          ActiveSetMethod: 'Random'
+        IsActiveSetVector: [1000×1 logical]
+            LogLikelihood: 1.0143e+03
+         ActiveSetHistory: []
+           BCDInformation: []
+
+
+  <a href="matlab: properties('RegressionGP')">Properties</a>, <a href="matlab: methods('RegressionGP')">Methods</a>
+
+<a href="matlab: opentoline('C:\Users\sterg\Documents\GitHub\infer\code\interp\code\structhorzcat.m',31,1)">31  </a>T = cellfun(@(S) struct2table(S,'AsArray',true),S,'UniformOutput',false);
+S
+
+S =
+
+  1×2 <a href="matlab:helpPopup cell" style="font-weight:bold">cell</a> array
+
+    {1×1 struct}    {1×1 struct}
+
+S{1}
+
+ans = 
+
+  <a href="matlab:helpPopup struct" style="font-weight:bold">struct</a> with fields:
+
+        method: 'gpr'
+       projtol: 1.0000e-04
+         zeroQ: 0
+           usv: [1×1 struct]
+     starttime: 26-Oct-2020 15:33:16
+        ncores: 6
+     gitcommit: 'e8add59'
+          uuid: '8fa31c78'
+     predinput: '5dof'
+    queryinput: '5dof'
+         projQ: 0
+          oref: [0.7319 0.6330 0.2523 -0.0025 0.0939 -0.8641 0.3277 -0.3704]
+         oref2: [0.7319 0.6330 0.2523 -0.0025 0.0939 -0.8641 0.3277 -0.3704]
+          nnmu: 6.5766
+       nnsigma: 1.6655
+    symruntime: 3.8339
+         ypred: [1000×1 double]
+        mdlcmd: @(cgprMdl,X2)predict(cgprMdl,X2)
+      interpfn: @(qm2,nA2)interp_gpr(cgprMdl,qm2,nA2,projtol,usv)
+       runtime: 0.8841
+          mesh: [1×1 struct]
+          data: [1×1 struct]
+        parity: [1×1 struct]
+
+S{2}
+
+ans = 
+
+  <a href="matlab:helpPopup struct" style="font-weight:bold">struct</a> with fields:
+
+              cgprMdl: [1×1 classreg.learning.regr.CompactRegressionGP]
+              gpropts: {'PredictMethod'  'exact'}
+                  ysd: [1000×1 double]
+                 yint: [1000×2 double]
+    KernelInformation: [1×1 struct]
+
+T = cellfun(@(S) struct2table(S,'AsArray',true),S,'UniformOutput',false);
+T
+
+T =
+
+  1×2 <a href="matlab:helpPopup cell" style="font-weight:bold">cell</a> array
+
+    {1×23 table}    {1×5 table}
+
+T{1}
+
+ans =
+
+  1×23 <a href="matlab:helpPopup table" style="font-weight:bold">table</a>
+
+    <strong>method</strong>     <strong>projtol</strong>    <strong>zeroQ</strong>        <strong>usv</strong>              <strong>starttime</strong>          <strong>ncores</strong>     <strong>gitcommit</strong>         <strong>uuid</strong>        <strong>predinput</strong>    <strong>queryinput</strong>    <strong>projQ</strong>        <strong>oref</strong>           <strong>oref2</strong>         <strong>nnmu</strong>     <strong>nnsigma</strong>    <strong>symruntime</strong>         <strong>ypred</strong>                       <strong>mdlcmd</strong>                                       <strong>interpfn</strong>                          <strong>runtime</strong>        <strong>mesh</strong>            <strong>data</strong>           <strong>parity</strong>   
+    <strong>_______</strong>    <strong>_______</strong>    <strong>_____</strong>    <strong>____________</strong>    <strong>____________________</strong>    <strong>______</strong>    <strong>___________</strong>    <strong>____________</strong>    <strong>_________</strong>    <strong>__________</strong>    <strong>_____</strong>    <strong>____________</strong>    <strong>____________</strong>    <strong>______</strong>    <strong>_______</strong>    <strong>__________</strong>    <strong>_______________</strong>    <strong>__________________________________</strong>    <strong>___________________________________________________</strong>    <strong>_______</strong>    <strong>____________</strong>    <strong>____________</strong>    <strong>____________</strong>
+
+    {'gpr'}    0.0001     false    [1×1 struct]    26-Oct-2020 15:33:16      6       {'e8add59'}    {'8fa31c78'}    {'5dof'}      {'5dof'}     false    [1×8 double]    [1×8 double]    6.5766    1.6655       3.8339      {1000×1 double}    {@(cgprMdl,X2)predict(cgprMdl,X2)}    {@(qm2,nA2)interp_gpr(cgprMdl,qm2,nA2,projtol,usv)}    0.88412    [1×1 struct]    [1×1 struct]    [1×1 struct]
+
+horzcat
+
+ans =
+
+     []
+
+T{:}
+
+ans =
+
+  1×23 <a href="matlab:helpPopup table" style="font-weight:bold">table</a>
+
+    <strong>method</strong>     <strong>projtol</strong>    <strong>zeroQ</strong>        <strong>usv</strong>              <strong>starttime</strong>          <strong>ncores</strong>     <strong>gitcommit</strong>         <strong>uuid</strong>        <strong>predinput</strong>    <strong>queryinput</strong>    <strong>projQ</strong>        <strong>oref</strong>           <strong>oref2</strong>         <strong>nnmu</strong>     <strong>nnsigma</strong>    <strong>symruntime</strong>         <strong>ypred</strong>                       <strong>mdlcmd</strong>                                       <strong>interpfn</strong>                          <strong>runtime</strong>        <strong>mesh</strong>            <strong>data</strong>           <strong>parity</strong>   
+    <strong>_______</strong>    <strong>_______</strong>    <strong>_____</strong>    <strong>____________</strong>    <strong>____________________</strong>    <strong>______</strong>    <strong>___________</strong>    <strong>____________</strong>    <strong>_________</strong>    <strong>__________</strong>    <strong>_____</strong>    <strong>____________</strong>    <strong>____________</strong>    <strong>______</strong>    <strong>_______</strong>    <strong>__________</strong>    <strong>_______________</strong>    <strong>__________________________________</strong>    <strong>___________________________________________________</strong>    <strong>_______</strong>    <strong>____________</strong>    <strong>____________</strong>    <strong>____________</strong>
+
+    {'gpr'}    0.0001     false    [1×1 struct]    26-Oct-2020 15:33:16      6       {'e8add59'}    {'8fa31c78'}    {'5dof'}      {'5dof'}     false    [1×8 double]    [1×8 double]    6.5766    1.6655       3.8339      {1000×1 double}    {@(cgprMdl,X2)predict(cgprMdl,X2)}    {@(qm2,nA2)interp_gpr(cgprMdl,qm2,nA2,projtol,usv)}    0.88412    [1×1 struct]    [1×1 struct]    [1×1 struct]
+
+
+ans =
+
+  1×5 <a href="matlab:helpPopup table" style="font-weight:bold">table</a>
+
+                        <strong>cgprMdl</strong>                                    <strong>gpropts</strong>                      <strong>ysd</strong>               <strong>yint</strong>          <strong>KernelInformation</strong>
+    <strong>________________________________________________</strong>    <strong>______________________________</strong>    <strong>_______________</strong>    <strong>_______________</strong>    <strong>_________________</strong>
+
+    {1×1 classreg.learning.regr.CompactRegressionGP}    {'PredictMethod'}    {'exact'}    {1000×1 double}    {1000×2 double}      [1×1 struct]   
+
+Sout = horzcat(T{:});
+opentoline('C:\Users\sterg\Documents\GitHub\infer\code\interp\code\interp5DOF_setup.m',91,0)
+matlab.internal.language.introspective.errorDocCallback('structhorzcat')
+opentoline('C:\Users\sterg\Documents\GitHub\infer\code\interp\code\interp5DOF_setup.m',91,0)
+T = cellfun(@(S) struct2table(S,'AsArray',true),S,'UniformOutput',false);
+if system_dependent('IsDebugMode')==1, dbquit all; end
+randOctParityData
+env = local
+dryrunQ = 0
+savecatQ = 1
+metaQ = 1
+default comment: test. Continue (y) or override (n)? y
+[Warning: Working directory not clean (i.e. uncommitted/unpushed) files exist. Use !git commit -am "<message>", then !git push] 
+[> In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('get_gitcommit', 'C:\Users\sterg\Documents\GitHub\infer\code\interp\code\MATslurm\code\get_gitcommit.m', 15)" style="font-weight:bold">get_gitcommit</a> (<a href="matlab: opentoline('C:\Users\sterg\Documents\GitHub\infer\code\interp\code\MATslurm\code\get_gitcommit.m',15,0)">line 15</a>)
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('writeparfile', 'C:\Users\sterg\Documents\GitHub\infer\code\interp\code\MATslurm\code\writeparfile.m', 124)" style="font-weight:bold">writeparfile</a> (<a href="matlab: opentoline('C:\Users\sterg\Documents\GitHub\infer\code\interp\code\MATslurm\code\writeparfile.m',124,0)">line 124</a>)
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('randOctParityData', 'C:\Users\sterg\Documents\GitHub\infer\code\interp\code\randOctParityData.m', 112)" style="font-weight:bold">randOctParityData</a> (<a href="matlab: opentoline('C:\Users\sterg\Documents\GitHub\infer\code\interp\code\randOctParityData.m',112,0)">line 112</a>)] 
+max_walltime = 59 minutes
+saving parameter file

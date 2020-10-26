@@ -4,6 +4,7 @@ arguments
    npredpts
    method = 'gpr'
    datatype char {mustBeMember(datatype,{'brk','kim'})} = 'brk'
+   NV.pgnum(1,1) double = 32 %m-3m (i.e. m\overbar{3}m) FCC symmetry default
    NV.uuid = get_uuid()
 end
 %INTERP5DOF_SETUP  setup for interpolating five-degree-of-freedom property
@@ -13,6 +14,7 @@ end
 addpathdir({'cu2qu.m','q2rod.m','qmult.m','get_ocubo.m'})
 
 %unpack
+pgnum = NV.pgnum;
 uuid = NV.uuid;
 
 %seed
@@ -64,7 +66,7 @@ nA2 = vertcat(five2.nA);
 
 %% interpolation
 [ypred,interpfn,mdl,mdlpars] = interp5DOF(qm,nA,propList,qm2,nA2,method,...
-    'uuid',uuid,'dataprops',dataprops);
+    'pgnum',pgnum,'uuid',uuid,'dataprops',dataprops);
 
 %% error values
 proptrue = mdl.data.props;
@@ -77,15 +79,17 @@ disp(['RMSE = ' num2str(rmse) ' J/m^2'])
 disp(['MAE = ' num2str(mae) ' J/m^2'])
 
 %% repackage model and parameters
-mdlparsextra = var_names(genseed,errmetrics,rmse,mae,datatype);
-mdlextra = var_names(genseed,errmetrics,rmse,mae,seedstruct,datatype);
+% variables and parameters to prepend
+mdlpre = var_names(datatype);
+mdlparspre = var_names(datatype);
 
-%function to concatenate structures with all different fields
-structcat = @(S1,S2) table2struct([struct2table(S1,'AsArray',true),struct2table(S2,'AsArray',true)]);
+% variables and parameters to append
+mdlparsextra = var_names(genseed,errmetrics,rmse,mae);
+mdlextra = var_names(genseed,errmetrics,rmse,mae,seedstruct);
 
 %concatenation
-mdlpars = structcat(mdlpars,mdlparsextra);
-mdl = structcat(mdl,mdlextra);
+mdlpars = structhorzcat(mdlparspre,mdlpars,mdlparsextra);
+mdl = structhorzcat(mdlpre,mdl,mdlextra);
 end
 
 
@@ -221,5 +225,11 @@ switch inputtype
 end
 
 
+%function to concatenate structures with all different fields
+structcat = @(S1,S2,S3) ...
+    table2struct([...
+    struct2table(S1,'AsArray',true),...
+    struct2table(S2,'AsArray',true),...
+    struct2table(S3,'AsArray',true)]); %distinct from structvertcat.m
 
 %}

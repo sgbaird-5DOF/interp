@@ -12,13 +12,8 @@ end
 %default radius or user-supplied radius
 if isempty(r)
     pdX = pdist(X);
-    sig = std(pdX);
-    mu = mean(pdX);
-    if sig > 0
-        r = mu-2*sig;
-    else
-        r = mu;
-    end
+    mu = mean(pdX)/sqrt(2); %note: since alen = ~0.5*omega, mu in octonion is ~2x this (2*mean(pdX)/sqrt(2))
+    r = mu;
     clear pdX
 end
 
@@ -64,4 +59,17 @@ end
 % yavg = mean(y);
 % yq(isnan(yq)) = yavg;
 % yq(yq <= eps) = yavg;
+
+if isempty(r)
+    pdX = pdist(X);
+%     sig = std(pdX);
+    mu = mean(pdX);
+%     if sig > 0
+%         r = mu-2*sig;
+%     else
+        r = mu;
+%     end
+    clear pdX
+end
+
 %}
