@@ -4,7 +4,7 @@ clear; close all
 %octochorically sampled octonions
 addpathdir({'var_names.m','writeparfile.m','walltimefns'})
 runtype = 'test'; %'test','full'
-nreps = 5; % number of runs or repetitions
+nreps = 10; % number of runs or repetitions
 
 %make sure the parameters here correspond with the input to "pars" below
 switch runtype
@@ -160,7 +160,9 @@ switch env
             
             if metaQ
                 S = load(fpath);
-                mdlparslist{i} = S;
+                if any(strcmp(S.datatype,datatype))
+                    mdlparslist{i} = S;
+                end
             else
                 loadvars = {'ypred','mdl','mdlpars','interpfn'};
                 S = load(fpath,loadvars{:});
@@ -168,11 +170,22 @@ switch env
                 % delete a previous erroneous data file you generated with the
                 % wrong variable names. Typically shouldn't be an issue
                 % though..
-                [ypredlist{i},mdllist{i},mdlparslist{i},interpfnlist{i}] = ...
+                if any(strcmp(S.mdl.datatype,datatype))
+                    [ypredlist{i},mdllist{i},mdlparslist{i},interpfnlist{i}] = ...
                     deal(S.ypred, S.mdl, S.mdlpars, S.interpfn);
+                end
             end
             %             Slist{i} = S;
         end
+        
+        emptyIDs = cellfun(@isempty,mdlparslist);
+        if metaQ
+            [mdlparslist{emptyIDs}] = deal([]);
+        else
+            [ypredlist{emptyIDs},mdllist{emptyIDs},mdlparslist{emptyIDs},interpfnlist{emptyIDs}] = ...
+            deal([]);
+        end
+            
         
         if ~metaQ
             %concatenate models and parameters
