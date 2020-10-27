@@ -44,7 +44,8 @@ for n = 1:ntbls
     t = tbl{n}; %unpack
     
     t = changestruct(t,'cell', @(x) num2cell(x,2), @(x) ~isscalar(x)); %cell vector to cell scalar
-    t = changestruct(t,'char', @string); %char vector to string
+    t = changestruct(t,'cell', @(x) categorical(cellstr(x{1})), @(x) iscell(x) && isscalar(x) && (isstring(x{1}) || ischar(x{1})));
+    t = changestruct(t,'char', @categorical); %char vector to string
     t = changestruct(t,'struct', @(x) num2cell(x,2)); %struct to {struct} (cell scalar)
     t = changestruct(t,'logical', @double);
     t = changestruct(t,'uint32', @double);
