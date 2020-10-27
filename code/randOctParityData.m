@@ -9,9 +9,9 @@ nreps = 10; % number of runs or repetitions
 %make sure the parameters here correspond with the input to "pars" below
 switch runtype
     case 'test'
-        ndatapts = [1000]; % 5000 10000 20000 50000];
-        npredpts = 1000;
-        method = {'idw','gpr'}; % 'sphbary', 'pbary', 'gpr', 'sphgpr', 'nn', 'avg'
+        ndatapts = [100 388 500 1000 5000 10000 20000 50000]; % 5000 10000 20000 50000];
+        npredpts = 10000;
+        method = {'idw'}; % 'sphbary', 'pbary', 'gpr', 'sphgpr', 'nn', 'avg'
         datatype = {'brk','kim'};
         pgnum = 32; %m-3m (i.e. m\overbar{3}m) FCC symmetry default for e.g. Ni
         
@@ -25,7 +25,7 @@ end
 
 %comment (no spaces, used in filename)
 % comment = 'paper-data2';
-comment = 'set4';
+comment = 'set4-idw';
 % comment = 'idw-test-3pt5deg';
 
 % job submission environment
