@@ -9,9 +9,9 @@ nreps = 5; % number of runs or repetitions
 %make sure the parameters here correspond with the input to "pars" below
 switch runtype
     case 'test'
-        ndatapts = [50000]; % 5000 10000 20000 50000];
-        npredpts = 10000;
-        method = {'pbary'}; % 'sphbary', 'pbary', 'gpr', 'sphgpr', 'nn', 'avg'
+        ndatapts = [1000]; % 5000 10000 20000 50000];
+        npredpts = 1000;
+        method = {'gpr'}; % 'sphbary', 'pbary', 'gpr', 'sphgpr', 'nn', 'avg'
         datatype = {'kim'};
         pgnum = 32; %m-3m (i.e. m\overbar{3}m) FCC symmetry default for e.g. Ni
         
@@ -29,11 +29,11 @@ comment = 'set4';
 % comment = 'idw-test-3pt5deg';
 
 % job submission environment
-env = 'slurm'; %'slurm', 'local'
+env = 'local'; %'slurm', 'local'
 T = true;
 F = false;
 %whether to skip running the jobs and just compile results
-dryrunQ = F;
+dryrunQ = T;
 disp(['env = ' env])
 
 if strcmp(env,'slurm') && dryrunQ
@@ -62,6 +62,8 @@ switch env
         if ~dryrunQ
             p = gcp;
             cores = p.NumWorkers;
+        else
+            cores = 1;
         end
 end
 
@@ -94,10 +96,10 @@ end
     
 savepathfn = @(method,ndatapts,gitcommit,puuid) fullfile(savefolder,savenamefn(method,ndatapts,gitcommit,puuid));
 
+%parameters
+pars = var_names(ndatapts,npredpts,method,cores,datatype,pgnum); %**ADD ALL PARAMETERS HERE** (see runtype switch statement)
 if ~dryrunQ
     %% parameter file setup
-    %parameters
-    pars = var_names(ndatapts,npredpts,method,cores,datatype,pgnum); %**ADD ALL PARAMETERS HERE** (see runtype switch statement)
     %function to execute and output arguments from function
     execfn = @(ndatapts,npredpts,method,datatype,pgnum) ... **NAMES NEED TO MATCH PARS FIELDS** (see above)
         interp5DOF_setup(ndatapts,npredpts,method,datatype,'pgnum',pgnum); %**NAMES NEED TO MATCH PARS FIELDS AND EXECFN ARGUMENTS**
@@ -181,6 +183,8 @@ switch env
         
         mdlparscat = structvertcat(mdlparslist{:});
         mdlparstbl = struct2table(mdlparscat,'AsArray',true);
+        
+        mdlparstbl = parfilter(mdlparstbl,pars);
         
         %         gitcommit = get_gitcommit();
         %save models and parameters
