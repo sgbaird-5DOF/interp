@@ -169,10 +169,10 @@ switch env
                 % wrong variable names. Typically shouldn't be an issue
                 % though..
                 [ypredlist{i},mdllist{i},mdlparslist{i},interpfnlist{i}] = ...
-                    deal(S.ypred, S.mdl, S.mdlpars, S.interpfn);
+                deal(S.ypred, S.mdl, S.mdlpars, S.interpfn);
             end
             %             Slist{i} = S;
-        end            
+        end
         
         if ~metaQ
             %concatenate models and parameters
