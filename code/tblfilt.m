@@ -4,7 +4,7 @@ names = fieldnames(pars);
 for i = 1:length(names)
     name = names{i};
     if ismember(name,tbl.Properties.VariableNames)
-        ids = all(tbl.(name) == pars.(name),2);
+        ids = any(tbl.(name) == pars.(name),2);
         tbl = tbl(ids,:);
     end
 end
