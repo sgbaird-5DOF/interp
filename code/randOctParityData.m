@@ -184,7 +184,7 @@ switch env
         mdlparscat = structvertcat(mdlparslist{:});
         mdlparstbl = struct2table(mdlparscat,'AsArray',true);
         
-        mdlparstbl = parfilter(mdlparstbl,pars);
+        mdlparstbl = tblfilt(mdlparstbl,pars);
         
         %         gitcommit = get_gitcommit();
         %save models and parameters
