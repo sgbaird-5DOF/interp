@@ -158,9 +158,7 @@ switch env
             
             if metaQ
                 S = load(fpath);
-                if any(strcmp(S.datatype,datatype))
-                    mdlparslist{i} = S;
-                end
+                mdlparslist{i} = S;
             else
                 loadvars = {'ypred','mdl','mdlpars','interpfn'};
                 S = load(fpath,loadvars{:});
@@ -168,22 +166,19 @@ switch env
                 % delete a previous erroneous data file you generated with the
                 % wrong variable names. Typically shouldn't be an issue
                 % though..
-                if any(strcmp(S.mdl.datatype,datatype))
-                    [ypredlist{i},mdllist{i},mdlparslist{i},interpfnlist{i}] = ...
-                    deal(S.ypred, S.mdl, S.mdlpars, S.interpfn);
-                end
+                [ypredlist{i},mdllist{i},mdlparslist{i},interpfnlist{i}] = ...
+                deal(S.ypred, S.mdl, S.mdlpars, S.interpfn);
             end
             %             Slist{i} = S;
         end
         
-        emptyIDs = cellfun(@isempty,mdlparslist);
-        if metaQ
-            [mdlparslist{emptyIDs}] = deal([]);
-        else
-            [ypredlist{emptyIDs},mdllist{emptyIDs},mdlparslist{emptyIDs},interpfnlist{emptyIDs}] = ...
-            deal([]);
-        end
-            
+        %emptyIDs = cellfun(@isempty,mdlparslist);
+        %if metaQ
+        %    [mdlparslist{emptyIDs}] = deal([]);
+        %else
+        %    [ypredlist{emptyIDs},mdllist{emptyIDs},mdlparslist{emptyIDs},interpfnlist{emptyIDs}] = ...
+        %    deal([]);
+        %end
         
         if ~metaQ
             %concatenate models and parameters
