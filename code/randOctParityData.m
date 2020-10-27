@@ -9,10 +9,10 @@ nreps = 10; % number of runs or repetitions
 %make sure the parameters here correspond with the input to "pars" below
 switch runtype
     case 'test'
-        ndatapts = [1000]; % 5000 10000 20000 50000];
-        npredpts = 1000;
-        method = {'gpr'}; % 'sphbary', 'pbary', 'gpr', 'sphgpr', 'nn', 'avg'
-        datatype = {'brk','kim'};
+        ndatapts = [50000]; % 5000 10000 20000 50000];
+        npredpts = 10000;
+        method = {'pbary'}; % 'sphbary', 'pbary', 'gpr', 'sphgpr', 'nn', 'avg'
+        datatype = {'kim'};
         pgnum = 32; %m-3m (i.e. m\overbar{3}m) FCC symmetry default for e.g. Ni
         
     case 'full'
@@ -33,7 +33,7 @@ env = 'local'; %'slurm', 'local'
 T = true;
 F = false;
 %whether to skip running the jobs and just compile results
-dryrunQ = T;
+dryrunQ = F;
 disp(['env = ' env])
 
 if strcmp(env,'slurm') && dryrunQ
@@ -107,7 +107,7 @@ if ~dryrunQ
     %i.e. [propOut,interpfn,mdl,mdlpars] = interp5DOF_setup(ndatapts,npredpts,method,'datatype',datatype);
     
     % walltimefn = @() 300; %can set to constant or to depend on parameters, probably fine when using standby queue
-    walltimefn = @(ndatapts,npredpts,method,cores) get_walltimefn(ndatapts,npredpts,method,cores);
+    walltimefn = @(ndatapts,npredpts,method,cores,datatype) get_walltimefn(ndatapts,npredpts,method,cores,datatype);
     
     %% parameter file
     [parpath, parcombsets, Ntrim, jobwalltimes] = ...
