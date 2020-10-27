@@ -12,7 +12,7 @@ end
 %default radius or user-supplied radius
 if isempty(r)
     [~,~,mu] = get_knn(X,'norm',1);
-    r = mu/sqrt(2); %note: since alen = ~0.5*omega, mu in octonion is ~2x this (2*mean(D)/sqrt(2))
+    r = mu*sqrt(2); %note: since alen = ~0.5*omega, mu in octonion is ~2x this (2*mu*sqrt(2))
 end
 
 pd = pdist2(X,Xq); %pairwise distance matrix
@@ -33,7 +33,7 @@ end
 yq = sum(W.*y)./sum(W);
 
 %assign NN value if no GBs fall into radius for a particular property
-nnIDs = isnan(yq);
+nnIDs = find(isnan(yq));
 nnList = dsearchn(X,Xq(nnIDs,:));
 %assign NN property values
 yq(nnIDs) = y(nnList);
@@ -45,10 +45,11 @@ end
 yq = yq.';
 
 %idw parameters
-nints = length(nnIDs);
+numnonints = length(nnIDs);
 npredpts = size(Xq,1);
-numnonints = npredpts-nints;
+nints = npredpts-numnonints;
 int_fraction = nints/(nints+numnonints);
+disp(['numnonints = ' int2str(numnonints)])
 
 end
 
