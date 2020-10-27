@@ -3,7 +3,7 @@ arguments
     X double %rows of input points
     Xq double %rows of query points
     y(:,1) double %property values
-    r double = [] %radius, if rand(size(X,1)^2) can't fit in memory, be sure to specify
+    r double = [] %radius
     L(1,1) double = 2 %Euclidean or 2-norm
 end
 % IDW inverse-distance weighting interpolation
@@ -11,10 +11,8 @@ end
 
 %default radius or user-supplied radius
 if isempty(r)
-    pdX = pdist(X);
-    mu = mean(pdX)/sqrt(2); %note: since alen = ~0.5*omega, mu in octonion is ~2x this (2*mean(pdX)/sqrt(2))
-    r = mu;
-    clear pdX
+    [~,~,mu] = get_knn(X,'norm',1);
+    r = mu/sqrt(2); %note: since alen = ~0.5*omega, mu in octonion is ~2x this (2*mean(D)/sqrt(2))
 end
 
 pd = pdist2(X,Xq); %pairwise distance matrix
@@ -71,5 +69,12 @@ if isempty(r)
 %     end
     clear pdX
 end
+
+    r double = [] %radius, if rand(size(X,1)^2) can't fit in memory, be sure to specify
+
+%     pdX = pdist(X);
+%     mu = mean(pdX)/sqrt(2);
+%     r = mu;
+%     clear pdX
 
 %}
