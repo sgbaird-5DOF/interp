@@ -30,7 +30,7 @@ for i = 1:nIDs
     else
         t = repelem({''},length(ID));
     end
-    opts = struct('charlbl',charlbl{i},'title',t{i},'scatterOpts',...
+    opts = struct('charlbl',charlbl{i},'title',t(i),'scatterOpts',...
         struct('MarkerEdgeAlpha',0.1),'xlim',NV.xlim,'ylim',NV.ylim);
     if isempty(NV.xlim)
         opts = rmfield(opts,'xlim');

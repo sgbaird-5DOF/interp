@@ -1,10 +1,12 @@
 %split apply & find groups
 % fname = 'gitID-76fca8c_uuID-f51500cd_paper-data.mat';
 % fname = 'gitID-396aaa2_uuID-6816f860_paper-data2.mat';
-fname = 'gitID-f585733_uuID-edf2fcc7_paper-data2.mat';
+% fname = 'gitID-f585733_uuID-edf2fcc7_paper-data2.mat';
+fname = 'gitID-c67a123_uuID-18d21f26_set4.mat';
 files = dir(fullfile('**',fname));
 fpath = fullfile(files(1).folder,files(1).name);
 load(fpath);
+disp('file loaded')
 
 slurmQ = 0;
 
@@ -34,20 +36,23 @@ for datatype = datatypelist
             sgtitle(['nmeshpts = ' int2str(nmeshpts)])
         end
         
-        savefigpng(folder,[datatype 'parity' int2str(nmeshpts)]);
+        savefigpng(folder,[char(datatype) 'parity' int2str(nmeshpts)]);
     end
 end
 
 %% errors
 methodlist = {'pbary','gpr','idw','nn','avg'};
 
-multixyplots(mdlparstbl,methodlist,'nmeshpts',{'rmse','mae'},2,1,'ymin',0,'lgdloc','southwest')
-%saving
-savefigpng(folder,[datatype 'error'])
+for datatype = datatypelist
+    tbltmp = mdlparstbl(mdlparstbl.datatype==datatype,:);
+    multixyplots(tbltmp,methodlist,'nmeshpts',{'rmse','mae'},2,1,'ymin',0,'lgdloc','southwest')
+    %saving
+    savefigpng(folder,[char(datatype) 'error'])
+end
 
 %% timing
 methodlist = {{'pbary','gpr'},{'idw','nn','avg'}};
-tbl3 = mdlparstbl(mdlparstbl.ncores==24,:);
+tbl3 = mdlparstbl(mdlparstbl.ncores==12,:);
 %{ 
 whether to multiple pbary by # cores since uses parfor (although rest
 might use multiple cores via vectorization..)?
