@@ -12,7 +12,7 @@ switch runtype
         ndatapts = [1000]; % 5000 10000 20000 50000];
         npredpts = 1000;
         method = {'gpr'}; % 'sphbary', 'pbary', 'gpr', 'sphgpr', 'nn', 'avg'
-        datatype = {'kim'};
+        datatype = {'brk','kim'};
         pgnum = 32; %m-3m (i.e. m\overbar{3}m) FCC symmetry default for e.g. Ni
         
     case 'full'
@@ -174,14 +174,6 @@ switch env
             %             Slist{i} = S;
         end
         
-        %emptyIDs = cellfun(@isempty,mdlparslist);
-        %if metaQ
-        %    [mdlparslist{emptyIDs}] = deal([]);
-        %else
-        %    [ypredlist{emptyIDs},mdllist{emptyIDs},mdlparslist{emptyIDs},interpfnlist{emptyIDs}] = ...
-        %    deal([]);
-        %end
-        
         if ~metaQ
             %concatenate models and parameters
             mdlcat = structvertcat(mdllist{:});
@@ -310,5 +302,25 @@ savefolder = fullfile('data','randOctParity','pcombs');
 
 % job unique identifier
 % juuid = get_uuid();
+
+
+        emptyIDs = cellfun(@isempty,mdlparslist);
+        if metaQ
+            [mdlparslist{emptyIDs}] = deal([]);
+        else
+            [ypredlist{emptyIDs},mdllist{emptyIDs},mdlparslist{emptyIDs},interpfnlist{emptyIDs}] = ...
+            deal([]);
+        end
+
+
+                if any(strcmp(S.datatype,datatype))
+                    mdlparslist{i} = S;
+                end
+
+
+                if any(strcmp(S.mdl.datatype,datatype))
+                    [ypredlist{i},mdllist{i},mdlparslist{i},interpfnlist{i}] = ...
+                    deal(S.ypred, S.mdl, S.mdlpars, S.interpfn);
+                end
 
 %}
