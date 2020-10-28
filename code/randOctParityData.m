@@ -4,7 +4,7 @@ clear; close all
 %octochorically sampled octonions
 addpathdir({'var_names.m','writeparfile.m','walltimefns'})
 runtype = 'test'; %'test','full'
-nreps = 3; % number of runs or repetitions
+nreps = 1; % number of runs or repetitions
 
 %make sure the parameters here correspond with the input to "pars" below
 switch runtype
@@ -12,7 +12,7 @@ switch runtype
         ndatapts = [10000]; % 5000 10000 20000 50000];
         npredpts = 10000;
         method = {'nn','avg'}; % 'sphbary', 'pbary', 'gpr', 'sphgpr', 'nn', 'avg'
-        datatype = {'kim'};
+        datatype = {'rohrer-Ni'};
         pgnum = 32; %m-3m (i.e. m\overbar{3}m) FCC symmetry default for e.g. Ni
         
     case 'full'
@@ -25,7 +25,7 @@ end
 
 %comment (no spaces, used in filename)
 % comment = 'paper-data2';
-comment = 'kim-test';
+comment = 'rohrer-Ni-test';
 % comment = 'idw-test-3pt5deg';
 
 % job submission environment
