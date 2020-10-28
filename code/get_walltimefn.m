@@ -4,7 +4,7 @@ arguments
     npredpts(1,1) double
     method char {mustBeMember(method,{'sphgpr','gpr','pbary','sphbary','idw','nn','avg'})}
     cores(1,1) double
-    datatype char {mustBeMember(datatype,{'brk','kim'})} = 'brk'
+    datatype char {mustBeMember(datatype,{'brk','kim','rohrer-Ni'})} = 'brk'
 end
 walltimeBuffer = 5;
 
