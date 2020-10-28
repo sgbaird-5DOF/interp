@@ -53,7 +53,9 @@ t=n2c(datatemp2);
 eulist = [phi1 Phi phi2]; %catenate euler angles
 
 %convert to quaternions & cartesian normal pairs
-qlist = eu2qu(eulist,1);
+qlist = eu2qu(eulist,-1); % +1 or -1?
+%convert from active to passive convention?
+qlist = qinv_johnson(qlist);
 el = po2el(po); %convert polar angle to elevation angle
 [x,y,z] = sph2cart(az,el,ones(npts,1));
 nAlist = [x y z];
