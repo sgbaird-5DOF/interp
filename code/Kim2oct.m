@@ -49,13 +49,12 @@ disp(['# pts: ' int2str(npts)])
 %extract 5DOF parameters
 datatemp2 = datatemp(:,1:end-1);
 t=n2c(datatemp2);
-[phi1,Phi,phi2,pol,az] = t{:};
+[phi1,Phi,phi2,po,az] = t{:};
 eulist = [phi1 Phi phi2]; %catenate euler angles
 
 %convert to quaternions & cartesian normal pairs
-%Kim references Bunge notation, so using that convention for rotation conversion
-qlist = eu2qu(eulist,-1);
-el = 90-pol; %convert polar angle to elevation angle
+qlist = eu2qu(eulist,1);
+el = po2el(po); %convert polar angle to elevation angle
 [x,y,z] = sph2cart(az,el,ones(npts,1));
 nAlist = [x y z];
 
@@ -119,5 +118,7 @@ save(fpath(1:end-4),'meshList','propList','five','meshTable')
 %get octonion mesh
 meshListTmp = GBfive2oct(qlist,nAlist);
 meshListFull = get_octpairs(meshListTmp);
+
+%Kim references Bunge notation, so using that convention for rotation conversion
 
 %}
