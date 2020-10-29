@@ -1,3 +1,5 @@
+:warning: This is a modified version of the [original CMU GBO repository](https://github.com/ichesser/GB_octonion_code)
+
 # Overview
 
 This repository contains a set of tutorials for grain boundary octonion computations to accompany the papers: 
