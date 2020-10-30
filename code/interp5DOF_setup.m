@@ -11,7 +11,7 @@ end
 %data using random octochorically sampled octonions
 
 %% setup
-addpathdir({'cu2qu.m','q2rod.m','qmult.m','get_ocubo.m'})
+addpathdir({'cu2qu.m','q2rod.m','qmult.m','get_ocubo.m','get_uuid.m'})
 
 %unpack
 pgnum = NV.pgnum;
