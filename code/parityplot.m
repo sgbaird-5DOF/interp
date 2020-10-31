@@ -20,7 +20,7 @@ arguments
     NV.legend = {'off'}
     NV.Location char = 'northwest'
     NV.cblbl char = 'counts'
-    NV.cbnds(1,2) double = [1 500]
+    NV.cbnds double = []
     NV.cscale char {mustBeMember(NV.cscale,{'log','linear'})} = 'log'
     NV.res(1,1) double = 50
     NV.drawEdges(1,1) logical = 0
@@ -68,7 +68,7 @@ assert(all(size(ypred)==size(yactual)),['y1 [' num2str(size(ypred)) '] and y2 ['
 
 switch plottype
     case 'hex'
-        hexscatter(yactual,ypred,NV.xlim,NV.ylim,'cscale',NV.cscale,'cbnds',[1 500]);
+        hexscatter(yactual,ypred,NV.xlim,NV.ylim,'cscale',NV.cscale,'cbnds',NV.cbnds);
     case 'scatter'
         %% scatter
         if NV.fillQ
@@ -94,13 +94,6 @@ reflineNames = fields(NV.reflineOpts);
 for i = 1:length(reflineNames)
     reflineName = reflineNames{i};
     ax2.(reflineName) = NV.reflineOpts.(reflineName);
-end
-
-if ~isempty(NV.xlim)
-    xlim(NV.xlim)
-end
-if ~isempty(NV.ylim)
-    ylim(NV.ylim)
 end
 
 axis square tight
@@ -131,6 +124,13 @@ end
 % label for figure tiles, e.g. '(a)', '(b)', '(c)', '(d)'
 if ~isempty(NV.charlbl)
     text(0.025,0.95,NV.charlbl,'Units','normalized','FontSize',12)
+end
+
+if ~isempty(NV.xlim)
+    xlim(NV.xlim)
+end
+if ~isempty(NV.ylim)
+    ylim(NV.ylim)
 end
 
 hold off
