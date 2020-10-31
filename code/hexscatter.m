@@ -1,17 +1,17 @@
-function h = hexscatter(xdata, ydata, xlim, ylim, res, drawEdges, showZeros, NV)
+function h = hexscatter(xdata, ydata, xlims, ylims, res, drawEdges, showZeros, NV)
 arguments
-   xdata
-   ydata
-   xlim(1,2) double = [min([xdata(:);ydata(:)]) max([xdata(:);ydata(:)])]
-   ylim(1,2) double = [min([xdata(:);ydata(:)]) max([xdata(:);ydata(:)])]
-   res(1,1) double = 50
-   drawEdges(1,1) logical = 0
-   showZeros(1,1) logical = 0
-   NV.title char = ''
-   NV.charlbl char = ''
-   NV.cblbl char = 'counts'
-   NV.cbnds(1,2) double = [1 500]
-   NV.cscale char {mustBeMember(NV.cscale,{'log','linear'})} = 'log'
+    xdata
+    ydata
+    xlims(1,2) double = [min([xdata(:);ydata(:)]) max([xdata(:);ydata(:)])]
+    ylims(1,2) double = [min([xdata(:);ydata(:)]) max([xdata(:);ydata(:)])]
+    res(1,1) double = 50
+    drawEdges(1,1) logical = 0
+    showZeros(1,1) logical = 0
+    NV.title char = ''
+    NV.charlbl char = ''
+    NV.cblbl char = 'counts'
+    NV.cbnds double = []
+    NV.cscale char {mustBeMember(NV.cscale,{'log','linear'})} = 'log'
 end
 %% h = HEXSCATTER( x, y, ... )
 % Gordon Bean, February 2014
@@ -39,11 +39,11 @@ end
 %  'drawEdges' { false } - if true, edges are drawn around each hexagonal
 %  patch.
 %  'showZeros' { false } - if true, bins with 0 counts are shaded; if
-%  false, only bins with non-zero counts are colored. 
-% 
+%  false, only bins with non-zero counts are colored.
+%
 % h = hexscatter( ... ) returns the object handle to the patch object
 % created.
-% 
+%
 % Examples
 % hexscatter(rand(2000,1), rand(2000,1))
 %
@@ -57,125 +57,129 @@ end
 %         'res', 50, ...
 %         'drawEdges', false, ...
 %         'showZeros', false);
-    
-    if drawEdges
-        ec = 'flat';
-    else
-        ec = 'none';
-    end
-    
-    %% Determine grid
-    xl = xlim;
-    yl = ylim;
-    
-    xbins = linspace(xl(1), xl(2), res);
-    ybins = linspace(yl(1), yl(2), res);
-    dy = diff(ybins([1 2]))*0.5;
-    
-    [X, Y] = meshgrid(xbins, ybins);
-    n = size(X,1);
-    Y(:,1:fix(end/2)*2) = ...
-        Y(:,1:fix(end/2)*2) + repmat([0 dy],[n,fix(n/2)]);
 
-    %% Map points to boxes
-    nix = isnan(xdata) | isnan(ydata);
-    xdata = xdata(~nix);
-    ydata = ydata(~nix);
-    
-    % Which pair of columns?
-    dx = diff(xbins([1 2]));
-    foox = floor((xdata - xbins(1)) ./ dx)+1;
-    foox(foox > length(xbins)) = length(xbins);
-    
-    % Which pair of rows?
-    % Use the first row, which starts without an offset, as the standard
-    fooy = floor((ydata - ybins(1)) ./ diff(ybins([1 2])))+1;
-    fooy(fooy > length(ybins)) = length(ybins);
-    
-    % Which orientation
-    orientation = mod(foox,2) == 1;
+if drawEdges
+    ec = 'flat';
+else
+    ec = 'none';
+end
 
-    % Map points to boxes
-    foo = [xdata - xbins(foox)', ydata - ybins(fooy)'];
+%% Determine grid
+xl = xlims;
+yl = ylims;
 
-    % Which layer
-    layer = foo(:,2) > dy;
+xbins = linspace(xl(1), xl(2), res);
+ybins = linspace(yl(1), yl(2), res);
+dy = diff(ybins([1 2]))*0.5;
 
-    % Convert to block B format
-    toflip = layer == orientation;
-    foo(toflip,1) = dx - foo(toflip,1);
+[X, Y] = meshgrid(xbins, ybins);
+n = size(X,1);
+Y(:,1:fix(end/2)*2) = ...
+    Y(:,1:fix(end/2)*2) + repmat([0 dy],[n,fix(n/2)]);
 
-    foo(layer==1,2) = foo(layer==1,2) - dy;
+%% Map points to boxes
+nix = isnan(xdata) | isnan(ydata);
+xdata = xdata(~nix);
+ydata = ydata(~nix);
 
-    % Find closest corner
-    dist = sqrt(sum(foo.^2,2));
-    dist2 = sqrt(sum(bsxfun(@minus, [dx dy], foo).^2, 2));
+% Which pair of columns?
+dx = diff(xbins([1 2]));
+foox = floor((xdata - xbins(1)) ./ dx)+1;
+foox(foox > length(xbins)) = length(xbins);
 
-    topright = dist > dist2;
+% Which pair of rows?
+% Use the first row, which starts without an offset, as the standard
+fooy = floor((ydata - ybins(1)) ./ diff(ybins([1 2])))+1;
+fooy(fooy > length(ybins)) = length(ybins);
 
-    %% Map corners back to bins
-    % Which x bin?
-    x = foox + ~(orientation == (layer == topright));
-    x(x > length(xbins)) = length(xbins);
-    
-    % Which y bin?
-    y = fooy + (layer & topright);
-    y(y > length(ybins)) = length(ybins);
-    
-    ii = sub2ind(size(X), y, x);
+% Which orientation
+orientation = mod(foox,2) == 1;
 
-    %% Determine counts
-    counts = sum(bsxfun(@eq, ii, 1:numel(X)),1);
+% Map points to boxes
+foo = [xdata - xbins(foox)', ydata - ybins(fooy)'];
 
-    newplot;
-    xscale = diff(xbins([1 2]))*2/3;
-    yscale = diff(ybins([1 2]))*2/3;
-    theta = 0 : 60 : 360;
-    x = bsxfun(@plus, X(:), cosd(theta)*xscale)';
-    y = bsxfun(@plus, Y(:), sind(theta)*yscale)';
-    
-    if showZeros
-        h = patch(x, y, counts, 'edgeColor', ec);
-    else
-        jj = counts > 0;
-        h = patch(x(:,jj), y(:,jj), counts(jj), 'edgeColor', ec);
-    end
-    
-    %additional plotting (modified, SGB 2020-10-19)
-    hold on
-    refline(1,0)
-    
-    axis equal square
-    if ~isempty(NV.title)
-        title(NV.title)
-    end
-    cb = colorbar;
-    cb.Label.String = NV.cblbl;
-    ax = gca;
-    ax.ColorScale = NV.cscale;
+% Which layer
+layer = foo(:,2) > dy;
+
+% Convert to block B format
+toflip = layer == orientation;
+foo(toflip,1) = dx - foo(toflip,1);
+
+foo(layer==1,2) = foo(layer==1,2) - dy;
+
+% Find closest corner
+dist = sqrt(sum(foo.^2,2));
+dist2 = sqrt(sum(bsxfun(@minus, [dx dy], foo).^2, 2));
+
+topright = dist > dist2;
+
+%% Map corners back to bins
+% Which x bin?
+x = foox + ~(orientation == (layer == topright));
+x(x > length(xbins)) = length(xbins);
+
+% Which y bin?
+y = fooy + (layer & topright);
+y(y > length(ybins)) = length(ybins);
+
+ii = sub2ind(size(X), y, x);
+
+%% Determine counts
+counts = sum(bsxfun(@eq, ii, 1:numel(X)),1);
+
+newplot;
+xscale = diff(xbins([1 2]))*2/3;
+yscale = diff(ybins([1 2]))*2/3;
+theta = 0 : 60 : 360;
+x = bsxfun(@plus, X(:), cosd(theta)*xscale)';
+y = bsxfun(@plus, Y(:), sind(theta)*yscale)';
+
+if showZeros
+    h = patch(x, y, counts, 'edgeColor', ec);
+else
+    jj = counts > 0;
+    h = patch(x(:,jj), y(:,jj), counts(jj), 'edgeColor', ec);
+end
+
+%additional plotting (modified, SGB 2020-10-19)
+hold on
+refline(1,0)
+
+axis equal square
+if ~isempty(NV.title)
+    title(NV.title)
+end
+cb = colorbar;
+cb.Label.String = NV.cblbl;
+ax = gca;
+ax.ColorScale = NV.cscale;
+if ~isempty(NV.cbnds)
     ax.CLim = NV.cbnds;
     cb.Limits = NV.cbnds;
-    
-    % label for figure tiles, e.g. '(a)', '(b)', '(c)', '(d)'
-    if ~isempty(NV.charlbl)
-       text(0.025,0.95,NV.charlbl,'Units','normalized','FontSize',12)
-    end
-    
-    hold off
-    
-    if nargout == 0
-        clear h;
-    end
-    
-    %% Function: default_param
-    % Gordon Bean, March 2012
-    % Copied from https://github.com/brazilbean/bean-matlab-toolkit
+end
+% label for figure tiles, e.g. '(a)', '(b)', '(c)', '(d)'
+if ~isempty(NV.charlbl)
+    text(0.025,0.95,NV.charlbl,'Units','normalized','FontSize',12)
+end
+
+xlim(xlims);
+ylim(ylims);
+
+hold off
+
+if nargout == 0
+    clear h;
+end
+
+%% Function: default_param
+% Gordon Bean, March 2012
+% Copied from https://github.com/brazilbean/bean-matlab-toolkit
 %     function params = default_param( params, varargin )
 %         if (iscell(params))
 %             params = get_params(params{:});
 %         end
 %         defaults = get_params(varargin{:});
-% 
+%
 %         for f = fieldnames(defaults)'
 %             field = f{:};
 %             if (~isfield( params, lower(field) ))
@@ -184,24 +188,24 @@ end
 %         end
 %     end
 
-    %% Function: get_params - return a struct of key-value pairs
-    % Gordon Bean, January 2012
-    %
-    % Usage
-    % params = get_params( ... )
-    %
-    % Used to parse key-value pairs in varargin - returns a struct.
-    % Converts all keys to lower case.
-    %
-    % Copied from https://github.com/brazilbean/bean-matlab-toolkit
+%% Function: get_params - return a struct of key-value pairs
+% Gordon Bean, January 2012
+%
+% Usage
+% params = get_params( ... )
+%
+% Used to parse key-value pairs in varargin - returns a struct.
+% Converts all keys to lower case.
+%
+% Copied from https://github.com/brazilbean/bean-matlab-toolkit
 %     function params = get_params( varargin )
 %         params = struct;
-% 
+%
 %         nn = length(varargin);
 %         if (mod(nn,2) ~= 0)
 %             error('Uneven number of parameters and values in list.');
 %         end
-% 
+%
 %         tmp = reshape(varargin, [2 nn/2]);
 %         for kk = 1 : size(tmp,2)
 %             params.(lower(tmp{1,kk})) = tmp{2,kk};
