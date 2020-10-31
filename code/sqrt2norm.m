@@ -46,9 +46,14 @@ switch type
 			
 		end
 	case 'oct'
-		if all(abs(vecnorm(pts,2,2) - 1) < tol)
+        ptnm = vecnorm(pts,2,2);
+        if ~isempty(find(ptnm == 0, 1))
+%            warning('identity octonion(s) present')
+           ptnm(ptnm == 0) = [];
+        end
+		if all(abs(ptnm - 1) < tol)
 			pts = normr(pts)*sqrt(2);
-		elseif any(abs(vecnorm(pts,2,2) - sqrt(2)) > tol)
+		elseif any(abs(ptnm - sqrt(2)) > tol)
 			error('norm of octonions ~= 1 || sqrt(2)')
 		end
 end
