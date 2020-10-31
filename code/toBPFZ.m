@@ -1,4 +1,12 @@
-%function nA_out = toBPFZ(qlist,nAlist)
+function [nAout,nArot] = toBPFZ(qlist,nAlist,NV)
+arguments
+    qlist(:,4)
+    nAlist(:,3)
+    NV.nint(1,1) double = 1
+    NV.ctrcuspQ(1,1) logical = true
+    NV.pgnum(1,1) double = 32 %cubic Oh
+    NV.plotQ(1,1) logical = false
+end
 %--------------------------------------------------------------------------
 % Author: Sterling Baird
 %
@@ -7,7 +15,7 @@
 % Description: Rotate an arbitrary boundary plane normal for a given
 % quaternion into a standard boundary plane fundamental zone, similar to
 % what disorientation.m does for misorientations.
-% 
+%
 % Inputs:
 %		qlist === quaternion
 %
@@ -32,14 +40,9 @@
 %		spherical coordinate inequalities defined by the BP FZ spherical
 %		wedge.
 %--------------------------------------------------------------------------
-
-nint = 1;
-ctrcuspQ = 1;
-
-pgnum = 32; %cubic Oh
 symnames = load('PGnames.mat'); %need to add crystal_symmetry_ops to path in order for this to work
 symops = load('PGsymops.mat');
-qpt = symops.Q{pgnum}; %choose point group symmetry
+qpt = symops.Q{NV.pgnum}; %choose point group symmetry
 
 t = num2cell(qpt,2);
 
@@ -47,45 +50,61 @@ t = num2cell(qpt,2);
 Rmats = cellfun(@(q) qu2om(q),t,'UniformOutput',false);
 
 npts = size(qlist,1);
-for i = 1:npts
-	%unpack
-	nA = nAlist(i,:)
-	Rmat = Rmats{i};
-	
-	%get mesh points
-	[pts,A,R,TRI,af] = meshBP(q,nint,ctrcuspQ);
-	t = num2cell(pts);
-	[az1,el1,~] = cart2sph(t{:});
-	
-	%define bounds
-	azmin = min(az1);
-	elmin = min(az1);
-	
-	azmax = max(el1);
-	elmax = max(az1);
-	
-	%loop through rotation matrices
-	%initialize
-	nR = length(Rmats);
-	az = zeros(nR,1);
-	el = az;
-	nArot = zeros(nR,3);
-	for j = 1:nR
-		nArot(j,:) = (Rmat*nA.').';
-	end
-	
-	%convert to spherical
-	t = num2cell(nArot,1);
-	[az(j),el(j),~] = cart2sph(vertcat(t{:}));
-	
-	%test bounds
-	(azmin <= az) && (az <= azmax)
-	nA_out(i,:) = nArot(:,i,:);
-	
-end
+nAout = zeros(npts,3);
 
-t=num2cell(nArot,1);
-plot3(t{:},'*')
+nR = length(Rmats);
+nArot = repmat({zeros(nR,3)},npts,1);
+
+for i = 1:npts
+    %unpack
+    q = qlist(i,:);
+    nA = nAlist(i,:);
+    
+    %get mesh points
+    [pts,A,R,TRI,af] = meshBP(q,NV.nint,NV.ctrcuspQ);
+    t = n2c(vertcat(pts.sub));
+    [az1,el1,~] = cart2sph(t{:});
+    
+    %define bounds
+    azmin = min(az1);
+    elmin = min(az1);
+    
+    azmax = max(el1);
+    elmax = max(az1);
+    
+    %loop through rotation matrices
+    %initialize
+    for j = 1:nR
+        nArot{i}(j,:) = (Rmats{j}*nA.').';
+    end
+    nArot{i} = uniquetol(nArot{i},'ByRows',true);
+    
+    %convert to spherical
+    t = n2c(nArot{i});
+    [az,el,~] = cart2sph(t{:});
+    
+    %test bounds
+    azcheck = (azmin <= az) & (az <= azmax);
+    elcheck = (elmin <= el) & (el <= elmax);
+    keepIDs = find(azcheck & elcheck);
+    switch size(keepIDs,1)
+        case 0
+            warning(['no triangle found for iteration ' int2str(i)])
+        case 1
+            nAout(i,:) = nArot{i}(keepIDs,:);
+        case 2
+            warning(['multiple triangles found for iteration ' int2str(i)])
+            nAout(i,:) = nArot{i}(keepIDs(1),:);
+    end
+    if NV.plotQ
+        figure
+        %         sphplot()
+        %         hold on
+        t=n2c(nArot{i});
+        %         plot3(t{:},'*')
+        test_voronoisphere(nArot{i}.')
+    end
+end
 
 
 %------------------------------CODE GRAVEYARD------------------------------
@@ -102,5 +121,9 @@ plot3(t{:},'*')
 z_axis = [0 0 1];
 
 		nArot(:,i,j) = (Rmats{j}*z_axis.').';
+
+
+% 	[az,el] = deal(zeros(nR,1));
+
 %}
 
