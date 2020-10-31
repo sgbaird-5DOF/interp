@@ -118,7 +118,7 @@ for i = 1:nq
 				end
 				
 			else
-				geometry{i} = 'exterior';
+				geometry{i} = 'exterior'; % still low-symmetry, but exterior to Rodrigues FZ
 			end
 			
 	end
