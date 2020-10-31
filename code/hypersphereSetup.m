@@ -1,4 +1,9 @@
 function	meshpts = hypersphereSetup(n,d,subdivType)
+arguments
+    n
+    d
+    subdivType {mustBeMember(subdivType,{'orthant','hypersphere'})} = 'hypersphere'
+end
 %--------------------------------------------------------------------------
 % Author: Sterling Baird
 %
