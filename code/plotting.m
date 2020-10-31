@@ -61,6 +61,8 @@ might use multiple cores via vectorization..)?
 % tbl3(ids,'runtime') = tbl3(ids,'runtime').*tbl3(ids,'cores');
 [G3,ID3] = findgroups(tbl3.method);
 multixyplots(mdlparstbl,methodlist,'nmeshpts',{'runtime'},2,1,'YScale','linear','yunits','s','lgdloc','north')
+
+% stackedplot
 %saving
 savefigpng(folder,'runtime');
 
@@ -76,12 +78,49 @@ if slurmQ
     pd1 = pdist(pts).';
     pd2 = real(pdist(pts,@get_omega).');
     pd3 = real(pdist(pts,@get_alen).');
+    
     figure
     parityplot(pd1,pd3,'scatter','cscale','linear','xname','Euclidean Distance','yname','Arc Length','xunits','','yunits','rad')
     %saving
     fname = 'distance-parity';
     savefigpng(folder,fname);
+    
+%     load('olm_pairwise_oct.mat','oct_new')
+%     t = num2cell(oct_new,3);
+%     t = cellfun(@(x) squeeze(x).',t.','UniformOutput',false);
+%     oAB = vertcat(t{:});
+%     oA = get_octpairs(oAB(:,1:8));
+%     oB = get_octpairs(oAB(:,9:16));
+
+%%
+    A = importdata('olm_octonion_list.txt');
+    olmoct = A.data;
+    npts = 10;
+    [pd4c, pd5c, pd6c] = deal(cell(npts,1));
+    for i = 1:npts
+        oref(i,:) = get_ocubo(); %random reference octonion
+        olmoctsym = get_octpairs(olmoct,'oref',oref(i,:)); %symmetrize w.r.t. to oref
+        pd4c{i} = squareform(pdist(olmoctsym));
+        pd5c{i} = squareform(pdist(olmoctsym,@get_omega)); %pairwise distances
+        pd6c{i} = squareform(pdist(olmoctsym,@get_alen));
+        pd4c{i} = pd4c{i}(:);
+        pd5c{i} = rad2deg(pd5c{i}(:)); % flatten
+        pd6c{i} = pd6c{i}(:);
+    end
+    pd4tmp = [pd4c{:}];
+    pd5tmp = [pd5c{:}]; %catenate 10 vectors of pairwise distances
+    pd6tmp = [pd6c{:}];
+    pd4 = min(pd4tmp,[],2);
+    pd5 = min(pd5tmp,[],2);
+    pd6 = min(pd6tmp,[],2);
+
+    load('olm_pairwise_distances_cubic.mat','olmpairwisedistancescubic')
+    pd_olmchesser = table2array(olmpairwisedistancescubic);
+    pd7 = rad2deg(pd_olmchesser(:));
+    figure
+    parityplot(pd5,pd7,'hex','cscale','log','xname','\omega (Johnson)','yname','\omega (Chesser)','xunits','deg','yunits','deg')
 end
+
 %% distance parity (3D)
 % pts = normr(rand(388,3)-0.5);
 % pts2 = normr(rand(388,3)-0.5);
@@ -119,6 +158,10 @@ proj_down_test(1)
 savefigpng(folder,'bary-remove-deg')
 proj_down_test(2)
 savefigpng(folder,'bary-delaunay')
+
+%% voronoi example
+toBPFZ_test()
+savefigpng(folder,'voronoi')
 
 %% CODE GRAVEYARD
 %{
@@ -255,6 +298,25 @@ pd1 = pdist(mdltbl(strcmp(mdltbl.uuid,uuid),:).mesh{1}.pts).';
 pd2 = pdist(mdltbl(strcmp(mdltbl.uuid,uuid),:).mesh{1}.pts,@get_omega).';
 pd3 = pdist(mdltbl(strcmp(mdltbl.uuid,uuid),:).mesh{1}.pts,@get_alen).';
 parityplot(pd1,pd3,'xname','euclidean','yname','arclength','units','')
+
+    oA = vertcat(oct_new(:,:,1:8));
+    oB = vertcat(oct_new(:,:,9:16));
+
+
+A = importdata('olm_octonion_list.txt');
+    olmoct = A.data;
+    olmoctsym = get_octpairs(olmoct);
+    pd4 = squareform(pdist(olmoctsym));
+    pd5 = squareform(pdist(olmoctsym,@get_omega));
+    pd6 = squareform(pdist(olmoctsym,@get_alen));
+    pd4 = pd4(:);
+    pd5 = rad2deg(pd5(:));
+    pd6 = pd6(:);
+    load('olm_pairwise_distances_cubic.mat','olmpairwisedistancescubic')
+    pd_olmchesser = table2array(olmpairwisedistancescubic);
+    pd7 = rad2deg(pd_olmchesser(:));
+    figure
+    parityplot(pd5,pd7,'hex','cscale','linear','xname','\omega (Johnson)','yname','\omega (Chesser)','xunits','deg','yunits','deg')
 
 
 %}
