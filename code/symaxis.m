@@ -119,7 +119,7 @@ switch crystal
 				ay = [0,1,0];
 				az = [0,0,1];				
 			
-			case 'interior' %is this right? Are there are no symmetry axes (so anywhere goes for meshing), or is it a hemisphere so I choose arbitrary axes?
+			case {'interior','exterior'} %is this right? Are there are no symmetry axes (so anywhere goes for meshing), or is it a hemisphere so I choose arbitrary axes?
 				ax = [1,0,0];
 				ay = [0,1,0];
 				az = [0,0,1];
