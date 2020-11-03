@@ -35,20 +35,30 @@ hold(ax, 'on');
 axis(ax,'equal');
 
 % plot3(ax, xyz(1,:),xyz(2,:),xyz(3,:),'ro');
+% colormap default;
+% clmap = colormap;
 clmap = cool();
 ncl = size(clmap,1);
-if n < 20
-    [X,Y,Z] = sphere();
-    cl = clmap(1,:);
+cl = [0.3010, 0.7450, 0.9330];
+% cl = [0, 0.5, 0.5];
+% if n < 20
+    [X,Y,Z] = sphere(300);
+%     cl = clmap(1,:);
     surf(X,Y,Z,'FaceColor',cl,'Parent',ax,'EdgeColor','none');
-end
+% end
 for k = 1:n
     X = voronoiboundary{k};
-    cl = clmap(mod(k,ncl)+1,:);
-    fill3(X(1,:),X(2,:),X(3,:),cl,'Parent',ax,'EdgeColor','w');
+%     cl = clmap(mod(k,ncl)+1,:);
+%     fill3(X(1,:),X(2,:),X(3,:),cl,'Parent',ax,'EdgeColor','k');
+    patch(X(1,:),X(2,:),X(3,:),cl,'Parent',ax,'EdgeColor','k');
+
 end
 axis(ax,'equal');
 axis(ax,[-1 1 -1 1 -1 1]);
+
+camlight
+lighting gouraud
+material dull
 
 %% Graphic (2)
 % f = figure;
