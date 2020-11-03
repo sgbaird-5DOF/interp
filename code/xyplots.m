@@ -13,15 +13,16 @@ arguments
    NV.charlblQ(1,1) logical = false
    NV.charlbl char = ''
    NV.charlblnum double = []
+   NV.Interpreter char {mustBeMember(NV.Interpreter,{'latex','tex'})} = 'latex'
 end
 
 ax = gca;
 ax.XScale = 'log';
 xlabel(xtype)
 if ~isempty(NV.yunits)
-    ylabel([ytype ' (' NV.yunits ')'])
+    ylabel([ytype ' (' NV.yunits ')'],'Interpreter',NV.Interpreter)
 else
-    ylabel(ytype)
+    ylabel(ytype,'Interpreter',NV.Interpreter)
 end
 axis square
 
@@ -39,11 +40,12 @@ if ~isempty(NV.ymin)
     ax.YLim(1) = NV.ymin;
 end
 
-legend(xytypes,'Location',NV.lgdloc,'FontSize',9)
+legend(xytypes,'Location',NV.lgdloc,'FontSize',9,'Interpreter',NV.Interpreter)
 
 % label for figure tiles, e.g. '(a)', '(b)', '(c)', '(d)'
 if NV.charlblQ && ~isempty(NV.charlbl)
-    text(0.025,0.95,NV.charlbl,'Units','normalized','FontSize',12)
+    papertext(charlbl)
+%     text(0.025,0.95,NV.charlbl,'Units','normalized','FontSize',12,'Interpreter',NV.Interpreter)
 end
 
 end
