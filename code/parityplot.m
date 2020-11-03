@@ -3,8 +3,8 @@ arguments
     yactual double
     ypred double
     plottype char {mustBeMember(plottype,{'hex','scatter'})} = 'hex'
-    NV.xunits char = 'J/m^2'
-    NV.yunits char = 'J/m^2'
+    NV.xunits char = '$J m^{-2}$'
+    NV.yunits char = '$J m^{-2}$'
     NV.xname char = 'actual GBE'
     NV.yname char = 'predicted GBE'
     NV.title char = ''
@@ -15,7 +15,7 @@ arguments
     NV.fillQ(1,1) logical = false
     NV.scatterOpts(1,1) struct = struct()
     NV.reflineOpts(1,1) struct = struct()
-    NV.Interpreter char = 'tex'
+    NV.Interpreter char {mustBeMember(NV.Interpreter,{'tex','latex','none'})} = 'latex'
     NV.FontSize int32 = 11
     NV.legend = {'off'}
     NV.Location char = 'northwest'
@@ -116,14 +116,14 @@ ylabel(ylbl,'Interpreter',NV.Interpreter,'FontSize',NV.FontSize)
 title(NV.title,'Interpreter',NV.Interpreter,'FontSize',NV.FontSize)
 
 % legend
-lgd = legend(NV.legend{:});
+lgd = legend(NV.legend{:},'Interpreter',NV.Interpreter);
 if ~isempty(lgd)
     lgd.Location = NV.Location;
 end
 
 % label for figure tiles, e.g. '(a)', '(b)', '(c)', '(d)'
 if ~isempty(NV.charlbl)
-    text(0.025,0.95,NV.charlbl,'Units','normalized','FontSize',12)
+    text(0.025,0.95,NV.charlbl,'Units','normalized','FontSize',12,'Interpreter',NV.Interpreter)
 end
 
 if ~isempty(NV.xlim)
