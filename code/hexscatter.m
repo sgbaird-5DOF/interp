@@ -12,6 +12,7 @@ arguments
     NV.cblbl char = 'counts'
     NV.cbnds double = []
     NV.cscale char {mustBeMember(NV.cscale,{'log','linear'})} = 'log'
+    NV.Interpreter char {mustBeMember(NV.Interpreter,{'tex','latex','none'})} = 'latex'
 end
 %% h = HEXSCATTER( x, y, ... )
 % Gordon Bean, February 2014
@@ -145,12 +146,13 @@ end
 hold on
 refline(1,0)
 
-axis equal square
+axis equal
 if ~isempty(NV.title)
-    title(NV.title)
+    title(NV.title,'Interpreter',NV.Interpreter)
 end
-cb = colorbar;
+cb = colorbar('TickLabelInterpreter',NV.Interpreter);
 cb.Label.String = NV.cblbl;
+cb.Label.Interpreter = NV.Interpreter;
 ax = gca;
 ax.ColorScale = NV.cscale;
 if ~isempty(NV.cbnds)
@@ -159,7 +161,7 @@ if ~isempty(NV.cbnds)
 end
 % label for figure tiles, e.g. '(a)', '(b)', '(c)', '(d)'
 if ~isempty(NV.charlbl)
-    text(0.025,0.95,NV.charlbl,'Units','normalized','FontSize',12)
+    text(0.025,0.95,NV.charlbl,'Units','normalized','FontSize',12,'Interpreter',NV.Interpreter)
 end
 
 xlim(xlims);
