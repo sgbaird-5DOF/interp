@@ -15,4 +15,8 @@ ax.View = NV.axview;
 shading interp
 axis equal
 
+camlight
+lighting gouraud
+material dull
+
 end
