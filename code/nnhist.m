@@ -38,22 +38,22 @@ end
 
 [nnpts,D,mu,sigma,idx] = get_knn(pts,dtype,K,'dispQ',NV.dispQ);
 
-if NV.plotQ
-    figure
-end
+% if NV.plotQ
+%     paperfigure()
+% end
 
 if NV.plotQ
     %% plotting
     switch dtype
         case 'omega'
-            xlbl = 'NN \omega (deg)';
+            xlbl = 'NN $\omega$ (deg)';
         case 'norm'
-            xlbl = 'NN euclidean octonion distance';
+            xlbl = 'NN Euclidean distance';
         case 'alen' %general arc length formula
-            xlbl = 'NN \omega = cos^{-1}(p_1 \cdot p_2) (deg)';
+            xlbl = 'NN $\omega = cos^{-1}(p_1 \cdot p_2)$ (deg)';
     end
-    xlabel(xlbl)
-    ylabel('counts')
+    xlabel(xlbl,'Interpreter','latex','FontSize',12)
+    ylabel('counts','Interpreter','latex','FontSize',12)
     hold on
     for k = 1:K
         histfit(D{k});
@@ -62,6 +62,8 @@ if NV.plotQ
 else
     ax = [];
 end
+
+axis square
 
 end
 %---------------------------------CODE GRAVEYARD---------------------------
