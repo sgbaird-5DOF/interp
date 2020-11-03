@@ -1,7 +1,7 @@
 function [Vertices, K, voronoiboundary, s] = voronoisphere(xyz,resolution)
 arguments
    xyz
-   resolution(1,1) double = deg2rad(0.2)
+   resolution(1,1) double = deg2rad(0.05)
 end
 % [Vertices, K, voronoiboundary, s] = voronoisphere(xyz)
 %
