@@ -1,5 +1,5 @@
 % spherical barycentric coordinates test
-clear; close all;
+% clear; close all;
 
 seed = 11;
 rng(seed);
@@ -38,32 +38,36 @@ if d == 3
 	hold on
 	
 	temp = num2cell(newvertices,1);
-	ax = trisurf(K,temp{:},'FaceColor',[0.4 0.6 0.7]);
-	alpha(ax,0.7);
+% 	ax = trisurf(K,temp{:},'FaceColor',[0.4 0.6 0.7]);
+% 	alpha(ax,0.7);
 	
 	temp = num2cell(newvertices,1);
 	sz = [length(temp{1}),length(temp)];
 	zero = num2cell(zeros(sz),1);
-	quiver3(zero{:},temp{:},1.1)
-	plot3(temp{:},'k*')
-	text(temp{1}+0.02,temp{2}+0.02,temp{3}+0.05,{'1','2','3'})
+% 	quiver3(zero{:},temp{:},1.1)
+% 	plot3(temp{:},'k*')
+% 	text(temp{1}+0.02,temp{2}+0.02,temp{3}+0.05,{'1','2','3'})
 	
 	[x,y,z] = sphere(30);
-	ax = surf(x,y,z,'EdgeColor','white');
+	ax = surf(x,y,z,'EdgeColor',0.01*[67.8, 84.7, 90.2]);
 	alpha(ax,0.2);
 		
 	temp = num2cell(vertices,1);
 	sz = [length(temp{1}),length(temp)];
 	zero = num2cell(zeros(sz),1);
-	trisurf(K,temp{:},'FaceColor','black');
+	ax=trisurf(K,temp{:},'FaceColor','black');
+    alpha(ax,0.5);
+    quiver3(zero{:},temp{:},1.1)
+    text(temp{1}+0.02,temp{2}+0.02,temp{3}+0.05,{'1','2','3'})
 	
 	temp = num2cell(nvec,1);
 %  plot3(temp{:},'r*','MarkerFaceColor','r')
-	plot3(temp{:},'r*')
-	quiver3(0,0,0,temp{:},1.1)
+% 	plot3(temp{:},'r*')
+% 	quiver3(0,0,0,temp{:},1.1)
 	
 	temp = num2cell(dataProj);
 	plot3(temp{:},'r*')
+    quiver3(0,0,0,temp{:},1.2)
 	
 	xlabel('x');
 	ylabel('y');
@@ -74,6 +78,12 @@ if d == 3
  	ax = gca;
 	ax.View = [45, 15];
 	ax.ZLim(1) = 0;
+%     
+%     camlight
+%     lighting gouraud
+%     material dull
+    
+%     set(gcf,'InvertHardCopy','off')
 end
 
 
