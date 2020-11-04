@@ -1,8 +1,7 @@
 function s = vcell_solidangle(P, K, xyz)
+% VCELL_SOLIDANGLE  Compute the solid angles of All voronoi cell
 % s = vcell_solidangle(P, K)
 % s = vcell_solidangle(P, K, xyz)
-%
-% Compute the solid angles of All voronoi cell
 %
 % P is (3 x m) array of vertices, coordinates of the vertices of voronoi diagram
 % K is (n x 1) cell, each K{j} contains the indices of the voronoi cell

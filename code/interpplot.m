@@ -2,12 +2,11 @@ function interpplot(fname)
 arguments
    fname char
 end
+% INTERPPLOT  Create parity plot with 5DOF plots on side (deprecated)
 %--------------------------------------------------------------------------
 % Author: Sterling Baird
 %
 % Date: 2020-07-28
-%
-% Description: Create parity plot with 5DOF plots on side
 % 
 % Inputs: fname - filename that contains relevant variables for plotting
 %

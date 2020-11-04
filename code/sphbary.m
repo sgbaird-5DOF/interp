@@ -1,10 +1,9 @@
 function [c,Pnew] = sphbary(data,vertices,varargin)
+% SPHBARY  compute spherical barycentric coordinates of a facet or simplex [1]
 %--------------------------------------------------------------------------
 % Author: Sterling Baird
 %
 % Date: 2020-07-03
-%
-% Description: compute spherical barycentric coordinates of facet or simplex [1]
 % 
 % Inputs:
 %		data		===	datapoint of interest on hypersphere which defines the

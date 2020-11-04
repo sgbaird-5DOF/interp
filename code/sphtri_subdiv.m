@@ -1,13 +1,11 @@
 function [newsphpts,newpts,TRI] = sphtri_subdiv(sphpts,nint)
+% Subdivision scheme that segments the triangle formed by vertices of a spherical triangle
+%  by partitioning the edges of the triangle, then projects those points
+%  back onto the sphere. This is not an equal area approach (2020-06-27).
 %--------------------------------------------------------------------------
 % Author: Sterling Baird
 %
 % Date: 2020-06-27
-%
-% Description: Subdivision scheme that segments the triangle formed by
-% vertices of a spherical triangle into equal areas by partitioning the
-% edges of the triangle, then projects those points back onto the sphere.
-% This is not an equal area approach (2020-06-27).
 %
 % Input:
 %		sphpts		===	points on the unit sphere in spherical coordinates,

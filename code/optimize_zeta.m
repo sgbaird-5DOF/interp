@@ -4,13 +4,11 @@ arguments
 	dtype char {mustBeMember(dtype,{'omega','norm'})} = 'omega'
 	z0 double {mustBeReal,mustBeFinite} = double.empty
 end
+% Minimize the pairwise distance matrix of a set of GBs w.r.t. zeta (twist angle via U(1) symmetry)
 %--------------------------------------------------------------------------
 % Author: Sterling Baird
 %
 % Date: 2020-07-27
-%
-% Description: Minimize the pairwise distance matrix of a set of GBs w.r.t.
-% zeta (twist angle via U(1) symmetry)
 %
 % Inputs:
 %	o - list of input octonions (pass into get_octpairs.m first)
@@ -25,7 +23,7 @@ end
 %	*
 %
 % Notes:
-%	*
+%	Modified from CMU GB_octonion_code GBdist.m
 %--------------------------------------------------------------------------
 
 npts = size(o,1);

@@ -1,10 +1,8 @@
+% PROJECT4D uses an isovolumetric projection to project points on the unit hypersphere into the unit ball in 3D
 %-------------------------------------------------------------------------%
 %Filename:  project4D.m
 %Author:    Oliver Johnson
 %Date:      6/21/2011
-%
-% PROJECT4D uses an isovolumetric projection to project points on the unit
-% hypersphere into the unit ball in 3D.
 %
 % Inputs:
 %   w - An array giving the rotation angles in the range [0,pi]

@@ -7,8 +7,7 @@ arguments
 	wtol(1,1) double {mustBeFinite,mustBeReal} = 1e-12 %omega tolerance
 	waitbarQ logical = false
 end
-% GBDIST4  modified version of GBdist function by CMU group. Keeps o1
-% constant.
+% GBDIST4  modified version of GBdist function by CMU group. Keeps o1 constant.
 %--------------------------------------------------------------------------
 % Inputs:
 %		o1, o2 -	octonions

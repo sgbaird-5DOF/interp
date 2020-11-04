@@ -1,11 +1,12 @@
 function addpathdir(fnames)
-%add folders of filenames to path by searching through subfolders and
-%adding first folder found for each filename (if any) to path. Since it
-%only adds the first folder found, then you avoid a disaster that would
-%otherwise come about by e.g. navigating to 'C:\' or '~/' and running
-%addpathdir('*'). However this does limit the functionality somewhat if you
-%wanted to add all folders with files matching the form myname*.m. Instead,
-%this will only add the first file found.
+%ADDPATHDIR add folders of filenames using addpath() and dir() 
+% search through subfolders and add first folder found for each filename
+% (if any) to path.
+%   Since it only adds the first folder found, then you avoid a disaster that would
+%   otherwise come about by e.g. navigating to 'C:\' or '~/' and running
+%   addpathdir('*'). However this does limit the functionality somewhat if you
+%   wanted to add all folders with files matching the form myname*.m. Instead,
+%   this will only add the first file found.
 
 %check if cell input or single name
 if iscell(fnames)

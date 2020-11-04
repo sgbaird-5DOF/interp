@@ -1,4 +1,5 @@
 function [FZmesh,meshTriangles,meshTetrahedra,idAboveAC,idBelowAC,idUnique] = meshFZ(resDegrees)
+% MESHFZ  mesh the misorientation fundamental zone (issues with tetgen)
 %--------------------------------------------------------------------------
 % Author: Oliver Johnson
 %

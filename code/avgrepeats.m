@@ -1,11 +1,9 @@
 function [meshList,propList] = avgrepeats(meshList,propList)
+% AVGREPEATS  average values for duplicate points, remove all but one from degenerate set
 %--------------------------------------------------------------------------
 % Author(s): Sterling Baird
 %
 % Date: 2020-07-27
-%
-% Description: %average property values for degenerate mesh points and then
-% remove all but one mesh point from the degenerate set.
 % 
 % Inputs:
 %  meshList - rows of mesh points (e.g. coordinates)

@@ -1,10 +1,9 @@
 function [A,b] = misFZcon()
+% MISFZCON  get constraints for misorientation fundamental zone (misFZ)
 %--------------------------------------------------------------------------
 % Author(s): Sterling Baird
 %
 % Date: 2020-08-13
-%
-% Description: get constraints for misorientation fundamental zone (misFZ)
 %
 % Inputs:
 %  N/A

@@ -1,4 +1,5 @@
 function pts = sqrt2norm(pts,type)
+% SQRT2NORM  take a set of octonions and give each row norm == sqrt(2) if (norm == 1) || (norm == sqrt(2))
 arguments
 	pts(:,8) double {mustBeNumeric,mustBeFinite}
 	type char {mustBeMember(type,{'oct','quat'})} = 'oct'

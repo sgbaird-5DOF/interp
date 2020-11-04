@@ -1,9 +1,8 @@
+% RANDQ generates uniformly distributed positive quaternions.
 %-------------------------------------------------------------------------%
 %Filename:  randq.m
 %Author:    Oliver Johnson
 %Date:      6/21/2011 (validated 7/6/2011)
-%
-% RANDQ generates uniformly distributed positive quaternions.
 %
 % Inputs:
 %   N - A scalar integer indicated the desired number of quaternions.

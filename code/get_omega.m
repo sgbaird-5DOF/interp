@@ -3,6 +3,7 @@ arguments
 	o1 (:,8) double {mustBeReal,mustBeFinite}
 	o2 (:,8) double {mustBeReal,mustBeFinite}
 end
+% GET_OMEGA  calculate octonion distance
 %--------------------------------------------------------------------------
 % Author: Sterling Baird
 %

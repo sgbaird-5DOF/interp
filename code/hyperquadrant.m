@@ -1,5 +1,5 @@
 function sphere = hyperquadrant( varargin )
-%HYPERSPHERE - Generate n-dimensional Ellipsoid or Sphere
+%HYPERQUADRANT  Generate n-dimensional Ellipsoid or Sphere
 %
 % Possible Calls:
 %

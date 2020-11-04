@@ -5,13 +5,11 @@ arguments
 	nint(1,1) double = 1
 	tricollapseQ(1,1) logical = true
 end
+% HYPERSPHERE_SUBDIV  Subdivide a "spherical" convex hull and collapse the triangulation.
 %--------------------------------------------------------------------------
 % Author: Sterling Baird
 %
 % Date: 2020-07-03
-%
-% Description: Subdivide a "spherical" convex hull and collapse the
-%		triangulation.
 %
 % Inputs:
 %

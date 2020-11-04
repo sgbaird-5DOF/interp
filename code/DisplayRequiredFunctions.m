@@ -1,4 +1,5 @@
-% List required files and toolboxes.  Displays them in the command window or console window (if deployed).
+function DisplayRequiredFunctions(fullFileName)
+% DISPLAYREQUIREDFUNCTIONS  List required files and toolboxes.  Displays them in the command window or console window (if deployed).
 % Sample call
 % 		fullFileName = [mfilename('fullpath'), '.m'];
 %       DisplayRequiredFunctions(fullFileName)
@@ -6,7 +7,6 @@
 
 % copied from Image Analyst's post
 %https://www.mathworks.com/matlabcentral/answers/28343-how-do-i-list-all-my-dependent-m-files
-function DisplayRequiredFunctions(fullFileName)
 try
 	if ~isdeployed
 		[~, baseFileNameNoExt, ext] = fileparts(fullFileName);

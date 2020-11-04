@@ -1,5 +1,5 @@
 function propList = GB5DOF_setup(five)
-% GB5DOF_SETUP  Compute 5DOF GB energy from BRK function
+%GB5DOF_SETUP  Compute 5DOF GB energy from BRK function
 %--------------------------------------------------------------------------
 % Author(s): Oliver Johnson, Sterling Baird
 % Date: 2020-07-27

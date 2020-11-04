@@ -4,12 +4,11 @@ arguments
 	nint(1,1) double = 1
 	tricollapseQ(1,1) logical = true
 end
+% HSPHEXT_SUBDIV  Hypersphere exterior hull subdivision.
 %--------------------------------------------------------------------------
 % Author: Sterling Baird
 %
 % Date: 2020-07-03
-%
-% Description: Hypersphere exterior hull subdivision.
 %
 % Inputs:
 %

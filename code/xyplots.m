@@ -1,6 +1,6 @@
-function xyplots(mdlparstbl,xytypes,xtype,ytype,NV)
+function xyplots(mastertbl,xytypes,xtype,ytype,NV)
 arguments
-   mdlparstbl table
+   mastertbl table
    xytypes cell
    xtype char
    ytype char
@@ -15,7 +15,7 @@ arguments
    NV.charlblnum double = []
    NV.Interpreter char {mustBeMember(NV.Interpreter,{'latex','tex'})} = 'latex'
 end
-
+% XYPLOTS  plot multiple datasets on the same axes using a "master" table and findgroups()
 ax = gca;
 ax.XScale = 'log';
 xlabel(xtype)
@@ -27,7 +27,7 @@ end
 axis square
 
 for xytype = xytypes
-    tbl = mdlparstbl(ismember(mdlparstbl.method,xytype),:);
+    tbl = mastertbl(ismember(mastertbl.method,xytype),:);
     [G,ID] = findgroups(tbl.nmeshpts);
     
     xyplot(tbl,G,xtype,ytype)

@@ -1,8 +1,6 @@
-function Fint = idw(X0,F0,Xint,p,rad,L)
+function Fint = idw_tovar(X0,F0,Xint,p,rad,L)
+% % IDW_TOVAR  Original inverse distance weight function by Andrew Tovar
 % function Fint = idw(X0,F0,Xint,p,rad,L)
-%
-% Inverse distance weight function to interpolate values based on
-% sampled points.
 %
 % Fint = idw(X0,F0,Xint) uses input coordinates X0 and input values F0
 % where X0 is a N by M input matrix of N samples and M number of variables.

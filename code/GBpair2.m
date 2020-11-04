@@ -1,4 +1,5 @@
 function [o3_out,omega3,omega3_GBdist,varargout] = GBpair2(o1,o2,o3,varargin)
+% GBPAIR2  deprecated
 prec = 6;
 tol = 1e-6;
 

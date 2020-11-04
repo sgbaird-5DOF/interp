@@ -1,11 +1,10 @@
 function [A,R] = symaxis(q,geometry)
+% SYMAXIS  Return the symmetry axes (if multiple) and the geometry given a quaternion
+%  (assumes FCC or BCC crystal structure 2020-06-30).
 %--------------------------------------------------------------------------
 % Author: Sterling Baird
 %
 % Date: 2020-06-30
-%
-% Description: Return the symmetry axes (if multiple) and the geometry
-% given a quaternion (assumes FCC or BCC crystal structure 2020-06-30).
 %
 % Input:
 %		q			===	quaternion, according to convention in [1], where

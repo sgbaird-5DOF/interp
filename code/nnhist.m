@@ -6,12 +6,11 @@ arguments
     NV.plotQ(1,1) logical = true
     NV.dispQ(1,1) logical = true
 end
+% NNHIST  nearest neighbor distance histogram
 %--------------------------------------------------------------------------
 % Author(s): Sterling Baird
 %
 % Date: 2020-07-27
-%
-% Description: nearest neighbor distance histogram
 %
 % Inputs:
 %  pts - rows of points (euclidean)

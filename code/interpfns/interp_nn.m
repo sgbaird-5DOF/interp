@@ -1,5 +1,5 @@
 function props = interp_nn(ppts,qm2,nA2,projtol,usv,zeroQ,propList)
-
+% INTERP_NN  nearest neighbor interpolation
 if isempty(usv)
     error('usv should not be empty')
 end

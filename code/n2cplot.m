@@ -1,5 +1,5 @@
 function n2cplot(pts,varargin)
-% convert rows of points to cells of points, convenient for plotting.
+% N2CPLOT  convert rows of points to cells of points, convenient for plotting.
 % e.g. plot(n2c([0 0; 1 1; 2 2),'*')
 
 d = size(pts,2);

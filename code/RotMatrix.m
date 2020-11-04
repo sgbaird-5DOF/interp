@@ -1,5 +1,5 @@
 function R = RotMatrix(alpha, u, v)
-% RotMatrix - N-dimensional Rotation matrix
+% ROTMATRIX  N-dimensional Rotation matrix
 % R = RotMatrix(alpha, u, v)
 % INPUT:
 %   alpha: Angle of rotation in radians, counter-clockwise direction.

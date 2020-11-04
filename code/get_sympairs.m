@@ -3,12 +3,11 @@ arguments
 	pgnum(1,1) int8 {mustBeInteger} = 32 %default == cubic
 	dispnameQ(1,1) logical = false
 end
+% GET_SYMPAIRS  get all combinations (pairs) of operators for a point group
 %--------------------------------------------------------------------------
 % Author: Sterling Baird
 %
 % Date: 2020-07-27
-%
-% Description: get all combinations (pairs) of operators for a point group
 % 
 % Inputs:
 %		pgnum - point group number, 32 == Oh (cubic)

@@ -1,11 +1,10 @@
+% CELL600  generates the vertices of a 600-cell (the 4D analog of the
+% icosahedron), that is circumscribed within a unit hypersphere. This
+% yields a regular grid on the unit hypersphere.
 %-------------------------------------------------------------------------%
 %Filename:  cell600.m
 %Author:    Oliver Johnson
 %Date:      8/8/2013
-%
-% CELL600 generates the vertices of a 600-cell (the 4D analog of the
-% icosahedron), that is circumscribed within a unit hypersphere. This
-% yields a regular grid on the unit hypersphere.
 %
 % Inputs:
 %   s - A scalar indicating the scaling factor. Higher values of s

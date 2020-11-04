@@ -1,3 +1,4 @@
+% PLOTTING  plotting script for interp5DOF paper
 %split apply & find groups
 % fname = 'gitID-76fca8c_uuID-f51500cd_paper-data.mat';
 % fname = 'gitID-396aaa2_uuID-6816f860_paper-data2.mat';

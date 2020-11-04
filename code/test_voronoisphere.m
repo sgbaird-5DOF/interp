@@ -2,8 +2,7 @@ function test_voronoisphere(xyz)
 arguments
     xyz double
 end
-
-% Sctipt to test voronoisphere
+% Script to test voronoisphere (modified from original (Bruno Luong) by Sterling Baird)
 % Random data
 % caseid = 0;
 % if caseid == 2

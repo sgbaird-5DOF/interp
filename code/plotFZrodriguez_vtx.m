@@ -1,5 +1,5 @@
 function hAx = plotFZrodriguez_vtx()
-
+% PLOTFZRODRIGUEZ_VTX  plotFZrodriguez with 'A','B','C','D','E','O' vertices
 [~,hAx] = plotFZrodriguez();
 
 scl = 0.1;

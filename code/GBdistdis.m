@@ -1,4 +1,5 @@
 function [omega_new, oct_new, zeta_new,wveclist,octonion_pair_sym_list] = GBdistdis(data,pgnum,genplot)
+% GBDISTDIS  modified version of GBdist() (deprecated)
 %% INPUT DATA 
 %
 % data: an N x 16 matrix of GB octonion pairs for the distance calculation

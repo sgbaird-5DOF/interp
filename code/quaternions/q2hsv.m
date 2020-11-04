@@ -1,6 +1,6 @@
-% [1] S. Patala, C.A. Schuh, A continuous and one-to-one coloring scheme for misorientations, Acta Mater. 59 (2011) 554–562. doi:10.1016/j.actamat.2010.09.058.
-
 function [h,s,v] = q2hsv(q)
+% Q2HSV  quaternion to continuous, one-to-one coloring scheme (Patala2011)
+% [1] S. Patala, C.A. Schuh, A continuous and one-to-one coloring scheme for misorientations, Acta Mater. 59 (2011) 554–562. doi:10.1016/j.actamat.2010.09.058.
 
 %% convert to rodriguez parameters (Eq. 2.1)
 x = q(:,2)./q(:,1);
