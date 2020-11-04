@@ -46,7 +46,7 @@ Verify that MATslurm is not an empty directory. If you're using GitHub Desktop, 
 #### Windows
 ##### Step 0: download the code
 Open GitHub Desktop and clone and/or fork `https://github.com/sgbaird-5DOF/interp.git`
-The submodules should be downloaded automatically. If you want to commit to submodules, add these GitHub desktop as well (add from existing, navigate within interp folder to the submodule and add).
+The submodules should be downloaded automatically. If you want to commit to submodules, add these to GitHub desktop as well ("add from existing", navigate within interp folder to the submodule, click on submodule folder, and "add").
 ##### Step 1: 
 Navigate to [interp-5DOF/code/](code/)
 
