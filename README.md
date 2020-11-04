@@ -33,7 +33,7 @@ See [cloning a repository](https://docs.github.com/en/github/creating-cloning-an
 ##### Step 0: download the code
 `git clone --recurse-submodules https://github.com/sgbaird-5DOF/interp.git`
 
-Verify that MATslurm is not an empty directory. If you're using GitHub Desktop, you may need to clone the directory with the above command using Git Bash, which can be opened via ``` Ctrl-` ``` or on the toolbar via Repository-->"Open in Git Bash".
+Verify that [MATslurm](https://github.com/sgbaird-5DOF/MATslurm) is not an empty directory. If you're using GitHub Desktop, you may need to clone the directory with the above command using Git Bash, which can be opened via ``` Ctrl-` ``` or on the toolbar via Repository-->"Open in Git Bash".
 
 ##### Step 1: navigate to [interp-5DOF/code/](code/)
 `cd interp-5DOF/code/`
