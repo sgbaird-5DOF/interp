@@ -5,4 +5,4 @@
 	#url = git@github.com:sgbaird-5dof/MATslurm.git
 [submodule "interp5DOF-paper"]
 	path = code/interp5DOF-paper
-	url = ../../sgbaird/interp5DOF-paper.git
+	url = ../../sgbaird-5dof/interp5DOF-paper.git
