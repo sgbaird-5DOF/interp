@@ -1,5 +1,10 @@
 %parseMyFiles_test
-[fpathshort,nameExt,plist] = parseReqFiles('interp5DOF.m');
+fname = 'interp5DOF.m';
+f = dir(fname);
+folder = f(1).folder;
+addpath(genpath(folder));
+sep = '/';
+[fpathshort,nameExt,plist] = parseReqFiles(fname,'interp*','sep',sep);
 fpathshort{1}
 nameExt{1}
 plist
