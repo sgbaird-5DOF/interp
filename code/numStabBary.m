@@ -1,50 +1,48 @@
 function lambda = numStabBary(X,xA)
-%{
-------NOTES------
-
-A numerically stable approach to computing barycentric coordinates by
-converting to projective or homogeneous coordinates as an intermediate to
-cartesian. I.e. cartesian -> projective -> barycentric. Uses an n-ary cross
-product [1] computed with MATLAB's symbolic engine to solve a linear system
-of equations (instead of using `\` (also called mldivide() or backsolve)
-operator). Taking this approach should theoretically minimize division
-operations that commonly cause numerical instability [2].
-
-Max is 8D cartesian, add more symbolic vectors to U and I for higher
-dimensions
-
-------INPUT-------
-
-X - row-wise vertices of simplex xA - test point that might be within
-simplex
-
----INTERMEDIATE---
-
-S - rows of vectors defining simplex, with X(1,:) as origin (i.e.
-parametric representation)
-
-------OUTPUT------
-
-lambda - barycentric coordinates
-
-
-----4D EXAMPLE----
-
-X = [ 1 1 0 1; 1 1 1 0; 0 1 1 1; 1 0 1 1 ];
-
-xA = [1 1 1 1];
-
-lambda = numStabBary(X,xA);
-
-----REFERENCES----
-
-[1] https://en.wikipedia.org/wiki/Cross_product
-
-[2] V. Skala, Robust Barycentric Coordinates Computation of the Closest
-Point to a Hyperplane in E^n, Proc. 2013 Int. Conf. Applies Math. Comput.
-Methods Eng. (2013) 239–244.
-
-%}
+% NUMSTABBARY  a numerically stable barycentric approach in high dimensions
+% ------NOTES------
+% 
+% A numerically stable approach to computing barycentric coordinates by
+% converting to projective or homogeneous coordinates as an intermediate to
+% cartesian. I.e. cartesian -> projective -> barycentric. Uses an n-ary cross
+% product [1] computed with MATLAB's symbolic engine to solve a linear system
+% of equations (instead of using `\` (also called mldivide() or backsolve)
+% operator). Taking this approach should theoretically minimize division
+% operations that commonly cause numerical instability [2].
+% 
+% Max is 8D cartesian, add more symbolic vectors to U and I for higher
+% dimensions
+% 
+% ------INPUT-------
+% 
+% X - row-wise vertices of simplex xA - test point that might be within
+% simplex
+% 
+% ---INTERMEDIATE---
+% 
+% S - rows of vectors defining simplex, with X(1,:) as origin (i.e.
+% parametric representation)
+% 
+% ------OUTPUT------
+% 
+% lambda - barycentric coordinates
+% 
+% 
+% ----4D EXAMPLE----
+% 
+% X = [ 1 1 0 1; 1 1 1 0; 0 1 1 1; 1 0 1 1 ];
+% 
+% xA = [1 1 1 1];
+% 
+% lambda = numStabBary(X,xA);
+% 
+% ----REFERENCES----
+% 
+% [1] https://en.wikipedia.org/wiki/Cross_product
+% 
+% [2] V. Skala, Robust Barycentric Coordinates Computation of the Closest
+% Point to a Hyperplane in E^n, Proc. 2013 Int. Conf. Applies Math. Comput.
+% Methods Eng. (2013) 239–244.
 
 d = length(xA);
 

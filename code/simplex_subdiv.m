@@ -1,12 +1,11 @@
 function x = simplex_subdiv(v,n)
+% Compute the subdivision cartesian coordinates of a simplex
+%	using graded lexicographic compositions and equal subdivision of facet
+%	edges. Basically just a wrapper function for John Burkardt's code.
 %---------------------------------------------------------------------------
 % Author: Sterling Baird
 %
 % Date: 2020-06-30
-%
-% Description: Compute the subdivision cartesian coordinates of a simplex
-%	using graded lexicographic compositions and equal subdivision of facet
-%	edges. Basically just a wrapper function for John Burkardt's code.
 %
 % Input:
 %

@@ -1,7 +1,5 @@
-% adapted from colormap432.m of MTEX 4.5.0
-
 function [pts,rgb] = q2rgb(q)
-
+% Q2RGB  convert quaternion to RGB values, adapted from colormap432.m of MTEX 4.5.0
 %% convert to rodriguez parameters (Eq. 2.1)
 
 pts(:,1) = q(:,2)./q(:,1);

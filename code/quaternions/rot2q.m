@@ -1,11 +1,11 @@
+% ROT2Q  convert rotation angles to quaternions
+%  converts the three independent rotation angles, w (omega), t
+%  (theta), p (phi), to their corresponding quaternion representation. ROT2Q
+%  uses the following convention in defining the quaterion representation:
 %-------------------------------------------------------------------------%
 %Filename:  rot2q.m
 %Author:    Oliver Johnson
 %Date:      2/23/2011
-%
-% ROT2Q converts the three independent rotation angles, w (omega), t
-% (theta), p (phi), to their corresponding quaternion representation. ROT2Q
-% uses the following convention in defining the quaterion representation:
 %
 % q(1) = cos(w/2);
 % q(2) = sin(w/2).*sin(t).*cos(p);

@@ -1,5 +1,5 @@
-function en = GB5DOF(P,Q,AlCuParameter,eRGB) %BRK energy function
-%  energy    computes the energy of an arbitrary boundary in FCC metals. 
+function en = GB5DOF(P,Q,AlCuParameter,eRGB)
+%  GB5DOF  computes the energy of an arbitrary boundary in FCC metals (BRK energy function)
 %
 %     en = GB5DOF(P,Q,AlCuParameter) computes the energy of a boundary
 %     described by two rotation matrices P and Q. The character string 

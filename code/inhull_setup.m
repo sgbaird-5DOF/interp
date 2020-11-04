@@ -1,4 +1,5 @@
 function oint = inhull_setup(datapts,usv,xyz,tess,five,savename)
+% INHULL_SETUP  wrapper function for inhull (deprecated)
 %--------------------------------------------------------------------------
 % Author: Sterling Baird
 %

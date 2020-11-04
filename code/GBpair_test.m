@@ -1,6 +1,4 @@
-%GBpair test
-
-
+%GBPAIR_TEST  test 
 fname = {'misFZfeatures.mat'};
 addpathdir(fname)
 

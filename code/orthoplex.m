@@ -1,11 +1,10 @@
 function [pts,K] = orthoplex(d)
+% ORTHOPLEX  Find indices and convex hull triangulation of an orthoplex
+% (i.e. n-dimensional analogue of octahedron).
 %--------------------------------------------------------------------------
 % Author: Sterling Baird
 %
 % Date: 2020-07-06
-%
-% Description: Find indices and convex hull triangulation of an orthoplex
-% (i.e. n-dimensional analogue of octahedron).
 % 
 % Inputs:
 %		d		=== dimensionality

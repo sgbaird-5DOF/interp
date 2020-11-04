@@ -4,7 +4,7 @@ arguments
 	method char {mustBeMember(method,{'random','uniform'})} = 'random'
 	sidelength {mustBeNonNegIntegerOrEmpty} = double.empty
 end
-% GET_OCUBO  get n quaternions from randomly or uniformly sampled cubochoric points
+% GET_CUBO  get n quaternions from randomly or uniformly sampled cubochoric points
 %--------------------------------------------------------------------------
 % Inputs:
 %		n - # of octonions to output (re-calculated if using 'uniform' method

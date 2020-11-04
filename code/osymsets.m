@@ -6,13 +6,11 @@ arguments
 	grainexchangeQ logical = false
 	doublecoverQ logical = false
 end
+% OSYMSETS  Get symmetrically equivalent octonions (osymsets) for each octonion in a list of octonions
 %--------------------------------------------------------------------------
 % Author: Sterling Baird
 %
 % Date: 2020-07-15
-%
-% Description: Get symmetrically equivalent octonions (osymsets) for each
-%					octonion in a list of octonions
 %
 % Inputs:
 %		data	===	rows of octonions

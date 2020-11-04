@@ -1,4 +1,4 @@
-% QUATERNIONROTATE - Rotates a 3D vector by a quaternion 
+% QUATERNIONROTATE  Rotates a 3D vector by a quaternion 
 %
 % Usage:   vnew = quaternionrotate(Q, v)
 %

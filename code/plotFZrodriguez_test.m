@@ -1,3 +1,4 @@
+%PLOTFZRODRIGUEZ_TEST  
 clear; close all;
 figure
 plotFZrodriguez();

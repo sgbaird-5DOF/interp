@@ -1,7 +1,5 @@
-% adapted from colormap432.m of MTEX 4.5.0
-
 function [pts,rgb] = rod2rgb(pts)
-
+% ROD2RGB  convert from Rodrigues vectors to RGB values, adapted from colormap432.m of MTEX 4.5.0
 %% convert to rodriguez parameters (Eq. 2.1)
 
 % pts(:,1) = q(:,2)./q(:,1);

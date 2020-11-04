@@ -1,4 +1,5 @@
 function S = datagen_setup(sampleMethod,opts,loadQ)
+% DATAGEN_SETUP  setup for generating octonion data (random or from literature)
 %--------------------------------------------------------------------------
 % Author: Sterling Baird
 %

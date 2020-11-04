@@ -1,4 +1,4 @@
-%%
+% DYNAMICCELLEXAMPLE  Dynamically creating a nested cell structure (unfinished/deprecated)
 clear; close all
 % User input character vector:
 str = 'stores{2}.name';

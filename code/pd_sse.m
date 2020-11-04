@@ -7,13 +7,11 @@ arguments
 	pdtruefn function_handle = @(o1,o2,dtype) GBdist4(o1,o2,32,dtype,1e-6,true)
 	errtype char {mustBeMember(errtype,{'rmse','mse','me'})} = 'me'
 end
+% PD_SSE  get the error of a pairwise distance matrix relative to the true pairwise distance matrix
 %--------------------------------------------------------------------------
 % Author: Sterling Baird
 %
 % Date: 2020-07-27
-%
-% Description: get the error of a pairwise distance matrix relative to the
-% true pairwise distance matrix
 %
 % Inputs:
 %	a - a

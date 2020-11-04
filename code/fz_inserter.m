@@ -1,7 +1,5 @@
 function [aa3, disorientation, OM_sst, r_sst, th_sst, sizes] = fz_inserter(super1,super2,input_str)
-
-%Compute misorientations in the fundamental zone for two lists of
-%orientations
+% FZ_INSERTER  Compute misorientations in the fundamental zone for two lists of orientations
 %INPUT: two arbitrary list of orientations expressed as
 % super1 and super 2 :: N x 9 arrays corresponding to lists of orientations. 
 % Each 1x9 row of array is flattened orientation matrix: see example below 

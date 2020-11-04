@@ -1,4 +1,4 @@
-%datagen test
+% DATAGEN_TEST  test generation of octonion data
 clear; close all force
 
 %'random', 'Kim2011', 'Rohrer2009', '5DOF', '5DOF_interior',

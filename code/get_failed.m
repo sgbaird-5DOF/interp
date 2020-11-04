@@ -1,4 +1,4 @@
-%find failed jobs
+%find failed jobs (under construction)
 
 %% determine failed jobs (if applicable)
 if strcmp(seed_type,'previous')

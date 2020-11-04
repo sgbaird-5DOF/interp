@@ -1,12 +1,17 @@
-function [newpts,A,R,TRI,af,sphpts] = meshBP(q,nint,ctrcuspQ,varargin)
+function [newpts,A,R,TRI,af,sphpts] = meshBP(q,nint,ctrcuspQ,geometry)
+arguments
+    q
+    nint = 1
+    ctrcuspQ(1,1) logical = true
+    geometry = ''
+end
+% MESHBP  generate boundary plane (BP) fundamental zone mesh for a
+% quaternion and rotate quaternion so that the BP normal matches the
+% quaternion.
 %--------------------------------------------------------------------------
 % Author: Sterling Baird
 %
 % Date: 2020-06-30
-%
-% Description: generate boundary plane (BP) fundamental zone mesh for a
-% quaternion and rotate quaternion so that the BP normal matches the
-% quaternion.
 %
 % Inputs:
 %		q			===	quaternion (according to convention in [1])
@@ -52,12 +57,11 @@ function [newpts,A,R,TRI,af,sphpts] = meshBP(q,nint,ctrcuspQ,varargin)
 %		https://doi.org/10.1080/14786435.2012.722700.
 %--------------------------------------------------------------------------
 
-if nargin == 4
-	geometry = varargin{1};
-else
-	geometry = findgeometry(q); %geometry in misorientation FZ, such as 'line OB'
-	geometry = geometry{1};
+if isempty(geometry)
+    geometry = findgeometry(q); %geometry in misorientation FZ, such as 'line OB'
+    geometry = geometry{1};
 end
+
 % geometry = 'twosphere'; %just for testing
 [A,R] = symaxis(q,geometry);
 
@@ -98,7 +102,7 @@ switch geometry
 	case 'O'
 		ptgrp = 'Oh';
 		alen = pi/4; %not accurate (more area than a true BP FZ), need to adjust elevation angle
-	case 'interior'
+	case {'interior','exterior'}
 		ptgrp = 'C1';
 		alen = 2*pi;
 	case 'twosphere'

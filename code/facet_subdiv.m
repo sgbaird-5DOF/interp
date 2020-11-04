@@ -5,14 +5,13 @@ arguments
 	delaunayQ(1,1) logical = true
 	convhullQ(1,1) logical = false
 end
+% FACET_SUBDIV  Project a facet from n-dimensional space to a simplex in n-1
+% dimensions, subdivide the simplex, compute the triangulation, and
+% reproject back to a facet in n-dimensional space
 %--------------------------------------------------------------------------
 % Author: Sterling Baird
 %
 % Date: 2020-06-27
-%
-% Description: Project a facet from n-dimensional space to a simplex in n-1
-% dimensions, subdivide the simplex, compute the triangulation, and
-% reproject back to a facet in n-dimensional space
 %
 % Inputs:
 %		pts			===	n-dimensional vertices of facet

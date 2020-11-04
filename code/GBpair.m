@@ -7,6 +7,7 @@ arguments
 	method char {mustBeMember(method,{'standard','pairwise'})} = 'pairwise'
 	wtol(1,1) double {mustBeFinite,mustBeReal} = 1e-6
 end
+% GBPAIR (deprecated) Method 1: Find o3 that has the minimum summed distances, o1-->o3, and o2-->o3.
 %--------------------------------------------------------------------------
 % Author: Sterling Baird
 %

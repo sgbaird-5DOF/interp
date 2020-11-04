@@ -1,18 +1,17 @@
-function [octvtx,oref] = get_octpairs(pts,savename,NV)
+function [octvtx,oref,fiveref] = get_octpairs(pts,savename,NV)
 arguments
 	pts(:,8) double {mustBeSqrt2Norm}
 	savename string = 'temp.mat'
 	NV.o2addQ(1,1) logical = false
-	NV.plotQ(1,1) logical = false
 	NV.pgnum(1,1) double = 32
-	NV.wtol(1,1) double = 1e-6
+	NV.wtol(1,1) double = 1e-12
+    NV.fiveref = []
+    NV.oref(1,8) double = get_ocubo(1,'random',[],10)
 end
+% GET_OCTPAIRS  Get a set of octonions that are symmetrized with respect to a fixed reference GB (rng seed == 10)
 % Author: Sterling Baird
 %
 % Date: 2020-07-27
-%
-% Description: Get a set of octonions that are symmetrized with respect to
-% two reference GBs
 %
 % Inputs:
 %  pts - rows of octonions
@@ -35,35 +34,24 @@ end
 %  GBdist4.m
 %  mustBeSqrt2Norm.m (argument validation function)
 %--------------------------------------------------------------------------
-fnames = {'PGnames.mat','olist.mat','misFZfeatures.mat'};
+fnames = {'PGnames.mat','olist.mat'};
 addpathdir(fnames)
 
-load('misFZfeatures.mat','qlist')
+%% Unpack 5DOF reference (empty is OK)
+fiveref = NV.fiveref;
 
 %% get reference octonion
-%unpack interior point
-name1 = 'interior';
-qA = qlist.(name1);
-
-%load normals (both are arbitrary set to [0 0 1])
-[~,RA] = symaxis(qA,name1);
-nA = (RA*[0 0 1].').';
-
-%package some "five" output for saving
-fiveref1.q =qA;
-fiveref1.nA = nA;
-fiveref1.d = q2rod(qA);
-fiveref1.geometry = name1;
-
-%convert to octonions
-% o1 = GBfive2oct(qA,nA);
-o1 = get_ocubo(1,'random',[],10);
+if isempty(fiveref)
+    oref = NV.oref;
+else
+    oref = GBfive2oct(fiveref);
+end
 
 %% get minimized distance octonions relative to oct pairs
 disp('get_octpairs ')
 npts = size(pts,1);
-o1rep = repmat(o1,npts,1);
-[~,octvtx] = GBdist4(o1rep,pts,32,'norm',NV.wtol,true);
+orefrep = repmat(oref,npts,1);
+[~,octvtx] = GBdist4(orefrep,pts,NV.pgnum,'norm',NV.wtol,true);
 
 %check if multiple octonions found (rare, have only seen once ever out of
 %tens of thousands 2020-08-17, otherwise might indicate an error)
@@ -84,35 +72,17 @@ octvtx = vertcat(octvtx{:});
 
 if NV.o2addQ
     %add reference octonion
-	octvtx = [o1; octvtx];
+	octvtx = [oref; octvtx];
 end
-
-if NV.plotQ
-    % compute 5DOF representation
-    five = GBoct2five(octvtx,true);
-    figure
-	plotFZrodriguez_vtx();
-	hold on
-    t = num2cell(q2rod(disorientation(vertcat(five.q),'cubic')),1);
-	plot3(t{:},'*')
-	title(['disQ == ' int2str(disQ)])
-end
-
-% tol = 1e-3;
-% [octvtx2,usv] = proj_down(octvtx,tol,'zeroQ',true);
-
-%package output
-oref = o1;
 
 %save data
-% pts = octvtx2;
 if exist('./data','dir') == 7
     savepath = fullfile('data',savename);
 else
     savepath = savename;
 end
 disp(savepath)
-save(savepath,'pts','oref','fiveref1','octvtx')
+save(savepath,'pts','oref','octvtx')
 
 end
 
@@ -448,5 +418,55 @@ end
 
 	NV.method char {mustBeMember(NV.method,{'standard','pairwise'})} = 'pairwise'
 
+
+name1 = 'random';
+switch name1
+    case 'interior'
+        qA = qlist.(name1);
+        
+        %load normals (both are arbitrary set to [0 0 1])
+        [~,RA] = symaxis(qA,name1);
+        nA = (RA*[0 0 1].').';
+        
+        %package some "five" output for saving
+        fiveref1.q =qA;
+        fiveref1.nA = nA;
+        fiveref1.d = q2rod(qA);
+        fiveref1.geometry = name1;
+        
+        %convert to octonions
+        oref = GBfive2oct(qA,nA);
+        
+    case 'random'
+        % o1 = get_ocubo(1,'random',[],10);
+        oref = get_ocubo;
+end
+
+% tol = 1e-3;
+% [octvtx2,usv] = proj_down(octvtx,tol,'zeroQ',true);
+
+
+% pts = octvtx2;
+
+
+
+% load('misFZfeatures.mat','qlist')
+
+fnames = {'PGnames.mat','olist.mat','misFZfeatures.mat'};
+
+
+
+	NV.plotQ(1,1) logical = false
+
+if NV.plotQ
+    % compute 5DOF representation
+    five = GBoct2five(octvtx,true);
+    figure
+	plotFZrodriguez_vtx();
+	hold on
+    t = num2cell(q2rod(disorientation(vertcat(five.q),'cubic')),1);
+	plot3(t{:},'*')
+	title(['disQ == ' int2str(disQ)])
+end
 
 %}

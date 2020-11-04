@@ -3,16 +3,14 @@ arguments
 	n {mustBeNonNegIntegerOrEmpty} = 1
 	method char {mustBeMember(method,{'random','uniform'})} = 'random'
 	sidelength {mustBeNonNegIntegerOrEmpty} = []
-    seed = 'shuffle'
+    seed = []
 end
+% GET_OCUBO  get octonions formed by pairs of quaternions from randomly or uniformly sampled cubochoric points.
+%  In general, for random, no two quaternions will be the same.
 %--------------------------------------------------------------------------
 % Author: Sterling Baird
 %
 % Date: 2020-07-25
-%
-% Description: get octonions formed by pairs of quaternions from randomly
-% or uniformly sampled cubochoric points. In general, for random, no two
-% quaternions will be the same.
 %
 % Inputs:
 %		n - # of octonions to output (re-calculated if using 'uniform' method
@@ -59,8 +57,11 @@ end
 % are two contradictory options.
 %
 %--------------------------------------------------------------------------
-%set random number generator
-rng(seed)
+%set random number generator (only if custom seed is specified)
+if ~isempty(seed)
+    startseed = rng; %to be used at end to set rng to initial state (i.e. before calling this function)
+    rng(seed)
+end
 
 % argument validation (cont.)
 if strcmp(method,'random') && ~isempty(sidelength)
@@ -126,6 +127,11 @@ o = [qA qB];
 %get unique list
 [~,ia] = uniquetol(round(o,12),'ByRows',true);
 o = o(ia,:);
+
+if ~isempty(seed)
+    %reset rng back to what it was before calling the function
+    rng(startseed);
+end
 
 end %get_ocube.m
 

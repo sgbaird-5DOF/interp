@@ -14,7 +14,7 @@ arguments
     NV.databary = []
     NV.propList = []
 end
-
+% INTERP_BARY  interpolate using spherical or planar barycentric coordinates
 pts2 = get_pts(qm2,nA2);
 ppts2 = get_ppts(pts2,projtol,usv,zeroQ);
 %% when barycentric coordinates aren't specified (new predict points)

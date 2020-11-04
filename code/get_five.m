@@ -2,8 +2,7 @@ function five = get_five(npts)
 arguments
     npts(1,1) double = 1
 end
-% GET_FIVE  generate random 5DOF misorientation/boundary plane normal pairs,
-% where the misorientation is cubochorically randomly sampled.
+% GET_FIVE  generate random cubochoric misorientation and random boundary plane normal pairs
 %--------------------------------------------------------------------------
 % Inputs:
 %  npts - number of 5DOF points to generate

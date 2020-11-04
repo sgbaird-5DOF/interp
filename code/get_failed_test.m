@@ -1,4 +1,4 @@
-
+% GET_FAILED_TEST  test getfailed.m
 seed_type = 'previous'; %'new', 'previous'
 failedjobQ = true;
 

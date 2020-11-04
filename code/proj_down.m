@@ -7,6 +7,8 @@ arguments
 	NV.nforceQ(1,1) logical = false
 	NV.zeroQ(1,1) logical = true
 end
+% PROJ_DOWN  project down by removing null dimensions (i.e. a rotation and translation) via singular value decomposition
+% (SVD)
 %--------------------------------------------------------------------------
 % Author: Sterling Baird
 %
@@ -16,9 +18,6 @@ end
 %		[projpts,usv] = proj_down(pts,usv);
 %
 % Date:
-%
-% Description: project down by removing null dimensions (i.e. a rotation
-% and translation) via singular value decomposition (SVD).
 %
 % Inputs:
 %   pts - rows of pts to be projected

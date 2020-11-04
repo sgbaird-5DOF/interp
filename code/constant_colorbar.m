@@ -1,4 +1,4 @@
-%----colorbar------
+% CONSTANT_COLORBAR  script to generate a colorbar with constant limits
 z_label = 'D_eff (m^2/s)';
 clims = [1e-15 1e-13];
 

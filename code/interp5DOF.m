@@ -1,20 +1,22 @@
-function [propOut,interpfn,mdl,mdlpars] = interp5DOF(qm,nA,propList,qm2,nA2,method,NV)
+function [ypred,interpfn,mdl,mdlpars] = interp5DOF(qm,nA,propList,qm2,nA2,method,NV)
 arguments
-    qm
-    nA
-    propList(:,1)
-    qm2
-    nA2
-    method = 'gpr'
-    NV.databary = []
-    NV.facetIDs = []
-    NV.dataprops = []
+    qm %input misorientation quaternions
+    nA %input BP normals
+    propList(:,1) %property values
+    qm2 %query misorientations
+    nA2 %query BP normals
+    method char {mustBeMember(method,{'gpr','sphgpr','pbary','sphbary','idw','nn','avg'})} = 'gpr'
+    NV.pgnum(1,1) double = 32 %m-3m (i.e. m\overbar{3}m) FCC symmetry default
+    NV.databary = [] %for use with bary methods
+    NV.facetIDs = [] %for use with bary methods
+    NV.dataprops = [] %user-specified "true" values for error calculations
     NV.modelparsspec = struct()
-    NV.brkQ(1,1) logical = true
-    NV.gpropts = struct.empty
-    NV.uuid = get_uuid()
-    NV.o = []
-    NV.o2 = []
+    NV.brkQ(1,1) logical = true %whether to compute BRK values as ytrue
+    NV.gpropts = struct.empty %for use with gpr methods 'gpr' or 'sphgpr'
+    NV.r double = [] %for use with 'idw' method, alternatively set to [] for automatic estimation
+    NV.uuid(1,8) char = get_uuid() %unique ID associated with this interpolation run
+    NV.o = [] %input octonions, specify these or qm/nA pairs
+    NV.o2 = [] %query octonions, specify these or qm2/nA2 pairs
 end
 % INTERP5DOF  Convert misorientation and boundary plane normal 5DOF input
 % data to a closed, octonion, hyperspherical mesh and interpolate property
@@ -118,7 +120,7 @@ end
 %   GRAVEYARD" section)
 %
 % Notes:
-%  Simpler, plug & play, input/output version of run.m (fewer options)
+%  Simpler, plug & play, input/output version of run.m (different options)
 %
 %  Dependencies updated 2020-09-03 SGB
 %
@@ -157,7 +159,11 @@ end
 % Date: 2020-09-03
 %--------------------------------------------------------------------------
 
+%display method
+disp(['method = ' method])
+
 %unpack (some) name-value pairs
+pgnum = NV.pgnum;
 brkQ = NV.brkQ;
 uuid = NV.uuid;
 
@@ -165,6 +171,7 @@ uuid = NV.uuid;
 addpathdir({'normr.m','GB5DOF_setup.m','cu2qu.m','q2rod.m','GBfive2oct.m','correctdis.m','interp_gpr.m'})
 
 %% convert to octonions & symmetrize
+tic
 %predictor points
 if isempty(qm) && isempty(nA) && ~isempty(NV.o)
     predinput = 'octonion';
@@ -173,8 +180,9 @@ else
     predinput = '5dof';
     otmp = GBfive2oct(qm,nA);
 end
+%symmetrization
 wtol = 1e-6;
-o = get_octpairs(otmp,'wtol',wtol);
+[o,oref] = get_octpairs(otmp,'wtol',wtol,'pgnum',pgnum);
 nmeshpts = size(o,1);
 
 %query points
@@ -185,8 +193,19 @@ else
     queryinput = '5dof';
     otmp2 = GBfive2oct(qm2,nA2);
 end
-o2 = get_octpairs(otmp2,'wtol',wtol);
+%symmetrization
+[o2,oref2] = get_octpairs(otmp2,'wtol',wtol,'pgnum',pgnum);
 ndatapts = size(o2,1);
+
+%make sure that reference octonions are identical within tolerance
+if ~ismembertol(oref,oref2,'ByRows',true)
+    disp(['oref  == ' num2str(oref)])
+    disp(['oref2 == ' num2str(oref2)])
+    warning('oref ~= oref2')
+end
+symruntime = toc;
+
+[~,~,nnmu,nnsigma] = get_knn(o,'omega',1);
 
 disp(['nmeshpts = ' int2str(nmeshpts) ', ndatapts = ' int2str(ndatapts)])
 
@@ -205,11 +224,12 @@ o = normr(o);
 o2 = normr(o2);
 [a,usv] = proj_down([o;o2],projtol,'zeroQ',zeroQ);
 
+d = size(a,2);
 %projected points
-if size(a,2) == 7
+if d <= 7
     ppts = proj_down(o,projtol,usv,'zeroQ',zeroQ);
 	ppts2 = proj_down(o2,projtol,usv,'zeroQ',zeroQ);
-else
+else 
     error("Input doesn't have degenerate dimension or has too few (i.e. check input data), or try reducing proj_down tolerance input (tol)")
 end
 
@@ -225,6 +245,7 @@ data.pts = o2;
 data.ppts = ppts2;
 data.npts = ndatapts;
 
+%data property values
 if isempty(NV.dataprops)
     if NV.brkQ
         for i = 1:data.npts
@@ -238,6 +259,7 @@ if isempty(NV.dataprops)
 else
     data.props = NV.dataprops;
 end
+ytrue = data.props;
 
 %% additional variables
 % current date and time
@@ -250,15 +272,12 @@ gitcommit = get_gitcommit();
 
 %% package into struct
 %general model variables 
-mdlgen = var_names(brkQ,method,projtol,zeroQ,usv,starttime,ncores,...
-    gitcommit,uuid,predinput,queryinput,projQ);
+mdlgen = var_names(method,projtol,zeroQ,usv,starttime,ncores,...
+    gitcommit,uuid,predinput,queryinput,projQ,oref,oref2,nnmu,nnsigma,symruntime);
 %general parameters
-mdlparsgen = var_names(brkQ,method,projtol,zeroQ,starttime,nmeshpts,...
-    ndatapts,ncores,gitcommit,uuid,predinput,queryinput,projQ);
-
-%% helper functions
-%function to concatenate structures with all different fields (no common)
-structcat = @(S1,S2) table2struct([struct2table(S1,'AsArray',true),struct2table(S2,'AsArray',true)]);
+mdlparsgen = var_names(method,projtol,zeroQ,starttime,nmeshpts,...
+    ndatapts,ncores,gitcommit,uuid,predinput,queryinput,projQ,oref,oref2,nnmu,nnsigma,...
+    symruntime);
 
 %% method-specific interpolation
 tic
@@ -294,7 +313,7 @@ switch method
                     barytype = 'planar';
             end
             %interpolation
-            [propOut,databary,facetprops,facetIDs,barypars] = get_interp(mesh,data,intfacetIDs,barytype,barytol);
+            [ypred,databary,facetprops,facetIDs,barypars] = get_interp(mesh,data,intfacetIDs,barytype,barytol);
             
             %model command and interpolation function
             mdlcmd = @(mesh,data,intfacetIDs,barytype,barytol) get_interp(mesh,data,intfacetIDs,barytype,barytol);
@@ -315,7 +334,7 @@ switch method
                         
             %model-specific parameters
             mdlparsspec = var_names(barytol,barytype,inttol,nnMax,...
-                nn_rmse,nn_mae,nints,numnonints,int_fraction);
+                nn_rmse,nn_mae,nints,numnonints,int_fraction,barypars);
             
         else
             %unpack
@@ -323,7 +342,7 @@ switch method
             facetIDs = NV.facetIDs;
             
             %interpolate using supplied barycentric coordinates
-            [propOut,facetprops,NNextrapID,nnList] = interp_bary_fast(ppts,ppts2,meshprops,databary,facetIDs);
+            [ypred,facetprops,NNextrapID,nnList] = interp_bary_fast(ppts,ppts2,meshprops,databary,facetIDs);
             
             %model command and interp function
             mdlcmd = @(databary,facetprops) dot(databary,facetprops,2);
@@ -349,9 +368,16 @@ switch method
         %gpr options
         if isempty(NV.gpropts)
             %% interp5DOF's default gpr options
-            PredictMethod = 'fic';
-            
-            gpropts = {'PredictMethod',PredictMethod};
+            if nmeshpts <= Inf
+                PredictMethod = 'exact';
+                gpropts = {};
+            else
+                PredictMethod = 'bcd';
+                gpropts = {'BlockSize',10000};
+            end
+            gpropts = [gpropts {'PredictMethod',PredictMethod}];
+%             gpropts = {'PredictMethod',PredictMethod};
+           
             if strcmp(method,'sphgpr')
                 %squared exponential kernel function with octonion distance
                 kfcn = @(XN,XM,theta) (exp(theta(2))^2)*exp(-(pdist2(XN,XM,@get_omega).^2)/(2*exp(theta(1))^2));
@@ -407,21 +433,24 @@ switch method
         else
             gprMdl = fitrgp(X,propList);
         end
+        %compact the model
+        cgprMdl = compact(gprMdl);
+        
         %predictions ("interpolated" points)
         if ~strcmp(PredictMethod,'bcd')
-            [propOut,ysd,yint] = predict(gprMdl,X2);
+            [ypred,ysd,yint] = predict(cgprMdl,X2);
         else
-            propOut = predict(gprMdl,X2);
+            ypred = predict(cgprMdl,X2);
         end
         
-        mdlcmd = @(gprMdl,X2) predict(gprMdl,X2);
-        interpfn = @(qm2,nA2) interp_gpr(gprMdl,qm2,nA2,projtol,usv);
+        mdlcmd = @(cgprMdl,X2) predict(cgprMdl,X2);
+        interpfn = @(qm2,nA2) interp_gpr(cgprMdl,qm2,nA2,projtol,usv);
         
         %model-specific variables
         if ~strcmp(PredictMethod,'bcd')
-            mdlspec = var_names(gprMdl,gpropts,ysd,yint);
+            mdlspec = var_names(cgprMdl,gpropts,ysd,yint);
         else
-            mdlspec = var_names(gprMdl,gpropts);
+            mdlspec = var_names(cgprMdl,gpropts);
         end
         %model-specific parameters
         if exist('gproptshort','var') == 1
@@ -439,16 +468,46 @@ switch method
         else
             mdlparsspec = var_names(PredictMethod);
         end
+        mdlspec.KernelInformation = cgprMdl.KernelInformation;
+        mdlparsspec.KernelType = cgprMdl.KernelInformation.Name;
+        mdlparsspec.KernelParameters = cgprMdl.KernelInformation.KernelParameters;
+        mdlparsspec.KernelParameterNames = cgprMdl.KernelInformation.KernelParameterNames;
+        mdlparsspec.Beta = cgprMdl.Beta;
+        mdlparsspec.Sigma = cgprMdl.Sigma;
         
-    case 'nn'
-        %nearest neighbors (NN)
+    case 'idw' % inverse distance weighting
+        %whether to remove degenerate dimension or not
+        if projQ
+            X = ppts;
+            X2 = ppts2;
+        else
+            X = o;
+            X2 = o2;
+        end
+        
+        r = NV.r;
+
+        L = 2; %norm-power (i.e. L == 2 --> Euclidean norm)
+        %different from Tovar's FEX idw.m implementation, but should be
+        %similar or same output
+        [ypred,W,r,nints,numnonints,int_fraction] = idw(X,X2,propList,r,L);
+        
+        mdlcmd = @(X,X2,propList,r,L) idw(X,X2,propList,r,L);
+        interpfn = @(qm2,nA2) interp_idw(X,qm2,nA2,y,r,L);
+        
+        %model-specific variables
+        mdlspec = var_names(L,W,r,nints,numnonints,int_fraction);
+        %model-specific parameters
+        mdlparsspec = var_names(L,r,nints,numnonints,int_fraction);
+        
+    case 'nn' %nearest neighbors
         nnList = dsearchn(ppts,ppts2);
         
         mdlcmd = @(ppts,ppts2,propList) propList(dsearchn(ppts,ppts2));
         interpfn = @(qm2,nA2) interp_nn(ppts,qm2,nA2,projtol,usv,propList);
         
         %assign NN property values
-        propOut = propList(nnList);
+        ypred = propList(nnList);
         
         %model-specific variables
         mdlspec.nnList = nnList;
@@ -457,7 +516,7 @@ switch method
         
     case 'avg'
         % "interpolation" (just constant model)
-        [propOut,yavg] = interp_avg(propList,ndatapts);
+        [ypred,yavg] = interp_avg(propList,ndatapts);
         
         mdlcmd = @(propList,ndatapts) interp_avg(propList,ndatapts);
         interpfn = @(qm2,nA2) repelem(yavg,ndatapts,1); %any new point gets assigned yavg
@@ -477,32 +536,47 @@ switch method
         %
         % variables to define:
         %   propOut - interpolated values
-        %   mdl - struct containing model variables
-        %   mdlpars - struct containing model parameters
+        %   mdlspec - struct containing model-specific variables
+        %   mdlparsspec - struct containing model-specific parameters
         %
         % update the documentation
         %
         % consider suggesting as an addition in the GitHub repository via
         % GitHub issue or preferably pull request
+        %
+        % for use with randOctParityData:
+        % update arguments..end syntax in get_walltimefn
+        % add 'case' for your 'insertnamehere' in get_walltimefn
+        
+        %model-specific variables
+        mdlspec = struct();
+        %model-specific parameters
+        mdlparsspec = struct();
 end
 runtime = toc; %time elapsed to do the interpolation (method-specific portion)
 
 %% append extra general variables
+%parity variables
+parity.ypred = ypred;
+parity.ytrue = ytrue;
+
 %model
-mdlgen.propOut = propOut;
+mdlgen.ypred = ypred;
 mdlgen.mdlcmd = mdlcmd;
 mdlgen.interpfn = interpfn;
 mdlgen.runtime = runtime;
 mdlgen.mesh = mesh;
 mdlgen.data = data;
+mdlgen.parity = parity;
 %parameters
 mdlparsgen.runtime = runtime;
+mdlparsgen.parity = parity;
 
 %% concatenate structs
 %model variables 
-mdl = structcat(mdlgen,mdlspec);
+mdl = structhorzcat(mdlgen,mdlspec);
 %model parameters
-mdlpars = structcat(mdlparsgen,mdlparsspec);
+mdlpars = structhorzcat(mdlparsgen,mdlparsspec);
 
 end
 
@@ -740,5 +814,10 @@ end
 % %projected points
 % ppts = a(1:nmeshpts,:);
 % ppts2 = a(nmeshpts+1:end,:);
+
+
+%% helper functions
+%function to concatenate structures with all different fields (no common)
+structcat = @(S1,S2) table2struct([struct2table(S1,'AsArray',true),struct2table(S2,'AsArray',true)]);
 
 %}

@@ -1,3 +1,4 @@
+%SUBDIV_TEST  e.g. subdivide a d-1 or d-2 simplex (e.g. triangle or line in 3D Cartesian coordinates) and plot
 clear; close all;
 
 test = 2;
