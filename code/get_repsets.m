@@ -3,12 +3,11 @@ arguments
 	pts
 	n(1,1) double {mustBeInteger} = 1
 end
+% GET_REPSETS  Find sets of points with at least a degeneracy of n
 %--------------------------------------------------------------------------
 % Author: Sterling Baird
 %
 % Date: 2020-06-30
-%
-% Description: Find sets of points with at least a degeneracy of n
 %
 % Inputs:
 %		pts - set of points (rows) that may or may not contain

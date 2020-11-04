@@ -28,13 +28,11 @@ arguments
     NV.xlim = [min([yactual(:);ypred(:)]) max([yactual(:);ypred(:)])]
     NV.ylim = [min([yactual(:);ypred(:)]) max([yactual(:);ypred(:)])]
 end
+% PARITYPLOT  Create a parity plot and pass options to (scatter() or hexscatter()) and refline().
 %--------------------------------------------------------------------------
 % Author(s): Sterling Baird
 %
 % Date: 2020-09-03
-%
-% Description: Create a parity plot and pass options to scatter() and
-% refline().
 %
 % Inputs:
 %  y1 - x-axis data

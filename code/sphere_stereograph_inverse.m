@@ -1,8 +1,6 @@
 function p = sphere_stereograph_inverse ( q )
-
+% SPHERE_STEREOGRAPH_INVERSE  compute stereographic preimages of points.
 %*****************************************************************************80
-%
-%% SPHERE_STEREOGRAPH_INVERSE computes stereographic preimages of points.
 %
 %  Discussion:
 %

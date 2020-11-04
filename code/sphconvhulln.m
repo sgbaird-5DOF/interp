@@ -5,12 +5,11 @@ arguments
 	dimtype char {mustBeMember(dimtype,{'low','high'})} = 'low'
     tol(1,1) double = 1e-4
 end
+% Compute the "convex hull" on a spherical surface
 %--------------------------------------------------------------------------
 % Author: Sterling Baird
 %
 % Date: 2020-07-06
-%
-% Description: Compute the convex hull of a spherical surface.
 %
 % Example usage: K = sphconvhulln(pts);
 % 

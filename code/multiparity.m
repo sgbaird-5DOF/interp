@@ -9,6 +9,7 @@ arguments
     NV.ylim = []
     NV.Interpreter char {mustBeMember(NV.Interpreter,{'tex','latex','none'})} = 'latex'
 end
+% MULTIPARITY  create tiled parity plots using cell parity data
 
 % fig=figure;
 % fig.Position = [418.6 194.6 644.8 555.2];

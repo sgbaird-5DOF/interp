@@ -1,4 +1,5 @@
-function [octvtx,usv,five,omega23_pair,omega23_GBdist] = get_octpairs(pts,five,savename,o2addQ,varargin)
+function [octvtx,usv,five,omega23_pair,omega23_GBdist] = get_octpairs2(pts,five,savename,o2addQ,varargin)
+%  GET_OCTPAIRS2  deprecated version of get_octpairs()
 %--------------------------------------------------------------------------
 % Author: Sterling Baird
 %

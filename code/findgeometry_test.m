@@ -1,3 +1,4 @@
+% FINDGEOMETRY_TEST  test findgeometry for 'OAB', 'OBCE', 'OADE', etc. of misorientation FZ
 clear; close all;
 
 %assumption is 'FCC' or 'BCC' crystal type (2020-06-30)

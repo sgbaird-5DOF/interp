@@ -6,8 +6,7 @@ arguments
 	ilist = []
 	NV.quiverQ(1,1) logical = false
 end
-
-%plotting
+%plotting five degree-of-freedom parameters in misorientation and boundary plane spaces
 nexttile
 plotFZrodriguez_vtx();
 hold on

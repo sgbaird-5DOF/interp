@@ -1,4 +1,5 @@
 function [five,sept,o] = mesh5DOF(featureType,ctrcuspQ,varargin)
+% MESH5DOF  generate "five" and "o" for a five degree-of-freedom fundamental zone (deprecated)
 %--------------------------------------------------------------------------
 % Author: Sterling Baird
 %

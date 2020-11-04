@@ -1,11 +1,9 @@
 function [five_out,olist_out] = tofiveFZ(five,varargin)
+% TOFIVEFZ  Take 5DOF data and rotate it into misorientation and boundary plane fundamental zones.
 %--------------------------------------------------------------------------
 % Author: Sterling Baird
 %
 % Date: 2020-07-21
-%
-% Description: Take 5DOF data and rotate it into misorientation and
-% boundary plane fundamental zones.
 %
 % Inputs:
 %		five - struct array of 5DOF parameters

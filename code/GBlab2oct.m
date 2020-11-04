@@ -5,10 +5,11 @@ arguments
    nA_Lab(:,3) double {mustBeReal,mustBeFinite}
    convention char {mustBeMember(convention,'francis')} = 'francis'
 end
-% GBLAB2OCT  Convert the crystal orientations (expressed as 
-% quaternions) of grains meeting at a grain boundary (GB) together with the
-% corresponding GB normals to the GB octonion defined by Francis [1] and 
-% required by the GBdist function [2].
+% GBLAB2OCT  convert lab coordinate grain boundareis to octonions
+% Convert the crystal orientations (expressed as quaternions) of grains
+% meeting at a grain boundary (GB) together with the corresponding GB
+% normals to the GB octonion defined by Francis [1] and required by the
+% GBdist function [2].
 %-------------------------------------------------------------------------%
 % Filename: GBlab2oct.m
 % Author: Oliver Johnson, Refactored by Sterling Baird

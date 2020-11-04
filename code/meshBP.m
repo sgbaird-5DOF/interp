@@ -5,14 +5,13 @@ arguments
     ctrcuspQ(1,1) logical = true
     geometry = ''
 end
+% MESHBP  generate boundary plane (BP) fundamental zone mesh for a
+% quaternion and rotate quaternion so that the BP normal matches the
+% quaternion.
 %--------------------------------------------------------------------------
 % Author: Sterling Baird
 %
 % Date: 2020-06-30
-%
-% Description: generate boundary plane (BP) fundamental zone mesh for a
-% quaternion and rotate quaternion so that the BP normal matches the
-% quaternion.
 %
 % Inputs:
 %		q			===	quaternion (according to convention in [1])

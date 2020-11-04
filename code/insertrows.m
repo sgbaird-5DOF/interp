@@ -1,5 +1,5 @@
 function [C,RA,RB] = insertrows(A,B,ind)
-% INSERTROWS - Insert rows into a matrix at specific locations
+% INSERTROWS  Insert rows into a matrix at specific locations
 %   C = INSERTROWS(A,B,IND) inserts the rows of matrix B into the matrix A at
 %   the positions IND. Row k of matrix B will be inserted *after* position IND(k)
 %   in the matrix A. If A is a N-by-X matrix and B is a M-by-X matrix, C will

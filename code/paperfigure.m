@@ -4,7 +4,7 @@ arguments
    ncols(1,1) double = 1
    ht double = []
 end
-%% call figure in centimeters and with appropriate size
+% PAPERFIGURE  call figure in centimeters and with appropriate size
 switch ncols
     case 1
         wd = 9;

@@ -1,5 +1,5 @@
 function [M, TF] = padcat(varargin)
-% PADCAT - concatenate vectors with different lengths by padding with NaN
+% PADCAT  concatenate vectors with different lengths by padding with NaN
 %
 %   M = PADCAT(V1, V2, V3, ..., VN) concatenates the vectors V1 through VN
 %   into one large matrix. All vectors should have the same orientation,

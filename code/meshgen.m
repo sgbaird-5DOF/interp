@@ -1,5 +1,5 @@
 function meshpts = meshgen(meshMethod)
-
+% MESHGEN  generate octonions randomly or from literature (deprecated)
 switch meshMethod
 	case 'Rohrer2009'
 		step = 10; %degrees

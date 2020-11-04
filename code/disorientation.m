@@ -1,14 +1,14 @@
-%-------------------------------------------------------------------------%
-%Filename:  disorientation.m
-%Author:    Oliver Johnson
-%Date:      2/25/2012
-%
+function d = disorientation(m,cs)
 % DISORIENTATION determines the unique misorientation between two adjacent
 % crystals among all of the symmetrically equivalent ones, satisfying the
 % conditions specified in [1], where a unit quaternion is defined by 
 % q = [q0 q1 q2 q3]. DISORIENTATION is fully vectorized and employs a 
 % memory management scheme to ensure quick computation by keeping, as much 
 % as possible, to the physical memory.
+%-------------------------------------------------------------------------%
+%Filename:  disorientation.m
+%Author:    Oliver Johnson
+%Date:      2/25/2012
 %
 % Inputs:
 %   m - An npts-by-4 array of unit quaternions representing the
@@ -40,8 +40,6 @@
 % Change Log:
 %   9/24/2012 - Added support for MTEX 3.3.1 symmetry labels
 %-------------------------------------------------------------------------%
-
-function d = disorientation(m,cs)
 
 %---determine appropriate symmetry relations to use---%
 switch lower(cs)

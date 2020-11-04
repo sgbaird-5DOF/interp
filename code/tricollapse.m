@@ -1,11 +1,9 @@
 function [uniqueK, uniquePts] = tricollapse(K,pts)
+% TRICOLLAPSE  collapse triangulation of points (i.e. a triangulation involving repeat points).
 %--------------------------------------------------------------------------
 % Author: Sterling Baird
 %
 % Date: 2020-07-03
-%
-% Description: collapse triangulation of points (i.e. a triangulation
-% involving repeat points).
 %
 % Inputs:
 %		K				=== convex hull triangulation of pts

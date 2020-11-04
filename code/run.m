@@ -1,4 +1,5 @@
 clear; close all force
+%  RUN  script to generate octonions and interpolate grain boundary energy values (deprecated, see interp5DOF.m)
 %---------------------------------run.m------------------------------------
 % Author: Sterling Baird
 %

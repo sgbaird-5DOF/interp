@@ -1,4 +1,5 @@
 function BPFZ_ids = inBPFZ(nAlist,vertices,R)
+% INBPFZ  return logical of which boundary plane normals are in BP fundamental zone
 %--------------------------------------------------------------------------
 % Author: Sterling Baird
 %

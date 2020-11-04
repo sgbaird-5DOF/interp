@@ -1,11 +1,9 @@
 function a = projray2hyperplane(nvec,pt)
+% PROJRAY2HYPERPLANE  Project ray (pt) from unit hypersphere to tangent hyperplane at another point (nvec)
 %--------------------------------------------------------------------------
 % Author: Sterling Baird
 %
 % Date: 2020-07-03
-%
-% Description: Project ray (pt) from unit hypersphere to tangent
-% hyperplane at another point (nvec).
 % 
 % Inputs:
 %	nvec	=== normalized normal to hyperplane

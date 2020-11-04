@@ -1,16 +1,12 @@
+function [w,t,p] = q2rot_fast(q)
+% Q2ROT_FAST  Same as q2rot, but does not perform the same checks (3x speedup)
+% As a result the output is not guaranteed to lie in the same intervals as
+% q2rot. Instead we have w = [0,2*pi], t = [0,pi]?, p = [-pi,pi].
 %-------------------------------------------------------------------------%
 %Filename:  q2rot_fast.m
 %Author:    Oliver Johnson
 %Date:      5/27/2013
-%
-% Same thing as q2rot, but does not perform the same checks in order to
-% achieve a speedup of 3x. As a result the output is not guaranteed to lie
-% in the same intervals as q2rot. Instead we have w = [0,2*pi], t =
-% [0,pi]?, p = [-pi,pi].
 %-------------------------------------------------------------------------%
-
-function [w,t,p] = q2rot_fast(q)
-
 % %---check inputs---%
 % assert((size(q,2) == 4),'q must be an npts-by-4 array.')
 

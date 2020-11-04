@@ -1,9 +1,7 @@
 function R= rotationmat3D(r,Axis)
-%function R= rotationmat3D(radians,Axis)
-%
-% creates a rotation matrix such that R * x 
-% operates on x by rotating x around the origin r radians around line
-% connecting the origin to the point "Axis"
+% ROTATIONMAT3D  creates a rotation matrix based on axis and angle
+% R * x: R operates on x by rotating x around the origin r radians around
+% line connecting the origin to the point "Axis"
 %
 % example:
 % rotate around a random direction a random amount and then back

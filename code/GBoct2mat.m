@@ -1,8 +1,6 @@
 function [OA1,OB1] = GBoct2mat(o)
+% GBOCT2MAT  convertion grain boundary octonions to orientation matrices (**unfinished**)
 %% INPUT DATA 
-
-%%% UNFINISHED %%%
-
 % OA, OB are normalized orientation matrices in the crystal frames of grain 1 and 2 with miller indices along the COLUMNS. 
 % IMPORTANT CONVENTION: third column of orientation matrix is aligned with boundary plane (z direction)
 

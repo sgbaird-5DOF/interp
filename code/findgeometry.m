@@ -3,17 +3,16 @@ arguments
 	qlist(:,4) double {mustBeReal,mustBeFinite}
 	tol(1,1) double = 1e-3
 end
+% FINDGEOMETRY: Output the misorientation FZ geometry of a point given a quaternion (e.g. 'OAB').
+%   (Assumes FCC 2020-06-30). The basic idea is check if in
+%	surface. If in surface, check if in line. If in line, check if on
+%	point. When nothing is found in the next geometry type (surface, line,
+%	point), the geometry name from the next highest set is taken. If it's
+%	not on a surface, the geometry is assumed to be 'interior'.
 %-------------------------------------------------------------------------
 % Author: Sterling Baird
 %
 % Date: 2020-06-30
-%
-% Description: Output the misorientation FZ geometry of a point given a
-%	quaternion. (Assumes FCC 2020-06-30). The basic idea is check if in
-%	surface. If in surface, check if in line. If in line, check if on point.
-%	When nothing is found in the next geometry type (surface, line, point),
-%	the geometry name from the next highest set is taken. If it's not on a
-%	surface, the geometry is assumed to be 'interior'.
 %
 % Inputs:
 %		qlist	=== rows of quaternion (according to convention in [1])

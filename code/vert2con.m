@@ -1,5 +1,5 @@
 function [A,b] = vert2con(V)
-% VERT2CON - convert a set of points to the set of inequality constraints
+% VERT2CON   convert a set of points to the set of inequality constraints
 %            which most tightly contain the points; i.e., create
 %            constraints to bound the convex hull of the given points
 %

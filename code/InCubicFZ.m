@@ -3,13 +3,11 @@ arguments
 	R(:,3) double
 	tol(1,1) double = 1e-3
 end
+% INCUBICFZ  Test whether or not a set of rodrigues vectors is within the cubic misorientation fundamental zone.
 %--------------------------------------------------------------------------
 % Authors: Eric Homer, Sterling Baird
 %
 % Date: 2020-07-20
-%
-% Description: Test whether or not a set of rodrigues vectors is within the
-% cubic misorientation fundamental zone.
 % 
 % Inputs: R - rows of rodrigues vector
 %

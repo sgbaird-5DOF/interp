@@ -5,13 +5,11 @@ arguments
 	b = []
 	tol = 1e-3
 end
+% INMISFZ  check which rodrigues vectors fall inside the misorientation fundamental zone via vert2con (FEX)
 %--------------------------------------------------------------------------
 % Author(s): Sterling Baird
 %
 % Date: 2020-08-13
-%
-% Description: check which rodrigues vectors fall inside the misorientation
-% fundamental zone
 %
 % Inputs:
 %  A,b - constraint output from vert2con.m (FEX)

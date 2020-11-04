@@ -3,12 +3,11 @@ arguments
 	pts double
 	usv struct {mustContainFields(usv,{'V'})}
 end
+% PROJ_UP  project up (restore null dimensions) using "USV" struct from proj_down.m
 %--------------------------------------------------------------------------
 % Author: Sterling Baird
 %
 % Date:
-%
-% Description: project up (restore null dimensions)
 % 
 % Inputs:
 %

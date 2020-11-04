@@ -3,9 +3,8 @@ arguments
    xyz
    resolution(1,1) double = deg2rad(0.05)
 end
+% VORONOISPHERE  Compute the voronoi's diagram of points on the spheres S^2
 % [Vertices, K, voronoiboundary, s] = voronoisphere(xyz)
-%
-% Compute the voronoi's diagram of points on the spheres S^2
 %
 % INPUT:
 %   xyz is (3 x n) array, coordinates of n points in R^3

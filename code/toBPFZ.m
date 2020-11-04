@@ -7,14 +7,12 @@ arguments
     NV.pgnum(1,1) double = 32 %cubic Oh
     NV.plotQ(1,1) logical = false
 end
+% TOBPFZ  Rotate an arbitrary boundary plane normal for quaternion into standard boundary plane fundamental zone
+%  similar to what disorientation.m does for misorientations.
 %--------------------------------------------------------------------------
 % Author: Sterling Baird
 %
 % Date: 2020-07-15
-%
-% Description: Rotate an arbitrary boundary plane normal for a given
-% quaternion into a standard boundary plane fundamental zone, similar to
-% what disorientation.m does for misorientations.
 %
 % Inputs:
 %		qlist === quaternion

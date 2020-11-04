@@ -5,13 +5,11 @@ arguments
     method {mustBeMember(method,'reverse')} = 'reverse'
     qmconvention char {mustBeMember(qmconvention,{'francis','johnson'})} = 'francis'
 end
+% GBOCT2FIVE  (incorrect, derivation error, 2020-11-03) Inverse operation of GBfive2oct.m (GB_octonion_code), output "five" struct
 %--------------------------------------------------------------------------
 % Author: Sterling Baird
 %
 % Date: 2020-09-23
-%
-% Description: Do the inverse operation of GBfive2oct.m (CMU group,
-% octonion code), and package into "five" structure
 %
 % Inputs:
 %		octlist - list of octonions (rows), can be norm==1 or norm==sqrt(2)

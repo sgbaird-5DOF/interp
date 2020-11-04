@@ -1,12 +1,11 @@
 function R = vecpair2rmat(v1,v2)
+% VECPAIR2RMAT  Compute a (non-unique) rotation matrix to go from v1 to v2.
+%  If v1 == v2 or v1 == -v2 within the given numerical precision, then the
+%  identity matrix or -1*identity matrix is given, respectively.
 %--------------------------------------------------------------------------
 % Author: Sterling Baird
 %
 % Date: 2020-07-01
-%
-% Description: Compute rotation matrix. If v1 == v2 or v1 == -v2 within the
-% given numerical precision, then the identity matrix or -1*identity matrix
-% is given, respectively.
 %
 % Inputs:
 %		v1, v2	===	two vectors to find the rotation matrix to go from

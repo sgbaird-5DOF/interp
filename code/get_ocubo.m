@@ -5,14 +5,12 @@ arguments
 	sidelength {mustBeNonNegIntegerOrEmpty} = []
     seed = []
 end
+% GET_OCUBO  get octonions formed by pairs of quaternions from randomly or uniformly sampled cubochoric points.
+%  In general, for random, no two quaternions will be the same.
 %--------------------------------------------------------------------------
 % Author: Sterling Baird
 %
 % Date: 2020-07-25
-%
-% Description: get octonions formed by pairs of quaternions from randomly
-% or uniformly sampled cubochoric points. In general, for random, no two
-% quaternions will be the same.
 %
 % Inputs:
 %		n - # of octonions to output (re-calculated if using 'uniform' method

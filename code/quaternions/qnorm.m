@@ -1,9 +1,8 @@
+% QNORM returns the magnitude (2-norm) of user supplied quaternions.
 %-------------------------------------------------------------------------%
 %Filename:  qnorm.m
 %Author:    Oliver Johnson
 %Date:      2/23/2011
-%
-% QNORM returns the magnitude (2-norm) of user supplied quaternions.
 %
 % Inputs:
 %   q - An npts-by-4 array containing quaternion components in 4-vector 

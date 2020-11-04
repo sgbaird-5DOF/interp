@@ -2,13 +2,11 @@ function tblout = tblvertcat(tbl)
 arguments (Repeating)
     tbl table
 end
+% TBLVERTCAT  vertically catenate tables with different variables, filling in dummy values as needed
 %--------------------------------------------------------------------------
 % Author(s): Sterling Baird 
 %
 % Date: 2020-09-04
-%
-% Description: vertically catenate any number of tables with different
-% variables, filling in dummy values where necessary.
 %
 % Inputs:
 %  tbl - table, where each table can have a different number of rows and

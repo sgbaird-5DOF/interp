@@ -1,4 +1,5 @@
 function walltimefn = get_walltimefn(ndatapts,npredpts,method,cores,datatype) %#ok<*INUSD,*INUSL>
+% GET_WALLTIMEFN  get a function handle for computing interp5DOF SLURM walltimes (e.g. 'gpr')
 arguments
     ndatapts(1,1) double
     npredpts(1,1) double

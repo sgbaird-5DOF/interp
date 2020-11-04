@@ -15,6 +15,7 @@ arguments
     NV.charlblQ(1,1) logical = true
     NV.Interpreter char {mustBeMember(NV.Interpreter,{'latex','tex'})} = 'latex'
 end
+% MULTIXYPLOTS  create tiled xy-plots from variables in a table
 
 if iscell(xytypes{1})
     ntypes = length(xytypes);

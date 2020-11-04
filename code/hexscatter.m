@@ -14,10 +14,9 @@ arguments
     NV.cscale char {mustBeMember(NV.cscale,{'log','linear'})} = 'log'
     NV.Interpreter char {mustBeMember(NV.Interpreter,{'tex','latex','none'})} = 'latex'
 end
+% HEXSCATTER  A scatter-plot substitute - generate a density plot using hexagonal patches.
 %% h = HEXSCATTER( x, y, ... )
 % Gordon Bean, February 2014
-% A scatter-plot substitute - generate a density plot using hexagonal
-% patches.
 %
 % Syntax
 % hexscatter(xdata, ydata)

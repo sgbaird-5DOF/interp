@@ -1,5 +1,5 @@
-function tbl = parfilter(tbl,pars)
-% PARFILTER  filter a table based on a struct of parameters
+function tbl = tblfilt(tbl,pars)
+% TBLFILT  filter a table based on a struct of parameters (deprecated, see built-in findgroups() and splitapply())
 names = fieldnames(pars);
 for i = 1:length(names)
     name = names{i};

@@ -5,13 +5,11 @@ arguments
 	datapts double {mustBeReal,mustBeFinite}
 	K(1,1) double {mustBeInteger} = size(meshpts,2)+50;
 end
+% KNNINTERP  compute linear interpolation using hyperplane fitted to k-nearest neighbors
 %--------------------------------------------------------------------------
 % Author: Sterling Baird
 %
 % Date: 2020-07-27
-%
-% Description: compute a linear interpolation of data using a hyperplane
-% fitted to k-nearest neighbors of mesh (points and property values).
 %
 % Inputs:
 %		a -	a

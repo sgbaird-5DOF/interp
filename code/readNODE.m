@@ -1,6 +1,5 @@
 function [V,I] = readNODE(filename)
-  % READNODE Read vertex positions from .node file, .node files are used by
-  % Stellar and Triangle
+  % READNODE  Read vertex positions from .node file, .node files are used by Stellar and Triangle
   %
   % V = readNODE(filename)
   %

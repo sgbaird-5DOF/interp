@@ -1,11 +1,9 @@
 function nrlist = normr(rlist)
+% NORMR  normalizes vectors row-by-row. Outputs zero vector if zero vector input (shadowed by Computer Vision Toolbox)
 %--------------------------------------------------------------------------
 % Author: Sterling Baird
 %
 % Date: 2020-07-03
-%
-% Description: normalizes vectors row-by-row. Outputs a zero vector if a
-%					zero vector is input.
 %
 % Inputs:
 %

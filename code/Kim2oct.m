@@ -1,10 +1,9 @@
+% KIM2OCT  load Kim2011 dataset, convert to norm-symmetrized octonions
+%  and write to file with corresponding GB energies
 %--------------------------------------------------------------------------
 % Author(s): Sterling Baird
 %
 % Date: 2020-07-27
-%
-% Description: load Kim2011 dataset, convert to norm-symmetrized octonions,
-% and write to file with corresponding GB energies
 %
 % Dependencies:
 %  addpathdir.m

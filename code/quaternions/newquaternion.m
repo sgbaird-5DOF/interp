@@ -1,4 +1,4 @@
-% NEWQUATERNION  - Construct quaternion 
+% NEWQUATERNION  Construct quaternion 
 %
 %  Q = newquaternion(theta, axis)
 %

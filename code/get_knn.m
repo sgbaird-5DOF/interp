@@ -5,12 +5,11 @@ arguments
     K(1,1) double {mustBePositive,mustBeInteger} = 1
     NV.dispQ(1,1) logical = false
 end
+% GET_KNN  k-nearest neighbor points, distances, mean, and std
 %--------------------------------------------------------------------------
 % Author(s): Sterling Baird
 %
 % Date: 2020-07-27
-%
-% Description: nearest neighbor distance histogram
 %
 % Inputs:
 %  pts - rows of points (euclidean)

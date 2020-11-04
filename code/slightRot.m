@@ -1,10 +1,9 @@
 function R = slightRot(d,varargin)
+% SLIGHTROT  rotate points slightly in every dimension
 %--------------------------------------------------------------------------
 % Author: Sterling Baird
 %
 % Date: 2020-07-17
-%
-% Description: rotate points slightly in every dimension
 % 
 % Inputs: 
 %		d			=== dimensionality
