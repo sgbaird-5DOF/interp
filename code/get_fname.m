@@ -3,12 +3,11 @@ arguments
 	sampleMethod char
 	opts struct
 end
+% GET_FNAME  Get a filename to load or save (deprecated, specific to old naming scheme)
 %--------------------------------------------------------------------------
 % Author: Sterling Baird
 %
 % Date: 2020-07-09
-%
-% Description: Get a filename to load or save
 %
 % Inputs:
 %		sampleMethod	=== the sampling method used in datagen

@@ -1,0 +1,35 @@
+method = gpr
+get_octpairs 
+  0  5 10 15 20 25 30 35 40 45 50 55 60 65 70 75 80 85 90 95data/temp.mat
+get_octpairs 
+  0  5 10 15 20 25 30 35 40 45 50 55 60 65 70 75 80 85 90 95data/temp.mat
+nmeshpts = 500, ndatapts = 10000
+
+gprMdl = 
+
+  RegressionGP
+             ResponseName: 'Y'
+    CategoricalPredictors: []
+        ResponseTransform: 'none'
+          NumObservations: 500
+           KernelFunction: 'SquaredExponential'
+        KernelInformation: [1x1 struct]
+            BasisFunction: 'Constant'
+                     Beta: 1.1511
+                    Sigma: 0.0573
+        PredictorLocation: []
+           PredictorScale: []
+                    Alpha: [500x1 double]
+         ActiveSetVectors: [500x8 double]
+            PredictMethod: 'Exact'
+            ActiveSetSize: 500
+                FitMethod: 'Exact'
+          ActiveSetMethod: 'Random'
+        IsActiveSetVector: [500x1 logical]
+            LogLikelihood: 474.0969
+         ActiveSetHistory: []
+           BCDInformation: []
+
+
+RMSE = 0.081109 J/m^2
+MAE = 0.057351 J/m^2

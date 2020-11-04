@@ -5,6 +5,8 @@ arguments
 	sampleType char = 'mesh'
 	opts struct = struct()
 end
+% DATAGEN  generate octonion data for various literature datasets (or
+% random octonions)
 %--------------------------------------------------------------------------
 % Author: Sterling Baird
 %

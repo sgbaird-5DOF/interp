@@ -5,10 +5,12 @@ arguments
     nA_Lab(3,:)
     convention char {mustBeMember(convention,{'olmsted','livermore'})} = 'livermore'
 end
-% CONSTRUCTGBMATRICES  Convert the crystal orientations (expressed as 
-% quaternions) of grains meeting at a grain boundary (GB) together with the
-% corresponding GB normals to the pair of GB matrices defined by Olmsted
-% [1] and required by the GB5DOF function [2].
+%CONSTRUCTGBMATRICES  Make Olmsted GB matrices for GB5DOF using labframe quaternion/normal inputs
+% Convert the crystal orientations (expressed as quaternions) of grains
+% meeting at a grain boundary (GB) together with the corresponding GB
+% normals to the pair of GB matrices defined by Olmsted [1] and required by
+% the GB5DOF function [2].
+%
 %-------------------------------------------------------------------------%
 % Filename: constructGBMatrices.m
 % Author: Oliver Johnson

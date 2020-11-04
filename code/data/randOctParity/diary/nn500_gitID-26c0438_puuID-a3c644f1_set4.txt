@@ -1,0 +1,17 @@
+datatype = brk
+method = nn
+get_octpairs 
+  0  5 10 15 20 25 30 35 40 45 50 55 60 65 70 75 80 85 90 95data/temp.mat
+get_octpairs 
+  0  5 10 15 20 25 30 35 40 45 50 55 60 65 70 75 80 85 90 95data/temp.mat
+nmeshpts = 500, ndatapts = 10000
+RMSE = 0.12066 J/m^2
+MAE = 0.086328 J/m^2
+{Error using save
+Unable to write to MAT-file
+/lustre/scratch/usr/sbaird9/sgbaird-5dof/infer/code/interp/code/data/randOctParity/pcombs/nn500_gitID-26c0438_puuID-a3c644f1_set4.mat.
+The file may be corrupt.
+
+Error in exec_combs (line 68)
+    save(savepath,'-struct','out','-v7.3')
+} 

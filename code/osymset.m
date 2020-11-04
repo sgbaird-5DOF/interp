@@ -6,12 +6,11 @@ arguments
     grainexchangeQ logical = false
     doublecoverQ logical = false
 end
+% OSYMSET  get symmetrically equivalent octonions
 %--------------------------------------------------------------------------
 % Author: Sterling Baird
 %
 % Date: 2020-07-27
-%
-% Description: get symmetrically equivalent octonions
 %
 % Inputs:
 %		(qA, qB) - quaternions

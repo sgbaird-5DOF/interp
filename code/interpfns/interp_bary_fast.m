@@ -7,9 +7,8 @@ arguments
     databary double
     facetIDs double
 end
-% INTERP_BARY_FAST  short-circuit barycentric coordinate calculation (same
-% predict points, new mesh property values). Cannot be used with new
-% predict points.
+% INTERP_BARY_FAST  short-circuit barycentric interpolation (same input/query points, new mesh property values)
+% Cannot be used with new predict points.
 
 %find NaN values & replace with NN values (NN extrapolation)
 [NNextrapID,~] = isnan(databary);

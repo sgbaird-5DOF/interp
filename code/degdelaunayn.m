@@ -1,22 +1,19 @@
 function TRI = degdelaunayn(pts)
-%%
-%{
-%--------------------------------------------------------------------------
-compute delaunay triangulation of d-1 hyperplane in d-dimensions (i.e.
-degenerate convex hull) by projecting onto "thin" dimension using singular
-value decomposition.
-
-Input:
-
---- pts === n x d matrix of input points corresponding to d-1 hyperplane
-
-Output:
-
---- K				=== indices of sub-facet vertices
-
---- vertices	=== n x d vertices
-
---- area			=== area of full facet (i.e. the degenerate convex hull)
+% DEGDELAUNAYN compute delaunay triangulation of d-1 hyperplane in d-dimensions
+%  (i.e. degenerate convex hull) by projecting onto "thin"
+%  dimension using singular value decomposition.
+% 
+% Input:
+% 
+% --- pts === n x d matrix of input points corresponding to d-1 hyperplane
+% 
+% Output:
+% 
+% --- K				=== indices of sub-facet vertices
+% 
+% --- vertices	=== n x d vertices
+% 
+% --- area			=== area of full facet (i.e. the degenerate convex hull)
 %--------------------------------------------------------------------------
 %}
 %%

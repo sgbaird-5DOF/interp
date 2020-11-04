@@ -1,6 +1,5 @@
 function five = correctdis(five)
-
-%% convert to disorientation (for plotting)
+% CORRECTDIS  convert to disorientation (for plotting)
 qtemp = disorientation(vertcat(five.q),'cubic');
 
 dtemp = q2rod(qtemp);

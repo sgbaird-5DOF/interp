@@ -1,0 +1,196 @@
+method = gpr
+get_octpairs 
+  0  5 10 15 20 25 30 35 40 45 50 55 60 65 70 75 80 85 90 95data\temp.mat
+get_octpairs 
+  0  5 10 15 20 25 30 35 40 45 50 55 60 65 70 75 80 85 90 95data\temp.mat
+nmeshpts = 1000, ndatapts = 1000
+[Warning: Working directory not clean (i.e. uncommitted/unpushed) files exist. Use !git commit -am "<message>", then !git push] 
+[> In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('get_gitcommit', 'C:\Users\sterg\Documents\GitHub\infer\code\interp\code\MATslurm\code\get_gitcommit.m', 15)" style="font-weight:bold">get_gitcommit</a> (<a href="matlab: opentoline('C:\Users\sterg\Documents\GitHub\infer\code\interp\code\MATslurm\code\get_gitcommit.m',15,0)">line 15</a>)
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('interp5DOF', 'C:\Users\sterg\Documents\GitHub\infer\code\interp\code\interp5DOF.m', 271)" style="font-weight:bold">interp5DOF</a> (<a href="matlab: opentoline('C:\Users\sterg\Documents\GitHub\infer\code\interp\code\interp5DOF.m',271,0)">line 271</a>)
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('interp5DOF_setup', 'C:\Users\sterg\Documents\GitHub\infer\code\interp\code\interp5DOF_setup.m', 68)" style="font-weight:bold">interp5DOF_setup</a> (<a href="matlab: opentoline('C:\Users\sterg\Documents\GitHub\infer\code\interp\code\interp5DOF_setup.m',68,0)">line 68</a>)
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('randOctParityData>@(ndatapts,npredpts,method)interp5DOF_setup(ndatapts,npredpts,method,datatype,''pgnum'',pgnum)', 'C:\Users\sterg\Documents\GitHub\infer\code\interp\code\randOctParityData.m', 103)" style="font-weight:bold">randOctParityData>@(ndatapts,npredpts,method)interp5DOF_setup(ndatapts,npredpts,method,datatype,'pgnum',pgnum)</a> (<a href="matlab: opentoline('C:\Users\sterg\Documents\GitHub\infer\code\interp\code\randOctParityData.m',103,0)">line 103</a>)
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('exec_argfn', 'C:\Users\sterg\Documents\GitHub\infer\code\interp\code\MATslurm\code\exec_argfn.m', 50)" style="font-weight:bold">exec_argfn</a> (<a href="matlab: opentoline('C:\Users\sterg\Documents\GitHub\infer\code\interp\code\MATslurm\code\exec_argfn.m',50,0)">line 50</a>)
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('exec_combs', 'C:\Users\sterg\Documents\GitHub\infer\code\interp\code\MATslurm\code\exec_combs.m', 64)" style="font-weight:bold">exec_combs</a> (<a href="matlab: opentoline('C:\Users\sterg\Documents\GitHub\infer\code\interp\code\MATslurm\code\exec_combs.m',64,0)">line 64</a>)
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('randOctParityData', 'C:\Users\sterg\Documents\GitHub\infer\code\interp\code\randOctParityData.m', 130)" style="font-weight:bold">randOctParityData</a> (<a href="matlab: opentoline('C:\Users\sterg\Documents\GitHub\infer\code\interp\code\randOctParityData.m',130,0)">line 130</a>)] 
+
+gprMdl = 
+
+  <a href="matlab: helpPopup RegressionGP">RegressionGP</a>
+             ResponseName: 'Y'
+    CategoricalPredictors: []
+        ResponseTransform: 'none'
+          NumObservations: 1000
+           KernelFunction: 'SquaredExponential'
+        KernelInformation: [1×1 struct]
+            BasisFunction: 'Constant'
+                     Beta: 1.1528
+                    Sigma: 0.0531
+        PredictorLocation: []
+           PredictorScale: []
+                    Alpha: [1000×1 double]
+         ActiveSetVectors: [1000×8 double]
+            PredictMethod: 'Exact'
+            ActiveSetSize: 1000
+                FitMethod: 'Exact'
+          ActiveSetMethod: 'Random'
+        IsActiveSetVector: [1000×1 logical]
+            LogLikelihood: 1.0844e+03
+         ActiveSetHistory: []
+           BCDInformation: []
+
+
+  <a href="matlab: properties('RegressionGP')">Properties</a>, <a href="matlab: methods('RegressionGP')">Methods</a>
+
+RMSE = 0.072572 J/m^2
+MAE = 0.051364 J/m^2
+<a href="matlab: opentoline('C:\Users\sterg\Documents\GitHub\infer\code\interp\code\interp5DOF_setup.m',91,1)">91  </a>mdlpars = structhorzcat(mdlparspre,mdlpars,mdlparsextra);
+mdlpars = structhorzcat(mdlparspre,mdlpars,mdlparsextra);
+[Warning: Calling STRUCT on an object prevents the object from hiding its implementation details and should thus be avoided. Use
+DISP or DISPLAY to see the visible public details of an object. See 'help struct' for more information.] 
+[> In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('structhorzcat')" style="font-weight:bold">structhorzcat</a>
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('interp5DOF_setup', 'C:\Users\sterg\Documents\GitHub\infer\code\interp\code\interp5DOF_setup.m', 91)" style="font-weight:bold">interp5DOF_setup</a> (<a href="matlab: opentoline('C:\Users\sterg\Documents\GitHub\infer\code\interp\code\interp5DOF_setup.m',91,0)">line 91</a>)
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('randOctParityData>@(ndatapts,npredpts,method)interp5DOF_setup(ndatapts,npredpts,method,datatype,''pgnum'',pgnum)', 'C:\Users\sterg\Documents\GitHub\infer\code\interp\code\randOctParityData.m', 103)" style="font-weight:bold">randOctParityData>@(ndatapts,npredpts,method)interp5DOF_setup(ndatapts,npredpts,method,datatype,'pgnum',pgnum)</a> (<a href="matlab: opentoline('C:\Users\sterg\Documents\GitHub\infer\code\interp\code\randOctParityData.m',103,0)">line 103</a>)
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('exec_argfn', 'C:\Users\sterg\Documents\GitHub\infer\code\interp\code\MATslurm\code\exec_argfn.m', 50)" style="font-weight:bold">exec_argfn</a> (<a href="matlab: opentoline('C:\Users\sterg\Documents\GitHub\infer\code\interp\code\MATslurm\code\exec_argfn.m',50,0)">line 50</a>)
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('exec_combs', 'C:\Users\sterg\Documents\GitHub\infer\code\interp\code\MATslurm\code\exec_combs.m', 64)" style="font-weight:bold">exec_combs</a> (<a href="matlab: opentoline('C:\Users\sterg\Documents\GitHub\infer\code\interp\code\MATslurm\code\exec_combs.m',64,0)">line 64</a>)
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('randOctParityData', 'C:\Users\sterg\Documents\GitHub\infer\code\interp\code\randOctParityData.m', 130)" style="font-weight:bold">randOctParityData</a> (<a href="matlab: opentoline('C:\Users\sterg\Documents\GitHub\infer\code\interp\code\randOctParityData.m',130,0)">line 130</a>)] 
+{Error using <a href="matlab:matlab.internal.language.introspective.errorDocCallback('struct2table', 'C:\Program Files\MATLAB\R2020b\toolbox\matlab\datatypes\tabular\struct2table.m', 73)" style="font-weight:bold">struct2table</a> (<a href="matlab: opentoline('C:\Program Files\MATLAB\R2020b\toolbox\matlab\datatypes\tabular\struct2table.m',73,0)">line 73</a>)
+Table variable name conflicts with reserved name 'Properties'.
+
+Error in <a href="matlab:matlab.internal.language.introspective.errorDocCallback('structhorzcat>@(S)struct2table(S,''AsArray'',true)', 'C:\Users\sterg\Documents\GitHub\infer\code\interp\code\structhorzcat.m', 30)" style="font-weight:bold">structhorzcat>@(S)struct2table(S,'AsArray',true)</a> (<a href="matlab: opentoline('C:\Users\sterg\Documents\GitHub\infer\code\interp\code\structhorzcat.m',30,0)">line 30</a>)
+T = cellfun(@(S) struct2table(S,'AsArray',true),S,'UniformOutput',false);
+
+Error in <a href="matlab:matlab.internal.language.introspective.errorDocCallback('structhorzcat', 'C:\Users\sterg\Documents\GitHub\infer\code\interp\code\structhorzcat.m', 30)" style="font-weight:bold">structhorzcat</a> (<a href="matlab: opentoline('C:\Users\sterg\Documents\GitHub\infer\code\interp\code\structhorzcat.m',30,0)">line 30</a>)
+T = cellfun(@(S) struct2table(S,'AsArray',true),S,'UniformOutput',false);
+} 
+opentoline('C:\Users\sterg\Documents\GitHub\infer\code\interp\code\structhorzcat.m',30,0)
+mdlpars = structhorzcat(mdlparspre,mdlpars,mdlparsextra);
+[Warning: Calling STRUCT on an object prevents the object from hiding its implementation details and should thus be avoided. Use
+DISP or DISPLAY to see the visible public details of an object. See 'help struct' for more information.] 
+[> In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('structhorzcat')" style="font-weight:bold">structhorzcat</a>
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('interp5DOF_setup', 'C:\Users\sterg\Documents\GitHub\infer\code\interp\code\interp5DOF_setup.m', 91)" style="font-weight:bold">interp5DOF_setup</a> (<a href="matlab: opentoline('C:\Users\sterg\Documents\GitHub\infer\code\interp\code\interp5DOF_setup.m',91,0)">line 91</a>)
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('randOctParityData>@(ndatapts,npredpts,method)interp5DOF_setup(ndatapts,npredpts,method,datatype,''pgnum'',pgnum)', 'C:\Users\sterg\Documents\GitHub\infer\code\interp\code\randOctParityData.m', 103)" style="font-weight:bold">randOctParityData>@(ndatapts,npredpts,method)interp5DOF_setup(ndatapts,npredpts,method,datatype,'pgnum',pgnum)</a> (<a href="matlab: opentoline('C:\Users\sterg\Documents\GitHub\infer\code\interp\code\randOctParityData.m',103,0)">line 103</a>)
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('exec_argfn', 'C:\Users\sterg\Documents\GitHub\infer\code\interp\code\MATslurm\code\exec_argfn.m', 50)" style="font-weight:bold">exec_argfn</a> (<a href="matlab: opentoline('C:\Users\sterg\Documents\GitHub\infer\code\interp\code\MATslurm\code\exec_argfn.m',50,0)">line 50</a>)
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('exec_combs', 'C:\Users\sterg\Documents\GitHub\infer\code\interp\code\MATslurm\code\exec_combs.m', 64)" style="font-weight:bold">exec_combs</a> (<a href="matlab: opentoline('C:\Users\sterg\Documents\GitHub\infer\code\interp\code\MATslurm\code\exec_combs.m',64,0)">line 64</a>)
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('randOctParityData', 'C:\Users\sterg\Documents\GitHub\infer\code\interp\code\randOctParityData.m', 130)" style="font-weight:bold">randOctParityData</a> (<a href="matlab: opentoline('C:\Users\sterg\Documents\GitHub\infer\code\interp\code\randOctParityData.m',130,0)">line 130</a>)] 
+<a href="matlab: opentoline('C:\Users\sterg\Documents\GitHub\infer\code\interp\code\structhorzcat.m',30,1)">30  </a>T = cellfun(@(S) struct2table(S,'AsArray',true),S,'UniformOutput',false);
+S
+
+S =
+
+  1×3 <a href="matlab:helpPopup cell" style="font-weight:bold">cell</a> array
+
+    {1×1 struct}    {1×1 struct}    {1×1 struct}
+
+S{:}
+
+ans = 
+
+  <a href="matlab:helpPopup struct" style="font-weight:bold">struct</a> with fields:
+
+    datatype: 'brk'
+
+
+ans = 
+
+  <a href="matlab:helpPopup struct" style="font-weight:bold">struct</a> with fields:
+
+          propertyNames: {9×1 cell}
+        defaultDimNames: {'Row'  'Variables'}
+    dispRowLabelsHeader: 0
+     emptyPropertiesObj: [1×1 matlab.tabular.TableProperties]
+                   data: {1×25 cell}
+                metaDim: [1×1 matlab.internal.tabular.private.metaDim]
+                 rowDim: [1×1 matlab.internal.tabular.private.rowNamesDim]
+                 varDim: [1×1 matlab.internal.tabular.private.varNamesDim]
+             arrayProps: [1×1 struct]
+                version: 4
+                  ndims: []
+                  nrows: []
+               rownames: []
+                  nvars: []
+               varnames: []
+                  props: []
+        arrayPropsDflts: [1×1 struct]
+             Properties: [1×1 matlab.tabular.TableProperties]
+
+
+ans = 
+
+  <a href="matlab:helpPopup struct" style="font-weight:bold">struct</a> with fields:
+
+       genseed: 62734
+    errmetrics: [1×1 struct]
+          rmse: 0.0726
+           mae: 0.0514
+
+struct2table(S{2})
+{Error using <a href="matlab:matlab.internal.language.introspective.errorDocCallback('struct2table', 'C:\Program Files\MATLAB\R2020b\toolbox\matlab\datatypes\tabular\struct2table.m', 83)" style="font-weight:bold">struct2table</a> (<a href="matlab: opentoline('C:\Program Files\MATLAB\R2020b\toolbox\matlab\datatypes\tabular\struct2table.m',83,0)">line 83</a>)
+Input structure is a scalar, but its fields have different numbers of rows. If you intended to create a table with one row, set
+'AsArray' to true.
+} 
+struct2table(S{2},'AsArray',true)
+{Error using <a href="matlab:matlab.internal.language.introspective.errorDocCallback('struct2table', 'C:\Program Files\MATLAB\R2020b\toolbox\matlab\datatypes\tabular\struct2table.m', 73)" style="font-weight:bold">struct2table</a> (<a href="matlab: opentoline('C:\Program Files\MATLAB\R2020b\toolbox\matlab\datatypes\tabular\struct2table.m',73,0)">line 73</a>)
+Table variable name conflicts with reserved name 'Properties'.
+} 
+S{2}
+
+ans = 
+
+  <a href="matlab:helpPopup struct" style="font-weight:bold">struct</a> with fields:
+
+          propertyNames: {9×1 cell}
+        defaultDimNames: {'Row'  'Variables'}
+    dispRowLabelsHeader: 0
+     emptyPropertiesObj: [1×1 matlab.tabular.TableProperties]
+                   data: {1×25 cell}
+                metaDim: [1×1 matlab.internal.tabular.private.metaDim]
+                 rowDim: [1×1 matlab.internal.tabular.private.rowNamesDim]
+                 varDim: [1×1 matlab.internal.tabular.private.varNamesDim]
+             arrayProps: [1×1 struct]
+                version: 4
+                  ndims: []
+                  nrows: []
+               rownames: []
+                  nvars: []
+               varnames: []
+                  props: []
+        arrayPropsDflts: [1×1 struct]
+             Properties: [1×1 matlab.tabular.TableProperties]
+
+dbup
+In workspace belonging to <a href="matlab:matlab.internal.language.introspective.errorDocCallback('interp5DOF_setup', 'C:\Users\sterg\Documents\GitHub\infer\code\interp\code\interp5DOF_setup.m', 91)" style="font-weight:bold">interp5DOF_setup</a> (<a href="matlab: opentoline('C:\Users\sterg\Documents\GitHub\infer\code\interp\code\interp5DOF_setup.m',91,0)">line 91</a>)
+mdlparspre
+
+mdlparspre = 
+
+  <a href="matlab:helpPopup struct" style="font-weight:bold">struct</a> with fields:
+
+    datatype: 'brk'
+
+mdlpars
+
+mdlpars =
+
+  1×25 <a href="matlab:helpPopup table" style="font-weight:bold">table</a>
+
+    <strong>method</strong>     <strong>projtol</strong>    <strong>zeroQ</strong>         <strong>starttime</strong>          <strong>nmeshpts</strong>    <strong>ndatapts</strong>    <strong>ncores</strong>     <strong>gitcommit</strong>         <strong>uuid</strong>        <strong>predinput</strong>    <strong>queryinput</strong>    <strong>projQ</strong>        <strong>oref</strong>           <strong>oref2</strong>         <strong>nnmu</strong>     <strong>nnsigma</strong>    <strong>symruntime</strong>    <strong>runtime</strong>       <strong>parity</strong>       <strong>PredictMethod</strong>          <strong>KernelType</strong>          <strong>KernelParameters</strong>    <strong>KernelParameterNames</strong>     <strong>Beta</strong>      <strong>Sigma</strong>  
+    <strong>_______</strong>    <strong>_______</strong>    <strong>_____</strong>    <strong>____________________</strong>    <strong>________</strong>    <strong>________</strong>    <strong>______</strong>    <strong>___________</strong>    <strong>____________</strong>    <strong>_________</strong>    <strong>__________</strong>    <strong>_____</strong>    <strong>____________</strong>    <strong>____________</strong>    <strong>______</strong>    <strong>_______</strong>    <strong>__________</strong>    <strong>_______</strong>    <strong>____________</strong>    <strong>_____________</strong>    <strong>______________________</strong>    <strong>________________</strong>    <strong>____________________</strong>    <strong>______</strong>    <strong>________</strong>
+
+    {'gpr'}    0.0001     false    26-Oct-2020 15:36:16      1000        1000        6       {'e8add59'}    {'f86b0102'}    {'5dof'}      {'5dof'}     false    [1×8 double]    [1×8 double]    6.5396    1.6117       3.7485      0.85911    [1×1 struct]      {'exact'}      {'SquaredExponential'}      {2×1 double}           {2×1 cell}         1.1528    0.053054
+
+dbup
+In workspace belonging to <a href="matlab:matlab.internal.language.introspective.errorDocCallback('randOctParityData>@(ndatapts,npredpts,method)interp5DOF_setup(ndatapts,npredpts,method,datatype,''pgnum'',pgnum)', 'C:\Users\sterg\Documents\GitHub\infer\code\interp\code\randOctParityData.m', 103)" style="font-weight:bold">randOctParityData>@(ndatapts,npredpts,method)interp5DOF_setup(ndatapts,npredpts,method,datatype,'pgnum',pgnum)</a> (<a href="matlab: opentoline('C:\Users\sterg\Documents\GitHub\infer\code\interp\code\randOctParityData.m',103,0)">line 103</a>)
+if system_dependent('IsDebugMode')==1, dbquit; end
+if system_dependent('IsDebugMode')==1, dbquit; end
+randOctParityData
+env = local
+dryrunQ = 0
+savecatQ = 1
+metaQ = 1
+default comment: test. Continue (y) or override (n)? y
+[Warning: Working directory not clean (i.e. uncommitted/unpushed) files exist. Use !git commit -am "<message>", then !git push] 
+[> In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('get_gitcommit', 'C:\Users\sterg\Documents\GitHub\infer\code\interp\code\MATslurm\code\get_gitcommit.m', 15)" style="font-weight:bold">get_gitcommit</a> (<a href="matlab: opentoline('C:\Users\sterg\Documents\GitHub\infer\code\interp\code\MATslurm\code\get_gitcommit.m',15,0)">line 15</a>)
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('writeparfile', 'C:\Users\sterg\Documents\GitHub\infer\code\interp\code\MATslurm\code\writeparfile.m', 124)" style="font-weight:bold">writeparfile</a> (<a href="matlab: opentoline('C:\Users\sterg\Documents\GitHub\infer\code\interp\code\MATslurm\code\writeparfile.m',124,0)">line 124</a>)
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('randOctParityData', 'C:\Users\sterg\Documents\GitHub\infer\code\interp\code\randOctParityData.m', 112)" style="font-weight:bold">randOctParityData</a> (<a href="matlab: opentoline('C:\Users\sterg\Documents\GitHub\infer\code\interp\code\randOctParityData.m',112,0)">line 112</a>)] 
+max_walltime = 59 minutes
+saving parameter file

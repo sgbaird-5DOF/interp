@@ -1,0 +1,36 @@
+datatype = kim
+method = gpr
+get_octpairs 
+  1  6 11 16 21 26 31 36 41 46 51 56 61 66 71 76 81 86 91 96data/temp.mat
+get_octpairs 
+  0  5 10 15 20 25 30 35 40 45 50 55 60 65 70 75 80 85 90 95data/temp.mat
+nmeshpts = 100, ndatapts = 10000
+
+gprMdl = 
+
+  RegressionGP
+             ResponseName: 'Y'
+    CategoricalPredictors: []
+        ResponseTransform: 'none'
+          NumObservations: 100
+           KernelFunction: 'SquaredExponential'
+        KernelInformation: [1x1 struct]
+            BasisFunction: 'Constant'
+                     Beta: 1.2235
+                    Sigma: 0.0012
+        PredictorLocation: []
+           PredictorScale: []
+                    Alpha: [100x1 double]
+         ActiveSetVectors: [100x8 double]
+            PredictMethod: 'Exact'
+            ActiveSetSize: 100
+                FitMethod: 'Exact'
+          ActiveSetMethod: 'Random'
+        IsActiveSetVector: [100x1 logical]
+            LogLikelihood: 110.8327
+         ActiveSetHistory: []
+           BCDInformation: []
+
+
+RMSE = 0.088402 J/m^2
+MAE = 0.064668 J/m^2

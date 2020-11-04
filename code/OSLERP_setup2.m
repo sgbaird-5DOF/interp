@@ -1,4 +1,4 @@
-%OSLERP_setup2
+%OSLERP_SETUP2  another script to call OSLERP (deprecated)
 
 %% setup
 clear; close all;

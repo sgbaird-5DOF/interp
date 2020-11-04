@@ -1,68 +1,115 @@
 clear; close all
+%% parameters
 %loop through different combinations of parameters using random,
 %octochorically sampled octonions
-addpathdir({'var_names.m','writeparfile.m'})
+addpathdir({'var_names.m','writeparfile.m','walltimefns'})
 runtype = 'test'; %'test','full'
-nreps = 10;
+nreps = 1; % number of runs or repetitions
+
+%make sure the parameters here correspond with the input to "pars" below
 switch runtype
     case 'test'
-        ndatapts = 1000;
-        npredpts = 500;
-        method = {'sphgpr','gpr','sphbary','pbary','nn','avg'}; % 'sphbary', 'pbary', 'gpr', 'sphgpr', 'nn', 'avg'
-        inputtype = {'5dof'}; %'5dof','octonion'
+        ndatapts = [10000]; % 5000 10000 20000 50000];
+        npredpts = 10000;
+        method = {'nn','avg'}; % 'sphbary', 'pbary', 'gpr', 'sphgpr', 'nn', 'avg'
+        datatype = {'rohrer-Ni'};
+        pgnum = 32; %m-3m (i.e. m\overbar{3}m) FCC symmetry default for e.g. Ni
+        
     case 'full'
-        ndatapts = [50000];
-        npredpts = 50000;
-        method = {'gpr'}; %'sphbary','pbary','gpr','nn'
-        inputtype = {'5dof'};
+        ndatapts = [100 388 500 1000 5000 10000 20000 50000];
+        npredpts = 10000;
+        method = {'sphgpr','gpr','sphbary','pbary','nn','avg','idw'}; % 'sphbary', 'pbary', 'gpr', 'sphgpr', 'nn', 'avg'
+        datatype = {'brk','kim'};
+        pgnum = 32; %m-3m (i.e. m\overbar{3}m) FCC symmetry default for e.g. Ni
 end
+
+%comment (no spaces, used in filename)
+% comment = 'paper-data2';
+comment = 'rohrer-Ni-test';
+% comment = 'idw-test-3pt5deg';
 
 % job submission environment
 env = 'local'; %'slurm', 'local'
-
 T = true;
 F = false;
 %whether to skip running the jobs and just compile results
+dryrunQ = F;
+disp(['env = ' env])
+
+if strcmp(env,'slurm') && dryrunQ
+    error('did you mean to change dryrunQ to false?')
+end
+
+metaQ = T; %whether to load full model or only meta-data at end
+disp(['dryrunQ = ' int2str(dryrunQ)])
 if strcmp(env,'local')
-    dryrunQ = F;
-    disp(['dryrunQ == ' int2str(dryrunQ)])
+    savecatQ = T; % whether to save the catenated model and/or parameters (depends on metaQ)
+    disp(['savecatQ = ' int2str(savecatQ)])
+    disp(['metaQ = ' int2str(metaQ)])
+end
+
+m = input(['default comment: ' comment '. Continue (y) or override (n)? '],'s');
+if ~strcmp(m,'y') && ~strcmp(m,'Y')
+    disp('enter a comment without spaces for use in a filename')
+    comment = input('new comment: ','s');
+end
+
+% # cores
+switch env
+    case 'slurm'
+        cores = 12;
+    case 'local'
+        if ~dryrunQ
+            p = gcp;
+            cores = p.NumWorkers;
+        else
+            cores = 1;
+        end
 end
 
 %% functions to generate save filepaths
 %diary
 files = dir(fullfile('**','data','randOctParity','diary'));
 diaryfolder = files(1).folder;
-diarynamefn = @(method,ndatapts,gitcommit,puuid) [method int2str(ndatapts) '_gitID-' gitcommit(1:7) '_puuID-' puuid '.txt'];
+diarynamefn = @(method,ndatapts,gitcommit,puuid) [method int2str(ndatapts) '_gitID-' gitcommit(1:7) '_puuID-' puuid '_' comment '.txt'];
 diarypathfn = @(method,ndatapts,gitcommit,puuid) fullfile(diaryfolder,diarynamefn(method,ndatapts,gitcommit,puuid));
 %data
 files = dir(fullfile('**','data','randOctParity','pcombs'));
 savefolder = files(1).folder;
-savenamefn = @(method,ndatapts,gitcommit,puuid) [method int2str(ndatapts) '_gitID-' gitcommit(1:7) '_puuID-' puuid '.mat'];
+savenamefn = @(method,ndatapts,gitcommit,puuid) [method int2str(ndatapts) '_gitID-' gitcommit(1:7) '_puuID-' puuid '_' comment '.mat'];
 
-savepathgen = fullfile(savefolder,'*gitID-*puuID*.mat'); %for use with dir
-savenamematch = [... %for use with regexp
+%for use with dir
+savepathgen = fullfile(savefolder,'*gitID-*puuID*.mat');
+
+savenamematch = [ ...
     ['(' strjoin(method,'|') ')'] ... match (exactly) any of the method options
-    ['(' strjoin(num2cell(num2str(ndatapts),2),'|') ')'] ... match (exactly) any of the ndatapts options
+    ['(' strjoin(cellfun(@num2str,num2cell(ndatapts),'UniformOutput',false),'|') ')'] ... match (exactly) any of the ndatapts options
     '(_gitID-[a-z0-9]*)' ... match any combination of 0 or more lowercase alphabetic or numeric characters (for git hash)
     '(_puuID-[a-z0-9]+)' ... match any combination of 1 or more lowercase alphabetic or numeric characters (for param combo uuid)
-    '[.mat]' ... %match (exactly) the file-extension
-    ]; %e.g. '(sphbary|gpr)(50)(_gitID-)[a-z0-9]*)(_puuID-[a-z0-9]+).mat'
-
+    ['(_' comment ')'] ...
+    ]; %e.g. '(sphbary|gpr|nn)(50)(_gitID-)[a-z0-9]*)(_puuID-[a-z0-9]+)' matches sphbary50_gitID-abcd123_puuID-abcd123.mat
+if metaQ
+    savenamematch = [ savenamematch '(_meta.mat)'];
+else
+    savenamematch = [savenamematch '(.mat)'];
+end
+    
 savepathfn = @(method,ndatapts,gitcommit,puuid) fullfile(savefolder,savenamefn(method,ndatapts,gitcommit,puuid));
 
-%% parameter file setup
 %parameters
-pars = var_names(ndatapts,npredpts,method,inputtype); %add all parameters here (see runtype switch statement)
-%function to execute and output arguments from function
-execfn = @(ndatapts,npredpts,method,inputtype) ...
-    interp5DOF_setup(ndatapts,npredpts,method,get_uuid(),inputtype); %names need to match pars fields
-argoutnames = {'propOut','interpfn','mdl','mdlpars'};
-%i.e. [propOut,interpfn,mdl,mdlpars] = interp5DOF_setup(ndatapts,npredpts,method);
-
-walltimefn = @() 300; %can set to constant or to depend on parameters
-
-%% parameter file
+pars = var_names(ndatapts,npredpts,method,cores,datatype,pgnum); %**ADD ALL PARAMETERS HERE** (see runtype switch statement)
 if ~dryrunQ
+    %% parameter file setup
+    %function to execute and output arguments from function
+    execfn = @(ndatapts,npredpts,method,datatype,pgnum) ... **NAMES NEED TO MATCH PARS FIELDS** (see above)
+        interp5DOF_setup(ndatapts,npredpts,method,datatype,'pgnum',pgnum); %**NAMES NEED TO MATCH PARS FIELDS AND EXECFN ARGUMENTS**
+    argoutnames = {'ypred','interpfn','mdl','mdlpars'};
+    %i.e. [propOut,interpfn,mdl,mdlpars] = interp5DOF_setup(ndatapts,npredpts,method,'datatype',datatype);
+    
+    % walltimefn = @() 300; %can set to constant or to depend on parameters, probably fine when using standby queue
+    walltimefn = @(ndatapts,npredpts,method,cores,datatype) get_walltimefn(ndatapts,npredpts,method,cores,datatype);
+    
+    %% parameter file
     [parpath, parcombsets, Ntrim, jobwalltimes] = ...
         writeparfile(pars,execfn,argoutnames,walltimefn,'diarypathfn',diarypathfn,'savepathfn',savepathfn,'nreps',nreps);
 end
@@ -70,7 +117,6 @@ end
 switch env
     case 'slurm'
         %setup
-        cores = 12;
         mem = 1024*12*cores; %total memory of job, MB
         qosopt = 'standby'; %'', 'test', 'standby'
         scriptfpath = fullfile('MATslurm','code','submit.sh');
@@ -98,37 +144,61 @@ switch env
         names = namestmp(matchIDs);
         folders = folderstmp(matchIDs);
         nfiles = length(names);
-        assert(nfiles ~= 0,'no files matched')
+        assert(nfiles ~= 0,'no files matched. Verify files exist and check regexp savenamematch.')
         %initialize
         init1 = cell(nfiles,1);
-        [outlist,propOutlist,mdllist,mdlparslist,interpfnlist] = deal(init1);
+        [Slist,ypredlist,mdllist,mdlparslist,interpfnlist] = deal(init1);
         
         %extract results from files
         for i = 1:nfiles
+            if mod(i,50) == 0
+                disp(i)
+            end
             folder = folders{i};
             name = names{i};
             fpath = fullfile(folder,name);
-            clear S out
-            S = load(fpath,'out');
-            out = S.out;
-            [propOutlist{i},mdllist{i},mdlparslist{i},interpfnlist{i}] = ...
-                deal(out.propOut, out.mdl, out.mdlpars, out.interpfn);
-            outlist{i} = out;
+            
+            if metaQ
+                S = load(fpath);
+                mdlparslist{i} = S;
+            else
+                loadvars = {'ypred','mdl','mdlpars','interpfn'};
+                S = load(fpath,loadvars{:});
+                % if you get a "variable not loaded here" warning, you may need to
+                % delete a previous erroneous data file you generated with the
+                % wrong variable names. Typically shouldn't be an issue
+                % though..
+                [ypredlist{i},mdllist{i},mdlparslist{i},interpfnlist{i}] = ...
+                deal(S.ypred, S.mdl, S.mdlpars, S.interpfn);
+            end
+            %             Slist{i} = S;
         end
         
-        %concatenate models and parameters
-        mdlcat = structvertcat(mdllist{:});
-        mdltbl = struct2table(mdlcat);
+        if ~metaQ
+            %concatenate models and parameters
+            mdlcat = structvertcat(mdllist{:});
+            clear mdllist
+            %         mdltbl = struct2table(mdlcat,'AsArray',true);
+        end
+        
         mdlparscat = structvertcat(mdlparslist{:});
         mdlparstbl = struct2table(mdlparscat,'AsArray',true);
         
-        gitcommit = get_gitcommit();
+        mdlparstbl = tblfilt(mdlparstbl,pars);
+        
+        %         gitcommit = get_gitcommit();
         %save models and parameters
-        fpath = fullfile(savefolder,['gitID-' get_gitcommit '_uuID-' get_uuid() '.mat']);
-        save(fpath,'propOutlist','interpfnlist','mdllist',...
-            'mdlparslist','mdlcat','mdlparscat','mdlparstbl','outlist',...
-            '-v7.3','-nocompression')
-        writetable(mdlparstbl,[fpath(1:end-4) '.xlsx'])
+        fpath = fullfile(savefolder,['gitID-' get_gitcommit '_uuID-' get_uuid() '_' comment '.mat']);
+        if savecatQ
+            if metaQ
+                savevars = {'mdlparscat','mdlparstbl'};
+            else
+                savevars = {'ypredlist','interpfnlist','mdlcat',...
+                    'mdlparscat','mdlparstbl'};
+            end
+            save(fpath,savevars{:},'-v7.3')
+        end
+        writetable(mdlparstbl,[fpath(1:end-4) '.csv'])
         disp(mdlparstbl)
         
         %         %nested loop through jobs and tasks to load results
@@ -228,4 +298,29 @@ memfn = @(method,ndatapts) ...
 
 diaryfolder = fullfile('data','randOctParity','diary');
 savefolder = fullfile('data','randOctParity','pcombs');
+
+
+% job unique identifier
+% juuid = get_uuid();
+
+
+        emptyIDs = cellfun(@isempty,mdlparslist);
+        if metaQ
+            [mdlparslist{emptyIDs}] = deal([]);
+        else
+            [ypredlist{emptyIDs},mdllist{emptyIDs},mdlparslist{emptyIDs},interpfnlist{emptyIDs}] = ...
+            deal([]);
+        end
+
+
+                if any(strcmp(S.datatype,datatype))
+                    mdlparslist{i} = S;
+                end
+
+
+                if any(strcmp(S.mdl.datatype,datatype))
+                    [ypredlist{i},mdllist{i},mdlparslist{i},interpfnlist{i}] = ...
+                    deal(S.ypred, S.mdl, S.mdlpars, S.interpfn);
+                end
+
 %}

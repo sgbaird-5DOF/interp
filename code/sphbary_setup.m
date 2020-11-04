@@ -1,4 +1,5 @@
 function [c,intfacetIDs] = sphbary_setup(pts,facetPtIDs,data,tol)
+% SPHBARY_SETUP  sphbary coords and intersections for points
 %--------------------------------------------------------------------------
 % Author: Sterling Baird
 %

@@ -1,4 +1,5 @@
-% QCONJ takes the conjugate of quaternions.
+function q_star = qconj(q)
+% QCONJ takes the conjugate of quaternions
 %-------------------------------------------------------------------------%
 %Filename:  qconj.m
 %Author:    Oliver Johnson
@@ -12,9 +13,6 @@
 %   q_star - An npts-by-4 array containing the conjugate of each of the 
 %            npts quaternions in q, i.e., q_star(i,:) = qconj(q(i,:)).
 %-------------------------------------------------------------------------%
-
-function q_star = qconj(q)
-
 %---check inputs---%
 assert((size(q,2) == 4),'q must be an npts-by-4 array.')
 

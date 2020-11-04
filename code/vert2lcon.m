@@ -1,9 +1,10 @@
 function [A,b,Aeq,beq]=vert2lcon(V,tol)
-%An extension of Michael Kleder's vert2con function, used for finding the 
-%linear constraints defining a polyhedron in R^n given its vertices. This 
-%wrapper extends the capabilities of vert2con to also handle cases where the 
-%polyhedron is not solid in R^n, i.e., where the polyhedron is defined by 
-%both equality and inequality constraints.
+% VERT2LCON  An extension of Michael Kleder's vert2con function, handles degeneracy
+%  used for finding the linear constraints defining a polyhedron
+%  in R^n given its vertices. This wrapper extends the capabilities of
+%  vert2con to also handle cases where the polyhedron is not solid in R^n,
+%  i.e., where the polyhedron is defined by both equality and inequality
+%  constraints.
 % 
 %SYNTAX:
 %

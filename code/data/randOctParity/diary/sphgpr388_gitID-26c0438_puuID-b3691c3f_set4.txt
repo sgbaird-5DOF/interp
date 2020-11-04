@@ -1,0 +1,37 @@
+datatype = kim
+method = sphgpr
+get_octpairs 
+  0  5 10 15 20 25 30 35 39 44 49 54 59 64 69 74 79 84 88 93data/temp.mat
+get_octpairs 
+  0  5 10 15 20 25 30 35 40 45 50 55 60 65 70 75 80 85 90 95nids: 1
+data/temp.mat
+nmeshpts = 388, ndatapts = 10000
+
+gprMdl = 
+
+  RegressionGP
+             ResponseName: 'Y'
+    CategoricalPredictors: []
+        ResponseTransform: 'none'
+          NumObservations: 388
+           KernelFunction: [function_handle]
+        KernelInformation: [1x1 struct]
+            BasisFunction: 'Constant'
+                     Beta: 1.2331
+                    Sigma: 0.0850
+        PredictorLocation: []
+           PredictorScale: []
+                    Alpha: [388x1 double]
+         ActiveSetVectors: [388x8 double]
+            PredictMethod: 'Exact'
+            ActiveSetSize: 388
+                FitMethod: 'Exact'
+          ActiveSetMethod: 'Random'
+        IsActiveSetVector: [388x1 logical]
+            LogLikelihood: 405.9044
+         ActiveSetHistory: []
+           BCDInformation: []
+
+
+RMSE = 0.087462 J/m^2
+MAE = 0.061187 J/m^2

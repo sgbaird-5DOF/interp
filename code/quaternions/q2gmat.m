@@ -1,10 +1,8 @@
+% Q2GMAT converts quaternions to their canonical 3x3 rotation matrix representation
 %-------------------------------------------------------------------------%
 %Filename:  q2gmat.m
 %Author:    Oliver Johnson
 %Date:      6/2/2011
-%
-% Q2GMAT converts quaternions to their canonical 3x3 rotation matrix
-% representation.
 %
 % Inputs:
 %   q - An npts-by-4 matrix of quaternion components.

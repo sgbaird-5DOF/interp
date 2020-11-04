@@ -1,0 +1,48 @@
+method = sphbary
+get_octpairs 
+  1  6 11 16 21 26 31 36 41 46 51 56 61 66 71 76 81 86 91 96data\temp.mat
+get_octpairs 
+  1  6 11 16 21 26 31 36 41 46 51 56 61 66 71 76 81 86 91 96data\temp.mat
+nmeshpts = 100, ndatapts = 100
+[Warning: Working directory not clean (i.e. uncommitted/unpushed) files exist. Use !git commit -am "<message>", then !git
+push] 
+[> In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('get_gitcommit', 'C:\Users\sterg\Documents\GitHub\infer\code\interp\code\MATslurm\code\get_gitcommit.m', 15)" style="font-weight:bold">get_gitcommit</a> (<a href="matlab: opentoline('C:\Users\sterg\Documents\GitHub\infer\code\interp\code\MATslurm\code\get_gitcommit.m',15,0)">line 15</a>)
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('interp5DOF', 'C:\Users\sterg\Documents\GitHub\infer\code\interp\code\interp5DOF.m', 253)" style="font-weight:bold">interp5DOF</a> (<a href="matlab: opentoline('C:\Users\sterg\Documents\GitHub\infer\code\interp\code\interp5DOF.m',253,0)">line 253</a>)
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('interp5DOF_setup', 'C:\Users\sterg\Documents\GitHub\infer\code\interp\code\interp5DOF_setup.m', 45)" style="font-weight:bold">interp5DOF_setup</a> (<a href="matlab: opentoline('C:\Users\sterg\Documents\GitHub\infer\code\interp\code\interp5DOF_setup.m',45,0)">line 45</a>)
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('randOctParityData>@(ndatapts,npredpts,method)interp5DOF_setup(ndatapts,npredpts,method,get_uuid(),''5dof'')', 'C:\Users\sterg\Documents\GitHub\infer\code\interp\code\randOctParityData.m', 83)" style="font-weight:bold">randOctParityData>@(ndatapts,npredpts,method)interp5DOF_setup(ndatapts,npredpts,method,get_uuid(),'5dof')</a> (<a href="matlab: opentoline('C:\Users\sterg\Documents\GitHub\infer\code\interp\code\randOctParityData.m',83,0)">line 83</a>)
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('exec_argfn', 'C:\Users\sterg\Documents\GitHub\infer\code\interp\code\MATslurm\code\exec_argfn.m', 50)" style="font-weight:bold">exec_argfn</a> (<a href="matlab: opentoline('C:\Users\sterg\Documents\GitHub\infer\code\interp\code\MATslurm\code\exec_argfn.m',50,0)">line 50</a>)
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('exec_combs', 'C:\Users\sterg\Documents\GitHub\infer\code\interp\code\MATslurm\code\exec_combs.m', 60)" style="font-weight:bold">exec_combs</a> (<a href="matlab: opentoline('C:\Users\sterg\Documents\GitHub\infer\code\interp\code\MATslurm\code\exec_combs.m',60,0)">line 60</a>)
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('randOctParityData', 'C:\Users\sterg\Documents\GitHub\infer\code\interp\code\randOctParityData.m', 110)" style="font-weight:bold">randOctParityData</a> (<a href="matlab: opentoline('C:\Users\sterg\Documents\GitHub\infer\code\interp\code\randOctParityData.m',110,0)">line 110</a>)] 
+--delaunayn
+intersect_facet
+  1  6 11 16 21 26 31 36 41 46 51 56 61 66 71 76 81 86 91 96interpolation
+loop through datapoints
+i == 12; no valid intersection, taking NN with dist = 0.07991
+i == 19; no valid intersection, taking NN with dist = 0.25119
+i == 27; no valid intersection, taking NN with dist = 0.34855
+i == 33; no valid intersection, taking NN with dist = 0.42189
+i == 35; no valid intersection, taking NN with dist = 0.11434
+i == 41; no valid intersection, taking NN with dist = 0.22788
+i == 43; no valid intersection, taking NN with dist = 0.15201
+i == 45; no valid intersection, taking NN with dist = 0.16572
+i == 48; no valid intersection, taking NN with dist = 0.1947
+i == 49; no valid intersection, taking NN with dist = 0.21186
+i == 54; no valid intersection, taking NN with dist = 0.13491
+i == 60; no valid intersection, taking NN with dist = 0.16463
+i == 61; no valid intersection, taking NN with dist = 0.19389
+i == 62; no valid intersection, taking NN with dist = 0.14613
+i == 71; no valid intersection, taking NN with dist = 0.25639
+i == 73; no valid intersection, taking NN with dist = 0.20483
+i == 83; no valid intersection, taking NN with dist = 0.35908
+i == 87; no valid intersection, taking NN with dist = 0.13907
+i == 97; no valid intersection, taking NN with dist = 0.30769
+i == 98; no valid intersection, taking NN with dist = 0.16739
+i == 100; no valid intersection, taking NN with dist = 0.22846
+ 
+# non-intersections: 21/100
+ 
+RMSE (J/m^2): interp == 0.1263, NN == 0.1761
+ 
+total RMSE: 0.1383, all NN RMSE comparison: 0.1573
+RMSE = 0.13829 J/m^2
+MAE = 0.089875 J/m^2

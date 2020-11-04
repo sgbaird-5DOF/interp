@@ -1,12 +1,9 @@
 function pts = axpolytope(d,varargin)
+% AXPOLYTOPE Indices of a polytope with vertices on every axis and every intersection of every plane formed by axes.
 %--------------------------------------------------------------------------
 % Author: Sterling Baird
 %
 % Date: 2020-07-17
-%
-% Description: Find indices and convex hull triangulation of a polytope
-% with vertices on every axis and every intersection of every plane formed
-% by axes.
 % 
 % Inputs:
 %		d			===	dimensionality

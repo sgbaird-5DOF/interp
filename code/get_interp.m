@@ -9,13 +9,11 @@ arguments
     NV.saveQ logical = false
     NV.savename char = 'temp.mat'
 end
+% GET_INTERP  Interpolate query point values based on spherical or planar barycentric coords in a mesh
 %--------------------------------------------------------------------------
 % Author: Sterling Baird
 %
 % Date: 2020-07-27
-%
-% Description: Interpolate query point property values based on their
-% spherical or planar barycentric coordinates relative to a mesh.
 %
 % Inputs:
 %	mesh - struct containing octonions (pts), down-projected octonions

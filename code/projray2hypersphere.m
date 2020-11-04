@@ -8,13 +8,11 @@ arguments
 	maxnormQ(1,1) logical = false
 	invmethod char {mustBeMember(invmethod,{'mldivide','pinv','extendedCross'})} = 'mldivide'
 end
+% PROJRAY2HYPERSPHERE  project ray to hypersphere, compute barycentric coordinates, compute intersecting facet
 %--------------------------------------------------------------------------
 % Author: Sterling Baird
 %
 % Date: 2020-06-24
-%
-% Description: project ray to hypersphere, compute barycentric coordinates,
-% compute intersecting facet
 %
 % Inputs:
 %
@@ -27,6 +25,8 @@ end
 %
 % References:
 %		https://math.stackexchange.com/q/1256236/798661
+%       https://math.stackexchange.com/q/3731002
+%       https://github.com/tomilov/quickhull/issues/8
 %
 % Notes:
 %		To relax the requirement that pts need to be close to on the unit

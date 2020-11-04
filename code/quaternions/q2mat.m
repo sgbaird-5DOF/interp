@@ -1,11 +1,10 @@
+% Q2MAT  transforms quaternion components to their matrix representation.
 %-------------------------------------------------------------------------%
 %Filename:  q2mat.m
 %Author:    Oliver Johnson
 %Date:      2/23/2011
 %
 %Updated 6/8/2011 to include isocliny flag option.
-%
-% Q2MAT transforms quaternion components to their matrix representation.
 %
 % Inputs:
 %   q - An npts-by-4 array containing quaternion components in 4-vector 

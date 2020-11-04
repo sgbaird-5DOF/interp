@@ -3,11 +3,9 @@ arguments
 	o1(:,8) double {mustBeFinite,mustBeReal}
 	o2(:,8) double {mustBeFinite,mustBeReal}
 end
+% ZETA_MIN  Alternative version of CMU group function zeta_min(), vectorized by Sterling Baird
 %--------------------------------------------------------------------------
 % Date: 2020-07-27
-%
-% Description: Alternative version of CMU group function zeta_min(),
-% vectorized by Sterling Baird
 % 
 % Inputs:
 %		(o1,o2)	-	lists of octonions

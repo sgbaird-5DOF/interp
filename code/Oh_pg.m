@@ -1,4 +1,4 @@
-
+% OH_PG  Oh point group load/testing function
 pgnum = 32 %cubic Oh
 symnames = load('PGnames.mat'); %need to add crystal_symmetry_ops to path in order for this to work
 symops = load('PGsymops.mat');

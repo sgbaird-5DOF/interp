@@ -1,11 +1,8 @@
+% QPOWER computes the power of a quaternion, defined as: q^k = q*q*q*... (k times)
 %-------------------------------------------------------------------------%
 %Filename:  qpower.m
 %Author:    Oliver Johnson
 %Date:      5/25/2013
-%
-% QPOWER computes the power of a quaternion, defined as:
-%
-%               q^k = q*q*q*... (k times)
 %
 % Inputs:
 %   q - An nq-by-4 array of quaternions. Each row is a quaternion.

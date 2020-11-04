@@ -10,18 +10,18 @@ arguments
 	NV.invmethod char {mustBeMember(NV.invmethod,{'mldivide','pinv','extendedCross'})} = 'mldivide'
 	NV.nnMax(1,1) double {mustBeInteger} = size(pts,1)
 end
-%--------------------------------------------------------------------------
-% Author: Sterling Baird
-%
-% Date: 2020-07-06
-%
-% Description: Project a ray (each row of pts) onto each facet connected to
+% INTERSECT_FACET  Find intersection of ray with facet using barycentric coordinates.
+% Project a ray (each row of pts) onto each facet connected to
 % the nearest neighbor of that ray, and compute the barycentric coordinates
 % of the projected datapoint. If all coordinates of a facet are positive,
 % mark that facet as an intersecting facet. If no intersecting is found
 % with the first nearest neighbor search, continue looking at next nearest
 % neighbors until an intersecting facet has been found or all facets have
 % been looped through.
+%--------------------------------------------------------------------------
+% Author: Sterling Baird
+%
+% Date: 2020-07-06
 %
 % Inputs:
 %		pts			===	rows of points that fall on a unit sphere, must

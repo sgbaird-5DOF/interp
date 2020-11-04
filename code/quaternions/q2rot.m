@@ -1,16 +1,15 @@
+% Q2ROT convert quaternions to rotation angles.
+%  converts quaternion components to their corresponding three independent
+%  rotation angles, w (omega), t (theta), p (phi). Q2ROT uses the following
+%  convention in defining the quaterion representation:
+%  q(1) = cos(w/2);
+%  q(2) = sin(w/2).*sin(t).*cos(p);
+%  q(3) = sin(w/2).*sin(t).*sin(p);
+%  q(4) = sin(w/2).*cos(t);
 %-------------------------------------------------------------------------%
 %Filename:  q2rot.m
 %Author:    Oliver Johnson
 %Date:      2/23/2011
-%
-% Q2ROT converts quaternion components to their corresponding three 
-% independent rotation angles, w (omega), t (theta), p (phi). Q2ROT
-% uses the following convention in defining the quaterion representation:
-%
-% q(1) = cos(w/2);
-% q(2) = sin(w/2).*sin(t).*cos(p);
-% q(3) = sin(w/2).*sin(t).*sin(p);
-% q(4) = sin(w/2).*cos(t);
 %
 % Inputs:
 %   q - An npts-by-4 array containing the user supplied quaternions in 

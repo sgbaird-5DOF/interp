@@ -1,3 +1,4 @@
+% RANDQVALIDATE  validate randq.m
 clear all; close all; clc
 qtest = randq(1e6);
 [w,t,p] = q2rot(qtest);

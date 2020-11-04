@@ -1,5 +1,5 @@
 function write_video(images,movname)
-
+% WRITE_VIDEO  write a set of images to a video named movname with some defaults
 %close all %not sure if you need this
 
 mymovie = VideoWriter(movname); %,'MPEG-4');

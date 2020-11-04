@@ -1,4 +1,5 @@
 function [omega_new, oct_new, zeta_new,wveclist_out,octonion_pair_sym_list_out] = GBdistEucl(data,pgnum,genplot)
+%  GBDISTEUCL  modified version of GBdist() for Euclidean distances (deprecated)
 %% INPUT DATA
 %
 % data: an N x 16 matrix of GB octonion pairs for the distance calculation

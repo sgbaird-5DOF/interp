@@ -1,13 +1,11 @@
-%gcfpos
+%GCFPOS  get current figure position and copy to clipboard
 %--------------------------------------------------------------------------
 % Author(s): Sterling Baird
 %
 % Date: 2020-08-18
 %
-% Description: get current figure position and copy to clipboard
-%
 % Usage:
-%  gcfpos
+%  gcfpos()
 %--------------------------------------------------------------------------
 fig = gcf;
 pos = fig.Position;

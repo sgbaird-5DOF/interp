@@ -1,5 +1,5 @@
 function in = inhull(testpts,xyz,tess,tol)
-% inhull: tests if a set of points are inside a convex hull
+% INHULL  tests if a set of points are inside a convex hull
 % usage: in = inhull(testpts,xyz)
 % usage: in = inhull(testpts,xyz,tess)
 % usage: in = inhull(testpts,xyz,tess,tol)

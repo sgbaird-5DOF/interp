@@ -1,4 +1,4 @@
-% function job_setup
+% SBATCH_SETUP  setup for SLURM sbatch submissions (deprecated)
 %--------------------------------------------------------------------------
 % Author: Sterling Baird
 %

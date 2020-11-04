@@ -1,0 +1,35 @@
+method = sphgpr
+get_octpairs 
+  0  5 10 15 20 25 30 35 40 45 50 55 60 65 70 75 80 85 90 95data/temp.mat
+get_octpairs 
+  0  5 10 15 20 25 30 35 40 45 50 55 60 65 70 75 80 85 90 95data/temp.mat
+nmeshpts = 1000, ndatapts = 10000
+
+gprMdl = 
+
+  RegressionGP
+             ResponseName: 'Y'
+    CategoricalPredictors: []
+        ResponseTransform: 'none'
+          NumObservations: 1000
+           KernelFunction: [function_handle]
+        KernelInformation: [1x1 struct]
+            BasisFunction: 'Constant'
+                     Beta: 1.1377
+                    Sigma: 0.0510
+        PredictorLocation: []
+           PredictorScale: []
+                    Alpha: [1000x1 double]
+         ActiveSetVectors: [1000x8 double]
+            PredictMethod: 'Exact'
+            ActiveSetSize: 1000
+                FitMethod: 'Exact'
+          ActiveSetMethod: 'Random'
+        IsActiveSetVector: [1000x1 logical]
+            LogLikelihood: 1.0918e+03
+         ActiveSetHistory: []
+           BCDInformation: []
+
+
+RMSE = 0.068361 J/m^2
+MAE = 0.048783 J/m^2

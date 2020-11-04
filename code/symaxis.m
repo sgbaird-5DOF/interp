@@ -1,11 +1,10 @@
 function [A,R] = symaxis(q,geometry)
+% SYMAXIS  Return the symmetry axes (if multiple) and the geometry given a quaternion
+%  (assumes FCC or BCC crystal structure 2020-06-30).
 %--------------------------------------------------------------------------
 % Author: Sterling Baird
 %
 % Date: 2020-06-30
-%
-% Description: Return the symmetry axes (if multiple) and the geometry
-% given a quaternion (assumes FCC or BCC crystal structure 2020-06-30).
 %
 % Input:
 %		q			===	quaternion, according to convention in [1], where
@@ -119,7 +118,7 @@ switch crystal
 				ay = [0,1,0];
 				az = [0,0,1];				
 			
-			case 'interior' %is this right? Are there are no symmetry axes (so anywhere goes for meshing), or is it a hemisphere so I choose arbitrary axes?
+			case {'interior','exterior'} %is this right? Are there are no symmetry axes (so anywhere goes for meshing), or is it a hemisphere so I choose arbitrary axes?
 				ax = [1,0,0];
 				ay = [0,1,0];
 				az = [0,0,1];

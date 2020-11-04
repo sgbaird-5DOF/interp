@@ -1,13 +1,13 @@
 function newvertices = projfacet2hyperplane(nvec,vertices)
+% PROJFACET2HYPERPLANE  project facet vertices onto a hyperplane defined by nvec
+% Take a list of vertices defining a facet with vertices on
+% the unit hypersphere and project them onto a tangent hyperplane at a
+% user-defined point, nvec. Useful for computing spherical barycentric
+% coordinates (sphbary.m).
 %--------------------------------------------------------------------------
 % Author: Sterling Baird
 %
 % Date: 2020-07-03
-%
-% Description: Take a list of vertices defining a facet with vertices on
-% the unit hypersphere and project them onto a tangent hyperplane at a
-% user-defined point, nvec. Useful for computing spherical barycentric
-% coordinates (sphbary.m).
 %
 % Inputs:
 %	nvec			===	normalized normal to desired tangent hyperplane (i.e.

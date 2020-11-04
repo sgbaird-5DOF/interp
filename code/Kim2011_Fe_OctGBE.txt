@@ -1,0 +1,11 @@
+#------------------------------------------------- 
+ #Calculated grain boundary energies of bcc Fe for 
+ #mechanically selected 66,339 grain boundaries 
+ #Columns 1:8 : Euclidean grain boundary octonion coordinates 
+#Column 9 : Grain boundary energy (J/m^2) 
+#------------------------------------------------- 
+-1	1	1	1	1	1	1	1	1
+1	1	1	1	1	1	1	1	1
+1	1	1	1	1	1	1	1	1
+1	1	1	1	1	1	1	1	1
+1	1	1	1	1	1	1	1	1

@@ -1,0 +1,2 @@
+brkQ,method,projtol,zeroQ,starttime,nmeshpts,ndatapts,ncores,gitcommit,uuid,predinput,queryinput,projQ,runtime,parity,L,r,genseed,errmetrics,rmse,mae
+1,idw,0.0001,0,17-Oct-2020 22:18:49,1000,1000,6,a12d52d,e3ffe861,5dof,5dof,1,0.0223616,,2,0.174532925199433,1148923787,,0.102130788845425,0.0760817906583166
