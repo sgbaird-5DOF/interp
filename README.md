@@ -2,10 +2,10 @@
  Code related to meshing and interpolation of grain boundaries by representing 5DOF of grain boundaries as octonions and mapping them into a Voronoi Fundamental Zone.
  
 See
+* Baird, S., Homer, E., Fullwood, T., & Johnson, O. (2020). Five Degree-of-Freedom Property Interpolation of Arbitrary GrainBoundaries via Voronoi Fundamental Zone Octonion Framework. (Submitted to Acta Materialia)
 * [GB_octonion_code](https://github.com/ichesser/GB_octonion_code)
 * Chesser, I., Francis, T., De Graef, M., & Holm, E. A. (2020). Learning the Grain Boundary Manifold: Tools for Visualizing and Fitting Grain Boundary Properties. Acta Materialia. https://doi.org/10.2139/ssrn.3460311
 * Francis, T., Chesser, I., Singh, S., Holm, E. A., & De Graef, M. (2019). A geodesic octonion metric for grain boundaries. Acta Materialia, 166, 135–147. https://doi.org/10.1016/j.actamat.2018.12.034
-* Baird, S., Homer, E., Fullwood, T., & Johnson, O. (2020). <Title>. (Submitted to Acta Materialia)
 
 ## Dependencies
 ### MATLAB Version
