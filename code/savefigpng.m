@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 function savefigpng(folder,fname,cropPos,manualcrop)
 arguments
     folder char
@@ -5,10 +6,14 @@ arguments
     cropPos double = []
     manualcrop(1,1) logical = false
 end
+=======
+function savefigpng(folder,fname)
+>>>>>>> master
 % SAVEFIGPNG  save a figure and print the figure as 300 DPI .png
 fpath = fullfile(folder,fname);
 savefig(fpath)
 print(fpath,'-dpng','-r300')
+<<<<<<< HEAD
 if ~isempty(cropPos) || manualcrop
     pngpath = [fpath,'.png'];
     I = imread(pngpath);
@@ -35,3 +40,7 @@ end
     NV.ncols(1,1) double = 1
 
 %}
+=======
+
+end
+>>>>>>> master

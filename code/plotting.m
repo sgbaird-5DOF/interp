@@ -35,6 +35,7 @@ for datatype = datatypelist
             ismember(mdlparstbl.datatype,datatype) & ...
             mdlparstbl.nmeshpts==nmeshpts,:);
         [G3,ID3] = findgroups(tbl3.method);
+<<<<<<< HEAD
         tlisttmp = cell(size(ID3));
         for i = 1:size(ID3,1)
             IDchar = char(ID3(i));
@@ -51,6 +52,13 @@ for datatype = datatypelist
         %plotting
         multiparity(parity3,ID3,'hex','cbnds',cbnds,'titlelist',titlelist)
 
+=======
+        parity3 = splitapply(@(x){x(1)},tbl3.parity,G3);
+        
+        %plotting
+        multiparity(parity3,ID3,'hex','titleQ',true)
+        
+>>>>>>> master
         %extra
         if sgtitleQ
             sgtitle(['nmeshpts = ' int2str(nmeshpts)])
@@ -62,6 +70,7 @@ end
 
 %% errors
 methodlist = {'pbary','gpr','idw','nn','avg'};
+<<<<<<< HEAD
 xytypelbls = ['Barycentric',upper(methodlist(2:4)),'Average'];
 datatypelist = {'brk','kim'};
 ytypes = {'rmse','mae'};
@@ -70,15 +79,25 @@ for datatype = datatypelist
     tbltmp = mdlparstbl(mdlparstbl.datatype==datatype,:);
     multixyplots(tbltmp,methodlist,'nmeshpts',ytypes,1,2,'ymin',0,...
         'lgdloc','southwest','ytypelbls',ytypelbls,'xytypelbls',xytypelbls)
+=======
+
+for datatype = datatypelist
+    tbltmp = mdlparstbl(mdlparstbl.datatype==datatype,:);
+    multixyplots(tbltmp,methodlist,'nmeshpts',{'rmse','mae'},2,1,'ymin',0,'lgdloc','southwest')
+>>>>>>> master
     %saving
     savefigpng(folder,[char(datatype) 'error'])
 end
 
 %% timing
+<<<<<<< HEAD
 methodlist = {{'pbary','gpr','idw','nn'},{'pbary','gpr','idw','nn'}};
 xytypelbls = {{'Barycentric','GPR','IDW','NN'},{'Barycentric','GPR','IDW','NN'}};
 % methodlist = {{'pbary','gpr'},{'gpr','idw','nn'}};
 % xytypelbls = {{'Barycentric','GPR'},{'GPR','IDW','NN'}};
+=======
+methodlist = {{'pbary','gpr'},{'idw','nn'}};
+>>>>>>> master
 tbl3 = mdlparstbl(mdlparstbl.ncores==12,:);
 %{ 
 whether to multiple pbary by # cores since uses parfor (although rest
@@ -87,6 +106,7 @@ might use multiple cores via vectorization..)?
 % ids = ismember(tbl3.method,'pbary');
 % tbl3(ids,'runtime') = tbl3(ids,'runtime').*tbl3(ids,'cores');
 [G3,ID3] = findgroups(tbl3.method);
+<<<<<<< HEAD
 multixyplots(mdlparstbl,methodlist,'nmeshpts',{'runtime'},1,2,'XScale','linear',...
     'YScale','linear','yunits','s','lgdloc','north','xytypelbls',xytypelbls)
 ax = gca;
@@ -95,10 +115,15 @@ ax.XScale = 'log';
 ax.YScale = 'log';
 % ax.YLim(2) = 1000;
 ax.Legend.Location = 'southeast';
+=======
+multixyplots(mdlparstbl,methodlist,'nmeshpts',{'runtime'},2,1,'YScale','linear','yunits','s','lgdloc','north')
+
+>>>>>>> master
 % stackedplot
 %saving
 savefigpng(folder,'runtime');
 
+<<<<<<< HEAD
 %% Runtime Table
 % the data is too varied and a log-log plot is too misleading. Going with table instead.
 methodlist = {'pbary','gpr','idw','nn'};
@@ -147,6 +172,8 @@ xlabel('VFZO Set Size','Interpreter','latex')
 ylabel('VFZO $\omega_{\mathrm{NN}}$ ($^{\circ}$)','Interpreter','latex')
 savefigpng(folder,'nndist-vs-setsize');
 
+=======
+>>>>>>> master
 %% arclength vs. euclidean distance parity
 % addpathdir({'get_five.m','cu2qu.m','GBfive2oct.m','gmat2q.m','distance-parity.mat'})
 addpathdir({'dist-parity.mat','paperfigure.m'})
@@ -230,7 +257,11 @@ for i = 1:npts
         j = j+1;
         nexttile
         yrange = ['[1,' int2str(i),']'];
+<<<<<<< HEAD
         yname = ['$\mathop{}_{\scriptstyle{\forall k \in' yrange '}}^{\rm{min}}2(\frac{180}{\pi})|\hat{o}_{i,k}^{sym}-\hat{o}_{j,k}^{sym}|$'];
+=======
+        yname = ['$\mathop{}_{\scriptstyle{\forall k \in' yrange '}}^{\rm{min}}2\frac{180}{\pi}|\hat{o}_{i,k}^{sym}-\hat{o}_{j,k}^{sym}|$'];
+>>>>>>> master
         parityplot(pd7,pd4tow,'hex','cscale','log','xname','$\omega$ (traditional)',...
             'yname',yname,'xunits','$^{\circ}$','yunits','$^{\circ}$')
         papertext(j,'xypos',[-0.2,1.0])
@@ -303,9 +334,15 @@ savefigpng(folder,['nnhist-knn-',int2str(npts)])
 
 %% barycentric methods
 proj_down_test(1)
+<<<<<<< HEAD
 savefigpng(folder,'bary-remove-deg',[130.5 19.5 1886 572])
 proj_down_test(2)
 savefigpng(folder,'bary-delaunay',[131.5 7.5 1872 432])
+=======
+savefigpng(folder,'bary-remove-deg')
+proj_down_test(2)
+savefigpng(folder,'bary-delaunay')
+>>>>>>> master
 
 %% voronoi example
 addpathdir('PGnames.mat')
@@ -314,12 +351,17 @@ toBPFZ_test(1)
 % toBPFZ_test(1)
 % nexttile
 % toBPFZ_test(4)
+<<<<<<< HEAD
 fname = 'voronoi';
 savefigpng(folder,fname,[178.5 41.5 1755 784])
+=======
+savefigpng(folder,'voronoi')
+>>>>>>> master
 % savefigpng(folder,'voronoi-4NN')
 
 %% bary interp
 sphbary_test()
+<<<<<<< HEAD
 fname = 'bary-interp';
 savefigpng(folder,fname,'crop',[242.5 351.5 609 393])
 % fpath = fullfile(folder,[fname,'.png']);
@@ -327,6 +369,10 @@ savefigpng(folder,fname,'crop',[242.5 351.5 609 393])
 % imshow(I)
 % Icropped = imcrop(I,[242.5 351.5 609 393]);
 % imwrite(Icropped,fpath)
+=======
+savefigpng(folder,'bary-interp')
+
+>>>>>>> master
 
 %% Prior Work Error Summary
 S = load('prior-work-error-summary.mat');
@@ -499,7 +545,10 @@ A = importdata('olm_octonion_list.txt');
     parityplot(pd5,pd7,'hex','cscale','linear','xname','\omega (Johnson)','yname','\omega (Chesser)','xunits','deg','yunits','deg')
 
 
+<<<<<<< HEAD
         tlisttmp = cellfun(@(ID) regexprep(ID,{'pbary','gpr','idw','nn'},{'Barycentric','GPR','IDW','NN'}),cellstr(ID3),'UniformOutput',false);
 
 
+=======
+>>>>>>> master
 %}

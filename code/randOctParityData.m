@@ -5,15 +5,26 @@ clear; close all
 %octochorically sampled octonions
 addpathdir({'var_names.m','writeparfile.m','walltimefns'})
 runtype = 'test'; %'test','full'
+<<<<<<< HEAD
 nreps = 10; % number of runs or repetitions
+=======
+nreps = 1; % number of runs or repetitions
+>>>>>>> master
 
 %make sure the parameters here correspond with the input to "pars" below
 switch runtype
     case 'test'
+<<<<<<< HEAD
         ndatapts = [100 388 500 1000 2000 5000 10000,20000 50000]; % 5000 10000 20000 50000];
         npredpts = 1000;
         method = {'gpr'}; % 'sphbary', 'pbary', 'gpr', 'sphgpr', 'nn', 'avg'
         datatype = {'brk'};
+=======
+        ndatapts = [10000]; % 5000 10000 20000 50000];
+        npredpts = 10000;
+        method = {'nn','avg'}; % 'sphbary', 'pbary', 'gpr', 'sphgpr', 'nn', 'avg'
+        datatype = {'rohrer-Ni'};
+>>>>>>> master
         pgnum = 32; %m-3m (i.e. m\overbar{3}m) FCC symmetry default for e.g. Ni
         
     case 'full'
@@ -26,12 +37,20 @@ end
 
 %comment (no spaces, used in filename)
 % comment = 'paper-data2';
+<<<<<<< HEAD
 % comment = 'rohrer-Ni-test';
 comment = 'gpr-fic-full';
 % comment = 'idw-test-3pt5deg';
 
 % job submission environment
 env = 'slurm'; %'slurm', 'local'
+=======
+comment = 'rohrer-Ni-test';
+% comment = 'idw-test-3pt5deg';
+
+% job submission environment
+env = 'local'; %'slurm', 'local'
+>>>>>>> master
 T = true;
 F = false;
 %whether to skip running the jobs and just compile results

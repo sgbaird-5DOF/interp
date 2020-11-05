@@ -6,16 +6,22 @@ arguments
     ytypes(1,:) = {'rmse','mae'}
     nrows(1,1) double = []
     ncols(1,1) double = []
+<<<<<<< HEAD
     NV.xtypelbl char = 'Input VFZO Set Size'
     NV.ytypelbls = ytypes
     NV.xytypelbls = xytypes
+=======
+>>>>>>> master
     NV.yunits char = '$J m^{-2}$'
     NV.XScale char {mustBeMember(NV.XScale,{'log','linear'})} = 'log'
     NV.YScale char {mustBeMember(NV.YScale,{'log','linear'})} = 'linear'
     NV.xmin double = []
     NV.ymin double = []
+<<<<<<< HEAD
     NV.xmax double = []
     NV.ymax double = []
+=======
+>>>>>>> master
     NV.lgdloc char = 'best'
     NV.charlblQ(1,1) logical = true
     NV.Interpreter char {mustBeMember(NV.Interpreter,{'latex','tex'})} = 'latex'
@@ -55,16 +61,25 @@ if ~isempty(nrows) && ~isempty(ncols)
 %     tiledlayout('TileSpacing','compact','Padding','compact');
 end
 
+<<<<<<< HEAD
 % if NV.charlblQ
 %     charlbl = get_charlbl(ntypes);
 % else
 %     charlbl = repelem({''},ntypes,1);
 % end
+=======
+if NV.charlblQ
+    charlbl = get_charlbl(ntypes);
+else
+    charlbl = repelem({''},ntypes,1);
+end
+>>>>>>> master
 
 for i = 1:ntypes
     switch loopvar
         case 'ytypes'
             ytype = ytypes{i};
+<<<<<<< HEAD
             if isempty(NV.ytypelbls)
                 NV.ytypelbl = ytype;
             else
@@ -88,6 +103,19 @@ for i = 1:ntypes
 %     NV.charlbl = charlbl{i};
     NVtmp.charlblnum = i;
     NVpairs = namedargs2cell(NVtmp);
+=======
+        case 'xytypes'
+            subxytypes = xytypes{i};
+    end
+    
+    ax1 = nexttile;
+    hold(ax1,'on')
+    ax1.XScale = NV.XScale;
+    ax1.YScale = NV.YScale;
+    NV.charlbl = charlbl{i};
+    NV.charlblnum = i;
+    NVpairs = namedargs2cell(NV);
+>>>>>>> master
     switch loopvar
         case 'ytypes'
             xyplots(tbl,xytypes,xtype,ytype,NVpairs{:})
