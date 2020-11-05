@@ -34,7 +34,7 @@ dataBary
 classicbaryinterp = dot(dataBary,propvals)
 
 if d == 3
-	fig = figure;
+	fig = paperfigure();
 	hold on
 	
 	temp = num2cell(newvertices,1);
@@ -49,8 +49,15 @@ if d == 3
 % 	text(temp{1}+0.02,temp{2}+0.02,temp{3}+0.05,{'1','2','3'})
 	
 	[x,y,z] = sphere(30);
+    ids = find(z < 0);
+    x(ids) = 0;
+    y(ids) = 0;
+    z(ids) = 0;
 	ax = surf(x,y,z,'EdgeColor',0.01*[67.8, 84.7, 90.2]);
 	alpha(ax,0.2);
+    ax = gca;
+	ax.View = [45, 15];
+	ax.ZLim(1) = 0;
 		
 	temp = num2cell(vertices,1);
 	sz = [length(temp{1}),length(temp)];
@@ -74,10 +81,6 @@ if d == 3
 	zlabel('z');
 
 	axis equal tight off
-
- 	ax = gca;
-	ax.View = [45, 15];
-	ax.ZLim(1) = 0;
 %     
 %     camlight
 %     lighting gouraud
