@@ -5,12 +5,12 @@ clear; close all
 %octochorically sampled octonions
 addpathdir({'var_names.m','writeparfile.m','walltimefns'})
 runtype = 'test'; %'test','full'
-nreps = 1; % number of runs or repetitions
+nreps = 10; % number of runs or repetitions
 
 %make sure the parameters here correspond with the input to "pars" below
 switch runtype
     case 'test'
-        ndatapts = [10000,50000]; % 5000 10000 20000 50000];
+        ndatapts = [100 388 500 1000 2000 5000 10000,20000 50000]; % 5000 10000 20000 50000];
         npredpts = 1000;
         method = {'gpr'}; % 'sphbary', 'pbary', 'gpr', 'sphgpr', 'nn', 'avg'
         datatype = {'brk'};
@@ -27,11 +27,11 @@ end
 %comment (no spaces, used in filename)
 % comment = 'paper-data2';
 % comment = 'rohrer-Ni-test';
-comment = 'gpr-partest';
+comment = 'gpr-fic-full';
 % comment = 'idw-test-3pt5deg';
 
 % job submission environment
-env = 'local'; %'slurm', 'local'
+env = 'slurm'; %'slurm', 'local'
 T = true;
 F = false;
 %whether to skip running the jobs and just compile results
