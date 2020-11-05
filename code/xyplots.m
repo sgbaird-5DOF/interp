@@ -4,25 +4,30 @@ arguments
    xytypes cell
    xtype char
    ytype char
+   NV.xtypelbl char = xtype
+   NV.ytypelbl char = ytype
+   NV.xytypelbl char = xytypes
    NV.yunits char = 'J/m^2'
    NV.XScale char {mustBeMember(NV.XScale,{'log','linear'})} = 'log'
    NV.YScale char {mustBeMember(NV.YScale,{'log','linear'})} = 'linear'
    NV.xmin double = []
    NV.ymin double = []
+   NV.xmax double = []
+   NV.ymax double = []
    NV.lgdloc char = 'best'
    NV.charlblQ(1,1) logical = false
-   NV.charlbl char = ''
    NV.charlblnum double = []
    NV.Interpreter char {mustBeMember(NV.Interpreter,{'latex','tex'})} = 'latex'
 end
 % XYPLOTS  plot multiple datasets on the same axes using a "master" table and findgroups()
 ax = gca;
-ax.XScale = 'log';
-xlabel(xtype)
+ax.XScale = NV.XScale;
+ax.YScale = NV.YScale;
+xlabel(NV.xtypelbl)
 if ~isempty(NV.yunits)
-    ylabel([ytype ' (' NV.yunits ')'],'Interpreter',NV.Interpreter)
+    ylabel([NV.ytypelbl ' (' NV.yunits ')'],'Interpreter',NV.Interpreter)
 else
-    ylabel(ytype,'Interpreter',NV.Interpreter)
+    ylabel(NV.ytypelbl,'Interpreter',NV.Interpreter)
 end
 axis square
 
@@ -39,12 +44,18 @@ end
 if ~isempty(NV.ymin)
     ax.YLim(1) = NV.ymin;
 end
+if ~isempty(NV.xmax)
+    ax.XLim(1) = NV.xmax;
+end
+if ~isempty(NV.ymax)
+    ax.YLim(2) = NV.ymax;
+end
 
-legend(xytypes,'Location',NV.lgdloc,'FontSize',9,'Interpreter',NV.Interpreter)
+legend(NV.xytypelbl,'Location',NV.lgdloc,'FontSize',9,'Interpreter',NV.Interpreter)
 
 % label for figure tiles, e.g. '(a)', '(b)', '(c)', '(d)'
-if NV.charlblQ && ~isempty(NV.charlbl)
-    papertext(charlbl)
+if NV.charlblQ
+    papertext(NV.charlblnum)
 %     text(0.025,0.95,NV.charlbl,'Units','normalized','FontSize',12,'Interpreter',NV.Interpreter)
 end
 
@@ -82,4 +93,6 @@ end
     ylabel('runtime (s)')
     axis square
     hold off
+
+%   NV.charlbl char = ''
 %}
