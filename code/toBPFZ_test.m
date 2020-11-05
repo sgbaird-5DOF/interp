@@ -28,7 +28,7 @@ nAref = nArot{1}(18,:);
 
 %% plotting
 paperfigure(1,2);
-tnum = 2;
+tnum = 1;
 nexttile(tnum) % voronoi cell point cloud
 nAsub = nArot(2:end);
 v = num2cell(randi(24,npts-1,1));
@@ -82,7 +82,7 @@ end
 
 papertext(tnum);
 
-tnum = 1;
+tnum = 2;
 nexttile(tnum) %voronoi cell, single intersection example
 hold on
 t = n2c(setdiff(nArotex,ptex,'rows'));
