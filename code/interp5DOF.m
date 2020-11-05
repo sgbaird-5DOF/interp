@@ -182,7 +182,7 @@ else
 end
 %symmetrization
 wtol = 1e-6;
-[o,oref] = get_octpairs(otmp,'wtol',wtol,'pgnum',pgnum);
+[o,oref] = get_octpairs(otmp,'wtol',wtol,'pgnum',pgnum); %***this is where an ensemble would start***
 nmeshpts = size(o,1);
 
 %query points
