@@ -48,6 +48,8 @@ doublecoverQ = true;
 switch dtype
 	case 'omega'
 		distfn = @(o1,o2) get_omega(o1,o2);
+    case 'alen'
+        distfn = @(o1,o2) get_alen(o1,o2);
 	case 'norm'
 		distfn = @(o1,o2) vecnorm(o1-o2,2,2);
 end
