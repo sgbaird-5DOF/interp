@@ -180,10 +180,6 @@ else
     predinput = '5dof';
     otmp = GBfive2oct(qm,nA);
 end
-%symmetrization
-wtol = 1e-6;
-[o,oref] = get_octpairs(otmp,'wtol',wtol,'pgnum',pgnum); %***this is where an ensemble would start***
-nmeshpts = size(o,1);
 
 %query points
 if isempty(qm2) && isempty(nA2) && ~isempty(NV.o2)
@@ -193,6 +189,12 @@ else
     queryinput = '5dof';
     otmp2 = GBfive2oct(qm2,nA2);
 end
+
+%symmetrization
+wtol = 1e-6;
+[o,oref] = get_octpairs(otmp,'wtol',wtol,'pgnum',pgnum); %***this is where an ensemble would start***
+nmeshpts = size(o,1);
+
 %symmetrization
 [o2,oref2] = get_octpairs(otmp2,'wtol',wtol,'pgnum',pgnum);
 ndatapts = size(o2,1);
