@@ -6,3 +6,6 @@
 [submodule "interp5DOF-paper"]
 	path = code/interp5DOF-paper
 	url = ../../sgbaird/interp5DOF-paper.git
+[submodule "code/interp5DOF-paper"]
+	path = code/interp5DOF-paper
+	url = git@github.com:sgbaird/interp5DOF-paper.git

@@ -49,10 +49,13 @@ if d == 3
 % 	text(temp{1}+0.02,temp{2}+0.02,temp{3}+0.05,{'1','2','3'})
 	
 	[x,y,z] = sphere(30);
+<<<<<<< HEAD
     ids = find(z < 0);
     x(ids) = 0;
     y(ids) = 0;
     z(ids) = 0;
+=======
+>>>>>>> master
 	ax = surf(x,y,z,'EdgeColor',0.01*[67.8, 84.7, 90.2]);
 	alpha(ax,0.2);
     ax = gca;
@@ -81,6 +84,13 @@ if d == 3
 	zlabel('z');
 
 	axis equal tight off
+<<<<<<< HEAD
+=======
+
+ 	ax = gca;
+	ax.View = [45, 15];
+	ax.ZLim(1) = 0;
+>>>>>>> master
 %     
 %     camlight
 %     lighting gouraud
