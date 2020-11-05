@@ -190,9 +190,11 @@ else
     otmp2 = GBfive2oct(qm2,nA2);
 end
 
+%***this is where an ensemble would start***
+% for k = 1:K
 %symmetrization
 wtol = 1e-6;
-[o,oref] = get_octpairs(otmp,'wtol',wtol,'pgnum',pgnum); %***this is where an ensemble would start***
+[o,oref] = get_octpairs(otmp,'wtol',wtol,'pgnum',pgnum);
 nmeshpts = size(o,1);
 
 %symmetrization
@@ -563,6 +565,8 @@ switch method
         mdlparsspec = struct();
 end
 runtime = toc; %time elapsed to do the interpolation (method-specific portion)
+
+% Ensemble loop would end here, and compiling ensemble results would follow
 
 %% append extra general variables
 %parity variables
