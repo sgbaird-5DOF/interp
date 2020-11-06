@@ -1,16 +1,8 @@
-<<<<<<< HEAD
 function [ypred,interpfn,mdl,mdlpars] = interp5DOF(qm,nA,y,qm2,nA2,method,NV)
 arguments
     qm %input misorientation quaternions
     nA %input BP normals
     y(:,1) %property values
-=======
-function [ypred,interpfn,mdl,mdlpars] = interp5DOF(qm,nA,propList,qm2,nA2,method,NV)
-arguments
-    qm %input misorientation quaternions
-    nA %input BP normals
-    propList(:,1) %property values
->>>>>>> master
     qm2 %query misorientations
     nA2 %query BP normals
     method char {mustBeMember(method,{'gpr','sphgpr','pbary','sphbary','idw','nn','avg'})} = 'gpr'
@@ -188,13 +180,10 @@ else
     predinput = '5dof';
     otmp = GBfive2oct(qm,nA);
 end
-<<<<<<< HEAD
-=======
 %symmetrization
 wtol = 1e-6;
 [o,oref] = get_octpairs(otmp,'wtol',wtol,'pgnum',pgnum);
 nmeshpts = size(o,1);
->>>>>>> master
 
 %query points
 if isempty(qm2) && isempty(nA2) && ~isempty(NV.o2)
@@ -204,7 +193,6 @@ else
     queryinput = '5dof';
     otmp2 = GBfive2oct(qm2,nA2);
 end
-<<<<<<< HEAD
 
 %***this is where an ensemble would start***
 % for k = 1:K
@@ -213,8 +201,6 @@ wtol = 1e-6;
 [o,oref] = get_octpairs(otmp,'wtol',wtol,'pgnum',pgnum);
 nmeshpts = size(o,1);
 
-=======
->>>>>>> master
 %symmetrization
 [o2,oref2] = get_octpairs(otmp2,'wtol',wtol,'pgnum',pgnum);
 ndatapts = size(o2,1);
@@ -250,7 +236,7 @@ d = size(a,2);
 %projected points
 if d <= 7
     ppts = proj_down(o,projtol,usv,'zeroQ',zeroQ);
-	ppts2 = proj_down(o2,projtol,usv,'zeroQ',zeroQ);
+    ppts2 = proj_down(o2,projtol,usv,'zeroQ',zeroQ);
 else 
     error("Input doesn't have degenerate dimension or has too few (i.e. check input data), or try reducing proj_down tolerance input (tol)")
 end
@@ -391,11 +377,7 @@ switch method
         if isempty(NV.gpropts)
             %% interp5DOF's default gpr options
             if nmeshpts <= Inf
-<<<<<<< HEAD
-                PredictMethod = 'fic';
-=======
                 PredictMethod = 'exact';
->>>>>>> master
                 gpropts = {};
             else
                 PredictMethod = 'bcd';
@@ -459,18 +441,14 @@ switch method
         else
             gprMdl = fitrgp(X,y);
         end
-<<<<<<< HEAD
         
 %         %cross-validate the model
 %         cvgprMdl = crossval(gprMdl);
         
-=======
->>>>>>> master
         %compact the model
         cgprMdl = compact(gprMdl);
         
         %predictions ("interpolated" points)
-<<<<<<< HEAD
         switch PredictMethod
             case 'fic'
                 [ypred,ysd,yint] = predict(gprMdl,X2);
@@ -479,14 +457,12 @@ switch method
             otherwise
                 [ypred,ysd,yint] = predict(gprMdl,X2);
         end
-=======
         if ~strcmp(PredictMethod,'bcd')
             [ypred,ysd,yint] = predict(cgprMdl,X2);
         else
             ypred = predict(cgprMdl,X2);
         end
         
->>>>>>> master
         mdlcmd = @(cgprMdl,X2) predict(cgprMdl,X2);
         interpfn = @(qm2,nA2) interp_gpr(cgprMdl,qm2,nA2,projtol,usv);
         
@@ -518,10 +494,7 @@ switch method
         mdlparsspec.KernelParameterNames = cgprMdl.KernelInformation.KernelParameterNames;
         mdlparsspec.Beta = cgprMdl.Beta;
         mdlparsspec.Sigma = cgprMdl.Sigma;
-<<<<<<< HEAD
 %         mdlparsspec.CrossVal = CrossVal;
-=======
->>>>>>> master
         
     case 'idw' % inverse distance weighting
         %whether to remove degenerate dimension or not
@@ -538,11 +511,7 @@ switch method
         L = 2; %norm-power (i.e. L == 2 --> Euclidean norm)
         %different from Tovar's FEX idw.m implementation, but should be
         %similar or same output
-<<<<<<< HEAD
         [ypred,W,r,nints,numnonints,int_fraction] = idw(X,X2,y,r,L);
-=======
-        [ypred,W,r,nints,numnonints,int_fraction] = idw(X,X2,propList,r,L);
->>>>>>> master
         
         mdlcmd = @(X,X2,propList,r,L) idw(X,X2,propList,r,L);
         interpfn = @(qm2,nA2) interp_idw(X,qm2,nA2,y,r,L);
@@ -559,11 +528,7 @@ switch method
         interpfn = @(qm2,nA2) interp_nn(ppts,qm2,nA2,projtol,usv,y);
         
         %assign NN property values
-<<<<<<< HEAD
         ypred = y(nnList);
-=======
-        ypred = propList(nnList);
->>>>>>> master
         
         %model-specific variables
         mdlspec.nnList = nnList;
@@ -572,11 +537,7 @@ switch method
         
     case 'avg'
         % "interpolation" (just constant model)
-<<<<<<< HEAD
         [ypred,yavg] = interp_avg(y,ndatapts);
-=======
-        [ypred,yavg] = interp_avg(propList,ndatapts);
->>>>>>> master
         
         mdlcmd = @(propList,ndatapts) interp_avg(propList,ndatapts);
         interpfn = @(qm2,nA2) repelem(yavg,ndatapts,1); %any new point gets assigned yavg
