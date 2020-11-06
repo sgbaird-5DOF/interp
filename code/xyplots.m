@@ -4,33 +4,24 @@ arguments
    xytypes cell
    xtype char
    ytype char
-<<<<<<< HEAD
    NV.xtypelbl char = xtype
    NV.ytypelbl char = ytype
    NV.xytypelbl char = xytypes
-=======
->>>>>>> master
    NV.yunits char = 'J/m^2'
    NV.XScale char {mustBeMember(NV.XScale,{'log','linear'})} = 'log'
    NV.YScale char {mustBeMember(NV.YScale,{'log','linear'})} = 'linear'
    NV.xmin double = []
    NV.ymin double = []
-<<<<<<< HEAD
    NV.xmax double = []
    NV.ymax double = []
    NV.lgdloc char = 'best'
    NV.charlblQ(1,1) logical = false
-=======
-   NV.lgdloc char = 'best'
-   NV.charlblQ(1,1) logical = false
    NV.charlbl char = ''
->>>>>>> master
    NV.charlblnum double = []
    NV.Interpreter char {mustBeMember(NV.Interpreter,{'latex','tex'})} = 'latex'
 end
 % XYPLOTS  plot multiple datasets on the same axes using a "master" table and findgroups()
 ax = gca;
-<<<<<<< HEAD
 ax.XScale = NV.XScale;
 ax.YScale = NV.YScale;
 xlabel(NV.xtypelbl)
@@ -38,14 +29,7 @@ if ~isempty(NV.yunits)
     ylabel([NV.ytypelbl ' (' NV.yunits ')'],'Interpreter',NV.Interpreter)
 else
     ylabel(NV.ytypelbl,'Interpreter',NV.Interpreter)
-=======
-ax.XScale = 'log';
 xlabel(xtype)
-if ~isempty(NV.yunits)
-    ylabel([ytype ' (' NV.yunits ')'],'Interpreter',NV.Interpreter)
-else
-    ylabel(ytype,'Interpreter',NV.Interpreter)
->>>>>>> master
 end
 axis square
 
@@ -62,7 +46,6 @@ end
 if ~isempty(NV.ymin)
     ax.YLim(1) = NV.ymin;
 end
-<<<<<<< HEAD
 if ~isempty(NV.xmax)
     ax.XLim(1) = NV.xmax;
 end
@@ -75,14 +58,6 @@ legend(NV.xytypelbl,'Location',NV.lgdloc,'FontSize',9,'Interpreter',NV.Interpret
 % label for figure tiles, e.g. '(a)', '(b)', '(c)', '(d)'
 if NV.charlblQ
     papertext(NV.charlblnum)
-=======
-
-legend(xytypes,'Location',NV.lgdloc,'FontSize',9,'Interpreter',NV.Interpreter)
-
-% label for figure tiles, e.g. '(a)', '(b)', '(c)', '(d)'
-if NV.charlblQ && ~isempty(NV.charlbl)
-    papertext(charlbl)
->>>>>>> master
 %     text(0.025,0.95,NV.charlbl,'Units','normalized','FontSize',12,'Interpreter',NV.Interpreter)
 end
 
@@ -120,9 +95,5 @@ end
     ylabel('runtime (s)')
     axis square
     hold off
-<<<<<<< HEAD
-
 %   NV.charlbl char = ''
-=======
->>>>>>> master
 %}

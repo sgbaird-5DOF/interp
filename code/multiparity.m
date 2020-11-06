@@ -4,28 +4,19 @@ arguments
     ID
     plottype char {mustBeMember(plottype,{'hex','scatter'})} = 'hex'
     NV.charlblQ(1,1) logical = true
-<<<<<<< HEAD
     NV.autotitle(1,1) logical = false
     NV.titlelist = []
     NV.xlim = []
     NV.ylim = []
     NV.cbnds = []
-=======
-    NV.titleQ(1,1) logical = true
-    NV.xlim = []
-    NV.ylim = []
->>>>>>> master
     NV.Interpreter char {mustBeMember(NV.Interpreter,{'tex','latex','none'})} = 'latex'
 end
 % MULTIPARITY  create tiled parity plots using cell parity data
 
-<<<<<<< HEAD
 if ~isempty(NV.titlelist)
     assert(~NV.autotitle,'if titlelist is specified, autotitle should be set to false')
 end
 
-=======
->>>>>>> master
 % fig=figure;
 % fig.Position = [418.6 194.6 644.8 555.2];
 
@@ -44,7 +35,6 @@ switch nIDs
         sz = [];
 end
 if ~isempty(sz)
-<<<<<<< HEAD
     switch sz(2)
         case 1
             ht = 14.5838333333333/2;
@@ -54,9 +44,6 @@ if ~isempty(sz)
             ht = [];
     end
     paperfigure(sz(1),sz(2),ht);
-=======
-    paperfigure(sz(1),sz(2));
->>>>>>> master
 else
     tiledlayout('flow','TileSpacing','compact','Padding','compact');
 end
@@ -72,7 +59,6 @@ for i = 1:nIDs
     else
         charlbl = repelem({''},length(ID));
     end
-<<<<<<< HEAD
     if ~isempty(NV.titlelist)
         t = NV.titlelist;
     else
@@ -84,15 +70,6 @@ for i = 1:nIDs
     end
     opts = struct('charlbl',charlbl{i},'title',t(i),'scatterOpts',...
         struct('MarkerEdgeAlpha',0.1),'xlim',NV.xlim,'ylim',NV.ylim,'cbnds',NV.cbnds);
-=======
-    if NV.titleQ
-        t = ID;
-    else
-        t = repelem({''},length(ID));
-    end
-    opts = struct('charlbl',charlbl{i},'title',t(i),'scatterOpts',...
-        struct('MarkerEdgeAlpha',0.1),'xlim',NV.xlim,'ylim',NV.ylim);
->>>>>>> master
     if isempty(NV.xlim)
         opts = rmfield(opts,'xlim');
     end
