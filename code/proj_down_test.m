@@ -33,15 +33,36 @@ switch test
             % 			fig=figure;
             % 			fig.Position = [443.4 123.4 261.6 588.8];
             % 			tiledlayout(2,1,'TileSpacing','compact','Padding','compact')
-            paperfigure(1,2);
-            nexttile % 3D point cloud
+            paperfigure(1,3);
+            tnum = 2;
+            nexttile(tnum) % 3D point cloud, U(1) removed
             t=n2c(pts);
             plot3(t{:},'k*')
             hold on
-            sphplot(200,'axview',[-7.0769e+01   2.8197e+01])
-            axis off
+            sphplot(200,'axview',[-125 20])
+            axis equal tight off
             
-            papertext(1);
+            papertext(tnum);
+        end
+        
+        % for visualization of U(1) degeneracy
+        u1pts = zeros(size(pts));
+        for i = 1:npts+2
+            R = rotationmat3D(pi*rand,[0 0 1]);
+            pt = pts(i,:);
+            u1pts(i,:) = (R*(pt.')).';
+        end
+        
+        if d == 3
+            tnum = 1;
+            nexttile(tnum) % 3D point cloud, U(1) degeneracy present
+            t=n2c(u1pts);
+            plot3(t{:},'k*')
+            hold on
+            sphplot(200,'axview',[-125 20])
+            axis equal tight off
+            
+            papertext(tnum);
         end
         
         %remove degenerate dimension (outputting origin point automatically
@@ -50,14 +71,14 @@ switch test
         [downpts2,usv2] = proj_down(pts,'zeroQ',false);
         
         if d == 3
-            nexttile % 2D point cloud
+            tnum = 3;
+            nexttile(tnum) % 2D point cloud
             t=n2c(downpts);
             plot(t{:},'k*')
             viscircles([0,0],0.8,'Color','k');
             scl2 = 1.15;
             axis([-1 1 -1 1]*scl2,'equal','off')
 %             txtfn('b')
-            papertext(2);
             %             nexttile
             t=n2c(downpts2);
             hold on
@@ -65,7 +86,7 @@ switch test
             plot(0,0,'k+')
             hold off
             lgd = legend('zeroQ=T','zeroQ=F','(0,0)','Location','southeast');
-            lgd.Position = [0.766477042811879 0.194469508634414 0.140716805329194 0.148823532609379];
+            lgd.Position = [0.77470852429336 0.194469508634414 0.155941938669603 0.165461046921141];
             %             viscircles([0,0],0.8,'Color','k');
             % 			axis equal tight
             %             txtfn('c')
@@ -75,21 +96,32 @@ switch test
         
     case 2
         %sub-hemisphere data (i.e. within single orthant)
+        paperfigure(1,4)
         d = 3;
         npts = 100;
         pts = normr(rand(npts,d));
         scl = 0.8;
         
+        tnum = 1;
+        nexttile(tnum) % 3D point cloud on hypersphere
+        t=n2c(pts);
+        plot3(t{:},'r.')
+        % 			trisurf(K,t{:},'FaceColor','none','EdgeColor','k')
+        
+        hold on
+        sphplot('axview',[65.5094   21.7505])
+        axis equal tight off
+        papertext(tnum);
+        
         projpts = projfacet2hyperplane(mean(pts),pts);
         
-        [downpts,usv] = proj_down(projpts,'zeroQ',false);
         
-        paperfigure(1,3)
+        [downpts,usv] = proj_down(projpts,'zeroQ',false);
         
         scl2 = 1.15;
         
         if d == 3
-            tnum = 2;
+            tnum = 3;
             nexttile(tnum) %2D triangulation
             t=n2c(downpts);
             K=delaunayn(downpts);
@@ -100,15 +132,16 @@ switch test
             
             papertext(tnum,'xypos',[0.005 1.1])
             
-            cloud2D_Q = false;
+            cloud2D_Q = true;
             if cloud2D_Q
                 tnum = 3;
                 nexttile(tnum) %2D point cloud
-                plot(t{:},'k.')
+                hold on
+                plot(t{:},'r.')
                 hold off
                 axis(scl2*[-1 1 -1 1])
                 axis equal tight off
-                txtfn(charlist{tnum})
+%                 txtfn(charlist{tnum})
             end
         end
         
@@ -116,11 +149,12 @@ switch test
         
         
         if d == 3
-            tnum = 1;
+<<<<<<< HEAD
+            tnum = 2;
             nexttile(tnum) % 3D point cloud on hyperplane
             t=n2c(uppts);
-            plot3(t{:},'k.')
-            % 			trisurf(K,t{:},'FaceColor','none','EdgeColor','k')
+            plot3(t{:},'r.')
+	    % 			trisurf(K,t{:},'FaceColor','none','EdgeColor','k')
             
             hold on
             sphplot('axview',[65.5094   21.7505])
@@ -145,10 +179,10 @@ switch test
             % 			fig=figure;
             % 			fig.Position = [405.8 109.8 208.8 660];
             % 			tiledlayout(4,1,'TileSpacing','compact','Padding','compact')
-            tnum = 3;
+            tnum = 4;
             nexttile(tnum) % 3D point cloud on hypersphere w/ tri
             t=n2c(pts);
-            plot3(t{:},'k.')
+            plot3(t{:},'r.')
             hold on
             
             sphplot()

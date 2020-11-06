@@ -1,8 +1,8 @@
-function [ypred,interpfn,mdl,mdlpars] = interp5DOF(qm,nA,propList,qm2,nA2,method,NV)
+function [ypred,interpfn,mdl,mdlpars] = interp5DOF(qm,nA,y,qm2,nA2,method,NV)
 arguments
     qm %input misorientation quaternions
     nA %input BP normals
-    propList(:,1) %property values
+    y(:,1) %property values
     qm2 %query misorientations
     nA2 %query BP normals
     method char {mustBeMember(method,{'gpr','sphgpr','pbary','sphbary','idw','nn','avg'})} = 'gpr'
@@ -193,6 +193,14 @@ else
     queryinput = '5dof';
     otmp2 = GBfive2oct(qm2,nA2);
 end
+
+%***this is where an ensemble would start***
+% for k = 1:K
+%symmetrization
+wtol = 1e-6;
+[o,oref] = get_octpairs(otmp,'wtol',wtol,'pgnum',pgnum);
+nmeshpts = size(o,1);
+
 %symmetrization
 [o2,oref2] = get_octpairs(otmp2,'wtol',wtol,'pgnum',pgnum);
 ndatapts = size(o2,1);
@@ -228,7 +236,7 @@ d = size(a,2);
 %projected points
 if d <= 7
     ppts = proj_down(o,projtol,usv,'zeroQ',zeroQ);
-	ppts2 = proj_down(o2,projtol,usv,'zeroQ',zeroQ);
+    ppts2 = proj_down(o2,projtol,usv,'zeroQ',zeroQ);
 else 
     error("Input doesn't have degenerate dimension or has too few (i.e. check input data), or try reducing proj_down tolerance input (tol)")
 end
@@ -237,7 +245,7 @@ end
 %mesh
 mesh.pts = o;
 mesh.ppts = ppts;
-mesh.props = propList;
+mesh.props = y;
 mesh.npts = nmeshpts;
 
 %data
@@ -381,7 +389,7 @@ switch method
             if strcmp(method,'sphgpr')
                 %squared exponential kernel function with octonion distance
                 kfcn = @(XN,XM,theta) (exp(theta(2))^2)*exp(-(pdist2(XN,XM,@get_omega).^2)/(2*exp(theta(1))^2));
-                theta0 = [deg2rad(10), std(propList)/sqrt(2)]; %initial length scale and noise
+                theta0 = [deg2rad(10), std(y)/sqrt(2)]; %initial length scale and noise
                 gpropts = [gpropts,{'KernelFunction',kfcn,'KernelParameters',theta0}];
             end
             
@@ -429,14 +437,26 @@ switch method
         
         %Gaussian process regression        
         if ~isempty(gpropts)
-            gprMdl = fitrgp(X,propList,gpropts{:}) %#ok<NOPRT>
+            gprMdl = fitrgp(X,y,gpropts{:}) %#ok<NOPRT>
         else
-            gprMdl = fitrgp(X,propList);
+            gprMdl = fitrgp(X,y);
         end
+        
+%         %cross-validate the model
+%         cvgprMdl = crossval(gprMdl);
+        
         %compact the model
         cgprMdl = compact(gprMdl);
         
         %predictions ("interpolated" points)
+        switch PredictMethod
+            case 'fic'
+                [ypred,ysd,yint] = predict(gprMdl,X2);
+            case 'bcd'
+                ypred = predict(gprMdl,X2);
+            otherwise
+                [ypred,ysd,yint] = predict(gprMdl,X2);
+        end
         if ~strcmp(PredictMethod,'bcd')
             [ypred,ysd,yint] = predict(cgprMdl,X2);
         else
@@ -474,6 +494,7 @@ switch method
         mdlparsspec.KernelParameterNames = cgprMdl.KernelInformation.KernelParameterNames;
         mdlparsspec.Beta = cgprMdl.Beta;
         mdlparsspec.Sigma = cgprMdl.Sigma;
+%         mdlparsspec.CrossVal = CrossVal;
         
     case 'idw' % inverse distance weighting
         %whether to remove degenerate dimension or not
@@ -490,7 +511,7 @@ switch method
         L = 2; %norm-power (i.e. L == 2 --> Euclidean norm)
         %different from Tovar's FEX idw.m implementation, but should be
         %similar or same output
-        [ypred,W,r,nints,numnonints,int_fraction] = idw(X,X2,propList,r,L);
+        [ypred,W,r,nints,numnonints,int_fraction] = idw(X,X2,y,r,L);
         
         mdlcmd = @(X,X2,propList,r,L) idw(X,X2,propList,r,L);
         interpfn = @(qm2,nA2) interp_idw(X,qm2,nA2,y,r,L);
@@ -504,10 +525,10 @@ switch method
         nnList = dsearchn(ppts,ppts2);
         
         mdlcmd = @(ppts,ppts2,propList) propList(dsearchn(ppts,ppts2));
-        interpfn = @(qm2,nA2) interp_nn(ppts,qm2,nA2,projtol,usv,propList);
+        interpfn = @(qm2,nA2) interp_nn(ppts,qm2,nA2,projtol,usv,y);
         
         %assign NN property values
-        ypred = propList(nnList);
+        ypred = y(nnList);
         
         %model-specific variables
         mdlspec.nnList = nnList;
@@ -516,7 +537,7 @@ switch method
         
     case 'avg'
         % "interpolation" (just constant model)
-        [ypred,yavg] = interp_avg(propList,ndatapts);
+        [ypred,yavg] = interp_avg(y,ndatapts);
         
         mdlcmd = @(propList,ndatapts) interp_avg(propList,ndatapts);
         interpfn = @(qm2,nA2) repelem(yavg,ndatapts,1); %any new point gets assigned yavg
@@ -554,6 +575,8 @@ switch method
         mdlparsspec = struct();
 end
 runtime = toc; %time elapsed to do the interpolation (method-specific portion)
+
+% Ensemble loop would end here, and compiling ensemble results would follow
 
 %% append extra general variables
 %parity variables

@@ -53,13 +53,13 @@ npts = size(pts,1);
 orefrep = repmat(oref,npts,1);
 [~,octvtx] = GBdist4(orefrep,pts,NV.pgnum,'norm',NV.wtol,true);
 
-%check if multiple octonions found (rare, have only seen once ever out of
-%tens of thousands 2020-08-17, otherwise might indicate an error)
+%check if multiple octonions found (rare, otherwise might indicate an error)
 idstmp = cellfun(@(oct) size(oct,1),octvtx) > 1;
 nids = sum(idstmp);
 if nids > 0
+    disp(['nids: ' int2str(nids)])
     %display the id since it's a rare occurrence
-	disp(['nids: ' int2str(nids)])
+    disp(find(idstmp))
     %replace octonions with first octonion
     ids = find(idstmp);
     for i = 1:length(ids)
