@@ -55,7 +55,6 @@ if ~isempty(nrows) && ~isempty(ncols)
 %     tiledlayout('TileSpacing','compact','Padding','compact');
 end
 
-<<<<<<< HEAD
 % if NV.charlblQ
 %     charlbl = get_charlbl(ntypes);
 % else
@@ -89,7 +88,6 @@ for i = 1:ntypes
 %     NV.charlbl = charlbl{i};
     NVtmp.charlblnum = i;
     NVpairs = namedargs2cell(NVtmp);
-    
     switch loopvar
         case 'ytypes'
             xyplots(tbl,xytypes,xtype,ytype,NVpairs{:})
