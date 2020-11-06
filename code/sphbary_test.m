@@ -81,7 +81,6 @@ if d == 3
 	zlabel('z');
 
 	axis equal tight off
-
 %     
 %     camlight
 %     lighting gouraud

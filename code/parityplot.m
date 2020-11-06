@@ -107,6 +107,7 @@ if ~isempty(NV.yunits)
 else
     yunits = '';
 end
+
 xlbl = strjoin({NV.xname,xunits},' ');
 ylbl = strjoin({NV.yname,yunits},' ');
 xlabel(xlbl,'Interpreter',NV.Interpreter,'FontSize',NV.FontSize)

@@ -79,6 +79,7 @@ switch test
             scl2 = 1.15;
             axis([-1 1 -1 1]*scl2,'equal','off')
 %             txtfn('b')
+            papertext(tnum);
             %             nexttile
             t=n2c(downpts2);
             hold on
@@ -149,12 +150,11 @@ switch test
         
         
         if d == 3
-<<<<<<< HEAD
             tnum = 2;
             nexttile(tnum) % 3D point cloud on hyperplane
             t=n2c(uppts);
             plot3(t{:},'r.')
-	    % 			trisurf(K,t{:},'FaceColor','none','EdgeColor','k')
+            % 			trisurf(K,t{:},'FaceColor','none','EdgeColor','k')
             
             hold on
             sphplot('axview',[65.5094   21.7505])
