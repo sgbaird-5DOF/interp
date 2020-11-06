@@ -10,7 +10,6 @@ nreps = 10; % number of runs or repetitions
 %make sure the parameters here correspond with the input to "pars" below
 switch runtype
     case 'test'
-<<<<<<< HEAD
         ndatapts = [100 388 500 1000 2000 5000 10000,20000 50000]; % 5000 10000 20000 50000];
         npredpts = 1000;
         method = {'gpr'}; % 'sphbary', 'pbary', 'gpr', 'sphgpr', 'nn', 'avg'
@@ -32,7 +31,7 @@ comment = 'gpr-fic-full';
 % comment = 'idw-test-3pt5deg';
 
 % job submission environment
-env = 'local'; %'slurm', 'local'
+env = 'slurm'; %'slurm', 'local'
 T = true;
 F = false;
 %whether to skip running the jobs and just compile results
