@@ -180,10 +180,6 @@ else
     predinput = '5dof';
     otmp = GBfive2oct(qm,nA);
 end
-%symmetrization
-wtol = 1e-6;
-[o,oref] = get_octpairs(otmp,'wtol',wtol,'pgnum',pgnum);
-nmeshpts = size(o,1);
 
 %query points
 if isempty(qm2) && isempty(nA2) && ~isempty(NV.o2)
@@ -377,7 +373,7 @@ switch method
         if isempty(NV.gpropts)
             %% interp5DOF's default gpr options
             if nmeshpts <= Inf
-                PredictMethod = 'exact';
+                PredictMethod = 'fic';
                 gpropts = {};
             else
                 PredictMethod = 'bcd';
@@ -457,12 +453,6 @@ switch method
             otherwise
                 [ypred,ysd,yint] = predict(gprMdl,X2);
         end
-        if ~strcmp(PredictMethod,'bcd')
-            [ypred,ysd,yint] = predict(cgprMdl,X2);
-        else
-            ypred = predict(cgprMdl,X2);
-        end
-        
         mdlcmd = @(cgprMdl,X2) predict(cgprMdl,X2);
         interpfn = @(qm2,nA2) interp_gpr(cgprMdl,qm2,nA2,projtol,usv);
         

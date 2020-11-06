@@ -16,7 +16,6 @@ arguments
    NV.ymax double = []
    NV.lgdloc char = 'best'
    NV.charlblQ(1,1) logical = false
-   NV.charlbl char = ''
    NV.charlblnum double = []
    NV.Interpreter char {mustBeMember(NV.Interpreter,{'latex','tex'})} = 'latex'
 end
@@ -29,7 +28,6 @@ if ~isempty(NV.yunits)
     ylabel([NV.ytypelbl ' (' NV.yunits ')'],'Interpreter',NV.Interpreter)
 else
     ylabel(NV.ytypelbl,'Interpreter',NV.Interpreter)
-xlabel(xtype)
 end
 axis square
 
@@ -95,5 +93,6 @@ end
     ylabel('runtime (s)')
     axis square
     hold off
+
 %   NV.charlbl char = ''
 %}
