@@ -9,14 +9,15 @@ arguments
     NV.pgnum(1,1) double = 32 %m-3m (i.e. m\overbar{3}m) FCC symmetry default
     NV.databary = [] %for use with bary methods
     NV.facetIDs = [] %for use with bary methods
-    NV.dataprops = [] %user-specified "true" values for error calculations
+    NV.ytrue = [] %user-specified "true" values for error calculations
     NV.modelparsspec = struct()
     NV.brkQ(1,1) logical = true %whether to compute BRK values as ytrue
-    NV.gpropts = struct.empty %for use with gpr methods 'gpr' or 'sphgpr'
+    NV.mygpropts = struct.empty %for use with gpr methods 'gpr' or 'sphgpr'
     NV.r double = [] %for use with 'idw' method, alternatively set to [] for automatic estimation
     NV.uuid(1,8) char = get_uuid() %unique ID associated with this interpolation run
     NV.o = [] %input octonions, specify these or qm/nA pairs
     NV.o2 = [] %query octonions, specify these or qm2/nA2 pairs
+    NV.oref = get_ocubo(1,'random',[],10)
 end
 % INTERP5DOF  Convert misorientation and boundary plane normal 5DOF input
 % data to a closed, octonion, hyperspherical mesh and interpolate property
@@ -60,10 +61,10 @@ end
 %
 %       'brkQ' - logical, whether or not to calculate BRK energy values for
 %       the query points to use for error calculations. If false and
-%       dataprops is not supplied, then data.props is assigned a NaN vector
+%       ytrue is not supplied, then data.props is assigned a NaN vector
 %       of the same size as mesh.props
 %
-%       'dataprops' - user supplied properties for query points for error
+%       'ytrue' - user supplied properties for query points for error
 %       calculations. If not supplied, data.props depends on brkQ
 %
 %       'modelparsspec' - user supplied struct of model-specific
@@ -168,7 +169,8 @@ brkQ = NV.brkQ;
 uuid = NV.uuid;
 
 % add relevant folders to path (by searching subfolders for functions)
-addpathdir({'normr.m','GB5DOF_setup.m','cu2qu.m','q2rod.m','GBfive2oct.m','correctdis.m','interp_gpr.m'})
+addpathdir({'normr.m','GB5DOF_setup.m','cu2qu.m','q2rod.m','GBfive2oct.m',...
+    'correctdis.m','interp_gpr.m'})
 
 %% convert to octonions & symmetrize
 tic
@@ -194,11 +196,11 @@ end
 % for k = 1:K
 %symmetrization
 wtol = 1e-6;
-[o,oref] = get_octpairs(otmp,'wtol',wtol,'pgnum',pgnum);
+[o,oref] = get_octpairs(otmp,'wtol',wtol,'pgnum',pgnum,'oref',NV.oref);
 nmeshpts = size(o,1);
 
 %symmetrization
-[o2,oref2] = get_octpairs(otmp2,'wtol',wtol,'pgnum',pgnum);
+[o2,oref2] = get_octpairs(otmp2,'wtol',wtol,'pgnum',pgnum,'oref',NV.oref);
 ndatapts = size(o2,1);
 
 %make sure that reference octonions are identical within tolerance
@@ -250,7 +252,7 @@ data.ppts = ppts2;
 data.npts = ndatapts;
 
 %data property values
-if isempty(NV.dataprops)
+if isempty(NV.ytrue)
     if NV.brkQ
         for i = 1:data.npts
             om1 = qu2om(o2(i,1:4));
@@ -261,7 +263,7 @@ if isempty(NV.dataprops)
         data.props = nan(size(ppts2,1),1);
     end
 else
-    data.props = NV.dataprops;
+    data.props = NV.ytrue;
 end
 ytrue = data.props;
 
@@ -370,7 +372,7 @@ switch method
         end
         
         %gpr options
-        if isempty(NV.gpropts)
+        if isempty(NV.mygpropts)
             %% interp5DOF's default gpr options
             if nmeshpts <= Inf
                 PredictMethod = 'fic';
@@ -391,7 +393,7 @@ switch method
             
         else
             % user-supplied gpr options
-            gpropts = NV.gpropts;
+            gpropts = NV.mygpropts;
             gproptnames = gpropts{1:2:end};
             gproptvals = gpropts{2:2:end};
             gproptstruct = cell2struct(gproptvals,gproptnames,2);

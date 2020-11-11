@@ -6,6 +6,7 @@ arguments
    datatype char {mustBeMember(datatype,{'brk','kim','rohrer-Ni'})} = 'brk'
    NV.pgnum(1,1) double = 32 %m-3m (i.e. m\overbar{3}m) FCC symmetry default
    NV.uuid = get_uuid()
+   NV.K(1,1) double = 1 %# of VFZO ensembles
 end
 %INTERP5DOF_SETUP  setup for interpolating five-degree-of-freedom property
 %data using random octochorically sampled octonions
@@ -16,6 +17,7 @@ addpathdir({'cu2qu.m','q2rod.m','qmult.m','get_ocubo.m','get_uuid.m'})
 %unpack
 pgnum = NV.pgnum;
 uuid = NV.uuid;
+K = NV.K;
 
 %seed
 seedstruct = rng;
@@ -34,7 +36,7 @@ switch datatype
         fivetmp = S.five;
         q = vertcat(fivetmp.q);
         nA = vertcat(fivetmp.nA);
-        proptmp = S.propList;
+        ytmp = S.propList;
         
         npts = ndatapts+npredpts;
         c = cvpartition(npts,'Holdout',npredpts);
@@ -46,8 +48,8 @@ switch datatype
         five2 = struct('q',q(id2,:),'nA',nA(id2,:));
 
         %split properties
-        propList = proptmp(id1);
-        dataprops = proptmp(id2);
+        y = ytmp(id1);
+        dataprops = ytmp(id2);
         
     case 'brk'
         %random 5dof parameters
@@ -55,7 +57,7 @@ switch datatype
         five2 = get_five(npredpts);
         
         %get BRK function values
-        propList = GB5DOF_setup(five);
+        y = GB5DOF_setup(five);
         dataprops = GB5DOF_setup(five2);
         
     case 'rohrer-Ni'
@@ -65,7 +67,7 @@ switch datatype
         [q,nA] = TJ2five(EAs,norms);
         %unpack
         assert(isvector(resE),'resE should be a vector');
-        proptmp = resE(:);
+        ytmp = resE(:);
         
         npts = ndatapts+npredpts;
         c = cvpartition(npts,'Holdout',npredpts);
@@ -77,8 +79,8 @@ switch datatype
         five2 = struct('q',q(id2,:),'nA',nA(id2,:));
         
         %split properties
-        propList = proptmp(id1);
-        dataprops = proptmp(id2);
+        y = ytmp(id1);
+        dataprops = ytmp(id2);
         
 end
 
@@ -89,8 +91,13 @@ qm2 = vertcat(five2.q);
 nA2 = vertcat(five2.nA);
 
 %% interpolation
-[ypred,interpfn,mdl,mdlpars] = interp5DOF(qm,nA,propList,qm2,nA2,method,...
-    'pgnum',pgnum,'uuid',uuid,'dataprops',dataprops);
+[ypredlist,interpfnlist,mdllist,mdlparslist] = deal(cell(K,1));
+for k = 1:K
+    [ypredlist{k},interpfnlist{k},mdllist{k},mdlparslist{k}] = interp5DOF(qm,nA,y,qm2,nA2,method,...
+        'pgnum',pgnum,'uuid',uuid,'dataprops',dataprops);
+end
+ypredtmp = [ypredlist{:}];
+ypred = min(ypredtmp,2);
 
 %% error values
 proptrue = mdl.data.props;
