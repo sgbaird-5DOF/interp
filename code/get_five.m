@@ -1,4 +1,4 @@
-function five = get_five(npts)
+function [five,q,nA] = get_five(npts)
 arguments
     npts(1,1) double = 1
 end
@@ -24,6 +24,7 @@ end
 %
 % Date: 2020-10-06
 %--------------------------------------------------------------------------
-five.q = get_cubo(npts);
-five.nA = normr(rand(npts,3)-0.5);
+q = get_cubo(npts);
+nA = normr(rand(npts,3)-0.5);
+five = var_names(q,nA);
 end
