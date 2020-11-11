@@ -72,8 +72,9 @@ plot3(t{:},'ko','MarkerFaceColor','w')
 axis equal tight off
 test_voronoisphere(nArot{1}.')
 if K == 2
-    lgdlbltmp = {'symmetrized'};
-    legend('starting',lgdlbltmp{:},'reference','Location','north')
+    lgdlbltmp = {'p_i^*'};
+    legend('p_i',lgdlbltmp{:},'p_\rmmath{ref}','Location','north')
+%     legend('starting',lgdlbltmp{:},'reference','Location','north')
 else
     lgdlbltmp = strcat('NN',{' '},num2cell(num2str((1:K-1).')));
     legend('starting',lgdlbltmp{:},'reference','Location','southeast')
@@ -86,7 +87,7 @@ tnum = 2;
 nexttile(tnum) %voronoi cell, single intersection example
 hold on
 t = n2c(setdiff(nArotex,ptex,'rows'));
-plot3(t{:},'r.')
+plot3(t{:},'m.')
 t = n2c(ptex);
 plot3(t{:},'b.')
 t = n2c(nAref*1.02);
@@ -98,6 +99,7 @@ ax.View = [140 35];
 test_voronoisphere(nArot{1}.')
 
 axis equal tight off
+lgdlbl = {'p_i','p_i^*','p_\rmmath{ref}'};
 legend({'starting','symmetrized','reference'},'Location','north')
 
 end
