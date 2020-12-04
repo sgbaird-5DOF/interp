@@ -1,15 +1,8 @@
 
 %% 1. LOAD OCTONION UTILITY FUNCTIONS 
 
-filelist = {'../olmsted_xtal_info_numeric.csv','crystal_symmetry_ops','rotation_conversions','octonion_functions'};
-filepathgen = fullfile('**',filelist);
-for i = 1:length(filepathgen)
-	octfile = dir(filepathgen{i});
-	if ~isempty(octfile)
-		octfolder = octfile(1).folder;
-		addpath(octfolder);
-	end
-end
+addpathdir({'olmsted_xtal_info_numeric.csv','crystal_symmetry_ops',...
+    'rotation_conversions','octonion_functions'})
 
 % addpath([fileparts(pwd),'/Data']) %add Data directory to path
 % addpath('**/crystal_symmetry_ops')
@@ -117,3 +110,15 @@ fprintf(fID,'%6.8f %6.8f %6.8f %6.8f %6.8f %6.8f %6.8f %6.8f \n', octlist');
 
 
 
+%% CODE GRAVEYARD
+%{
+filelist = ;
+filepathgen = fullfile('**',filelist);
+for i = 1:length(filepathgen)
+	octfile = dir(filepathgen{i});
+	if ~isempty(octfile)
+		octfolder = octfile(1).folder;
+		addpath(octfolder);
+	end
+end
+%}
