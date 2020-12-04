@@ -1,4 +1,7 @@
-function [A,b] = misFZcon()
+function [A,b] = misFZcon(epsijk)
+arguments
+   epsijk(1,1) double = 1 
+end
 % MISFZCON  get constraints for misorientation fundamental zone (misFZ)
 %--------------------------------------------------------------------------
 % Author(s): Sterling Baird
@@ -43,6 +46,9 @@ qO = [1 0 0 0];
 qlist = [qA;qB;qC;qD;qE;qO];
 
 %convert to rodrigues vectors
+% ro = qu2ro(qlist,epsijk);
+% dlist = ro(:,4).*ro(:,1:3);
+
 dlist = q2rod(qlist);
 
 %compute constraints
