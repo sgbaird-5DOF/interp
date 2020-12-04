@@ -1,9 +1,10 @@
-function out = qmult(pp,qq)
+function out = qmult(pp,qq,epsijk)
 arguments
    pp(:,4) double {mustBeReal,mustBeFinite}
    qq(:,4) double {mustBeReal,mustBeFinite}
+   epsijk = 1
 end
-epsijk = 1;
+% epsijk = 1;
 % global epsijk
 % if isempty(epsijk)
 %     setGlobal_epsijk(1)
@@ -16,6 +17,10 @@ qr = pp(:,1).*qq(:,1) - dot(p,q,2);
 qi = pp(:,1).*q + qq(:,1).*p + epsijk*cross(p,q,2);
 
 out = [qr qi];
+
+% %negate quaternions if scalar part is negative
+% ids = qr < 0;
+% out(ids,:) = -out(ids,:);
 
 end
 

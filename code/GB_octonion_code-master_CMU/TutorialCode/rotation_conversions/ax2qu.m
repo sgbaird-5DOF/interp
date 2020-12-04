@@ -1,7 +1,10 @@
-% from axis-angle pair to quaternions
+function q = ax2qu(ax,epsijk)
+arguments
+    ax(:,4)
+    epsijk = 1
+end
+% AX2QU  from axis-angle pair to quaternions, first 3 elements:axis, last element: angle
 %vectorized by SGB 2020-08-15
-function q = ax2qu(ax)
-
 npts = size(ax,1);
 q = zeros(npts,4);
 
@@ -17,6 +20,7 @@ if any(~ids)
 	c = cos(ax(~ids,4)*0.5);
 	s = sin(ax(~ids,4)*0.5);
 	q(~ids,:) = [ c, ax(~ids,1).*s, ax(~ids,2).*s, ax(~ids,3).*s ];
+    q(~ids,2:4) = -epsijk*q(~ids,2:4);
 end
 % set values very close to 0 as 0
 

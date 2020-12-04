@@ -1,8 +1,11 @@
 % from Euler angles to axis-angle pair
 
-function q = eu2ax(eu)
-
-global epsijk
+function q = eu2ax(eu,epsijk)
+arguments
+    eu(:,3)
+    epsijk = 1
+end
+% global epsijk
 thr = 1e-10;
 
 aphi1 = eu(1);
