@@ -1,11 +1,12 @@
-function oAB = GBlab2oct(qA_Lab,qB_Lab,nA_Lab,convention)
+function oAB = GBlab2oct(qA_Lab,qB_Lab,nA_Lab,convention,epsijk)
 arguments
    qA_Lab(:,4) double {mustBeReal,mustBeFinite,mustBeRowNormalized(qA_Lab,1e-6)}
    qB_Lab(:,4) double {mustBeReal,mustBeFinite,mustBeRowNormalized(qB_Lab,1e-6)}
    nA_Lab(:,3) double {mustBeReal,mustBeFinite}
    convention char {mustBeMember(convention,'francis')} = 'francis'
+   epsijk(1,1) double = 1
 end
-% GBLAB2OCT  convert lab coordinate grain boundareis to octonions
+% GBLAB2OCT  convert lab coordinate grain boundaries to octonions
 % Convert the crystal orientations (expressed as quaternions) of grains
 % meeting at a grain boundary (GB) together with the corresponding GB
 % normals to the GB octonion defined by Francis [1] and required by the
@@ -105,8 +106,10 @@ qR = gmat2q(gR);
 
 %% Construct qA_R and qB_R (quaternions in the GB reference frame)
 
-qA_R = qmultiply(qA_Lab,qinv_johnson(qR)); % note this is using Toby's misorientation convention, these should not be used with our code directly
-qB_R = qmultiply(qB_Lab,qinv_johnson(qR));
+qA_R = qmult(qA_Lab,qinv(qR),epsijk);
+qB_R = qmult(qB_Lab,qinv(qR),epsijk);
+% qA_R = qmultiply(qA_Lab,qinv_johnson(qR)); % note this is using Toby's misorientation convention, these should not be used with our code directly
+% qB_R = qmultiply(qB_Lab,qinv_johnson(qR));
 
 %% Convert to octonion
 
