@@ -1,7 +1,8 @@
-function zm = zeta_min2(o1,o2)
+function zm = zeta_min2(o1,o2,epsijk)
 arguments
 	o1(:,8) double {mustBeFinite,mustBeReal}
 	o2(:,8) double {mustBeFinite,mustBeReal}
+    epsijk(1,1) double = 1
 end
 % ZETA_MIN  Alternative version of CMU group function zeta_min(), vectorized by Sterling Baird
 %--------------------------------------------------------------------------
@@ -39,7 +40,7 @@ mu_num1 = qA(:,4).*qC(:,1)-qC(:,4).*qA(:,1)+qB(:,4).*qD(:,1)-qD(:,4).*qB(:,1);
 crossAC = cross(qA(:,2:4),qC(:,2:4),2);
 crossBD = cross(qB(:,2:4),qD(:,2:4),2);
 
-mu_arg = (mu_num1 + crossAC(:,3) + crossBD(:,3))./(qdot_AC+qdot_BD);
+mu_arg = (mu_num1 + epsijk*crossAC(:,3) + epsijk*crossBD(:,3))./(qdot_AC+qdot_BD);
 
 mu_arg(isnan(mu_arg)) = 0;
 
