@@ -65,10 +65,12 @@ switch method
                 
         Zero = zeros(npts,1);
         
-        mA0 = qmult(qmis,qmult([Zero nA],qinv_francis(qmis)));
+%         mA0 = qmult(qmis,qmult([Zero nA],qinv_francis(qmis),epsijk),epsijk);
         % mA0 = qmult(qmis,[0 Lpr(qmis,nA)]); %this attempt still produce different mA values
         
-        mA = mA0(:,2:4);
+%         mA = mA0(:,2:4);
+        
+        mA = Lpr(qmis,nA,epsijk);
         
         % disp(['mA = ' num2str(mA)])
         
@@ -83,9 +85,9 @@ switch method
         
         axisA = normr([mA(:,2) -mA(:,1) Zero]);
         
-        pA = ax2qu([axisA phiA]);
+        pA = ax2qu([axisA phiA],epsijk);
         
-        qA = qmult(qinv_francis(qmis),pA);
+        qA = qmult(qinv(qmis),pA,epsijk);
         qB = pA;
         
         o = [qA qB];
