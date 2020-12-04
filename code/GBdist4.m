@@ -1,4 +1,4 @@
-function [dmin, o2minsyms] = GBdist4(o1,o2,pgnum,dtype,wtol,waitbarQ)
+function [dmin, o2minsyms] = GBdist4(o1,o2,pgnum,dtype,wtol,waitbarQ,epsijk)
 arguments
 	o1(:,8) double {mustBeFinite,mustBeReal,mustBeSqrt2Norm}
 	o2(:,8) double {mustBeFinite,mustBeReal,mustBeSqrt2Norm}
@@ -6,6 +6,7 @@ arguments
 	dtype char {mustBeMember(dtype,{'omega','norm'})} = 'norm'
 	wtol(1,1) double {mustBeFinite,mustBeReal} = 1e-12 %omega tolerance
 	waitbarQ logical = false
+    epsijk(1,1) double = 1
 end
 % GBDIST4  modified version of GBdist function by CMU group. Keeps o1 constant.
 %--------------------------------------------------------------------------
@@ -82,7 +83,7 @@ function nUpdateProgress(~)
 end
 
 %loop through octonion pairs
-parfor i = 1:npts %parfor compatible
+for i = 1:npts %parfor compatible
 	%text waitbar
 	if mod(i,nreps2) == 0
 		if waitbarQ
@@ -92,7 +93,7 @@ parfor i = 1:npts %parfor compatible
 	
 	%% setup	
 	%unpack SEOs
-	oset = osymsets(o2(i,:),pgnum,struct,grainexchangeQ,doublecoverQ);
+	oset = osymsets(o2(i,:),pgnum,struct,grainexchangeQ,doublecoverQ,epsijk);
 	o2tmp = oset{1};
 	
 	%number of CSEOs
@@ -112,10 +113,11 @@ parfor i = 1:npts %parfor compatible
 	% get minimum zeta & sigma values (zm)
 	zm = zeta_min2(o1rep,o2tmp);
 	qzm = [cos(zm/2) zeros(nsets,2) sin(zm/2)];
+%     qzm = [cos(zm/2) zeros(nsets,2) -epsijk*sin(zm/2)];
 	
 	% get minimized quaternions
-	qCz = qmult(qSC,qzm);
-	qDz = qmult(qSD,qzm);
+	qCz = qmult(qSC,qzm,epsijk);
+	qDz = qmult(qSD,qzm,epsijk);
 	
 	%package quaternions
 	o2syms = [qCz qDz];
