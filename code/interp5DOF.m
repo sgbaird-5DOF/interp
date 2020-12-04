@@ -192,16 +192,14 @@ else
     otmp2 = GBfive2oct(qm2,nA2);
 end
 
-%***this is where an ensemble would start***
-% for k = 1:K
 %symmetrization
 wtol = 1e-6;
 [o,oref] = get_octpairs(otmp,'wtol',wtol,'pgnum',pgnum,'oref',NV.oref);
-nmeshpts = size(o,1);
+ninputpts = size(o,1);
 
 %symmetrization
 [o2,oref2] = get_octpairs(otmp2,'wtol',wtol,'pgnum',pgnum,'oref',NV.oref);
-ndatapts = size(o2,1);
+npredpts = size(o2,1);
 
 %make sure that reference octonions are identical within tolerance
 if ~ismembertol(oref,oref2,'ByRows',true)
@@ -213,7 +211,7 @@ symruntime = toc;
 
 [~,~,nnmu,nnsigma] = get_knn(o,'omega',1);
 
-disp(['nmeshpts = ' int2str(nmeshpts) ', ndatapts = ' int2str(ndatapts)])
+disp(['ninputpts = ' int2str(ninputpts) ', npredpts = ' int2str(npredpts)])
 
 %% projection
 %important to project both sets together so they use same SVD decomposition
@@ -244,12 +242,12 @@ end
 mesh.pts = o;
 mesh.ppts = ppts;
 mesh.props = y;
-mesh.npts = nmeshpts;
+mesh.npts = ninputpts;
 
 %data
 data.pts = o2;
 data.ppts = ppts2;
-data.npts = ndatapts;
+data.npts = npredpts;
 
 %data property values
 if isempty(NV.ytrue)
@@ -281,8 +279,8 @@ gitcommit = get_gitcommit();
 mdlgen = var_names(method,projtol,zeroQ,usv,starttime,ncores,...
     gitcommit,uuid,predinput,queryinput,projQ,oref,oref2,nnmu,nnsigma,symruntime);
 %general parameters
-mdlparsgen = var_names(method,projtol,zeroQ,starttime,nmeshpts,...
-    ndatapts,ncores,gitcommit,uuid,predinput,queryinput,projQ,oref,oref2,nnmu,nnsigma,...
+mdlparsgen = var_names(method,projtol,zeroQ,starttime,ninputpts,...
+    npredpts,ncores,gitcommit,uuid,predinput,queryinput,projQ,oref,oref2,nnmu,nnsigma,...
     symruntime);
 
 %% method-specific interpolation
@@ -374,7 +372,8 @@ switch method
         %gpr options
         if isempty(NV.mygpropts)
             %% interp5DOF's default gpr options
-            if nmeshpts <= Inf
+            thresh = Inf;
+            if ninputpts <= thresh
                 PredictMethod = 'fic';
                 gpropts = {};
             else
@@ -451,19 +450,22 @@ switch method
             case 'fic'
                 [ypred,ysd,yint] = predict(gprMdl,X2);
             case 'bcd'
-                ypred = predict(gprMdl,X2);
+                ypred = predict(cgprMdl,X2);
             otherwise
                 [ypred,ysd,yint] = predict(gprMdl,X2);
         end
-        mdlcmd = @(cgprMdl,X2) predict(cgprMdl,X2);
-        interpfn = @(qm2,nA2) interp_gpr(cgprMdl,qm2,nA2,projtol,usv);
         
-        %model-specific variables
-        if ~strcmp(PredictMethod,'bcd')
-            mdlspec = var_names(cgprMdl,gpropts,ysd,yint);
-        else
-            mdlspec = var_names(cgprMdl,gpropts);
+        switch PredictMethod
+            case 'fic'
+                mdlcmd = @(gprMdl,X2) predict(gprMdl,X2);
+                interpfn = @(qm2,nA2) interp_gpr(gprMdl,qm2,nA2,projtol,usv);
+                mdlspec = var_names(gprMdl,gpropts,ysd,yint);
+            otherwise
+                mdlcmd = @(cgprMdl,X2) predict(cgprMdl,X2);
+                interpfn = @(qm2,nA2) interp_gpr(cgprMdl,qm2,nA2,projtol,usv);
+                mdlspec = var_names(cgprMdl,gpropts,ysd,yint);
         end
+
         %model-specific parameters
         if exist('gproptshort','var') == 1
             if ~isempty(fieldnames(gproptshort))
@@ -529,10 +531,10 @@ switch method
         
     case 'avg'
         % "interpolation" (just constant model)
-        [ypred,yavg] = interp_avg(y,ndatapts);
+        [ypred,yavg] = interp_avg(y,npredpts);
         
         mdlcmd = @(propList,ndatapts) interp_avg(propList,ndatapts);
-        interpfn = @(qm2,nA2) repelem(yavg,ndatapts,1); %any new point gets assigned yavg
+        interpfn = @(qm2,nA2) repelem(yavg,npredpts,1); %any new point gets assigned yavg
         
         %model-specific variables
         mdlspec.yavg = yavg;
@@ -567,8 +569,6 @@ switch method
         mdlparsspec = struct();
 end
 runtime = toc; %time elapsed to do the interpolation (method-specific portion)
-
-% Ensemble loop would end here, and compiling ensemble results would follow
 
 %% append extra general variables
 %parity variables
@@ -834,5 +834,18 @@ end
 %% helper functions
 %function to concatenate structures with all different fields (no common)
 structcat = @(S1,S2) table2struct([struct2table(S1,'AsArray',true),struct2table(S2,'AsArray',true)]);
+
+%***this is where an ensemble would start***
+% for k = 1:K
+
+
+% Ensemble loop would end here, and compiling ensemble results would follow
+
+        %model-specific variables
+        if ~strcmp(PredictMethod,'bcd')
+            mdlspec = var_names(cgprMdl,gpropts,ysd,yint);
+        else
+            mdlspec = var_names(cgprMdl,gpropts);
+        end
 
 %}
