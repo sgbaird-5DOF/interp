@@ -3,7 +3,7 @@ function tbl = eumA2five_test2()
 %% Lab to Five
 npts = 1;
 epsijk = 1;
-rng(11)
+rng(11) 
 
 eA = normr(rand(npts,3));
 eB = normr(rand(npts,3));
