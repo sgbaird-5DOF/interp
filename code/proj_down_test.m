@@ -99,7 +99,7 @@ switch test
         %sub-hemisphere data (i.e. within single orthant)
         paperfigure(1,4)
         d = 3;
-        npts = 100;
+        npts = 200;
         pts = normr(rand(npts,d));
         scl = 0.8;
         
@@ -152,13 +152,15 @@ switch test
         if d == 3
             tnum = 2;
             nexttile(tnum) % 3D point cloud on hyperplane
-            t=n2c(uppts);
-            plot3(t{:},'r.')
-            % 			trisurf(K,t{:},'FaceColor','none','EdgeColor','k')
             
             hold on
             sphplot('axview',[65.5094   21.7505])
             axis off
+            
+            t=n2c(uppts);
+%             trisurf(K,t{:},'FaceColor','k','EdgeColor','none','FaceAlpha',0.1) %'EdgeColor','k')
+            hold on
+            plot3(t{:},'r.')
             
 %             [x,y,z]=sphere(40);
 %             % 			scl = 0.8;
