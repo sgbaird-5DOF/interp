@@ -11,4 +11,6 @@ K = 10;
 
 errmetrics = get_errmetrics(ypred,ytrue,'dispQ',true);
 
+paperfigure()
+
 save('ensemble-interp.mat')
