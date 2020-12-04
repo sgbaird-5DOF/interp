@@ -7,7 +7,10 @@ arguments
 end
 % PARSEREQFILES  parse required files & products using fileseparator sep
 % (default is native separator of computer running MATLAB) for files that
-% are accessible via MATLAB path.
+% are accessible via MATLAB path. expression is regexp value that shortens
+% an absolute path to a relative path. So if the function of interest
+% (fname) is in the "interp" folder, then 'interp*' would work for
+% expression.
 [flist,plist] = matlab.codetools.requiredFilesAndProducts(fname);
 nfiles = length(flist);
 
