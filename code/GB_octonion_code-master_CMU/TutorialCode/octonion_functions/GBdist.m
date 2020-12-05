@@ -1,4 +1,10 @@
-function [omega_new, oct_new, zeta_new] = GBdist(data,pgnum,genplot)
+function [omega_new, oct_new, zeta_new] = GBdist(data,pgnum,genplot,epsijk)
+arguments
+   data(:,16)
+   pgnum(1,1) double = 32
+   genplot(1,1) logical = false
+   epsijk(1,1) double = 1
+end
 %% INPUT DATA
 
 % data: an N x 16 matrix of GB octonion pairs for the distance calculation
@@ -91,17 +97,17 @@ for k = 1:length(pair_list)
 %                     qSD = qmult(Sl,qD);
 
                     %apply symmetry operators
-                    qSA = qmult(qA,Si);
-                    qSB = qmult(qB,Sj);
-                    qSC = qmult(qC,Sm);
-                    qSD = qmult(qD,Sl);
+                    qSA = qmult(qA,Si,epsijk);
+                    qSB = qmult(qB,Sj,epsijk);
+                    qSC = qmult(qC,Sm,epsijk);
+                    qSD = qmult(qD,Sl,epsijk);
                     
                     %now we implement U(1) and grain exchange symmetry
                     
                     %1. (A B C'(zeta) D'(zeta))
-                    zm1 = zeta_min(qSA,qSB,qSC,qSD);
+                    zm1 = zeta_min(qSA,qSB,qSC,qSD,epsijk);
 %                     qzm1 = [cos(zm1/2) 0 0 sin(zm1/2)];
-                    qzm1 = ax2qu([0 0 1 zm1]);
+                    qzm1 = ax2qu([0 0 1 zm1],epsijk);
 %                     r1 = [1 0 0];
 %                     r2 = Lpr(qzm1,r1);
 %                     R = vecpair2rmat(r1,r2);
@@ -110,8 +116,8 @@ for k = 1:length(pair_list)
 %                     qDz1 = qmult(qSD,qzm1);
 %                     qCz1 = qmult(qinv(qR),qSC);
 %                     qDz1 = qmult(qinv(qR),qSD);
-                    qCz1 = qmult(qzm1,qSC);
-                    qDz1 = qmult(qzm1,qSD);
+                    qCz1 = qmult(qzm1,qSC,epsijk);
+                    qDz1 = qmult(qzm1,qSD,epsijk);
 %                     qCz1 = qmult(qzm1,qinv(qSC));
 %                     qDz1 = qmult(qzm1,qinv(qSD));
                     w1 = 2*acos(abs(sum(qSA.*qCz1)-sum(qSB.*qDz1))/2);
@@ -119,27 +125,27 @@ for k = 1:length(pair_list)
                     
                     %2. (B A C'(sigma) D'(sigma))
                     
-                    sm1 = zeta_min(qSB,qSA,qSC,qSD);
+                    sm1 = zeta_min(qSB,qSA,qSC,qSD,epsijk);
 %                     qsm1 = [cos(sm1/2) 0 0 sin(sm1/2)];
-                    qsm1 = ax2qu([0 0 1 sm1]);
+                    qsm1 = ax2qu([0 0 1 sm1],epsijk);
 %                     qCs1 = qmult(qSC,qsm1);
 %                     qDs1 = qmult(qSD,qsm1);
-                    qCs1 = qmult(qsm1,qSC);
-                    qDs1 = qmult(qsm1,qSD);
+                    qCs1 = qmult(qsm1,qSC,epsijk);
+                    qDs1 = qmult(qsm1,qSD,epsijk);
                     w2 = 2*acos(abs(sum(qSB.*qCs1)-sum(qSA.*qDs1))/2);
                     w6 = 2*acos(abs(sum(-qSB.*qCs1)-sum(qSA.*qDs1))/2);
                     
                     %3. (A -B C'(zeta') D'(zeta'))
                     
-                    zm2 = zeta_min(qSA,-qSB,qSC,qSD);
+                    zm2 = zeta_min(qSA,-qSB,qSC,qSD,epsijk);
 %                     qzm2 = [cos(zm2/2) 0 0 sin(zm2/2)];
-                    qzm2 = ax2qu([0 0 1 zm2]);
+                    qzm2 = ax2qu([0 0 1 zm2],epsijk);
 %                     qCz2 = qmult(qSC,qzm2);
 %                     qDz2 = qmult(qSD,qzm2);
-                    qCz2 = qmult(qzm2,qSC);
-                    qDz2 = qmult(qzm2,qSD);
-                    qC2 = qmult(qzm2,qC);
-                    qD2 = qmult(qzm2,qD);
+                    qCz2 = qmult(qzm2,qSC,epsijk);
+                    qDz2 = qmult(qzm2,qSD,epsijk);
+                    qC2 = qmult(qzm2,qC,epsijk);
+                    qD2 = qmult(qzm2,qD,epsijk);
                     
                     w3 = 2*acos(abs(sum(qSA.*qCz2)-sum(-qSB.*qDz2))/2);
                     w7 = 2*acos(abs(sum(-qSA.*qCz2)-sum(-qSB.*qDz2))/2);
@@ -147,13 +153,13 @@ for k = 1:length(pair_list)
                     
                     %4. (B -A C'(sigma') D'(sigma'))
                     
-                    sm2 = zeta_min(qSB,-qSA,qSC,qSD);
+                    sm2 = zeta_min(qSB,-qSA,qSC,qSD,epsijk);
 %                     qsm2 = [cos(sm2/2) 0 0 sin(sm2/2)];
-                    qsm2 = ax2qu([0 0 1 sm2]);
+                    qsm2 = ax2qu([0 0 1 sm2],epsijk);
 %                     qCs2 = qmult(qSC,qsm2);
 %                     qDs2 = qmult(qSD,qsm2);
-                    qCs2 = qmult(qsm2,qSC);
-                    qDs2 = qmult(qsm2,qSD);
+                    qCs2 = qmult(qsm2,qSC,epsijk);
+                    qDs2 = qmult(qsm2,qSD,epsijk);
                     
                     w4 = 2*acos(abs(sum(qSB.*qCs2)-sum(-qSA.*qDs2))/2);
                     w8 = 2*acos(abs(sum(-qSB.*qCs2)-sum(-qSA.*qDs2))/2);
@@ -264,7 +270,7 @@ end
 
 %% Auxiliary functions: to understand these, read the original octonion paper
 
-function zm = zeta_min(qA,qB,qC,qD)
+function zm = zeta_min(qA,qB,qC,qD,epsijk)
 %%% zeta is twist angle of U(1) symmetry (6 --> 5 DOF)
 %%% GBOM angle can be analytically minimized w.r.t. zeta (EQN 25, octonion paper)
 
@@ -282,7 +288,7 @@ mu_num1 = qA(4)*qC(1)-qC(4)*qA(1)+qB(4)*qD(1)-qD(4)*qB(1);
 crossAC = crossp(qA(2:4),qC(2:4));
 crossBD = crossp(qB(2:4),qD(2:4));
 
-mu_arg = (mu_num1 + crossAC(3) + crossBD(3))/(qdot_AC+qdot_BD);
+mu_arg = (mu_num1 + epsijk*crossAC(3) + epsijk*crossBD(3))/(qdot_AC+qdot_BD);
 mu = 2*atan(mu_arg);
 
 if mu >= 0
