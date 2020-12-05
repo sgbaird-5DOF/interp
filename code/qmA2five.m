@@ -46,7 +46,7 @@ end
 %--------------------------------------------------------------------------
 npts = size(qA,1);
 %misorientation quaternion
-qm = qdis(qlab2qm(qA,qB,epsijk));
+qm = qlab2qm(qA,qB,epsijk);
 
 %boundary plane normal
 [nA,nB] = deal(zeros(npts,3));
