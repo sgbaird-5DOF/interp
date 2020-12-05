@@ -1,16 +1,15 @@
-function qm = qlab2qm(qAlab,qBlab,convention)
+function qm = qlab2qm(qAlab,qBlab,epsijk)
 arguments
-   qAlab(:,4) double
-   qBlab(:,4) double
-   convention char {mustBeMember(convention,{'francis','johnson'})} = 'johnson'
+    qAlab(:,4) double
+    qBlab(:,4) double
+    epsijk(1,1) double = 1
 end
-% QLAB2QM  Convert lab/sample frame quaternions of grain A and grain B and
-% and compute misorientation quaternion according to Toby Francis's or
-% Oliver Johnson's convention
+% QLAB2QM  Convert lab/sample frame quaternions of grain A and grain B to misorientation quaternion
+% active (epsijk==1) or passive (epsijk==-1) convention
 %--------------------------------------------------------------------------
 % Author(s): Sterling Baird
 % Date: 2020-08-22
-% 
+%
 % Inputs:
 %  qA, qB - Orientations of grains A and B in sample reference frame, resp.
 %  convention - francis or johnson convention
@@ -23,14 +22,35 @@ end
 %
 % Dependencies:
 %  qmult.m
-%  qinv_francis.m
+%  qinv.m
 %
 % References:
 %  [1] supplementary material of DOI: 10.1016/j.actamat.2018.12.034
+%
+%  [2] Rowenhorst, D.; Rollett, A. D.; Rohrer, G. S.; Groeber, M.; Jackson,
+%  M.; Konijnenberg, P. J.; De Graef, M. Consistent Representations of and
+%  Conversions between 3D Rotations. Modelling Simul. Mater. Sci. Eng.
+%  2015, 23 (8), 083501. https://doi.org/10.1088/0965-0393/23/8/083501.
 %--------------------------------------------------------------------------
-switch convention
-    case 'francis'
-        qm = qmult(qBlab,qinv_francis(qAlab)); %ref [1], eqn. S-4
-    case 'johnson'
-        qm = qmult(qinv_francis(qAlab),qBlab);
-end
+
+% qm = qmult(qBlab,qinv(qAlab),epsijk); %issue1: produces consistent results internally within GBdist(), but not during conversion, (passive convention)
+qm = qmult(qinv(qAlab),qBlab,epsijk); %issue2: produces consistent results in 5DOF-->octonion conversion, but not within GBdist(), (active convention)
+
+%% CODE GRAVEYARD
+%{
+%    convention char {mustBeMember(convention,{'francis','johnson'})} = 'johnson'
+
+% switch convention
+%     case 'francis'
+%         qm = qmult(qBlab,qinv(qAlab)); %ref [1], eqn. S-4
+%     case 'johnson'
+%         qm = qmult(qinv(qAlab),qBlab);
+% end
+
+% qm = qmult(qBlab,qinv(qAlab),epsijk);
+
+% qm = disorientation(qmult(qinv(qAlab),qBlab,epsijk));
+
+% qm = qmultiply(qinv(qAlab),qBlab);
+% qm = qmultiply(qBlab,qinv(qAlab));
+%}

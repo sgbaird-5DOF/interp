@@ -5,19 +5,19 @@ clear; close all
 %octochorically sampled octonions
 addpathdir({'var_names.m','writeparfile.m','walltimefns'})
 runtype = 'test'; %'test','full'
-nreps = 10; % number of runs or repetitions
+nreps = 1; % number of runs or repetitions
 
 %make sure the parameters here correspond with the input to "pars" below
 switch runtype
     case 'test'
-        ndatapts = [100 388 500 1000 2000 5000 10000,20000 50000]; % 5000 10000 20000 50000];
-        npredpts = 1000;
-        method = {'gpr'}; % 'sphbary', 'pbary', 'gpr', 'sphgpr', 'nn', 'avg'
-        datatype = {'brk'};
+        ndatapts = [10000]; % 5000 10000 20000 50000];
+        npredpts = 10000;
+        method = {'gpr','avg'}; % 'sphbary', 'pbary', 'gpr', 'sphgpr', 'nn', 'avg'
+        datatype = {'rohrer-Ni'}; % 'brk', 'kim', 'rohrer-Ni'
         pgnum = 32; %m-3m (i.e. m\overbar{3}m) FCC symmetry default for e.g. Ni
         
     case 'full'
-        ndatapts = [100 388 500 1000 5000 10000 20000 50000];
+        ndatapts = [100 388 500 1000 5000 10000 20000 50000]; % 388, 500, 1000, 2000, 5000, 10000, 20000, 50000
         npredpts = 10000;
         method = {'sphgpr','gpr','sphbary','pbary','nn','avg','idw'}; % 'sphbary', 'pbary', 'gpr', 'sphgpr', 'nn', 'avg'
         datatype = {'brk','kim'};
@@ -26,12 +26,12 @@ end
 
 %comment (no spaces, used in filename)
 % comment = 'paper-data2';
-% comment = 'rohrer-Ni-test';
-comment = 'gpr-fic-full';
+comment = 'rohrer-Ni-test2';
+% comment = 'test';
 % comment = 'idw-test-3pt5deg';
 
 % job submission environment
-env = 'slurm'; %'slurm', 'local'
+env = 'local'; %'slurm', 'local'
 T = true;
 F = false;
 %whether to skip running the jobs and just compile results

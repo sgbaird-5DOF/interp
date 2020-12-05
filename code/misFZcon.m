@@ -1,4 +1,7 @@
-function [A,b] = misFZcon()
+function [A,b] = misFZcon(epsijk)
+arguments
+   epsijk(1,1) double = 1 
+end
 % MISFZCON  get constraints for misorientation fundamental zone (misFZ)
 %--------------------------------------------------------------------------
 % Author(s): Sterling Baird
@@ -19,9 +22,12 @@ function [A,b] = misFZcon()
 %	vert2con.m
 %
 % Notes:
-%  *
+%  (1) Patala, S.; Schuh, C. A. Symmetries in the Representation of Grain
+%  Boundary-Plane Distributions. Philosophical Magazine 2013, 93 (5),
+%  524–573. https://doi.org/10.1080/14786435.2012.722700.
+
 %--------------------------------------------------------------------------
-%define quaternions (corresponding to vertices of misFZ in rodrigues space)
+%define quaternions (corresponding to vertices of misFZ in rodrigues space), mostly from (1)
 k = sqrt(2)-1;
 
 qA = [cos(pi/8),sin(pi/8),0,0];
@@ -43,6 +49,9 @@ qO = [1 0 0 0];
 qlist = [qA;qB;qC;qD;qE;qO];
 
 %convert to rodrigues vectors
+% ro = qu2ro(qlist,epsijk);
+% dlist = ro(:,4).*ro(:,1:3);
+
 dlist = q2rod(qlist);
 
 %compute constraints

@@ -1,11 +1,12 @@
 function [ypred,interpfn,mdl,mdlpars] = interp5DOF_setup(ndatapts,npredpts,method,datatype,NV)
 arguments
-   ndatapts
-   npredpts
-   method char = 'gpr'
-   datatype char {mustBeMember(datatype,{'brk','kim','rohrer-Ni'})} = 'brk'
-   NV.pgnum(1,1) double = 32 %m-3m (i.e. m\overbar{3}m) FCC symmetry default
-   NV.uuid = get_uuid()
+    ndatapts
+    npredpts
+    method char = 'gpr'
+    datatype char {mustBeMember(datatype,{'brk','kim','rohrer-Ni'})} = 'brk'
+    NV.pgnum(1,1) double = 32 %m-3m (i.e. m\overbar{3}m) FCC symmetry default
+    NV.uuid = get_uuid()
+    NV.K(1,1) double = 1 %# of VFZO ensembles
 end
 %INTERP5DOF_SETUP  setup for interpolating five-degree-of-freedom property
 %data using random octochorically sampled octonions
@@ -16,6 +17,7 @@ addpathdir({'cu2qu.m','q2rod.m','qmult.m','get_ocubo.m','get_uuid.m'})
 %unpack
 pgnum = NV.pgnum;
 uuid = NV.uuid;
+K = NV.K;
 
 %seed
 seedstruct = rng;
@@ -34,20 +36,20 @@ switch datatype
         fivetmp = S.five;
         q = vertcat(fivetmp.q);
         nA = vertcat(fivetmp.nA);
-        proptmp = S.propList;
+        ytmp = S.propList;
         
         npts = ndatapts+npredpts;
         c = cvpartition(npts,'Holdout',npredpts);
         id1 = training(c);
         id2 = test(c);
-                
+        
         %split 5dof parameters
         five = struct('q',q(id1,:),'nA',nA(id1,:));
         five2 = struct('q',q(id2,:),'nA',nA(id2,:));
-
+        
         %split properties
-        propList = proptmp(id1);
-        dataprops = proptmp(id2);
+        y = ytmp(id1);
+        ytrue = ytmp(id2);
         
     case 'brk'
         %random 5dof parameters
@@ -55,17 +57,21 @@ switch datatype
         five2 = get_five(npredpts);
         
         %get BRK function values
-        propList = GB5DOF_setup(five);
-        dataprops = GB5DOF_setup(five2);
+        y = GB5DOF_setup(five);
+        ytrue = GB5DOF_setup(five2);
         
     case 'rohrer-Ni'
         load('../../TJ2GBE/output/Ni_0131_21520_Cub.mat','EAs','norms','resE')
         
         %convert
-        [q,nA] = TJ2five(EAs,norms);
+        epsijk = 1;
+        [q,nA] = TJ2five(EAs,norms,epsijk);
+        oct = TJ2oct(EAs,norms,'francis',epsijk);
+        oct2 = TJ2oct(EAs,norms,'francis',epsijk);
+        %         [q,nA] = TJ2five(EAs,norms,'francis');
         %unpack
         assert(isvector(resE),'resE should be a vector');
-        proptmp = resE(:);
+        ytmp = resE(:);
         
         npts = ndatapts+npredpts;
         c = cvpartition(npts,'Holdout',npredpts);
@@ -76,9 +82,12 @@ switch datatype
         five = struct('q',q(id1,:),'nA',nA(id1,:));
         five2 = struct('q',q(id2,:),'nA',nA(id2,:));
         
+        o = oct(id1,:);
+        o2 = oct(id2,:);
+        
         %split properties
-        propList = proptmp(id1);
-        dataprops = proptmp(id2);
+        y = ytmp(id1);
+        ytrue = ytmp(id2);
         
 end
 
@@ -89,11 +98,25 @@ qm2 = vertcat(five2.q);
 nA2 = vertcat(five2.nA);
 
 %% interpolation
-[ypred,interpfn,mdl,mdlpars] = interp5DOF(qm,nA,propList,qm2,nA2,method,...
-    'pgnum',pgnum,'uuid',uuid,'dataprops',dataprops);
+[ypredlist,interpfnlist,mdllist,mdlparslist] = deal(cell(K,1));
+for k = 1:K
+    switch datatype
+        case 'rohrer-Ni'
+            % use octonions obtained via GBlab2oct
+            [qm,nA,qm2,nA2]=deal([]);
+            [ypredlist{k},interpfnlist{k},mdllist{k},mdlparslist{k}] = interp5DOF(qm,nA,y,qm2,nA2,method,...
+                'pgnum',pgnum,'uuid',uuid,'ytrue',ytrue,'o',o,'o2',o2);
+        otherwise
+            [ypredlist{k},interpfnlist{k},mdllist{k},mdlparslist{k}] = interp5DOF(qm,nA,y,qm2,nA2,method,...
+                'pgnum',pgnum,'uuid',uuid,'ytrue',ytrue);
+    end
+end
+ypredtmp = [ypredlist{:}];
+ypred = median(ypredtmp,2);
+interpfn = interpfnlist{1};
 
 %% error values
-proptrue = mdl.data.props;
+proptrue = mdllist{1}.data.props;
 
 errmetrics = get_errmetrics(ypred,proptrue);
 
@@ -112,8 +135,8 @@ mdlparsextra = var_names(genseed,errmetrics,rmse,mae);
 mdlextra = var_names(genseed,errmetrics,rmse,mae,seedstruct);
 
 %concatenation
-mdlpars = structhorzcat(mdlparspre,mdlpars,mdlparsextra);
-mdl = structhorzcat(mdlpre,mdl,mdlextra);
+mdlpars = structhorzcat(mdlparspre,mdlparslist{1},mdlparsextra);
+mdl = structhorzcat(mdlpre,mdllist{1},mdlextra);
 end
 
 
@@ -202,7 +225,7 @@ mdlextra = var_names(ocubotype,ocuboseed1,ocuboseed2,genseed,errmetrics,rmse,mae
         
         %five2
         five2.q = qtmp(id2,:);
-        five2.nA = nAtmp(id2,:);  
+        five2.nA = nAtmp(id2,:);
 
 
 
