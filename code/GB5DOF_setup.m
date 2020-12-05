@@ -40,17 +40,29 @@ end
 
 npts = size(pB,1);
 
+if isempty(pA)
+    % case that pB is actually misorientation
+    pA = repmat([1 0 0 0],npts,1);
+end
+
+if epsijk == -1
+    pA = qinv(pA);
+    pB = qinv(pB);
+end
+
 % [gA_R,gB_R] = constructGBMatrices(pA,pB,mA,'livermore');
 
 [omA,omB] = deal(zeros(3,3,npts));
 for i = 1:npts
     mAtmp = mA(i,:);
-    R = vecpair2rmat(mAtmp,[1 0 0]);
-    qR = om2qu(R,epsijk);
-    qA = qmult(qR,pA,epsijk);
-    qB = qmult(qR,pB,epsijk);
-    omA(:,:,i) = qu2om(qA,epsijk);
-    omB(:,:,i) = qu2om(qB,epsijk);
+    R = vecpair2rmat(mAtmp,[1 0 0],1);
+    qR = om2qu(R,1);
+    pAtmp = pA(i,:);
+    pBtmp = pB(i,:);
+    qA = qmult(qR,pAtmp,1);
+    qB = qmult(qR,pBtmp,1);
+    omA(:,:,i) = qu2om(qA,1);
+    omB(:,:,i) = qu2om(qB,1);
 end
 
 %Calculate GB Energies
@@ -76,4 +88,16 @@ end
 %E.Ni = reshape(E.Ni,size(x)); %x was an output from sphere() in other code
 
 % 	waitbar(k/nGB,f)
+
+% for i = 1:npts
+%     mAtmp = mA(i,:);
+%     R = vecpair2rmat(mAtmp,[1 0 0],epsijk);
+%     qR = om2qu(R,epsijk);
+%     pAtmp = pA(i,:);
+%     pBtmp = pB(i,:);
+%     qA = qmult(qR,pAtmp,epsijk);
+%     qB = qmult(qR,pBtmp,epsijk);
+%     omA(:,:,i) = qu2om(qA,epsijk);
+%     omB(:,:,i) = qu2om(qB,epsijk);
+% end
 %}
