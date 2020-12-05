@@ -33,8 +33,8 @@ end
 %  2015, 23 (8), 083501. https://doi.org/10.1088/0965-0393/23/8/083501.
 %--------------------------------------------------------------------------
 
-% qm = qmult(qBlab,qinv(qAlab),epsijk); %issue1: produces consistent results internally within GBdist(), but not during conversion
-qm = qmult(qinv(qAlab),qBlab,epsijk); %issue2: produces consistent results in 5DOF-->octonion conversion, but not within GBdist()
+% qm = qmult(qBlab,qinv(qAlab),epsijk); %issue1: produces consistent results internally within GBdist(), but not during conversion, (passive convention)
+qm = qmult(qinv(qAlab),qBlab,epsijk); %issue2: produces consistent results in 5DOF-->octonion conversion, but not within GBdist(), (active convention)
 
 %% CODE GRAVEYARD
 %{
