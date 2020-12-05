@@ -22,9 +22,12 @@ end
 %	vert2con.m
 %
 % Notes:
-%  *
+%  (1) Patala, S.; Schuh, C. A. Symmetries in the Representation of Grain
+%  Boundary-Plane Distributions. Philosophical Magazine 2013, 93 (5),
+%  524–573. https://doi.org/10.1080/14786435.2012.722700.
+
 %--------------------------------------------------------------------------
-%define quaternions (corresponding to vertices of misFZ in rodrigues space)
+%define quaternions (corresponding to vertices of misFZ in rodrigues space), mostly from (1)
 k = sqrt(2)-1;
 
 qA = [cos(pi/8),sin(pi/8),0,0];
