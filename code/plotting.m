@@ -254,6 +254,21 @@ plot(enstbl.ksize,enstbl.mae,'-*')
 legend('RMSE','MAE','Interpreter','latex')
 savefigpng(folder,['dist-ensemble-rmse-mae'])
 
+%% Ensemble Interpolation
+paperfigure(2,2)
+nexttile
+title('mean')
+parityplot(ytrue,mean([ypredlist{:}],2),'hex')
+nexttile
+title('median')
+parityplot(ytrue,median([ypredlist{:}],2),'hex')
+nexttile
+title('median')
+parityplot(ytrue,min([ypredlist{:}],[],2),'hex')
+nexttile
+title('max')
+parityplot(ytrue,max([ypredlist{:}],[],2),'hex')
+savefigpng(folder,'ensemble-interp')
 
 %% distance parity (3D)
 % pts = normr(rand(388,3)-0.5);

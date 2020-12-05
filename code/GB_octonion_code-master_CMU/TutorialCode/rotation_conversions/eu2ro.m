@@ -1,8 +1,11 @@
-% from Euler angles to Rodrigues vector
+function q = eu2ro(eu,epsijk)
+arguments
+    eu
+    epsijk = 1
+end
+% EU2RO  from Euler angles to Rodrigues vector
 
-function q = eu2ro(eu)
-
-global epsijk
+% global epsijk
 % epsijk = -1;
 
 thr = 1e-10;

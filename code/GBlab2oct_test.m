@@ -86,19 +86,19 @@ for i=1:length(conventionlist)
     convention=conventionlist{i};
     switch convention
         case 'johnson'
-            qm1 = qmult(qinv_francis(qA),qB)
-            qm2 = qmult(qinv_francis(qC),qD)
+            qm1 = qmult(qinv(qA),qB)
+            qm2 = qmult(qinv(qC),qD)
         case 'francis'
-            qm1 = qmult(qB,qinv_francis(qA))
-            qm2 = qmult(qD,qinv_francis(qC))
+            qm1 = qmult(qB,qinv(qA))
+            qm2 = qmult(qD,qinv(qC))
     end
     switch convention
         case 'johnson'
-            nA = qmult(qinv_francis(qA),qmult([0 0 0 1],qA));
-            nC = qmult(qinv_francis(qC),qmult([0 0 0 1],qC));
+            nA = qmult(qinv(qA),qmult([0 0 0 1],qA));
+            nC = qmult(qinv(qC),qmult([0 0 0 1],qC));
         case 'francis'
-            nA = qmult(qA,qmult([0 0 0 1],qinv_francis(qA)));
-            nC = qmult(qC,qmult([0 0 0 1],qinv_francis(qC)));
+            nA = qmult(qA,qmult([0 0 0 1],qinv(qA)));
+            nC = qmult(qC,qmult([0 0 0 1],qinv(qC)));
     end
 nA = nA(2:4)
 nC = nC(2:4)
@@ -109,6 +109,8 @@ OmegaTest5 = rad2deg(GBdist4(o1b,o2b,32,'omega'))
 end
 %not sure why, but qm is the same between these two (just a fluke of the
 %problem)
+
+
 
 
 %----------------------------CODE GRAVEYARD--------------------------------

@@ -37,8 +37,8 @@ s = sin(aPhi/2);
 %calculate quaternion
 q = [c.*cos(sigma), -epsijk*s.*cos(delta), -epsijk*s.*sin(delta), -epsijk*c.*sin(sigma)];
 
-%negate quaternions where q0 >= 0
-ids = q(:,1) >= 0;
+%negate quaternions where q0 < 0
+ids = q(:,1) < 0;
 q(ids,:) = -q(ids,:);
 
 % set values very close to 0 as 0

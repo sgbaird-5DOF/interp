@@ -1,10 +1,11 @@
-function symocts = osymset(qA,qB,Spairs,grainexchangeQ,doublecoverQ)
+function symocts = osymset(qA,qB,Spairs,grainexchangeQ,doublecoverQ,epsijk)
 arguments
     qA(1,4) double {mustBeNumeric,mustBeFinite}
     qB(1,4) double {mustBeNumeric,mustBeFinite}
     Spairs(:,8) double {mustBeNumeric} = get_sympairs(qA,qB)
     grainexchangeQ logical = false
     doublecoverQ logical = false
+    epsijk = 1
 end
 % OSYMSET  get symmetrically equivalent octonions
 %--------------------------------------------------------------------------
@@ -43,8 +44,8 @@ SAlist = Spairs(:,1:4);
 SBlist = Spairs(:,5:8);
 
 %apply symmetry operators
-qSA = qmult(SAlist,qArep);
-qSB = qmult(SBlist,qBrep);
+qSA = qmult(SAlist,qArep,epsijk);
+qSB = qmult(SBlist,qBrep,epsijk);
 
 if grainexchangeQ && doublecoverQ
     %apply grain exchange & double cover

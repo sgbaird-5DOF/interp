@@ -2,7 +2,7 @@ function [gA_R,gB_R] = constructGBMatrices(qA_Lab,qB_Lab,nA_Lab,convention)
 arguments
     qA_Lab(:,4)
     qB_Lab(:,4)
-    nA_Lab(3,:)
+    nA_Lab(:,3)
     convention char {mustBeMember(convention,{'olmsted','livermore'})} = 'livermore'
 end
 %CONSTRUCTGBMATRICES  Make Olmsted GB matrices for GB5DOF using labframe quaternion/normal inputs
@@ -74,6 +74,7 @@ end
 %     https://doi.org/10.1016/j.actamat.2013.10.057
 %-------------------------------------------------------------------------%
 
+nA_Lab = nA_Lab.';
 % number of GBs
 Ngb = size(qA_Lab,1);
 

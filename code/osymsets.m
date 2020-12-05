@@ -1,10 +1,11 @@
-function osets = osymsets(oct,pgnum,usv,grainexchangeQ,doublecoverQ)
+function osets = osymsets(oct,pgnum,usv,grainexchangeQ,doublecoverQ,epsijk)
 arguments
 	oct(:,8) double {mustBeFinite,mustBeReal,mustBeSqrt2Norm}
 	pgnum(1,1) double {mustBeInteger} = 32 %default to Oh cubic point group
 	usv(1,1) struct = struct
 	grainexchangeQ logical = false
 	doublecoverQ logical = false
+    epsijk(1,1) double = 1
 end
 % OSYMSETS  Get symmetrically equivalent octonions (osymsets) for each octonion in a list of octonions
 %--------------------------------------------------------------------------
@@ -59,13 +60,13 @@ qAlist = normr(qAlist);
 qBlist = normr(qBlist);
 
 %loop through quaternion pairs
-parfor i = 1:ndatapts %parfor compatible
+for i = 1:ndatapts %parfor compatible
 	%unpack quaternions
 	qA = qAlist(i,:);
 	qB = qBlist(i,:);
 	
 	%get symmetrically equivalent octonions
-	osets{i} = osymset(qA,qB,Spairs,grainexchangeQ,doublecoverQ);
+	osets{i} = osymset(qA,qB,Spairs,grainexchangeQ,doublecoverQ,epsijk);
 end
 
 end %osymsets

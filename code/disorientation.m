@@ -1,4 +1,8 @@
 function d = disorientation(m,cs)
+arguments
+    m
+    cs = 'cubic'
+end
 % DISORIENTATION determines the unique misorientation between two adjacent
 % crystals among all of the symmetrically equivalent ones, satisfying the
 % conditions specified in [1], where a unit quaternion is defined by 

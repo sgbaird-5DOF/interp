@@ -1,8 +1,8 @@
-function nA = qmA2nA(qA,mA,convention)
+function nA = qmA2nA(qA,mA,epsijk)
 arguments
    qA(:,4) double
    mA(:,3) double
-   convention char {mustBeMember(convention,{'francis','johnson'})} = 'johnson'
+   epsijk(1,1) double
 end
 % QLAB2FIVE Convert lab/sample frame quaternions of grain A and grain B and
 % and compute misorientation quaternion according to Toby Francis's or
@@ -29,6 +29,22 @@ end
 % References:
 %  [1] supplementary material of DOI: 10.1016/j.actamat.2018.12.034
 %--------------------------------------------------------------------------
+
+nA = Lpr(qA,mA,epsijk);
+
+% npts = size(qA,1);
+% Zero = zeros(npts,1);
+% mA0 = [Zero mA];
+% 
+% nA = qmult(qinv(qA),qmult(mA0,qA,epsijk),epsijk);
+% nA = nA(:,2:4);
+
+end
+%% CODE GRAVEYARD
+%{
+%    convention char {mustBeMember(convention,{'francis','johnson'})} = 'johnson'
+
+
 npts = size(qA,1);
 Zero = zeros(npts,1);
 mA0 = [Zero mA];
@@ -39,3 +55,4 @@ switch convention
         nA = qmult(qA,qmult(mA0,qinv_francis(qA)));
 end
 nA = nA(:,2:4);
+%}

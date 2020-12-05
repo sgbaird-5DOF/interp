@@ -1,0 +1,1048 @@
+datatype = rohrer-Ni
+<a href="matlab: opentoline('C:\Users\sterg\Documents\GitHub\infer\code\interp\code\interp5DOF_setup.m',68,1)">68  </a>        [q,nA] = TJ2five(EAs,norms,epsijk);
+if system_dependent('IsDebugMode')==1, dbstep; end
+<a href="matlab: opentoline('C:\Users\sterg\Documents\GitHub\infer\code\interp\code\interp5DOF_setup.m',69,1)">69  </a>        oct = TJ2oct(EAs,norms,'francis',epsijk);
+if system_dependent('IsDebugMode')==1, dbstep; end
+<a href="matlab: opentoline('C:\Users\sterg\Documents\GitHub\infer\code\interp\code\interp5DOF_setup.m',72,1)">72  </a>        assert(isvector(resE),'resE should be a vector');
+if system_dependent('IsDebugMode')==1, dbstep; end
+<a href="matlab: opentoline('C:\Users\sterg\Documents\GitHub\infer\code\interp\code\interp5DOF_setup.m',73,1)">73  </a>        ytmp = resE(:);
+if system_dependent('IsDebugMode')==1, dbstep; end
+<a href="matlab: opentoline('C:\Users\sterg\Documents\GitHub\infer\code\interp\code\interp5DOF_setup.m',75,1)">75  </a>        npts = ndatapts+npredpts;
+if system_dependent('IsDebugMode')==1, dbstep; end
+<a href="matlab: opentoline('C:\Users\sterg\Documents\GitHub\infer\code\interp\code\interp5DOF_setup.m',76,1)">76  </a>        c = cvpartition(npts,'Holdout',npredpts);
+if system_dependent('IsDebugMode')==1, dbstep; end
+<a href="matlab: opentoline('C:\Users\sterg\Documents\GitHub\infer\code\interp\code\interp5DOF_setup.m',77,1)">77  </a>        id1 = training(c);
+if system_dependent('IsDebugMode')==1, dbstep; end
+<a href="matlab: opentoline('C:\Users\sterg\Documents\GitHub\infer\code\interp\code\interp5DOF_setup.m',78,1)">78  </a>        id2 = test(c);
+GBfive2oct(q(1,:),nA(1,:))
+
+ans =
+
+    0.3016   -0.5039    0.4814   -0.6507    0.3126   -0.4094   -0.3299    0.7911
+
+GBfive2oct(q(1,:),nA(1,:))
+
+ans =
+
+    0.0602   -0.3083    0.6250   -0.7146    0.3554   -0.6729   -0.3133    0.5681
+
+GBfive2oct(q(1,:),nA(1,:))
+
+ans =
+
+    0.2841   -0.4908    0.4948   -0.6585    0.3173   -0.4318   -0.3301    0.7771
+
+try open('GBfive2oct'); catch edit('GBfive2oct'); end
+oct(1,:)
+
+ans =
+
+    0.7361    0.3685   -0.4958    0.2767   -0.3655    0.5240    0.7317    0.2375
+
+oct = TJ2oct(EAs,norms,'francis',epsijk);
+oct(1,:)
+
+ans =
+
+    0.7877    0.1716   -0.5789    0.1219   -0.1861    0.6106    0.6566    0.4018
+
+otmp = GBfive2oct(q,nA);
+otmp(1,:)
+
+ans =
+
+    0.1563   -0.3900    0.5776   -0.6999    0.3438   -0.5788   -0.3245    0.6645
+
+GBdist4(otmp(1,:),oct(1,:))
+
+ans =
+
+    0.3563
+
+try open('GBdist4'); catch edit('GBdist4'); end
+ct2 = TJ2oct(EAs,norms,'francis',epsijk);
+oct2 = TJ2oct(EAs,norms,'francis',epsijk);
+oct(1,:)
+
+ans =
+
+    0.7877    0.1716   -0.5789    0.1219   -0.1861    0.6106    0.6566    0.4018
+
+oct2(1,:)
+
+ans =
+
+    0.6988    0.4430   -0.4504    0.3356   -0.4327    0.4766    0.7475    0.1636
+
+GBdist4(oct(1,:),oct(2,:))
+
+ans =
+
+    0.3361
+
+GBdist4(oct(1,:),oct2(1,:))
+
+ans =
+
+    0.2411
+
+oct = TJ2oct(EAs,norms,'francis',epsijk);
+        oct2 = TJ2oct(EAs,norms,'francis',epsijk);
+GBdist4(oct(1,:),oct2(1,:))
+
+ans =
+
+    0.3688
+
+oct = TJ2oct(EAs,norms,'francis',epsijk);
+        oct2 = TJ2oct(EAs,norms,'francis',epsijk);
+GBdist4(oct(1,:),oct2(1,:))
+
+ans =
+
+    0.3401
+
+open GBdist4
+try open('GBdist'); catch edit('GBdist'); end
+GBdist([oct(1,:),oct2(1,:)],32)
+
+ans =
+
+    0.4821
+
+if system_dependent('IsDebugMode')==1, dbquit; end
+clear
+GBlab2oct_test
+
+Omega =
+
+   15.2551
+
+
+oAB =
+
+    0.0331   -0.9374   -0.3339    0.0928   -0.0331   -0.9374   -0.3339   -0.0928
+
+
+OmegaTest =
+
+   15.2551
+
+
+OmegaTest2 =
+
+   15.2551
+
+{Unrecognized function or variable 'qinv_francis'.
+
+Error in <a href="matlab:matlab.internal.language.introspective.errorDocCallback('GBmat2oct', 'C:\Users\sterg\Documents\GitHub\infer\code\interp\code\GB_octonion_code-master_CMU\TutorialCode\octonion_functions\GBmat2oct.m', 20)" style="font-weight:bold">GBmat2oct</a> (<a href="matlab: opentoline('C:\Users\sterg\Documents\GitHub\infer\code\interp\code\GB_octonion_code-master_CMU\TutorialCode\octonion_functions\GBmat2oct.m',20,0)">line 20</a>)
+mA0 = qmult(qinv_francis(pA),qmult([0 nA],(pA))); mA = mA0(2:4);
+
+Error in <a href="matlab:matlab.internal.language.introspective.errorDocCallback('GBlab2oct_test', 'C:\Users\sterg\Documents\GitHub\infer\code\interp\code\GBlab2oct_test.m', 55)" style="font-weight:bold">GBlab2oct_test</a> (<a href="matlab: opentoline('C:\Users\sterg\Documents\GitHub\infer\code\interp\code\GBlab2oct_test.m',55,0)">line 55</a>)
+o1 = GBmat2oct(om1,om2);
+} 
+opentoline('C:\Users\sterg\Documents\GitHub\infer\code\interp\code\GB_octonion_code-master_CMU\TutorialCode\octonion_functions\GBmat2oct.m',20,0)
+opentoline('C:\Users\sterg\Documents\GitHub\infer\code\interp\code\GB_octonion_code-master_CMU\TutorialCode\octonion_functions\GBmat2oct.m',20,0)
+GBlab2oct_test
+
+Omega =
+
+   15.2551
+
+
+oAB =
+
+    0.0274   -0.9558   -0.2771    0.0946   -0.0274   -0.9558   -0.2771   -0.0946
+
+
+OmegaTest =
+
+   15.2551
+
+
+OmegaTest2 =
+
+   15.2551
+
+
+OmegaTest3 =
+
+   15.2551
+
+
+ans =
+
+    1.2642
+
+
+ans =
+
+    1.2642
+
+
+o1a =
+
+    0.9951         0   -0.0985         0    0.9951         0    0.0985         0
+
+
+o2a =
+
+    0.9732         0   -0.2298         0    0.9732         0    0.2298         0
+
+
+OmegaTest4 =
+
+   15.2551
+
+{Unrecognized function or variable 'qinv_francis'.
+
+Error in <a href="matlab:matlab.internal.language.introspective.errorDocCallback('GBlab2oct_test', 'C:\Users\sterg\Documents\GitHub\infer\code\interp\code\GBlab2oct_test.m', 89)" style="font-weight:bold">GBlab2oct_test</a> (<a href="matlab: opentoline('C:\Users\sterg\Documents\GitHub\infer\code\interp\code\GBlab2oct_test.m',89,0)">line 89</a>)
+            qm1 = qmult(qinv_francis(qA),qB)
+} 
+opentoline('C:\Users\sterg\Documents\GitHub\infer\code\interp\code\GBlab2oct_test.m',89,0)
+GBlab2oct_test
+
+Omega =
+
+   15.2551
+
+
+oAB =
+
+    0.0645   -0.7520   -0.6517    0.0745   -0.0645   -0.7520   -0.6517   -0.0745
+
+
+OmegaTest =
+
+   15.2551
+
+
+OmegaTest2 =
+
+   15.2551
+
+
+OmegaTest3 =
+
+   15.2551
+
+
+ans =
+
+    1.2642
+
+
+ans =
+
+    1.2642
+
+
+o1a =
+
+    0.9951         0   -0.0985         0    0.9951         0    0.0985         0
+
+
+o2a =
+
+    0.9732         0   -0.2298         0    0.9732         0    0.2298         0
+
+
+OmegaTest4 =
+
+   15.2551
+
+
+qm1 =
+
+    0.9806         0    0.1961         0
+
+
+qm2 =
+
+    0.8944         0    0.4472         0
+
+{Unrecognized function or variable 'qinv_francis'.
+
+Error in <a href="matlab:matlab.internal.language.introspective.errorDocCallback('GBlab2oct_test', 'C:\Users\sterg\Documents\GitHub\infer\code\interp\code\GBlab2oct_test.m', 97)" style="font-weight:bold">GBlab2oct_test</a> (<a href="matlab: opentoline('C:\Users\sterg\Documents\GitHub\infer\code\interp\code\GBlab2oct_test.m',97,0)">line 97</a>)
+            nA = qmult(qinv_francis(qA),qmult([0 0 0 1],qA));
+} 
+opentoline('C:\Users\sterg\Documents\GitHub\infer\code\interp\code\GBlab2oct_test.m',97,0)
+GBlab2oct_test
+
+Omega =
+
+   15.2551
+
+
+oAB =
+
+    0.0489   -0.8639   -0.4940    0.0855   -0.0489   -0.8639   -0.4940   -0.0855
+
+
+OmegaTest =
+
+   15.2551
+
+
+OmegaTest2 =
+
+   15.2551
+
+
+OmegaTest3 =
+
+   15.2551
+
+
+ans =
+
+    1.2642
+
+
+ans =
+
+    1.2642
+
+
+o1a =
+
+    0.9951         0   -0.0985         0    0.9951         0    0.0985         0
+
+
+o2a =
+
+    0.9732         0   -0.2298         0    0.9732         0    0.2298         0
+
+
+OmegaTest4 =
+
+   15.2551
+
+
+qm1 =
+
+    0.9806         0    0.1961         0
+
+
+qm2 =
+
+    0.8944         0    0.4472         0
+
+
+nA =
+
+    0.1961         0    0.9806
+
+
+nC =
+
+    0.4472         0    0.8944
+
+
+OmegaTest5 =
+
+   19.7740
+
+{Unrecognized function or variable 'qinv_francis'.
+
+Error in <a href="matlab:matlab.internal.language.introspective.errorDocCallback('GBlab2oct_test', 'C:\Users\sterg\Documents\GitHub\infer\code\interp\code\GBlab2oct_test.m', 92)" style="font-weight:bold">GBlab2oct_test</a> (<a href="matlab: opentoline('C:\Users\sterg\Documents\GitHub\infer\code\interp\code\GBlab2oct_test.m',92,0)">line 92</a>)
+            qm1 = qmult(qB,qinv_francis(qA))
+} 
+opentoline('C:\Users\sterg\Documents\GitHub\infer\code\interp\code\GBlab2oct_test.m',92,0)
+GBlab2oct_test
+
+Omega =
+
+   15.2551
+
+
+oAB =
+
+    0.0281   -0.9539   -0.2835    0.0945   -0.0281   -0.9539   -0.2835   -0.0945
+
+
+OmegaTest =
+
+   15.2551
+
+
+OmegaTest2 =
+
+   15.2551
+
+
+OmegaTest3 =
+
+   15.2551
+
+
+ans =
+
+    1.2642
+
+
+ans =
+
+    1.2642
+
+
+o1a =
+
+    0.9951         0   -0.0985         0    0.9951         0    0.0985         0
+
+
+o2a =
+
+    0.9732         0   -0.2298         0    0.9732         0    0.2298         0
+
+
+OmegaTest4 =
+
+   15.2551
+
+
+qm1 =
+
+    0.9806         0    0.1961         0
+
+
+qm2 =
+
+    0.8944         0    0.4472         0
+
+
+nA =
+
+    0.1961         0    0.9806
+
+
+nC =
+
+    0.4472         0    0.8944
+
+
+OmegaTest5 =
+
+   19.3916
+
+
+qm1 =
+
+    0.9806         0    0.1961         0
+
+
+qm2 =
+
+    0.8944         0    0.4472         0
+
+
+nA =
+
+   -0.1961         0    0.9806
+
+
+nC =
+
+   -0.4472         0    0.8944
+
+
+OmegaTest5 =
+
+   23.7286
+
+uiopen('C:\Users\sterg\Downloads\MATLAB code\GBlab2oct_original\GBlab2oct_original.m',1)
+uiopen('C:\Users\sterg\Downloads\MATLAB code\GBlab2oct_original\testGBlab2oct_original.m',1)
+testGBlab2oct_original
+
+Omega =
+
+   15.2551
+
+{Error using <a href="matlab:matlab.internal.language.introspective.errorDocCallback('GBlab2oct')" style="font-weight:bold">GBlab2oct</a>
+Invalid argument at position 3. Value must be a matrix with 3 columns.
+
+Error in <a href="matlab:matlab.internal.language.introspective.errorDocCallback('testGBlab2oct_original', 'C:\Users\sterg\Downloads\MATLAB code\GBlab2oct_original\testGBlab2oct_original.m', 32)" style="font-weight:bold">testGBlab2oct_original</a> (<a href="matlab: opentoline('C:\Users\sterg\Downloads\MATLAB code\GBlab2oct_original\testGBlab2oct_original.m',32,0)">line 32</a>)
+oAB = GBlab2oct(qA_Lab,qB_Lab,nA_Lab(:),'francis');
+} 
+testGBlab2oct_original
+
+Omega =
+
+   15.2551
+
+loading point group:
+30: 432
+Performing distance calculation ...
+
+OmegaTest =
+
+   15.2551
+
+loading point group:
+30: 432
+Performing distance calculation ...
+
+OmegaTest =
+
+   0.0000e+00 + 3.4151e-06i
+
+loading point group:
+30: 432
+Performing distance calculation ...
+
+OmegaTest =
+
+   28.7069
+
+loading point group:
+30: 432
+Performing distance calculation ...
+
+OmegaTest =
+
+   28.7069
+
+loading point group:
+30: 432
+Performing distance calculation ...
+
+OmegaTest =
+
+   22.2213
+
+loading point group:
+30: 432
+Performing distance calculation ...
+
+OmegaTest =
+
+   26.4068
+
+loading point group:
+30: 432
+Performing distance calculation ...
+
+OmegaTest =
+
+   25.8030
+
+loading point group:
+30: 432
+Performing distance calculation ...
+
+OmegaTest =
+
+   20.2981
+
+loading point group:
+30: 432
+Performing distance calculation ...
+
+OmegaTest =
+
+   19.5521
+
+loading point group:
+30: 432
+Performing distance calculation ...
+
+OmegaTest =
+
+   16.8424
+
+loading point group:
+30: 432
+Performing distance calculation ...
+
+OmegaTest =
+
+   26.7825
+
+loading point group:
+30: 432
+Performing distance calculation ...
+
+OmegaTest =
+
+   27.9429
+
+loading point group:
+30: 432
+Performing distance calculation ...
+
+OmegaTest =
+
+   16.4754
+
+loading point group:
+30: 432
+Performing distance calculation ...
+
+OmegaTest =
+
+   26.7622
+
+loading point group:
+30: 432
+Performing distance calculation ...
+
+OmegaTest =
+
+   20.3890
+
+loading point group:
+30: 432
+Performing distance calculation ...
+
+OmegaTest =
+
+   18.5123
+
+loading point group:
+30: 432
+Performing distance calculation ...
+
+OmegaTest =
+
+   26.9488
+
+loading point group:
+30: 432
+Performing distance calculation ...
+
+OmegaTest =
+
+   19.3721
+
+open get_cubo
+randq
+
+ans =
+
+    0.1186    0.8304   -0.4569    0.2959
+
+try open('randq'); catch edit('randq'); end
+Error using <a href="matlab:matlab.internal.language.introspective.errorDocCallback('GBlab2oct')" style="font-weight:bold">GBlab2oct</a>
+Invalid argument at position 3. Value must be a matrix with 3 columns.
+
+Error in <a href="matlab:matlab.internal.language.introspective.errorDocCallback('testGBlab2oct_original', 'C:\Users\sterg\Downloads\MATLAB code\GBlab2oct_original\testGBlab2oct_original.m', 58)" style="font-weight:bold">testGBlab2oct_original</a> (<a href="matlab: opentoline('C:\Users\sterg\Downloads\MATLAB code\GBlab2oct_original\testGBlab2oct_original.m',58,0)">line 58</a>)
+    oAB = GBlab2oct(qA_Lab,qB_Lab,nA_Lab(:),'francis');
+
+[Warning: "C:\Users\sterg\Downloads\MATLAB code\GBlab2oct_original\GB_octonion_code-master" not found in path.] 
+[Warning: "C:\Users\sterg\Downloads\MATLAB code\GBlab2oct_original\GB_octonion_code-master\Data" not found in path.] 
+[Warning: "C:\Users\sterg\Downloads\MATLAB code\GBlab2oct_original\GB_octonion_code-master\Data\GB_ids" not found in path.] 
+[Warning: "C:\Users\sterg\Downloads\MATLAB code\GBlab2oct_original\GB_octonion_code-master\Data\Olmsted_supp_original" not found
+in path.] 
+[Warning: "C:\Users\sterg\Downloads\MATLAB code\GBlab2oct_original\GB_octonion_code-master\Data\Yield_stress" not found in path.] 
+[Warning: "C:\Users\sterg\Downloads\MATLAB code\GBlab2oct_original\GB_octonion_code-master\TutorialCode" not found in path.] 
+[Warning: "C:\Users\sterg\Downloads\MATLAB code\GBlab2oct_original\GB_octonion_code-master\TutorialCode\crystal_symmetry_ops"
+not found in path.] 
+[Warning: "C:\Users\sterg\Downloads\MATLAB code\GBlab2oct_original\GB_octonion_code-master\TutorialCode\octonion_functions" not
+found in path.] 
+[Warning: "C:\Users\sterg\Downloads\MATLAB code\GBlab2oct_original\GB_octonion_code-master\TutorialCode\rotation_conversions"
+not found in path.] 
+[Warning: "C:\Users\sterg\Downloads\MATLAB code\GBlab2oct_original\GB_octonion_code-master\Visualizations" not found in path.] 
+[Warning: "C:\Users\sterg\Downloads\MATLAB code\GBlab2oct_original\GB_octonion_code-master\Visualizations\OVITO_files" not found
+in path.] 
+[Warning: "C:\Users\sterg\Downloads\MATLAB code\GBlab2oct_original\GB_octonion_code-master\Visualizations\OVITO_files\NB_viz"
+not found in path.] 
+[Warning: "C:\Users\sterg\Downloads\MATLAB code\GBlab2oct_original\GB_octonion_code-master\Visualizations\OVITO_files\Olm_viz"
+not found in path.] 
+loading point group:
+30: 432
+Performing distance calculation ...
+
+OmegaTest =
+
+   22.5372
+
+loading point group:
+30: 432
+Performing distance calculation ...
+
+OmegaTest =
+
+   23.7034
+
+loading point group:
+30: 432
+Performing distance calculation ...
+
+OmegaTest =
+
+   26.9006
+
+pwdrandq
+{Unrecognized function or variable 'pwdrandq'.
+} 
+pwd
+
+ans =
+
+    'C:\Users\sterg\Downloads\MATLAB code\GBlab2oct_original'
+
+norm(randq)
+
+ans =
+
+     1
+
+
+qA_Lab =
+
+    0.9177    0.3662    0.1232    0.0926
+
+
+qB_Lab =
+
+    0.9315    0.3092    0.1380    0.1327
+
+Error using <a href="matlab:matlab.internal.language.introspective.errorDocCallback('GBlab2oct')" style="font-weight:bold">GBlab2oct</a>
+Invalid argument at position 3. Value must be a matrix with 3 columns.
+
+Error in <a href="matlab:matlab.internal.language.introspective.errorDocCallback('testGBlab2oct_original', 'C:\Users\sterg\Downloads\MATLAB code\GBlab2oct_original\testGBlab2oct_original.m', 58)" style="font-weight:bold">testGBlab2oct_original</a> (<a href="matlab: opentoline('C:\Users\sterg\Downloads\MATLAB code\GBlab2oct_original\testGBlab2oct_original.m',58,0)">line 58</a>)
+    oAB = GBlab2oct(qA_Lab,qB_Lab,nA_Lab(:),'francis');
+
+[Warning: "C:\Users\sterg\Downloads\MATLAB code\GBlab2oct_original\GB_octonion_code-master" not found in path.] 
+[Warning: "C:\Users\sterg\Downloads\MATLAB code\GBlab2oct_original\GB_octonion_code-master\Data" not found in path.] 
+[Warning: "C:\Users\sterg\Downloads\MATLAB code\GBlab2oct_original\GB_octonion_code-master\Data\GB_ids" not found in path.] 
+[Warning: "C:\Users\sterg\Downloads\MATLAB code\GBlab2oct_original\GB_octonion_code-master\Data\Olmsted_supp_original" not found
+in path.] 
+[Warning: "C:\Users\sterg\Downloads\MATLAB code\GBlab2oct_original\GB_octonion_code-master\Data\Yield_stress" not found in path.] 
+[Warning: "C:\Users\sterg\Downloads\MATLAB code\GBlab2oct_original\GB_octonion_code-master\TutorialCode" not found in path.] 
+[Warning: "C:\Users\sterg\Downloads\MATLAB code\GBlab2oct_original\GB_octonion_code-master\TutorialCode\crystal_symmetry_ops"
+not found in path.] 
+[Warning: "C:\Users\sterg\Downloads\MATLAB code\GBlab2oct_original\GB_octonion_code-master\TutorialCode\octonion_functions" not
+found in path.] 
+[Warning: "C:\Users\sterg\Downloads\MATLAB code\GBlab2oct_original\GB_octonion_code-master\TutorialCode\rotation_conversions"
+not found in path.] 
+[Warning: "C:\Users\sterg\Downloads\MATLAB code\GBlab2oct_original\GB_octonion_code-master\Visualizations" not found in path.] 
+[Warning: "C:\Users\sterg\Downloads\MATLAB code\GBlab2oct_original\GB_octonion_code-master\Visualizations\OVITO_files" not found
+in path.] 
+[Warning: "C:\Users\sterg\Downloads\MATLAB code\GBlab2oct_original\GB_octonion_code-master\Visualizations\OVITO_files\NB_viz"
+not found in path.] 
+[Warning: "C:\Users\sterg\Downloads\MATLAB code\GBlab2oct_original\GB_octonion_code-master\Visualizations\OVITO_files\Olm_viz"
+not found in path.] 
+
+qA_Lab =
+
+    0.9177    0.3662    0.1232    0.0926
+
+
+qB_Lab =
+
+    0.9315    0.3092    0.1380    0.1327
+
+
+qD_Lab =
+
+    0.9984    0.0506    0.0232    0.0126
+
+loading point group:
+30: 432
+Performing distance calculation ...
+
+OmegaTest =
+
+   19.5836
+
+
+qA_Lab =
+
+    0.9177    0.3662    0.1232    0.0926
+
+
+qB_Lab =
+
+    0.9315    0.3092    0.1380    0.1327
+
+
+qD_Lab =
+
+    0.9984    0.0506    0.0232    0.0126
+
+loading point group:
+30: 432
+Performing distance calculation ...
+
+OmegaTest =
+
+   15.6178
+
+
+qA_Lab =
+
+    0.9177    0.3662    0.1232    0.0926
+
+
+qB_Lab =
+
+    0.9315    0.3092    0.1380    0.1327
+
+
+qD_Lab =
+
+    0.9984    0.0506    0.0232    0.0126
+
+loading point group:
+30: 432
+Performing distance calculation ...
+
+OmegaTest =
+
+   17.7157
+
+loading point group:
+30: 432
+Performing distance calculation ...
+
+OmegaTest =
+
+   19.3816
+
+loading point group:
+30: 432
+Performing distance calculation ...
+
+OmegaTest =
+
+   19.9874
+
+loading point group:
+30: 432
+Performing distance calculation ...
+
+OmegaTest =
+
+   32.4111
+
+
+qA_Lab =
+
+    0.3244   -0.7360    0.1935    0.5618
+
+
+qB_Lab =
+
+    0.0038   -0.1914   -0.8773    0.4400
+
+
+nA_Lab =
+
+    0.2377    0.1242    0.9634
+
+Error using <a href="matlab:matlab.internal.language.introspective.errorDocCallback('GBlab2oct')" style="font-weight:bold">GBlab2oct</a>
+Invalid argument at position 3. Value must be a matrix with 3 columns.
+
+Error in <a href="matlab:matlab.internal.language.introspective.errorDocCallback('testGBlab2oct_original', 'C:\Users\sterg\Downloads\MATLAB code\GBlab2oct_original\testGBlab2oct_original.m', 58)" style="font-weight:bold">testGBlab2oct_original</a> (<a href="matlab: opentoline('C:\Users\sterg\Downloads\MATLAB code\GBlab2oct_original\testGBlab2oct_original.m',58,0)">line 58</a>)
+    oAB = GBlab2oct(qA_Lab,qB_Lab,nA_Lab(:),'francis');
+
+[Warning: "C:\Users\sterg\Downloads\MATLAB code\GBlab2oct_original\GB_octonion_code-master" not found in path.] 
+[Warning: "C:\Users\sterg\Downloads\MATLAB code\GBlab2oct_original\GB_octonion_code-master\Data" not found in path.] 
+[Warning: "C:\Users\sterg\Downloads\MATLAB code\GBlab2oct_original\GB_octonion_code-master\Data\GB_ids" not found in path.] 
+[Warning: "C:\Users\sterg\Downloads\MATLAB code\GBlab2oct_original\GB_octonion_code-master\Data\Olmsted_supp_original" not found
+in path.] 
+[Warning: "C:\Users\sterg\Downloads\MATLAB code\GBlab2oct_original\GB_octonion_code-master\Data\Yield_stress" not found in path.] 
+[Warning: "C:\Users\sterg\Downloads\MATLAB code\GBlab2oct_original\GB_octonion_code-master\TutorialCode" not found in path.] 
+[Warning: "C:\Users\sterg\Downloads\MATLAB code\GBlab2oct_original\GB_octonion_code-master\TutorialCode\crystal_symmetry_ops"
+not found in path.] 
+[Warning: "C:\Users\sterg\Downloads\MATLAB code\GBlab2oct_original\GB_octonion_code-master\TutorialCode\octonion_functions" not
+found in path.] 
+[Warning: "C:\Users\sterg\Downloads\MATLAB code\GBlab2oct_original\GB_octonion_code-master\TutorialCode\rotation_conversions"
+not found in path.] 
+[Warning: "C:\Users\sterg\Downloads\MATLAB code\GBlab2oct_original\GB_octonion_code-master\Visualizations" not found in path.] 
+[Warning: "C:\Users\sterg\Downloads\MATLAB code\GBlab2oct_original\GB_octonion_code-master\Visualizations\OVITO_files" not found
+in path.] 
+[Warning: "C:\Users\sterg\Downloads\MATLAB code\GBlab2oct_original\GB_octonion_code-master\Visualizations\OVITO_files\NB_viz"
+not found in path.] 
+[Warning: "C:\Users\sterg\Downloads\MATLAB code\GBlab2oct_original\GB_octonion_code-master\Visualizations\OVITO_files\Olm_viz"
+not found in path.] 
+
+qA_Lab =
+
+    0.3244   -0.7360    0.1935    0.5618
+
+
+qB_Lab =
+
+    0.0038   -0.1914   -0.8773    0.4400
+
+
+nA_Lab =
+
+    0.2377    0.1242    0.9634
+
+
+qC_Lab =
+
+    0.1937   -0.8132   -0.0333    0.5477
+
+
+qD_Lab =
+
+    0.0506   -0.0126   -0.9984   -0.0232
+
+
+nC_Lab =
+
+    0.6432    0.5811    0.4986
+
+loading point group:
+30: 432
+Performing distance calculation ...
+
+OmegaTest =
+
+   24.5568
+
+
+qA_Lab =
+
+    0.3244   -0.7360    0.1935    0.5618
+
+
+qB_Lab =
+
+    0.0038   -0.1914   -0.8773    0.4400
+
+
+nA_Lab =
+
+    0.2377    0.1242    0.9634
+
+
+qC_Lab =
+
+    0.1937   -0.8132   -0.0333    0.5477
+
+
+qD_Lab =
+
+    0.0506   -0.0126   -0.9984   -0.0232
+
+
+nC_Lab =
+
+    0.6432    0.5811    0.4986
+
+loading point group:
+30: 432
+Performing distance calculation ...
+
+OmegaTest =
+
+   24.6313
+
+
+qA_Lab =
+
+    0.3244   -0.7360    0.1935    0.5618
+
+
+qB_Lab =
+
+    0.0038   -0.1914   -0.8773    0.4400
+
+
+nA_Lab =
+
+    0.2377    0.1242    0.9634
+
+
+qC_Lab =
+
+    0.1937   -0.8132   -0.0333    0.5477
+
+
+qD_Lab =
+
+    0.0506   -0.0126   -0.9984   -0.0232
+
+
+nC_Lab =
+
+    0.6432    0.5811    0.4986
+
+loading point group:
+30: 432
+Performing distance calculation ...
+
+OmegaTest =
+
+   26.7759
+
+loading point group:
+30: 432
+Performing distance calculation ...
+
+OmegaTest =
+
+   24.5555
+
+loading point group:
+30: 432
+Performing distance calculation ...
+
+OmegaTest =
+
+   28.7866
+
+loading point group:
+30: 432
+Performing distance calculation ...
+
+OmegaTest =
+
+   24.3603
+
+loading point group:
+30: 432
+Performing distance calculation ...
+
+OmegaTest =
+
+   19.3568
+
+loading point group:
+30: 432
+Performing distance calculation ...
+
+OmegaTest =
+
+   29.4782
+
+loading point group:
+30: 432
+Performing distance calculation ...
+
+OmegaTest =
+
+   23.7807
+
+IdleTimeout has been reached.
+Parallel pool using the 'local' profile is shutting down.
+open GBfive2oct
+rmpath(genpath('GB_octonion_code-master')) % remove from path so that GBlab2oct uses Dr. Johnson's qinv function
+open GBfive2oct
+pwd
+
+ans =
+
+    'C:\Users\sterg\Documents\GitHub\infer\code\interp\code'
+
+rmpath(genpath('GB_octonion_code-master')) % remove from path so that GBlab2oct uses Dr. Johnson's qinv function
+addpathdir({'normr.m','GB5DOF_setup.m','cu2qu.m','q2rod.m','GBfive2oct.m',...
+    'correctdis.m','interp_gpr.m'})
+open GBfive2oct.m
+open GBfive2oct_test
+{Error using <a href="matlab:matlab.internal.language.introspective.errorDocCallback('open', 'C:\Program Files\MATLAB\R2020b\toolbox\matlab\general\open.m', 80)" style="font-weight:bold">open</a> (<a href="matlab: opentoline('C:\Program Files\MATLAB\R2020b\toolbox\matlab\general\open.m',80,0)">line 80</a>)
+File 'GBfive2oct_test' not found.
+} 
+pwd
+
+ans =
+
+    'C:\Users\sterg\Documents\GitHub\infer\code\interp\code'
+
+addpathdir('GBfive2oct_test.m')
+DNE: GBfive2oct_test.m. Is file name/extension correct? Is file contained in subfolder of working directory?
