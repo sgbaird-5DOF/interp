@@ -65,7 +65,7 @@ switch datatype
         switch datatype
             case 'rohrer-Ni'
                 datfpath = '../../TJ2GBE/TJdata/triples_Ni_0131_21520.txt';
-                resEfpath = '../../TJ2GBE/output/resE.txt';;
+                resEfpath = '../../TJ2GBE/output/resE.txt';
                 
 %                 load('../../TJ2GBE/output/Ni_0131_21520_Cub.mat','EAs','norms','resE')
 %                 %convert
@@ -79,6 +79,7 @@ switch datatype
         [q,nA] = datfile2five(datfpath,0,epsijk);
         oct = five2oct(q,nA,epsijk);
         resE = importdata(resEfpath);
+        resE(resE < 0) = 0;
         %unpack
         assert(isvector(resE),'resE should be a vector');
         ytmp = resE(:);
