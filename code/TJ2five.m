@@ -57,20 +57,9 @@ end
 % see also Ni_0131_21520_Cub.mat
 %--------------------------------------------------------------------------
 
-[e1,e2,e3,m1,m2,m3,intIDs] = TJ2em(EAs,norms);
+[e1,e2,e3,m1,m2,m3] = TJ2em(EAs,norms);
 
-%convert euler pairs and BP normal (sample frame) to mis quaternion and BP
-%normal (grain A crystal frame)
-[qm1,nA1] = eumA2five(e2,e3,m1,epsijk);
-[qm2,nA2] = eumA2five(e3,e1,m2,epsijk);
-[qm3,nA3] = eumA2five(e1,e2,m3,epsijk);
-
-%interleave so that e.g. qm(1,:) corresponds with B(1,:), resE(1), and
-%X0(1:3+3*1); qm(2,:) corresponds with B(2,:), resE(2), and X0(1:3+3*2)
-%--misorientation quaternions
-qm(intIDs,:) = [qm1; qm2; qm3];
-%--boundary plane normals
-nA(intIDs,:) = [nA1; nA2; nA3];
+[qm,nA] = em2five(e1,e2,e3,m1,m2,m3,epsijk);
 
 end
 

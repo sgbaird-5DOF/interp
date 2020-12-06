@@ -38,7 +38,7 @@ end
 %  166, 135–147. https://doi.org/10.1016/j.actamat.2018.12.034.
 
 %--------------------------------------------------------------------------
-npts = size(pA,1);
+npts = size(pB,1);
 qR = zeros(npts,4);
 for i = 1:npts
     mAtmp = mA(i,:);
@@ -62,4 +62,12 @@ end
 % omB = qu2om(qB1,epsijk);
 
 % R = zeros(3,3,npts);
+
+if isempty(pA)
+    pA = repmat([1 0 0 0],npts,1);
+end
+if epsijk == -1
+    pA = qinv(pA);
+    pB = qinv(pB);
+end
 %}
