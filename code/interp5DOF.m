@@ -1,4 +1,4 @@
-function [ypred,interpfn,mdl,mdlpars] = interp5DOF(qm,nA,y,qm2,nA2,method,NV)
+function [ypred,interpfn,mdl,mdlpars] = interp5DOF(qm,nA,y,qm2,nA2,method,epsijk,NV)
 arguments
     qm %input misorientation quaternions
     nA %input BP normals
@@ -6,6 +6,7 @@ arguments
     qm2 %query misorientations
     nA2 %query BP normals
     method char {mustBeMember(method,{'gpr','sphgpr','pbary','sphbary','idw','nn','avg'})} = 'gpr'
+    epsijk(1,1) double = 1
     NV.pgnum(1,1) double = 32 %m-3m (i.e. m\overbar{3}m) FCC symmetry default
     NV.databary = [] %for use with bary methods
     NV.facetIDs = [] %for use with bary methods
@@ -134,13 +135,13 @@ end
 %  sub-folder of your current working directory. Alternatively, call the
 %  following line of code while in the "code" directory, and then move
 %  to your directory of choice:
-%  addpathdir({'normr.m','GB5DOF_setup.m','cu2qu.m','q2rod.m','GBfive2oct.m','correctdis.m'})
+%  addpathdir({'normr.m','GB5DOF_setup.m','cu2qu.m','q2rod.m','five2oct.m','correctdis.m'})
 %
 %  In the context of this function, mesh is equivalent to predictors &
 %  predictor responses, and data is equivalent to the query points you want
 %  to interpolate or predict at.
 %
-%  Test functions (e.g. GBfive2oct_test.m, get_octpairs_test.m) are
+%  Test functions (e.g. five2oct_test.m, get_octpairs_test.m) are
 %  available for many of the functions listed in "FUNCTION DEPENDENCIES" at
 %  the end which can help with understanding and visualizing what each
 %  function does. These are also very useful for debugging. The test
@@ -169,7 +170,7 @@ brkQ = NV.brkQ;
 uuid = NV.uuid;
 
 % add relevant folders to path (by searching subfolders for functions)
-addpathdir({'normr.m','GB5DOF_setup.m','cu2qu.m','q2rod.m','GBfive2oct.m',...
+addpathdir({'normr.m','GB5DOF_setup.m','cu2qu.m','q2rod.m','five2oct.m',...
     'correctdis.m','interp_gpr.m'})
 
 %% convert to octonions & symmetrize
@@ -180,7 +181,7 @@ if isempty(qm) && isempty(nA) && ~isempty(NV.o)
     otmp = NV.o;
 else
     predinput = '5dof';
-    otmp = GBfive2oct(qm,nA);
+    otmp = five2oct(qm,nA,epsijk);
 end
 
 %query points
@@ -189,7 +190,7 @@ if isempty(qm2) && isempty(nA2) && ~isempty(NV.o2)
     otmp2 = NV.o2;
 else
     queryinput = '5dof';
-    otmp2 = GBfive2oct(qm2,nA2);
+    otmp2 = five2oct(qm2,nA2,epsijk);
 end
 
 %symmetrization
@@ -230,7 +231,7 @@ o2 = normr(o2);
 
 d = size(a,2);
 %projected points
-if d <= 7
+if d <= 8
     ppts = proj_down(o,projtol,usv,'zeroQ',zeroQ);
     ppts2 = proj_down(o2,projtol,usv,'zeroQ',zeroQ);
 else 
@@ -609,7 +610,7 @@ end
 %     ---qnorm.m
 %    --qmultiply.m
 %
-%  GBfive2oct.m
+%  five2oct.m
 %   -ax2qu.m
 %   -qinv.m
 %
@@ -639,7 +640,7 @@ end
 %   -q2rod.m
 %   -disorientation.m
 %   -addpathdir.m
-%   -GBfive2oct.m (see above)
+%   -five2oct.m (see above)
 %   -GBoct2five.m
 %    --disorientation.m (optional)
 %    --findgeometry.m
