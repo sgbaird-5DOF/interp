@@ -48,13 +48,13 @@ disp(['# pts: ' int2str(npts)])
 
 %% conversion to octonions
 %extract 5DOF parameters
-datatemp2 = datatemp(:,1:end-1);
+datatemp2 = deg2rad(datatemp(:,1:end-1));
 t=n2c(datatemp2);
 [phi1,Phi,phi2,po,az] = t{:};
 eulist = [phi1 Phi phi2]; %catenate euler angles
 
 %convert to quaternions & cartesian normal pairs
-qlist = eu2qu(eulist,epsijk); % +1 or -1?
+qlist = eu2qu(eulist,epsijk); % +1 or -1?, misorientation seems to be defined in the active sense, hence epsijk==1
 % %convert from active to passive convention?
 % qlist = qinv(qlist);
 el = po2el(po); %convert polar angle to elevation angle
