@@ -4,7 +4,7 @@ function tbl = eumA2five_test2()
 npts = 1;
 epsijk = 1;
 pgnum = 32;
-rng(12)
+rng(11)
 plotQ = false;
 
 type = 'rand'; %'rand', 'sym'
@@ -109,10 +109,11 @@ if plotQ
 end
 %% Symmetry Checks
 o2 = get_ocubo();
-[~,osym] = GBdist([o2 o],pgnum,false,epsijk);
-% [~, osym] = GBdist4(o2,o,32,'norm',1e-12,false,epsijk);
-osym1 = osym(1:8);
-osym2 = osym(9:16);
+% [~,osym] = GBdist([o2 o],pgnum,false,epsijk);
+% osym1 = osym(1:8);
+% osym2 = osym(9:16);
+[~, osym2] = GBdist4(o2,o,32,'norm',1e-12,false,epsijk);
+osym2 = osym2{1};
 
 qAsym = osym2(1,1:4);
 qBsym = osym2(1,5:8);
@@ -131,6 +132,11 @@ gbedata = [gbe0;gbe1;gbe2;gbesym];
 gbedata2 = [gbe;gbe1a;gbe2a;gbesyma];
 tbl = table(qmdata,nAdata,gbedata,gbedata2,'VariableNames',{'qm','nA','lab-gbe','five-gbe'},'RowNames',{'start','vecpair2rmat','GBmat2oct','symmetrized'});
 disp(tbl)
+
+%% Octonion distance check
+[dmin,o2minsym] = GBdist4(o,osym2);
+o2minsym = o2minsym{1};
+disp(['dmin: ',num2str(dmin)])
 
 %% checking BP symmetries
 Spairs = get_sympairs(pgnum);
