@@ -44,8 +44,10 @@ SAlist = Spairs(:,1:4);
 SBlist = Spairs(:,5:8);
 
 %apply symmetry operators
-qSA = qmult(SAlist,qArep,epsijk);
-qSB = qmult(SBlist,qBrep,epsijk);
+% qSA = qmult(SAlist,qArep,epsijk);
+% qSB = qmult(SBlist,qBrep,epsijk);
+qSA = qmult(qArep,SAlist,epsijk);
+qSB = qmult(qBrep,SBlist,epsijk);
 
 if grainexchangeQ && doublecoverQ
     %apply grain exchange & double cover

@@ -1,8 +1,7 @@
-function o = TJ2oct(EAs,norms,qmconvention,epsijk)
+function o = TJ2oct(EAs,norms,epsijk)
 arguments
    EAs(:,3,3) double {mustBeReal,mustBeFinite}
    norms(:,3,3) double {mustBeReal,mustBeFinite}
-   qmconvention char {mustBeMember(qmconvention,{'francis','johnson'})} = 'francis'
    epsijk(1,1) double = 1
 end
 %--------------------------------------------------------------------------
@@ -65,9 +64,9 @@ q2 = eu2qu(e2,epsijk);
 q3 = eu2qu(e3,epsijk);
 
 %convert euler pairs and BP normal (sample frame) to octonions
-o1 = GBlab2oct(q2,q3,m1,qmconvention,epsijk);
-o2 = GBlab2oct(q3,q1,m2,qmconvention,epsijk);
-o3 = GBlab2oct(q1,q2,m3,qmconvention,epsijk);
+o1 = qmA2oct(q2,q3,m1,epsijk); %changed from GBlab2oct to qmA2oct (2020-12-05)
+o2 = qmA2oct(q3,q1,m2,epsijk);
+o3 = qmA2oct(q1,q2,m3,epsijk);
 
 %interleave so that e.g. o(1,:) corresponds with resE(1)
 o(intIDs,:) = [o1; o2; o3];
@@ -144,4 +143,6 @@ q1 = eu2qu(e1);
 q2 = eu2qu(e2);
 q3 = eu2qu(e3);
 
+
+%    qmconvention char {mustBeMember(qmconvention,{'francis','johnson'})} = 'francis'
 %}
