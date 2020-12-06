@@ -10,10 +10,10 @@ nreps = 1; % number of runs or repetitions
 %make sure the parameters here correspond with the input to "pars" below
 switch runtype
     case 'test'
-        ndatapts = [10000]; % 5000 10000 20000 50000];
-        npredpts = 10000;
-        method = {'gpr','avg'}; % 'sphbary', 'pbary', 'gpr', 'sphgpr', 'nn', 'avg'
-        datatype = {'rohrer-Ni'}; % 'brk', 'kim', 'rohrer-Ni'
+        ndatapts = [1000]; % 5000 10000 20000 50000];
+        npredpts = 1000;
+        method = {'gpr','nn','avg'}; % 'sphbary', 'pbary', 'gpr', 'sphgpr', 'nn', 'avg'
+        datatype = {'rohrer-test'}; % 'brk', 'kim', 'rohrer-Ni', 'rohrer-test'
         pgnum = 32; %m-3m (i.e. m\overbar{3}m) FCC symmetry default for e.g. Ni
         
     case 'full'
@@ -26,7 +26,9 @@ end
 
 %comment (no spaces, used in filename)
 % comment = 'paper-data2';
-comment = 'rohrer-Ni-test2';
+% comment = 'rohrer-Ni-test3';
+comment = 'rohrer-test';
+% comment = 'kim-test';
 % comment = 'test';
 % comment = 'idw-test-3pt5deg';
 

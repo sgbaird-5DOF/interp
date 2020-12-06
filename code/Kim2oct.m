@@ -17,6 +17,8 @@
 clear; close all
 %% setup
 
+epsijk = 1;
+
 addpathdir({'eu2qu.m','q2rod.m','get_octpairs.m','GBfive2oct.m','Kim'})
 
 folder = 'Kim';
@@ -52,7 +54,7 @@ t=n2c(datatemp2);
 eulist = [phi1 Phi phi2]; %catenate euler angles
 
 %convert to quaternions & cartesian normal pairs
-qlist = eu2qu(eulist,1); % +1 or -1?
+qlist = eu2qu(eulist,epsijk); % +1 or -1?
 % %convert from active to passive convention?
 % qlist = qinv(qlist);
 el = po2el(po); %convert polar angle to elevation angle
@@ -60,7 +62,7 @@ el = po2el(po); %convert polar angle to elevation angle
 nAlist = [x y z];
 
 %get octonion mesh
-meshListFull = GBfive2oct(qlist,nAlist);
+meshListFull = five2oct(qlist,nAlist,epsijk);
 
 %% get property list
 propListFull = datatemp(:,end)/1000; % convert from mJ/m^2 to J/m^2
@@ -68,17 +70,20 @@ propListFull = datatemp(:,end)/1000; % convert from mJ/m^2 to J/m^2
 %% average properties for repeat octonions and remove repeats (except one)
 [meshList,propList] = avgrepeats(meshListFull,propListFull);
 
-%% remove octonions with GBE of 0
+%% remove GBs with GBE of 0
 ids = find(propList);
 meshList = meshList(ids,:);
 propList = propList(ids);
+
+qlist = qlist(ids,:);
+nAlist = nAlist(ids,:);
 
 %number of points after averaging
 npts2 = size(meshList,1);
 disp(['# pts (after repeat and GBE=0 removal): ' int2str(npts2)])
 
 %package q & nA pairs
-five = struct('q',qlist(ids,:),'nA',nAlist(ids,:));
+five = struct('q',qlist,'nA',nAlist);
 
 %% write files
 %write octonions and GB Energy to .txt file

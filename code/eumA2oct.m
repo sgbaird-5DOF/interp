@@ -37,8 +37,8 @@ end
 
 
 %--------------------------------------------------------------------------
-qA = eu2qu(eA,epsijk); % grain A, sample frame
-qB = eu2qu(eB,epsijk); % grain B, sample frame
+pA = eu2qu(eA,epsijk); % grain A, sample frame
+pB = eu2qu(eB,epsijk); % grain B, sample frame
 
 o = qmA2oct(pA,pB,mA,epsijk);
 

@@ -1,9 +1,10 @@
-function [ypred,interpfn,mdl,mdlpars] = interp5DOF_setup(ndatapts,npredpts,method,datatype,NV)
+function [ypred,interpfn,mdl,mdlpars] = interp5DOF_setup(ndatapts,npredpts,method,datatype,epsijk,NV)
 arguments
     ndatapts
     npredpts
     method char = 'gpr'
-    datatype char {mustBeMember(datatype,{'brk','kim','rohrer-Ni'})} = 'brk'
+    datatype char {mustBeMember(datatype,{'brk','kim','rohrer-Ni','rohrer-test'})} = 'brk'
+    epsijk(1,1) double = 1
     NV.pgnum(1,1) double = 32 %m-3m (i.e. m\overbar{3}m) FCC symmetry default
     NV.uuid = get_uuid()
     NV.K(1,1) double = 1 %# of VFZO ensembles
@@ -57,18 +58,23 @@ switch datatype
         five2 = get_five(npredpts);
         
         %get BRK function values
-        y = GB5DOF_setup(five);
-        ytrue = GB5DOF_setup(five2);
+        y = GB5DOF_setup([],five.q,five.nA,epsijk);
+        ytrue = GB5DOF_setup([],five2.q,five2.nA,epsijk);
         
-    case 'rohrer-Ni'
-        load('../../TJ2GBE/output/Ni_0131_21520_Cub.mat','EAs','norms','resE')
-        
-        %convert
-        epsijk = 1;
-        [q,nA] = TJ2five(EAs,norms,epsijk);
-        oct = TJ2oct(EAs,norms,'francis',epsijk);
-        oct2 = TJ2oct(EAs,norms,'francis',epsijk);
-        %         [q,nA] = TJ2five(EAs,norms,'francis');
+    case {'rohrer-Ni','rohrer-test'}
+        switch datatype
+            case 'rohrer-Ni'
+                load('../../TJ2GBE/output/Ni_0131_21520_Cub.mat','EAs','norms','resE')
+                %convert
+                [q,nA] = TJ2five(EAs,norms,epsijk);
+                oct = TJ2oct(EAs,norms,epsijk);
+            case 'rohrer-test'
+                datfpath = '../../TJ2GBE/TJdata/triples_30000.dat';
+%                 [~,EAs,norms] = read_dat(datfpath);
+                [q,nA] = datfile2five(datfpath,0,epsijk);
+                oct = five2oct(q,nA,epsijk);
+                resE = importdata('../../TJ2GBE/TJdata/trueE_30000.txt');
+        end
         %unpack
         assert(isvector(resE),'resE should be a vector');
         ytmp = resE(:);
@@ -88,6 +94,9 @@ switch datatype
         %split properties
         y = ytmp(id1);
         ytrue = ytmp(id2);
+        
+    case 'olmsted-Ni'
+        
         
 end
 
@@ -287,6 +296,17 @@ structcat = @(S1,S2,S3) ...
         idsub = setdiff(idfull,id1);
         id2 = randi(npts,npredpts,1);
 
+%         [q,nA] = TJ2five(EAs,norms,'francis');
+
+%         [pA,pB,mA] = get_qmA(ndatapts);
+%         [pA2,pB2,mA2] = get_qmA(npredpts);
+%         y = GB5DOF_setup(pA,pB,mA,epsijk);
+%         ytrue = GB5DOF_setup(pA,pB,mA,epsijk);
+
+%                 oct2 = TJ2oct(EAs,norms,epsijk);
+
+                [~,e1,e2,e3,m1,m2,m3] = datfile2em(fpath,nheaderlines);
+                [q,nA] = em2five(e1,e2,e3,m1,m2,m3,epsijk);
 
 
 %}

@@ -1,7 +1,8 @@
-function [octvtx,oref,fiveref] = get_octpairs(pts,savename,NV)
+function [octvtx,oref,fiveref] = get_octpairs(pts,savename,epsijk,NV)
 arguments
 	pts(:,8) double {mustBeSqrt2Norm}
 	savename string = 'temp.mat'
+    epsijk(1,1) double = 1
 	NV.o2addQ(1,1) logical = false
 	NV.pgnum(1,1) double = 32
 	NV.wtol(1,1) double = 1e-12
@@ -44,14 +45,14 @@ fiveref = NV.fiveref;
 if isempty(fiveref)
     oref = NV.oref;
 else
-    oref = GBfive2oct(fiveref);
+    oref = five2oct(fiveref,epsijk);
 end
 
 %% get minimized distance octonions relative to oct pairs
 disp('get_octpairs ')
 npts = size(pts,1);
 orefrep = repmat(oref,npts,1);
-[~,octvtx] = GBdist4(orefrep,pts,NV.pgnum,'norm',NV.wtol,true);
+[dmin,octvtx] = GBdist4(orefrep,pts,NV.pgnum,'norm',NV.wtol,true,epsijk);
 
 %check if multiple octonions found (rare, otherwise might indicate an error)
 idstmp = cellfun(@(oct) size(oct,1),octvtx) > 1;
