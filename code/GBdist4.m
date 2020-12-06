@@ -83,7 +83,7 @@ function nUpdateProgress(~)
 end
 
 %loop through octonion pairs
-for i = 1:npts %parfor compatible
+parfor i = 1:npts %parfor compatible
 	%text waitbar
 	if mod(i,nreps2) == 0
 		if waitbarQ
@@ -111,13 +111,18 @@ for i = 1:npts %parfor compatible
 	
 	%% apply U(1) symmetry
 	% get minimum zeta & sigma values (zm)
-	zm = zeta_min2(o1rep,o2tmp);
-	qzm = [cos(zm/2) zeros(nsets,2) sin(zm/2)];
+	zm = zeta_min2(o1rep,o2tmp,-epsijk);
+    mA = [0 0 1]; %octonion convention that BP normal is [0 0 1] in lab frame
+    mArep = repmat(mA,nsets,1);
+    qzm = ax2qu([mArep zm],-epsijk);
+% 	qzm = [cos(zm/2) zeros(nsets,2) sin(zm/2)];
 %     qzm = [cos(zm/2) zeros(nsets,2) -epsijk*sin(zm/2)];
 	
 	% get minimized quaternions
-	qCz = qmult(qSC,qzm,epsijk);
-	qDz = qmult(qSD,qzm,epsijk);
+% 	qCz = qmult(qSC,qzm,epsijk);
+% 	qDz = qmult(qSD,qzm,epsijk);
+    qCz = qmult(qzm,qSC,epsijk);
+	qDz = qmult(qzm,qSD,epsijk);
 	
 	%package quaternions
 	o2syms = [qCz qDz];
