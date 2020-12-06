@@ -64,17 +64,21 @@ switch datatype
     case {'rohrer-Ni','rohrer-test'}
         switch datatype
             case 'rohrer-Ni'
-                load('../../TJ2GBE/output/Ni_0131_21520_Cub.mat','EAs','norms','resE')
-                %convert
-                [q,nA] = TJ2five(EAs,norms,epsijk);
-                oct = TJ2oct(EAs,norms,epsijk);
+                datfpath = '../../TJ2GBE/TJdata/triples_Ni_0131_21520.txt';
+                resEfpath = '../../TJ2GBE/output/resE.txt';;
+                
+%                 load('../../TJ2GBE/output/Ni_0131_21520_Cub.mat','EAs','norms','resE')
+%                 %convert
+%                 [q,nA] = TJ2five(EAs,norms,epsijk);
+%                 oct = TJ2oct(EAs,norms,epsijk);
             case 'rohrer-test'
                 datfpath = '../../TJ2GBE/TJdata/triples_30000.dat';
 %                 [~,EAs,norms] = read_dat(datfpath);
-                [q,nA] = datfile2five(datfpath,0,epsijk);
-                oct = five2oct(q,nA,epsijk);
-                resE = importdata('../../TJ2GBE/TJdata/trueE_30000.txt');
+                resEfpath = '../../TJ2GBE/TJdata/trueE_30000.txt';
         end
+        [q,nA] = datfile2five(datfpath,0,epsijk);
+        oct = five2oct(q,nA,epsijk);
+        resE = importdata(resEfpath);
         %unpack
         assert(isvector(resE),'resE should be a vector');
         ytmp = resE(:);
