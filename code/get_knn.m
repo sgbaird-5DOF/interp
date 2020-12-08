@@ -1,9 +1,11 @@
-function [nnpts,D,mu,sigma,idx] = get_knn(pts,dtype,K,NV)
+function [nnX,D,mu,sigma,idxtmp] = get_knn(X,dtype,K,NV)
 arguments
-    pts
+    X double
     dtype char {mustBeMember(dtype,{'omega','norm','alen'})} = 'omega'
     K(1,1) double {mustBePositive,mustBeInteger} = 1
     NV.dispQ(1,1) logical = false
+    NV.ID = []
+    NV.Y = []
 end
 % GET_KNN  k-nearest neighbor points, distances, mean, and std
 %--------------------------------------------------------------------------
@@ -33,7 +35,16 @@ end
 %  *
 %--------------------------------------------------------------------------
 %get nearest neighbor IDs and euclidean distances
-[idxtmp,Dtmp] = knnsearch(pts,pts,'K',K+1);
+ID = NV.ID;
+Y = NV.Y;
+assert(isempty(ID) || isempty(Y),'ID and Y should not be supplied simultaneously')
+if ~isempty(ID)
+    Y = X(ID,:);
+elseif isempty(Y)
+    Y = X; %check NNs within set of points (otherwise check NN against specific pts in NV.Y)
+end
+    
+[idxtmp,Dtmp] = knnsearch(X,Y,'K',K+1);
 
 %remove "self" column
 idxtmp = idxtmp(:,2:end);
@@ -47,18 +58,18 @@ for k = 1:K
     idx = idxtmp(:,k);
     
     %nearest neighbor pts
-    nnpts = pts(idx,:);
+    nnX = X(idx,:);
     
     %get distances for plotting
     switch dtype
         case 'omega'
-            Drad = get_omega(pts,nnpts);
+            Drad = get_omega(nnX,Y);
             D{k} = rad2deg(Drad);
         case 'norm'
             D{k} = Dtmp(:,k);
         case 'alen' %general arc length formula
-            assert(norm(pts(1,:))-1 < 1e-6,'norm(pts,2) must be 1 (within tol)')
-            Drad = real(acos(dot(pts,nnpts,2)));
+            assert(norm(X(1,:))-1 < 1e-6,'norm(pts,2) must be 1 (within tol)')
+            Drad = real(acos(dot(nnX,Y,2)));
             D{k} = rad2deg(Drad);
     end
     
