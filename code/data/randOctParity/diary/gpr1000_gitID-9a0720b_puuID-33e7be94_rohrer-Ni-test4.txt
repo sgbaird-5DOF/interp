@@ -1,0 +1,130 @@
+datatype = brk
+method = gpr
+get_octpairs 
+  0  5 10 15 20 25 30 35 40 45 50 55 60 65 70 75 80 85 90 95data\temp.mat
+get_octpairs 
+  0  5 10 15 20 25 30 35 40 45 50 55 60 65 70 75 80 85 90 95data\temp.mat
+ninputpts = 1000, npredpts = 1000
+[Warning: Working directory not clean (i.e. uncommitted/unpushed) files exist. Use !git commit -am "<message>", then !git
+push] 
+[> In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('get_gitcommit', 'C:\Users\sterg\Documents\GitHub\infer\code\interp\code\MATslurm\code\get_gitcommit.m', 15)" style="font-weight:bold">get_gitcommit</a> (<a href="matlab: opentoline('C:\Users\sterg\Documents\GitHub\infer\code\interp\code\MATslurm\code\get_gitcommit.m',15,0)">line 15</a>)
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('interp5DOF', 'C:\Users\sterg\Documents\GitHub\infer\code\interp\code\interp5DOF.m', 277)" style="font-weight:bold">interp5DOF</a> (<a href="matlab: opentoline('C:\Users\sterg\Documents\GitHub\infer\code\interp\code\interp5DOF.m',277,0)">line 277</a>)
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('interp5DOF_setup', 'C:\Users\sterg\Documents\GitHub\infer\code\interp\code\interp5DOF_setup.m', 128)" style="font-weight:bold">interp5DOF_setup</a> (<a href="matlab: opentoline('C:\Users\sterg\Documents\GitHub\infer\code\interp\code\interp5DOF_setup.m',128,0)">line 128</a>)
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('randOctParityData>@(ndatapts,npredpts,method,datatype,pgnum)interp5DOF_setup(ndatapts,npredpts,method,datatype,''pgnum'',pgnum,''sigma'',sigma)', 'C:\Users\sterg\Documents\GitHub\infer\code\interp\code\randOctParityData.m', 112)" style="font-weight:bold">randOctParityData>@(ndatapts,npredpts,method,datatype,pgnum)interp5DOF_setup(ndatapts,npredpts,method,datatype,'pgnum',pgnum,'sigma',sigma)</a> (<a href="matlab: opentoline('C:\Users\sterg\Documents\GitHub\infer\code\interp\code\randOctParityData.m',112,0)">line 112</a>)
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('exec_argfn', 'C:\Users\sterg\Documents\GitHub\infer\code\interp\code\MATslurm\code\exec_argfn.m', 50)" style="font-weight:bold">exec_argfn</a> (<a href="matlab: opentoline('C:\Users\sterg\Documents\GitHub\infer\code\interp\code\MATslurm\code\exec_argfn.m',50,0)">line 50</a>)
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('exec_combs', 'C:\Users\sterg\Documents\GitHub\infer\code\interp\code\MATslurm\code\exec_combs.m', 64)" style="font-weight:bold">exec_combs</a> (<a href="matlab: opentoline('C:\Users\sterg\Documents\GitHub\infer\code\interp\code\MATslurm\code\exec_combs.m',64,0)">line 64</a>)
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('randOctParityData', 'C:\Users\sterg\Documents\GitHub\infer\code\interp\code\randOctParityData.m', 140)" style="font-weight:bold">randOctParityData</a> (<a href="matlab: opentoline('C:\Users\sterg\Documents\GitHub\infer\code\interp\code\randOctParityData.m',140,0)">line 140</a>)] 
+|=====================================================================================================|
+| Iter | Eval   | Objective:  | Objective   | BestSoFar   | BestSoFar   |        Sigma |  KernelScale |
+|      | result | log(1+loss) | runtime     | (observed)  | (estim.)    |              |              |
+|=====================================================================================================|
+|    1 | Best   |    0.019985 |      2.0903 |    0.019985 |    0.019985 |      0.13006 |       0.3702 |
+|    2 | Accept |    0.020075 |      2.8426 |    0.019985 |    0.019985 |    0.0019812 |     0.046795 |
+|    3 | Accept |    0.029784 |      3.5296 |    0.019985 |    0.019985 |      0.89832 |    0.0028172 |
+|    4 | Accept |    0.029784 |      2.7033 |    0.019985 |    0.019985 |    0.0053089 |    0.0022329 |
+|    5 | Accept |     0.11439 |      2.2423 |    0.019985 |    0.019988 |   0.00013783 |      0.12489 |
+|    6 | Accept |    0.026065 |      2.9588 |    0.019985 |    0.019987 |     0.042543 |      0.34037 |
+|    7 | Accept |    0.029784 |      4.5236 |    0.019985 |    0.019995 |      0.29632 |    0.0041657 |
+|    8 | Best   |    0.017881 |      1.8848 |    0.017881 |    0.017905 |     0.086147 |      0.38106 |
+|    9 | Accept |    0.029784 |      3.8851 |    0.017881 |    0.017907 |       1.7336 |      0.15379 |
+|   10 | Accept |    0.018234 |      1.9197 |    0.017881 |    0.018068 |     0.092869 |      0.38989 |
+|   11 | Accept |      15.812 |      9.5426 |    0.017881 |    0.011504 |    0.0027816 |      0.37988 |
+|   12 | Accept |     0.02054 |      2.6815 |    0.017881 |    0.011722 |   0.00015204 |     0.041275 |
+|   13 | Accept |    0.029448 |      2.8876 |    0.017881 |    0.011945 |    0.0022064 |     0.014476 |
+|   14 | Best   |    0.016201 |      1.6423 |    0.016201 |     0.01169 |     0.094134 |     0.082456 |
+|   15 | Accept |     0.02838 |      2.2271 |    0.016201 |    0.011787 |      0.05616 |     0.020626 |
+|   16 | Accept |    0.029784 |      2.5774 |    0.016201 |    0.011301 |     0.031333 |    0.0035585 |
+|   17 | Accept |    0.029784 |      2.4058 |    0.016201 |    0.011671 |     0.021488 |   0.00049738 |
+|   18 | Accept |    0.029784 |       2.556 |    0.016201 |    0.011716 |    0.0023756 |   0.00047718 |
+|   19 | Accept |     0.02549 |      2.6385 |    0.016201 |    0.010788 |   0.00077176 |     0.027573 |
+|   20 | Accept |    0.029784 |      3.8594 |    0.016201 |     0.01105 |       1.7223 |     0.017263 |
+|=====================================================================================================|
+| Iter | Eval   | Objective:  | Objective   | BestSoFar   | BestSoFar   |        Sigma |  KernelScale |
+|      | result | log(1+loss) | runtime     | (observed)  | (estim.)    |              |              |
+|=====================================================================================================|
+|   21 | Accept |    0.029784 |      2.9924 |    0.016201 |    0.010736 |      0.10091 |   0.00091351 |
+|   22 | Accept |    0.029784 |      2.5285 |    0.016201 |    0.011144 |    0.0001152 |   0.00047721 |
+|   23 | Accept |    0.029784 |      2.5969 |    0.016201 |     0.01144 |   0.00010732 |    0.0026633 |
+|   24 | Accept |    0.026597 |       2.777 |    0.016201 |    0.010739 |     0.010287 |     0.025144 |
+|   25 | Accept |    0.029784 |      2.6055 |    0.016201 |    0.010275 |   0.00051408 |    0.0013047 |
+|   26 | Accept |    0.029784 |      3.5907 |    0.016201 |    0.010527 |       1.7328 |    0.0004828 |
+|   27 | Accept |    0.029784 |      4.9115 |    0.016201 |    0.010021 |      0.33437 |     0.040894 |
+|   28 | Accept |    0.029784 |      4.9794 |    0.016201 |   0.0099071 |      0.96464 |      0.47568 |
+|   29 | Accept |    0.029723 |      3.6849 |    0.016201 |   0.0099961 |    0.0001001 |     0.010708 |
+|   30 | Accept |    0.029784 |      4.2639 |    0.016201 |   0.0095455 |      0.37867 |   0.00047654 |
+
+__________________________________________________________
+Optimization completed.
+MaxObjectiveEvaluations of 30 reached.
+Total function evaluations: 30
+Total elapsed time: 118.6118 seconds
+Total objective function evaluation time: 96.5288
+
+Best observed feasible point:
+     <strong>Sigma</strong>      <strong>KernelScale</strong>
+    <strong>________</strong>    <strong>___________</strong>
+
+    0.094134     0.082456  
+
+Observed objective function value = 0.016201
+Estimated objective function value = 0.016087
+Function evaluation time = 1.6423
+
+Best estimated feasible point (according to models):
+     <strong>Sigma</strong>      <strong>KernelScale</strong>
+    <strong>________</strong>    <strong>___________</strong>
+
+    0.086147      0.38106  
+
+Estimated objective function value = 0.0095455
+Estimated function evaluation time = 1.889
+
+
+gprMdl = 
+
+  <a href="matlab: helpPopup RegressionGP">RegressionGP</a>
+                         ResponseName: 'Y'
+                CategoricalPredictors: []
+                    ResponseTransform: 'none'
+                      NumObservations: 1000
+    HyperparameterOptimizationResults: [1×1 BayesianOptimization]
+                       KernelFunction: 'SquaredExponential'
+                    KernelInformation: [1×1 struct]
+                        BasisFunction: 'Constant'
+                                 Beta: -2.6658
+                                Sigma: 0.0861
+                    PredictorLocation: []
+                       PredictorScale: []
+                                Alpha: [1000×1 double]
+                     ActiveSetVectors: [1000×8 double]
+                        PredictMethod: 'FIC'
+                        ActiveSetSize: 1000
+                            FitMethod: 'Exact'
+                      ActiveSetMethod: 'Random'
+                    IsActiveSetVector: [1000×1 logical]
+                        LogLikelihood: 284.7318
+                     ActiveSetHistory: [1×1 struct]
+                       BCDInformation: []
+
+
+  <a href="matlab: properties('RegressionGP')">Properties</a>, <a href="matlab: methods('RegressionGP')">Methods</a>
+
+<a href="matlab: opentoline('C:\Users\sterg\Documents\GitHub\infer\code\interp\code\interp5DOF.m',451,1)">451 </a>        switch PredictMethod
+gprMdl.KernelInformation.KernelParameters
+
+ans =
+
+    0.3811
+   12.7023
+
+rad2deg(0.3811)
+
+ans =
+
+   21.8354
+
+if system_dependent('IsDebugMode')==1, dbcont; end
+RMSE = 0.078357 J/m^2
+MAE = 0.059657 J/m^2
+C:\Users\sterg\Documents\GitHub\infer\code\interp\code\data\randOctParity\pcombs\gpr1000_gitID-9a0720b_puuID-33e7be94_rohrer-Ni-test4_meta.mat
+C:\Users\sterg\Documents\GitHub\infer\code\interp\code\data\randOctParity\pcombs\gpr1000_gitID-9a0720b_puuID-33e7be94_rohrer-Ni-test4.mat

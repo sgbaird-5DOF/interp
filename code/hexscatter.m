@@ -13,6 +13,7 @@ arguments
     NV.cbnds double = []
     NV.cscale char {mustBeMember(NV.cscale,{'log','linear'})} = 'log'
     NV.Interpreter char {mustBeMember(NV.Interpreter,{'tex','latex','none'})} = 'latex'
+    NV.axis = 'equal'
 end
 % HEXSCATTER  A scatter-plot substitute - generate a density plot using hexagonal patches.
 %% h = HEXSCATTER( x, y, ... )
@@ -145,7 +146,7 @@ end
 hold on
 refline(1,0)
 
-axis equal
+axis(NV.axis);
 if ~isempty(NV.title)
     title(NV.title,'Interpreter',NV.Interpreter)
 end

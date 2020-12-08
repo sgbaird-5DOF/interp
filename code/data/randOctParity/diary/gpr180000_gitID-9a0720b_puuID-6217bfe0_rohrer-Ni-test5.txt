@@ -1,0 +1,496 @@
+datatype = rohrer-Ni
+method = gpr
+get_octpairs 
+  0  5 10 15 20 25 30 35 40 45 50 55 60 65 70 75 80 85 90 95nids: 2
+      114633      145376
+
+data\temp.mat
+get_octpairs 
+  0  5 10 15 20 25 30 35 40 45 50 55 60 65 70 75 80 85 90 95data\temp.mat
+ninputpts = 180000, npredpts = 10000
+[Warning: Working directory not clean (i.e. uncommitted/unpushed) files exist. Use !git commit -am "<message>", then !git
+push] 
+[> In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('get_gitcommit', 'C:\Users\sterg\Documents\GitHub\infer\code\interp\code\MATslurm\code\get_gitcommit.m', 15)" style="font-weight:bold">get_gitcommit</a> (<a href="matlab: opentoline('C:\Users\sterg\Documents\GitHub\infer\code\interp\code\MATslurm\code\get_gitcommit.m',15,0)">line 15</a>)
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('interp5DOF', 'C:\Users\sterg\Documents\GitHub\infer\code\interp\code\interp5DOF.m', 277)" style="font-weight:bold">interp5DOF</a> (<a href="matlab: opentoline('C:\Users\sterg\Documents\GitHub\infer\code\interp\code\interp5DOF.m',277,0)">line 277</a>)
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('interp5DOF_setup', 'C:\Users\sterg\Documents\GitHub\infer\code\interp\code\interp5DOF_setup.m', 147)" style="font-weight:bold">interp5DOF_setup</a> (<a href="matlab: opentoline('C:\Users\sterg\Documents\GitHub\infer\code\interp\code\interp5DOF_setup.m',147,0)">line 147</a>)
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('randOctParityData>@(ndatapts,npredpts,method,datatype,pgnum,sigma)interp5DOF_setup(ndatapts,npredpts,method,datatype,''pgnum'',pgnum,''sigma'',sigma)', 'C:\Users\sterg\Documents\GitHub\infer\code\interp\code\randOctParityData.m', 115)" style="font-weight:bold">randOctParityData>@(ndatapts,npredpts,method,datatype,pgnum,sigma)interp5DOF_setup(ndatapts,npredpts,method,datatype,'pgnum',pgnum,'sigma',sigma)</a> (<a href="matlab: opentoline('C:\Users\sterg\Documents\GitHub\infer\code\interp\code\randOctParityData.m',115,0)">line 115</a>)
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('exec_argfn', 'C:\Users\sterg\Documents\GitHub\infer\code\interp\code\MATslurm\code\exec_argfn.m', 50)" style="font-weight:bold">exec_argfn</a> (<a href="matlab: opentoline('C:\Users\sterg\Documents\GitHub\infer\code\interp\code\MATslurm\code\exec_argfn.m',50,0)">line 50</a>)
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('exec_combs', 'C:\Users\sterg\Documents\GitHub\infer\code\interp\code\MATslurm\code\exec_combs.m', 64)" style="font-weight:bold">exec_combs</a> (<a href="matlab: opentoline('C:\Users\sterg\Documents\GitHub\infer\code\interp\code\MATslurm\code\exec_combs.m',64,0)">line 64</a>)
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('randOctParityData', 'C:\Users\sterg\Documents\GitHub\infer\code\interp\code\randOctParityData.m', 143)" style="font-weight:bold">randOctParityData</a> (<a href="matlab: opentoline('C:\Users\sterg\Documents\GitHub\infer\code\interp\code\randOctParityData.m',143,0)">line 143</a>)] 
+<a href="matlab: opentoline('C:\Program Files\MATLAB\R2020b\toolbox\stats\classreg\+classreg\+learning\+gputils\selectActiveSet.m',440,1)">440 </a>            vvec     = -umat(sub2ind([N,lenJset],Jset,(1:lenJset)')) + tau^2;
+dbstack
+> In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('classreg.learning.gputils.selectActiveSet>selectActiveSetSGMA', 'C:\Program Files\MATLAB\R2020b\toolbox\stats\classreg\+classreg\+learning\+gputils\selectActiveSet.m', 440)" style="font-weight:bold">classreg.learning.gputils.selectActiveSet>selectActiveSetSGMA</a> (<a href="matlab: opentoline('C:\Program Files\MATLAB\R2020b\toolbox\stats\classreg\+classreg\+learning\+gputils\selectActiveSet.m',440,0)">line 440</a>)
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('classreg.learning.gputils.selectActiveSet', 'C:\Program Files\MATLAB\R2020b\toolbox\stats\classreg\+classreg\+learning\+gputils\selectActiveSet.m', 293)" style="font-weight:bold">classreg.learning.gputils.selectActiveSet</a> (<a href="matlab: opentoline('C:\Program Files\MATLAB\R2020b\toolbox\stats\classreg\+classreg\+learning\+gputils\selectActiveSet.m',293,0)">line 293</a>)
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('classreg.learning.impl/GPImpl/selectActiveSet', 'C:\Program Files\MATLAB\R2020b\toolbox\stats\classreg\+classreg\+learning\+impl\GPImpl.m', 2783)" style="font-weight:bold">classreg.learning.impl/GPImpl/selectActiveSet</a> (<a href="matlab: opentoline('C:\Program Files\MATLAB\R2020b\toolbox\stats\classreg\+classreg\+learning\+impl\GPImpl.m',2783,0)">line 2783</a>)
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('classreg.learning.impl/GPImpl/doFitMethodSD', 'C:\Program Files\MATLAB\R2020b\toolbox\stats\classreg\+classreg\+learning\+impl\GPImpl.m', 473)" style="font-weight:bold">classreg.learning.impl/GPImpl/doFitMethodSD</a> (<a href="matlab: opentoline('C:\Program Files\MATLAB\R2020b\toolbox\stats\classreg\+classreg\+learning\+impl\GPImpl.m',473,0)">line 473</a>)
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('classreg.learning.impl/GPImpl/doFit', 'C:\Program Files\MATLAB\R2020b\toolbox\stats\classreg\+classreg\+learning\+impl\GPImpl.m', 371)" style="font-weight:bold">classreg.learning.impl/GPImpl/doFit</a> (<a href="matlab: opentoline('C:\Program Files\MATLAB\R2020b\toolbox\stats\classreg\+classreg\+learning\+impl\GPImpl.m',371,0)">line 371</a>)
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('classreg.learning.impl/GPImpl/make', 'C:\Program Files\MATLAB\R2020b\toolbox\stats\classreg\+classreg\+learning\+impl\GPImpl.m', 268)" style="font-weight:bold">classreg.learning.impl/GPImpl/make</a> (<a href="matlab: opentoline('C:\Program Files\MATLAB\R2020b\toolbox\stats\classreg\+classreg\+learning\+impl\GPImpl.m',268,0)">line 268</a>)
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('RegressionGP', 'C:\Program Files\MATLAB\R2020b\toolbox\stats\classreg\RegressionGP.m', 277)" style="font-weight:bold">RegressionGP</a> (<a href="matlab: opentoline('C:\Program Files\MATLAB\R2020b\toolbox\stats\classreg\RegressionGP.m',277,0)">line 277</a>)
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('classreg.learning/FitTemplate/fit', 'C:\Program Files\MATLAB\R2020b\toolbox\stats\classreg\+classreg\+learning\FitTemplate.m', 263)" style="font-weight:bold">classreg.learning/FitTemplate/fit</a> (<a href="matlab: opentoline('C:\Program Files\MATLAB\R2020b\toolbox\stats\classreg\+classreg\+learning\FitTemplate.m',263,0)">line 263</a>)
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('RegressionGP.fit', 'C:\Program Files\MATLAB\R2020b\toolbox\stats\classreg\RegressionGP.m', 308)" style="font-weight:bold">RegressionGP.fit</a> (<a href="matlab: opentoline('C:\Program Files\MATLAB\R2020b\toolbox\stats\classreg\RegressionGP.m',308,0)">line 308</a>)
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('fitrgp', 'C:\Program Files\MATLAB\R2020b\toolbox\stats\classreg\fitrgp.m', 469)" style="font-weight:bold">fitrgp</a> (<a href="matlab: opentoline('C:\Program Files\MATLAB\R2020b\toolbox\stats\classreg\fitrgp.m',469,0)">line 469</a>)
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('interp5DOF', 'C:\Users\sterg\Documents\GitHub\infer\code\interp\code\interp5DOF.m', 441)" style="font-weight:bold">interp5DOF</a> (<a href="matlab: opentoline('C:\Users\sterg\Documents\GitHub\infer\code\interp\code\interp5DOF.m',441,0)">line 441</a>)
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('interp5DOF_setup', 'C:\Users\sterg\Documents\GitHub\infer\code\interp\code\interp5DOF_setup.m', 147)" style="font-weight:bold">interp5DOF_setup</a> (<a href="matlab: opentoline('C:\Users\sterg\Documents\GitHub\infer\code\interp\code\interp5DOF_setup.m',147,0)">line 147</a>)
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('randOctParityData>@(ndatapts,npredpts,method,datatype,pgnum,sigma)interp5DOF_setup(ndatapts,npredpts,method,datatype,''pgnum'',pgnum,''sigma'',sigma)', 'C:\Users\sterg\Documents\GitHub\infer\code\interp\code\randOctParityData.m', 115)" style="font-weight:bold">randOctParityData>@(ndatapts,npredpts,method,datatype,pgnum,sigma)interp5DOF_setup(ndatapts,npredpts,method,datatype,'pgnum',pgnum,'sigma',sigma)</a> (<a href="matlab: opentoline('C:\Users\sterg\Documents\GitHub\infer\code\interp\code\randOctParityData.m',115,0)">line 115</a>)
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('exec_argfn', 'C:\Users\sterg\Documents\GitHub\infer\code\interp\code\MATslurm\code\exec_argfn.m', 50)" style="font-weight:bold">exec_argfn</a> (<a href="matlab: opentoline('C:\Users\sterg\Documents\GitHub\infer\code\interp\code\MATslurm\code\exec_argfn.m',50,0)">line 50</a>)
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('exec_combs', 'C:\Users\sterg\Documents\GitHub\infer\code\interp\code\MATslurm\code\exec_combs.m', 64)" style="font-weight:bold">exec_combs</a> (<a href="matlab: opentoline('C:\Users\sterg\Documents\GitHub\infer\code\interp\code\MATslurm\code\exec_combs.m',64,0)">line 64</a>)
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('randOctParityData', 'C:\Users\sterg\Documents\GitHub\infer\code\interp\code\randOctParityData.m', 143)" style="font-weight:bold">randOctParityData</a> (<a href="matlab: opentoline('C:\Users\sterg\Documents\GitHub\infer\code\interp\code\randOctParityData.m',143,0)">line 143</a>)
+dbup
+In workspace belonging to <a href="matlab:matlab.internal.language.introspective.errorDocCallback('classreg.learning.gputils.selectActiveSet', 'C:\Program Files\MATLAB\R2020b\toolbox\stats\classreg\+classreg\+learning\+gputils\selectActiveSet.m', 293)" style="font-weight:bold">classreg.learning.gputils.selectActiveSet</a> (<a href="matlab: opentoline('C:\Program Files\MATLAB\R2020b\toolbox\stats\classreg\+classreg\+learning\+gputils\selectActiveSet.m',293,0)">line 293</a>)
+dbup
+In workspace belonging to <a href="matlab:matlab.internal.language.introspective.errorDocCallback('classreg.learning.impl/GPImpl/selectActiveSet', 'C:\Program Files\MATLAB\R2020b\toolbox\stats\classreg\+classreg\+learning\+impl\GPImpl.m', 2783)" style="font-weight:bold">classreg.learning.impl/GPImpl/selectActiveSet</a> (<a href="matlab: opentoline('C:\Program Files\MATLAB\R2020b\toolbox\stats\classreg\+classreg\+learning\+impl\GPImpl.m',2783,0)">line 2783</a>)
+bup
+{Unrecognized function or variable 'bup'.
+} 
+dbup
+In workspace belonging to <a href="matlab:matlab.internal.language.introspective.errorDocCallback('classreg.learning.impl/GPImpl/doFitMethodSD', 'C:\Program Files\MATLAB\R2020b\toolbox\stats\classreg\+classreg\+learning\+impl\GPImpl.m', 473)" style="font-weight:bold">classreg.learning.impl/GPImpl/doFitMethodSD</a> (<a href="matlab: opentoline('C:\Program Files\MATLAB\R2020b\toolbox\stats\classreg\+classreg\+learning\+impl\GPImpl.m',473,0)">line 473</a>)
+dbup
+In workspace belonging to <a href="matlab:matlab.internal.language.introspective.errorDocCallback('classreg.learning.impl/GPImpl/doFit', 'C:\Program Files\MATLAB\R2020b\toolbox\stats\classreg\+classreg\+learning\+impl\GPImpl.m', 371)" style="font-weight:bold">classreg.learning.impl/GPImpl/doFit</a> (<a href="matlab: opentoline('C:\Program Files\MATLAB\R2020b\toolbox\stats\classreg\+classreg\+learning\+impl\GPImpl.m',371,0)">line 371</a>)
+dbup
+In workspace belonging to <a href="matlab:matlab.internal.language.introspective.errorDocCallback('classreg.learning.impl/GPImpl/make', 'C:\Program Files\MATLAB\R2020b\toolbox\stats\classreg\+classreg\+learning\+impl\GPImpl.m', 268)" style="font-weight:bold">classreg.learning.impl/GPImpl/make</a> (<a href="matlab: opentoline('C:\Program Files\MATLAB\R2020b\toolbox\stats\classreg\+classreg\+learning\+impl\GPImpl.m',268,0)">line 268</a>)
+dbup
+In workspace belonging to <a href="matlab:matlab.internal.language.introspective.errorDocCallback('RegressionGP', 'C:\Program Files\MATLAB\R2020b\toolbox\stats\classreg\RegressionGP.m', 277)" style="font-weight:bold">RegressionGP</a> (<a href="matlab: opentoline('C:\Program Files\MATLAB\R2020b\toolbox\stats\classreg\RegressionGP.m',277,0)">line 277</a>)
+dbup
+In workspace belonging to <a href="matlab:matlab.internal.language.introspective.errorDocCallback('classreg.learning/FitTemplate/fit', 'C:\Program Files\MATLAB\R2020b\toolbox\stats\classreg\+classreg\+learning\FitTemplate.m', 263)" style="font-weight:bold">classreg.learning/FitTemplate/fit</a> (<a href="matlab: opentoline('C:\Program Files\MATLAB\R2020b\toolbox\stats\classreg\+classreg\+learning\FitTemplate.m',263,0)">line 263</a>)
+dbup
+In workspace belonging to <a href="matlab:matlab.internal.language.introspective.errorDocCallback('RegressionGP.fit', 'C:\Program Files\MATLAB\R2020b\toolbox\stats\classreg\RegressionGP.m', 308)" style="font-weight:bold">RegressionGP.fit</a> (<a href="matlab: opentoline('C:\Program Files\MATLAB\R2020b\toolbox\stats\classreg\RegressionGP.m',308,0)">line 308</a>)
+dbup
+In workspace belonging to <a href="matlab:matlab.internal.language.introspective.errorDocCallback('fitrgp', 'C:\Program Files\MATLAB\R2020b\toolbox\stats\classreg\fitrgp.m', 469)" style="font-weight:bold">fitrgp</a> (<a href="matlab: opentoline('C:\Program Files\MATLAB\R2020b\toolbox\stats\classreg\fitrgp.m',469,0)">line 469</a>)
+dbup
+In workspace belonging to <a href="matlab:matlab.internal.language.introspective.errorDocCallback('interp5DOF', 'C:\Users\sterg\Documents\GitHub\infer\code\interp\code\interp5DOF.m', 441)" style="font-weight:bold">interp5DOF</a> (<a href="matlab: opentoline('C:\Users\sterg\Documents\GitHub\infer\code\interp\code\interp5DOF.m',441,0)">line 441</a>)
+size(X)
+
+ans =
+
+      180000           8
+
+size(y)
+
+ans =
+
+      180000           1
+
+gprMdl = fitrgp(X,y,'PredictMethod','fic');
+gprMdl
+
+gprMdl = 
+
+  <a href="matlab: helpPopup RegressionGP">RegressionGP</a>
+             ResponseName: 'Y'
+    CategoricalPredictors: []
+        ResponseTransform: 'none'
+          NumObservations: 180000
+           KernelFunction: 'SquaredExponential'
+        KernelInformation: [1×1 struct]
+            BasisFunction: 'Constant'
+                     Beta: 0.9682
+                    Sigma: 0.1506
+        PredictorLocation: []
+           PredictorScale: []
+                    Alpha: [2000×1 double]
+         ActiveSetVectors: [2000×8 double]
+            PredictMethod: 'FIC'
+            ActiveSetSize: 2000
+                FitMethod: 'SD'
+          ActiveSetMethod: 'Random'
+        IsActiveSetVector: [180000×1 logical]
+            LogLikelihood: 934.7815
+         ActiveSetHistory: [1×1 struct]
+           BCDInformation: []
+
+
+  <a href="matlab: properties('RegressionGP')">Properties</a>, <a href="matlab: methods('RegressionGP')">Methods</a>
+
+gprMdl.KernelInformation
+
+ans = 
+
+  <a href="matlab:helpPopup struct" style="font-weight:bold">struct</a> with fields:
+
+                    Name: 'SquaredExponential'
+        KernelParameters: [2×1 double]
+    KernelParameterNames: {2×1 cell}
+
+gprMdl.KernelInformation.KernelParameters
+
+ans =
+
+    0.0737
+    0.0181
+
+rad2deg(0.0737)
+
+ans =
+
+    4.2227
+
+gprMdl = fitrgp(X,y,'PredictMethod','fic','ActiveSetMethod','sgma');
+{Operation terminated by user during <a href="matlab:matlab.internal.language.introspective.errorDocCallback('classreg.learning.gputils.selectActiveSet>selectActiveSetSGMA', 'C:\Program Files\MATLAB\R2020b\toolbox\stats\classreg\+classreg\+learning\+gputils\selectActiveSet.m', 440)" style="font-weight:bold">classreg.learning.gputils.selectActiveSet>selectActiveSetSGMA</a> (<a href="matlab: opentoline('C:\Program Files\MATLAB\R2020b\toolbox\stats\classreg\+classreg\+learning\+gputils\selectActiveSet.m',440,0)">line 440</a>)
+
+
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('classreg.learning.gputils.selectActiveSet', 'C:\Program Files\MATLAB\R2020b\toolbox\stats\classreg\+classreg\+learning\+gputils\selectActiveSet.m', 293)" style="font-weight:bold">classreg.learning.gputils.selectActiveSet</a> (<a href="matlab: opentoline('C:\Program Files\MATLAB\R2020b\toolbox\stats\classreg\+classreg\+learning\+gputils\selectActiveSet.m',293,0)">line 293</a>)
+                [A,C,CProfile,exitFlag] =       selectActiveSetSGMA(X,kfun,diagkfun,M,A0,J,issparsesearch,tol,verbose,tau);
+
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('classreg.learning.impl.GPImpl/selectActiveSet', 'C:\Program Files\MATLAB\R2020b\toolbox\stats\classreg\+classreg\+learning\+impl\GPImpl.m', 2783)" style="font-weight:bold">classreg.learning.impl.GPImpl/selectActiveSet</a> (<a href="matlab: opentoline('C:\Program Files\MATLAB\R2020b\toolbox\stats\classreg\+classreg\+learning\+impl\GPImpl.m',2783,0)">line 2783</a>)
+                    [activeSet,~,critProfile,~] = classreg.learning.gputils.selectActiveSet(X,kfun,diagkfun,...
+
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('classreg.learning.impl.GPImpl/doFitMethodSD', 'C:\Program Files\MATLAB\R2020b\toolbox\stats\classreg\+classreg\+learning\+impl\GPImpl.m', 473)" style="font-weight:bold">classreg.learning.impl.GPImpl/doFitMethodSD</a> (<a href="matlab: opentoline('C:\Program Files\MATLAB\R2020b\toolbox\stats\classreg\+classreg\+learning\+impl\GPImpl.m',473,0)">line 473</a>)
+                        [activeSet,activeSetIndices,critProfile] = selectActiveSet(this,this.X,this.y,beta,theta,sigma);
+
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('classreg.learning.impl.GPImpl/doFit', 'C:\Program Files\MATLAB\R2020b\toolbox\stats\classreg\+classreg\+learning\+impl\GPImpl.m', 371)" style="font-weight:bold">classreg.learning.impl.GPImpl/doFit</a> (<a href="matlab: opentoline('C:\Program Files\MATLAB\R2020b\toolbox\stats\classreg\+classreg\+learning\+impl\GPImpl.m',371,0)">line 371</a>)
+                    this = doFitMethodSD(this);
+
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('classreg.learning.impl.GPImpl.make', 'C:\Program Files\MATLAB\R2020b\toolbox\stats\classreg\+classreg\+learning\+impl\GPImpl.m', 268)" style="font-weight:bold">classreg.learning.impl.GPImpl.make</a> (<a href="matlab: opentoline('C:\Program Files\MATLAB\R2020b\toolbox\stats\classreg\+classreg\+learning\+impl\GPImpl.m',268,0)">line 268</a>)
+            this = doFit(this);
+
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('RegressionGP', 'C:\Program Files\MATLAB\R2020b\toolbox\stats\classreg\RegressionGP.m', 277)" style="font-weight:bold">RegressionGP</a> (<a href="matlab: opentoline('C:\Program Files\MATLAB\R2020b\toolbox\stats\classreg\RegressionGP.m',277,0)">line 277</a>)
+            this.Impl = classreg.learning.impl.GPImpl.make(...
+
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('classreg.learning.FitTemplate/fit', 'C:\Program Files\MATLAB\R2020b\toolbox\stats\classreg\+classreg\+learning\FitTemplate.m', 263)" style="font-weight:bold">classreg.learning.FitTemplate/fit</a> (<a href="matlab: opentoline('C:\Program Files\MATLAB\R2020b\toolbox\stats\classreg\+classreg\+learning\FitTemplate.m',263,0)">line 263</a>)
+            [varargout{1:nargout}] = this.MakeFitObject(X,Y,W,this.ModelParams,fitArgs{:});
+
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('RegressionGP.fit', 'C:\Program Files\MATLAB\R2020b\toolbox\stats\classreg\RegressionGP.m', 308)" style="font-weight:bold">RegressionGP.fit</a> (<a href="matlab: opentoline('C:\Program Files\MATLAB\R2020b\toolbox\stats\classreg\RegressionGP.m',308,0)">line 308</a>)
+            this = fit(temp,X,Y);
+
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('fitrgp', 'C:\Program Files\MATLAB\R2020b\toolbox\stats\classreg\fitrgp.m', 469)" style="font-weight:bold">fitrgp</a> (<a href="matlab: opentoline('C:\Program Files\MATLAB\R2020b\toolbox\stats\classreg\fitrgp.m',469,0)">line 469</a>)
+    obj = RegressionGP.fit(X,Y,RemainingArgs{:});
+} 
+gprMdl = fitrgp(X,y,'PredictMethod','fic','ActiveSetMethod','entropy');
+{Operation terminated by user during <a href="matlab:matlab.internal.language.introspective.errorDocCallback('classreg.learning.gputils.selectActiveSet>selectActiveSetEntropy', 'C:\Program Files\MATLAB\R2020b\toolbox\stats\classreg\+classreg\+learning\+gputils\selectActiveSet.m', 693)" style="font-weight:bold">classreg.learning.gputils.selectActiveSet>selectActiveSetEntropy</a> (<a href="matlab: opentoline('C:\Program Files\MATLAB\R2020b\toolbox\stats\classreg\+classreg\+learning\+gputils\selectActiveSet.m',693,0)">line 693</a>)
+
+
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('classreg.learning.gputils.selectActiveSet', 'C:\Program Files\MATLAB\R2020b\toolbox\stats\classreg\+classreg\+learning\+gputils\selectActiveSet.m', 295)" style="font-weight:bold">classreg.learning.gputils.selectActiveSet</a> (<a href="matlab: opentoline('C:\Program Files\MATLAB\R2020b\toolbox\stats\classreg\+classreg\+learning\+gputils\selectActiveSet.m',295,0)">line 295</a>)
+                [A,C,CProfile,exitFlag] =
+                selectActiveSetEntropy(X,kfun,diagkfun,M,A0,J,issparsesearch,tol,verbose,sigma);
+
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('classreg.learning.impl.GPImpl/selectActiveSet', 'C:\Program Files\MATLAB\R2020b\toolbox\stats\classreg\+classreg\+learning\+impl\GPImpl.m', 2789)" style="font-weight:bold">classreg.learning.impl.GPImpl/selectActiveSet</a> (<a href="matlab: opentoline('C:\Program Files\MATLAB\R2020b\toolbox\stats\classreg\+classreg\+learning\+impl\GPImpl.m',2789,0)">line 2789</a>)
+                    [activeSet,~,critProfile,~] = classreg.learning.gputils.selectActiveSet(X,kfun,diagkfun,...
+
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('classreg.learning.impl.GPImpl/doFitMethodSD', 'C:\Program Files\MATLAB\R2020b\toolbox\stats\classreg\+classreg\+learning\+impl\GPImpl.m', 473)" style="font-weight:bold">classreg.learning.impl.GPImpl/doFitMethodSD</a> (<a href="matlab: opentoline('C:\Program Files\MATLAB\R2020b\toolbox\stats\classreg\+classreg\+learning\+impl\GPImpl.m',473,0)">line 473</a>)
+                        [activeSet,activeSetIndices,critProfile] = selectActiveSet(this,this.X,this.y,beta,theta,sigma);
+
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('classreg.learning.impl.GPImpl/doFit', 'C:\Program Files\MATLAB\R2020b\toolbox\stats\classreg\+classreg\+learning\+impl\GPImpl.m', 371)" style="font-weight:bold">classreg.learning.impl.GPImpl/doFit</a> (<a href="matlab: opentoline('C:\Program Files\MATLAB\R2020b\toolbox\stats\classreg\+classreg\+learning\+impl\GPImpl.m',371,0)">line 371</a>)
+                    this = doFitMethodSD(this);
+
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('classreg.learning.impl.GPImpl.make', 'C:\Program Files\MATLAB\R2020b\toolbox\stats\classreg\+classreg\+learning\+impl\GPImpl.m', 268)" style="font-weight:bold">classreg.learning.impl.GPImpl.make</a> (<a href="matlab: opentoline('C:\Program Files\MATLAB\R2020b\toolbox\stats\classreg\+classreg\+learning\+impl\GPImpl.m',268,0)">line 268</a>)
+            this = doFit(this);
+
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('RegressionGP', 'C:\Program Files\MATLAB\R2020b\toolbox\stats\classreg\RegressionGP.m', 277)" style="font-weight:bold">RegressionGP</a> (<a href="matlab: opentoline('C:\Program Files\MATLAB\R2020b\toolbox\stats\classreg\RegressionGP.m',277,0)">line 277</a>)
+            this.Impl = classreg.learning.impl.GPImpl.make(...
+
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('classreg.learning.FitTemplate/fit', 'C:\Program Files\MATLAB\R2020b\toolbox\stats\classreg\+classreg\+learning\FitTemplate.m', 263)" style="font-weight:bold">classreg.learning.FitTemplate/fit</a> (<a href="matlab: opentoline('C:\Program Files\MATLAB\R2020b\toolbox\stats\classreg\+classreg\+learning\FitTemplate.m',263,0)">line 263</a>)
+            [varargout{1:nargout}] = this.MakeFitObject(X,Y,W,this.ModelParams,fitArgs{:});
+
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('RegressionGP.fit', 'C:\Program Files\MATLAB\R2020b\toolbox\stats\classreg\RegressionGP.m', 308)" style="font-weight:bold">RegressionGP.fit</a> (<a href="matlab: opentoline('C:\Program Files\MATLAB\R2020b\toolbox\stats\classreg\RegressionGP.m',308,0)">line 308</a>)
+            this = fit(temp,X,Y);
+
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('fitrgp', 'C:\Program Files\MATLAB\R2020b\toolbox\stats\classreg\fitrgp.m', 469)" style="font-weight:bold">fitrgp</a> (<a href="matlab: opentoline('C:\Program Files\MATLAB\R2020b\toolbox\stats\classreg\fitrgp.m',469,0)">line 469</a>)
+    obj = RegressionGP.fit(X,Y,RemainingArgs{:});
+} 
+gprMdl = fitrgp(X,y,'PredictMethod','fic','ActiveSetMethod','entropy','NumActiveSetRepeats',1);
+{Operation terminated by user during <a href="matlab:matlab.internal.language.introspective.errorDocCallback('classreg.learning.gputils.selectActiveSet>selectActiveSetEntropy', 'C:\Program Files\MATLAB\R2020b\toolbox\stats\classreg\+classreg\+learning\+gputils\selectActiveSet.m', 693)" style="font-weight:bold">classreg.learning.gputils.selectActiveSet>selectActiveSetEntropy</a> (<a href="matlab: opentoline('C:\Program Files\MATLAB\R2020b\toolbox\stats\classreg\+classreg\+learning\+gputils\selectActiveSet.m',693,0)">line 693</a>)
+
+
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('classreg.learning.gputils.selectActiveSet', 'C:\Program Files\MATLAB\R2020b\toolbox\stats\classreg\+classreg\+learning\+gputils\selectActiveSet.m', 295)" style="font-weight:bold">classreg.learning.gputils.selectActiveSet</a> (<a href="matlab: opentoline('C:\Program Files\MATLAB\R2020b\toolbox\stats\classreg\+classreg\+learning\+gputils\selectActiveSet.m',295,0)">line 295</a>)
+                [A,C,CProfile,exitFlag] =
+                selectActiveSetEntropy(X,kfun,diagkfun,M,A0,J,issparsesearch,tol,verbose,sigma);
+
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('classreg.learning.impl.GPImpl/selectActiveSet', 'C:\Program Files\MATLAB\R2020b\toolbox\stats\classreg\+classreg\+learning\+impl\GPImpl.m', 2789)" style="font-weight:bold">classreg.learning.impl.GPImpl/selectActiveSet</a> (<a href="matlab: opentoline('C:\Program Files\MATLAB\R2020b\toolbox\stats\classreg\+classreg\+learning\+impl\GPImpl.m',2789,0)">line 2789</a>)
+                    [activeSet,~,critProfile,~] = classreg.learning.gputils.selectActiveSet(X,kfun,diagkfun,...
+
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('classreg.learning.impl.GPImpl/doFitMethodSD', 'C:\Program Files\MATLAB\R2020b\toolbox\stats\classreg\+classreg\+learning\+impl\GPImpl.m', 473)" style="font-weight:bold">classreg.learning.impl.GPImpl/doFitMethodSD</a> (<a href="matlab: opentoline('C:\Program Files\MATLAB\R2020b\toolbox\stats\classreg\+classreg\+learning\+impl\GPImpl.m',473,0)">line 473</a>)
+                        [activeSet,activeSetIndices,critProfile] = selectActiveSet(this,this.X,this.y,beta,theta,sigma);
+
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('classreg.learning.impl.GPImpl/doFit', 'C:\Program Files\MATLAB\R2020b\toolbox\stats\classreg\+classreg\+learning\+impl\GPImpl.m', 371)" style="font-weight:bold">classreg.learning.impl.GPImpl/doFit</a> (<a href="matlab: opentoline('C:\Program Files\MATLAB\R2020b\toolbox\stats\classreg\+classreg\+learning\+impl\GPImpl.m',371,0)">line 371</a>)
+                    this = doFitMethodSD(this);
+
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('classreg.learning.impl.GPImpl.make', 'C:\Program Files\MATLAB\R2020b\toolbox\stats\classreg\+classreg\+learning\+impl\GPImpl.m', 268)" style="font-weight:bold">classreg.learning.impl.GPImpl.make</a> (<a href="matlab: opentoline('C:\Program Files\MATLAB\R2020b\toolbox\stats\classreg\+classreg\+learning\+impl\GPImpl.m',268,0)">line 268</a>)
+            this = doFit(this);
+
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('RegressionGP', 'C:\Program Files\MATLAB\R2020b\toolbox\stats\classreg\RegressionGP.m', 277)" style="font-weight:bold">RegressionGP</a> (<a href="matlab: opentoline('C:\Program Files\MATLAB\R2020b\toolbox\stats\classreg\RegressionGP.m',277,0)">line 277</a>)
+            this.Impl = classreg.learning.impl.GPImpl.make(...
+
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('classreg.learning.FitTemplate/fit', 'C:\Program Files\MATLAB\R2020b\toolbox\stats\classreg\+classreg\+learning\FitTemplate.m', 263)" style="font-weight:bold">classreg.learning.FitTemplate/fit</a> (<a href="matlab: opentoline('C:\Program Files\MATLAB\R2020b\toolbox\stats\classreg\+classreg\+learning\FitTemplate.m',263,0)">line 263</a>)
+            [varargout{1:nargout}] = this.MakeFitObject(X,Y,W,this.ModelParams,fitArgs{:});
+
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('RegressionGP.fit', 'C:\Program Files\MATLAB\R2020b\toolbox\stats\classreg\RegressionGP.m', 308)" style="font-weight:bold">RegressionGP.fit</a> (<a href="matlab: opentoline('C:\Program Files\MATLAB\R2020b\toolbox\stats\classreg\RegressionGP.m',308,0)">line 308</a>)
+            this = fit(temp,X,Y);
+
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('fitrgp', 'C:\Program Files\MATLAB\R2020b\toolbox\stats\classreg\fitrgp.m', 469)" style="font-weight:bold">fitrgp</a> (<a href="matlab: opentoline('C:\Program Files\MATLAB\R2020b\toolbox\stats\classreg\fitrgp.m',469,0)">line 469</a>)
+    obj = RegressionGP.fit(X,Y,RemainingArgs{:});
+} 
+gprMdl = fitrgp(X,y,'PredictMethod','sd','ActiveSetMethod','random','NumActiveSetRepeats',1);
+gprMdl = fitrgp(X,y,'PredictMethod','sd','ActiveSetMethod','likelihood','NumActiveSetRepeats',1);
+{Operation terminated by user during <a href="matlab:matlab.internal.language.introspective.errorDocCallback('classreg.learning.gputils.selectActiveSet>selectActiveSetLikelihood', 'C:\Program Files\MATLAB\R2020b\toolbox\stats\classreg\+classreg\+learning\+gputils\selectActiveSet.m', 898)" style="font-weight:bold">classreg.learning.gputils.selectActiveSet>selectActiveSetLikelihood</a> (<a href="matlab: opentoline('C:\Program Files\MATLAB\R2020b\toolbox\stats\classreg\+classreg\+learning\+gputils\selectActiveSet.m',898,0)">line 898</a>)
+
+
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('classreg.learning.gputils.selectActiveSet', 'C:\Program Files\MATLAB\R2020b\toolbox\stats\classreg\+classreg\+learning\+gputils\selectActiveSet.m', 297)" style="font-weight:bold">classreg.learning.gputils.selectActiveSet</a> (<a href="matlab: opentoline('C:\Program Files\MATLAB\R2020b\toolbox\stats\classreg\+classreg\+learning\+gputils\selectActiveSet.m',297,0)">line 297</a>)
+                [A,C,CProfile,exitFlag] =
+                selectActiveSetLikelihood(X,y,kfun,diagkfun,M,A0,J,issparsesearch,tol,verbose,sigma,tau);
+
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('classreg.learning.impl.GPImpl/selectActiveSet', 'C:\Program Files\MATLAB\R2020b\toolbox\stats\classreg\+classreg\+learning\+impl\GPImpl.m', 2797)" style="font-weight:bold">classreg.learning.impl.GPImpl/selectActiveSet</a> (<a href="matlab: opentoline('C:\Program Files\MATLAB\R2020b\toolbox\stats\classreg\+classreg\+learning\+impl\GPImpl.m',2797,0)">line 2797</a>)
+                    [activeSet,~,critProfile,~] = classreg.learning.gputils.selectActiveSet(X,kfun,diagkfun,...
+
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('classreg.learning.impl.GPImpl/doFitMethodSD', 'C:\Program Files\MATLAB\R2020b\toolbox\stats\classreg\+classreg\+learning\+impl\GPImpl.m', 473)" style="font-weight:bold">classreg.learning.impl.GPImpl/doFitMethodSD</a> (<a href="matlab: opentoline('C:\Program Files\MATLAB\R2020b\toolbox\stats\classreg\+classreg\+learning\+impl\GPImpl.m',473,0)">line 473</a>)
+                        [activeSet,activeSetIndices,critProfile] = selectActiveSet(this,this.X,this.y,beta,theta,sigma);
+
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('classreg.learning.impl.GPImpl/doFit', 'C:\Program Files\MATLAB\R2020b\toolbox\stats\classreg\+classreg\+learning\+impl\GPImpl.m', 371)" style="font-weight:bold">classreg.learning.impl.GPImpl/doFit</a> (<a href="matlab: opentoline('C:\Program Files\MATLAB\R2020b\toolbox\stats\classreg\+classreg\+learning\+impl\GPImpl.m',371,0)">line 371</a>)
+                    this = doFitMethodSD(this);
+
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('classreg.learning.impl.GPImpl.make', 'C:\Program Files\MATLAB\R2020b\toolbox\stats\classreg\+classreg\+learning\+impl\GPImpl.m', 268)" style="font-weight:bold">classreg.learning.impl.GPImpl.make</a> (<a href="matlab: opentoline('C:\Program Files\MATLAB\R2020b\toolbox\stats\classreg\+classreg\+learning\+impl\GPImpl.m',268,0)">line 268</a>)
+            this = doFit(this);
+
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('RegressionGP', 'C:\Program Files\MATLAB\R2020b\toolbox\stats\classreg\RegressionGP.m', 277)" style="font-weight:bold">RegressionGP</a> (<a href="matlab: opentoline('C:\Program Files\MATLAB\R2020b\toolbox\stats\classreg\RegressionGP.m',277,0)">line 277</a>)
+            this.Impl = classreg.learning.impl.GPImpl.make(...
+
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('classreg.learning.FitTemplate/fit', 'C:\Program Files\MATLAB\R2020b\toolbox\stats\classreg\+classreg\+learning\FitTemplate.m', 263)" style="font-weight:bold">classreg.learning.FitTemplate/fit</a> (<a href="matlab: opentoline('C:\Program Files\MATLAB\R2020b\toolbox\stats\classreg\+classreg\+learning\FitTemplate.m',263,0)">line 263</a>)
+            [varargout{1:nargout}] = this.MakeFitObject(X,Y,W,this.ModelParams,fitArgs{:});
+
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('RegressionGP.fit', 'C:\Program Files\MATLAB\R2020b\toolbox\stats\classreg\RegressionGP.m', 308)" style="font-weight:bold">RegressionGP.fit</a> (<a href="matlab: opentoline('C:\Program Files\MATLAB\R2020b\toolbox\stats\classreg\RegressionGP.m',308,0)">line 308</a>)
+            this = fit(temp,X,Y);
+
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('fitrgp', 'C:\Program Files\MATLAB\R2020b\toolbox\stats\classreg\fitrgp.m', 469)" style="font-weight:bold">fitrgp</a> (<a href="matlab: opentoline('C:\Program Files\MATLAB\R2020b\toolbox\stats\classreg\fitrgp.m',469,0)">line 469</a>)
+    obj = RegressionGP.fit(X,Y,RemainingArgs{:});
+} 
+gprMdl = fitrgp(X(1:10000,:),y(1:10000),'PredictMethod','sd','ActiveSetMethod','sgma','NumActiveSetRepeats',1,'RandomSearchSetSize',1000);
+{Operation terminated by user during <a href="matlab:matlab.internal.language.introspective.errorDocCallback('classreg.learning.gputils.selectActiveSet>selectActiveSetSGMA', 'C:\Program Files\MATLAB\R2020b\toolbox\stats\classreg\+classreg\+learning\+gputils\selectActiveSet.m', 441)" style="font-weight:bold">classreg.learning.gputils.selectActiveSet>selectActiveSetSGMA</a> (<a href="matlab: opentoline('C:\Program Files\MATLAB\R2020b\toolbox\stats\classreg\+classreg\+learning\+gputils\selectActiveSet.m',441,0)">line 441</a>)
+
+
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('classreg.learning.gputils.selectActiveSet', 'C:\Program Files\MATLAB\R2020b\toolbox\stats\classreg\+classreg\+learning\+gputils\selectActiveSet.m', 293)" style="font-weight:bold">classreg.learning.gputils.selectActiveSet</a> (<a href="matlab: opentoline('C:\Program Files\MATLAB\R2020b\toolbox\stats\classreg\+classreg\+learning\+gputils\selectActiveSet.m',293,0)">line 293</a>)
+                [A,C,CProfile,exitFlag] =       selectActiveSetSGMA(X,kfun,diagkfun,M,A0,J,issparsesearch,tol,verbose,tau);
+
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('classreg.learning.impl.GPImpl/selectActiveSet', 'C:\Program Files\MATLAB\R2020b\toolbox\stats\classreg\+classreg\+learning\+impl\GPImpl.m', 2783)" style="font-weight:bold">classreg.learning.impl.GPImpl/selectActiveSet</a> (<a href="matlab: opentoline('C:\Program Files\MATLAB\R2020b\toolbox\stats\classreg\+classreg\+learning\+impl\GPImpl.m',2783,0)">line 2783</a>)
+                    [activeSet,~,critProfile,~] = classreg.learning.gputils.selectActiveSet(X,kfun,diagkfun,...
+
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('classreg.learning.impl.GPImpl/doFitMethodSD', 'C:\Program Files\MATLAB\R2020b\toolbox\stats\classreg\+classreg\+learning\+impl\GPImpl.m', 473)" style="font-weight:bold">classreg.learning.impl.GPImpl/doFitMethodSD</a> (<a href="matlab: opentoline('C:\Program Files\MATLAB\R2020b\toolbox\stats\classreg\+classreg\+learning\+impl\GPImpl.m',473,0)">line 473</a>)
+                        [activeSet,activeSetIndices,critProfile] = selectActiveSet(this,this.X,this.y,beta,theta,sigma);
+
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('classreg.learning.impl.GPImpl/doFit', 'C:\Program Files\MATLAB\R2020b\toolbox\stats\classreg\+classreg\+learning\+impl\GPImpl.m', 371)" style="font-weight:bold">classreg.learning.impl.GPImpl/doFit</a> (<a href="matlab: opentoline('C:\Program Files\MATLAB\R2020b\toolbox\stats\classreg\+classreg\+learning\+impl\GPImpl.m',371,0)">line 371</a>)
+                    this = doFitMethodSD(this);
+
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('classreg.learning.impl.GPImpl.make', 'C:\Program Files\MATLAB\R2020b\toolbox\stats\classreg\+classreg\+learning\+impl\GPImpl.m', 268)" style="font-weight:bold">classreg.learning.impl.GPImpl.make</a> (<a href="matlab: opentoline('C:\Program Files\MATLAB\R2020b\toolbox\stats\classreg\+classreg\+learning\+impl\GPImpl.m',268,0)">line 268</a>)
+            this = doFit(this);
+
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('RegressionGP', 'C:\Program Files\MATLAB\R2020b\toolbox\stats\classreg\RegressionGP.m', 277)" style="font-weight:bold">RegressionGP</a> (<a href="matlab: opentoline('C:\Program Files\MATLAB\R2020b\toolbox\stats\classreg\RegressionGP.m',277,0)">line 277</a>)
+            this.Impl = classreg.learning.impl.GPImpl.make(...
+
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('classreg.learning.FitTemplate/fit', 'C:\Program Files\MATLAB\R2020b\toolbox\stats\classreg\+classreg\+learning\FitTemplate.m', 263)" style="font-weight:bold">classreg.learning.FitTemplate/fit</a> (<a href="matlab: opentoline('C:\Program Files\MATLAB\R2020b\toolbox\stats\classreg\+classreg\+learning\FitTemplate.m',263,0)">line 263</a>)
+            [varargout{1:nargout}] = this.MakeFitObject(X,Y,W,this.ModelParams,fitArgs{:});
+
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('RegressionGP.fit', 'C:\Program Files\MATLAB\R2020b\toolbox\stats\classreg\RegressionGP.m', 308)" style="font-weight:bold">RegressionGP.fit</a> (<a href="matlab: opentoline('C:\Program Files\MATLAB\R2020b\toolbox\stats\classreg\RegressionGP.m',308,0)">line 308</a>)
+            this = fit(temp,X,Y);
+
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('fitrgp', 'C:\Program Files\MATLAB\R2020b\toolbox\stats\classreg\fitrgp.m', 469)" style="font-weight:bold">fitrgp</a> (<a href="matlab: opentoline('C:\Program Files\MATLAB\R2020b\toolbox\stats\classreg\fitrgp.m',469,0)">line 469</a>)
+    obj = RegressionGP.fit(X,Y,RemainingArgs{:});
+} 
+gprMdl = fitrgp(X(1:1000,:),y(1:1000),'PredictMethod','sd','ActiveSetMethod','sgma','NumActiveSetRepeats',1);
+mymax = 5000; gprMdl = fitrgp(X(1:mymax,:),y(1:mymax),'PredictMethod','sd','ActiveSetMethod','sgma','NumActiveSetRepeats',1);
+mytic = tic; mymax = 10000; gprMdl = fitrgp(X(1:mymax,:),y(1:mymax),'PredictMethod','sd','ActiveSetMethod','sgma','NumActiveSetRepeats',1); toc(mytic)
+Elapsed time is 110.316508 seconds.
+mytic = tic; mymax = 1000; gprMdl = fitrgp(X(1:mymax,:),y(1:mymax),'PredictMethod','sd','ActiveSetMethod','sgma','NumActiveSetRepeats',1); toc(mytic)
+Elapsed time is 3.929790 seconds.
+mytic = tic; mymax = 5000; gprMdl = fitrgp(X(1:mymax,:),y(1:mymax),'PredictMethod','sd','ActiveSetMethod','sgma','NumActiveSetRepeats',1); toc(mytic)
+Elapsed time is 76.726464 seconds.
+mytic = tic; mymax = 15000; gprMdl = fitrgp(X(1:mymax,:),y(1:mymax),'PredictMethod','sd','ActiveSetMethod','sgma','NumActiveSetRepeats',1); toc(mytic)
+Elapsed time is 157.665986 seconds.
+figure; plot([5000 10000 15000],[76.73,110.32,157.67])
+figure; plot([1000 5000 10000 15000],[3.93,76.73,110.32,157.67])
+mytic = tic; mymax = 20000; gprMdl = fitrgp(X(1:mymax,:),y(1:mymax),'PredictMethod','sd','ActiveSetMethod','sgma','NumActiveSetRepeats',1); toc(mytic)
+Elapsed time is 189.389262 seconds.
+IdleTimeout has been reached.
+Parallel pool using the 'local' profile is shutting down.
+figure; plot([1000 5000 10000 15000 20000],[3.93,76.73,110.32,157.67 189.39])
+paperfigure;
+plot([1000 5000 10000 15000 20000],[3.93,76.73,110.32,157.67 189.39])
+xlabel('total # datapoints')
+ylabel('time (s)')
+title('PredictMethod=sd, ActiveSetMethod=sgma')
+paperfigure;
+plot([1000 5000 10000 15000 20000],[3.93,76.73,110.32,157.67 189.39])
+xlabel('total # datapoints','Interpreter','latex')
+ylabel('time (s)','Interpreter','latex')
+title('PredictMethod=sd, ActiveSetMethod=sgma','Interpreter','latex')
+[Warning: Error updating Text.
+
+ String scalar or character vector must have valid interpreter syntax:
+total # datapoints
+] 
+[> In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('defaulterrorcallback', 'C:\Program Files\MATLAB\R2020b\toolbox\matlab\graphics\objectsystem\defaulterrorcallback.m', 12)" style="font-weight:bold">defaulterrorcallback</a> (<a href="matlab: opentoline('C:\Program Files\MATLAB\R2020b\toolbox\matlab\graphics\objectsystem\defaulterrorcallback.m',12,0)">line 12</a>)
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('classreg.learning.gputils.selectActiveSet>selectActiveSetSGMA', 'C:\Program Files\MATLAB\R2020b\toolbox\stats\classreg\+classreg\+learning\+gputils\selectActiveSet.m', 440)" style="font-weight:bold">classreg.learning.gputils.selectActiveSet>selectActiveSetSGMA</a> (<a href="matlab: opentoline('C:\Program Files\MATLAB\R2020b\toolbox\stats\classreg\+classreg\+learning\+gputils\selectActiveSet.m',440,0)">line 440</a>)
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('classreg.learning.gputils.selectActiveSet', 'C:\Program Files\MATLAB\R2020b\toolbox\stats\classreg\+classreg\+learning\+gputils\selectActiveSet.m', 293)" style="font-weight:bold">classreg.learning.gputils.selectActiveSet</a> (<a href="matlab: opentoline('C:\Program Files\MATLAB\R2020b\toolbox\stats\classreg\+classreg\+learning\+gputils\selectActiveSet.m',293,0)">line 293</a>)
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('classreg.learning.impl/GPImpl/selectActiveSet', 'C:\Program Files\MATLAB\R2020b\toolbox\stats\classreg\+classreg\+learning\+impl\GPImpl.m', 2783)" style="font-weight:bold">classreg.learning.impl/GPImpl/selectActiveSet</a> (<a href="matlab: opentoline('C:\Program Files\MATLAB\R2020b\toolbox\stats\classreg\+classreg\+learning\+impl\GPImpl.m',2783,0)">line 2783</a>)
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('classreg.learning.impl/GPImpl/doFitMethodSD', 'C:\Program Files\MATLAB\R2020b\toolbox\stats\classreg\+classreg\+learning\+impl\GPImpl.m', 473)" style="font-weight:bold">classreg.learning.impl/GPImpl/doFitMethodSD</a> (<a href="matlab: opentoline('C:\Program Files\MATLAB\R2020b\toolbox\stats\classreg\+classreg\+learning\+impl\GPImpl.m',473,0)">line 473</a>)
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('classreg.learning.impl/GPImpl/doFit', 'C:\Program Files\MATLAB\R2020b\toolbox\stats\classreg\+classreg\+learning\+impl\GPImpl.m', 371)" style="font-weight:bold">classreg.learning.impl/GPImpl/doFit</a> (<a href="matlab: opentoline('C:\Program Files\MATLAB\R2020b\toolbox\stats\classreg\+classreg\+learning\+impl\GPImpl.m',371,0)">line 371</a>)
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('classreg.learning.impl/GPImpl/make', 'C:\Program Files\MATLAB\R2020b\toolbox\stats\classreg\+classreg\+learning\+impl\GPImpl.m', 268)" style="font-weight:bold">classreg.learning.impl/GPImpl/make</a> (<a href="matlab: opentoline('C:\Program Files\MATLAB\R2020b\toolbox\stats\classreg\+classreg\+learning\+impl\GPImpl.m',268,0)">line 268</a>)
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('RegressionGP', 'C:\Program Files\MATLAB\R2020b\toolbox\stats\classreg\RegressionGP.m', 277)" style="font-weight:bold">RegressionGP</a> (<a href="matlab: opentoline('C:\Program Files\MATLAB\R2020b\toolbox\stats\classreg\RegressionGP.m',277,0)">line 277</a>)
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('classreg.learning/FitTemplate/fit', 'C:\Program Files\MATLAB\R2020b\toolbox\stats\classreg\+classreg\+learning\FitTemplate.m', 263)" style="font-weight:bold">classreg.learning/FitTemplate/fit</a> (<a href="matlab: opentoline('C:\Program Files\MATLAB\R2020b\toolbox\stats\classreg\+classreg\+learning\FitTemplate.m',263,0)">line 263</a>)
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('RegressionGP.fit', 'C:\Program Files\MATLAB\R2020b\toolbox\stats\classreg\RegressionGP.m', 308)" style="font-weight:bold">RegressionGP.fit</a> (<a href="matlab: opentoline('C:\Program Files\MATLAB\R2020b\toolbox\stats\classreg\RegressionGP.m',308,0)">line 308</a>)
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('fitrgp', 'C:\Program Files\MATLAB\R2020b\toolbox\stats\classreg\fitrgp.m', 469)" style="font-weight:bold">fitrgp</a> (<a href="matlab: opentoline('C:\Program Files\MATLAB\R2020b\toolbox\stats\classreg\fitrgp.m',469,0)">line 469</a>)
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('interp5DOF', 'C:\Users\sterg\Documents\GitHub\infer\code\interp\code\interp5DOF.m', 441)" style="font-weight:bold">interp5DOF</a> (<a href="matlab: opentoline('C:\Users\sterg\Documents\GitHub\infer\code\interp\code\interp5DOF.m',441,0)">line 441</a>)
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('interp5DOF_setup', 'C:\Users\sterg\Documents\GitHub\infer\code\interp\code\interp5DOF_setup.m', 147)" style="font-weight:bold">interp5DOF_setup</a> (<a href="matlab: opentoline('C:\Users\sterg\Documents\GitHub\infer\code\interp\code\interp5DOF_setup.m',147,0)">line 147</a>)
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('randOctParityData>@(ndatapts,npredpts,method,datatype,pgnum,sigma)interp5DOF_setup(ndatapts,npredpts,method,datatype,''pgnum'',pgnum,''sigma'',sigma)', 'C:\Users\sterg\Documents\GitHub\infer\code\interp\code\randOctParityData.m', 115)" style="font-weight:bold">randOctParityData>@(ndatapts,npredpts,method,datatype,pgnum,sigma)interp5DOF_setup(ndatapts,npredpts,method,datatype,'pgnum',pgnum,'sigma',sigma)</a> (<a href="matlab: opentoline('C:\Users\sterg\Documents\GitHub\infer\code\interp\code\randOctParityData.m',115,0)">line 115</a>)
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('exec_argfn', 'C:\Users\sterg\Documents\GitHub\infer\code\interp\code\MATslurm\code\exec_argfn.m', 50)" style="font-weight:bold">exec_argfn</a> (<a href="matlab: opentoline('C:\Users\sterg\Documents\GitHub\infer\code\interp\code\MATslurm\code\exec_argfn.m',50,0)">line 50</a>)
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('exec_combs', 'C:\Users\sterg\Documents\GitHub\infer\code\interp\code\MATslurm\code\exec_combs.m', 64)" style="font-weight:bold">exec_combs</a> (<a href="matlab: opentoline('C:\Users\sterg\Documents\GitHub\infer\code\interp\code\MATslurm\code\exec_combs.m',64,0)">line 64</a>)
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('randOctParityData', 'C:\Users\sterg\Documents\GitHub\infer\code\interp\code\randOctParityData.m', 143)" style="font-weight:bold">randOctParityData</a> (<a href="matlab: opentoline('C:\Users\sterg\Documents\GitHub\infer\code\interp\code\randOctParityData.m',143,0)">line 143</a>)] 
+plot([1000 5000 10000 15000 20000],[3.93,76.73,110.32,157.67 189.39])
+xlabel('total \# datapoints','Interpreter','latex')
+ylabel('time (s)','Interpreter','latex')
+title('PredictMethod=sd, ActiveSetMethod=sgma','Interpreter','latex')
+paperfigure;
+plot([1000 5000 10000 15000 20000],[3.93,76.73,110.32,157.67 189.39])
+xlabel('total \# datapoints','Interpreter','latex')
+ylabel('time (s)','Interpreter','latex')
+title('PredictMethod=sd, ActiveSetMethod=sgma','Interpreter','latex')
+savefigpng(folder,'sgma-linear-time')
+{Unrecognized function or variable 'folder'.
+} 
+gprMdl
+
+gprMdl = 
+
+  <a href="matlab: helpPopup RegressionGP">RegressionGP</a>
+             ResponseName: 'Y'
+    CategoricalPredictors: []
+        ResponseTransform: 'none'
+          NumObservations: 20000
+           KernelFunction: 'SquaredExponential'
+        KernelInformation: [1×1 struct]
+            BasisFunction: 'Constant'
+                     Beta: 0.9619
+                    Sigma: 0.0019
+        PredictorLocation: []
+           PredictorScale: []
+                    Alpha: [2000×1 double]
+         ActiveSetVectors: [2000×8 double]
+            PredictMethod: 'SD'
+            ActiveSetSize: 2000
+                FitMethod: 'SD'
+          ActiveSetMethod: 'SGMA'
+        IsActiveSetVector: [20000×1 logical]
+            LogLikelihood: 1.9901e+03
+         ActiveSetHistory: [1×1 struct]
+           BCDInformation: []
+
+
+  <a href="matlab: properties('RegressionGP')">Properties</a>, <a href="matlab: methods('RegressionGP')">Methods</a>
+
+paperfigure();
+plot([5000 10000 15000 20000],[76.73,110.32,157.67 189.39])
+xlabel('total \# datapoints','Interpreter','latex')
+ylabel('time (s)','Interpreter','latex')
+title('PredictMethod=sd, ActiveSetMethod=sgma','Interpreter','latex')
+savefigpng(folder,'sgma-linear-time')
+{Unrecognized function or variable 'folder'.
+} 
+Unrecognized function or variable 'folder'.
+
+Error in <a href="matlab:matlab.internal.language.introspective.errorDocCallback('Untitled2', 'Untitled2', 77)" style="font-weight:bold">Untitled2</a> (<a href="matlab: opentoline('Untitled2',77,0)">line 77</a>)
+savefigpng(folder,'sgma-linear-time')
+
+files = dir(fullfile('**','interp5DOF-paper','figures'));
+folder = files(1).folder;
+189.39/20000*180000
+
+ans =
+
+   1.7045e+03
+
+gprMdl
+
+gprMdl = 
+
+  <a href="matlab: helpPopup RegressionGP">RegressionGP</a>
+             ResponseName: 'Y'
+    CategoricalPredictors: []
+        ResponseTransform: 'none'
+          NumObservations: 20000
+           KernelFunction: 'SquaredExponential'
+        KernelInformation: [1×1 struct]
+            BasisFunction: 'Constant'
+                     Beta: 0.9619
+                    Sigma: 0.0019
+        PredictorLocation: []
+           PredictorScale: []
+                    Alpha: [2000×1 double]
+         ActiveSetVectors: [2000×8 double]
+            PredictMethod: 'SD'
+            ActiveSetSize: 2000
+                FitMethod: 'SD'
+          ActiveSetMethod: 'SGMA'
+        IsActiveSetVector: [20000×1 logical]
+            LogLikelihood: 1.9901e+03
+         ActiveSetHistory: [1×1 struct]
+           BCDInformation: []
+
+
+  <a href="matlab: properties('RegressionGP')">Properties</a>, <a href="matlab: methods('RegressionGP')">Methods</a>
+
+[~,D]=get_knn(gprMdl.ActiveSetVectors,'omega');
+d=D{1};
+paperfigure;histogram(d)
+[~,D2]=get_knn(data.pts,'omega');
+d = D2{1};
+d=D{1};
+d2=D2{1};
+paperfigure;histogram([d,d2])
+{Error using <a href="matlab:matlab.internal.language.introspective.errorDocCallback('horzcat')" style="font-weight:bold">horzcat</a>
+Dimensions of arrays being concatenated are not consistent.
+} 
+paperfigure;histogram(d);hold on;histogram(d2)
+[~,D2]=get_knn(mesh.pts,'omega');
+d2=D2{1};
+paperfigure;histogram(d);hold on;histogram(d2)
+size(d2)
+
+ans =
+
+      180000           1
+
+size(d)
+
+ans =
+
+        2000           1
+
+[~,D2]=get_knn(mesh.pts(1:20000,:),'omega');
+paperfigure;histogram(d);hold on;histogram(d2)
+d2=D2{1};
+paperfigure;histogram(d);hold on;histogram(d2)
+paperfigure;histogram(d,'Normalization','probability');hold on;histogram(d2,'Normalization','probability')
+[~,D] = get_knn(mesh.pts(gprMdl.IsActiveSetVector,:),'omega'); d = D{1};
+paperfigure;histogram(d,'Normalization','probability');hold on;histogram(d2,'Normalization','probability')
+max(d2)
+
+ans =
+
+    7.4340
+
+max(d)
+
+ans =
+
+   10.3697
+
+try open('get_knn'); catch edit('get_knn'); end
+[~,D] = get_knn(mesh.pts,'omega','ID',find(IsActiveSetVector)); d = D{1};
+{Unrecognized function or variable 'IsActiveSetVector'.
+} 
+[~,D] = get_knn(mesh.pts,'omega','ID',find(gprMdl.IsActiveSetVector)); d = D{1};
+paperfigure;histogram(d,'Normalization','probability');hold on;histogram(d2,'Normalization','probability')
+paperfigure;histogram(d,'Normalization','probability');hold on;histogram(d2,'Normalization','probability'); legend
+if system_dependent('IsDebugMode')==1, dbquit all; end
+randOctParityData
+env = local
+dryrunQ = 0
+savecatQ = 1
+metaQ = 0
+default comment: rohrer-Ni-test5. Continue (y) or override (n)? y
+Starting parallel pool (parpool) using the 'local' profile ...
+Connected to the parallel pool (number of workers: 6).
+[Warning: Working directory not clean (i.e. uncommitted/unpushed) files exist. Use !git commit -am "<message>", then !git
+push] 
+[> In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('get_gitcommit', 'C:\Users\sterg\Documents\GitHub\infer\code\interp\code\MATslurm\code\get_gitcommit.m', 15)" style="font-weight:bold">get_gitcommit</a> (<a href="matlab: opentoline('C:\Users\sterg\Documents\GitHub\infer\code\interp\code\MATslurm\code\get_gitcommit.m',15,0)">line 15</a>)
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('writeparfile', 'C:\Users\sterg\Documents\GitHub\infer\code\interp\code\MATslurm\code\writeparfile.m', 124)" style="font-weight:bold">writeparfile</a> (<a href="matlab: opentoline('C:\Users\sterg\Documents\GitHub\infer\code\interp\code\MATslurm\code\writeparfile.m',124,0)">line 124</a>)
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('randOctParityData', 'C:\Users\sterg\Documents\GitHub\infer\code\interp\code\randOctParityData.m', 125)" style="font-weight:bold">randOctParityData</a> (<a href="matlab: opentoline('C:\Users\sterg\Documents\GitHub\infer\code\interp\code\randOctParityData.m',125,0)">line 125</a>)] 
+max_walltime = 59 minutes
+saving parameter file

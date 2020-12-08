@@ -25,6 +25,11 @@ if size(o1,1) == 1
     o1 = repmat(o1,npts,1);
 end
 
+if size(o2,1) == 1
+    npts = size(o1,1);
+    o2 = repmat(o2,npts,1);
+end
+
 qA = normr(o1(:,1:4));
 qB = normr(o1(:,5:8));
 qC = normr(o2(:,1:4));

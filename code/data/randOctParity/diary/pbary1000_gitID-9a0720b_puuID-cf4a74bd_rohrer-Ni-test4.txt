@@ -1,0 +1,109 @@
+datatype = rohrer-Ni
+method = pbary
+get_octpairs 
+  0  5 10 15 20 25 30 35 40 45 50 55 60 65 70 75 80 85 90 95data\temp.mat
+get_octpairs 
+  0  5 10 15 20 25 30 35 40 45 50 55 60 65 70 75 80 85 90 95data\temp.mat
+ninputpts = 1000, npredpts = 1000
+[Warning: Working directory not clean (i.e. uncommitted/unpushed) files exist. Use !git commit -am "<message>", then !git
+push] 
+[> In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('get_gitcommit', 'C:\Users\sterg\Documents\GitHub\infer\code\interp\code\MATslurm\code\get_gitcommit.m', 15)" style="font-weight:bold">get_gitcommit</a> (<a href="matlab: opentoline('C:\Users\sterg\Documents\GitHub\infer\code\interp\code\MATslurm\code\get_gitcommit.m',15,0)">line 15</a>)
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('interp5DOF', 'C:\Users\sterg\Documents\GitHub\infer\code\interp\code\interp5DOF.m', 276)" style="font-weight:bold">interp5DOF</a> (<a href="matlab: opentoline('C:\Users\sterg\Documents\GitHub\infer\code\interp\code\interp5DOF.m',276,0)">line 276</a>)
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('interp5DOF_setup', 'C:\Users\sterg\Documents\GitHub\infer\code\interp\code\interp5DOF_setup.m', 121)" style="font-weight:bold">interp5DOF_setup</a> (<a href="matlab: opentoline('C:\Users\sterg\Documents\GitHub\infer\code\interp\code\interp5DOF_setup.m',121,0)">line 121</a>)
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('randOctParityData>@(ndatapts,npredpts,method,datatype,pgnum)interp5DOF_setup(ndatapts,npredpts,method,datatype,''pgnum'',pgnum)', 'C:\Users\sterg\Documents\GitHub\infer\code\interp\code\randOctParityData.m', 109)" style="font-weight:bold">randOctParityData>@(ndatapts,npredpts,method,datatype,pgnum)interp5DOF_setup(ndatapts,npredpts,method,datatype,'pgnum',pgnum)</a> (<a href="matlab: opentoline('C:\Users\sterg\Documents\GitHub\infer\code\interp\code\randOctParityData.m',109,0)">line 109</a>)
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('exec_argfn', 'C:\Users\sterg\Documents\GitHub\infer\code\interp\code\MATslurm\code\exec_argfn.m', 50)" style="font-weight:bold">exec_argfn</a> (<a href="matlab: opentoline('C:\Users\sterg\Documents\GitHub\infer\code\interp\code\MATslurm\code\exec_argfn.m',50,0)">line 50</a>)
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('exec_combs', 'C:\Users\sterg\Documents\GitHub\infer\code\interp\code\MATslurm\code\exec_combs.m', 64)" style="font-weight:bold">exec_combs</a> (<a href="matlab: opentoline('C:\Users\sterg\Documents\GitHub\infer\code\interp\code\MATslurm\code\exec_combs.m',64,0)">line 64</a>)
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('randOctParityData', 'C:\Users\sterg\Documents\GitHub\infer\code\interp\code\randOctParityData.m', 136)" style="font-weight:bold">randOctParityData</a> (<a href="matlab: opentoline('C:\Users\sterg\Documents\GitHub\infer\code\interp\code\randOctParityData.m',136,0)">line 136</a>)] 
+[Warning: d = 7 and npts = 1000. Initial convex hull input may be too big.] 
+[> In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('sphconvhulln', 'C:\Users\sterg\Documents\GitHub\infer\code\interp\code\sphconvhulln.m', 34)" style="font-weight:bold">sphconvhulln</a> (<a href="matlab: opentoline('C:\Users\sterg\Documents\GitHub\infer\code\interp\code\sphconvhulln.m',34,0)">line 34</a>)
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('interp5DOF', 'C:\Users\sterg\Documents\GitHub\infer\code\interp\code\interp5DOF.m', 294)" style="font-weight:bold">interp5DOF</a> (<a href="matlab: opentoline('C:\Users\sterg\Documents\GitHub\infer\code\interp\code\interp5DOF.m',294,0)">line 294</a>)
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('interp5DOF_setup', 'C:\Users\sterg\Documents\GitHub\infer\code\interp\code\interp5DOF_setup.m', 121)" style="font-weight:bold">interp5DOF_setup</a> (<a href="matlab: opentoline('C:\Users\sterg\Documents\GitHub\infer\code\interp\code\interp5DOF_setup.m',121,0)">line 121</a>)
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('randOctParityData>@(ndatapts,npredpts,method,datatype,pgnum)interp5DOF_setup(ndatapts,npredpts,method,datatype,''pgnum'',pgnum)', 'C:\Users\sterg\Documents\GitHub\infer\code\interp\code\randOctParityData.m', 109)" style="font-weight:bold">randOctParityData>@(ndatapts,npredpts,method,datatype,pgnum)interp5DOF_setup(ndatapts,npredpts,method,datatype,'pgnum',pgnum)</a> (<a href="matlab: opentoline('C:\Users\sterg\Documents\GitHub\infer\code\interp\code\randOctParityData.m',109,0)">line 109</a>)
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('exec_argfn', 'C:\Users\sterg\Documents\GitHub\infer\code\interp\code\MATslurm\code\exec_argfn.m', 50)" style="font-weight:bold">exec_argfn</a> (<a href="matlab: opentoline('C:\Users\sterg\Documents\GitHub\infer\code\interp\code\MATslurm\code\exec_argfn.m',50,0)">line 50</a>)
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('exec_combs', 'C:\Users\sterg\Documents\GitHub\infer\code\interp\code\MATslurm\code\exec_combs.m', 64)" style="font-weight:bold">exec_combs</a> (<a href="matlab: opentoline('C:\Users\sterg\Documents\GitHub\infer\code\interp\code\MATslurm\code\exec_combs.m',64,0)">line 64</a>)
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('randOctParityData', 'C:\Users\sterg\Documents\GitHub\infer\code\interp\code\randOctParityData.m', 136)" style="font-weight:bold">randOctParityData</a> (<a href="matlab: opentoline('C:\Users\sterg\Documents\GitHub\infer\code\interp\code\randOctParityData.m',136,0)">line 136</a>)] 
+--delaunayn
+intersect_facet
+  0  5 10 15 20 25 30 35 40 45 50 55 60 65 70 75 80 85 90 95interpolation
+loop through datapoints
+i == 3; no valid intersection, taking NN with dist = 0.082018
+i == 5; no valid intersection, taking NN with dist = 0.082615
+i == 27; no valid intersection, taking NN with dist = 0.14155
+i == 46; no valid intersection, taking NN with dist = 0.121
+i == 78; no valid intersection, taking NN with dist = 0.033356
+i == 82; no valid intersection, taking NN with dist = 0.16631
+i == 83; no valid intersection, taking NN with dist = 0.19284
+i == 90; no valid intersection, taking NN with dist = 0.14603
+i == 91; no valid intersection, taking NN with dist = 0.16671
+i == 105; no valid intersection, taking NN with dist = 0.035603
+i == 106; no valid intersection, taking NN with dist = 0.090409
+i == 124; no valid intersection, taking NN with dist = 0.016269
+i == 129; no valid intersection, taking NN with dist = 0.067234
+i == 131; no valid intersection, taking NN with dist = 0.24118
+i == 161; no valid intersection, taking NN with dist = 0.092403
+i == 163; no valid intersection, taking NN with dist = 0.090263
+i == 165; no valid intersection, taking NN with dist = 0.089747
+i == 168; no valid intersection, taking NN with dist = 0.0058913
+i == 171; no valid intersection, taking NN with dist = 0.051164
+i == 175; no valid intersection, taking NN with dist = 0.082132
+i == 177; no valid intersection, taking NN with dist = 0.086855
+i == 198; no valid intersection, taking NN with dist = 0.15671
+i == 261; no valid intersection, taking NN with dist = 0.090746
+i == 262; no valid intersection, taking NN with dist = 0.20585
+i == 271; no valid intersection, taking NN with dist = 0.19968
+i == 276; no valid intersection, taking NN with dist = 0.10136
+i == 277; no valid intersection, taking NN with dist = 0.10953
+i == 287; no valid intersection, taking NN with dist = 0.17417
+i == 327; no valid intersection, taking NN with dist = 0.032376
+i == 377; no valid intersection, taking NN with dist = 0.090347
+i == 399; no valid intersection, taking NN with dist = 0.12551
+i == 412; no valid intersection, taking NN with dist = 0.17195
+i == 413; no valid intersection, taking NN with dist = 0.17549
+i == 444; no valid intersection, taking NN with dist = 0.14752
+i == 458; no valid intersection, taking NN with dist = 0.053506
+i == 460; no valid intersection, taking NN with dist = 0.15418
+i == 482; no valid intersection, taking NN with dist = 0.067056
+i == 513; no valid intersection, taking NN with dist = 0.029404
+i == 544; no valid intersection, taking NN with dist = 0.14227
+i == 548; no valid intersection, taking NN with dist = 0.16121
+i == 564; no valid intersection, taking NN with dist = 0.1407
+i == 566; no valid intersection, taking NN with dist = 0.12465
+i == 568; no valid intersection, taking NN with dist = 0.17703
+i == 600; no valid intersection, taking NN with dist = 0.11113
+i == 605; no valid intersection, taking NN with dist = 0.14872
+i == 611; no valid intersection, taking NN with dist = 0.034148
+i == 615; no valid intersection, taking NN with dist = 0.022747
+i == 618; no valid intersection, taking NN with dist = 0.024593
+i == 640; no valid intersection, taking NN with dist = 0.075814
+i == 642; no valid intersection, taking NN with dist = 0.076329
+i == 671; no valid intersection, taking NN with dist = 0.16978
+i == 677; no valid intersection, taking NN with dist = 0.11835
+i == 699; no valid intersection, taking NN with dist = 0.13066
+i == 725; no valid intersection, taking NN with dist = 0.1547
+i == 726; no valid intersection, taking NN with dist = 0.17663
+i == 739; no valid intersection, taking NN with dist = 0.11756
+i == 740; no valid intersection, taking NN with dist = 0.11686
+i == 782; no valid intersection, taking NN with dist = 0.18001
+i == 783; no valid intersection, taking NN with dist = 0.13704
+i == 787; no valid intersection, taking NN with dist = 0.043901
+i == 865; no valid intersection, taking NN with dist = 0.13422
+i == 910; no valid intersection, taking NN with dist = 0.17155
+i == 922; no valid intersection, taking NN with dist = 0.11462
+i == 943; no valid intersection, taking NN with dist = 0.14385
+i == 947; no valid intersection, taking NN with dist = 0.087884
+i == 956; no valid intersection, taking NN with dist = 0.14215
+i == 980; no valid intersection, taking NN with dist = 0.13425
+i == 983; no valid intersection, taking NN with dist = 0.10281
+i == 989; no valid intersection, taking NN with dist = 0.18708
+i == 990; no valid intersection, taking NN with dist = 0.19779
+i == 995; no valid intersection, taking NN with dist = 0.13465
+ 
+# non-intersections: 71/1000
+ 
+RMSE (J/m^2): interp == 0.0761, NN == 0.0919
+ 
+total RMSE: 0.0773, all NN RMSE comparison: 0.0923
+RMSE = 0.077319 J/m^2
+MAE = 0.052004 J/m^2
+C:\Users\sterg\Documents\GitHub\infer\code\interp\code\data\randOctParity\pcombs\pbary1000_gitID-9a0720b_puuID-cf4a74bd_rohrer-Ni-test4_meta.mat
+C:\Users\sterg\Documents\GitHub\infer\code\interp\code\data\randOctParity\pcombs\pbary1000_gitID-9a0720b_puuID-cf4a74bd_rohrer-Ni-test4.mat

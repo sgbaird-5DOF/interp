@@ -40,6 +40,10 @@ end
 
 npts = size(pB,1);
 
+if size(mA,1) == 1
+    mA = repmat(mA,npts,1);
+end
+
 if isempty(pA)
     % case that pB is actually misorientation
     pA = repmat([1 0 0 0],npts,1);
@@ -53,7 +57,7 @@ end
 % [gA_R,gB_R] = constructGBMatrices(pA,pB,mA,'livermore');
 
 [omA,omB] = deal(zeros(3,3,npts));
-for i = 1:npts
+parfor i = 1:npts
     mAtmp = mA(i,:);
     R = vecpair2rmat(mAtmp,[1 0 0],1);
     qR = om2qu(R,1);

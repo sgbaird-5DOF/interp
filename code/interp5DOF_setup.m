@@ -3,11 +3,12 @@ arguments
     ndatapts
     npredpts
     method char = 'gpr'
-    datatype char {mustBeMember(datatype,{'brk','kim','rohrer-Ni','rohrer-test'})} = 'brk'
+    datatype char {mustBeMember(datatype,{'brk','kim','rohrer-Ni','rohrer-test','rohrer-brk-test'})} = 'brk'
     epsijk(1,1) double = 1
     NV.pgnum(1,1) double = 32 %m-3m (i.e. m\overbar{3}m) FCC symmetry default
     NV.uuid = get_uuid()
     NV.K(1,1) double = 1 %# of VFZO ensembles
+    NV.sigma(1,1) double = 0 %mJ/m^2, standard deviation to add to y
 end
 %INTERP5DOF_SETUP  setup for interpolating five-degree-of-freedom property
 %data using random octochorically sampled octonions
@@ -19,6 +20,7 @@ addpathdir({'cu2qu.m','q2rod.m','qmult.m','get_ocubo.m','get_uuid.m'})
 pgnum = NV.pgnum;
 uuid = NV.uuid;
 K = NV.K;
+sigma = NV.sigma;
 
 %seed
 seedstruct = rng;
@@ -61,23 +63,44 @@ switch datatype
         y = GB5DOF_setup([],five.q,five.nA,epsijk);
         ytrue = GB5DOF_setup([],five2.q,five2.nA,epsijk);
         
-    case {'rohrer-Ni','rohrer-test'}
+    case {'rohrer-Ni','rohrer-test','rohrer-brk-test'}
         switch datatype
             case 'rohrer-Ni'
-                load('../../TJ2GBE/output/Ni_0131_21520_Cub.mat','EAs','norms','resE')
-                %convert
-                [q,nA] = TJ2five(EAs,norms,epsijk);
-                oct = TJ2oct(EAs,norms,epsijk);
-            case 'rohrer-test'
+%                 datfpath = '../../TJ2GBE/TJdata/triples_Ni_0131_21520.txt';
+                datfpath = '../../TJ2GBE/TJdata/triples_Ni_cat_88092.dat';
+                resEfpath = '../../TJ2GBE/output/Ni_cat_88092_Cub_lamb300mresE.txt';
+                
+%                 load('../../TJ2GBE/output/Ni_0131_21520_Cub.mat','EAs','norms','resE')
+%                 %convert
+%                 [q,nA] = TJ2five(EAs,norms,epsijk);
+%                 oct = TJ2oct(EAs,norms,epsijk);
+            case {'rohrer-test','rohrer-brk-test'}
                 datfpath = '../../TJ2GBE/TJdata/triples_30000.dat';
 %                 [~,EAs,norms] = read_dat(datfpath);
-                [q,nA] = datfile2five(datfpath,0,epsijk);
-                oct = five2oct(q,nA,epsijk);
-                resE = importdata('../../TJ2GBE/TJdata/trueE_30000.txt');
+                resEfpath = '../../TJ2GBE/TJdata/trueE_30000.txt';
         end
+        [q,nA] = datfile2five(datfpath,0,epsijk);
+        
+        % assign GBE values
+        switch datatype
+            case {'rohrer-test','rohrer-Ni'}
+                resE = importdata(resEfpath);
+                resE(resE < 0) = 0;
+            case {'rohrer-brk-test'}
+                resE = GB5DOF_setup([],q,nA,epsijk);
+        end
+        
+        % average repeats, remove repeats except 1
+%         qnA = [q,nA];
+%         [qnA,resE] = avgrepeats(qnA,resE);
+%         q = qnA(:,1:4);
+%         nA = qnA(:,5:8);
+
         %unpack
         assert(isvector(resE),'resE should be a vector');
         ytmp = resE(:);
+        
+        oct = five2oct(q,nA,epsijk);
         
         npts = ndatapts+npredpts;
         c = cvpartition(npts,'Holdout',npredpts);
@@ -98,6 +121,14 @@ switch datatype
     case 'olmsted-Ni'
         
         
+end
+
+noisetype = 'normal';
+switch noisetype
+    case 'normal'
+        y = normrnd(y,sigma);
+    case 'uniform'
+        y = y + sigma*2*(rand(size(y))-0.5); %uniform
 end
 
 %unpack
@@ -131,13 +162,14 @@ errmetrics = get_errmetrics(ypred,proptrue);
 
 rmse = errmetrics.rmse;
 mae = errmetrics.mae;
+disp(['input sigma = ',num2str(sigma),' J/m^2'])
 disp(['RMSE = ' num2str(rmse) ' J/m^2'])
 disp(['MAE = ' num2str(mae) ' J/m^2'])
 
 %% repackage model and parameters
 % variables and parameters to prepend
-mdlpre = var_names(datatype);
-mdlparspre = var_names(datatype);
+mdlpre = var_names(datatype,sigma);
+mdlparspre = var_names(datatype,sigma);
 
 % variables and parameters to append
 mdlparsextra = var_names(genseed,errmetrics,rmse,mae);

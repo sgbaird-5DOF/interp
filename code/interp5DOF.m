@@ -218,12 +218,13 @@ disp(['ninputpts = ' int2str(ninputpts) ', npredpts = ' int2str(npredpts)])
 %important to project both sets together so they use same SVD decomposition
 
 projtol = 1e-4;
-switch method
-    case {'sphgpr','gpr'}
-        projQ = false;
-    otherwise
-        projQ = true;
-end
+% switch method
+%     case {'sphgpr','gpr'}
+%         projQ = false;
+%     otherwise
+%         projQ = true;
+% end
+projQ = true;
 zeroQ = false;
 o = normr(o);
 o2 = normr(o2);
@@ -264,6 +265,7 @@ if isempty(NV.ytrue)
 else
     data.props = NV.ytrue;
 end
+
 ytrue = data.props;
 
 %% additional variables
@@ -375,8 +377,12 @@ switch method
             %% interp5DOF's default gpr options
             thresh = Inf;
             if ninputpts <= thresh
-                PredictMethod = 'fic';
+                PredictMethod = 'exact';
+%                 gpropts = {'KernelParameters',[deg2rad(3),0.1]};
+%                 gpropts = {'ActiveSetMethod','sgma','NumActiveSetRepeats',1};
                 gpropts = {};
+%                 gpropts = {'OptimizeHyperparameters',{'KernelScale','Sigma'}};
+%                 gpropts = {'KernelFunction','ardsquaredexponential','KernelParameters',[deg2rad(15)*ones(1,7),0.2]};
             else
                 PredictMethod = 'bcd';
                 gpropts = {'BlockSize',10000};
@@ -488,7 +494,7 @@ switch method
         mdlparsspec.KernelParameters = cgprMdl.KernelInformation.KernelParameters;
         mdlparsspec.KernelParameterNames = cgprMdl.KernelInformation.KernelParameterNames;
         mdlparsspec.Beta = cgprMdl.Beta;
-        mdlparsspec.Sigma = cgprMdl.Sigma;
+%         mdlparsspec.Sigma = cgprMdl.Sigma;
 %         mdlparsspec.CrossVal = CrossVal;
         
     case 'idw' % inverse distance weighting
