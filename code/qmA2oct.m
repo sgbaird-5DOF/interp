@@ -40,7 +40,7 @@ end
 %--------------------------------------------------------------------------
 npts = size(pB,1);
 qR = zeros(npts,4);
-for i = 1:npts
+parfor i = 1:npts
     mAtmp = mA(i,:);
     %rotation matrix to go from mAtmp to [0 0 1]
     R = vecpair2rmat(mAtmp,[0 0 1],1); %not sure why this has to stay in active interpretation for epsijk==1 *and* epsijk==-1

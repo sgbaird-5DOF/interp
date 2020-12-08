@@ -1,7 +1,7 @@
 function multiparity(parity,ID,plottype,NV)
 arguments
     parity(:,1) cell
-    ID
+    ID = 1:length(parity)
     plottype char {mustBeMember(plottype,{'hex','scatter'})} = 'hex'
     NV.charlblQ(1,1) logical = true
     NV.autotitle(1,1) logical = false

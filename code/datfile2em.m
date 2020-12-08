@@ -1,7 +1,10 @@
-function [TJs,e1,e2,e3,m1,m2,m3] = datfile2em(fpath,nheaderlines)
+function [TJs,e1,e2,e3,m1,m2,m3,nTJs] = datfile2em(fpath,nheaderlines,deg2radQ,invQ,normrQ)
 arguments
     fpath char = '../../TJ2GBE/TJdata/triples_30000.dat'
     nheaderlines(1,1) double = 0
+    deg2radQ(1,1) logical = true
+    invQ(1,1) logical = true
+    normrQ(1,1) logical = true
 end
 % READ_DAT  extract TJs, EAs, and norms from triples.dat file.
 % Mirrors https://github.com/Yufeng-shen/TJ2GBE/blob/master/Src/Python/Reconstruction.py
@@ -43,22 +46,28 @@ e3 = [data(17:22:end),data(18:22:end),data(19:22:end)]; %lines 7, 14, etc.
 m3 = [data(20:22:end),data(21:22:end),data(22:22:end)]; %lines 8, 15, etc.
 
 % convert Euler angles from degrees to radians
-e1 = deg2rad(e1);
-e2 = deg2rad(e2);
-e3 = deg2rad(e3);
+if deg2radQ
+    e1 = deg2rad(e1);
+    e2 = deg2rad(e2);
+    e3 = deg2rad(e3);
+end
 
-q1 = eu2qu(e1,-1);
-q2 = eu2qu(e2,-1);
-q3 = eu2qu(e3,-1);
+if invQ
+    q1 = eu2qu(e1,-1);
+    q2 = eu2qu(e2,-1);
+    q3 = eu2qu(e3,-1);
+    
+    e1 = qu2eu(q1,1);
+    e2 = qu2eu(q2,1);
+    e3 = qu2eu(q3,1);
+end
 
-e1 = qu2eu(q1,1);
-e2 = qu2eu(q2,1);
-e3 = qu2eu(q3,1);
-
-% renormalize the BP normals
-m1 = normr(m1);
-m2 = normr(m2);
-m3 = normr(m3);
+if normrQ
+    % renormalize the BP normals
+    m1 = normr(m1);
+    m2 = normr(m2);
+    m3 = normr(m3);
+end
 
 % no output, but useful as a double check:
 TJnum = data(1:22:end); %lines 1, 8, etc.

@@ -27,6 +27,7 @@ arguments
     NV.showZeros(1,1) logical = 0
     NV.xlim = [min([yactual(:);ypred(:)]) max([yactual(:);ypred(:)])]
     NV.ylim = [min([yactual(:);ypred(:)]) max([yactual(:);ypred(:)])]
+    NV.axis = 'equal'
 end
 % PARITYPLOT  Create a parity plot and pass options to (scatter() or hexscatter()) and refline().
 %--------------------------------------------------------------------------
@@ -66,7 +67,7 @@ assert(all(size(ypred)==size(yactual)),['y1 [' num2str(size(ypred)) '] and y2 ['
 
 switch plottype
     case 'hex'
-        hexscatter(yactual,ypred,NV.xlim,NV.ylim,'cscale',NV.cscale,'cbnds',NV.cbnds);
+        hexscatter(yactual,ypred,NV.xlim,NV.ylim,'cscale',NV.cscale,'cbnds',NV.cbnds,'axis',NV.axis);
     case 'scatter'
         %% scatter
         if NV.fillQ

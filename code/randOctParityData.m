@@ -10,11 +10,12 @@ nreps = 1; % number of runs or repetitions
 %make sure the parameters here correspond with the input to "pars" below
 switch runtype
     case 'test'
-        ndatapts = [1000]; % 5000 10000 20000 50000];
-        npredpts = 1000;
-        method = {'gpr','nn','avg'}; % 'sphbary', 'pbary', 'gpr', 'sphgpr', 'nn', 'avg'
-        datatype = {'rohrer-test'}; % 'brk', 'kim', 'rohrer-Ni', 'rohrer-test'
+        ndatapts = [10000]; % 5000 10000 20000 50000];
+        npredpts = 10000;
+        method = {'gpr'}; % 'sphbary', 'pbary', 'gpr', 'sphgpr', 'nn', 'avg'
+        datatype = {'rohrer-Ni'}; % 'brk', 'kim', 'rohrer-Ni', 'rohrer-test', 'rohrer-brk-test'
         pgnum = 32; %m-3m (i.e. m\overbar{3}m) FCC symmetry default for e.g. Ni
+        sigma = [0]; %mJ/m^2, standard deviation, added to "y"
         
     case 'full'
         ndatapts = [100 388 500 1000 5000 10000 20000 50000]; % 388, 500, 1000, 2000, 5000, 10000, 20000, 50000
@@ -22,14 +23,21 @@ switch runtype
         method = {'sphgpr','gpr','sphbary','pbary','nn','avg','idw'}; % 'sphbary', 'pbary', 'gpr', 'sphgpr', 'nn', 'avg'
         datatype = {'brk','kim'};
         pgnum = 32; %m-3m (i.e. m\overbar{3}m) FCC symmetry default for e.g. Ni
+        sigma = 0.100; %mJ/m^2, standard deviation, added to "y"
 end
 
 %comment (no spaces, used in filename)
 % comment = 'paper-data2';
-% comment = 'rohrer-Ni-test3';
-comment = 'rohrer-test';
-% comment = 'kim-test';
+% comment = 'rohrer-Ni-test5';
+% comment = 'rohrer-Ni-regularization';
+% comment = 'rohrer-Ni-lamb500m';
+comment = 'rohrer-Ni-lamb300m';
+% comment = 'rohrer-test';
+% comment = 'kim-test2';
 % comment = 'test';
+% comment = 'brk-test';
+% comment = 'rohrer-brk-test';
+% comment = 'brk-test-uniform';
 % comment = 'idw-test-3pt5deg';
 
 % job submission environment
@@ -44,7 +52,7 @@ if strcmp(env,'slurm') && dryrunQ
     error('did you mean to change dryrunQ to false?')
 end
 
-metaQ = T; %whether to load full model or only meta-data at end
+metaQ = F; %whether to load full model or only meta-data at end
 disp(['dryrunQ = ' int2str(dryrunQ)])
 if strcmp(env,'local')
     savecatQ = T; % whether to save the catenated model and/or parameters (depends on metaQ)
@@ -101,12 +109,14 @@ end
 savepathfn = @(method,ndatapts,gitcommit,puuid) fullfile(savefolder,savenamefn(method,ndatapts,gitcommit,puuid));
 
 %parameters
-pars = var_names(ndatapts,npredpts,method,cores,datatype,pgnum); %**ADD ALL PARAMETERS HERE** (see runtype switch statement)
+%**ADD ALL PARAMETERS HERE** (see runtype switch statement)
+pars = var_names(ndatapts,npredpts,method,cores,datatype,pgnum,sigma);
 if ~dryrunQ
     %% parameter file setup
     %function to execute and output arguments from function
-    execfn = @(ndatapts,npredpts,method,datatype,pgnum) ... **NAMES NEED TO MATCH PARS FIELDS** (see above)
-        interp5DOF_setup(ndatapts,npredpts,method,datatype,'pgnum',pgnum); %**NAMES NEED TO MATCH PARS FIELDS AND EXECFN ARGUMENTS**
+    execfn = @(ndatapts,npredpts,method,datatype,pgnum,sigma) ... **NAMES NEED TO MATCH PARS FIELDS** (see above)
+        interp5DOF_setup(ndatapts,npredpts,method,datatype,...
+        'pgnum',pgnum,'sigma',sigma); %**NAMES NEED TO MATCH PARS FIELDS AND EXECFN ARGUMENTS**
     argoutnames = {'ypred','interpfn','mdl','mdlpars'};
     %i.e. [propOut,interpfn,mdl,mdlpars] = interp5DOF_setup(ndatapts,npredpts,method,'datatype',datatype);
     
@@ -181,6 +191,9 @@ switch env
         if ~metaQ
             %concatenate models and parameters
             mdlcat = structvertcat(mdllist{:});
+            mdltbl = struct2table(mdlcat,'AsArray',true);
+            mdltbl = tblfilt(mdltbl,pars);
+            mdlcat = table2struct(mdltbl);
             clear mdllist
             %         mdltbl = struct2table(mdlcat,'AsArray',true);
         end
@@ -189,6 +202,7 @@ switch env
         mdlparstbl = struct2table(mdlparscat,'AsArray',true);
         
         mdlparstbl = tblfilt(mdlparstbl,pars);
+        mdlparscat = table2struct(mdlparstbl);
         
         %         gitcommit = get_gitcommit();
         %save models and parameters
@@ -218,6 +232,12 @@ disp('end randOctParityData.m')
 disp(' ')
 %-----------------------------CODE GRAVEYARD-------------------------------
 %{
+
+% sigma plotting
+[~,ids] = sort([mdlparscat.sigma]);
+mdlparscat = mdlparscat(ids);
+titlelist = strcat('$$\sigma_y$$ =',{' '},cellfun(@num2str,num2cell(vertcat(mdlparscat.sigma)),'UniformOutput',false),' $$J/m^2$$')
+multiparity({mdlparscat.errmetrics},[2 3 4 1],'titlelist',titlelist)
 
 
 for i = 1:length(ndataptsList)

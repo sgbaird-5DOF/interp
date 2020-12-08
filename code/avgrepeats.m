@@ -1,4 +1,8 @@
-function [meshList,propList] = avgrepeats(meshList,propList)
+function [meshList,propList,rmIDlist] = avgrepeats(meshList,propList)
+arguments
+   meshList = []
+   propList
+end
 % AVGREPEATS  average values for duplicate points, remove all but one from degenerate set
 %--------------------------------------------------------------------------
 % Author(s): Sterling Baird
