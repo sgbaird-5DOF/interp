@@ -1,0 +1,53 @@
+datatype = kim
+method = avg
+[Warning: rng(10) used for testing purposes] 
+[> In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('interp5DOF', 'C:\Users\sterg\Documents\GitHub\infer\code\interp\code\interp5DOF.m', 168)" style="font-weight:bold">interp5DOF</a> (<a href="matlab: opentoline('C:\Users\sterg\Documents\GitHub\infer\code\interp\code\interp5DOF.m',168,0)">line 168</a>)
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('interp5DOF_setup', 'C:\Users\sterg\Documents\GitHub\infer\code\interp\code\interp5DOF_setup.m', 150)" style="font-weight:bold">interp5DOF_setup</a> (<a href="matlab: opentoline('C:\Users\sterg\Documents\GitHub\infer\code\interp\code\interp5DOF_setup.m',150,0)">line 150</a>)
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('randOctParityData>@(ndatapts,npredpts,method,datatype,pgnum,sigma)interp5DOF_setup(ndatapts,npredpts,method,datatype,''pgnum'',pgnum,''sigma'',sigma)', 'C:\Users\sterg\Documents\GitHub\infer\code\interp\code\randOctParityData.m', 119)" style="font-weight:bold">randOctParityData>@(ndatapts,npredpts,method,datatype,pgnum,sigma)interp5DOF_setup(ndatapts,npredpts,method,datatype,'pgnum',pgnum,'sigma',sigma)</a> (<a href="matlab: opentoline('C:\Users\sterg\Documents\GitHub\infer\code\interp\code\randOctParityData.m',119,0)">line 119</a>)
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('exec_argfn', 'C:\Users\sterg\Documents\GitHub\infer\code\interp\code\MATslurm\code\exec_argfn.m', 50)" style="font-weight:bold">exec_argfn</a> (<a href="matlab: opentoline('C:\Users\sterg\Documents\GitHub\infer\code\interp\code\MATslurm\code\exec_argfn.m',50,0)">line 50</a>)
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('exec_combs', 'C:\Users\sterg\Documents\GitHub\infer\code\interp\code\MATslurm\code\exec_combs.m', 64)" style="font-weight:bold">exec_combs</a> (<a href="matlab: opentoline('C:\Users\sterg\Documents\GitHub\infer\code\interp\code\MATslurm\code\exec_combs.m',64,0)">line 64</a>)
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('randOctParityData', 'C:\Users\sterg\Documents\GitHub\infer\code\interp\code\randOctParityData.m', 147)" style="font-weight:bold">randOctParityData</a> (<a href="matlab: opentoline('C:\Users\sterg\Documents\GitHub\infer\code\interp\code\randOctParityData.m',147,0)">line 147</a>)] 
+get_octpairs 
+  0  5 10{Operation terminated by user during <a href="matlab:matlab.internal.language.introspective.errorDocCallback('distcomp.remoteparfor/getCompleteIntervals', 'C:\Program Files\MATLAB\R2020b\toolbox\parallel\distcomp\+distcomp\remoteparfor.m', 379)" style="font-weight:bold">distcomp.remoteparfor/getCompleteIntervals</a> (<a href="matlab: opentoline('C:\Program Files\MATLAB\R2020b\toolbox\parallel\distcomp\+distcomp\remoteparfor.m',379,0)">line 379</a>)
+
+
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('parallel_function>distributed_execution', 'C:\Program Files\MATLAB\R2020b\toolbox\matlab\lang\parallel_function.m', 741)" style="font-weight:bold">parallel_function>distributed_execution</a> (<a href="matlab: opentoline('C:\Program Files\MATLAB\R2020b\toolbox\matlab\lang\parallel_function.m',741,0)">line 741</a>)
+        [tags, out] = P.getCompleteIntervals(chunkSize);
+
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('parallel_function', 'C:\Program Files\MATLAB\R2020b\toolbox\matlab\lang\parallel_function.m', 573)" style="font-weight:bold">parallel_function</a> (<a href="matlab: opentoline('C:\Program Files\MATLAB\R2020b\toolbox\matlab\lang\parallel_function.m',573,0)">line 573</a>)
+    R = distributed_execution(...
+
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('GBdist4', 'C:\Users\sterg\Documents\GitHub\infer\code\interp\code\GBdist4.m', 86)" style="font-weight:bold">GBdist4</a> (<a href="matlab: opentoline('C:\Users\sterg\Documents\GitHub\infer\code\interp\code\GBdist4.m',86,0)">line 86</a>)
+parfor i = 1:npts %parfor compatible
+
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('get_octpairs', 'C:\Users\sterg\Documents\GitHub\infer\code\interp\code\get_octpairs.m', 55)" style="font-weight:bold">get_octpairs</a> (<a href="matlab: opentoline('C:\Users\sterg\Documents\GitHub\infer\code\interp\code\get_octpairs.m',55,0)">line 55</a>)
+[dmin,octvtx] = GBdist4(orefrep,pts,NV.pgnum,'norm',NV.wtol,true,epsijk);
+
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('interp5DOF', 'C:\Users\sterg\Documents\GitHub\infer\code\interp\code\interp5DOF.m', 201)" style="font-weight:bold">interp5DOF</a> (<a href="matlab: opentoline('C:\Users\sterg\Documents\GitHub\infer\code\interp\code\interp5DOF.m',201,0)">line 201</a>)
+[o,oref] = get_octpairs(otmp,'wtol',wtol,'pgnum',pgnum,'oref',NV.oref);
+
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('interp5DOF_setup', 'C:\Users\sterg\Documents\GitHub\infer\code\interp\code\interp5DOF_setup.m', 150)" style="font-weight:bold">interp5DOF_setup</a> (<a href="matlab: opentoline('C:\Users\sterg\Documents\GitHub\infer\code\interp\code\interp5DOF_setup.m',150,0)">line 150</a>)
+            [ypredlist{k},interpfnlist{k},mdllist{k},mdlparslist{k}] = interp5DOF(qm,nA,y,qm2,nA2,method,...
+
+In
+<a href="matlab:matlab.internal.language.introspective.errorDocCallback('randOctParityData>@(ndatapts,npredpts,method,datatype,pgnum,sigma)interp5DOF_setup(ndatapts,npredpts,method,datatype,''pgnum'',pgnum,''sigma'',sigma)', 'C:\Users\sterg\Documents\GitHub\infer\code\interp\code\randOctParityData.m', 119)" style="font-weight:bold">randOctParityData>@(ndatapts,npredpts,method,datatype,pgnum,sigma)interp5DOF_setup(ndatapts,npredpts,method,datatype,'pgnum',pgnum,'sigma',sigma)</a>
+(<a href="matlab: opentoline('C:\Users\sterg\Documents\GitHub\infer\code\interp\code\randOctParityData.m',119,0)">line 119</a>)
+        interp5DOF_setup(ndatapts,npredpts,method,datatype,...
+
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('exec_argfn', 'C:\Users\sterg\Documents\GitHub\infer\code\interp\code\MATslurm\code\exec_argfn.m', 50)" style="font-weight:bold">exec_argfn</a> (<a href="matlab: opentoline('C:\Users\sterg\Documents\GitHub\infer\code\interp\code\MATslurm\code\exec_argfn.m',50,0)">line 50</a>)
+[argout{:}] = fn(argvals{:});
+
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('exec_combs', 'C:\Users\sterg\Documents\GitHub\infer\code\interp\code\MATslurm\code\exec_combs.m', 64)" style="font-weight:bold">exec_combs</a> (<a href="matlab: opentoline('C:\Users\sterg\Documents\GitHub\infer\code\interp\code\MATslurm\code\exec_combs.m',64,0)">line 64</a>)
+    out = exec_argfn(execfn,parcombs,argoutnames);
+
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('randOctParityData', 'C:\Users\sterg\Documents\GitHub\infer\code\interp\code\randOctParityData.m', 147)" style="font-weight:bold">randOctParityData</a> (<a href="matlab: opentoline('C:\Users\sterg\Documents\GitHub\infer\code\interp\code\randOctParityData.m',147,0)">line 147</a>)
+                    outtmp = exec_combs(parpath, jid, tid);
+} 
+randOctParityData
+env = local
+dryrunQ = 0
+savecatQ = 1
+metaQ = 0
+default comment: kim-test4-pos-epsijk. Continue (y) or override (n)? y
+max_walltime = 59 minutes
+saving parameter file

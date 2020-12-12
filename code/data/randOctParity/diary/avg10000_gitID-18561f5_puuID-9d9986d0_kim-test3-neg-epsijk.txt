@@ -1,0 +1,12 @@
+datatype = kim
+method = avg
+get_octpairs 
+  0  5 10 15 20 25 30 35 40 45 50 55 60 65 70 75 80 85 90 95data\temp.mat
+get_octpairs 
+  0  5 10 15 20 25 30 35 40 45 50 55 60 65 70 75 80 85 90 95data\temp.mat
+ninputpts = 10000, npredpts = 10000
+input sigma = 0 J/m^2
+RMSE = 0.088585 J/m^2
+MAE = 0.064229 J/m^2
+C:\Users\sterg\Documents\GitHub\infer\code\interp\code\data\randOctParity\pcombs\avg10000_gitID-18561f5_puuID-9d9986d0_kim-test3-neg-epsijk_meta.mat
+C:\Users\sterg\Documents\GitHub\infer\code\interp\code\data\randOctParity\pcombs\avg10000_gitID-18561f5_puuID-9d9986d0_kim-test3-neg-epsijk.mat
