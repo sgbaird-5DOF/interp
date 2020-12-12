@@ -257,7 +257,7 @@ if isempty(NV.ytrue)
         for i = 1:data.npts
             om1 = qu2om(o2(i,1:4));
             om2 = qu2om(o2(i,5:8));
-            data.props(i) = GB5DOF(om1,om2,'Ni');
+            data.props(i) = GB5DOF_setup(om1,om2,'Ni');
         end
     else
         data.props = nan(size(ppts2,1),1);
@@ -377,12 +377,17 @@ switch method
             %% interp5DOF's default gpr options
             thresh = Inf;
             if ninputpts <= thresh
-                PredictMethod = 'exact';
-%                 gpropts = {'KernelParameters',[deg2rad(3),0.1]};
+%                 PredictMethod = 'exact';
+                PredictMethod = 'fic';
+%                 gpropts = {'KernelParameters',[deg2rad(2.5),0.02]};
 %                 gpropts = {'ActiveSetMethod','sgma','NumActiveSetRepeats',1};
-                gpropts = {};
-%                 gpropts = {'OptimizeHyperparameters',{'KernelScale','Sigma'}};
-%                 gpropts = {'KernelFunction','ardsquaredexponential','KernelParameters',[deg2rad(15)*ones(1,7),0.2]};
+%                 gpropts = {};
+%                 gpropts = {'KernelParameters',[deg2rad(2.5),0.01],...
+%                     'OptimizeHyperparameters',{'KernelScale','Sigma'}};
+%                 gpropts = {'KernelFunction','ardsquaredexponential',...
+%                     'KernelParameters',[deg2rad(2.5)*ones(1,7),0.05],...
+%                     'OptimizeHyperparameters','Sigma'};
+%                 gpropts = {'KernelFunction','ardsquaredexponential'};
             else
                 PredictMethod = 'bcd';
                 gpropts = {'BlockSize',10000};
@@ -854,5 +859,16 @@ structcat = @(S1,S2) table2struct([struct2table(S1,'AsArray',true),struct2table(
         else
             mdlspec = var_names(cgprMdl,gpropts);
         end
+
+
+        switch datatype
+            case 'kim'
+                mat = 'Fe';
+            otherwise
+                mat = 'Ni';
+        end
+           
+ case {'rohrer-Ni-test','brk'}
+                mat = 'Ni';
 
 %}
