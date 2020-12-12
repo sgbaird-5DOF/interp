@@ -10,12 +10,13 @@ nreps = 1; % number of runs or repetitions
 %make sure the parameters here correspond with the input to "pars" below
 switch runtype
     case 'test'
-        ndatapts = [10000]; % 5000 10000 20000 50000];
+        ndatapts = [57886]; % 5000 10000 20000 50000];
         npredpts = 10000;
         method = {'gpr'}; % 'sphbary', 'pbary', 'gpr', 'sphgpr', 'nn', 'avg'
-        datatype = {'rohrer-Ni'}; % 'brk', 'kim', 'rohrer-Ni', 'rohrer-test', 'rohrer-brk-test'
+        datatype = {'kim'}; % 'brk', 'kim', 'rohrer-Ni', 'rohrer-test', 'rohrer-brk-test'
         pgnum = 32; %m-3m (i.e. m\overbar{3}m) FCC symmetry default for e.g. Ni
         sigma = [0]; %mJ/m^2, standard deviation, added to "y"
+        genseed = 10;
         
     case 'full'
         ndatapts = [100 388 500 1000 5000 10000 20000 50000]; % 388, 500, 1000, 2000, 5000, 10000, 20000, 50000
@@ -24,6 +25,7 @@ switch runtype
         datatype = {'brk','kim'};
         pgnum = 32; %m-3m (i.e. m\overbar{3}m) FCC symmetry default for e.g. Ni
         sigma = 0.100; %mJ/m^2, standard deviation, added to "y"
+        genseed = 10;
 end
 
 %comment (no spaces, used in filename)
@@ -31,9 +33,12 @@ end
 % comment = 'rohrer-Ni-test5';
 % comment = 'rohrer-Ni-regularization';
 % comment = 'rohrer-Ni-lamb500m';
-comment = 'rohrer-Ni-lamb300m';
+% comment = 'rohrer-Ni-lamb300m';
 % comment = 'rohrer-test';
-% comment = 'kim-test2';
+% comment = 'kim-test5-neg-epsijk';
+% comment = 'kim-test6-pos-epsijk';
+% comment = 'kim-paper-data2';
+comment = 'kim-paper-data-exact';
 % comment = 'test';
 % comment = 'brk-test';
 % comment = 'rohrer-brk-test';
@@ -110,15 +115,15 @@ savepathfn = @(method,ndatapts,gitcommit,puuid) fullfile(savefolder,savenamefn(m
 
 %parameters
 %**ADD ALL PARAMETERS HERE** (see runtype switch statement)
-pars = var_names(ndatapts,npredpts,method,cores,datatype,pgnum,sigma);
+pars = var_names(ndatapts,npredpts,method,cores,datatype,pgnum,sigma,genseed);
 if ~dryrunQ
     %% parameter file setup
     %function to execute and output arguments from function
-    execfn = @(ndatapts,npredpts,method,datatype,pgnum,sigma) ... **NAMES NEED TO MATCH PARS FIELDS** (see above)
+    execfn = @(ndatapts,npredpts,method,datatype,pgnum,sigma,genseed) ... **NAMES NEED TO MATCH PARS FIELDS** (see above)
         interp5DOF_setup(ndatapts,npredpts,method,datatype,...
-        'pgnum',pgnum,'sigma',sigma); %**NAMES NEED TO MATCH PARS FIELDS AND EXECFN ARGUMENTS**
+        'pgnum',pgnum,'sigma',sigma,'genseed',genseed); %**NAMES NEED TO MATCH PARS FIELDS AND EXECFN ARGUMENTS**
     argoutnames = {'ypred','interpfn','mdl','mdlpars'};
-    %i.e. [propOut,interpfn,mdl,mdlpars] = interp5DOF_setup(ndatapts,npredpts,method,'datatype',datatype);
+    %i.e. [ypred,interpfn,mdl,mdlpars] = interp5DOF_setup(ndatapts,npredpts,method,datatype,...);
     
     % walltimefn = @() 300; %can set to constant or to depend on parameters, probably fine when using standby queue
     walltimefn = @(ndatapts,npredpts,method,cores,datatype) get_walltimefn(ndatapts,npredpts,method,cores,datatype);
