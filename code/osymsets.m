@@ -1,11 +1,12 @@
-function osets = osymsets(oct,pgnum,usv,grainexchangeQ,doublecoverQ,epsijk)
+function osets = osymsets(oct,pgnum,usv,grainexchangeQ,doublecoverQ,uniqueQ,epsijk)
 arguments
 	oct(:,8) double {mustBeFinite,mustBeReal,mustBeSqrt2Norm}
 	pgnum(1,1) double {mustBeInteger} = 32 %default to Oh cubic point group
-	usv(1,1) struct = struct
-	grainexchangeQ logical = false
-	doublecoverQ logical = false
-    epsijk(1,1) double = 1
+	usv = struct
+	grainexchangeQ(1,1) logical {mustBeLogical} = false
+	doublecoverQ(1,1) logical {mustBeLogical} = false
+    uniqueQ(1,1) logical {mustBeLogical} = false
+    epsijk(1,1) double {mustBeInteger} = 1
 end
 % OSYMSETS  Get symmetrically equivalent octonions (osymsets) for each octonion in a list of octonions
 %--------------------------------------------------------------------------
@@ -39,9 +40,9 @@ end
 %% load symmetry operator combinations
 Spairs = get_sympairs(pgnum);
 
-%% reformat data to 8D (if applicable)
+%% reformat data from 7D Cartesian to 8D Cartesian (if applicable)
 ndatapts = size(oct,1);
-if size(oct,2) == 7 && ~isempty(fields(usv))
+if size(oct,2) == 7 && ~isempty(usv)
 	oct = proj_up(oct,usv);
 elseif size(oct,2) == 7
 	oct = [oct zeros(size(oct,1),1)];
@@ -60,13 +61,13 @@ qAlist = normr(qAlist);
 qBlist = normr(qBlist);
 
 %loop through quaternion pairs
-for i = 1:ndatapts %parfor compatible
+parfor i = 1:ndatapts %parfor compatible
 	%unpack quaternions
 	qA = qAlist(i,:);
 	qB = qBlist(i,:);
 	
 	%get symmetrically equivalent octonions
-	osets{i} = osymset(qA,qB,Spairs,grainexchangeQ,doublecoverQ,epsijk);
+	osets{i} = osymset(qA,qB,Spairs,grainexchangeQ,doublecoverQ,uniqueQ,epsijk);
 end
 
 end %osymsets
