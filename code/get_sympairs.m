@@ -1,4 +1,4 @@
-function Spairs = get_sympairs(pgnum,dispnameQ)
+function [Spairs,nsympairs] = get_sympairs(pgnum,dispnameQ)
 arguments
 	pgnum(1,1) int8 {mustBeInteger} = 32 %default == cubic
 	dispnameQ(1,1) logical = false
