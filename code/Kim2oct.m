@@ -18,6 +18,8 @@ clear; close all
 %% setup
 
 epsijk = 1;
+avgQ = false;
+removezeroQ = true;
 
 addpathdir({'eu2qu.m','q2rod.m','get_octpairs.m','GBfive2oct.m','Kim'})
 
@@ -26,61 +28,109 @@ if exist(folder,'dir') ~= 7
 	mkdir(folder)
 end
 
-%load Kim data
-fname = 'Kim2011_FeGBEnergy.txt';
+%load mechanically selected Kim data
+% fname = 'Kim2011_FeGBEnergy.txt';
+fname = 'Fe_BCC_Nor_DB.txt';
 txt = fileread(fname);
 
 %convert 'D' (meaning double precision, base 10) to 'e', as in 1e2 == 100
 txt = strrep(txt,'D','e');
 fname2 = [fname(1:end-4) '_matlab.txt'];
-fpath2 = fullfile(folder,fname2);
-fid=fopen(fpath2,'w');
+fpath = fullfile(folder,fname2);
+fid=fopen(fpath,'w');
 fprintf(fid,txt);
 fclose(fid);
 
 %read in data from file
-meshTable = readtable(fname2,'HeaderLines',9,'ReadVariableNames',true);
-datatemp = table2array(meshTable);
+meshTable = readtable(fname2,'HeaderLines',15,'ReadVariableNames',true);
+datatmp = table2array(meshTable);
 
-%number of points
-npts = size(datatemp,1);
-disp(['# pts: ' int2str(npts)])
+%load intentionally selected Kim data
+% fnamesym = 'Kim2011_FeGBEnergy_SymSubset.txt';
+fnamesym = 'Fe_BCC_Spe_DB.txt';
+txtsym = fileread(fnamesym);
+txtsym = strrep(txtsym,'D','e');
+fnamesym2 = [fname(1:end-4) '_matlab.txt'];
+fpathsym = fullfile(folder,fnamesym2);
+fid=fopen(fpathsym,'w');
+fprintf(fid,txtsym);
+fclose(fid);
+
+%read in data from file
+meshTableSym = readtable(fnamesym2,'HeaderLines',15,'ReadVariableNames',true);
+datatmpsym = table2array(meshTableSym);
+
+%number of mechanically seleected points
+npts = size(datatmp,1);
+disp(['# mechanically selected pts: ' int2str(npts)])
+
+nptssym = size(datatmpsym,1);
+disp(['# intentionally selected points: ' int2str(nptssym)])
+
+nptstot = npts+nptssym;
+disp(['# total points: ' int2str(nptstot)])
+
+%concatenate mechanical and intentional points
+data5dof = [datatmp(:,1:end-1);datatmpsym(:,2:end-1)]; %ignore column that contains "Sigma" in datatmpsym
+gbe = [datatmp(:,end);datatmpsym(:,end)];
 
 %% conversion to octonions
 %extract 5DOF parameters
-datatemp2 = deg2rad(datatemp(:,1:end-1));
-t=n2c(datatemp2);
+data5dof = deg2rad(data5dof);
+t=n2c(data5dof);
 [phi1,Phi,phi2,po,az] = t{:};
 eulist = [phi1 Phi phi2]; %catenate euler angles
 
 %convert to quaternions & cartesian normal pairs
-qlist = eu2qu(eulist,epsijk); % +1 or -1?, misorientation seems to be defined in the active sense, hence epsijk==1
-% %convert from active to passive convention?
-% qlist = qinv(qlist);
+% +1 or -1?, based on paper, misorientation seems to be defined in the active sense, but epsijk==-1 gives better results
+initialepsijk = 1; %epsijk==1 also seems to give more expected results with GBdist4 comparisons, see "Extra" at bottom
+qlist = eu2qu(eulist,initialepsijk);
 el = po2el(po); %convert polar angle to elevation angle
-[x,y,z] = sph2cart(az,el,ones(npts,1));
+[x,y,z] = sph2cart(az,el,ones(nptstot,1));
 nAlist = [x y z];
 
 %get octonion mesh
 meshListFull = five2oct(qlist,nAlist,epsijk);
 
+mechIDs = 1:npts;
+specIDs = npts+1:nptstot;
+
 %% get property list
-propListFull = datatemp(:,end)/1000; % convert from mJ/m^2 to J/m^2
+propListFull = gbe/1000; % convert from mJ/m^2 to J/m^2
 
 %% average properties for repeat octonions and remove repeats (except one)
-[meshList,propList] = avgrepeats(meshListFull,propListFull);
+if avgQ
+    [meshList,propList,rmIDlist] = avgrepeats(meshListFull,propListFull); %#ok<*UNRCH>
+    mechIDs = setdiff(mechIDs,rmIDlist);
+    specIDs = setdiff(specIDs,rmIDlist);
+else
+    propList = propListFull;
+    meshList = meshListFull;
+end
 
-%% remove GBs with GBE of 0
-ids = find(propList);
-meshList = meshList(ids,:);
-propList = propList(ids);
-
-qlist = qlist(ids,:);
-nAlist = nAlist(ids,:);
+if removezeroQ
+    %% remove GBs with GBE of 0
+    ids = find(propList);
+    meshList = meshList(ids,:);
+    propList = propList(ids);
+    
+    mechIDs = intersect(mechIDs,ids); %note that sorting occurs, but shouldn't matter because mechIDs is already sorted
+    specIDs = intersect(specIDs,ids);
+    
+    qlist = qlist(ids,:);
+    nAlist = nAlist(ids,:);
+end
 
 %number of points after averaging
 npts2 = size(meshList,1);
-disp(['# pts (after repeat and GBE=0 removal): ' int2str(npts2)])
+% disp(['# pts (after repeat and GBE=0 removal): ' int2str(npts2)])
+disp(['# pts (removezeroQ==' int2str(removezeroQ) ', avgQ==' int2str(avgQ) '): ' int2str(npts2)])
+
+nptsmech = nnz(mechIDs);
+nptsspec = nnz(specIDs);
+
+disp(['# mechanically selected pts (removezeroQ==' int2str(removezeroQ) ', avgQ==' int2str(avgQ) '): ' int2str(nptsmech)])
+disp(['# special pts (removezeroQ==' int2str(removezeroQ) ', avgQ==' int2str(avgQ) '): ' int2str(nptsspec)])
 
 %package q & nA pairs
 five = struct('q',qlist,'nA',nAlist);
@@ -93,7 +143,8 @@ fid = fopen(fpath,'w');
 fprintf(fid,[...
 	'#------------------------------------------------- \n' ...
 	'#Calculated grain boundary energies of bcc Fe for \n' ...
-   '#mechanically selected 66,339 grain boundaries \n' ...
+    '#mechanically selected 66,339 grain boundaries and \n' ...
+    '#intentionally selected 2,366 special boundaries \n' ...
 	'#Columns 1:8 : Euclidean grain boundary octonion coordinates \n' ...
 	'#Column 9 : Grain boundary energy (J/m^2) \n' ...
 	'#------------------------------------------------- \n']); %6 header lines
@@ -101,12 +152,29 @@ fprintf(fid,[...
 ftmp = 'temp.txt';
 ftmppath = fullfile(folder,ftmp);
 writematrix([meshList propList],ftmppath,'Delimiter','tab');
-txt2 = fileread(ftmppath);
-fprintf(fid,txt2);
+txtsym = fileread(ftmppath);
+fprintf(fid,txtsym);
 fclose(fid);
 %save to .mat file
-save(fpath(1:end-4),'meshList','propList','five','meshTable')
+save(fpath(1:end-4),'meshList','propList','five','mechIDs','specIDs','meshTable')
 
+
+%% Extra Commentary
+%{
+% initialepsijk = 1;
+% 
+% 38000	38001	0.1864
+% 38000	65000	0.2298
+% 38000	38003	0.2567
+% 
+% initialepsijk = -1;
+% 
+% 38000	38001	0.1864
+% 38000	65000	0.3366
+% 38000	38003	0.3378
+% 
+% Since norm(nAlist(ids(38000),:)-nAlist(ids(38003),:)) == 0.5002 = ~0.2567*2, this makes me think that epsijk == 1 is the correct interpretation. This is also supported by the description in the paper of the misorientation convention being qinv(qA)**qB
+%}
 
 %----------------------------------CODE GRAVEYARD--------------------------
 %{
@@ -127,4 +195,43 @@ meshListFull = get_octpairs(meshListTmp);
 
 %Kim references Bunge notation, so using that convention for rotation conversion
 
+
+datatmp2 = deg2rad(datatmp(:,1:end-1));
+
+% %convert from active to passive convention?
+% qlist = qinv(qlist);
+
+
+%split back into mechanically and intentionally selected GBs
+% qmech = qlist(1:npts,:);
+% nAmech = nAlist(1:npts,:);
+% 
+% qspec = qlist(npts+1:end,:);
+% nAspec = nAlist(npts+1:end,:);
+
+% meshmech = meshListFull(1:npts,:);
+% meshspec = meshListFull(npts+1:end,:);
+
+
+% propmech = propListFull(1:npts,:);
+% propspec = propListFull(npts+1:end,:);
+
+
+%     [meshmech,propmech] = avgrepeats(meshmech,propmech); %#ok<*UNRCH>
+%     [meshspec,propspec] = avgrepeats(meshspec,propspec); %#ok<*UNRCH>
+
+
+
+%     idsmech = find(propmech);
+%     meshmech = meshmech(ids,:);
+%     propmech = propmech(ids,:);
+%     
+%     idsspec = find(propspec);
+%     meshspec = meshspec(ids,:);
+%     propspec = propspec(ids,:);
+    %     qmech = qmech(idsmech,:);
+%     nAmech = nAmech(idsmech,:);
+%     
+%     qspec = qspec(idsspec,:);
+%     nAspec = nAspec(idsspec,:);
 %}
