@@ -92,11 +92,11 @@ parfor i = 1:npts %parfor compatible
 	end
 	
 	%% setup	
-	%unpack SEOs
+	%unpack symmetrically equivalent octonions (SEOs) of single octonion
 	oset = osymsets(o2(i,:),pgnum,struct,grainexchangeQ,doublecoverQ,epsijk);
 	o2tmp = oset{1};
 	
-	%number of CSEOs
+	%number of SEOs
 	nsets = size(o2tmp,1);
 	
 	%unpack first octonion (held constant)
