@@ -9,6 +9,7 @@ arguments
     NV.uuid = get_uuid()
     NV.K(1,1) double = 1 %# of VFZO ensembles
     NV.sigma(1,1) double = 0 %mJ/m^2, standard deviation to add to y
+    NV.genseed(1,1) double = []
 end
 %INTERP5DOF_SETUP  setup for interpolating five-degree-of-freedom property
 %data using random octochorically sampled octonions
@@ -21,10 +22,15 @@ pgnum = NV.pgnum;
 uuid = NV.uuid;
 K = NV.K;
 sigma = NV.sigma;
+genseed = NV.genseed;
 
 %seed
-seedstruct = rng;
-genseed = seedstruct.Seed;
+if ~isempty(genseed)
+    seedstruct = rng(genseed);
+else
+    seedstruct = rng;
+    genseed = seedstruct.Seed;
+end
 
 disp(['datatype = ' datatype])
 

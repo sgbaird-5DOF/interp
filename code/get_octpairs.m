@@ -9,7 +9,7 @@ arguments
     NV.fiveref = []
     NV.oref(1,8) double = get_ocubo(1,'random',[],10)
 end
-% GET_OCTPAIRS  Get a set of octonions that are symmetrized with respect to a fixed reference GB (rng seed == 10)
+% GET_OCTPAIRS  Get a set of octonions that are symmetrized with respect to a fixed reference GB (default rng seed == 10)
 % Author: Sterling Baird
 %
 % Date: 2020-07-27

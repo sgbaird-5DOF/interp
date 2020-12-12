@@ -1,8 +1,9 @@
-function propList = GB5DOF_setup(pA,pB,mA,epsijk)
+function propList = GB5DOF_setup(pA,pB,mA,mat,epsijk)
 arguments
     pA(:,4)
     pB(:,4)
     mA(:,3)
+    mat char = 'Ni'
     epsijk(1,1) double = 1
 end
 %GB5DOF_SETUP  Compute 5DOF GB energy from BRK function
@@ -70,11 +71,11 @@ parfor i = 1:npts
 end
 
 %Calculate GB Energies
-element = 'Ni'; %'Al', 'Au', 'Cu'
+% mat = 'Ni'; %'Al', 'Au', 'Cu'
 E(npts) = struct;
-E(1).(element) = [];
+E(1).(mat) = [];
 parfor k = 1:npts
-	E(k).(element) = GB5DOF(omA(:,:,k),omB(:,:,k),element);
+	E(k).(mat) = GB5DOF(omA(:,:,k),omB(:,:,k),mat);
 end
 propList = vertcat(E.Ni);
 end
