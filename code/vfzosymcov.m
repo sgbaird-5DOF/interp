@@ -99,7 +99,7 @@ osets = mat2cell(osets,repelem(nsym,npts));
 PDvertavgs = cell(1,npts);
 for i = 1:npts
     %text waitbar
-    if mod(i+nreps2-1,nreps2) == 0
+    if mod(i,nreps2) == 0
         if waitbarQ
             send(D,i);
         end
@@ -132,15 +132,9 @@ Take a "master" covariance matrix given by:
 |  .   .   .       .  |
 | CN1 CN2 CN3 ... CNN |
 
-"Symmetrized" covariance matrix is given by:
-C(1,1) = mean(C11,'all')
-C(2,1) = mean(C21,'all')
-C(2,2) = mean(C22,'all')
-...
-C(N,N) = mean(CNN,'all')
-
-o1 is the first SEO of the first GB (I think just the identity rotations)
-o1['...] represents the final symmetry pair
+o1 is the first SEO of the first GB (just the identity rotation, i.e. o(1,:) )
+o1' is the second SEO of the first GB
+o1['...] represents the final SEO of the first GB
 C11 expanded, expressed as pairwise distance matrix:
             o1 o1' o1'' ... o1['...]
          ---------------------------
@@ -161,10 +155,17 @@ o2['...] |_________________________|
 
 etc.
 
+"Symmetrized" covariance matrix is given by:
+C(1,1) = mean(C11,'all')
+C(2,1) = mean(C21,'all')
+C(2,2) = mean(C22,'all')
+...
+C(N,N) = mean(CNN,'all')
+
 Unfortunately, the master covariance matrix is generally too large to
 compute at once, and rather slow to compute with a nested for loop.
 
-So instead we calculate averages along vertical chunks of the matrix, where
+So instead we calculate averages within vertical chunks of the matrix, where
 the first column chunk looks like:
 | C11 |
 | C21 |
@@ -172,7 +173,14 @@ the first column chunk looks like:
 |  .  |
 | CN1 |
 
-For the i-th column:
+and C11, C21, etc. are averaged individually to produce a vector:
+| c11 |
+| c21 |
+| c31 |
+|  .  |
+| cN1 |
+
+That is, for the i-th column:
 Cvertstack = [C1i; C2i; C3i; ... ; CNi];
 Cvertavg{i}(1) = mean(C1i,'all');
 Cvertavg{i}(2) = mean(C2i,'all');
