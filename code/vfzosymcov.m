@@ -1,6 +1,6 @@
-function cov = vfzosymcov(o,pgnum,covtype,covpars,grainexchangeQ,doublecoverQ,epsijk)
+function [cov,o,oref] = vfzosymcov(o,pgnum,covtype,covpars,grainexchangeQ,doublecoverQ,epsijk)
 arguments
-   o(:,8) = get_octpairs(get_ocubo(100))
+   o(:,8) = get_ocubo(100)
    pgnum(1,1) double = 32
    covtype char = 'squaredexponential'
    covpars double = [deg2rad(5),0.01]
@@ -9,10 +9,10 @@ arguments
    epsijk(1,1) double = 1
 %    NV.oref(1,8) double = get_ocubo(1,'random',[],10)
 end
-% VFZOSYMCOV  get symmetrized covariance matrix for VFZO set
+% VFZOSYMCOV  get symmetrized covariance matrix for an octonion set
 %--------------------------------------------------------------------------
 % Inputs:
-%  o - list of voronoi fundamental zone octonions (VFZOs)
+%  o - list of octonions (these could be VFZOs or not)
 %
 %  pgnum - point group number
 %
@@ -31,6 +31,10 @@ end
 % Outputs:
 %  C - symmetrized covariance matrix
 %
+%  o - VFZ-symmetrized octonions
+%
+%  oref - reference octonion used to symmetrize octonions into VFZ
+%
 % Usage:
 %  C = vfzosymset(o); %use all defaults
 %  C = vfzosymset(o,L,sigma,pgnum,covtype,grainexchangeQ,doublecoverQ,epsijk);
@@ -42,26 +46,45 @@ end
 %  See "Explanation of Covariance Matrix Averaging" section at end of file,
 %  before "CODE GRAVEYARD" section
 %
+%  The VFZ-symmetrized octonion output should be identical within numerical
+%  error to the original octonion set if the input is a VFZO set and the
+%  same 'oref' is used to symmetrize.
+%
 % Author(s): Sterling Baird
 %
 % Date: 2020-12-12
 %--------------------------------------------------------------------------
 
-%% compile symmetrically equivalent octonions
+[o,oref] = get_octpairs(o,[],epsijk);
+
+%% get symmetrically equivalent octonions (SEOs)
 npts = size(o,1);
 osets = osymsets(o,pgnum,[],grainexchangeQ,doublecoverQ,epsijk);
 nsyms = cellfun(@(oset) size(oset,1),osets);
 nsym = nsyms(1);
 assert(all(nsyms-nsym==0),'all entries of osets should have same # of pts')
+
+%% compile symmetrically equivalent octonions (SEOs)
 osets = vertcat(osets{:});
 osets = normr(osets); %for use with get_alen
-nsympts = size(osets,1);
+
+%% U(1) symmetry
+% setup
+nptstot = npts*nsym;
+orefrep = repmat(oref,nptstot,1);
+zm = zeta_min2(orefrep,osets,-epsijk);
+mA = [0 0 1]; %octonion convention that BP normal is [0 0 1] in lab frame
+mArep = repmat(mA,nptstot,1);
+qzm = ax2qu([mArep zm],-epsijk);
+% apply
+osets(:,1:4) = qmult(qzm,osets(:,1:4),epsijk);
+osets(:,5:8) = qmult(qzm,osets(:,5:8),epsijk);
 
 %% reshape the osets array
 % IDs for interleaving vectors
 ids = cell(nsym,1);
 for i = 1:nsym
-    ids{i} = i:nsym:nsympts;
+    ids{i} = i:nsym:nptstot;
 end
 intIDs = [ids{:}];
 osets(intIDs,:) = osets;
@@ -97,7 +120,7 @@ osets = mat2cell(osets,repelem(nsym,npts));
 
 %% main loop
 PDvertavgs = cell(1,npts);
-for i = 1:npts
+parfor i = 1:npts
     %text waitbar
     if mod(i,nreps2) == 0
         if waitbarQ
@@ -256,5 +279,10 @@ arranged as an (N * N * nsym) array
 
 Applying the horizontal average:
 C = (Cvertavg{1} + Cvertavg{2} + Cvertavg{3} + ... + Cvertavg{N})/N
+
+
+% osets = get_octpairs(osets,[],epsijk);
+
+% nsympts = size(osets,1); %replaced by nptstot
 
 %}
