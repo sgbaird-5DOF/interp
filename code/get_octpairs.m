@@ -48,6 +48,10 @@ else
     oref = five2oct(fiveref,epsijk);
 end
 
+if isempty(savename)
+    savename = 'temp.mat';
+end
+
 %% get minimized distance octonions relative to oct pairs
 disp('get_octpairs ')
 npts = size(pts,1);
