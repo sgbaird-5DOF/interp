@@ -1,0 +1,41 @@
+datatype = kim
+{The logical indices in position 1 contain a true value outside of the array bounds.
+
+Error in <a href="matlab:matlab.internal.language.introspective.errorDocCallback('interp5DOF_setup', 'C:\Users\sterg\Documents\GitHub\infer\code\interp\code\interp5DOF_setup.m', 72)" style="font-weight:bold">interp5DOF_setup</a> (<a href="matlab: opentoline('C:\Users\sterg\Documents\GitHub\infer\code\interp\code\interp5DOF_setup.m',72,0)">line 72</a>)
+        five = struct('q',q(id1,:),'nA',nA(id1,:));
+
+Error in
+<a href="matlab:matlab.internal.language.introspective.errorDocCallback('randOctParityData>@(ndatapts,npredpts,method,datatype,pgnum,sigma,genseed)interp5DOF_setup(ndatapts,npredpts,method,datatype,''pgnum'',pgnum,''sigma'',sigma,''genseed'',genseed)', 'C:\Users\sterg\Documents\GitHub\infer\code\interp\code\randOctParityData.m', 126)" style="font-weight:bold">randOctParityData>@(ndatapts,npredpts,method,datatype,pgnum,sigma,genseed)interp5DOF_setup(ndatapts,npredpts,method,datatype,'pgnum',pgnum,'sigma',sigma,'genseed',genseed)</a>
+(<a href="matlab: opentoline('C:\Users\sterg\Documents\GitHub\infer\code\interp\code\randOctParityData.m',126,0)">line 126</a>)
+        interp5DOF_setup(ndatapts,npredpts,method,datatype,...
+
+Error in <a href="matlab:matlab.internal.language.introspective.errorDocCallback('exec_argfn', 'C:\Users\sterg\Documents\GitHub\infer\code\interp\code\MATslurm\code\exec_argfn.m', 50)" style="font-weight:bold">exec_argfn</a> (<a href="matlab: opentoline('C:\Users\sterg\Documents\GitHub\infer\code\interp\code\MATslurm\code\exec_argfn.m',50,0)">line 50</a>)
+[argout{:}] = fn(argvals{:});
+
+Error in <a href="matlab:matlab.internal.language.introspective.errorDocCallback('exec_combs', 'C:\Users\sterg\Documents\GitHub\infer\code\interp\code\MATslurm\code\exec_combs.m', 64)" style="font-weight:bold">exec_combs</a> (<a href="matlab: opentoline('C:\Users\sterg\Documents\GitHub\infer\code\interp\code\MATslurm\code\exec_combs.m',64,0)">line 64</a>)
+    out = exec_argfn(execfn,parcombs,argoutnames);
+
+Error in <a href="matlab:matlab.internal.language.introspective.errorDocCallback('randOctParityData', 'C:\Users\sterg\Documents\GitHub\infer\code\interp\code\randOctParityData.m', 154)" style="font-weight:bold">randOctParityData</a> (<a href="matlab: opentoline('C:\Users\sterg\Documents\GitHub\infer\code\interp\code\randOctParityData.m',154,0)">line 154</a>)
+                    outtmp = exec_combs(parpath, jid, tid);
+} 
+opentoline('C:\Users\sterg\Documents\GitHub\infer\code\interp\code\interp5DOF_setup.m',72,0)
+opentoline('C:\Users\sterg\Documents\GitHub\infer\code\interp\code\interp5DOF_setup.m',72,0)
+randOctParityData
+env = local
+dryrunQ = 0
+savecatQ = 1
+metaQ = 0
+default comment: kim-mech-spec-equal-exact-exact. Continue (y) or override (n)? {Operation terminated by user during <a href="matlab:matlab.internal.language.introspective.errorDocCallback('randOctParityData', 'C:\Users\sterg\Documents\GitHub\infer\code\interp\code\randOctParityData.m', 71)" style="font-weight:bold">randOctParityData</a> (<a href="matlab: opentoline('C:\Users\sterg\Documents\GitHub\infer\code\interp\code\randOctParityData.m',71,0)">line 71</a>)
+} 
+randOctParityData
+env = local
+dryrunQ = 0
+savecatQ = 1
+metaQ = 0
+default comment: kim-spec-exact-exact. Continue (y) or override (n)? y
+[Warning: Working directory not clean (i.e. uncommitted/unpushed) files exist. Use !git commit -am "<message>", then !git push] 
+[> In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('get_gitcommit', 'C:\Users\sterg\Documents\GitHub\infer\code\interp\code\MATslurm\code\get_gitcommit.m', 15)" style="font-weight:bold">get_gitcommit</a> (<a href="matlab: opentoline('C:\Users\sterg\Documents\GitHub\infer\code\interp\code\MATslurm\code\get_gitcommit.m',15,0)">line 15</a>)
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('writeparfile', 'C:\Users\sterg\Documents\GitHub\infer\code\interp\code\MATslurm\code\writeparfile.m', 124)" style="font-weight:bold">writeparfile</a> (<a href="matlab: opentoline('C:\Users\sterg\Documents\GitHub\infer\code\interp\code\MATslurm\code\writeparfile.m',124,0)">line 124</a>)
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('randOctParityData', 'C:\Users\sterg\Documents\GitHub\infer\code\interp\code\randOctParityData.m', 137)" style="font-weight:bold">randOctParityData</a> (<a href="matlab: opentoline('C:\Users\sterg\Documents\GitHub\infer\code\interp\code\randOctParityData.m',137,0)">line 137</a>)] 
+max_walltime = 59 minutes
+saving parameter file
