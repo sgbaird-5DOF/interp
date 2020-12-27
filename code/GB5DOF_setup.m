@@ -77,7 +77,7 @@ E(1).(mat) = [];
 parfor k = 1:npts
 	E(k).(mat) = GB5DOF(omA(:,:,k),omB(:,:,k),mat);
 end
-propList = vertcat(E.Ni);
+propList = vertcat(E.(mat));
 end
 
 %% CODE GRAVEYARD
