@@ -1,6 +1,6 @@
-function [ypred,interpfn,mdl,mdlpars] = interp5DOF_setup(ndatapts,npredpts,method,datatype,epsijk,NV)
+function [ypred,interpfn,mdl,mdlpars] = interp5DOF_setup(ninputpts,npredpts,method,datatype,epsijk,NV)
 arguments
-    ndatapts
+    ninputpts
     npredpts
     method char = 'gpr'
     datatype char {mustBeMember(datatype,{'brk','kim','rohrer-Ni','rohrer-test','rohrer-brk-test'})} = 'brk'
@@ -10,6 +10,7 @@ arguments
     NV.K(1,1) double = 1 %# of VFZO ensembles
     NV.sigma(1,1) double = 0 %mJ/m^2, standard deviation to add to y
     NV.genseed(1,1) double = []
+    NV.brkQ(1,1) double = false
 end
 %INTERP5DOF_SETUP  setup for interpolating five-degree-of-freedom property
 %data using random octochorically sampled octonions
@@ -23,6 +24,7 @@ uuid = NV.uuid;
 K = NV.K;
 sigma = NV.sigma;
 genseed = NV.genseed;
+brkQ = NV.brkQ;
 
 %seed
 if ~isempty(genseed)
@@ -39,18 +41,62 @@ switch datatype
         %load 5dof
         fname = 'Kim2011_Fe_oct_GBE.mat'; %produced via Kim2oct.m
         addpathdir({fname})
-        S = load(fname,'five','propList');
+        S = load(fname,'five','propList','mechIDs','specIDs');
         
         %unpack
         fivetmp = S.five;
+        mechIDs = S.mechIDs;
+        specIDs = S.specIDs;
+        
         q = vertcat(fivetmp.q);
         nA = vertcat(fivetmp.nA);
         ytmp = S.propList;
+
+        npts = ninputpts+npredpts;
+        nspec = numel(specIDs);
         
-        npts = ndatapts+npredpts;
-        c = cvpartition(npts,'Holdout',npredpts);
-        id1 = training(c);
-        id2 = test(c);
+        kimpartitionNum = 3;
+        switch kimpartitionNum
+            case 1
+                %include an equal number of mechpts and specpts, unless more than
+                %2*nspec points are requested. If so, then include extra mechpts
+                if npts > 2*nspec
+                    nmech = npts - nspec;
+                else
+                    nmech = nspec;
+                end
+                %get random mechIDs
+                p = randperm(numel(mechIDs),nmech);
+                ids = [mechIDs(p),specIDs];
+                
+                %put extra mech q/nA/ytmp pairs at end
+                ids2 = setdiff((1:size(ytmp,1)).',ids);
+                q = [q(ids,:);q(ids2,:)];
+                nA = [nA(ids,:);nA(ids2,:)];
+                ytmp = [ytmp(ids);ytmp(ids2,:)];
+                
+                group = [zeros(nspec,1);ones(nspec,1)];
+                holdout = floor(0.2*(nspec+nmech));
+                c = cvpartition(group,'Holdout',holdout);
+                id1 = training(c);
+                id2 = test(c);
+                %add the leftover mechIDs to test set
+                extraIDs = ~ismember((1:npts).',[find(id1);find(id2)]); %be careful of logical vectors vs. indices
+                id2 = [id2;extraIDs(nspec+nmech+1:end)];
+                
+            case 2
+                id1 = specIDs;
+                id2 = mechIDs(p);
+                
+            case 3
+                p = randperm(npts,npts);
+                id1 = p(1:ninputpts);
+                id2 = p(ninputpts+1:end);
+                
+            case 4
+                id1 = mechIDs(p);
+                id2 = specIDs;
+        end
         
         %split 5dof parameters
         five = struct('q',q(id1,:),'nA',nA(id1,:));
@@ -62,12 +108,12 @@ switch datatype
         
     case 'brk'
         %random 5dof parameters
-        five = get_five(ndatapts);
+        five = get_five(ninputpts);
         five2 = get_five(npredpts);
         
         %get BRK function values
-        y = GB5DOF_setup([],five.q,five.nA,epsijk);
-        ytrue = GB5DOF_setup([],five2.q,five2.nA,epsijk);
+        y = GB5DOF_setup([],five.q,five.nA,'Ni',epsijk);
+        ytrue = GB5DOF_setup([],five2.q,five2.nA,'Ni',epsijk);
         
     case {'rohrer-Ni','rohrer-test','rohrer-brk-test'}
         switch datatype
@@ -108,7 +154,7 @@ switch datatype
         
         oct = five2oct(q,nA,epsijk);
         
-        npts = ndatapts+npredpts;
+        npts = ninputpts+npredpts;
         c = cvpartition(npts,'Holdout',npredpts);
         id1 = training(c);
         id2 = test(c);
@@ -125,7 +171,7 @@ switch datatype
         ytrue = ytmp(id2);
         
     case 'olmsted-Ni'
-        
+        %this is probably about all I have left to try.
         
 end
 
@@ -151,10 +197,10 @@ for k = 1:K
             % use octonions obtained via GBlab2oct
             [qm,nA,qm2,nA2]=deal([]);
             [ypredlist{k},interpfnlist{k},mdllist{k},mdlparslist{k}] = interp5DOF(qm,nA,y,qm2,nA2,method,...
-                'pgnum',pgnum,'uuid',uuid,'ytrue',ytrue,'o',o,'o2',o2);
+                'pgnum',pgnum,'uuid',uuid,'ytrue',ytrue,'o',o,'o2',o2,'brkQ',brkQ);
         otherwise
             [ypredlist{k},interpfnlist{k},mdllist{k},mdlparslist{k}] = interp5DOF(qm,nA,y,qm2,nA2,method,...
-                'pgnum',pgnum,'uuid',uuid,'ytrue',ytrue);
+                'pgnum',pgnum,'uuid',uuid,'ytrue',ytrue,'brkQ',brkQ);
     end
 end
 ypredtmp = [ypredlist{:}];
@@ -346,5 +392,12 @@ structcat = @(S1,S2,S3) ...
                 [~,e1,e2,e3,m1,m2,m3] = datfile2em(fpath,nheaderlines);
                 [q,nA] = em2five(e1,e2,e3,m1,m2,m3,epsijk);
 
+%         q = vertcat(fivetmp.q(ids,:));
+%         nA = vertcat(fivetmp.nA(ids,:));
+%         ytmp = S.propList(ids);
 
+
+
+%         nmech = nspec;
+%         p = randperm(numel(mechIDs),npts);
 %}

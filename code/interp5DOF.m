@@ -253,7 +253,7 @@ data.npts = npredpts;
 
 %data property values
 if isempty(NV.ytrue)
-    if NV.brkQ
+    if brkQ
         for i = 1:data.npts
             om1 = qu2om(o2(i,1:4));
             om2 = qu2om(o2(i,5:8));
@@ -279,7 +279,7 @@ gitcommit = get_gitcommit();
 
 %% package into struct
 %general model variables 
-mdlgen = var_names(method,projtol,zeroQ,usv,starttime,ncores,...
+mdlgen = var_names(method,projtol,zeroQ,usv,starttime,ncores,ninputpts,npredpts,...
     gitcommit,uuid,predinput,queryinput,projQ,oref,oref2,nnmu,nnsigma,symruntime);
 %general parameters
 mdlparsgen = var_names(method,projtol,zeroQ,starttime,ninputpts,...
@@ -377,11 +377,14 @@ switch method
             %% interp5DOF's default gpr options
             thresh = Inf;
             if ninputpts <= thresh
-%                 PredictMethod = 'exact';
                 PredictMethod = 'fic';
+%                 PredictMethod = 'exact';
+%                 gpropts = {'FitMethod','none','KernelFunction','exponential','Sigma',0.005,...
+%                     'ConstantSigma',true};
 %                 gpropts = {'KernelParameters',[deg2rad(2.5),0.02]};
 %                 gpropts = {'ActiveSetMethod','sgma','NumActiveSetRepeats',1};
-%                 gpropts = {};
+%                   gpropts = {'OptimizeHyperparameters',{'KernelScale','Sigma'},...
+%                       'HyperparameterOptimizationOptions',struct('UseParallel',true)};
 %                 gpropts = {'KernelParameters',[deg2rad(2.5),0.01],...
 %                     'OptimizeHyperparameters',{'KernelScale','Sigma'}};
 %                 gpropts = {'KernelFunction','ardsquaredexponential',...
@@ -391,6 +394,9 @@ switch method
             else
                 PredictMethod = 'bcd';
                 gpropts = {'BlockSize',10000};
+            end
+            if exist('gpropts','var') ~= 1
+                gpropts = {};
             end
             gpropts = [gpropts {'PredictMethod',PredictMethod}];
 %             gpropts = {'PredictMethod',PredictMethod};

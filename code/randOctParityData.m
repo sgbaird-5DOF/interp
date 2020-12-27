@@ -1,5 +1,9 @@
 % RANDOCTPARITYDATA  submit sets of jobs to supercomputer or run locally for interp5DOF()
 clear; close all
+
+T = true;
+F = false;
+
 %% parameters
 %loop through different combinations of parameters using random,
 %octochorically sampled octonions
@@ -7,25 +11,33 @@ addpathdir({'var_names.m','writeparfile.m','walltimefns'})
 runtype = 'test'; %'test','full'
 nreps = 1; % number of runs or repetitions
 
+% job submission environment
+env = 'local'; %'slurm', 'local'
+%whether to skip running the jobs and just compile results
+dryrunQ = F;
+metaQ = F; %whether to load full model or only meta-data at end
+
 %make sure the parameters here correspond with the input to "pars" below
 switch runtype
     case 'test'
-        ndatapts = [57886]; % 5000 10000 20000 50000];
-        npredpts = 10000;
-        method = {'gpr'}; % 'sphbary', 'pbary', 'gpr', 'sphgpr', 'nn', 'avg'
-        datatype = {'kim'}; % 'brk', 'kim', 'rohrer-Ni', 'rohrer-test', 'rohrer-brk-test'
+        ninputpts = floor(264276*.8); %floor(58604*0.8); %17176; %1893*2; %[2366]; %[1893*1]; % 5000 10000 20000 50000];
+        npredpts = ceil(264276*0.2); %ceil(58604*0.2); %67886-17176; %67886-1893*2; %65520; %473*1;
+        method = {'idw'}; % 'sphbary', 'pbary', 'gpr', 'sphgpr', 'nn', 'avg'
+        datatype = {'rohrer-Ni'}; % 'brk', 'kim', 'rohrer-Ni', 'rohrer-test', 'rohrer-brk-test'
         pgnum = 32; %m-3m (i.e. m\overbar{3}m) FCC symmetry default for e.g. Ni
         sigma = [0]; %mJ/m^2, standard deviation, added to "y"
         genseed = 10;
+        brkQ = false;
         
     case 'full'
-        ndatapts = [100 388 500 1000 5000 10000 20000 50000]; % 388, 500, 1000, 2000, 5000, 10000, 20000, 50000
+        ninputpts = [100 388 500 1000 5000 10000 20000 50000]; % 388, 500, 1000, 2000, 5000, 10000, 20000, 50000
         npredpts = 10000;
         method = {'sphgpr','gpr','sphbary','pbary','nn','avg','idw'}; % 'sphbary', 'pbary', 'gpr', 'sphgpr', 'nn', 'avg'
         datatype = {'brk','kim'};
         pgnum = 32; %m-3m (i.e. m\overbar{3}m) FCC symmetry default for e.g. Ni
         sigma = 0.100; %mJ/m^2, standard deviation, added to "y"
         genseed = 10;
+        brkQ = true;
 end
 
 %comment (no spaces, used in filename)
@@ -34,30 +46,37 @@ end
 % comment = 'rohrer-Ni-regularization';
 % comment = 'rohrer-Ni-lamb500m';
 % comment = 'rohrer-Ni-lamb300m';
+comment = 'rohrer-Ni-lamb300m';
 % comment = 'rohrer-test';
 % comment = 'kim-test5-neg-epsijk';
 % comment = 'kim-test6-pos-epsijk';
 % comment = 'kim-paper-data2';
-comment = 'kim-paper-data-exact';
+% comment = 'kim-paper-data-exact';
+% comment ='kim-mech-spec-equal-ard';
+% comment = 'kim-mech-spec-equal-hyperopt';
+% comment = 'kim-mech-spec-equal-exact-exact';
+% comment = 'kim-mech-train-spec-test-fic-fic';
+% comment = 'kim-mech-fic-fic';
+% comment = 'kim-minrepeats';
+comment = 'rohrer';
+% comment = 'kim-paper-data-equal-sig0.005-exact-exact';
+% comment = 'kim-brk';
+% comment = 'kim-brk-sig-0.1-test2';
+% comment = 'kim-brk-sig-0.1-exp-cstsig';
 % comment = 'test';
+% comment = 'brk-test-kim-compare-sig-0';
+% comment = 'kim-brk-sig-0-fic';
 % comment = 'brk-test';
 % comment = 'rohrer-brk-test';
 % comment = 'brk-test-uniform';
 % comment = 'idw-test-3pt5deg';
 
-% job submission environment
-env = 'local'; %'slurm', 'local'
-T = true;
-F = false;
-%whether to skip running the jobs and just compile results
-dryrunQ = F;
 disp(['env = ' env])
 
 if strcmp(env,'slurm') && dryrunQ
     error('did you mean to change dryrunQ to false?')
 end
 
-metaQ = F; %whether to load full model or only meta-data at end
 disp(['dryrunQ = ' int2str(dryrunQ)])
 if strcmp(env,'local')
     savecatQ = T; % whether to save the catenated model and/or parameters (depends on metaQ)
@@ -88,19 +107,19 @@ end
 %diary
 files = dir(fullfile('**','data','randOctParity','diary'));
 diaryfolder = files(1).folder;
-diarynamefn = @(method,ndatapts,gitcommit,puuid) [method int2str(ndatapts) '_gitID-' gitcommit(1:7) '_puuID-' puuid '_' comment '.txt'];
-diarypathfn = @(method,ndatapts,gitcommit,puuid) fullfile(diaryfolder,diarynamefn(method,ndatapts,gitcommit,puuid));
+diarynamefn = @(method,ninputpts,gitcommit,puuid) [method int2str(ninputpts) '_gitID-' gitcommit(1:7) '_puuID-' puuid '_' comment '.txt'];
+diarypathfn = @(method,ninputpts,gitcommit,puuid) fullfile(diaryfolder,diarynamefn(method,ninputpts,gitcommit,puuid));
 %data
 files = dir(fullfile('**','data','randOctParity','pcombs'));
 savefolder = files(1).folder;
-savenamefn = @(method,ndatapts,gitcommit,puuid) [method int2str(ndatapts) '_gitID-' gitcommit(1:7) '_puuID-' puuid '_' comment '.mat'];
+savenamefn = @(method,ninputpts,gitcommit,puuid) [method int2str(ninputpts) '_gitID-' gitcommit(1:7) '_puuID-' puuid '_' comment '.mat'];
 
 %for use with dir
 savepathgen = fullfile(savefolder,'*gitID-*puuID*.mat');
 
 savenamematch = [ ...
     ['(' strjoin(method,'|') ')'] ... match (exactly) any of the method options
-    ['(' strjoin(cellfun(@num2str,num2cell(ndatapts),'UniformOutput',false),'|') ')'] ... match (exactly) any of the ndatapts options
+    ['(' strjoin(cellfun(@num2str,num2cell(ninputpts),'UniformOutput',false),'|') ')'] ... match (exactly) any of the ninputpts options
     '(_gitID-[a-z0-9]*)' ... match any combination of 0 or more lowercase alphabetic or numeric characters (for git hash)
     '(_puuID-[a-z0-9]+)' ... match any combination of 1 or more lowercase alphabetic or numeric characters (for param combo uuid)
     ['(_' comment ')'] ...
@@ -111,22 +130,22 @@ else
     savenamematch = [savenamematch '(.mat)'];
 end
     
-savepathfn = @(method,ndatapts,gitcommit,puuid) fullfile(savefolder,savenamefn(method,ndatapts,gitcommit,puuid));
+savepathfn = @(method,ninputpts,gitcommit,puuid) fullfile(savefolder,savenamefn(method,ninputpts,gitcommit,puuid));
 
 %parameters
 %**ADD ALL PARAMETERS HERE** (see runtype switch statement)
-pars = var_names(ndatapts,npredpts,method,cores,datatype,pgnum,sigma,genseed);
+pars = var_names(ninputpts,npredpts,method,cores,datatype,pgnum,sigma,genseed,brkQ);
 if ~dryrunQ
     %% parameter file setup
     %function to execute and output arguments from function
-    execfn = @(ndatapts,npredpts,method,datatype,pgnum,sigma,genseed) ... **NAMES NEED TO MATCH PARS FIELDS** (see above)
-        interp5DOF_setup(ndatapts,npredpts,method,datatype,...
-        'pgnum',pgnum,'sigma',sigma,'genseed',genseed); %**NAMES NEED TO MATCH PARS FIELDS AND EXECFN ARGUMENTS**
+    execfn = @(ninputpts,npredpts,method,datatype,pgnum,sigma,genseed,brkQ) ... **NAMES NEED TO MATCH PARS FIELDS** (see above)
+        interp5DOF_setup(ninputpts,npredpts,method,datatype,...
+        'pgnum',pgnum,'sigma',sigma,'genseed',genseed,'brkQ',brkQ); %**NAMES NEED TO MATCH PARS FIELDS AND EXECFN ARGUMENTS**
     argoutnames = {'ypred','interpfn','mdl','mdlpars'};
-    %i.e. [ypred,interpfn,mdl,mdlpars] = interp5DOF_setup(ndatapts,npredpts,method,datatype,...);
+    %i.e. [ypred,interpfn,mdl,mdlpars] = interp5DOF_setup(ninputpts,npredpts,method,datatype,...);
     
     % walltimefn = @() 300; %can set to constant or to depend on parameters, probably fine when using standby queue
-    walltimefn = @(ndatapts,npredpts,method,cores,datatype) get_walltimefn(ndatapts,npredpts,method,cores,datatype);
+    walltimefn = @(ninputpts,npredpts,method,cores,datatype) get_walltimefn(ninputpts,npredpts,method,cores,datatype);
     
     %% parameter file
     [parpath, parcombsets, Ntrim, jobwalltimes] = ...
@@ -206,7 +225,12 @@ switch env
         mdlparscat = structvertcat(mdlparslist{:});
         mdlparstbl = struct2table(mdlparscat,'AsArray',true);
         
-        mdlparstbl = tblfilt(mdlparstbl,pars);
+        mdlparstbltmp = tblfilt(mdlparstbl,pars);
+        if isempty(mdlparstbltmp)
+            error('mdlparstbltmp was was empty, check tblfilt()')
+        else
+            mdlparstbl = mdlparstbltmp;
+        end
         mdlparscat = table2struct(mdlparstbl);
         
         %         gitcommit = get_gitcommit();
@@ -221,7 +245,7 @@ switch env
             end
             save(fpath,savevars{:},'-v7.3')
         end
-        writetable(mdlparstbl,[fpath(1:end-4) '.csv'])
+        writetable(mdlparstbl,[fpath(1:end-4) '.csv'],'WriteVariableNames',true)
         disp(mdlparstbl)
         
         %         %nested loop through jobs and tasks to load results
@@ -235,7 +259,37 @@ end
 
 disp('end randOctParityData.m')
 disp(' ')
-%-----------------------------CODE GRAVEYARD-------------------------------
+
+mdltbl(:,{'method','ninputpts','npredpts','rmse','mae'})
+
+%% plotting
+mdlnum = 1;
+mdl = mdlcat(mdlnum);
+Kpars = mdl.KernelInformation.KernelParameters;
+Lval = Kpars(1);
+sigval = Kpars(2);
+paperfigure(1,2);
+nexttile
+t1 = ['$L_{\mathrm{kernel}}$: ' num2str(rad2deg(Lval)*2) ' ($^\circ{}$), ' ...
+    '$\sigma_{\mathrm{kernel}}$: ' num2str(sigval) ' ($J m^{-2}$)'];
+brkQ = true;
+tunnelplot(mdl,'brkQ',brkQ)
+title(t1,'Interpreter','latex')
+% multiparity({mdl.errmetrics},'charlblQ',false);
+nexttile
+% parityplot(mdl.errmetrics.ytrue,mdl.errmetrics.ypred,'scatter',...
+%     'mkr','o','fillQ',true,'scatterOpts',struct('MarkerFaceAlpha',0.005));
+
+parityplot(mdl.errmetrics.ytrue,mdl.errmetrics.ypred);
+
+t2 = ['RMSE: ' num2str(mdl.rmse) ' ($J m^{-2}$), MAE: ' num2str(mdl.mae) ' ($J m^{-2}$)'];
+title(t2,'Interpreter','latex')
+
+t3 = ['method: ' upper(char(mdl.method)) ', datatype: ' upper(char(mdl.datatype)),...
+    ', ninputpts: ' num2str(mdl.ninputpts) ', npredpts: ' num2str(mdl.npredpts)];
+sgtitle(t3,'Interpreter','latex')
+
+%% CODE GRAVEYARD
 %{
 
 % sigma plotting
@@ -245,12 +299,12 @@ titlelist = strcat('$$\sigma_y$$ =',{' '},cellfun(@num2str,num2cell(vertcat(mdlp
 multiparity({mdlparscat.errmetrics},[2 3 4 1],'titlelist',titlelist)
 
 
-for i = 1:length(ndataptsList)
+for i = 1:length(ninputptsList)
     %unpack
-    ndatapts = ndataptsList(i);
+    ninputpts = ninputptsList(i);
     for j = 1:length(methods)
         method = methods{j};
-        fname = ['randOctParityData_' method int2str(ndatapts) '.mat'];
+        fname = ['randOctParityData_' method int2str(ninputpts) '.mat'];
         S = load(
     end
 end
@@ -258,17 +312,17 @@ end
 % execfn = @interp5DOF_setup;
 
 %initialize
-init1 = cell(length(ndatapts),length(method));
+init1 = cell(length(ninputpts),length(method));
 propOutlist = init1;
 mdllist = init1;
 mdlparslist = init1;
 interpfnlist = init1;
 
 
-% %nested loop through ndataptsList and methodlist
-% for i = 1:length(ndatapts)
+% %nested loop through ninputptsList and methodlist
+% for i = 1:length(ninputpts)
 %     %unpack
-%     ndatapts = ndatapts(i);
+%     ninputpts = ninputpts(i);
 %     for j = 1:length(method)
 %         %% setup
 %         %unpack
@@ -279,7 +333,7 @@ interpfnlist = init1;
 %         uuid = get_uuid();
 %
 %         %% interpolation
-%         [propOutlist{i,j},interpfnlist{i,j},mdllist{i,j},mdlparslist{i,j}]=interp5DOF_setup(ndatapts,npredpts,method,uuid);
+%         [propOutlist{i,j},interpfnlist{i,j},mdllist{i,j},mdlparslist{i,j}]=interp5DOF_setup(ninputpts,npredpts,method,uuid);
 %
 %         %% output
 %         %package
@@ -288,8 +342,8 @@ interpfnlist = init1;
 %         mdl = mdllist{i,j};
 %         mdlpars = mdlparslist{i,j};
 %         %save
-%         save(savepathfn(method,ndatapts,mdl.gitcommit,uuid),...
-%             'propOut','interpfn','mdl','mdlpars','ndatapts','method','uuID',...
+%         save(savepathfn(method,ninputpts,mdl.gitcommit,uuid),...
+%             'propOut','interpfn','mdl','mdlpars','ninputpts','method','uuID',...
 %             '-v7.3','-nocompression')
 %         disp(' ')
 %     end
@@ -306,15 +360,15 @@ end
 %job universal unique ID
 uuid = {get_uuid()};
 
-pars = var_names(ndatapts,npredpts,method.uuid);
+pars = var_names(ninputpts,npredpts,method.uuid);
 
 %         S(nfiles) = struct();
 %         S(1).out = struct();
 
 
-memfn = @(method,ndatapts) ...
-    (strcmp(method,'gpr') && ndatapts > 10000) *1024*8 + ...
-    (~strcmp(method,'gpr') && ndatapts <= 10000) * 1024*4;
+memfn = @(method,ninputpts) ...
+    (strcmp(method,'gpr') && ninputpts > 10000) *1024*8 + ...
+    (~strcmp(method,'gpr') && ninputpts <= 10000) * 1024*4;
 
 %         k = 0; %initialize counter
         %nested loop through jobs and tasks to generate results
