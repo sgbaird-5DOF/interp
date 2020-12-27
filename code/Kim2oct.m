@@ -18,7 +18,7 @@ clear; close all
 %% setup
 
 epsijk = 1;
-avgQ = false;
+avgQ = true;
 removezeroQ = true;
 
 addpathdir({'eu2qu.m','q2rod.m','get_octpairs.m','GBfive2oct.m','Kim'})
@@ -90,32 +90,34 @@ el = po2el(po); %convert polar angle to elevation angle
 nAlist = [x y z];
 
 %get octonion mesh
-meshListFull = five2oct(qlist,nAlist,epsijk);
+meshListTmp = five2oct(qlist,nAlist,epsijk);
+meshListFull = get_octpairs(meshListTmp,[],epsijk);
 
-mechIDs = 1:npts;
-specIDs = npts+1:nptstot;
+mechIDs = [true(1,npts),false(1,nptssym)];
+specIDs = ~mechIDs;
 
 %% get property list
 propListFull = gbe/1000; % convert from mJ/m^2 to J/m^2
 
 %% average properties for repeat octonions and remove repeats (except one)
 if avgQ
-    [meshList,propList,rmIDlist] = avgrepeats(meshListFull,propListFull); %#ok<*UNRCH>
-    mechIDs = setdiff(mechIDs,rmIDlist);
-    specIDs = setdiff(specIDs,rmIDlist);
+    [meshList,propList,rmIDlist] = avgrepeats(meshListFull,propListFull,'min'); %#ok<*UNRCH>
+    mechIDs(rmIDlist) = [];
+    specIDs(rmIDlist) = [];
+    
 else
     propList = propListFull;
     meshList = meshListFull;
 end
 
 if removezeroQ
-    %% remove GBs with GBE of 0
-    ids = find(propList);
+    %% remove GBs with GBE near 0
+    ids = find(propList > 0.1);
     meshList = meshList(ids,:);
     propList = propList(ids);
     
-    mechIDs = intersect(mechIDs,ids); %note that sorting occurs, but shouldn't matter because mechIDs is already sorted
-    specIDs = intersect(specIDs,ids);
+    mechIDs = mechIDs(ids);
+    specIDs = specIDs(ids);
     
     qlist = qlist(ids,:);
     nAlist = nAlist(ids,:);
@@ -234,4 +236,26 @@ datatmp2 = deg2rad(datatmp(:,1:end-1));
 %     
 %     qspec = qspec(idsspec,:);
 %     nAspec = nAspec(idsspec,:);
+
+
+
+        % mechIDs = 1:npts;
+% specIDs = npts+1:nptstot;
+%     mechIDs = setdiff(mechIDs,rmIDlist);
+    
+%     specIDs = setdiff(specIDs,rmIDlist);
+%     nmechIDs = numel(mechIDs);
+%     nspecIDs = numel(specIDs);
+    
+%     mechIDs = 1:nmechIDs;
+%     specIDs = (nmechIDs+1):(nmechIDs+nspecIDs);
+
+%     mechIDs = intersect(mechIDs,ids); %note that sorting occurs, but shouldn't matter because mechIDs is already sorted
+%     specIDs = intersect(specIDs,ids);
+    
+%     nmechIDs = numel(mechIDs);
+%     nspecIDs = numel(specIDs);
+    
+%     mechIDs = 1:nmechIDs;
+%     specIDs = (nmechIDs+1):(nmechIDs+nspecIDs);
 %}
