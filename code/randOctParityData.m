@@ -15,18 +15,18 @@ nreps = 1; % number of runs or repetitions
 env = 'local'; %'slurm', 'local'
 %whether to skip running the jobs and just compile results
 dryrunQ = F;
-metaQ = F; %whether to load full model or only meta-data at end
+metaQ = F; %whether to load full model or only metay-data at end
 
 %make sure the parameters here correspond with the input to "pars" below
 switch runtype
     case 'test'
-        ninputpts = floor(264276*.8); %floor(58604*0.8); %17176; %1893*2; %[2366]; %[1893*1]; % 5000 10000 20000 50000];
-        npredpts = ceil(264276*0.2); %ceil(58604*0.2); %67886-17176; %67886-1893*2; %65520; %473*1;
-        method = {'idw'}; % 'sphbary', 'pbary', 'gpr', 'sphgpr', 'nn', 'avg'
-        datatype = {'rohrer-Ni'}; % 'brk', 'kim', 'rohrer-Ni', 'rohrer-test', 'rohrer-brk-test'
+        ninputpts = floor(58604*0.8); %56442; %floor(67886*0.8); %floor(264276*.8); %17176; %1893*2; %[2366]; %[1893*1]; % 5000 10000 20000 50000];
+        npredpts = ceil(58604*0.2); %11443; %floor(67886*0.2); %ceil(264276*0.2); %67886-17176; %67886-1893*2; %65520; %473*1;
+        method = {'gpr'}; % 'sphbary', 'pbary', 'gpr', 'sphgpr', 'nn', 'avg'
+        datatype = {'kim'}; % 'brk', 'kim', 'rohrer-Ni', 'rohrer-test', 'rohrer-brk-test'
         pgnum = 32; %m-3m (i.e. m\overbar{3}m) FCC symmetry default for e.g. Ni
-        sigma = [0]; %mJ/m^2, standard deviation, added to "y"
-        genseed = 10;
+        sigma = [0]; %J/m^2, standard deviation, added to "y"
+        genseed = 11;
         brkQ = false;
         
     case 'full'
@@ -46,7 +46,7 @@ end
 % comment = 'rohrer-Ni-regularization';
 % comment = 'rohrer-Ni-lamb500m';
 % comment = 'rohrer-Ni-lamb300m';
-comment = 'rohrer-Ni-lamb300m';
+% comment = 'rohrer-Ni-lamb300m';
 % comment = 'rohrer-test';
 % comment = 'kim-test5-neg-epsijk';
 % comment = 'kim-test6-pos-epsijk';
@@ -57,8 +57,15 @@ comment = 'rohrer-Ni-lamb300m';
 % comment = 'kim-mech-spec-equal-exact-exact';
 % comment = 'kim-mech-train-spec-test-fic-fic';
 % comment = 'kim-mech-fic-fic';
+% comment = 'kim-brk-minrepeats2';
 % comment = 'kim-minrepeats';
-comment = 'rohrer';
+% comment = 'kim-minrepeats3';
+% comment = 'kim-minrepeats2-trainsigma0.2';
+% comment = 'kim-minrepeats2-traintestsigma0.2';
+% comment = 'kim-minrepeats5-trainsigma0.2-posnoise';
+comment = 'kim-exponential-rng11';
+% comment = 'kim-trainRepeat-testNoRepeat';
+% comment = 'rohrer';
 % comment = 'kim-paper-data-equal-sig0.005-exact-exact';
 % comment = 'kim-brk';
 % comment = 'kim-brk-sig-0.1-test2';
@@ -119,7 +126,7 @@ savepathgen = fullfile(savefolder,'*gitID-*puuID*.mat');
 
 savenamematch = [ ...
     ['(' strjoin(method,'|') ')'] ... match (exactly) any of the method options
-    ['(' strjoin(cellfun(@num2str,num2cell(ninputpts),'UniformOutput',false),'|') ')'] ... match (exactly) any of the ninputpts options
+    ['*'] ... %     ['(' strjoin(cellfun(@num2str,num2cell(ninputpts),'UniformOutput',false),'|') ')'] ... match (exactly) any of the ninputpts options
     '(_gitID-[a-z0-9]*)' ... match any combination of 0 or more lowercase alphabetic or numeric characters (for git hash)
     '(_puuID-[a-z0-9]+)' ... match any combination of 1 or more lowercase alphabetic or numeric characters (for param combo uuid)
     ['(_' comment ')'] ...
