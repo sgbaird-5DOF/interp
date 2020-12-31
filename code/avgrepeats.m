@@ -1,4 +1,4 @@
-function [meshList,propList,rmIDlist] = avgrepeats(meshList,propList,avgtype)
+function [meshList,propList,rmIDs,keepIDs,rmIDcell] = avgrepeats(meshList,propList,avgtype)
 arguments
    meshList
    propList
@@ -45,14 +45,15 @@ switch avgtype
 end
 
 repsets = get_repsets(meshList,2);
+keepIDs = cellfun(@(repset) repset(1),repsets);
 nrepsets = length(repsets);
-rmIDs = cell(1,nrepsets);
+rmIDcell = cell(1,nrepsets);
 for i = 1:nrepsets
 	%unpack
 	repset = repsets{i};
 	
 	%degenerate octonions to remove (after loop)
-	rmIDs{i} = repset(2:end);
+	rmIDcell{i} = repset(2:end);
     
     %octonion to keep
     keepID = repset(1);
@@ -62,8 +63,8 @@ for i = 1:nrepsets
 end
 
 %remove repeat octonions
-rmIDlist = horzcat(rmIDs{:});
-meshList(rmIDlist,:) = [];
-propList(rmIDlist,:) = [];
+rmIDs = horzcat(rmIDcell{:});
+meshList(rmIDs,:) = [];
+propList(rmIDs,:) = [];
 
 end
