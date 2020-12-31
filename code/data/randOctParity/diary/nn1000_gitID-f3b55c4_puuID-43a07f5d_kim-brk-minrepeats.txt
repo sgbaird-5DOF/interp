@@ -1,0 +1,17 @@
+datatype = kim
+method = nn
+get_octpairs 
+  0  5 10 15 20 25 30 35 40 45 50 55 60 65 70 75 80 85 90 95data\temp.mat
+get_octpairs 
+  0  5 10 15 20 25 30 35 40 45 50 55 60 65 70 75 80 85 90 95data\temp.mat
+ninputpts = 1000, npredpts = 1000
+<a href="matlab: opentoline('C:\Users\sterg\Documents\GitHub\infer\code\interp\code\interp5DOF.m',265,1)">265 </a>        y(i) = GB5DOF_setup(om1,om2,'Ni');
+if system_dependent('IsDebugMode')==1, dbquit all; end
+randOctParityData
+env = local
+dryrunQ = 0
+savecatQ = 1
+metaQ = 0
+default comment: kim-brk-minrepeats. Continue (y) or override (n)? y
+max_walltime = 59 minutes
+saving parameter file

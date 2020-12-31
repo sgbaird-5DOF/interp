@@ -1,0 +1,41 @@
+datatype = kim
+method = gpr
+get_octpairs 
+  0  5 10 15 20 25 30 35 40 45 50 55 60 65 70 75 80 85 90 95data\temp.mat
+get_octpairs 
+  0  5 10 15 20 25 30 35 40 45 50 55 60 65 70 75 80 85 90 95data\temp.mat
+ninputpts = 1000, npredpts = 2000
+
+gprMdl = 
+
+  <a href="matlab: helpPopup RegressionGP">RegressionGP</a>
+             ResponseName: 'Y'
+    CategoricalPredictors: []
+        ResponseTransform: 'none'
+          NumObservations: 1000
+           KernelFunction: 'SquaredExponential'
+        KernelInformation: [1×1 struct]
+            BasisFunction: 'Constant'
+                     Beta: 1.3205
+                    Sigma: 0.1288
+        PredictorLocation: []
+           PredictorScale: []
+                    Alpha: [1000×1 double]
+         ActiveSetVectors: [1000×7 double]
+            PredictMethod: 'FIC'
+            ActiveSetSize: 1000
+                FitMethod: 'Exact'
+          ActiveSetMethod: 'Random'
+        IsActiveSetVector: [1000×1 logical]
+            LogLikelihood: 460.0421
+         ActiveSetHistory: [1×1 struct]
+           BCDInformation: []
+
+
+  <a href="matlab: properties('RegressionGP')">Properties</a>, <a href="matlab: methods('RegressionGP')">Methods</a>
+
+input sigma = 0.2 J/m^2
+RMSE = 0.13753 J/m^2
+MAE = 0.10798 J/m^2
+C:\Users\sterg\Documents\GitHub\infer\code\interp\code\data\randOctParity\pcombs\gpr1000_gitID-f3b55c4_puuID-9c22a183_kim-minrepeats5-trainsigma0.2-posnoise_meta.mat
+C:\Users\sterg\Documents\GitHub\infer\code\interp\code\data\randOctParity\pcombs\gpr1000_gitID-f3b55c4_puuID-9c22a183_kim-minrepeats5-trainsigma0.2-posnoise.mat

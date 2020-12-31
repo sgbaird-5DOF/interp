@@ -1,0 +1,34 @@
+datatype = kim
+method = nn
+get_octpairs 
+  0  5 10 15 20 25 30 35 40 45 50 55 60 65 70 75 80 85 90 95nids: 1
+       16535
+
+data\temp.mat
+get_octpairs 
+  0  5 10 15 20 25 30 35 40 45 50 55 60 65 70 75 80 85 90 95data\temp.mat
+ninputpts = 46883, npredpts = 11721
+<a href="matlab: opentoline('C:\Users\sterg\Documents\GitHub\infer\code\interp\code\interp5DOF.m',268,1)">268 </a>    noisetype = 'normal';
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+sigma
+
+sigma =
+
+    0.2000
+
+y(1)
+
+ans =
+
+    1.0910
+
+if system_dependent('IsDebugMode')==1, dbcont; end
+input sigma = 0.2 J/m^2
+RMSE = 0.20304 J/m^2
+MAE = 0.16175 J/m^2
+C:\Users\sterg\Documents\GitHub\infer\code\interp\code\data\randOctParity\pcombs\nn46883_gitID-f3b55c4_puuID-7e45d4c4_kim-minrepeats2-trainsigma0.2_meta.mat
+C:\Users\sterg\Documents\GitHub\infer\code\interp\code\data\randOctParity\pcombs\nn46883_gitID-f3b55c4_puuID-7e45d4c4_kim-minrepeats2-trainsigma0.2.mat

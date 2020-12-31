@@ -1,0 +1,12 @@
+datatype = kim
+method = nn
+get_octpairs 
+  0  5 10 15 20 25 30 35 40 45 50 55 60 65 70 75 80 85 90 95data\temp.mat
+get_octpairs 
+  0  5 10 15 20 25 30 35 40 45 50 55 60 65 70 75 80 85 90 95data\temp.mat
+ninputpts = 1000, npredpts = 2000
+input sigma = 0.2 J/m^2
+RMSE = 0.18332 J/m^2
+MAE = 0.14122 J/m^2
+C:\Users\sterg\Documents\GitHub\infer\code\interp\code\data\randOctParity\pcombs\nn1000_gitID-f3b55c4_puuID-bd828381_kim-minrepeats5-trainsigma0.2-posnoise_meta.mat
+C:\Users\sterg\Documents\GitHub\infer\code\interp\code\data\randOctParity\pcombs\nn1000_gitID-f3b55c4_puuID-bd828381_kim-minrepeats5-trainsigma0.2-posnoise.mat

@@ -1,0 +1,47 @@
+datatype = kim
+--get repsets
+  0  5 10 15 20 25 30 35 40 45 50 55 60 65 70 75 80 84 89 94updated ninputpts: 49483
+updated npredpts: 9687
+method = gpr
+get_octpairs 
+  0  5 10 15 20 25 30 35 40 45 50 55 60 65 70 75 80 85 90 95nids: 1
+       17528
+
+data\temp.mat
+get_octpairs 
+  0  5 10 15 20 25 30 35 40 45 50 55 60 65 70 75 80 85 90 95data\temp.mat
+ninputpts = 49483, npredpts = 9687
+
+gprMdl = 
+
+  <a href="matlab: helpPopup RegressionGP">RegressionGP</a>
+             ResponseName: 'Y'
+    CategoricalPredictors: []
+        ResponseTransform: 'none'
+          NumObservations: 49483
+           KernelFunction: 'SquaredExponential'
+        KernelInformation: [1×1 struct]
+            BasisFunction: 'Constant'
+                     Beta: 1.2291
+                    Sigma: 0.0451
+        PredictorLocation: []
+           PredictorScale: []
+                    Alpha: [2000×1 double]
+         ActiveSetVectors: [2000×7 double]
+            PredictMethod: 'FIC'
+            ActiveSetSize: 2000
+                FitMethod: 'SD'
+          ActiveSetMethod: 'Random'
+        IsActiveSetVector: [49483×1 logical]
+            LogLikelihood: 2.6756e+03
+         ActiveSetHistory: [1×1 struct]
+           BCDInformation: []
+
+
+  <a href="matlab: properties('RegressionGP')">Properties</a>, <a href="matlab: methods('RegressionGP')">Methods</a>
+
+input sigma = 0 J/m^2
+RMSE = 0.051566 J/m^2
+MAE = 0.037355 J/m^2
+C:\Users\sterg\Documents\GitHub\infer\code\interp\code\data\randOctParity\pcombs\gpr46883_gitID-f3b55c4_puuID-9334c352_kim-trainRepeat-testNoRepeat_meta.mat
+C:\Users\sterg\Documents\GitHub\infer\code\interp\code\data\randOctParity\pcombs\gpr46883_gitID-f3b55c4_puuID-9334c352_kim-trainRepeat-testNoRepeat.mat

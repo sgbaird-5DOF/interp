@@ -1,0 +1,177 @@
+datatype = kim
+method = nn
+get_octpairs 
+  0  5 10 15 20 25 30 35 40 45 50 55 60 65 70 75 80 85 90 95data\temp.mat
+get_octpairs 
+  0  5 10 15 20 25 30 35 40 45 50 55 60 65 70 75 80 85 90 95data\temp.mat
+ninputpts = 1000, npredpts = 1000
+<a href="matlab: opentoline('C:\Users\sterg\Documents\GitHub\infer\code\interp\code\interp5DOF.m',258,1)">258 </a>if brkQ
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+mean(y)
+
+ans =
+
+    1.1348
+
+if system_dependent('IsDebugMode')==1, dbstep; end
+<a href="matlab: opentoline('C:\Users\sterg\Documents\GitHub\infer\code\interp\code\interp5DOF.m',269,1)">269 </a>    switch noisetype
+if system_dependent('IsDebugMode')==1, dbstep; end
+<a href="matlab: opentoline('C:\Users\sterg\Documents\GitHub\infer\code\interp\code\interp5DOF.m',270,1)">270 </a>        case 'normal'
+if system_dependent('IsDebugMode')==1, dbstep; end
+<a href="matlab: opentoline('C:\Users\sterg\Documents\GitHub\infer\code\interp\code\interp5DOF.m',272,1)">272 </a>            y = y + abs(normrnd(0,sigma));
+if system_dependent('IsDebugMode')==1, dbstep; end
+<a href="matlab: opentoline('C:\Users\sterg\Documents\GitHub\infer\code\interp\code\interp5DOF.m',275,1)">275 </a>    end
+mean(y)
+
+ans =
+
+    1.6853
+
+sigm a
+{Unrecognized function or variable 'sigm'.
+} 
+sigma
+
+sigma =
+
+    0.2000
+
+mean(abs(normrnd(zeros(100,1),sigma))
+ mean(abs(normrnd(zeros(100,1),sigma))
+                                      ↑
+{Error: Invalid expression. When calling a function or indexing a variable, use parentheses. Otherwise, check for
+mismatched delimiters.
+} 
+mean(abs(normrnd(zeros(100,1),sigma)))
+
+ans =
+
+    0.1755
+
+abs(normrnd(zeros(100,1),sigma))
+
+ans =
+
+    0.0820
+    0.0555
+    0.2777
+    0.2076
+    0.2552
+    0.0174
+    0.1295
+    0.0405
+    0.2524
+    0.0408
+    0.1229
+    0.0870
+    0.1647
+    0.0392
+    0.3373
+    0.0371
+    0.1204
+    0.0853
+    0.1461
+    0.1470
+    0.1342
+    0.3324
+    0.1183
+    0.2870
+    0.0542
+    0.2489
+    0.2927
+    0.1714
+    0.0688
+    0.2815
+    0.0973
+    0.0182
+    0.3533
+    0.1957
+    0.3895
+    0.4205
+    0.0243
+    0.3814
+    0.0695
+    0.2553
+    0.1024
+    0.2112
+    0.0168
+    0.2496
+    0.1035
+    0.0661
+    0.0607
+    0.0180
+    0.1100
+    0.1797
+    0.1839
+    0.3817
+    0.0715
+    0.0595
+    0.1087
+    0.0664
+    0.1333
+    0.0052
+    0.0537
+    0.0318
+    0.4930
+    0.0500
+    0.1985
+    0.3936
+    0.0820
+    0.3436
+    0.2790
+    0.2712
+    0.1772
+    0.1483
+    0.1738
+    0.3533
+    0.0109
+    0.0307
+    0.1122
+    0.1506
+    0.0299
+    0.0697
+    0.1820
+    0.4493
+    0.1012
+    0.2773
+    0.1317
+    0.0561
+    0.0368
+    0.0826
+    0.1022
+    0.2559
+    0.2645
+    0.2940
+    0.0120
+    0.1568
+    0.0664
+    0.1378
+    0.0166
+    0.1100
+    0.3241
+    0.2273
+    0.3971
+    0.2410
+
+mean(y)
+
+ans =
+
+    1.6853
+
+if system_dependent('IsDebugMode')==1, dbquit all; end
+randOctParityData
+env = local
+dryrunQ = 0
+savecatQ = 1
+metaQ = 0
+default comment: kim-minrepeats4-trainsigma0.2-posnoise. Continue (y) or override (n)? y
+max_walltime = 59 minutes
+saving parameter file
