@@ -39,6 +39,9 @@ end
 %     mA = vertcat(five.nA).';
 % end
 
+pA = normr(pA);
+pB = normr(pB);
+
 npts = size(pB,1);
 
 if size(mA,1) == 1
