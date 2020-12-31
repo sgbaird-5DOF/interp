@@ -354,9 +354,12 @@ f2 = 1-f1;
 f1*rmse+f2*rmse2
 
 %% Arbitrary path through GB space
+%tunnelplot()
 
-
-
+%% Kim Interpolation
+fname = 'gpr46883_gitID-f3b55c4_puuID-f1940b1b_kim-exponential-rng11.mat';
+gprmix_test(fname)
+savefigpng(folder,'kim-interp')
 
 %% CODE GRAVEYARD
 %{
