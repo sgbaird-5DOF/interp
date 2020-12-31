@@ -105,6 +105,9 @@ if avgQ
     mechIDs(rmIDlist) = [];
     specIDs(rmIDlist) = [];
     
+    qlist(rmIDlist,:) = [];
+    nAlist(rmIDlist,:) = [];
+    
 else
     propList = propListFull;
     meshList = meshListFull;
