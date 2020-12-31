@@ -13,6 +13,7 @@ arguments
     NV.ytrue = [] %user-specified "true" values for error calculations
     NV.modelparsspec = struct()
     NV.brkQ(1,1) logical = true %whether to compute BRK values as ytrue
+    NV.sigma(1,1) double = 0 %noise to add to property values
     NV.mygpropts = struct.empty %for use with gpr methods 'gpr' or 'sphgpr'
     NV.r double = [] %for use with 'idw' method, alternatively set to [] for automatic estimation
     NV.uuid(1,8) char = get_uuid() %unique ID associated with this interpolation run
@@ -168,6 +169,8 @@ disp(['method = ' method])
 pgnum = NV.pgnum;
 brkQ = NV.brkQ;
 uuid = NV.uuid;
+ytrue = NV.ytrue;
+sigma = NV.sigma;
 
 % add relevant folders to path (by searching subfolders for functions)
 addpathdir({'normr.m','GB5DOF_setup.m','cu2qu.m','q2rod.m','five2oct.m',...
@@ -243,7 +246,7 @@ end
 %mesh
 mesh.pts = o;
 mesh.ppts = ppts;
-mesh.props = y;
+% mesh.props = y;
 mesh.npts = ninputpts;
 
 %data
@@ -251,22 +254,56 @@ data.pts = o2;
 data.ppts = ppts2;
 data.npts = npredpts;
 
-%data property values
-if isempty(NV.ytrue)
-    if brkQ
-        for i = 1:data.npts
-            om1 = qu2om(o2(i,1:4));
-            om2 = qu2om(o2(i,5:8));
-            data.props(i) = GB5DOF_setup(om1,om2,'Ni');
-        end
-    else
-        data.props = nan(size(ppts2,1),1);
+%mesh property values
+if brkQ
+    if ~isempty(y)
+        warning('overriding "y" values with BRK values')
     end
-else
-    data.props = NV.ytrue;
+    pA = o(:,1:4);
+    pB = o(:,5:8);
+    mA = [0 0 1];
+    y = GB5DOF_setup(pA,pB,mA,'Ni',epsijk);
+    
+    % add noise to BRK values
+    noisetype = 'normal';
+    switch noisetype
+        case 'normal'
+%             y = normrnd(y,sigma);
+            y = y + abs(normrnd(zeros(size(y)),sigma));
+        case 'uniform'
+            y = y + sigma*2*(rand(size(y))-0.5); %uniform
+    end
+    
+elseif isempty(y)
+    y = nan(size(ppts2,1),1);
 end
 
-ytrue = data.props;
+mesh.props = y;
+
+%data property values
+if brkQ
+    if ~isempty(ytrue)
+        warning('overriding "ytrue" values with BRK values')
+    end
+    pA = o2(:,1:4);
+    pB = o2(:,5:8);
+    mA = [0 0 1];
+    ytrue = GB5DOF_setup(pA,pB,mA,'Ni',epsijk);
+    
+    % add noise to BRK values if applicable
+    noisetype = 'normal';
+    switch noisetype
+        case 'normal'
+%             ytrue = normrnd(ytrue,sigma);
+            ytrue = ytrue + abs(normrnd(zeros(size(ytrue)),sigma));
+        case 'uniform'
+            ytrue = ytrue + sigma*2*(rand(size(ytrue))-0.5); %uniform
+    end
+    
+elseif isempty(ytrue)
+    ytrue = nan(size(ppts2,1),1);
+end
+data.props = ytrue;
 
 %% additional variables
 % current date and time
@@ -378,6 +415,7 @@ switch method
             thresh = Inf;
             if ninputpts <= thresh
                 PredictMethod = 'fic';
+                gpropts = {'KernelFunction','exponential'};
 %                 PredictMethod = 'exact';
 %                 gpropts = {'FitMethod','none','KernelFunction','exponential','Sigma',0.005,...
 %                     'ConstantSigma',true};
@@ -876,5 +914,27 @@ structcat = @(S1,S2) table2struct([struct2table(S1,'AsArray',true),struct2table(
            
  case {'rohrer-Ni-test','brk'}
                 mat = 'Ni';
+
+
+if ~isempty(y)
+    mesh.props = y;
+end
+if ~isempty(ytrue)
+    data.props = ytrue;
+end
+
+%     for i = 1:mesh.npts
+%         om1 = qu2om(o(i,1:4));
+%         om2 = qu2om(o(i,5:8));
+%         pA = o(i,1:4);
+%         pB
+%         y(i) = GB5DOF_setup(om1,om2,'Ni');
+%     end
+
+%     for i = 1:data.npts
+%         om1 = qu2om(o2(i,1:4));
+%         om2 = qu2om(o2(i,5:8));
+%         ytrue = GB5DOF_setup(om1,om2,'Ni');
+%     end
 
 %}
