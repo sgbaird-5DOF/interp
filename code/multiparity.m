@@ -1,6 +1,6 @@
 function multiparity(parity,ID,plottype,NV)
 arguments
-    parity(:,1) cell
+    parity(:,1)
     ID = 1:length(parity)
     plottype char {mustBeMember(plottype,{'hex','scatter'})} = 'hex'
     NV.charlblQ(1,1) logical = true
@@ -12,6 +12,14 @@ arguments
     NV.Interpreter char {mustBeMember(NV.Interpreter,{'tex','latex','none'})} = 'latex'
 end
 % MULTIPARITY  create tiled parity plots using cell parity data
+
+if ~iscell(parity)
+    if isscalar(parity)
+        parity = {parity};
+    else
+        error('parity should be a cell of structs or scalar struct (which then gets converted into a cell)')
+    end
+end
 
 if ~isempty(NV.titlelist)
     assert(~NV.autotitle,'if titlelist is specified, autotitle should be set to false')
@@ -26,16 +34,16 @@ switch nIDs
     case 1
         sz = [1 1];
     case 2
-        sz = [2 1];
+        sz = [1 2];
     case 3
-        sz = [3 1];
+        sz = [1 3];
     case 4
         sz = [2 2];
     otherwise
         sz = [];
 end
 if ~isempty(sz)
-    switch sz(2)
+    switch sz(1)
         case 1
             ht = 14.5838333333333/2;
         case 2
