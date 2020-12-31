@@ -41,21 +41,24 @@ switch datatype
         %load 5dof
         fname = 'Kim2011_Fe_oct_GBE.mat'; %produced via Kim2oct.m
         addpathdir({fname})
-        S = load(fname,'five','propList','mechIDs','specIDs');
+        S = load(fname,'five','propList','mechIDs','specIDs','meshList');
         
         %unpack
         fivetmp = S.five;
         mechIDs = S.mechIDs;
         specIDs = S.specIDs;
+        meshList = S.meshList;
+        propList = S.propList;
         
         q = vertcat(fivetmp.q);
         nA = vertcat(fivetmp.nA);
-        ytmp = S.propList;
-
+        ytmp = propList;
+        
+        nptsfull = length(propList);
         npts = ninputpts+npredpts;
         nspec = numel(specIDs);
         
-        kimpartitionNum = 3;
+        kimpartitionNum = 5;
         switch kimpartitionNum
             case 1
                 %include an equal number of mechpts and specpts, unless more than
@@ -89,13 +92,33 @@ switch datatype
                 id2 = mechIDs(p);
                 
             case 3
-                p = randperm(npts,npts);
+                %% train on repeats, but only test on repeats that don't appear in training data
+                %initial split into training and test
+                p = randperm(nptsfull,npts);
                 id1 = p(1:ninputpts);
                 id2 = p(ninputpts+1:end);
+                %get repeat IDs
+                [~,~,~,keepIDs,rmIDcell] = avgrepeats(meshList,propList);
+                
+                for i = 1:length(keepIDs)
+                    rmIDs = rmIDcell{i};
+                    keepID = keepIDs(i);
+                    if any(ismember(id1,[rmIDs,keepID]))
+                        %remove repeated GBs that are in training from test
+                        id2 = setdiff(id2,[rmIDs,keepID]);
+                        % place extras from test back into training
+                        id1 = union(id1,[rmIDs,keepID]);
+                    end
+                end
                 
             case 4
                 id1 = mechIDs(p);
                 id2 = specIDs;
+                
+            case 5
+                p = randperm(npts,npts);
+                id1 = p(1:ninputpts);
+                id2 = p(ninputpts+1:end);
         end
         
         %split 5dof parameters
@@ -175,13 +198,13 @@ switch datatype
         
 end
 
-noisetype = 'normal';
-switch noisetype
-    case 'normal'
-        y = normrnd(y,sigma);
-    case 'uniform'
-        y = y + sigma*2*(rand(size(y))-0.5); %uniform
-end
+% noisetype = 'normal';
+% switch noisetype
+%     case 'normal'
+%         y = normrnd(y,sigma);
+%     case 'uniform'
+%         y = y + sigma*2*(rand(size(y))-0.5); %uniform
+% end
 
 %unpack
 qm = vertcat(five.q);
@@ -197,10 +220,10 @@ for k = 1:K
             % use octonions obtained via GBlab2oct
             [qm,nA,qm2,nA2]=deal([]);
             [ypredlist{k},interpfnlist{k},mdllist{k},mdlparslist{k}] = interp5DOF(qm,nA,y,qm2,nA2,method,...
-                'pgnum',pgnum,'uuid',uuid,'ytrue',ytrue,'o',o,'o2',o2,'brkQ',brkQ);
+                'pgnum',pgnum,'uuid',uuid,'ytrue',ytrue,'o',o,'o2',o2,'brkQ',brkQ,'sigma',sigma);
         otherwise
             [ypredlist{k},interpfnlist{k},mdllist{k},mdlparslist{k}] = interp5DOF(qm,nA,y,qm2,nA2,method,...
-                'pgnum',pgnum,'uuid',uuid,'ytrue',ytrue,'brkQ',brkQ);
+                'pgnum',pgnum,'uuid',uuid,'ytrue',ytrue,'brkQ',brkQ,'sigma',sigma);
     end
 end
 ypredtmp = [ypredlist{:}];
@@ -400,4 +423,10 @@ structcat = @(S1,S2,S3) ...
 
 %         nmech = nspec;
 %         p = randperm(numel(mechIDs),npts);
+
+%                 ninputpts = numel(id1);
+%                 npredpts = numel(id2);
+%                 disp(['updated ninputpts: ' int2str(numel(id1))])
+%                 disp(['updated npredpts: ' int2str(numel(id2))])
+%                 id2 = setdiff(p,[id1,rmIDs,keepIDs]);
 %}
