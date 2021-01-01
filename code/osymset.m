@@ -3,9 +3,9 @@ arguments
     qA(1,4) double {mustBeNumeric,mustBeFinite}
     qB(1,4) double {mustBeNumeric,mustBeFinite}
     Spairs(:,8) double {mustBeNumeric} = get_sympairs(32,false) %default to cubic Oh symmetry
-    grainexchangeQ(1,1) logical {mustBeA(grainexchangeQ,'logical')} = false
-    doublecoverQ(1,1) logical {mustBeA(doublecoverQ,'logical')} = false
-    uniqueQ(1,1) logical {mustBeA(uniqueQ,'logical')} = false
+    grainexchangeQ(1,1) logical {mustBeLogical} = false
+    doublecoverQ(1,1) logical {mustBeLogical} = false
+    uniqueQ(1,1) logical {mustBeLogical} = false
     epsijk(1,1) double {mustBeInteger} = 1
 end
 % OSYMSET  get symmetrically equivalent octonions
