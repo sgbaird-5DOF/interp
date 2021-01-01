@@ -357,8 +357,7 @@ f1*rmse+f2*rmse2
 %tunnelplot()
 
 %% Kim GPR Mixture Interpolation, Teaching
-fname = 'gpr46883_gitID-233ae6e_puuID-5690bda0_kim-exponential-rng11.mat';
-[ypred,ysd,ytrue] = gprmix_test(fname);
+[ypred,ysd,ytrue] = gprmix_test();
 savefigpng(folder,'kim-interp-teach')
 
 %% Kim GPR Mixture Final Result
