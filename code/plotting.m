@@ -13,7 +13,7 @@ disp('file loaded')
 
 %saving
 files = dir(fullfile('**','interp5DOF-paper','figures'));
-folder = files(1).folder;
+figfolder = files(1).folder;
 
 addpathdir({'paperfigure.m','dist-parity.mat','olm_octonion_list.txt',...
     'oct50000.mat','gmat2q.m','PGnames.mat','var_names.m'})
@@ -56,7 +56,7 @@ for datatype = datatypelist
             sgtitle(['nmeshpts = ' int2str(nmeshpts)])
         end
         
-        savefigpng(folder,[char(datatype) 'parity' int2str(nmeshpts)]);
+        savefigpng(figfolder,[char(datatype) 'parity' int2str(nmeshpts)]);
     end
 end
 
@@ -71,7 +71,7 @@ for datatype = datatypelist
     multixyplots(tbltmp,methodlist,'nmeshpts',ytypes,1,2,'ymin',0,...
         'lgdloc','southwest','ytypelbls',ytypelbls,'xytypelbls',xytypelbls)
     %saving
-    savefigpng(folder,[char(datatype) 'error'])
+    savefigpng(figfolder,[char(datatype) 'error'])
 end
 
 %% timing
@@ -97,7 +97,7 @@ ax.YScale = 'log';
 ax.Legend.Location = 'southeast';
 % stackedplot
 %saving
-savefigpng(folder,'runtime');
+savefigpng(figfolder,'runtime');
 
 %% Runtime Table
 % the data is too varied and a log-log plot is too misleading. Going with table instead.
@@ -145,7 +145,7 @@ errorbar(ID,nnmu,nnsigma);
 set(gca,'XScale','log');
 xlabel('VFZO Set Size','Interpreter','latex')
 ylabel('VFZO $\omega_{\mathrm{NN}}$ ($^{\circ}$)','Interpreter','latex')
-savefigpng(folder,'nndist-vs-setsize');
+savefigpng(figfolder,'nndist-vs-setsize');
 
 %% arclength vs. euclidean distance parity
 % addpathdir({'get_five.m','cu2qu.m','GBfive2oct.m','gmat2q.m','distance-parity.mat'})
@@ -170,7 +170,7 @@ parityplot(pd1,pd3,'scatter','cscale','linear','xname','Euclidean Distance',...
 
 %saving
 % savefigpng(folder,fname);
-fpath = fullfile(folder,fname);
+fpath = fullfile(figfolder,fname);
 print(fpath,'-dpng','-r300')
 
     
@@ -241,7 +241,7 @@ end
 klbls = cellfun(@char,num2cell(string(nptslist)),'UniformOutput',false);
 lbls = strcat(klbls,'-');
 lbls{end}(end) = []; %remove last '-'
-savefigpng(folder,['dist-ensemble-k' lbls{:}])
+savefigpng(figfolder,['dist-ensemble-k' lbls{:}])
 
 paperfigure()
 enstbl = struct2table(structvertcat(errmetrics{:})); %ensemble table
@@ -252,7 +252,7 @@ ylabel('Error ($^{\circ}$)','Interpreter','latex')
 hold on
 plot(enstbl.ksize,enstbl.mae,'-*')
 legend('RMSE','MAE','Interpreter','latex')
-savefigpng(folder,['dist-ensemble-rmse-mae'])
+savefigpng(figfolder,['dist-ensemble-rmse-mae'])
 
 %% Ensemble Interpolation
 paperfigure(2,2)
@@ -268,7 +268,7 @@ parityplot(ytrue,min([ypredlist{:}],[],2),'hex')
 nexttile
 title('max')
 parityplot(ytrue,max([ypredlist{:}],[],2),'hex')
-savefigpng(folder,'ensemble-interp')
+savefigpng(figfolder,'ensemble-interp')
 
 %% distance parity (3D)
 % pts = normr(rand(388,3)-0.5);
@@ -314,13 +314,13 @@ ylabel(ylbl,'Interpreter','latex','FontSize',12)
 papertext(2)
 
 % savefigpng(folder,['knnhist',int2str(npts)])
-savefigpng(folder,['nnhist-knn-',int2str(npts)])
+savefigpng(figfolder,['nnhist-knn-',int2str(npts)])
 
 %% barycentric methods
 proj_down_test(1)
-savefigpng(folder,'bary-remove-deg',[130.5 19.5 1886 572])
+savefigpng(figfolder,'bary-remove-deg',[130.5 19.5 1886 572])
 proj_down_test(2)
-savefigpng(folder,'bary-delaunay',[131.5 7.5 1872 432])
+savefigpng(figfolder,'bary-delaunay',[131.5 7.5 1872 432])
 
 %% voronoi example
 addpathdir('PGnames.mat')
@@ -330,13 +330,13 @@ toBPFZ_test(1)
 % nexttile
 % toBPFZ_test(4)
 fname = 'voronoi';
-savefigpng(folder,fname,[178.5 41.5 1755 784])
+savefigpng(figfolder,fname,[178.5 41.5 1755 784])
 % savefigpng(folder,'voronoi-4NN')
 
 %% bary interp
 sphbary_test()
 fname = 'bary-interp';
-savefigpng(folder,fname,'crop',[242.5 351.5 609 393])
+savefigpng(figfolder,fname,'crop',[242.5 351.5 609 393])
 % fpath = fullfile(folder,[fname,'.png']);
 % I = imread(fpath);
 % imshow(I)
@@ -358,12 +358,12 @@ f1*rmse+f2*rmse2
 
 %% Kim GPR Mixture Interpolation, Teaching
 [ypred,ysd,ytrue] = gprmix_test();
-savefigpng(folder,'kim-interp-teach')
+savefigpng(figfolder,'kim-interp-teach')
 
 %% Kim GPR Mixture Final Result
 paperfigure();
 parityplot(ytrue,ypred);
-savefigpng(folder,'kim-interp')
+savefigpng(figfolder,'kim-interp')
 
 %% GPR Mixture Sigmoid Function
 paperfigure();
@@ -376,7 +376,7 @@ ylim([0 1])
 xlabel('GBE ($J m^{-2}$)','Interpreter','latex')
 ylabel('Mixing fraction (f)','Interpreter','latex')
 axis square
-savefigpng(folder,'gprmix-sigmoid')
+savefigpng(figfolder,'gprmix-sigmoid')
 
 %% CODE GRAVEYARD
 %{
