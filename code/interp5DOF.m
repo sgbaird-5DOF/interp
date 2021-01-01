@@ -173,6 +173,7 @@ ytrue = NV.ytrue;
 sigma = NV.sigma;
 
 % add relevant folders to path (by searching subfolders for functions)
+addpath(genpath('.'))
 % addpathdir({'normr.m','GB5DOF_setup.m','cu2qu.m','q2rod.m','five2oct.m',...
 %     'correctdis.m','interp_gpr.m'})
 
