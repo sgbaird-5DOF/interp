@@ -52,9 +52,12 @@ end
 
 aa = acube*(2*G-1); %center grid about [0,0,0] and scale grid
 
+% poolobj = gcp;
+% addAttachedFiles(poolobj,{'cu2qu.m','cu2ho.m','ho2qu.m','ho2ax.m','ax2qu.m','GetPyramid.m'})
+
 %convert to quaternion
 q = zeros(n,4);
-for i = 1:n
+parfor i = 1:n
 	q(i,:) = cu2qu(aa(i,:)); %vectorization possible
 end
 
