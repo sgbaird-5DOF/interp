@@ -70,7 +70,6 @@ end
 
 %----------------------CUSTOM VALIDATION FUNCTIONS-------------------------
 function mustBeNonNegIntegerOrEmpty(arg)
-disp('mustBeNonNegIntegerOrEmpty')
 errmsg = 'must be non-neg integer or empty []';
 if ~isempty(arg)
 	if floor(arg) ~= arg
