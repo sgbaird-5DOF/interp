@@ -16,6 +16,7 @@ if (max(abs(xyz)) > ((pi^(2/3)/2.0)+1e-8))
 end
 
 % determine which pyramid pair the point lies in and copy coordinates in correct order (see paper)
+disp('GetPyramid')
 p = GetPyramid(xyz);
 if (p==1) || (p==2)
     sXYZ = xyz;

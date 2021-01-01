@@ -1,7 +1,9 @@
 % from cubochoric to quaternions
 
 function q = cu2qu(c)
+disp('cu2ho')
 h = cu2ho(c);
+disp('ho2qu')
 q = ho2qu(h);
 
 % set values very close to 0 as 0
