@@ -65,7 +65,8 @@ end
 % comment = 'kim-minrepeats5-trainsigma0.2-posnoise';
 % comment = 'kim-rng11';
 % comment = 'paper-data3';
-comment = 'test';
+comment = 'paper-data4';
+% comment = 'test';
 % comment = 'kim-trainRepeat-testNoRepeat';
 % comment = 'rohrer';
 % comment = 'kim-paper-data-equal-sig0.005-exact-exact';
