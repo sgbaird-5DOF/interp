@@ -14,7 +14,7 @@ nreps = 1; % number of runs or repetitions
 % job submission environment
 env = 'local'; %'slurm', 'local'
 %whether to skip running the jobs and just compile results
-dryrunQ = F;
+dryrunQ = T;
 metaQ = F; %whether to load full model or only metay-data at end
 
 %make sure the parameters here correspond with the input to "pars" below
@@ -63,7 +63,7 @@ end
 % comment = 'kim-minrepeats2-trainsigma0.2';
 % comment = 'kim-minrepeats2-traintestsigma0.2';
 % comment = 'kim-minrepeats5-trainsigma0.2-posnoise';
-comment = 'kim-exponential-rng11';
+comment = 'kim-rng11';
 % comment = 'kim-trainRepeat-testNoRepeat';
 % comment = 'rohrer';
 % comment = 'kim-paper-data-equal-sig0.005-exact-exact';
