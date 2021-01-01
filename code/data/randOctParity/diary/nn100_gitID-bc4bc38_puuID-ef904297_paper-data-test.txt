@@ -1,0 +1,24 @@
+datatype = brk
+get_five
+GB5DOF_setup
+unpack
+interp5DOF
+method = nn
+get_octpairs 
+  1  6 11 16 21 26 31 36 41 46 51 56 61 66 71 76 81 86 91 96data/temp.mat
+get_octpairs 
+  0  5 10 15 20 25 30 35 40 45 50 55 60 65 70 75 80 85 90 95data/temp.mat
+ninputpts = 100, npredpts = 10000
+[Warning: Working directory not clean (i.e. uncommitted/unpushed) files exist. Use !git commit -am "<message>", then !git push] 
+[> In get_gitcommit (line 15)
+  In interp5DOF (line 316)
+  In interp5DOF_setup (line 230)
+  In randOctParityData>@(ninputpts,npredpts,method,datatype,pgnum,sigma,genseed,brkQ)interp5DOF_setup(ninputpts,npredpts,method,datatype,'pgnum',pgnum,'sigma',sigma,'genseed',genseed,'brkQ',brkQ) (line 152)
+  In exec_argfn (line 50)
+  In exec_combs (line 64)
+  In randOctParityData (line 180)] 
+input sigma = 0 J/m^2
+RMSE = 0.13837 J/m^2
+MAE = 0.098193 J/m^2
+/lustre/scratch/usr/sbaird9/sgbaird-5dof/infer/code/interp/code/data/randOctParity/pcombs/nn100_gitID-bc4bc38_puuID-ef904297_paper-data-test_meta.mat
+/lustre/scratch/usr/sbaird9/sgbaird-5dof/infer/code/interp/code/data/randOctParity/pcombs/nn100_gitID-bc4bc38_puuID-ef904297_paper-data-test.mat

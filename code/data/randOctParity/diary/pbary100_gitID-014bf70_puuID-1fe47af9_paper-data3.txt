@@ -1,0 +1,28 @@
+datatype = kim
+method = pbary
+get_octpairs 
+  1  6 11 16 21 26 31 36 41 46 51 56 61 66 71 76 81 86 91 96data/temp.mat
+{Error using save
+Unable to write file data/temp.mat: Input/output error.
+
+Error in get_octpairs (line 90)
+save(savepath,'pts','oref','octvtx')
+
+Error in interp5DOF (line 201)
+[o,oref] = get_octpairs(otmp,'wtol',wtol,'pgnum',pgnum,'oref',NV.oref);
+
+Error in interp5DOF_setup (line 225)
+            [ypredlist{k},interpfnlist{k},mdllist{k},mdlparslist{k}] =
+            interp5DOF(qm,nA,y,qm2,nA2,method,...
+
+Error in
+randOctParityData>@(ninputpts,npredpts,method,datatype,pgnum,sigma,genseed,brkQ)interp5DOF_setup(ninputpts,npredpts,method,datatype,'pgnum',pgnum,'sigma',sigma,'genseed',genseed,'brkQ',brkQ)
+(line 151)
+        interp5DOF_setup(ninputpts,npredpts,method,datatype,...
+
+Error in exec_argfn (line 50)
+[argout{:}] = fn(argvals{:});
+
+Error in exec_combs (line 64)
+    out = exec_argfn(execfn,parcombs,argoutnames);
+} 

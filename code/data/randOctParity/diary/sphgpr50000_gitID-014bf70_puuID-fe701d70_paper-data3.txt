@@ -1,0 +1,89 @@
+datatype = brk
+method = sphgpr
+get_octpairs 
+  0  5 10 15 20 25 30 35 40 45 50 55 60 65 70 75 80 85 90 95data/temp.mat
+get_octpairs 
+  0  5 10 15 20 25 30 35 40 45 50 55 60 65 70 75 80 85 90 95data/temp.mat
+ninputpts = 50000, npredpts = 10000
+[Warning: Working directory not clean (i.e. uncommitted/unpushed) files exist.
+Use !git commit -am "<message>", then !git push] 
+[> In get_gitcommit (line 15)
+  In interp5DOF (line 315)
+  In interp5DOF_setup (line 225)
+  In randOctParityData>@(ninputpts,npredpts,method,datatype,pgnum,sigma,genseed,brkQ)interp5DOF_setup(ninputpts,npredpts,method,datatype,'pgnum',pgnum,'sigma',sigma,'genseed',genseed,'brkQ',brkQ) (line 151)
+  In exec_argfn (line 50)
+  In exec_combs (line 64)] 
+{Error using pdist2 (line 672)
+Error evaluating distance function 'get_omega'.
+
+Error in
+interp5DOF>@(XN,XM,theta)(exp(theta(2))^2)*exp(-(pdist2(XN,XM,@get_omega).^2)/(2*exp(theta(1))^2))
+(line 443)
+                kfcn = @(XN,XM,theta)
+                (exp(theta(2))^2)*exp(-(pdist2(XN,XM,@get_omega).^2)/(2*exp(theta(1))^2));
+
+Error in classreg.learning.gputils.CustomKernel/makeKernelAsFunctionOfTheta/f
+(line 138)
+                KNM = customFcn(XN,XM,theta);
+
+Error in
+classreg.learning.impl.GPImpl/makeNegativeProfiledLogLikelihoodExact/f1 (line
+975)
+                [V,DK]       = kfcn(theta);
+
+Error in classreg.learning.gputils.fminqn (line 214)
+                        f     = fun(x);
+
+Error in classreg.learning.impl.GPImpl/doMinimization (line 3013)
+                        [phiHat,fHat,~,exitFlag] =
+                        classreg.learning.gputils.fminqn(objFun,phi0,'Options',opts,'InitialStepSize',initialStepSize);
+
+Error in classreg.learning.impl.GPImpl/estimateThetaHatSigmaHatExact (line 860)
+                [phiHat,nloglikHat,cause] =
+                doMinimization(this,objFun,phi0,haveGrad);
+
+Error in classreg.learning.impl.GPImpl/doFitMethodSD (line 476)
+                        [theta,sigma,loglik]                     =
+                        estimateThetaHatSigmaHatExact(this,XA,yA,beta,theta,sigma);
+
+Error in classreg.learning.impl.GPImpl/doFit (line 371)
+                    this = doFitMethodSD(this);
+
+Error in classreg.learning.impl.GPImpl.make (line 268)
+            this = doFit(this);
+
+Error in RegressionGP (line 277)
+            this.Impl = classreg.learning.impl.GPImpl.make(...
+
+Error in classreg.learning.FitTemplate/fit (line 263)
+            [varargout{1:nargout}] =
+            this.MakeFitObject(X,Y,W,this.ModelParams,fitArgs{:});
+
+Error in RegressionGP.fit (line 308)
+            this = fit(temp,X,Y);
+
+Error in fitrgp (line 469)
+    obj = RegressionGP.fit(X,Y,RemainingArgs{:});
+
+Error in interp5DOF (line 492)
+            gprMdl = fitrgp(X,y,gpropts{:}) %#ok<NOPRT>
+
+Error in interp5DOF_setup (line 225)
+            [ypredlist{k},interpfnlist{k},mdllist{k},mdlparslist{k}] =
+            interp5DOF(qm,nA,y,qm2,nA2,method,...
+
+Error in
+randOctParityData>@(ninputpts,npredpts,method,datatype,pgnum,sigma,genseed,brkQ)interp5DOF_setup(ninputpts,npredpts,method,datatype,'pgnum',pgnum,'sigma',sigma,'genseed',genseed,'brkQ',brkQ)
+(line 151)
+        interp5DOF_setup(ninputpts,npredpts,method,datatype,...
+
+Error in exec_argfn (line 50)
+[argout{:}] = fn(argvals{:});
+
+Error in exec_combs (line 64)
+    out = exec_argfn(execfn,parcombs,argoutnames);
+
+Caused by:
+    Error using get_omega
+    Invalid input argument at position 1. Value must be 8-column matrix.
+} 

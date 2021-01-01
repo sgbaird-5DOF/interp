@@ -1,0 +1,38 @@
+datatype = brk
+method = gpr
+get_octpairs 
+  0  5 10 15 20 25 30 35 40 45 50 55 60 65 70 75 80 85 90 95data/temp.mat
+get_octpairs 
+  0  5 10 15 20 25 30 35 40 45 50 55 60 65 70 75 80 85 90 95data/temp.mat
+nmeshpts = 500, ndatapts = 1000
+
+gprMdl = 
+
+  RegressionGP
+             ResponseName: 'Y'
+    CategoricalPredictors: []
+        ResponseTransform: 'none'
+          NumObservations: 500
+           KernelFunction: 'SquaredExponential'
+        KernelInformation: [1x1 struct]
+            BasisFunction: 'Constant'
+                     Beta: 1.1616
+                    Sigma: 0.0445
+        PredictorLocation: []
+           PredictorScale: []
+                    Alpha: [500x1 double]
+         ActiveSetVectors: [500x8 double]
+            PredictMethod: 'FIC'
+            ActiveSetSize: 500
+                FitMethod: 'Exact'
+          ActiveSetMethod: 'Random'
+        IsActiveSetVector: [500x1 logical]
+            LogLikelihood: 492.1963
+         ActiveSetHistory: [1x1 struct]
+           BCDInformation: []
+
+
+RMSE = 0.08355 J/m^2
+MAE = 0.059841 J/m^2
+/lustre/scratch/usr/sbaird9/sgbaird-5dof/infer/code/interp/code/data/randOctParity/pcombs/gpr500_gitID-e94b9ec_puuID-1c5a57b8_gpr-fic-full_meta.mat
+/lustre/scratch/usr/sbaird9/sgbaird-5dof/infer/code/interp/code/data/randOctParity/pcombs/gpr500_gitID-e94b9ec_puuID-1c5a57b8_gpr-fic-full.mat
