@@ -1,8 +1,8 @@
 % from homochoric to quaternions
 
 function q = ho2qu(h)
-disp('ho2qu')
-q = ax2qu(ho2ax(h));
+ax = ho2ax(h);
+q = ax2qu(ax);
 
 % set values very close to 0 as 0
 thr = 1e-8;

@@ -1,7 +1,6 @@
 % from cubochoric to homochoric
 
 function q = cu2ho(xyz)
-disp('cu2ho')
 % rs = sqrt(sum(xyz.*xyz));
 R1 = (3*pi/4)^(1/3);
 aa = ((pi^5)/6)^(1/6);

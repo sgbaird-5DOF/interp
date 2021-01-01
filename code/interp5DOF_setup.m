@@ -132,7 +132,6 @@ switch datatype
         ytrue = ytmp(id2);
         
     case 'brk'
-        disp('get_five')
         %random 5dof parameters
         five = get_five(ninputpts);
         five2 = get_five(npredpts);

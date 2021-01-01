@@ -1,8 +1,8 @@
 % from cubochoric to quaternions
 
 function q = cu2qu(c)
-disp('cu2qu')
-q = ho2qu(cu2ho(c));
+h = cu2ho(c);
+q = ho2qu(h);
 
 % set values very close to 0 as 0
 thr = 1e-10;
