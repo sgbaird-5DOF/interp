@@ -3,9 +3,9 @@ arguments
 	oct(:,8) double {mustBeFinite,mustBeReal,mustBeSqrt2Norm}
 	pgnum(1,1) double {mustBeInteger} = 32 %default to Oh cubic point group
 	usv = struct
-	grainexchangeQ(1,1) logical {mustBeLogical} = false
-	doublecoverQ(1,1) logical {mustBeLogical} = false
-    uniqueQ(1,1) logical {mustBeLogical} = false
+	grainexchangeQ(1,1) logical {mustBeA(grainexchangeQ,'logical')} = false
+	doublecoverQ(1,1) logical {mustBeA(doublecoverQ,'logical')} = false
+    uniqueQ(1,1) logical {mustBeA(uniqueQ,'logical')} = false
     epsijk(1,1) double {mustBeInteger} = 1
 end
 % OSYMSETS  Get symmetrically equivalent octonions (osymsets) for each octonion in a list of octonions
