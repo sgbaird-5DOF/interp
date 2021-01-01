@@ -1,7 +1,7 @@
 % from homochoric to quaternions
 
 function q = ho2qu(h)
-
+disp('ho2qu')
 q = ax2qu(ho2ax(h));
 
 % set values very close to 0 as 0
