@@ -9,7 +9,7 @@ arguments
     NV.uuid = get_uuid()
     NV.K(1,1) double = 1 %# of VFZO ensembles
     NV.sigma(1,1) double = 0 %mJ/m^2, standard deviation to add to y
-    NV.genseed(1,1) double = []
+    NV.genseed = []
     NV.brkQ(1,1) double = false
 end
 %INTERP5DOF_SETUP  setup for interpolating five-degree-of-freedom property
