@@ -31,7 +31,6 @@ end
 %
 % Date: 2020-07-25
 %--------------------------------------------------------------------------
-disp('start')
 if strcmp(method,'uniform') && isempty(sidelength)
 	sidelength = ceil(n^(1/3)); % auto-calculate sidelength
 elseif isempty(n)
@@ -53,7 +52,7 @@ end
 
 aa = acube*(2*G-1); %center grid about [0,0,0] and scale grid
 
-disp('cu2qu')
+disp('cu2qu loop')
 %convert to quaternion
 q = zeros(n,4);
 for i = 1:n
