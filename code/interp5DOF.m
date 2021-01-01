@@ -397,7 +397,6 @@ switch method
             
             %model-specific parameters
             mdlparsspec = NV.modelparsspec;
-            
         end
         
     case {'sphgpr','gpr'}
@@ -415,7 +414,7 @@ switch method
             thresh = Inf;
             if ninputpts <= thresh
                 PredictMethod = 'fic';
-                gpropts = {'KernelFunction','exponential'};
+%                 gpropts = {'KernelFunction','exponential'};
 %                 PredictMethod = 'exact';
 %                 gpropts = {'FitMethod','none','KernelFunction','exponential','Sigma',0.005,...
 %                     'ConstantSigma',true};
