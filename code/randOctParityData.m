@@ -9,7 +9,7 @@ F = false;
 %octochorically sampled octonions
 addpathdir({'var_names.m','writeparfile.m','walltimefns'})
 runtype = 'full'; %'test','full'
-nreps = 10; % number of runs or repetitions
+nreps = 1; % number of runs or repetitions
 
 % job submission environment
 env = 'slurm'; %'slurm', 'local'
@@ -32,7 +32,7 @@ switch runtype
     case 'full'
         ninputpts = [100 388 500 1000 5000 10000 20000 50000]; % 388, 500, 1000, 2000, 5000, 10000, 20000, 50000
         npredpts = 10000;
-        method = {'sphgpr','gpr','sphbary','pbary','nn','avg','idw'}; % 'sphbary', 'pbary', 'gpr', 'sphgpr', 'nn', 'avg'
+        method = {'gpr','pbary','nn','avg','idw'}; % 'sphbary', 'pbary', 'gpr', 'sphgpr', 'nn', 'avg', 'idw'
         datatype = {'brk'};
         pgnum = 32; %m-3m (i.e. m\overbar{3}m) FCC symmetry default for e.g. Ni
         sigma = [0]; %mJ/m^2, standard deviation, added to "y"
@@ -65,7 +65,7 @@ end
 % comment = 'kim-minrepeats5-trainsigma0.2-posnoise';
 % comment = 'kim-rng11';
 % comment = 'paper-data3';
-comment = 'paper-data4';
+comment = 'paper-data-test';
 % comment = 'test';
 % comment = 'kim-trainRepeat-testNoRepeat';
 % comment = 'rohrer';
