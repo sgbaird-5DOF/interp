@@ -1,0 +1,58 @@
+datatype = brk
+get_five
+get_cubo
+mustBeNonNegIntegerOrEmpty
+mustBeNonNegIntegerOrEmpty
+start
+cu2qu
+normr
+var_names
+get_cubo
+mustBeNonNegIntegerOrEmpty
+mustBeNonNegIntegerOrEmpty
+start
+cu2qu
+normr
+var_names
+mustBeNonNegIntegerOrEmpty
+mustBeNonNegIntegerOrEmpty
+start
+cu2qu
+method = gpr
+get_octpairs 
+  0  5 10 15 20 25 30 35 40 45 50 55 60 65 70 75 80 85 90 95data/temp.mat
+get_octpairs 
+  0  5 10 15 20 25 30 35 40 45 50 55 60 65 70 75 80 85 90 95data/temp.mat
+ninputpts = 500, npredpts = 10000
+
+gprMdl = 
+
+  RegressionGP
+             ResponseName: 'Y'
+    CategoricalPredictors: []
+        ResponseTransform: 'none'
+          NumObservations: 500
+           KernelFunction: 'SquaredExponential'
+        KernelInformation: [1x1 struct]
+            BasisFunction: 'Constant'
+                     Beta: 1.1233
+                    Sigma: 0.0195
+        PredictorLocation: []
+           PredictorScale: []
+                    Alpha: [500x1 double]
+         ActiveSetVectors: [500x7 double]
+            PredictMethod: 'FIC'
+            ActiveSetSize: 500
+                FitMethod: 'Exact'
+          ActiveSetMethod: 'Random'
+        IsActiveSetVector: [500x1 logical]
+            LogLikelihood: 622.2641
+         ActiveSetHistory: [1x1 struct]
+           BCDInformation: []
+
+
+input sigma = 0 J/m^2
+RMSE = 0.058202 J/m^2
+MAE = 0.038382 J/m^2
+/lustre/scratch/usr/sbaird9/sgbaird-5dof/infer/code/interp/code/data/randOctParity/pcombs/gpr500_gitID-f402ad1_puuID-fdc78c75_paper-data-test_meta.mat
+/lustre/scratch/usr/sbaird9/sgbaird-5dof/infer/code/interp/code/data/randOctParity/pcombs/gpr500_gitID-f402ad1_puuID-fdc78c75_paper-data-test.mat

@@ -1,0 +1,12 @@
+datatype = brk
+method = avg
+get_octpairs 
+  0  5 10 15 20 25 30 35 40 45 50 55 60 65 70 75 80 85 90 95data/temp.mat
+get_octpairs 
+  0  5 10 15 20 25 30 35 40 45 50 55 60 65 70 75 80 85 90 95data/temp.mat
+ninputpts = 10000, npredpts = 10000
+input sigma = 0 J/m^2
+RMSE = 0.13066 J/m^2
+MAE = 0.097229 J/m^2
+/lustre/scratch/usr/sbaird9/sgbaird-5dof/infer/code/interp/code/data/randOctParity/pcombs/avg10000_gitID-db55e51_puuID-ae895c06_paper-data4_meta.mat
+/lustre/scratch/usr/sbaird9/sgbaird-5dof/infer/code/interp/code/data/randOctParity/pcombs/avg10000_gitID-db55e51_puuID-ae895c06_paper-data4.mat

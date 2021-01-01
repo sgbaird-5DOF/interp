@@ -1,0 +1,34 @@
+datatype = brk
+get_five
+get_cubo
+mustBeNonNegIntegerOrEmpty
+mustBeNonNegIntegerOrEmpty
+start
+cu2qu
+normr
+var_names
+get_cubo
+mustBeNonNegIntegerOrEmpty
+mustBeNonNegIntegerOrEmpty
+start
+cu2qu
+normr
+var_names
+mustBeNonNegIntegerOrEmpty
+mustBeNonNegIntegerOrEmpty
+start
+cu2qu
+method = avg
+get_octpairs 
+  0  5 10 15 20 25 30 35 40 45 50 55 60 65 70 75 80 85 90 95data/temp.mat
+get_octpairs 
+  0  5 10 15 20 25 30 35 40 45 50 55 60 65 70 75 80 85 90 95nids: 1
+        1293
+
+data/temp.mat
+ninputpts = 20000, npredpts = 10000
+input sigma = 0 J/m^2
+RMSE = 0.13192 J/m^2
+MAE = 0.096882 J/m^2
+/lustre/scratch/usr/sbaird9/sgbaird-5dof/infer/code/interp/code/data/randOctParity/pcombs/avg20000_gitID-f402ad1_puuID-d3113e93_paper-data-test_meta.mat
+/lustre/scratch/usr/sbaird9/sgbaird-5dof/infer/code/interp/code/data/randOctParity/pcombs/avg20000_gitID-f402ad1_puuID-d3113e93_paper-data-test.mat

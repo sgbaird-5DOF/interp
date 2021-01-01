@@ -1,0 +1,20 @@
+datatype = kim
+method = nn
+get_octpairs 
+  0  5 10 15 20 25 30 35 39 44 49 54 59 64 69 74 79 84 88 93data/temp.mat
+get_octpairs 
+  0  5 10 15 20 25 30 35 40 45 50 55 60 65 70 75 80 85 90 95data/temp.mat
+ninputpts = 388, npredpts = 10000
+[Warning: Working directory not clean (i.e. uncommitted/unpushed) files exist.
+Use !git commit -am "<message>", then !git push] 
+[> In get_gitcommit (line 15)
+  In interp5DOF (line 315)
+  In interp5DOF_setup (line 225)
+  In randOctParityData>@(ninputpts,npredpts,method,datatype,pgnum,sigma,genseed,brkQ)interp5DOF_setup(ninputpts,npredpts,method,datatype,'pgnum',pgnum,'sigma',sigma,'genseed',genseed,'brkQ',brkQ) (line 151)
+  In exec_argfn (line 50)
+  In exec_combs (line 64)] 
+input sigma = 0 J/m^2
+RMSE = 0.10034 J/m^2
+MAE = 0.069834 J/m^2
+/lustre/scratch/usr/sbaird9/sgbaird-5dof/infer/code/interp/code/data/randOctParity/pcombs/nn388_gitID-014bf70_puuID-b32c4e88_paper-data3_meta.mat
+/lustre/scratch/usr/sbaird9/sgbaird-5dof/infer/code/interp/code/data/randOctParity/pcombs/nn388_gitID-014bf70_puuID-b32c4e88_paper-data3.mat

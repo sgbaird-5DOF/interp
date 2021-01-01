@@ -1,0 +1,12 @@
+datatype = brk
+method = nn
+get_octpairs 
+  0  5 10 15 20 25 30 35 40 45 50 55 60 65 70 75 80 85 90 95data/temp.mat
+get_octpairs 
+  0  5 10 15 20 25 30 35 40 45 50 55 60 65 70 75 80 85 90 95data/temp.mat
+ninputpts = 5000, npredpts = 10000
+input sigma = 0 J/m^2
+RMSE = 0.069626 J/m^2
+MAE = 0.048051 J/m^2
+/lustre/scratch/usr/sbaird9/sgbaird-5dof/infer/code/interp/code/data/randOctParity/pcombs/nn5000_gitID-db55e51_puuID-69ed4b22_paper-data4_meta.mat
+/lustre/scratch/usr/sbaird9/sgbaird-5dof/infer/code/interp/code/data/randOctParity/pcombs/nn5000_gitID-db55e51_puuID-69ed4b22_paper-data4.mat
