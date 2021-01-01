@@ -18,7 +18,7 @@ end
 %% setup
 % addpath(genpath('.'))
 % fclose('all');
-% addpathdir({'cu2qu.m','q2rod.m','qmult.m','get_ocubo.m','get_uuid.m'})
+addpathdir({'cu2qu.m','q2rod.m','qmult.m','get_ocubo.m','get_uuid.m'})
 
 %unpack
 pgnum = NV.pgnum;
