@@ -173,7 +173,7 @@ ytrue = NV.ytrue;
 sigma = NV.sigma;
 
 % add relevant folders to path (by searching subfolders for functions)
-addpath(genpath('.'))
+% addpath(genpath('.'))
 % addpathdir({'normr.m','GB5DOF_setup.m','cu2qu.m','q2rod.m','five2oct.m',...
 %     'correctdis.m','interp_gpr.m'})
 
@@ -441,7 +441,7 @@ switch method
            
             if strcmp(method,'sphgpr')
                 %squared exponential kernel function with octonion distance
-                kfcn = @(XN,XM,theta) (exp(theta(2))^2)*exp(-(pdist2(XN,XM,@get_omega).^2)/(2*exp(theta(1))^2));
+                kfcn = @(XN,XM,theta) (exp(theta(2))^2)*exp(-(pdist2(XN,XM,@get_alen).^2)/(2*exp(theta(1))^2));
                 theta0 = [deg2rad(10), std(y)/sqrt(2)]; %initial length scale and noise
                 gpropts = [gpropts,{'KernelFunction',kfcn,'KernelParameters',theta0}];
             end
