@@ -3,7 +3,8 @@
 % fname = 'gitID-76fca8c_uuID-f51500cd_paper-data.mat';
 % fname = 'gitID-396aaa2_uuID-6816f860_paper-data2.mat';
 % fname = 'gitID-f585733_uuID-edf2fcc7_paper-data2.mat';
-fname = 'gitID-c67a123_uuID-18d21f26_set4.mat';
+% fname = 'gitID-c67a123_uuID-18d21f26_set4.mat';
+fname = 'gitID-014bf70_uuID-3ed9cba0_paper-data3.mat';
 files = dir(fullfile('**',fname));
 fpath = fullfile(files(1).folder,files(1).name);
 load(fpath);
@@ -28,12 +29,12 @@ methodlist = {'pbary','gpr','idw','nn'};
 datatypelist = {'brk','kim'};
 sgtitleQ = false;
 for datatype = datatypelist
-    for nmeshpts = [388 10000 50000]
+    for ninputpts = [388 10000 50000]
         %extract parity and IDs
         tbl3 = mdlparstbl(...
             ismember(mdlparstbl.method,methodlist) & ...
             ismember(mdlparstbl.datatype,datatype) & ...
-            mdlparstbl.nmeshpts==nmeshpts,:);
+            mdlparstbl.ninputpts==ninputpts,:);
         [G3,ID3] = findgroups(tbl3.method);
         tlisttmp = cell(size(ID3));
         for i = 1:size(ID3,1)
@@ -42,8 +43,8 @@ for datatype = datatypelist
         end
         titlelist = categorical(tlisttmp);
         parity3 = splitapply(@(x){x(1)},tbl3.parity,G3);
-        
-        if strcmp(datatype,'brk') && (nmeshpts == 50000)
+
+        if strcmp(datatype,'brk') && (ninputpts == 50000)
             cbnds = [1 500];
         else
             cbnds = [];
@@ -53,10 +54,10 @@ for datatype = datatypelist
 
         %extra
         if sgtitleQ
-            sgtitle(['nmeshpts = ' int2str(nmeshpts)])
+            sgtitle(['ninputpts = ' int2str(ninputpts)])
         end
         
-        savefigpng(figfolder,[char(datatype) 'parity' int2str(nmeshpts)]);
+        savefigpng(figfolder,[char(datatype) 'parity' int2str(ninputpts)]);
     end
 end
 
@@ -68,7 +69,7 @@ ytypes = {'rmse','mae'};
 ytypelbls = upper(ytypes);
 for datatype = datatypelist
     tbltmp = mdlparstbl(mdlparstbl.datatype==datatype,:);
-    multixyplots(tbltmp,methodlist,'nmeshpts',ytypes,1,2,'ymin',0,...
+    multixyplots(tbltmp,methodlist,'ninputpts',ytypes,1,2,'ymin',0,...
         'lgdloc','southwest','ytypelbls',ytypelbls,'xytypelbls',xytypelbls)
     %saving
     savefigpng(figfolder,[char(datatype) 'error'])
@@ -87,7 +88,7 @@ might use multiple cores via vectorization..)?
 % ids = ismember(tbl3.method,'pbary');
 % tbl3(ids,'runtime') = tbl3(ids,'runtime').*tbl3(ids,'cores');
 [G3,ID3] = findgroups(tbl3.method);
-multixyplots(mdlparstbl,methodlist,'nmeshpts',{'runtime'},1,2,'XScale','linear',...
+multixyplots(mdlparstbl,methodlist,'ninputpts',{'runtime'},1,2,'XScale','linear',...
     'YScale','linear','yunits','s','lgdloc','north','xytypelbls',xytypelbls)
 ax = gca;
 % ax.YLim = [0 30];
@@ -115,7 +116,7 @@ for i = 1:length(methodlist)
     method = methodlist{i};
     %extract
     tbltmp = tbl3(tbl3.method == method,:);
-    [Gtmp,IDtmp] = findgroups(tbltmp.nmeshpts);
+    [Gtmp,IDtmp] = findgroups(tbltmp.ninputpts);
     %extract
     tmu(:,i) = round(splitapply(@mean,tbltmp.runtime,Gtmp),4);
     tsigma(:,i) = round(splitapply(@std,tbltmp.runtime,Gtmp),4);
@@ -137,7 +138,7 @@ end
 
 %% NN Mean and Standard Deviation vs. VFZO set size
 tbltmp = mdlparstbl(mdlparstbl.datatype == 'brk',:);
-[G,ID] = findgroups(tbltmp.nmeshpts);
+[G,ID] = findgroups(tbltmp.ninputpts);
 nnmu = splitapply(@mean,tbltmp.nnmu,G);
 nnsigma = splitapply(@std,tbltmp.nnmu,G);
 paperfigure();
@@ -389,7 +390,7 @@ load(fpath);
 for i = 1:length(G1)
     G = G1(i);
     GIDs = find(G1==G);
-[G2,ID2] = findgroups(mdlparstbl.nmeshpts);
+[G2,ID2] = findgroups(mdlparstbl.ninputpts);
 parity = splitapply(@(x){x},mdlparstbl.parity,G);
 medRMSE = splitapply(@(x)median(x),mdlparstbl.rmse,G);
 medMAE = splitapply(@(x)median(x),mdlparstbl.mae,G);
@@ -436,12 +437,12 @@ end
 parity = splitapply(@(x){x(1)},mdlparstbl.parity,G1);
 
 
-    % tbl1 = tbl(:,{'method','nmeshpts','ndatapts'});
+    % tbl1 = tbl(:,{'method','ninputpts','ndatapts'});
 
 
     tbl2 = mdlparstbl(:,{'method','ndatapts'});
     [G2,ID2] = findgroups(ID1.method);
-    nmeshpts1 = splitapply(@(x){x},mdlparstbl.nmeshpts,G2);
+    ninputpts1 = splitapply(@(x){x},mdlparstbl.ninputpts,G2);
 
 
 fig1 = figure;
@@ -462,11 +463,11 @@ ax.YScale = 'log';
 hold on
 for method = methodlist
     tbl = mdlparstbl(ismember(mdlparstbl.method,method),:);
-    [G1,ID1] = findgroups(tbl.nmeshpts);
+    [G1,ID1] = findgroups(tbl.ninputpts);
     
-    [npts,rmse,mae,runtime] = deal(tbl.nmeshpts,tbl.rmse,tbl.mae,tbl.runtime);
+    [npts,rmse,mae,runtime] = deal(tbl.ninputpts,tbl.rmse,tbl.mae,tbl.runtime);
     
-    nmeshpts = splitapply(@(x)x(1),npts,G1);
+    ninputpts = splitapply(@(x)x(1),npts,G1);
     medRMSE = splitapply(@median,rmse,G1);
     stdRMSE = splitapply(@std,rmse,G1);
     medMAE = splitapply(@median,mae,G1);
@@ -474,23 +475,23 @@ for method = methodlist
     medruntime = splitapply(@median,runtime,G1);
     stdruntime = splitapply(@std,runtime,G1);
     
-    semilogx(t1,nmeshpts,medRMSE,'-o')
-    xlabel('nmeshpts')
+    semilogx(t1,ninputpts,medRMSE,'-o')
+    xlabel('ninputpts')
     ylabel('RMSE (J/m^2)')
     axis square
     hold off
     
-    semilogx(t2,nmeshpts,medMAE,'-o')
-    xlabel('nmeshpts')
+    semilogx(t2,ninputpts,medMAE,'-o')
+    xlabel('ninputpts')
     ylabel('MAE (J/m^2)')
     axis square
     hold off
-%     semilogx(nmeshpts,medruntime,'-o')
+%     semilogx(ninputpts,medruntime,'-o')
 
     figure(fig2)
     hold on
-    semilogx(nmeshpts,medruntime,'-o')
-    xlabel('nmeshpts')
+    semilogx(ninputpts,medruntime,'-o')
+    xlabel('ninputpts')
     ylabel('runtime (s)')
     axis square
     hold off
