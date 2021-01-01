@@ -33,7 +33,7 @@ axis square
 
 for xytype = xytypes
     tbl = mastertbl(ismember(mastertbl.method,xytype),:);
-    [G,ID] = findgroups(tbl.nmeshpts);
+    [G,ID] = findgroups(tbl.ninputpts);
     
     xyplot(tbl,G,xtype,ytype)
 end
@@ -63,9 +63,9 @@ end
 
 %% CODE GRAVEYARD
 %{
-%     [npts,rmse,mae,runtime] = deal(tbl.nmeshpts,tbl.rmse,tbl.mae,tbl.runtime);
+%     [npts,rmse,mae,runtime] = deal(tbl.ninputpts,tbl.rmse,tbl.mae,tbl.runtime);
     
-    nmeshpts = splitapply(@(x)x(1),npts,G1);
+    ninputpts = splitapply(@(x)x(1),npts,G1);
     medRMSE = splitapply(@median,rmse,G1);
     stdRMSE = splitapply(@std,rmse,G1);
     medMAE = splitapply(@median,mae,G1);
@@ -73,23 +73,23 @@ end
     medruntime = splitapply(@median,runtime,G1);
     stdruntime = splitapply(@std,runtime,G1);
     
-    semilogx(t1,nmeshpts,medRMSE,'-o')
-    xlabel('nmeshpts')
+    semilogx(t1,ninputpts,medRMSE,'-o')
+    xlabel('ninputpts')
     ylabel('RMSE (J/m^2)')
     axis square
     hold off
     
-    semilogx(t2,nmeshpts,medMAE,'-o')
-    xlabel('nmeshpts')
+    semilogx(t2,ninputpts,medMAE,'-o')
+    xlabel('ninputpts')
     ylabel('MAE (J/m^2)')
     axis square
     hold off
-%     semilogx(nmeshpts,medruntime,'-o')
+%     semilogx(ninputpts,medruntime,'-o')
 
     figure(fig2)
     hold on
-    semilogx(nmeshpts,medruntime,'-o')
-    xlabel('nmeshpts')
+    semilogx(ninputpts,medruntime,'-o')
+    xlabel('ninputpts')
     ylabel('runtime (s)')
     axis square
     hold off
