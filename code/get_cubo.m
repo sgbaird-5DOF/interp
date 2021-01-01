@@ -57,7 +57,8 @@ aa = acube*(2*G-1); %center grid about [0,0,0] and scale grid
 
 %convert to quaternion
 q = zeros(n,4);
-parfor i = 1:n
+for i = 1:n
+    pause(0.0001)
 	q(i,:) = cu2qu(aa(i,:)); %vectorization possible
 end
 
