@@ -9,12 +9,12 @@ F = false;
 %octochorically sampled octonions
 addpathdir({'var_names.m','writeparfile.m','walltimefns'})
 runtype = 'test'; %'test','full'
-nreps = 1; % number of runs or repetitions
+nreps = 10; % number of runs or repetitions
 
 % job submission environment
-env = 'local'; %'slurm', 'local'
+env = 'slurm'; %'slurm', 'local'
 %whether to skip running the jobs and just compile results
-dryrunQ = T;
+dryrunQ = F;
 metaQ = F; %whether to load full model or only metay-data at end
 
 %make sure the parameters here correspond with the input to "pars" below
@@ -35,9 +35,9 @@ switch runtype
         method = {'sphgpr','gpr','sphbary','pbary','nn','avg','idw'}; % 'sphbary', 'pbary', 'gpr', 'sphgpr', 'nn', 'avg'
         datatype = {'brk','kim'};
         pgnum = 32; %m-3m (i.e. m\overbar{3}m) FCC symmetry default for e.g. Ni
-        sigma = 0.100; %mJ/m^2, standard deviation, added to "y"
+        sigma = [0]; %mJ/m^2, standard deviation, added to "y"
         genseed = 10;
-        brkQ = true;
+        brkQ = false;
 end
 
 %comment (no spaces, used in filename)
@@ -63,7 +63,9 @@ end
 % comment = 'kim-minrepeats2-trainsigma0.2';
 % comment = 'kim-minrepeats2-traintestsigma0.2';
 % comment = 'kim-minrepeats5-trainsigma0.2-posnoise';
-comment = 'kim-rng11';
+% comment = 'kim-rng11';
+% comment = 'paper-data3';
+comment = 'test';
 % comment = 'kim-trainRepeat-testNoRepeat';
 % comment = 'rohrer';
 % comment = 'kim-paper-data-equal-sig0.005-exact-exact';
@@ -262,39 +264,39 @@ switch env
         %                 S.
         %             end
         %         end
+        mdltbl(:,{'method','ninputpts','npredpts','rmse','mae'})
+
+        %% plotting
+        mdlnum = 1;
+        mdl = mdlcat(mdlnum);
+        Kpars = mdl.KernelInformation.KernelParameters;
+        Lval = Kpars(1);
+        sigval = Kpars(2);
+        paperfigure(1,2);
+        nexttile
+        t1 = ['$L_{\mathrm{kernel}}$: ' num2str(rad2deg(Lval)*2) ' ($^\circ{}$), ' ...
+        '$\sigma_{\mathrm{kernel}}$: ' num2str(sigval) ' ($J m^{-2}$)'];
+        brkQ = true;
+        tunnelplot(mdl,'brkQ',brkQ)
+        title(t1,'Interpreter','latex')
+        % multiparity({mdl.errmetrics},'charlblQ',false);
+        nexttile
+        % parityplot(mdl.errmetrics.ytrue,mdl.errmetrics.ypred,'scatter',...
+        %     'mkr','o','fillQ',true,'scatterOpts',struct('MarkerFaceAlpha',0.005));
+
+        parityplot(mdl.errmetrics.ytrue,mdl.errmetrics.ypred);
+
+        t2 = ['RMSE: ' num2str(mdl.rmse) ' ($J m^{-2}$), MAE: ' num2str(mdl.mae) ' ($J m^{-2}$)'];
+        title(t2,'Interpreter','latex')
+
+        t3 = ['method: ' upper(char(mdl.method)) ', datatype: ' upper(char(mdl.datatype)),...
+        ', ninputpts: ' num2str(mdl.ninputpts) ', npredpts: ' num2str(mdl.npredpts)];
+        sgtitle(t3,'Interpreter','latex')
 end
 
 disp('end randOctParityData.m')
 disp(' ')
 
-mdltbl(:,{'method','ninputpts','npredpts','rmse','mae'})
-
-%% plotting
-mdlnum = 1;
-mdl = mdlcat(mdlnum);
-Kpars = mdl.KernelInformation.KernelParameters;
-Lval = Kpars(1);
-sigval = Kpars(2);
-paperfigure(1,2);
-nexttile
-t1 = ['$L_{\mathrm{kernel}}$: ' num2str(rad2deg(Lval)*2) ' ($^\circ{}$), ' ...
-    '$\sigma_{\mathrm{kernel}}$: ' num2str(sigval) ' ($J m^{-2}$)'];
-brkQ = true;
-tunnelplot(mdl,'brkQ',brkQ)
-title(t1,'Interpreter','latex')
-% multiparity({mdl.errmetrics},'charlblQ',false);
-nexttile
-% parityplot(mdl.errmetrics.ytrue,mdl.errmetrics.ypred,'scatter',...
-%     'mkr','o','fillQ',true,'scatterOpts',struct('MarkerFaceAlpha',0.005));
-
-parityplot(mdl.errmetrics.ytrue,mdl.errmetrics.ypred);
-
-t2 = ['RMSE: ' num2str(mdl.rmse) ' ($J m^{-2}$), MAE: ' num2str(mdl.mae) ' ($J m^{-2}$)'];
-title(t2,'Interpreter','latex')
-
-t3 = ['method: ' upper(char(mdl.method)) ', datatype: ' upper(char(mdl.datatype)),...
-    ', ninputpts: ' num2str(mdl.ninputpts) ', npredpts: ' num2str(mdl.npredpts)];
-sgtitle(t3,'Interpreter','latex')
 
 %% CODE GRAVEYARD
 %{
