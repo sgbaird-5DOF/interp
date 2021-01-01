@@ -356,10 +356,28 @@ f1*rmse+f2*rmse2
 %% Arbitrary path through GB space
 %tunnelplot()
 
-%% Kim Interpolation
-fname = 'gpr46883_gitID-f3b55c4_puuID-f1940b1b_kim-exponential-rng11.mat';
-gprmix_test(fname)
+%% Kim GPR Mixture Interpolation, Teaching
+fname = 'gpr46883_gitID-233ae6e_puuID-5690bda0_kim-exponential-rng11.mat';
+[ypred,ysd,ytrue] = gprmix_test(fname);
+savefigpng(folder,'kim-interp-teach')
+
+%% Kim GPR Mixture Final Result
+paperfigure();
+parityplot(ytrue,ypred);
 savefigpng(folder,'kim-interp')
+
+%% GPR Mixture Sigmoid Function
+paperfigure();
+thr = 1.1;
+scl = 30;
+sigfn = @(x,scl,xshift) 1./(1+exp(-scl*(x-xshift)));
+x = 0.5:0.01:1.5;
+plot(x,sigfn(x,scl,thr),'LineWidth',1.5);
+ylim([0 1])
+xlabel('GBE ($J m^{-2}$)','Interpreter','latex')
+ylabel('Mixing fraction (f)','Interpreter','latex')
+axis square
+savefigpng(folder,'gprmix-sigmoid')
 
 %% CODE GRAVEYARD
 %{
