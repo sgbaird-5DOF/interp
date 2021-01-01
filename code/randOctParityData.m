@@ -8,7 +8,7 @@ F = false;
 %loop through different combinations of parameters using random,
 %octochorically sampled octonions
 addpathdir({'var_names.m','writeparfile.m','walltimefns'})
-runtype = 'test'; %'test','full'
+runtype = 'full'; %'test','full'
 nreps = 10; % number of runs or repetitions
 
 % job submission environment
@@ -33,7 +33,7 @@ switch runtype
         ninputpts = [100 388 500 1000 5000 10000 20000 50000]; % 388, 500, 1000, 2000, 5000, 10000, 20000, 50000
         npredpts = 10000;
         method = {'sphgpr','gpr','sphbary','pbary','nn','avg','idw'}; % 'sphbary', 'pbary', 'gpr', 'sphgpr', 'nn', 'avg'
-        datatype = {'brk','kim'};
+        datatype = {'brk'};
         pgnum = 32; %m-3m (i.e. m\overbar{3}m) FCC symmetry default for e.g. Ni
         sigma = [0]; %mJ/m^2, standard deviation, added to "y"
         genseed = []; %set to empty if you want to vary for each run
