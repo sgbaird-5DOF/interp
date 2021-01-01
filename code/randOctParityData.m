@@ -36,7 +36,7 @@ switch runtype
         datatype = {'brk','kim'};
         pgnum = 32; %m-3m (i.e. m\overbar{3}m) FCC symmetry default for e.g. Ni
         sigma = [0]; %mJ/m^2, standard deviation, added to "y"
-        genseed = [];
+        genseed = []; %set to empty if you want to vary for each run
         brkQ = false;
 end
 
