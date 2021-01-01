@@ -24,7 +24,10 @@ end
 %
 % Date: 2020-10-06
 %--------------------------------------------------------------------------
+disp('get_cubo')
 q = get_cubo(npts);
+disp('normr')
 nA = normr(rand(npts,3)-0.5);
+disp('var_names')
 five = var_names(q,nA);
 end

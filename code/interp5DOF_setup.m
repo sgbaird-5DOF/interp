@@ -136,7 +136,6 @@ switch datatype
         %random 5dof parameters
         five = get_five(ninputpts);
         five2 = get_five(npredpts);
-        disp('GB5DOF_setup')
         %get BRK function values
         y = GB5DOF_setup([],five.q,five.nA,'Ni',epsijk);
         ytrue = GB5DOF_setup([],five2.q,five2.nA,'Ni',epsijk);
@@ -209,7 +208,6 @@ end
 %         y = y + sigma*2*(rand(size(y))-0.5); %uniform
 % end
 
-disp('unpack')
 %unpack
 qm = vertcat(five.q);
 nA = vertcat(five.nA);
@@ -218,7 +216,6 @@ nA2 = vertcat(five2.nA);
 
 %% interpolation
 [ypredlist,interpfnlist,mdllist,mdlparslist] = deal(cell(K,1));
-disp('interp5DOF')
 for k = 1:K
     switch datatype
         case 'rohrer-Ni'
