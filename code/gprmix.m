@@ -83,6 +83,7 @@ end
 
 % populate ypred with predictions above threshold
 ypred(ids2) = ypredtmp2(ids2);
+ypredtmp3 = ypred;
 
 %% GPR mixture model
 % sigmoid function values
@@ -100,19 +101,19 @@ if plotQ
     % new parity plot
     multiparity({...
         struct('ytrue',ytrue,'ypred',ypred),...
-        struct('ytrue',ytrue,'ypred',ypred),...
+        struct('ytrue',ytrue,'ypred',ypredtmp3),...
         struct('ytrue',ytrue,'ypred',ypredtmp2),...
         struct('ytrue',ytrue,'ypred',ypredtmp)})
     % sigmoid mixing function
-    nexttile(2)
-    cla reset
-    x = 0.5:0.01:1.5;
-    plot(x,sigfn(x,scl,thr),'LineWidth',1.5);
-    ylim([0 1])
-    xlabel('GBE ($J m^{-2}$)','Interpreter','latex')
-    ylabel('Mixing fraction (f)','Interpreter','latex')
-    axis square
-    papertext(2)
+%     nexttile(2)
+%     cla reset
+%     x = 0.5:0.01:1.5;
+%     plot(x,sigfn(x,scl,thr),'LineWidth',1.5);
+%     ylim([0 1])
+%     xlabel('GBE ($J m^{-2}$)','Interpreter','latex')
+%     ylabel('Mixing fraction (f)','Interpreter','latex')
+%     axis square
+%     papertext(2)
 end
 if dispQ
     get_errmetrics(ytrue,ypred,'dispQ',true);

@@ -1,6 +1,6 @@
-function gprmix_test(fname)
+function [ypred,ysd,ytrue] = gprmix_test(fname)
 arguments
-   fname = 'gpr46883_gitID-f3b55c4_puuID-f1940b1b_kim-exponential-rng11.mat'
+   fname = 'gpr46883_gitID-233ae6e_puuID-5690bda0_kim-exponential-rng11.mat'
 end
 % GPRMIX_TEST  Perform sigmoid-based mixture with model trained on subset of low property values.
 %% setup
