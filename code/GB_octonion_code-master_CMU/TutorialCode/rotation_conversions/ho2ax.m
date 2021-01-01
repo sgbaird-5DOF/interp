@@ -1,7 +1,6 @@
 % from homochoric to axis-angle pair
 
 function q = ho2ax(h)
-disp('ho2ax')
           
 thr = 1e-8;
 tfit = [+1.0000000000018852, -0.5000000002194847, ... 

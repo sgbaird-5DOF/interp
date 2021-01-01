@@ -5,7 +5,6 @@ arguments
 end
 % AX2QU  from axis-angle pair to quaternions, first 3 elements:axis, last element: angle
 %vectorized by SGB 2020-08-15
-disp('ax2qu')
 npts = size(ax,1);
 q = zeros(npts,4);
 

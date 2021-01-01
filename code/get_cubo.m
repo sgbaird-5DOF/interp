@@ -52,7 +52,6 @@ end
 
 aa = acube*(2*G-1); %center grid about [0,0,0] and scale grid
 
-disp('cu2qu loop')
 %convert to quaternion
 q = zeros(n,4);
 for i = 1:n
