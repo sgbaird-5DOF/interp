@@ -72,14 +72,14 @@ plot3(t{:},'ko','MarkerFaceColor','w')
 axis equal tight off
 test_voronoisphere(nArot{1}.')
 if K == 2
-    lgdlbltmp = {'p_i^*'};
-    legend('p_i',lgdlbltmp{:},'p_\rmmath{ref}','Location','north')
+    lgdlbltmp = {'$p_i^*$ (symmetrized)'};
+    lgdlbl = ['$p_{i,1}$ (starting)',lgdlbltmp,'$p_\mathrm{ref}$ (reference)'];
+    legend(lgdlbl,'Location','north','Interpreter','latex')
 %     legend('starting',lgdlbltmp{:},'reference','Location','north')
 else
     lgdlbltmp = strcat('NN',{' '},num2cell(num2str((1:K-1).')));
     legend('starting',lgdlbltmp{:},'reference','Location','southeast')
 end
-1+1;
 
 papertext(tnum);
 
@@ -99,8 +99,11 @@ ax.View = [140 35];
 test_voronoisphere(nArot{1}.')
 
 axis equal tight off
-lgdlbl = {'p_i','p_i^*','p_\rmmath{ref}'};
-legend({'starting','symmetrized','reference'},'Location','north')
+% lgdlbl = {'p_i','p_i^*','p_\rmmath{ref}'};
+% lgdlbl = {'starting','symmetrized','reference'};
+lgdlbltmp = {'$p_1^*$ (symmetrized)'};
+lgdlbl = ['$p_{1,j}$ (starting)',lgdlbltmp,'$p_\mathrm{ref}$ (reference)'];
+legend(lgdlbl,'Location','north','Interpreter','latex')
 
 end
 function cellvertcatplot(x,k,nnID,c)
