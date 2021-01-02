@@ -4,6 +4,8 @@ arguments
     pts2 double
 end
 % GET_ALEN  get arclength of sphere (acos of dot product, note that this is half the octonion distance)
+pts = normr(pts);
+pts2 = normr(pts2);
 npts = size(pts2,1);
 if size(pts,1) == 1
     pts = repmat(pts,npts,1);
