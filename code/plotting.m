@@ -4,7 +4,8 @@
 % fname = 'gitID-396aaa2_uuID-6816f860_paper-data2.mat';
 % fname = 'gitID-f585733_uuID-edf2fcc7_paper-data2.mat';
 % fname = 'gitID-c67a123_uuID-18d21f26_set4.mat';
-fname = 'gitID-014bf70_uuID-3ed9cba0_paper-data3.mat';
+% fname = 'gitID-014bf70_uuID-3ed9cba0_paper-data3.mat';
+fname = 'gitID-6ede824_uuID-1cf78415_paper-data5.mat';
 files = dir(fullfile('**',fname));
 fpath = fullfile(files(1).folder,files(1).name);
 load(fpath);
@@ -26,7 +27,8 @@ set(0,'defaultAxesFontSize',12)
 
 %% parity plot
 methodlist = {'pbary','gpr','idw','nn'};
-datatypelist = {'brk','kim'};
+% datatypelist = {'brk','kim'};
+datatypelist = {'brk'};
 sgtitleQ = false;
 for datatype = datatypelist
     for ninputpts = [388 10000 50000]
@@ -64,13 +66,20 @@ end
 %% errors
 methodlist = {'pbary','gpr','idw','nn','avg'};
 xytypelbls = ['Barycentric',upper(methodlist(2:4)),'Average'];
-datatypelist = {'brk','kim'};
+% datatypelist = {'brk','kim'};
+datatypelist = {'brk'};
 ytypes = {'rmse','mae'};
 ytypelbls = upper(ytypes);
 for datatype = datatypelist
     tbltmp = mdlparstbl(mdlparstbl.datatype==datatype,:);
     multixyplots(tbltmp,methodlist,'ninputpts',ytypes,1,2,'ymin',0,...
         'lgdloc','southwest','ytypelbls',ytypelbls,'xytypelbls',xytypelbls)
+    fig = gcf;
+    t1 = nexttile(1);
+    t1.Legend.Position = [0.299964268608805 0.516990889931764 0.163876007802576 0.229411769754747];
+    t2 = nexttile(2);
+    t2.Legend.Position = [0.780569390710456 0.495824223265097 0.163876007802576 0.229411769754747];
+%     fig.Children.Children(3).Position = [0.780569390710456 0.495824223265097 0.163876007802576 0.229411769754747];
     %saving
     savefigpng(figfolder,[char(datatype) 'error'])
 end
@@ -89,7 +98,7 @@ might use multiple cores via vectorization..)?
 % tbl3(ids,'runtime') = tbl3(ids,'runtime').*tbl3(ids,'cores');
 [G3,ID3] = findgroups(tbl3.method);
 multixyplots(mdlparstbl,methodlist,'ninputpts',{'runtime'},1,2,'XScale','linear',...
-    'YScale','linear','yunits','s','lgdloc','north','xytypelbls',xytypelbls)
+    'YScale','linear','yunits','s','lgdloc','southeast','xytypelbls',xytypelbls)
 ax = gca;
 % ax.YLim = [0 30];
 ax.XScale = 'log';
@@ -186,6 +195,7 @@ print(fpath,'-dpng','-r300')
 addpathdir({'olm_octonion_list.txt','olm_pairwise_distances_cubic.mat'})
 A = importdata('olm_octonion_list.txt');
 olmoct = A.data;
+olmoct = [qinv(olmoct(:,1:4)),qinv(olmoct(:,5:8))];
 
 rng(5)
 
@@ -285,13 +295,14 @@ savefigpng(figfolder,'ensemble-interp')
 %% distance histogram and knn vs. meshpoints
 addpathdir({'gmat2q.m','oct50000.mat'})
 setpaperdefaults()
-% distance histogram
+% % distance histogram
 % seed = 10;
 % rng(seed);
 % npts = 50000;
 % five = get_five(npts);
 % o = GBfive2oct(five);
 % pts = get_octpairs(o);
+% save('oct50000.mat','pts')
 
 load('oct50000.mat','pts');
 
@@ -337,7 +348,7 @@ savefigpng(figfolder,fname,[178.5 41.5 1755 784])
 %% bary interp
 sphbary_test()
 fname = 'bary-interp';
-savefigpng(figfolder,fname,'crop',[242.5 351.5 609 393])
+savefigpng(figfolder,fname,[242.5 351.5 609 393])
 % fpath = fullfile(folder,[fname,'.png']);
 % I = imread(fpath);
 % imshow(I)
