@@ -3,7 +3,7 @@ function [datainterp,databary,facetprops,facetIDs,barypars] = ...
 arguments
 	mesh struct {mustContainFields(mesh,{'pts','ppts','props','sphK'})}
 	data struct {mustContainFields(data,{'pts','ppts','props'})}
-	intfacetIDs cell
+	intfacetIDs = []
 	barytype char {mustBeMember(barytype,{'planar','spherical'})} = 'planar'
 	barytol double = double.empty
     NV.saveQ logical = false
@@ -75,6 +75,10 @@ if isempty(barytol)
         case 'planar'
             barytol = 1e-6;
     end
+end
+
+if isempty(intfacetIDs)
+    intfacetIDs = {[]};
 end
 
 %unpack
