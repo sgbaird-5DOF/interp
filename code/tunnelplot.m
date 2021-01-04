@@ -1,28 +1,37 @@
-function tunnelplot(mdl,A,B,n,nv)
+function [tpredlist,tsdlist,propList,methodlist,A,B] = tunnelplot(mdls,A,B,n,nv)
 arguments
-    mdl = []
+    mdls = []
     A = []
     B = []
     n(1,1) double = 300
     nv.nnQ(1,1) logical = true
     nv.nnQ2(1,1) logical = true
     nv.brkQ(1,1) logical = true
+    nv.lgdloc char = 'best' %'northoutside'
+    nv.tpredlist = []
+    nv.tsdlist = []
+    nv.propList = []
+    nv.methodlist = []
+end
+
+if ~iscell(mdls) && isscalar(mdls)
+    mdls = {mdls};
 end
 
 nnQ = nv.nnQ;
 nnQ2 = nv.nnQ2;
 brkQ = nv.brkQ;
 
-% unpack
-if isfield(mdl,'gprMdl')
-    if ~isempty(mdl.gprMdl)
-        gprMdl = mdl.gprMdl;
-    end
-else
-    gprMdl = mdl.cgprMdl;
-end
-ppts = mdl.mesh.ppts;
-ppts2 = mdl.data.ppts;
+% % unpack
+% if isfield(mdl,'gprMdl')
+%     if ~isempty(mdl.gprMdl)
+%         gprMdl = mdl.gprMdl;
+%     end
+% else
+%     gprMdl = mdl.cgprMdl;
+% end
+ppts = mdls{1}.mesh.ppts;
+% ppts2 = mdl.data.ppts;
 
 %% pairwise distance
 npts = size(ppts,1);
@@ -32,7 +41,7 @@ else
     ids = 1:npts;
 end
 
-pts = mdl.mesh.pts;
+pts = mdls{1}.mesh.pts;
 if isempty(A) && isempty(B)
     pd = squareform(pdist(ppts(ids,:)));
     [mx,id] = max(pd,[],'all','linear');
@@ -59,17 +68,22 @@ B = sqrt(2)*normr(B);
 %% distance calculations/coordinate interpolation
 d1 = get_omega(A,B);
 
-arcpts = normr(OSLERP(A,B,d1,n));
-d2 = d1;
-
-% t = arrayfun(@(i) linspace(A(i),B(i),n).',1:size(A,2),'UniformOutput',false); %1D interpolation across each dimension
-% tpts = [t{:}];
-% tpts = normr(tpts);
-% t = n2c(tpts);
-% arcpts = interparc(n,t{:},'spline');
-% arcpts = 1/sqrt(2)*sqrt2norm(arcpts);
-% [d2,seg] = arclength(t{:},'spline');
-% d2 = 2*d2; %convert to omega
+slerptype = 'oslerp'; %'oslerp', 'interparc'
+switch slerptype
+    case 'oslerp'
+        arcpts = normr(get_octpairs(OSLERP(A,B,d1,n)));
+        d2 = d1;
+    case 'interparc'
+        t = arrayfun(@(i) linspace(A(i),B(i),n).',1:size(A,2),'UniformOutput',false); %1D interpolation across each dimension
+        tpts = [t{:}];
+        tpts = 1/sqrt(2)*[normr(tpts(:,1:4)),normr(tpts(:,5:8))];
+        t = n2c(tpts);
+        arcpts = interparc(n,t{:},'spline');
+        arcpts = normr(get_octpairs(arcpts,[],1));
+%         arcpts = 1/sqrt(2)*sqrt2norm(arcpts);
+        [d2,seg] = arclength(t{:},'spline');
+        d2 = 2*d2; %convert to omega
+end
 
 % ids = knnsearch(pts2,arcpts);
 % nnpts = uniquetol(pts2(ids,:),'ByRows',true);
@@ -77,30 +91,69 @@ d2 = d1;
 % arcpts = interparc(n,t{:},'spline');
 % arcpts = 1/sqrt(2)*sqrt2norm(arcpts);
 
-arcppts = proj_down(arcpts,1e-4,mdl.usv,'zeroQ',mdl.zeroQ);
-
 %% property interpolation
-[tpred,tsd,tint] = predict(gprMdl,arcppts);
-scl = 1;
-tpred = tpred*scl;
-tsd = tsd*scl;
-% mdl2 = S2.mdl;
-% mdlcmd2 = mdl2.mdlcmd;
-propList = mdl.mesh.props*scl;
+nmdl = length(mdls);
+if isempty(nv.tpredlist) && isempty(nv.tsdlist) && isempty(nv.propList) && isempty(nv.methodlist)
+    [tpredlist,tsdlist,propList,methodlist] = deal(cell(nmdl,1));
+    for i = 1:nmdl
+        mdl = mdls{i};
+        methodlist{i} = mdl.method;
+        if mdl.projQ
+            arcppts = proj_down(arcpts,mdl.projtol,mdl.usv,'zeroQ',mdl.zeroQ);
+            %         ptstmp = proj_down([arcpts;mdl.mesh.pts],mdl.projtol,'zeroQ',mdl.zeroQ);
+            %         arcppts = ptstmp(1:size(arcpts,1),:);
+            %         ppts = ptstmp((size(arcpts,1)+1):end,:);
+        else
+            arcppts = arcpts;
+        end
+        switch mdl.method
+            case 'pbary'
+                mdl.data.pts = arcpts;
+                mdl.data.ppts = arcppts;
+                mdl.data.npts = size(arcpts,1);
+                mdl.data.props = GB5DOF_setup(arcpts(:,1:4),arcpts(:,5:8),[0 0 1],'Ni',1);
+                [intfacetIDs,databary,klist] = intersect_facet(mdl.mesh.ppts,mdl.mesh.sphK,arcppts,mdl.inttol,'nnMax',mdl.nnMax);
+                tpredlist{i} = get_interp(mdl.mesh,mdl.data,intfacetIDs,mdl.barytype,mdl.barytol);
+            case 'gpr'
+                [tpredlist{i},tsdlist{i}] = predict(mdl.gprMdl,arcppts);
+                %     out = exec_argfn(mdl.mdlcmd,mdl,{'tpred','tsd'});
+                %     tpred = out.tpred;
+                %     tsd = out.tsd;
+            case 'idw'
+                tpredlist{i} = idw(mdl.mesh.ppts,arcppts,mdl.mesh.props,mdl.r,mdl.L);
+                %     out = exec_argfn(mdl.mdlcmd,mdl,{'tpred'});
+                %     tpred = out.tpred;
+            case 'nn'
+                tpredlist{i} = mdl.mesh.props(dsearchn(mdl.mesh.ppts,arcppts));
+        end
+        scl = 1;
+        tpredlist{i} = tpredlist{i}*scl;
+        tsdlist{i} = tsdlist{i}*scl;
+        
+        % mdl2 = S2.mdl;
+        % mdlcmd2 = mdl2.mdlcmd;
+        propList{i} = mdl.mesh.props*scl;
+    end
+else
+    tpredlist = nv.tpredlist;
+    tsdlist = nv.tsdlist;
+    propList = nv.propList;
+    methodlist = nv.methodlist;
+end
 
 %%
-K = 6;
-[~,nnd,~,~,ids] = get_knn(ppts,'norm',K,'Y',arcppts);
-tprednn = cellfun(@(id) propList(id),n2c(ids),'UniformOutput',false);
 % tprednn = propList(dsearchn(ppts,arcppts));
 
 % errorbar(tpred,tsd)
 x = linspace(0,rad2deg(d2),n);
 hold on
 ax = cell(3,1);
-sz2 = zeros(n,K);
 
 if nnQ2
+    K = 6;
+    [~,nnd,~,~,ids] = get_knn(ppts,'norm',K,'Y',arcppts);
+    tprednn = cellfun(@(id) propList{i}(id),n2c(ids),'UniformOutput',false);
+    sz2 = zeros(n,K);
     for i = 1:K
         sz = -rescale(nnd{i},-50,-2);
         %     sz2 = 2*rad2deg(-nnd{i}+2*min(nnd{i}));
@@ -116,21 +169,51 @@ if nnQ
     lgdax = [lgdax,ax{i}];
     i = i+1;
 end
-axtmp=shadedErrorBar(x,tpred,tsd);
-ax{i}=axtmp.mainLine;
-ax{i}.LineWidth = 2.5;
 
-pA = normr(arcpts(:,1:4));
-pB = normr(arcpts(:,5:8));
-
-lgdax = [lgdax,ax{i}];
-lgdlbl = [lgdlbl,'$\overline{AB}$ GPR'];
-i = i+1;
 if brkQ
+    pA = normr(arcpts(:,1:4));
+    pB = normr(arcpts(:,5:8));
     brk = GB5DOF_setup(pA,pB,[0 0 1],'Ni',1);
-    ax{i} = plot(x,brk,'r-','LineWidth',1);
+    ax{i} = plot(x,brk,'k-','LineWidth',3);
     lgdax = [lgdax,ax{i}];
-    lgdlbl = [lgdlbl,'$\overline{AB}$ BRK'];
+%     lgdlbltmp = '$\overline{AB}$ BRK';
+    lgdlbltmp = 'BRK';
+    lgdlbl = [lgdlbl,lgdlbltmp];
+    i = i+1;
+end
+
+for j = 1:nmdl
+%     mdl = mdls{j}
+    method = methodlist{j};
+    switch method
+        case 'gpr'
+            axtmp=shadedErrorBar(x,tpredlist{j},tsdlist{j},'lineProps','b.');
+            ax{j}=axtmp.mainLine;
+%             ax{i}.LineWidth = 1;
+            ax{j}.MarkerSize = 3;
+        otherwise
+            switch method
+                case 'pbary'
+                    mkr = 'r.';
+                case 'nn'
+                    mkr = 'm.';
+                case 'idw'
+                    mkr = 'g.';
+            end
+%             mkr = '.';
+            ax{j} = plot(x,tpredlist{j},mkr,'MarkerSize',3); %'LineWidth',1
+    end
+    
+    lgdax = [lgdax,ax{j}];
+    if strcmp(method,'pbary')
+        methodtxt = 'Barycentric';
+    else
+        methodtxt = upper(char(method));
+    end
+%     lgdlbltmp = ['$\overline{AB}$ ' methodtxt];
+%     lgdlbltmp = methodtxt;
+    lgdlbl = [lgdlbl,methodtxt];
+    i = i+1;
 end
 
 if nnQ2
@@ -142,7 +225,7 @@ if nnQ2
 end
 % kstr = num2cell(strcat(string(num2cell(1:K)),'-NN'));
 
-legend(lgdax,lgdlbl,'Location','northoutside','Interpreter','latex')
+legend(lgdax,lgdlbl,'Location',nv.lgdloc,'Interpreter','latex')
 
 xlabel('$\overline{AB}(t)$ $(^\circ)$','Interpreter','latex')
 ylabel('$GBE (J m^{-2})$','Interpreter','latex')
@@ -166,4 +249,6 @@ end
 
 % mdl = S.mdl;
 % gprMdl = mdl.gprMdl;
+
+
 %}
