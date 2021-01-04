@@ -294,7 +294,7 @@ savefigpng(figfolder,'ensemble-interp')
 
 %% distance histogram and knn vs. meshpoints
 addpathdir({'gmat2q.m','oct50000.mat'})
-setpaperdefaults()
+% % setpaperdefaults()
 % % distance histogram
 % seed = 10;
 % rng(seed);
@@ -389,6 +389,28 @@ xlabel('GBE ($J m^{-2}$)','Interpreter','latex')
 ylabel('Mixing fraction (f)','Interpreter','latex')
 axis square
 savefigpng(figfolder,'gprmix-sigmoid')
+
+%% tunnel plot (full)
+ninputpts = 50000; %1000, 50000
+n = 300;
+[tpredlist,tsdlist,propList,methodlist,A,B] = tunnelplot_test(2,ninputpts,n);
+fname = ['tunnel-',int2str(ninputpts)];
+fpath = fullfile(figfolder,fname);
+save(fpath,'tpredlist','tsdlist','propList','methodlist','A','B')
+disp(A)
+disp(B)
+savefigpng(figfolder,fname)
+
+%% tunnel plot (shortcut)
+ninputpts = 1000;
+n = 300;
+fname = ['tunnel-' int2str(ninputpts) '.mat'];
+fpath = fullfile(figfolder,fname);
+load(fpath,'tpredlist','tsdlist','propList','methodlist','A','B')
+tunnelplot_test(2,ninputpts,n,tpredlist,tsdlist,propList,methodlist,A,B);
+disp(A)
+disp(B)
+savefigpng(figfolder,fname)
 
 %% CODE GRAVEYARD
 %{
