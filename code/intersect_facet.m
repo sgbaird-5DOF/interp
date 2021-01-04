@@ -1,14 +1,13 @@
-function [intfacetIDs,dataBary] = ...
-	intersect_facet(pts,K,datalist,tol,NV)
+function [intfacetIDs,dataBary,klist] = intersect_facet(pts,K,datalist,tol,NV)
 arguments
-	pts double {mustBeFinite,mustBeReal}
-	K uint16 {mustBeFinite,mustBeReal} %maximum of 65535 points, change to uint32 otherwise
-	datalist double {mustBeFinite,mustBeReal}
-	tol(1,1) double {mustBeFinite,mustBeReal} = 1e-6
-	NV.maxnormQ(1,1) logical = true
-	NV.inttype char {mustBeMember(NV.inttype,{'planar','spherical'})} = 'planar'
-	NV.invmethod char {mustBeMember(NV.invmethod,{'mldivide','pinv','extendedCross'})} = 'mldivide'
-	NV.nnMax(1,1) double {mustBeInteger} = size(pts,1)
+    pts double {mustBeFinite,mustBeReal}
+    K uint16 {mustBeFinite,mustBeReal} %maximum of 65535 points, change to uint32 otherwise
+    datalist double {mustBeFinite,mustBeReal}
+    tol(1,1) double {mustBeFinite,mustBeReal} = 1e-6
+    NV.maxnormQ(1,1) logical = true
+    NV.inttype char {mustBeMember(NV.inttype,{'planar','spherical'})} = 'planar'
+    NV.invmethod char {mustBeMember(NV.invmethod,{'mldivide','pinv','extendedCross'})} = 'mldivide'
+    NV.nnMax(1,1) double {mustBeInteger} = 10 %size(pts,1)
 end
 % INTERSECT_FACET  Find intersection of ray with facet using barycentric coordinates.
 % Project a ray (each row of pts) onto each facet connected to
@@ -57,6 +56,8 @@ nnList = dsearchn(pts,datalist);
 % nmeshpts = size(pts,1);
 ndatapts = size(datalist,1);
 
+klist = zeros(ndatapts,1);
+
 %% initalize
 dataProj = cell(1,ndatapts); %projected data
 facetPts = dataProj; %facet points
@@ -72,89 +73,90 @@ afterEach(D, @nUpdateProgress);
 N=ndatapts;
 p=1;
 reverseStr = '';
-nreps2 = floor(N/20);
+nreps2 = ceil(N/100);
 nreps = nreps2;
 
-	function nUpdateProgress(~)
-		percentDone = 100*p/N;
-		msg = sprintf('%3.0f', percentDone); %Don't forget this semicolon
-		fprintf([reverseStr, msg]);
-		reverseStr = repmat(sprintf('\b'), 1, length(msg));
-		p = p + nreps;
-	end
+    function nUpdateProgress(~)
+        percentDone = 100*p/N;
+        msg = sprintf('%3.0f', percentDone); %Don't forget this semicolon
+        fprintf([reverseStr, msg]);
+        reverseStr = repmat(sprintf('\b'), 1, length(msg));
+        p = p + nreps;
+    end
 
 %% loop through datapts
 parfor i  = 1:ndatapts % parfor compatible
-	%text waitbar
-	if mod(i,nreps2) == 0
-		send(D,i);
-	end
-	
-	%% first NN projection
-	data = datalist(i,:);
-	nn = nnList(i);
-	
-	rownext = []; %initialize (used in while loop)
-	
-	%find vertices of facets attached to NN vertex (or use all facets)
-	[row,~]=find(K.Value==nn);
-	facetPtIDs= K.Value(row,:);
-	
-	%compute projections
-	switch inttype
-		case 'planar'
-			[dataProj{i},facetPts{i},dataBary{i},subfacetIDs{i},t{i}] = ...
-				projray2hypersphere(pts,facetPtIDs,data,tol,maxnormQ,invmethod);
-		case 'spherical'
-			[dataBary{i},subfacetIDs{i}] = sphbary_setup(pts,facetPtIDs,data,tol); %I think this is buggy 2020-07-16
-			
-	end
-	
-	%% keep using next NNs if facet not found
-	ptsTemp = pts; %dummy variable to be able to sift through new NN's
-	k = 0;
-	oldrow = row;
-	while isempty(subfacetIDs{i}) && k < nnMax
-		k = k+1;
-		%remove previous NN
-		ptsTemp(nn,:) = NaN(1,size(pts,2));
-		
-		%find next NN
-		nn = dsearchn(ptsTemp,data);
-		
-		%find facets attached to next NN
-		[row,~]=find(K.Value==nn);
-		
-		rownext = setdiff(row,oldrow); %this seems problematic for indexing later (2020-07-29)
-		oldrow = [row;oldrow];
-		
-		if ~isempty(rownext)
-			facetPtIDsNext= K.Value(rownext,:);
-			
-			%compute projections
-			switch inttype
-				case 'planar'
-					[dataProj{i},facetPts{i},dataBary{i},subfacetIDs{i},t{i}] = ...
-						projray2hypersphere(pts,facetPtIDsNext,data,tol,maxnormQ,invmethod);
-				case 'spherical'
-					[dataBary{i},subfacetIDs{i}] = sphbary_setup(pts,facetPtIDs,data,tol);
-			end
-		end
-	end
-	
-	if k > 0
-		row = rownext; %correct for indexing if the while loop was entered into
-		%NOTE: not having this was a major source of error (2020-07-29),
-		%i.e. only datapoints which did not enter the while loop had the
-		%correct output for the intersecting facet ID
-	end
-	
-	if ~isempty(subfacetIDs{i})
-		%convert from facetPtIDs or facetPtIDsNext index to K index
-		intfacetIDs{i} = row(subfacetIDs{i});
-	else
-		intfacetIDs{i} = [];
-	end
+    %text waitbar
+    if mod(i,nreps2) == 0
+        send(D,i);
+    end
+    
+    %% first NN projection
+    data = datalist(i,:);
+    nn = nnList(i);
+    
+    rownext = []; %initialize (used in while loop)
+    
+    %find vertices of facets attached to NN vertex (or use all facets)
+    [row,~]=find(K.Value==nn);
+    facetPtIDs= K.Value(row,:);
+    
+    %compute projections
+    switch inttype
+        case 'planar'
+            [dataProj{i},facetPts{i},dataBary{i},subfacetIDs{i},t{i}] = ...
+                projray2hypersphere(pts,facetPtIDs,data,tol,maxnormQ,invmethod);
+        case 'spherical'
+            [dataBary{i},subfacetIDs{i}] = sphbary_setup(pts,facetPtIDs,data,tol); %I think this is buggy 2020-07-16
+    end
+    
+    %% keep using next NNs if facet not found
+    ptsTemp = pts; %dummy variable to be able to sift through new NN's
+    k = 0;
+    oldrow = row;
+    while isempty(subfacetIDs{i}) && k < nnMax
+        k = k+1;
+        %remove previous NN
+        ptsTemp(nn,:) = NaN(1,size(pts,2));
+        
+        %find next NN
+        nn = dsearchn(ptsTemp,data);
+        
+        %find facets attached to next NN
+        [row,~]=find(K.Value==nn);
+        
+        rownext = setdiff(row,oldrow); %this seems problematic for indexing later (2020-07-29)
+        oldrow = [row;oldrow];
+        
+        if ~isempty(rownext)
+            facetPtIDsNext= K.Value(rownext,:);
+            
+            %compute projections
+            switch inttype
+                case 'planar'
+                    [dataProj{i},facetPts{i},dataBary{i},subfacetIDs{i},t{i}] = ...
+                        projray2hypersphere(pts,facetPtIDsNext,data,tol,maxnormQ,invmethod);
+                case 'spherical'
+                    [dataBary{i},subfacetIDs{i}] = sphbary_setup(pts,facetPtIDs,data,tol);
+            end
+        end
+    end
+    
+    if k > 0
+        row = rownext; %correct for indexing if the while loop was entered into
+        %NOTE: not having this was a major source of error (2020-07-29),
+        %i.e. only datapoints which did not enter the while loop had the
+        %correct output for the intersecting facet ID
+    end
+    
+    if ~isempty(subfacetIDs{i})
+        %convert from facetPtIDs or facetPtIDsNext index to K index
+        intfacetIDs{i} = row(subfacetIDs{i});
+    else
+        intfacetIDs{i} = [];
+    end
+    
+    klist(i) = k;
 end
 
 end
