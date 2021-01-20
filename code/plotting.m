@@ -13,6 +13,7 @@ disp('file loaded')
 
 % slurmQ = 0;
 
+%%
 %saving
 files = dir(fullfile('**','interp5DOF-paper','figures'));
 figfolder = files(1).folder;
@@ -199,7 +200,7 @@ olmoct = [qinv(olmoct(:,1:4)),qinv(olmoct(:,5:8))];
 
 rng(5)
 
-nptslist = [1 2 5 10];
+nptslist = [1 2 10 20];
 npts = max(nptslist);
 numnpts = length(nptslist);
 
@@ -209,6 +210,7 @@ pd7 = rad2deg(pd_olmchesser(:));
 
 [pd4c, pd5c, pd6c, errmetrics] = deal(cell(numnpts,1));
 oref = zeros(numnpts,8);
+% oref = get_orefs(8);
 paperfigure(2,2,14.5);
 j = 0;
 for i = 1:npts
@@ -216,6 +218,7 @@ for i = 1:npts
         oref(i,:) = get_ocubo(1,'random',[],10);
     else
         oref(i,:) = get_ocubo(); %random reference octonion
+%         oref(i,:) = orefs(i,:);
     end
     olmoctsym = get_octpairs(olmoct,'oref',oref(i,:)); %symmetrize w.r.t. to oref
     pd4c{i} = squareform(pdist(normr(olmoctsym)));
@@ -369,13 +372,66 @@ f1*rmse+f2*rmse2
 %tunnelplot()
 
 %% Kim GPR Mixture Interpolation, Teaching
-[ypred,ysd,ytrue] = gprmix_test();
+rng(10)
+[ypred,ysd,ytrue,ci,covmat,kfntmp,kfntmp2,mdl,gprMdl2] = gprmix_test();
 savefigpng(figfolder,'kim-interp-teach')
 
 %% Kim GPR Mixture Final Result
-paperfigure();
+rng(10);
+% paperfigure(2,2,13.6843);
+paperfigure(1,2);
+nexttile
 parityplot(ytrue,ypred);
+papertext(1);
+
+n = 300;
+
+nexttile
+mdl.method = 'gprmix';
+[~,~,~,~,A,B] = tunnelplot(mdl,[],[],n,'brkQ',false,'nnQ',false,'nnQ2',false,'tpredlist',ypred,...
+    'kfntmp',kfntmp,'kfntmp2',kfntmp2,'gprMdl2',gprMdl2);
+legend('GPR mixture model','Location','best','Interpreter','latex')
+papertext(2);
+disp(A)
+disp(B)
+
+% nsamp = 10;
+% gprsamples = mvnrnd(ypred,covmat,nsamp);
+
+
 savefigpng(figfolder,'kim-interp')
+
+%% Kim Tunnel Plots and Posterior Sampling
+paperfigure(2,2,13.6843);
+
+nexttile
+npts = size(ytrue,1);
+rids = randperm(npts,npts);
+parityplot(ytrue(rids),ypred(rids),'scatter','c',ysd(rids),'cblbl','$\sigma_{\mathrm{pred}} (J m^{-2})$')
+papertext(1);
+
+nexttile
+mdl.method = 'gprmix';
+tunnelplot(mdl,A,B,n,'brkQ',false,'nnQ',true,'nnQ2',true,'tpredlist',ypred,...
+    'kfntmp',kfntmp,'kfntmp2',kfntmp2,'gprMdl2',gprMdl2);
+papertext(2);
+
+nexttile
+mdl.method = 'gprmix';
+tunnelplot(mdl,A,B,n,'brkQ',false,'nnQ',false,'nnQ2',false,'tpredlist',ypred,...
+    'kfntmp',kfntmp,'kfntmp2',kfntmp2,'gprMdl2',gprMdl2,'nsamp',5);
+ax = nexttile(2);
+ch = ax.Children([2,3]);
+legend(ch,'GPR mixture model','1st NN (input points)','Location','best','Interpreter','latex')
+papertext(3);
+
+nexttile
+mdl.method = 'gprmix';
+tunnelplot(mdl,[],[],n,'brkQ',true,'nnQ',false,'nnQ2',false,'tpredlist',ypred,...
+    'kfntmp',kfntmp,'kfntmp2',kfntmp2,'gprMdl2',gprMdl2);
+legend('Ni BRK model','Fe GPR mixture model','Location','best','Interpreter','latex')
+papertext(4);
+savefigpng(figfolder,'kim-interp-posterior')
 
 %% GPR Mixture Sigmoid Function
 paperfigure();
@@ -392,7 +448,7 @@ savefigpng(figfolder,'gprmix-sigmoid')
 
 %% tunnel plot (full)
 ninputpts = 50000; %1000, 50000
-n = 300;
+n = 150;
 [tpredlist,tsdlist,propList,methodlist,A,B] = tunnelplot_test(2,ninputpts,n);
 fname = ['tunnel-',int2str(ninputpts)];
 fpath = fullfile(figfolder,fname);
@@ -403,14 +459,89 @@ savefigpng(figfolder,fname)
 
 %% tunnel plot (shortcut)
 ninputpts = 1000;
-n = 300;
-fname = ['tunnel-' int2str(ninputpts) '.mat'];
+n = 150;
+fname = ['tunnel-' int2str(ninputpts)];
 fpath = fullfile(figfolder,fname);
 load(fpath,'tpredlist','tsdlist','propList','methodlist','A','B')
 tunnelplot_test(2,ninputpts,n,tpredlist,tsdlist,propList,methodlist,A,B);
 disp(A)
 disp(B)
 savefigpng(figfolder,fname)
+
+
+%% Kim Interp Degeneracy Info
+fname = 'kim-interp-degeneracy'; % produced in Kim2oct.m
+fpath = fullfile(figfolder,fname);
+load(fpath,'errmetrics')
+paperfigure(2,2);
+i = 0;
+nexttile
+i = i+1;
+e = errmetrics.e;
+ecat = vertcat(e{:});
+nprops = errmetrics.nprops;
+
+ids = nprops <= 4;
+e1 = e(ids);
+ecat1 = vertcat(e1{:});
+
+nprops = errmetrics.nprops;
+histogram(ecat1);
+axis square
+% set(gca,'YScale','log');
+xlabel({'Error relative to (1-4 degeneracy)','set average ($J/m^2$)'},'Interpreter','latex')
+ylabel('counts','Interpreter','latex')
+
+min(ecat)
+max(ecat)
+papertext(i);
+
+nexttile
+i=i+1;
+propavg = vertcat(errmetrics.propavg{ids});
+props = vertcat(errmetrics.propsets{ids});
+parityplot(propavg,props)
+xlabel('Average set-wise GBE ($J/m^2$)','Interpreter','latex')
+ylabel('Input GBE ($J/m^2$)','Interpreter','latex')
+
+ids2 = nprops > 4;
+e2 = e(ids2);
+ecat2 = vertcat(e2{:});
+papertext(i);
+
+nexttile
+i = i+1;
+histogram(ecat2)
+axis square
+xlabel({'Error relative to (5+ degeneracy)','set average ($J/m^2$)'},'Interpreter','latex')
+ylabel('counts','Interpreter','latex')
+papertext(i);
+
+nexttile
+i = i+1;
+propavg = vertcat(errmetrics.propavg{ids2});
+props = vertcat(errmetrics.propsets{ids2});
+parityplot(propavg,props)
+xlabel('Average set-wise GBE ($J/m^2$)','Interpreter','latex')
+ylabel('Input GBE ($J/m^2$)','Interpreter','latex')
+papertext(i);
+
+fname = 'kim-interp-degeneracy-results';
+savefigpng(figfolder,fname)
+
+paperfigure()
+histogram(errmetrics.nprops)
+axis square
+xlabel('Number of degenerate GBs per set','Interpreter','latex')
+ylabel('Number of sets','Interpreter','latex')
+fname = 'kim-interp-degeneracy-sets';
+savefigpng(figfolder,fname)
+% 
+% nexttile
+% histogram(nprops(ids))
+
+disp(['wtrmse: ' num2str(errmetrics.wtrmse)])
+disp(['wtmae: ' num2str(errmetrics.wtmae)])
 
 %% CODE GRAVEYARD
 %{
