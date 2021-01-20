@@ -1,4 +1,4 @@
-function [meshList,propList,rmIDs,keepIDs,rmIDcell] = avgrepeats(meshList,propList,avgtype)
+function [meshList,propList,rmIDs,keepIDs,rmIDcell,errmetrics] = avgrepeats(meshList,propList,avgtype)
 arguments
    meshList
    propList
@@ -47,7 +47,9 @@ end
 repsets = get_repsets(meshList,2);
 keepIDs = cellfun(@(repset) repset(1),repsets);
 nrepsets = length(repsets);
-rmIDcell = cell(1,nrepsets);
+[mae,rmse] = deal(zeros(nrepsets,1));
+[rmIDcell,propsets,e,propavg] = deal(cell(1,nrepsets));
+
 for i = 1:nrepsets
 	%unpack
 	repset = repsets{i};
@@ -59,8 +61,25 @@ for i = 1:nrepsets
     keepID = repset(1);
     
 	%average properties
-	propList(keepID,:) = avgfn(propList(repset,:));
+    propset = propList(repset,:);
+	propList(keepID,:) = avgfn(propset); %package
+    
+    %error metrics
+    propavg{i} = repelem(mean(propset,1),length(propset),1);
+    errtmp = get_errmetrics(propset,propavg{i});
+    
+%     %package
+    propsets{i} = propset;
+    e{i} = errtmp.e;
+    nprops(i) = length(propset);
+    mae(i) = errtmp.mae;
+    rmse(i) = errtmp.rmse;
 end
+
+wtrmse = dot(nprops,rmse)/nrepsets;
+wtmae = dot(nprops,mae)/nrepsets;
+
+errmetrics = var_names(nprops,e,mae,rmse,propavg,propsets,wtrmse,wtmae);
 
 %remove repeat octonions
 rmIDs = horzcat(rmIDcell{:});
