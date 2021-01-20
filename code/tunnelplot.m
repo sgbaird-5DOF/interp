@@ -12,9 +12,14 @@ arguments
     nv.tsdlist = []
     nv.propList = []
     nv.methodlist = []
+    nv.covmat = []
+    nv.kfntmp = []
+    nv.kfntmp2 = []
+    nv.gprMdl2 = []
+    nv.nsamp = []
 end
 
-if ~iscell(mdls) && isscalar(mdls)
+if ~isempty(mdls) && ~iscell(mdls) && isscalar(mdls)
     mdls = {mdls};
 end
 
@@ -30,19 +35,21 @@ brkQ = nv.brkQ;
 % else
 %     gprMdl = mdl.cgprMdl;
 % end
-ppts = mdls{1}.mesh.ppts;
+if ~isempty(mdls)
+    ppts = mdls{1}.mesh.ppts;
+end
 % ppts2 = mdl.data.ppts;
 
 %% pairwise distance
-npts = size(ppts,1);
-if npts > 20000
-    ids = 1:20000;
-else
-    ids = 1:npts;
-end
-
-pts = mdls{1}.mesh.pts;
 if isempty(A) && isempty(B)
+    npts = size(ppts,1);
+    if npts > 20000
+        ids = 1:20000;
+    else
+        ids = 1:npts;
+    end
+    
+    pts = mdls{1}.mesh.pts;
     pd = squareform(pdist(ppts(ids,:)));
     [mx,id] = max(pd,[],'all','linear');
     
@@ -50,7 +57,7 @@ if isempty(A) && isempty(B)
     indlen = length(ids);
     [row,col] = ind2sub([indlen,indlen],id);
     A = pts(row,:);
-    B = pts(col,:);    
+    B = pts(col,:);
 end
 % a = ppts2(row,:);
 % b = ppts2(col,:);
@@ -80,7 +87,7 @@ switch slerptype
         t = n2c(tpts);
         arcpts = interparc(n,t{:},'spline');
         arcpts = normr(get_octpairs(arcpts,[],1));
-%         arcpts = 1/sqrt(2)*sqrt2norm(arcpts);
+        %         arcpts = 1/sqrt(2)*sqrt2norm(arcpts);
         [d2,seg] = arclength(t{:},'spline');
         d2 = 2*d2; %convert to omega
 end
@@ -92,8 +99,12 @@ end
 % arcpts = 1/sqrt(2)*sqrt2norm(arcpts);
 
 %% property interpolation
-nmdl = length(mdls);
-if isempty(nv.tpredlist) && isempty(nv.tsdlist) && isempty(nv.propList) && isempty(nv.methodlist)
+if isempty(mdls)
+    nmdl = length(nv.tpredlist);
+else
+    nmdl = length(mdls);
+end
+if (isempty(nv.tpredlist) && isempty(nv.tsdlist) && isempty(nv.propList) && isempty(nv.methodlist)) || strcmp(mdls{1}.method,'gprmix')
     [tpredlist,tsdlist,propList,methodlist] = deal(cell(nmdl,1));
     for i = 1:nmdl
         mdl = mdls{i};
@@ -116,9 +127,34 @@ if isempty(nv.tpredlist) && isempty(nv.tsdlist) && isempty(nv.propList) && isemp
                 tpredlist{i} = get_interp(mdl.mesh,mdl.data,intfacetIDs,mdl.barytype,mdl.barytol);
             case 'gpr'
                 [tpredlist{i},tsdlist{i}] = predict(mdl.gprMdl,arcppts);
+                
                 %     out = exec_argfn(mdl.mdlcmd,mdl,{'tpred','tsd'});
                 %     tpred = out.tpred;
                 %     tsd = out.tsd;
+            case 'gprmix'
+                alpha = 0.05;
+%                 [tpredlist{i},tsdlist{i}] = predict(mdl.gprMdl,arcppts);
+%                 if isempty(nv.kfntmp)
+%                     kfn = mdl.gprMdl.Impl.Kernel.makeKernelAsFunctionOfXNXM(mdl.gprMdl.Impl.ThetaHat);
+%                     if isempty(nv.covmat)
+%                         covmat = kfn(arcppts,arcppts);
+%                     else
+%                         covmat = nv.covmat;
+%                     end
+%                 else
+                [tpredlist{1},tsdlist{1}] = gprmix(mdl,[],[],arcppts,'gprMdl2',nv.gprMdl2);
+                kfn = kmix(nv.kfntmp,nv.kfntmp2);
+                a = sigfn(tpredlist{1});
+                covmat = kfn(arcppts,arcppts,a);
+                covmat = nearestSPD(covmat);
+%                 end
+%                 [tpredlist{i},covmat,ci] = predictExactWithCov(mdl.gprMdl.Impl,arcppts,alpha);
+%                 tsdlist{i} = sqrt(diag(covmat));
+%                 T = cholcov(covmat);
+%                 tpredlist{i} = tpredlist{i} + T'*randn(n,nsamp);
+                if ~isempty(nv.nsamp)
+                    tpredlist{i} = mvnrnd(tpredlist{i}.',covmat,nv.nsamp);
+                end
             case 'idw'
                 tpredlist{i} = idw(mdl.mesh.ppts,arcppts,mdl.mesh.props,mdl.r,mdl.L);
                 %     out = exec_argfn(mdl.mdlcmd,mdl,{'tpred'});
@@ -176,42 +212,51 @@ if brkQ
     brk = GB5DOF_setup(pA,pB,[0 0 1],'Ni',1);
     ax{i} = plot(x,brk,'k-','LineWidth',3);
     lgdax = [lgdax,ax{i}];
-%     lgdlbltmp = '$\overline{AB}$ BRK';
+    %     lgdlbltmp = '$\overline{AB}$ BRK';
     lgdlbltmp = 'BRK';
     lgdlbl = [lgdlbl,lgdlbltmp];
     i = i+1;
 end
 
 for j = 1:nmdl
-%     mdl = mdls{j}
+    %     mdl = mdls{j}
     method = methodlist{j};
     switch method
         case 'gpr'
-            axtmp=shadedErrorBar(x,tpredlist{j},tsdlist{j},'lineProps','b.');
+            axtmp=shadedErrorBar(x,tpredlist{j},tsdlist{j},'lineProps','bo');
             ax{j}=axtmp.mainLine;
-%             ax{i}.LineWidth = 1;
+            ax{i}.LineWidth = 0.25;
             ax{j}.MarkerSize = 3;
+        case 'gprmix'
+            if isempty(nv.nsamp)
+                axtmp=shadedErrorBar(x,tpredlist{j},tsdlist{j},'lineProps','bo');
+                ax{j}=axtmp.mainLine;
+                ax{i}.LineWidth = 0.25;
+                ax{j}.MarkerSize = 3;
+            else
+                mkr = '-o';
+                ax{j} = plot(x,tpredlist{j},mkr,'MarkerSize',3,'LineWidth',0.25);
+            end
         otherwise
             switch method
                 case 'pbary'
-                    mkr = 'r.';
+                    mkr = 'ro';
                 case 'nn'
-                    mkr = 'm.';
+                    mkr = 'mo';
                 case 'idw'
-                    mkr = 'g.';
+                    mkr = 'go';
             end
-%             mkr = '.';
-            ax{j} = plot(x,tpredlist{j},mkr,'MarkerSize',3); %'LineWidth',1
+            %             mkr = '.';
+            ax{j} = plot(x,tpredlist{j},mkr,'MarkerSize',3,'LineWidth',0.25);
     end
-    
     lgdax = [lgdax,ax{j}];
     if strcmp(method,'pbary')
         methodtxt = 'Barycentric';
     else
         methodtxt = upper(char(method));
     end
-%     lgdlbltmp = ['$\overline{AB}$ ' methodtxt];
-%     lgdlbltmp = methodtxt;
+    %     lgdlbltmp = ['$\overline{AB}$ ' methodtxt];
+    %     lgdlbltmp = methodtxt;
     lgdlbl = [lgdlbl,methodtxt];
     i = i+1;
 end
@@ -224,8 +269,9 @@ if nnQ2
     colormap jet
 end
 % kstr = num2cell(strcat(string(num2cell(1:K)),'-NN'));
-
-legend(lgdax,lgdlbl,'Location',nv.lgdloc,'Interpreter','latex')
+if ~strcmp(mdl.method,'gprmix')
+    legend(lgdax,lgdlbl,'Location',nv.lgdloc,'Interpreter','latex')
+end
 
 xlabel('$\overline{AB}(t)$ $(^\circ)$','Interpreter','latex')
 ylabel('$GBE (J m^{-2})$','Interpreter','latex')
