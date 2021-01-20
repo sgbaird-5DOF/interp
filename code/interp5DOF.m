@@ -415,6 +415,7 @@ switch method
             thresh = Inf;
             if ninputpts <= thresh
                 PredictMethod = 'fic';
+                gpropts = {'Sigma',1e-6,'ConstantSigma',true,'SigmaLowerBound',1e-8}; %interpolation
 %                 gpropts = {'KernelFunction','exponential'};
 %                 PredictMethod = 'exact';
 %                 gpropts = {'FitMethod','none','KernelFunction','exponential','Sigma',0.005,...
