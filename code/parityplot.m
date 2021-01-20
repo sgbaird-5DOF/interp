@@ -77,7 +77,11 @@ switch plottype
             %     ax1 = plot(yactual,ypred,NV.mkr);
             ax1 = scatter(yactual,ypred,NV.sz,NV.c,NV.mkr);
         end
-        
+        if ~isempty(NV.c)
+            cb = colorbar;
+            cb.Label.Interpreter = 'latex';
+            cb.Label.String = NV.cblbl;
+        end
         scatterNames = fields(NV.scatterOpts);
         for i = 1:length(scatterNames)
             scatterName = scatterNames{i};
@@ -133,5 +137,6 @@ if ~isempty(NV.ylim)
     ylim(NV.ylim)
 end
 
+% colormap jet
 hold off
 end
