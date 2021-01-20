@@ -1,4 +1,4 @@
-function [ypred,ysd,ytrue] = gprmix_test(fname)
+function [ypred,ysd,ytrue,ci,covmat,kfntmp,kfntmp2,mdl,gprMdl2] = gprmix_test(fname)
 arguments
    fname = 'gpr46883_gitID-9818307_puuID-e5d12412_kim-rng11.mat'
 end
@@ -12,7 +12,7 @@ S = load(fname);
 mdl = S.mdl;
 
 % unpack model components
-gprMdl = mdl.gprMdl;
+% gprMdl = mdl.gprMdl;
 X = mdl.mesh.ppts;
 y = mdl.mesh.props;
 X2 = mdl.data.ppts;
@@ -24,5 +24,5 @@ plotQ = true;
 dispQ = true;
 
 %% GPR mixture model
-[ypred,ysd] = gprmix(gprMdl,X,y,X2,ytrue,thr,'plotQ',plotQ,'dispQ',dispQ);
+[ypred,ysd,ci,covmat,kfntmp,kfntmp2,gprMdl2] = gprmix(mdl,X,y,X2,ytrue,thr,'plotQ',plotQ,'dispQ',dispQ);
 end
