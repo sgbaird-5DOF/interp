@@ -25,6 +25,7 @@ end
 % Date: 2020-10-06
 %--------------------------------------------------------------------------
 q = get_cubo(npts);
-nA = normr(rand(npts,3)-0.5);
+% nA = normr(rand(npts,3)-0.5); %(somewhat) non-uniform sampling of sphere
+nA = normr(normrnd(0,1,npts,3)-0.5); %uniform sampling of sphere
 five = var_names(q,nA);
 end
