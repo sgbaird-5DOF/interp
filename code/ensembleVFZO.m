@@ -32,4 +32,5 @@ end
 ypredtmp = [ypredlist{:}];
 %parse values
 % ypred = min(ypredtmp,[],2);
-ypred = median(ypredtmp,2);
+% ypred = median(ypredtmp,2);
+ypred = mean(ypredtmp,2);
