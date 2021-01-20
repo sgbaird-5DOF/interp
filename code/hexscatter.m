@@ -14,6 +14,7 @@ arguments
     NV.cscale char {mustBeMember(NV.cscale,{'log','linear'})} = 'log'
     NV.Interpreter char {mustBeMember(NV.Interpreter,{'tex','latex','none'})} = 'latex'
     NV.axis = 'equal'
+    NV.reflineQ = true
 end
 % HEXSCATTER  A scatter-plot substitute - generate a density plot using hexagonal patches.
 %% h = HEXSCATTER( x, y, ... )
@@ -144,7 +145,9 @@ end
 
 %additional plotting (modified, SGB 2020-10-19)
 hold on
-refline(1,0)
+if NV.reflineQ
+    refline(1,0)
+end
 
 axis(NV.axis);
 if ~isempty(NV.title)
