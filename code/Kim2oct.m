@@ -99,9 +99,27 @@ specIDs = ~mechIDs;
 %% get property list
 propListFull = gbe/1000; % convert from mJ/m^2 to J/m^2
 
+if removezeroQ
+    %% remove GBs with GBE near 0
+    ids = find(propListFull > 0.01);
+    meshList = meshListFull(ids,:);
+    propList = propListFull(ids);
+    
+    mechIDs = mechIDs(ids);
+    specIDs = specIDs(ids);
+    
+    qlist = qlist(ids,:);
+    nAlist = nAlist(ids,:);
+end
+
 %% average properties for repeat octonions and remove repeats (except one)
 if avgQ
-    [meshList,propList,rmIDlist] = avgrepeats(meshListFull,propListFull,'min'); %#ok<*UNRCH>
+    [meshList,propList,rmIDlist,keepIDs,rmIDcell,errmetrics] = avgrepeats(meshList,propList,'mean'); %#ok<*UNRCH>
+    files = dir(fullfile('**','interp5DOF-paper','figures'));
+    if ~isempty(files)
+        figfolder = files(1).folder;
+        save(fullfile(figfolder,'kim-interp-degeneracy.mat'),'errmetrics')
+    end
     mechIDs(rmIDlist) = [];
     specIDs(rmIDlist) = [];
     
@@ -111,19 +129,6 @@ if avgQ
 else
     propList = propListFull;
     meshList = meshListFull;
-end
-
-if removezeroQ
-    %% remove GBs with GBE near 0
-    ids = find(propList > 0.1);
-    meshList = meshList(ids,:);
-    propList = propList(ids);
-    
-    mechIDs = mechIDs(ids);
-    specIDs = specIDs(ids);
-    
-    qlist = qlist(ids,:);
-    nAlist = nAlist(ids,:);
 end
 
 %number of points after averaging
