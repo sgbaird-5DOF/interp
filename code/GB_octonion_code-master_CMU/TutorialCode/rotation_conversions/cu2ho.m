@@ -1,6 +1,10 @@
 % from cubochoric to homochoric
 
-function q = cu2ho(xyz)
+function q = cu2ho(xyz,printQ)
+arguments
+    xyz
+    printQ(1,1) logical = false
+end
 % rs = sqrt(sum(xyz.*xyz));
 R1 = (3*pi/4)^(1/3);
 aa = ((pi^5)/6)^(1/6);
@@ -16,7 +20,9 @@ if (max(abs(xyz)) > ((pi^(2/3)/2.0)+1e-8))
 end
 
 % determine which pyramid pair the point lies in and copy coordinates in correct order (see paper)
-disp('GetPyramid')
+if printQ
+    disp('GetPyramid')
+end
 p = GetPyramid(xyz);
 if (p==1) || (p==2)
     sXYZ = xyz;

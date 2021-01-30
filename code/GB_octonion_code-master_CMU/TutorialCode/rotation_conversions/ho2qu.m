@@ -1,9 +1,17 @@
 % from homochoric to quaternions
 
-function q = ho2qu(h)
-disp('ho2ax')
+function q = ho2qu(h,printQ)
+arguments
+    h
+    printQ(1,1) logical = false
+end
+if printQ
+    disp('ho2ax')
+end
 ax = ho2ax(h);
-disp('ax2qu')
+if printQ
+    disp('ax2qu')
+end
 q = ax2qu(ax);
 
 % set values very close to 0 as 0
