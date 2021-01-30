@@ -3,7 +3,8 @@ arguments
     ninputpts
     npredpts
     method char = 'gpr'
-    datatype char {mustBeMember(datatype,{'brk','kim','rohrer-Ni','rohrer-test','rohrer-brk-test'})} = 'brk'
+    datatype char {mustBeMember(datatype,{'brk','kim','rohrer-Ni','rohrer-test',...
+        'rohrer-brk-test','olmsted-Ni'})} = 'brk'
     epsijk(1,1) double = 1
     NV.pgnum(1,1) double = 32 %m-3m (i.e. m\overbar{3}m) FCC symmetry default
     NV.uuid = get_uuid()
@@ -196,7 +197,19 @@ switch datatype
         
     case 'olmsted-Ni'
         %this is probably about all I have left to try.
+        A = importdata('olm_octonion_list.txt');
+        o = A.data;
+        o = [qinv(o(:,1:4)),qinv(o(:,5:8))];
         
+        B = importdata('olm_properties.txt');
+        y = B.data(:,1);
+        
+        [qm,nA] = oct2five(o,epsijk);
+        five.q = qm;
+        five.nA = nA;
+        five2.q = qm;
+        five2.nA = nA;
+        ytrue = y;
 end
 
 % noisetype = 'normal';

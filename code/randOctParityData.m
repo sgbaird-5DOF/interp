@@ -8,21 +8,21 @@ F = false;
 %loop through different combinations of parameters using random,
 %octochorically sampled octonions
 addpathdir({'var_names.m','writeparfile.m','walltimefns'})
-runtype = 'full'; %'test','full'
-nreps = 10; % number of runs or repetitions
+runtype = 'test'; %'test','full'
+nreps = 1; % number of runs or repetitions
 
 % job submission environment
-env = 'slurm'; %'slurm', 'local'
+env = 'local'; %'slurm', 'local'
 dryrunQ = F; %whether to skip running the jobs and just compile results
-metaQ = T; %whether to load full model or only metay-data at end
+metaQ = F; %whether to load full model or only metay-data at end
 
 %make sure the parameters here correspond with the input to "pars" below
 switch runtype
     case 'test'
-        ninputpts = floor(58604*0.8); %56442; %floor(67886*0.8); %floor(264276*.8); %17176; %1893*2; %[2366]; %[1893*1]; % 5000 10000 20000 50000];
-        npredpts = ceil(58604*0.2); %11443; %floor(67886*0.2); %ceil(264276*0.2); %67886-17176; %67886-1893*2; %65520; %473*1;
-        method = {'gpr'}; % 'sphbary', 'pbary', 'gpr', 'sphgpr', 'nn', 'avg'
-        datatype = {'kim'}; % 'brk', 'kim', 'rohrer-Ni', 'rohrer-test', 'rohrer-brk-test'
+        ninputpts = 388; %17176; %floor(58604*0.2); %56442; %floor(67886*0.8); %floor(264276*.8); %17176; %1893*2; %[2366]; %[1893*1]; % 5000 10000 20000 50000];
+        npredpts = 0; %58604-17176; %ceil(58604*0.8); %11443; %floor(67886*0.2); %ceil(264276*0.2); %67886-17176; %67886-1893*2; %65520; %473*1;
+        method = {'gpr','nn','pbary','idw','avg'}; % 'sphbary', 'pbary', 'gpr', 'sphgpr', 'nn', 'avg'
+        datatype = {'olmsted-Ni'}; % 'brk', 'kim', 'rohrer-Ni', 'rohrer-test', 'rohrer-brk-test', 'olmsted-Ni'
         pgnum = 32; %m-3m (i.e. m\overbar{3}m) FCC symmetry default for e.g. Ni
         sigma = [0]; %J/m^2, standard deviation, added to "y"
         genseed = 11;
@@ -64,7 +64,9 @@ end
 % comment = 'kim-minrepeats5-trainsigma0.2-posnoise';
 % comment = 'kim-rng11';
 % comment = 'paper-data3';
-comment = 'paper-data-test';
+% comment = 'paper-data-test';
+% comment = 'paper-data5';
+comment = 'olmsted-ni';
 % comment = 'test';
 % comment = 'kim-trainRepeat-testNoRepeat';
 % comment = 'rohrer';

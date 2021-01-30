@@ -20,6 +20,8 @@ arguments
     NV.o = [] %input octonions, specify these or qm/nA pairs
     NV.o2 = [] %query octonions, specify these or qm2/nA2 pairs
     NV.oref = get_ocubo(1,'random',[],10)
+    NV.nforce double = 1
+    NV.nforceQ(1,1) logical = false
 end
 % INTERP5DOF  Convert misorientation and boundary plane normal 5DOF input
 % data to a closed, octonion, hyperspherical mesh and interpolate property
@@ -171,6 +173,8 @@ brkQ = NV.brkQ;
 uuid = NV.uuid;
 ytrue = NV.ytrue;
 sigma = NV.sigma;
+nforceQ = NV.nforceQ;
+nforce = NV.nforce;
 
 % add relevant folders to path (by searching subfolders for functions)
 % addpath(genpath('.'))
@@ -232,13 +236,13 @@ projQ = true;
 zeroQ = false;
 o = normr(o);
 o2 = normr(o2);
-[a,usv] = proj_down([o;o2],projtol,'zeroQ',zeroQ);
+[a,usv] = proj_down([o;o2],projtol,'zeroQ',zeroQ,'nforceQ',nforceQ,'nforce',nforce);
 
 d = size(a,2);
 %projected points
 if d <= 8
-    ppts = proj_down(o,projtol,usv,'zeroQ',zeroQ);
-    ppts2 = proj_down(o2,projtol,usv,'zeroQ',zeroQ);
+    ppts = proj_down(o,projtol,usv,'zeroQ',zeroQ,'nforceQ',nforceQ,'nforce',nforce);
+    ppts2 = proj_down(o2,projtol,usv,'zeroQ',zeroQ,'nforceQ',nforceQ,'nforce',nforce);
 else 
     error("Input doesn't have degenerate dimension or has too few (i.e. check input data), or try reducing proj_down tolerance input (tol)")
 end
@@ -415,7 +419,7 @@ switch method
             thresh = Inf;
             if ninputpts <= thresh
                 PredictMethod = 'fic';
-                gpropts = {'Sigma',1e-6,'ConstantSigma',true,'SigmaLowerBound',1e-8}; %interpolation
+%                 gpropts = {'Sigma',1e-6,'ConstantSigma',true,'SigmaLowerBound',1e-8}; %interpolation
 %                 gpropts = {'KernelFunction','exponential'};
 %                 PredictMethod = 'exact';
 %                 gpropts = {'FitMethod','none','KernelFunction','exponential','Sigma',0.005,...
