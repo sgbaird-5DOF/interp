@@ -27,10 +27,10 @@ switch type
         mA = normr([cos(deg2rad(-20)),0.5,sin(deg2rad(-20))]);
 end
 
-gbe0 = GB5DOF_setup(pA,pB,mA,epsijk);
+gbe0 = GB5DOF_setup(pA,pB,mA,'Ni',epsijk);
 
 [qm,nA] = eumA2five(eA,eB,mA,epsijk);
-gbe = GB5DOF_setup([1 0 0 0],qm,nA,epsijk);
+gbe = GB5DOF_setup([1 0 0 0],qm,nA,'Ni',epsijk);
 qmdis = qdis(qm,pgnum,epsijk);
 
 %% Plotting 5DOF conversion
@@ -61,7 +61,7 @@ qB1 = qmult(qR,pB,epsijk);
 omA = qu2om(qA1,epsijk);
 omB = qu2om(qB1,epsijk);
 
-gbe1 = GB5DOF_setup(qA1,qB1,[0 0 1],epsijk);
+gbe1 = GB5DOF_setup(qA1,qB1,[0 0 1],'Ni',epsijk);
 
 %plotting
 if plotQ
@@ -77,7 +77,7 @@ end
 [qm1,nA1] = qmA2five(qA1,qB1,[0 0 1],epsijk);
 qmdis1 = qdis(qm1,pgnum,epsijk);
 
-gbe1a = GB5DOF_setup([1 0 0 0],qm1,nA1,epsijk);
+gbe1a = GB5DOF_setup([1 0 0 0],qm1,nA1,'Ni',epsijk);
 
 % GBmat2oct
 o = GBmat2oct(omA,omB,epsijk); %note that qA == qA1 and qB == qB1
@@ -87,9 +87,9 @@ qB = o(5:8);
 [qm2,nA2] = qmA2five(qA,qB,[0 0 1],epsijk);
 qmdis2 = qdis(qm2,pgnum,epsijk);
 
-gbe2 = GB5DOF_setup(qA,qB,[0 0 1],epsijk);
+gbe2 = GB5DOF_setup(qA,qB,[0 0 1],'Ni',epsijk);
 
-gbe2a = GB5DOF_setup([1 0 0 0],qm2,nA2,epsijk);
+gbe2a = GB5DOF_setup([1 0 0 0],qm2,nA2,'Ni',epsijk);
 
 %% Plotting Intermediate to Octonion
 if plotQ
@@ -119,8 +119,8 @@ qAsym = osym2(1,1:4);
 qBsym = osym2(1,5:8);
 [qmsym,nAsym] = qmA2five(qAsym,qBsym,[0 0 1],epsijk);
 
-gbesym = GB5DOF_setup(qAsym,qBsym,[0 0 1],epsijk);
-gbesyma = GB5DOF_setup([1 0 0 0],qmsym,nAsym,epsijk);
+gbesym = GB5DOF_setup(qAsym,qBsym,[0 0 1],'Ni',epsijk);
+gbesyma = GB5DOF_setup([1 0 0 0],qmsym,nAsym,'Ni',epsijk);
 
 %when active-active (qmult/qm) used, qmdis==qmdis2, qmdis2~=qmsymdis
 %when active-passive (qmult/qm) used, qmdis~=qmdis2, qmdis2==qmsymdis
