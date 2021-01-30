@@ -2,7 +2,7 @@ function propList = GB5DOF_setup(pA,pB,mA,mat,epsijk)
 arguments
     pA(:,4)
     pB(:,4)
-    mA(:,3)
+    mA(:,3) = [0 0 1] %default is octonion convention
     mat char = 'Ni'
     epsijk(1,1) double = 1
 end
