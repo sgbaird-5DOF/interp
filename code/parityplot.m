@@ -77,7 +77,7 @@ switch plottype
             %     ax1 = plot(yactual,ypred,NV.mkr);
             ax1 = scatter(yactual,ypred,NV.sz,NV.c,NV.mkr);
         end
-        if ~isempty(NV.c)
+        if ~isempty(NV.c) && (size(NV.c,1) ~= 1)
             cb = colorbar;
             cb.Label.Interpreter = 'latex';
             cb.Label.String = NV.cblbl;

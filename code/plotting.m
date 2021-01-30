@@ -5,7 +5,8 @@
 % fname = 'gitID-f585733_uuID-edf2fcc7_paper-data2.mat';
 % fname = 'gitID-c67a123_uuID-18d21f26_set4.mat';
 % fname = 'gitID-014bf70_uuID-3ed9cba0_paper-data3.mat';
-fname = 'gitID-6ede824_uuID-1cf78415_paper-data5.mat';
+% fname = 'gitID-6ede824_uuID-1cf78415_paper-data5.mat';
+fname = 'gitID-0055bee_uuID-475a2dfd_paper-data6.mat';
 files = dir(fullfile('**',fname));
 fpath = fullfile(files(1).folder,files(1).name);
 load(fpath);
@@ -18,8 +19,9 @@ disp('file loaded')
 files = dir(fullfile('**','interp5DOF-paper','figures'));
 figfolder = files(1).folder;
 
-addpathdir({'paperfigure.m','dist-parity.mat','olm_octonion_list.txt',...
-    'oct50000.mat','gmat2q.m','PGnames.mat','var_names.m'})
+% addpathdir({'paperfigure.m','dist-parity.mat','olm_octonion_list.txt',...
+%     'oct50000.mat','gmat2q.m','PGnames.mat','var_names.m'})
+addpath(genpath('.'))
 
 set(0, 'DefaultTextInterpreter', 'latex')
 set(0, 'DefaultLegendInterpreter', 'latex')
@@ -79,7 +81,7 @@ for datatype = datatypelist
     t1 = nexttile(1);
     t1.Legend.Position = [0.299964268608805 0.516990889931764 0.163876007802576 0.229411769754747];
     t2 = nexttile(2);
-    t2.Legend.Position = [0.780569390710456 0.495824223265097 0.163876007802576 0.229411769754747];
+    t2.Legend.Position = [0.769986057377123 0.592250149191023 0.163876007802576 0.229411769754747];
 %     fig.Children.Children(3).Position = [0.780569390710456 0.495824223265097 0.163876007802576 0.229411769754747];
     %saving
     savefigpng(figfolder,[char(datatype) 'error'])
@@ -158,19 +160,22 @@ xlabel('VFZO Set Size','Interpreter','latex')
 ylabel('VFZO $\omega_{\mathrm{NN}}$ ($^{\circ}$)','Interpreter','latex')
 savefigpng(figfolder,'nndist-vs-setsize');
 
+%% dist-parity
+seed = 10; %#ok<*UNRCH>
+rng(seed);
+npts = 10000;
+[five,q,nA] = get_five(npts);
+o = five2oct(q,nA);
+pts = get_octpairs(o);
+pts = normr(pts);
+pd1 = pdist(pts).';
+pd2 = real(pdist(pts,@get_omega).');
+pd3 = real(pdist(pts,@get_alen).');
+save(fullfile(figfolder,'dist-parity.mat'),'pd1','pd2','pd3')
+
 %% arclength vs. euclidean distance parity
 % addpathdir({'get_five.m','cu2qu.m','GBfive2oct.m','gmat2q.m','distance-parity.mat'})
 addpathdir({'dist-parity.mat','paperfigure.m'})
-% seed = 10; %#ok<*UNRCH>
-% rng(seed);
-% npts = 10000;
-% five = get_five(npts);
-% o = GBfive2oct(five);
-% pts = get_octpairs(o);
-% pts = normr(pts);
-% pd1 = pdist(pts).';
-% pd2 = real(pdist(pts,@get_omega).');
-% pd3 = real(pdist(pts,@get_alen).');
 
 fname = 'dist-parity';
 load([fname,'.mat'],'pd1','pd2','pd3')
@@ -181,8 +186,8 @@ parityplot(pd1,pd3,'scatter','cscale','linear','xname','Euclidean Distance',...
 
 %saving
 % savefigpng(folder,fname);
-fpath = fullfile(figfolder,fname);
-print(fpath,'-dpng','-r300')
+print(fpath,'-dpng','-r300') %saving .fig takes too long, file is pretty big
+clear pd1 pd2 pd3
 
     
 %     load('olm_pairwise_oct.mat','oct_new')
@@ -268,21 +273,97 @@ plot(enstbl.ksize,enstbl.mae,'-*')
 legend('RMSE','MAE','Interpreter','latex')
 savefigpng(figfolder,['dist-ensemble-rmse-mae'])
 
+%% Ensemble Interpolation (Load)
+fname = 'ensemble-interp';
+
+seed = 10;
+rng(seed);
+ninputpts = 50000;
+npredpts = 10000;
+[~,qm,nA] = get_five(ninputpts);
+o = five2oct(qm,nA);
+y = GB5DOF_setup(o(:,1:4),o(:,5:8));
+[~,qm2,nA2] = get_five(npredpts);
+o2 = five2oct(qm2,nA2);
+ytrue = GB5DOF_setup(o2(:,1:4),o2(:,5:8));
+K = 10;
+method = 'gpr';
+[ypred,ypredlist,interpfnlist,mdllist,mdlparslist] = ...
+    ensembleVFZO([],[],y,[],[],K,method,'ytrue',ytrue,'o',o,'o2',o2);
+fpath = fullfile(figfolder,fname);
+save(fpath,'ypred','ypredlist','ytrue','qm','nA','qm2','nA2','y','o','o2')
+% save(fpath,'ypred','ypredlist','ytrue','qm','nA','qm2','nA2','y','o','o2',...
+%     'interpfnlist','mdllist','mdlparslist') %ran into issues with saving, maybe out of memory
+
+%% load Ensemble Interpolation
+fname = 'ensemble-interp';
+fpath = fullfile(figfolder,fname);
+load(fname,'ypred','ypredlist','ytrue','qm','nA','qm2','nA2','y','o','o2')
+
 %% Ensemble Interpolation
-paperfigure(2,2)
+paperfigure(2,2,14.509833333333333)
 nexttile
-title('mean')
 parityplot(ytrue,mean([ypredlist{:}],2),'hex')
+title('mean')
 nexttile
-title('median')
 parityplot(ytrue,median([ypredlist{:}],2),'hex')
-nexttile
 title('median')
-parityplot(ytrue,min([ypredlist{:}],[],2),'hex')
 nexttile
-title('max')
+parityplot(ytrue,min([ypredlist{:}],[],2),'hex')
+title('min')
+nexttile
 parityplot(ytrue,max([ypredlist{:}],[],2),'hex')
+title('max')
 savefigpng(figfolder,'ensemble-interp')
+
+%% Ensemble Interpolation
+K = length(ypredlist);
+% [errmetmean(K),errmetmed(K),errmetmin(K),errmetmax(K)] = deal([]);
+clear errmetmean errmetmed errmetmin errmetmax
+for i = 1:K
+    ypredmean = mean([ypredlist{1:i}],2);
+    ypredmed = median([ypredlist{1:i}],2);
+    ypredmin = min([ypredlist{1:i}],[],2);
+    ypredmax = max([ypredlist{1:i}],[],2);
+    errmetmean(i) = get_errmetrics(ypredmean,ytrue); %#ok<SAGROW>
+    errmetmed(i) = get_errmetrics(ypredmed,ytrue); %#ok<SAGROW>
+    errmetmin(i) = get_errmetrics(ypredmin,ytrue); %#ok<SAGROW>
+    errmetmax(i) = get_errmetrics(ypredmax,ytrue); %#ok<SAGROW>
+end
+rmse.mean = [errmetmean.rmse];
+rmse.med = [errmetmed.rmse];
+rmse.min = [errmetmin.rmse];
+rmse.max = [errmetmax.rmse];
+
+mae.mean = [errmetmean.mae];
+mae.med = [errmetmed.mae];
+mae.min = [errmetmin.mae];
+mae.max = [errmetmax.mae];
+
+rmsecat = [rmse.mean.',rmse.med.',rmse.min.',rmse.max.'];
+maecat = [mae.mean.',mae.med.',mae.min.',mae.max.'];
+lgdlbl = {'mean','median','min','max'};
+paperfigure(1,2);
+nexttile
+mkr = '*-';
+plot(1:K,rmsecat,mkr)
+% ax = gca;
+% ax.YLim(1) = 0;
+xlim([1,K])
+legend(lgdlbl,'Location','best')
+xlabel('Ensemble Size')
+ylabel('RMSE ($J/m^2$)')
+nexttile
+plot(1:K,maecat,mkr)
+% ax = gca;
+% ax.YLim(1) = 0;
+xlim([1,K])
+legend(lgdlbl,'Location','best')
+ylabel('MAE ($J/m^2$)')
+xlabel('Ensemble Size')
+
+fname = 'ensemble-interp-rmse-mae';
+savefigpng(figfolder,fname)
 
 %% distance parity (3D)
 % pts = normr(rand(388,3)-0.5);
@@ -322,7 +403,8 @@ nexttile
 % fig = figure;
 % fig.Position = [460.2 245 498.4 472.8];
 % paperfigure()
-errorbar(mu,sigma)
+shadedErrorBar(1:length(mu),mu,sigma)
+% errorbar(mu,sigma)
 xlabel('k-th NN','Interpreter','latex','FontSize',12)
 ylbl = 'average $\omega$ (deg)';
 ylabel(ylbl,'Interpreter','latex','FontSize',12)
@@ -379,7 +461,7 @@ savefigpng(figfolder,'kim-interp-teach')
 %% Kim GPR Mixture Final Result
 rng(10);
 % paperfigure(2,2,13.6843);
-paperfigure(1,2);
+paperfigure(1,2,7.46983333333333);
 nexttile
 parityplot(ytrue,ypred);
 papertext(1);
@@ -403,34 +485,39 @@ savefigpng(figfolder,'kim-interp')
 
 %% Kim Tunnel Plots and Posterior Sampling
 paperfigure(2,2,13.6843);
-
+rng(10)
+i = 0;
 nexttile
+i = i+1;
 npts = size(ytrue,1);
 rids = randperm(npts,npts);
 parityplot(ytrue(rids),ypred(rids),'scatter','c',ysd(rids),'cblbl','$\sigma_{\mathrm{pred}} (J m^{-2})$')
-papertext(1);
+papertext(i);
 
 nexttile
+i = i+1;
 mdl.method = 'gprmix';
 tunnelplot(mdl,A,B,n,'brkQ',false,'nnQ',true,'nnQ2',true,'tpredlist',ypred,...
     'kfntmp',kfntmp,'kfntmp2',kfntmp2,'gprMdl2',gprMdl2);
-papertext(2);
+ax = nexttile(i);
+ch = ax.Children([1,2]);
+legend(ch,'GPR mixture','1st (input) NN','Location','southwest','Interpreter','latex')
+papertext(i);
 
 nexttile
+i = i+1;
 mdl.method = 'gprmix';
 tunnelplot(mdl,A,B,n,'brkQ',false,'nnQ',false,'nnQ2',false,'tpredlist',ypred,...
     'kfntmp',kfntmp,'kfntmp2',kfntmp2,'gprMdl2',gprMdl2,'nsamp',5);
-ax = nexttile(2);
-ch = ax.Children([2,3]);
-legend(ch,'GPR mixture model','1st NN (input points)','Location','best','Interpreter','latex')
-papertext(3);
+papertext(i);
 
 nexttile
+i = i+1;
 mdl.method = 'gprmix';
 tunnelplot(mdl,[],[],n,'brkQ',true,'nnQ',false,'nnQ2',false,'tpredlist',ypred,...
     'kfntmp',kfntmp,'kfntmp2',kfntmp2,'gprMdl2',gprMdl2);
-legend('Ni BRK model','Fe GPR mixture model','Location','best','Interpreter','latex')
-papertext(4);
+legend('Ni BRK','Fe GPR mixture','Location','southwest','Interpreter','latex')
+papertext(i);
 savefigpng(figfolder,'kim-interp-posterior')
 
 %% GPR Mixture Sigmoid Function

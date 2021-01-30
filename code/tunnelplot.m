@@ -274,7 +274,7 @@ if ~strcmp(mdl.method,'gprmix')
 end
 
 xlabel('$\overline{AB}(t)$ $(^\circ)$','Interpreter','latex')
-ylabel('$GBE (J m^{-2})$','Interpreter','latex')
+ylabel('GBE $(J m^{-2})$','Interpreter','latex')
 axis square tight
 end
 
