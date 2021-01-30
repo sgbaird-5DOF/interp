@@ -1,8 +1,9 @@
-function q = get_cubo(n,method,sidelength)
+function q = get_cubo(n,method,sidelength,printQ)
 arguments
 	n {mustBeNonNegIntegerOrEmpty} = 1
 	method char {mustBeMember(method,{'random','uniform'})} = 'random'
 	sidelength {mustBeNonNegIntegerOrEmpty} = double.empty
+    printQ(1,1) logical = false
 end
 % GET_CUBO  get n quaternions from randomly or uniformly sampled cubochoric points
 %--------------------------------------------------------------------------
@@ -58,7 +59,7 @@ aa = acube*(2*G-1); %center grid about [0,0,0] and scale grid
 %convert to quaternion
 q = zeros(n,4);
 for i = 1:n
-	q(i,:) = cu2qu(aa(i,:)); %vectorization possible
+	q(i,:) = cu2qu(aa(i,:),printQ); %vectorization possible
 end
 
 end

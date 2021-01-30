@@ -1,6 +1,7 @@
-function [five,q,nA] = get_five(npts)
+function [five,q,nA] = get_five(npts,printQ)
 arguments
     npts(1,1) double = 1
+    printQ(1,1) logical = false
 end
 % GET_FIVE  generate random cubochoric misorientation and random boundary plane normal pairs
 %--------------------------------------------------------------------------
@@ -24,7 +25,7 @@ end
 %
 % Date: 2020-10-06
 %--------------------------------------------------------------------------
-q = get_cubo(npts);
+q = get_cubo(npts,'random',[],printQ);
 % nA = normr(rand(npts,3)-0.5); %(somewhat) non-uniform sampling of sphere
 nA = normr(normrnd(0,1,npts,3)-0.5); %uniform sampling of sphere
 five = var_names(q,nA);
