@@ -536,6 +536,7 @@ savefigpng(figfolder,'gprmix-sigmoid')
 %% tunnel plot (full)
 ninputpts = 50000; %1000, 50000
 n = 150;
+rng(10)
 [tpredlist,tsdlist,propList,methodlist,A,B] = tunnelplot_test(2,ninputpts,n);
 fname = ['tunnel-',int2str(ninputpts)];
 fpath = fullfile(figfolder,fname);
