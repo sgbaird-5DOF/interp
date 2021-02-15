@@ -17,18 +17,20 @@ nreps = 1; % number of runs or repetitions
 
 % job submission environment
 env = 'local'; %'slurm', 'local'
-dryrunQ = T; %whether to skip running the jobs and just compile results
+dryrunQ = F; %whether to skip running the jobs and just compile results
 metaQ = T; %whether to load full model or only meta-data at end
 
-%make sure the parameters here correspond with the input to "pars" below
+%make sure the parameters here correspond with the input to "pars" below,
+%for cells and strings, wrap in an outer cell
 switch runtype
     case 'test'
-        ninputpts = 10000; %ceil(58604*0.8); %17176; %floor(58604*0.2); %56442; %floor(67886*0.8); %floor(264276*.8); %17176; %1893*2; %[2366]; %[1893*1]; % 5000 10000 20000 50000];
-        npredpts = 10000; %floor(58604*0.2); %58604-17176; %ceil(58604*0.8); %11443; %floor(67886*0.2); %ceil(264276*0.2); %67886-17176; %67886-1893*2; %65520; %473*1;
-        datatype = {'kim'}; % 'brk', 'kim', 'rohrer-Ni', 'rohrer-test', 'rohrer-brk-test', 'olmsted-Ni'
+        ninputpts = 1000; %ceil(58604*0.8); %17176; %floor(58604*0.2); %56442; %floor(67886*0.8); %floor(264276*.8); %17176; %1893*2; %[2366]; %[1893*1]; % 5000 10000 20000 50000];
+        npredpts = 1000; %floor(58604*0.2); %58604-17176; %ceil(58604*0.8); %11443; %floor(67886*0.2); %ceil(264276*0.2); %67886-17176; %67886-1893*2; %65520; %473*1;
+        datatype = {'brk'}; % 'brk', 'kim', 'rohrer-Ni', 'rohrer-test', 'rohrer-brk-test', 'olmsted-Ni'
         pgnum = 32; %m-3m (i.e. m\overbar{3}m) FCC symmetry default for e.g. Ni
         sig = [0]; %J/m^2, standard deviation, added to "y"
-        K = 10;
+        mygpropts = {{'PredictMethod','exact'}};
+        K = 2;
         mixQ = true;
         genseed = 10;
         brkQ = false; % take whatever GBs and replace properties with BRK energy values
@@ -39,12 +41,12 @@ switch runtype
         datatype = {'brk'};
         pgnum = 32; %m-3m (i.e. m\overbar{3}m) FCC symmetry default for e.g. Ni
         sig = [0]; %mJ/m^2, standard deviation, added to "y"
+        mygpropts = {{'PredictMethod','exact'}};
         K = 10;
         mixQ = true;
         genseed = 'shuffle'; %set to 'shuffle' to use different seeds
         brkQ = false;
 end
-
 method = 'gpr';
 if mixQ
     method = [method 'm'];
@@ -53,6 +55,11 @@ if K >= 2
     method = ['e' method];
 end
 method = {method};
+
+%parameters
+%**ADD ALL PARAMETERS HERE** (see runtype switch statement)
+pars = var_names(ninputpts,npredpts,method,cores,datatype,pgnum,sig,genseed,brkQ,K,mixQ,mygpropts);
+%note: also need to update execfn
 
 %comment (no spaces, used in filename)
 % comment = 'brk';
@@ -123,9 +130,7 @@ end
 
 savepathfn = @(method,ninputpts,gitcommit,puuid) fullfile(savefolder,savenamefn(method,ninputpts,gitcommit,puuid));
 
-%parameters
-%**ADD ALL PARAMETERS HERE** (see runtype switch statement)
-pars = var_names(ninputpts,npredpts,method,cores,datatype,pgnum,sig,genseed,brkQ,K,mixQ);
+pars.cores = cores;
 if rmcoresQ
     pars = rmfield(pars,'cores');
 end
@@ -135,8 +140,9 @@ if ~dryrunQ
     method = 'gpr';
     execfn = @(ninputpts,npredpts,method,datatype,pgnum,sig,genseed,brkQ) ... **NAMES NEED TO MATCH PARS FIELDS** (see above)
         egprm_setup(ninputpts,npredpts,method,datatype,'K',K,...
-        'pgnum',pgnum,'sig',sig,'genseed',genseed,'brkQ',brkQ,'mixQ',mixQ); %**NAMES NEED TO MATCH PARS FIELDS AND EXECFN ARGUMENTS**
-    argoutnames = {'ypred','interpfn','mdl','mdlpars'};
+        'pgnum',pgnum,'sig',sig,'genseed',genseed,'brkQ',brkQ,'mixQ',mixQ,...
+        'mygpropts',mygpropts); %**NAMES NEED TO MATCH PARS FIELDS AND EXECFN ARGUMENTS**
+    argoutnames = {'ypred','interpfn','mdl','mdlpars'}; %one of these needs to be 'mdlpars' to get *_meta.mat to save
     %i.e. [ypred,interpfn,mdl,mdlpars] = interp5DOF_setup(ninputpts,npredpts,method,datatype,...);
     
     % walltimefn = @() 300; %can set to constant or to depend on parameters, probably fine when using standby queue
