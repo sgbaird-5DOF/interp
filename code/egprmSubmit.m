@@ -17,13 +17,13 @@ nreps = 1; % number of runs or repetitions
 
 % job submission environment
 env = 'local'; %'slurm', 'local'
-dryrunQ = T; %whether to skip running the jobs and just compile results
-metaQ = T; %whether to load full model or only meta-data at end
+dryrunQ = F; %whether to skip running the jobs and just compile results
+metaQ = F; %whether to load full model or only meta-data at end
 
 %make sure the parameters here correspond with the input to "pars" below
 switch runtype
     case 'test'
-        ninputpts = 10000; %ceil(58604*0.8); %17176; %floor(58604*0.2); %56442; %floor(67886*0.8); %floor(264276*.8); %17176; %1893*2; %[2366]; %[1893*1]; % 5000 10000 20000 50000];
+        ninputpts = 1000; %ceil(58604*0.8); %17176; %floor(58604*0.2); %56442; %floor(67886*0.8); %floor(264276*.8); %17176; %1893*2; %[2366]; %[1893*1]; % 5000 10000 20000 50000];
         npredpts = 1000; %floor(58604*0.2); %58604-17176; %ceil(58604*0.8); %11443; %floor(67886*0.2); %ceil(264276*0.2); %67886-17176; %67886-1893*2; %65520; %473*1;
         datatype = {'kim'}; % 'brk', 'kim', 'rohrer-Ni', 'rohrer-test', 'rohrer-brk-test', 'olmsted-Ni'
         pgnum = 32; %m-3m (i.e. m\overbar{3}m) FCC symmetry default for e.g. Ni
@@ -246,9 +246,11 @@ switch env
                 try
                     save(fpath,savevars{:})
                 catch
+                    warning('could not save with save(fpath,savevars{:})')
                     try
                         save(fpath,savevars{:},'-nocompression')
                     catch
+                        warning('could not save with save(fpath,savevars{:},-nocompression). Saving with -v7.3 flag instead')
                         save(fpath,savevars{:},'-v7.3')
                     end
                 end
@@ -264,42 +266,44 @@ switch env
         %                 S.
         %             end
         %         end
+        
         if metaQ
-            disp(mdlparstbl(:,{'method','ninputpts','npredpts','rmse','mae'}))
+            mdlplot = mdlparscat;
         else
-            disp(mdltbl(:,{'method','ninputpts','npredpts','rmse','mae'}))
-            
-            %% plotting
-            mdlnum = 1;
-            mdl = mdlcat(mdlnum);
-            Kinfo = [mdl.mdls.KernelInformation];
-            Kpars = [Kinfo.KernelParameters];
-            Lvals = Kpars(1,:);
-            sigvals = Kpars(2,:);
-            Lval = mean(Lvals);
-            sigval = mean(sigvals);
-            paperfigure(1,2);
-            nexttile
-            t1 = ['$L_{\mathrm{kernel}}$: ' num2str(rad2deg(Lval)*2) ' ($^\circ{}$), ' ...
-                '$\sigma_{\mathrm{kernel}}$: ' num2str(sigval) ' ($J m^{-2}$)'];
-            brkQ = true;
-            tunnelplot(mdl,'brkQ',brkQ)
-            title(t1,'Interpreter','latex')
-            % multiparity({mdl.errmetrics},'charlblQ',false);
-            nexttile
-            % parityplot(mdl.errmetrics.ytrue,mdl.errmetrics.ypred,'scatter',...
-            %     'mkr','o','fillQ',true,'scatterOpts',struct('MarkerFaceAlpha',0.005));
-            
-            parityplot(mdl.errmetrics.ytrue,mdl.errmetrics.ypred);
-            
-            t2 = ['RMSE: ' num2str(mdl.rmse) ' ($J m^{-2}$), MAE: ' num2str(mdl.mae) ' ($J m^{-2}$)'];
-            title(t2,'Interpreter','latex')
-            
-            t3 = ['method: ' upper(char(mdl.method)) ', datatype: ' upper(char(mdl.datatype)),...
-                ', ninputpts: ' num2str(mdl.ninputpts) ', npredpts: ' num2str(mdl.npredpts)];
-            sgtitle(t3,'Interpreter','latex')
-            
+            mdlplot = mdlcat;
         end
+        
+        mdlplot(:,{'method','ninputpts','npredpts','rmse','mae'})
+        
+        %% plotting
+        mdlnum = 1;
+        mdl = mdlplot(mdlnum);
+        Kinfo = [mdl.mdls.KernelInformation];
+        Kpars = [Kinfo.KernelParameters];
+        Lvals = Kpars(1,:);
+        sigvals = Kpars(2,:);
+        Lval = mean(Lvals);
+        sigval = mean(sigvals);
+        paperfigure(1,2);
+        nexttile
+        t1 = ['$L_{\mathrm{kernel}}$: ' num2str(rad2deg(Lval)*2) ' ($^\circ{}$), ' ...
+            '$\sigma_{\mathrm{kernel}}$: ' num2str(sigval) ' ($J m^{-2}$)'];
+        brkQ = true;
+        tunnelplot(mdl,'brkQ',brkQ)
+        title(t1,'Interpreter','latex')
+        % multiparity({mdl.errmetrics},'charlblQ',false);
+        nexttile
+        % parityplot(mdl.errmetrics.ytrue,mdl.errmetrics.ypred,'scatter',...
+        %     'mkr','o','fillQ',true,'scatterOpts',struct('MarkerFaceAlpha',0.005));
+        
+        parityplot(mdl.errmetrics.ytrue,mdl.errmetrics.ypred);
+        
+        t2 = ['RMSE: ' num2str(mdl.rmse) ' ($J m^{-2}$), MAE: ' num2str(mdl.mae) ' ($J m^{-2}$)'];
+        title(t2,'Interpreter','latex')
+        
+        t3 = ['method: ' upper(char(mdl.method)) ', datatype: ' upper(char(mdl.datatype)),...
+            ', ninputpts: ' num2str(mdl.ninputpts) ', npredpts: ' num2str(mdl.npredpts)];
+        sgtitle(t3,'Interpreter','latex')
 end
 
 disp('end egprmSubmit.m')
