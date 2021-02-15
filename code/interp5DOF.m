@@ -540,7 +540,7 @@ switch method
         %model-specific parameters
         if exist('gproptshort','var') == 1
             if ~isempty(fieldnames(gproptshort))
-                mdlparsspec = var_names(maxhyperobj,gproptshort);
+                mdlparsspec = var_names(gproptshort);
             else
                 evalc([(gproptstruct{end}) ' = G.(gproptstruct{end}']);
                 warning(['no tracked options were contained in user-specified gpropts. Consider tracking all. Tracking added via evalc() for ' ...
@@ -549,6 +549,9 @@ switch method
                     error(['Tracking automatically added for ' gproptstruct{end-1} ' but the added tracking option cannot be a struct'])
                 end
                 mdlparsspec = struct(gproptstruct{end-1},gproptshort.gproptstruct{end});
+            end
+            if exist('maxhyperobj','var') == 1
+                mdlparsspec.maxhyperobj = maxhyperobj;
             end
         else
             mdlparsspec = var_names(PredictMethod);
