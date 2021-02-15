@@ -1,4 +1,5 @@
-function [ypred,ysd,ci,covmat,kfntmp,kfntmp2,gprMdl2] = gprmix(mdl,X,y,X2,ytrue,thr,nv)
+function [ypred,ysd,ci,covmat,kfntmp,kfntmp2,gprMdl2,ypredsigmoid,mdl] = ...
+    gprmix(mdl,X,y,X2,ytrue,thr,nv)
 arguments
     mdl
     X double = []
@@ -7,11 +8,12 @@ arguments
     ytrue = []
     thr(1,1) double = 1.1
     nv.scl(1,1) double = 30
+    nv.thr2(1,1) double = thr+0.1
     nv.plotQ(1,1) logical = false
     nv.dispQ(1,1) logical = false
     nv.gprMdl2 = []
 end
-% GPRMIX  Gaussian process regression mixture model to better predict lower property values.
+% GPRMIX  (deprecated, replaced by egprm) Gaussian process regression mixture model to better predict lower property values
 %--------------------------------------------------------------------------
 % Inputs:
 %  gprMdl - a Guassian process regression object
@@ -53,7 +55,8 @@ end
 scl = nv.scl;
 plotQ = nv.plotQ;
 dispQ = nv.dispQ;
-gprMdl = mdl.gprMdl;
+gprMdl2 = nv.gprMdl2;
+thr2 = nv.thr2;
 
 % account for case where no true values supplied
 if isempty(ytrue)
@@ -61,32 +64,16 @@ if isempty(ytrue)
 end
 
 %% split input data with property values below threshold
-ids = find(y < thr+0.1);
+ids = find(y < thr2);
 X = X(ids,:);
 y = y(ids);
 
 %% original model
-%predict on all test points using original model
-% orefs = get_orefs(8);
 
-% if mdl.projQ
-%     o2 = proj_up(X2,mdl.usv);
-% else
-%     o2 = X2;
-% end
-% for i = 1:K
-% if i == 1
-%     oref = get_ocubo(1,'random',[],10);
-% else
-%     oref = get_ocubo();
-% end
-% o2 = get_octpairs(o2,'oref',oref);
-% end
 [ypredtmp,ysdtmp,citmp] = predict(gprMdl,X2);
 
 kfntmp = gprMdl.Impl.Kernel.makeKernelAsFunctionOfXNXM(gprMdl.Impl.ThetaHat);
 covmattmp = kfntmp(X2,X2);
-% [ypredtmpundoc,covmattmp,ciundoc] = predictExactWithCov(gprMdl.Impl,X2,alpha);
 
 %find predictions below threshold and populate ypred
 ids2 = ypredtmp <= thr;
@@ -108,7 +95,6 @@ if ~isempty(X)
     [ypredtmp2,ysdtmp2,citmp2] = predict(gprMdl2,X2);
     kfntmp2 = gprMdl2.Impl.Kernel.makeKernelAsFunctionOfXNXM(gprMdl2.Impl.ThetaHat);
     covmattmp2 = kfntmp2(X2,X2);
-    % [ypredtmpundoc2,covmattmp2,ciundoc2] = predictExactWithCov(gprMdl2.Impl,X2,alpha);
 elseif ~isempty(nv.gprMdl2)
     gprMdl2 = nv.gprMdl2;
     [ypredtmp2,ysdtmp2,citmp2] = predict(gprMdl2,X2);
@@ -120,22 +106,17 @@ end
 
 % populate ypred with predictions above threshold
 ypred(ids2) = ypredtmp2(ids2);
-ysd(ids2) = ysdtmp2(ids2);
-ci(ids2,:) = citmp2(ids2,:);
-covmat(ids2) = covmattmp2(ids2);
+% ysd(ids2) = ysdtmp2(ids2);
+% ci(ids2,:) = citmp2(ids2,:);
+% covmat(ids2) = covmattmp2(ids2);
 
 ypredtmp3 = ypred;
+ypredsigmoid = ypredtmp3;
 
 %% GPR mixture model
 % sigmoid function values
-% sigfn = @(x,scl,xshift) 1./(1+exp(-scl*(x-xshift))); %changed to sigfn.m file
-A = sigfn(ypred,scl,thr);
-% x = [0,1.5];
-% vq = [0,1];
-% A = interp1(x,vq,ypred);
-% A = 0.25;
+A = sigfn(ypredsigmoid,scl,thr);
 B = 1-A;
-% [A,B] = deal(0.5*ones(size(ypred)));
 
 % sigmoid mixing
 ypred = A.*ypredtmp+B.*ypredtmp2;
@@ -143,15 +124,6 @@ ypred = A.*ypredtmp+B.*ypredtmp2;
 ysd = A.*ysdtmp+B.*ysdtmp2;
 ci = A.*citmp+B.*citmp2;
 covmat = A.*covmattmp+B.*covmattmp2;
-
-% % sigmoid mixing
-% ypred = A.*ypredtmp+B.*ypredtmp2;
-% % if isempty(nv.gprMdl2)
-% ysd = A.*ysdtmp+B.*ysdtmp2;
-% ci = A.*citmp+B.*citmp2;
-% covmat = A.*covmattmp+B.*covmattmp2;
-% end
-% kfn = kmix(kfntmp,kfntmp2);
 
 %% plotting & error metrics
 if plotQ
@@ -162,20 +134,19 @@ if plotQ
         struct('ytrue',ytrue,'ypred',ypredtmp2),...
         struct('ytrue',ytrue,'ypred',ypredtmp3),...
         struct('ytrue',ytrue,'ypred',ypred)})
-    % sigmoid mixing function
-%     nexttile(2)
-%     cla reset
-%     x = 0.5:0.01:1.5;
-%     plot(x,sigfn(x,scl,thr),'LineWidth',1.5);
-%     ylim([0 1])
-%     xlabel('GBE ($J m^{-2}$)','Interpreter','latex')
-%     ylabel('Mixing fraction (f)','Interpreter','latex')
-%     axis square
-%     papertext(2)
 end
 if dispQ
     get_errmetrics(ytrue,ypred,'dispQ',true);
 end
+
+% package new model parameters
+mdl.thr = thr;
+mdl.thr2 = thr2;
+mdl.scl = scl;
+mdl.gprMdl2 = gprMdl2;
+
+mdl.interpfn = @() gprmix();
+mdl.interpcmd = @() gprmix();
 
 end
 %% CODE GRAVEYARD
@@ -186,4 +157,55 @@ end
 
 % Xsub = X2(ids2,:);
 % ytruesub = ytrue(ids2);
+
+%predict on all test points using original model
+% orefs = get_orefs(8);
+
+% if mdl.projQ
+%     o2 = proj_up(X2,mdl.usv);
+% else
+%     o2 = X2;
+% end
+% for i = 1:K
+% if i == 1
+%     oref = get_ocubo(1,'random',[],10);
+% else
+%     oref = get_ocubo();
+% end
+% o2 = get_octpairs(o2,'oref',oref);
+% end
+
+
+% [ypredtmpundoc,covmattmp,ciundoc] = predictExactWithCov(gprMdl.Impl,X2,alpha);
+% [ypredtmpundoc2,covmattmp2,ciundoc2] = predictExactWithCov(gprMdl2.Impl,X2,alpha);
+
+
+% sigfn = @(x,scl,xshift) 1./(1+exp(-scl*(x-xshift))); %changed to sigfn.m file
+% x = [0,1.5];
+% vq = [0,1];
+% A = interp1(x,vq,ypred);
+% A = 0.25;
+% [A,B] = deal(0.5*ones(size(ypred)));
+
+
+% % sigmoid mixing
+% ypred = A.*ypredtmp+B.*ypredtmp2;
+% % if isempty(nv.gprMdl2)
+% ysd = A.*ysdtmp+B.*ysdtmp2;
+% ci = A.*citmp+B.*citmp2;
+% covmat = A.*covmattmp+B.*covmattmp2;
+% end
+% kfn = kmix(kfntmp,kfntmp2);
+
+    % sigmoid mixing function
+%     nexttile(2)
+%     cla reset
+%     x = 0.5:0.01:1.5;
+%     plot(x,sigfn(x,scl,thr),'LineWidth',1.5);
+%     ylim([0 1])
+%     xlabel('GBE ($J m^{-2}$)','Interpreter','latex')
+%     ylabel('Mixing fraction (f)','Interpreter','latex')
+%     axis square
+%     papertext(2)
+
 %}
