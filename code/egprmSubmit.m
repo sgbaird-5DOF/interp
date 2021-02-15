@@ -88,7 +88,7 @@ switch env
             cores = p.NumWorkers;
             rmcoresQ = false;
         else
-%             cores = 1;
+            cores = 1;
             rmcoresQ = true;
         end
 end
