@@ -120,7 +120,7 @@ if metaQ
 else
     savenamematch = [savenamematch '(.mat)'];
 end
-    
+
 savepathfn = @(method,ninputpts,gitcommit,puuid) fullfile(savefolder,savenamefn(method,ninputpts,gitcommit,puuid));
 
 %parameters
@@ -202,7 +202,7 @@ switch env
                 % wrong variable names. Typically shouldn't be an issue
                 % though..
                 [ypredlist{i},mdllist{i},mdlparslist{i},interpfnlist{i}] = ...
-                deal(S.ypred, S.mdl, S.mdlpars, S.interpfn);
+                    deal(S.ypred, S.mdl, S.mdlpars, S.interpfn);
             end
             %             Slist{i} = S;
         end
@@ -268,37 +268,38 @@ switch env
             disp(mdlparstbl(:,{'method','ninputpts','npredpts','rmse','mae'}))
         else
             disp(mdltbl(:,{'method','ninputpts','npredpts','rmse','mae'}))
+            
+            %% plotting
+            mdlnum = 1;
+            mdl = mdlcat(mdlnum);
+            Kinfo = [mdl.mdls.KernelInformation];
+            Kpars = [Kinfo.KernelParameters];
+            Lvals = Kpars(1,:);
+            sigvals = Kpars(2,:);
+            Lval = mean(Lvals);
+            sigval = mean(sigvals);
+            paperfigure(1,2);
+            nexttile
+            t1 = ['$L_{\mathrm{kernel}}$: ' num2str(rad2deg(Lval)*2) ' ($^\circ{}$), ' ...
+                '$\sigma_{\mathrm{kernel}}$: ' num2str(sigval) ' ($J m^{-2}$)'];
+            brkQ = true;
+            tunnelplot(mdl,'brkQ',brkQ)
+            title(t1,'Interpreter','latex')
+            % multiparity({mdl.errmetrics},'charlblQ',false);
+            nexttile
+            % parityplot(mdl.errmetrics.ytrue,mdl.errmetrics.ypred,'scatter',...
+            %     'mkr','o','fillQ',true,'scatterOpts',struct('MarkerFaceAlpha',0.005));
+            
+            parityplot(mdl.errmetrics.ytrue,mdl.errmetrics.ypred);
+            
+            t2 = ['RMSE: ' num2str(mdl.rmse) ' ($J m^{-2}$), MAE: ' num2str(mdl.mae) ' ($J m^{-2}$)'];
+            title(t2,'Interpreter','latex')
+            
+            t3 = ['method: ' upper(char(mdl.method)) ', datatype: ' upper(char(mdl.datatype)),...
+                ', ninputpts: ' num2str(mdl.ninputpts) ', npredpts: ' num2str(mdl.npredpts)];
+            sgtitle(t3,'Interpreter','latex')
+            
         end
-
-        %% plotting
-        mdlnum = 1;
-        mdl = mdlcat(mdlnum);
-        Kinfo = [mdl.mdls.KernelInformation];
-        Kpars = [Kinfo.KernelParameters];
-        Lvals = Kpars(1,:);
-        sigvals = Kpars(2,:);
-        Lval = mean(Lvals);
-        sigval = mean(sigvals);
-        paperfigure(1,2);
-        nexttile
-        t1 = ['$L_{\mathrm{kernel}}$: ' num2str(rad2deg(Lval)*2) ' ($^\circ{}$), ' ...
-        '$\sigma_{\mathrm{kernel}}$: ' num2str(sigval) ' ($J m^{-2}$)'];
-        brkQ = true;
-        tunnelplot(mdl,'brkQ',brkQ)
-        title(t1,'Interpreter','latex')
-        % multiparity({mdl.errmetrics},'charlblQ',false);
-        nexttile
-        % parityplot(mdl.errmetrics.ytrue,mdl.errmetrics.ypred,'scatter',...
-        %     'mkr','o','fillQ',true,'scatterOpts',struct('MarkerFaceAlpha',0.005));
-
-        parityplot(mdl.errmetrics.ytrue,mdl.errmetrics.ypred);
-
-        t2 = ['RMSE: ' num2str(mdl.rmse) ' ($J m^{-2}$), MAE: ' num2str(mdl.mae) ' ($J m^{-2}$)'];
-        title(t2,'Interpreter','latex')
-
-        t3 = ['method: ' upper(char(mdl.method)) ', datatype: ' upper(char(mdl.datatype)),...
-        ', ninputpts: ' num2str(mdl.ninputpts) ', npredpts: ' num2str(mdl.npredpts)];
-        sgtitle(t3,'Interpreter','latex')
 end
 
 disp('end egprmSubmit.m')
