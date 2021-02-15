@@ -290,13 +290,6 @@ if isempty(egprmMdl)
     if K >= 2
         method = ['e' method];
     end
-    if ~mixQ && (K == 1)
-        if isfield(egprmMdl,'gprMdl')
-            egprmMdl.gprMdl = mdls(1).gprMdl;
-        else
-            egprmMdl.cgprMdl = mdls(1).cgprMdl;
-        end
-    end
     egprmMdl.method = method;
     egprmMdl.interpfn = @() egprm();
     egprmMdl.mdlcmd = @() egprm();
@@ -304,6 +297,20 @@ if isempty(egprmMdl)
     egprmMdlpars = var_names(ypred,ysd,ytrue,ci,l,u,zerofloorQ,n,ypost,...
        thr,scl,o2,mesh,oref,oreflist,projQ,projtol,usv,...
         zeroQ,mixQ,K,cores,pgnum,sig,brkQ);
+    
+    % deal with pure 'gpr' case (for e.g. tunnelplot.m compatibility)
+    if ~mixQ && (K == 1)
+        cgprMdl = mdls(1).cgprMdl;
+        if isfield(egprmMdl,'gprMdl')
+            egprmMdl.gprMdl = mdls(1).gprMdl;
+            egprmMdl.cgprMdl = cgprMdl;
+            egprmMdlpars.cgprMdl = cgprMdl;
+        else
+            egprmMdl.cgprMdl = cgprMdl;
+            egprmMdlpars.cgprMdl = cgprMdl;
+        end
+    end
+    
     %remove memory-intensive variables from "parameter" structure
     if isfield(mdls,'gprMdl')
         mdls = rmfield(mdls,'gprMdl');
