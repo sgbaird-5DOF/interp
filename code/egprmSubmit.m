@@ -221,7 +221,7 @@ switch env
         
         mdlparstbltmp = tblfilt(mdlparstbl,pars);
         if isempty(mdlparstbltmp)
-            error('mdlparstbltmp was was empty, check tblfilt()')
+            error('mdlparstbltmp was empty, check tblfilt()')
         else
             mdlparstbl = mdlparstbltmp;
         end
