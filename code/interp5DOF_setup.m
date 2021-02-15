@@ -9,7 +9,7 @@ arguments
     NV.pgnum(1,1) double = 32 %m-3m (i.e. m\overbar{3}m) FCC symmetry default
     NV.uuid = get_uuid()
     NV.K(1,1) double = 1 %# of VFZO ensembles
-    NV.sigma(1,1) double = 0 %mJ/m^2, standard deviation to add to y
+    NV.sig(1,1) double = 0 %mJ/m^2, standard deviation to add to y
     NV.genseed = []
     NV.brkQ(1,1) double = false
 end
@@ -25,7 +25,7 @@ addpathdir({'cu2qu.m','q2rod.m','qmult.m','get_ocubo.m','get_uuid.m'})
 pgnum = NV.pgnum;
 uuid = NV.uuid;
 K = NV.K;
-sigma = NV.sigma;
+sig = NV.sig;
 genseed = NV.genseed;
 brkQ = NV.brkQ;
 
@@ -234,10 +234,10 @@ for k = 1:K
             % use octonions obtained via GBlab2oct
             [qm,nA,qm2,nA2]=deal([]);
             [ypredlist{k},interpfnlist{k},mdllist{k},mdlparslist{k}] = interp5DOF(qm,nA,y,qm2,nA2,method,...
-                'pgnum',pgnum,'uuid',uuid,'ytrue',ytrue,'o',o,'o2',o2,'brkQ',brkQ,'sigma',sigma);
+                'pgnum',pgnum,'uuid',uuid,'ytrue',ytrue,'o',o,'o2',o2,'brkQ',brkQ,'sig',sig);
         otherwise
             [ypredlist{k},interpfnlist{k},mdllist{k},mdlparslist{k}] = interp5DOF(qm,nA,y,qm2,nA2,method,...
-                'pgnum',pgnum,'uuid',uuid,'ytrue',ytrue,'brkQ',brkQ,'sigma',sigma);
+                'pgnum',pgnum,'uuid',uuid,'ytrue',ytrue,'brkQ',brkQ,'sig',sig);
     end
 end
 ypredtmp = [ypredlist{:}];
@@ -251,14 +251,14 @@ errmetrics = get_errmetrics(ypred,proptrue);
 
 rmse = errmetrics.rmse;
 mae = errmetrics.mae;
-disp(['input sigma = ',num2str(sigma),' J/m^2'])
+disp(['input sig = ',num2str(sig),' J/m^2'])
 disp(['RMSE = ' num2str(rmse) ' J/m^2'])
 disp(['MAE = ' num2str(mae) ' J/m^2'])
 
 %% repackage model and parameters
 % variables and parameters to prepend
-mdlpre = var_names(datatype,sigma);
-mdlparspre = var_names(datatype,sigma);
+mdlpre = var_names(datatype,sig);
+mdlparspre = var_names(datatype,sig);
 
 % variables and parameters to append
 mdlparsextra = var_names(genseed,errmetrics,rmse,mae);
