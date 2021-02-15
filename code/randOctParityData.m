@@ -24,7 +24,7 @@ switch runtype
         method = {'gpr','nn','pbary','idw','avg'}; % 'sphbary', 'pbary', 'gpr', 'sphgpr', 'nn', 'avg'
         datatype = {'olmsted-Ni'}; % 'brk', 'kim', 'rohrer-Ni', 'rohrer-test', 'rohrer-brk-test', 'olmsted-Ni'
         pgnum = 32; %m-3m (i.e. m\overbar{3}m) FCC symmetry default for e.g. Ni
-        sigma = [0]; %J/m^2, standard deviation, added to "y"
+        sig = [0]; %J/m^2, standard deviation, added to "y"
         genseed = 11;
         brkQ = false;
         
@@ -34,7 +34,7 @@ switch runtype
         method = {'gpr','pbary','nn','avg','idw'}; % 'sphbary', 'pbary', 'gpr', 'sphgpr', 'nn', 'avg', 'idw'
         datatype = {'brk'};
         pgnum = 32; %m-3m (i.e. m\overbar{3}m) FCC symmetry default for e.g. Ni
-        sigma = [0]; %mJ/m^2, standard deviation, added to "y"
+        sig = [0]; %mJ/m^2, standard deviation, added to "y"
         genseed = 'shuffle'; %set to 'shuffle' to use different seeds
         brkQ = false;
 end
@@ -145,13 +145,13 @@ savepathfn = @(method,ninputpts,gitcommit,puuid) fullfile(savefolder,savenamefn(
 
 %parameters
 %**ADD ALL PARAMETERS HERE** (see runtype switch statement)
-pars = var_names(ninputpts,npredpts,method,cores,datatype,pgnum,sigma,genseed,brkQ);
+pars = var_names(ninputpts,npredpts,method,cores,datatype,pgnum,sig,genseed,brkQ);
 if ~dryrunQ
     %% parameter file setup
     %function to execute and output arguments from function
-    execfn = @(ninputpts,npredpts,method,datatype,pgnum,sigma,genseed,brkQ) ... **NAMES NEED TO MATCH PARS FIELDS** (see above)
+    execfn = @(ninputpts,npredpts,method,datatype,pgnum,sig,genseed,brkQ) ... **NAMES NEED TO MATCH PARS FIELDS** (see above)
         interp5DOF_setup(ninputpts,npredpts,method,datatype,...
-        'pgnum',pgnum,'sigma',sigma,'genseed',genseed,'brkQ',brkQ); %**NAMES NEED TO MATCH PARS FIELDS AND EXECFN ARGUMENTS**
+        'pgnum',pgnum,'sig',sig,'genseed',genseed,'brkQ',brkQ); %**NAMES NEED TO MATCH PARS FIELDS AND EXECFN ARGUMENTS**
     argoutnames = {'ypred','interpfn','mdl','mdlpars'};
     %i.e. [ypred,interpfn,mdl,mdlpars] = interp5DOF_setup(ninputpts,npredpts,method,datatype,...);
     
