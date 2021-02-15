@@ -4,7 +4,7 @@ function mustBeSqrt2Norm(o)
 %---------------------HELPER VALIDATION FUNCTION---------------------------
 onorm = norm(o(1,:));
 errmsg = ['octonion norm == ' num2str(onorm) ' ~= sqrt(2) == 1.4142'];
-assert(onorm - sqrt(2) <= 1e-1, errmsg)
+assert(abs(onorm - sqrt(2)) <= 1e-3, errmsg)
 
 % qnorm = norm(o(1,1:4));
 % errmsg = ['quaternion norm == ' num2str(qnorm) ' ~= 1'];
