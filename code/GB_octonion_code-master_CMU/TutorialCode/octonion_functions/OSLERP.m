@@ -1,4 +1,11 @@
 function O2 = OSLERP(o1,o2,omega,nt)
+arguments
+   o1
+   o2
+   omega
+   nt
+%    extend(1,1) double = 0
+end
 %% INPUT DATA 
 %
 % o1, o2: symmetrized octonions: see example 3
@@ -15,6 +22,10 @@ qA = o1(:,1:4); qB = o1(:,5:8);
 %% OSLERP 
 
 % nt = 10; %number of interpolated points
+% start = 0-extend;
+% finish = 1+extend;
+% omega = (1+2*extend)*omega;
+% t = linspace(start,finish,nt);
 t = linspace(0,1,nt);
 
 perms = [-qA qB; qA -qB; qA qB; -qA -qB];
