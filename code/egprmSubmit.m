@@ -17,7 +17,7 @@ nreps = 1; % number of runs or repetitions
 
 % job submission environment
 env = 'local'; %'slurm', 'local'
-dryrunQ = F; %whether to skip running the jobs and just compile results
+dryrunQ = T; %whether to skip running the jobs and just compile results
 metaQ = F; %whether to load full model or only meta-data at end
 
 %make sure the parameters here correspond with the input to "pars" below
@@ -259,21 +259,13 @@ switch env
         writetable(mdlparstbl,[fpath(1:end-4) '.csv'],'WriteVariableNames',true)
         disp(mdlparstbl)
         
-        %         %nested loop through jobs and tasks to load results
-        %         S = load(parpath);
-        %         for jid = 1:length(Ntrim)
-        %             for tid = 1:jid
-        %                 S.
-        %             end
-        %         end
-        
         if metaQ
+            disp(mdlparstbl(:,{'method','ninputpts','npredpts','rmse','mae'}))
             mdlplot = mdlparscat;
         else
+            disp(mdltbl(:,{'method','ninputpts','npredpts','rmse','mae'}))
             mdlplot = mdlcat;
         end
-        
-        mdlplot(:,{'method','ninputpts','npredpts','rmse','mae'})
         
         %% plotting
         mdlnum = 1;
@@ -291,11 +283,8 @@ switch env
         brkQ = true;
         tunnelplot(mdl,'brkQ',brkQ)
         title(t1,'Interpreter','latex')
-        % multiparity({mdl.errmetrics},'charlblQ',false);
-        nexttile
-        % parityplot(mdl.errmetrics.ytrue,mdl.errmetrics.ypred,'scatter',...
-        %     'mkr','o','fillQ',true,'scatterOpts',struct('MarkerFaceAlpha',0.005));
         
+        nexttile
         parityplot(mdl.errmetrics.ytrue,mdl.errmetrics.ypred);
         
         t2 = ['RMSE: ' num2str(mdl.rmse) ' ($J m^{-2}$), MAE: ' num2str(mdl.mae) ' ($J m^{-2}$)'];
@@ -426,5 +415,19 @@ savefolder = fullfile('data','randOctParity','pcombs');
                     [ypredlist{i},mdllist{i},mdlparslist{i},interpfnlist{i}] = ...
                     deal(S.ypred, S.mdl, S.mdlpars, S.interpfn);
                 end
+
+
+        %         %nested loop through jobs and tasks to load results
+        %         S = load(parpath);
+        %         for jid = 1:length(Ntrim)
+        %             for tid = 1:jid
+        %                 S.
+        %             end
+        %         end
+
+
+        % multiparity({mdl.errmetrics},'charlblQ',false);
+                % parityplot(mdl.errmetrics.ytrue,mdl.errmetrics.ypred,'scatter',...
+        %     'mkr','o','fillQ',true,'scatterOpts',struct('MarkerFaceAlpha',0.005));
 
 %}
