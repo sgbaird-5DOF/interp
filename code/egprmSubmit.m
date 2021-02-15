@@ -24,10 +24,10 @@ switch runtype
         datatype = {'kim'}; % 'brk', 'kim', 'rohrer-Ni', 'rohrer-test', 'rohrer-brk-test', 'olmsted-Ni'
         pgnum = 32; %m-3m (i.e. m\overbar{3}m) FCC symmetry default for e.g. Ni
         sig = [0]; %J/m^2, standard deviation, added to "y"
-        K = 10;
+        K = 1;
         mixQ = true;
         genseed = 10;
-        brkQ = true;
+        brkQ = true; % take whatever GBs and supply with BRK energy values
         
     case 'full'
         ninputpts = [100 388 500 1000 5000 10000 20000 50000]; % 388, 500, 1000, 2000, 5000, 10000, 20000, 50000
