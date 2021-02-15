@@ -63,11 +63,13 @@ if egprmDispQ
     disp(['K: ' int2str(K) ', mixQ: ' int2str(mixQ)])
 end
 
+freshQ = false;
 % perform the ensemble
 if isempty(mdls) && isempty(egprmMdl)
     NVtmp = rmfield(NV,{'mdls','thr','egprmMdl','scl','mixQ','postQ','egprmDispQ'});
     NVpairs = namedargs2cell(NVtmp);
     [~,~,~,mdls,mdlparslist] = ensembleVFZO(qm,nA,y,qm2,nA2,K,ensembleMethod,NVpairs{:});
+    freshQ = true;
 elseif ~isempty(egprmMdl)
     mdls = egprmMdl.mdls;
 end
@@ -94,16 +96,19 @@ end
 
 %Ensemble
 
-disp(' ')
 for i = 1:K
     if KdispQ
+        disp(' ')
         disp([int2str(i) '-th ensemble component symmetrization'])
     end
     mdl = mdls(i);
-    o2tmp = get_octpairs(o2,'oref',mdl.oref,'pgnum',pgnum);
-    o2tmp = normr(o2tmp);
-    X2{i} = proj_down(o2tmp,mdl.projtol,mdl.usv,'zeroQ',mdl.zeroQ);
-    
+    if freshQ
+        X2{i} = mdl.data.ppts;
+    else
+        o2tmp = get_octpairs(o2,'oref',mdl.oref,'pgnum',pgnum);
+        o2tmp = normr(o2tmp);
+        X2{i} = proj_down(o2tmp,mdl.projtol,mdl.usv,'zeroQ',mdl.zeroQ);
+    end
     [ypredlist{i},ysdlist{i},cilist{i}] = predict(mdl.gprMdl,X2{i});
     kfntmplist{i} = mdl.gprMdl.Impl.Kernel.makeKernelAsFunctionOfXNXM(mdl.gprMdl.Impl.ThetaHat);
     covmatlist{i} = kfntmplist{i}(X2{i},X2{i});
