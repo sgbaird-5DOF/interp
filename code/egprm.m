@@ -291,7 +291,11 @@ if isempty(egprmMdl)
         method = ['e' method];
     end
     if ~mixQ && (K == 1)
-        egprmMdl.gprMdl = mdls(1).gprMdl;
+        if isfield(egprmMdl,'gprMdl')
+            egprmMdl.gprMdl = mdls(1).gprMdl;
+        else
+            egprmMdl.cgprMdl = mdls(1).cgprMdl;
+        end
     end
     egprmMdl.method = method;
     egprmMdl.interpfn = @() egprm();
