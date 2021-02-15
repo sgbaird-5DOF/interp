@@ -153,7 +153,7 @@ yprede = fn(ypredtmp,2);
 ysde = fn(ysdtmp,2);
 cie = fn2(citmp,3);
 covmate = fn2(covmattmp,3);
-clear covmattmp
+clear covmattmp %10000x10000x10 array = ~8 GB
 kfne = @(X1,X2) kfnavg(kfntmplist,X1,X2);
 
 if ~mixQ
