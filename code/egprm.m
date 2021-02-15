@@ -286,7 +286,7 @@ if isempty(egprmMdl)
     egprmMdlpars = var_names(ypred,ysd,ytrue,ci,l,u,zerofloorQ,n,ypost,...
        thr,scl,o2,mesh,oref,oreflist,projQ,projtol,usv,...
         zeroQ,mixQ,K,cores,pgnum,sig,brkQ);
-    egprmMdlpars.mdls = rmfield(mdls,'gprMdl');
+    egprmMdlpars.mdls = rmfield(mdls,{'gprMdl','interpfn'});
     egprmMdlpars.method = method;
     
     if mixQ
