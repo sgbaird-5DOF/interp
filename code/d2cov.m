@@ -4,7 +4,7 @@ arguments
     covpars double
     covtype char = 'squaredexponential'
 end
-% d2cov  distance array to covariance based on covtype and covpars. covpars
+% D2COV  distance array to covariance based on covtype and covpars. covpars
 % follows documentation in 'KernelParameters' section of documentation for fitrgp
 %
 % for a tutorial/description on a few covariance functions, see
