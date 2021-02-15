@@ -91,6 +91,7 @@ if isempty(egprmMdl) && brkQ
 end
 
 %Ensemble
+
 for i = 1:K
     if KdispQ
         disp([int2str(i) '-th ensemble component symmetrization'])
@@ -257,7 +258,7 @@ if isempty(egprmMdl)
     oreflist = vertcat(mdls.oref);
     
     egprmMdl = var_names(ypred,ysd,ytrue,ci,covmat,l,u,zerofloorQ,n,ypost,...
-        kfntmplist,kfntmp2list,thr,scl,mdls,o2,mesh,oref,oreflist,projQ,projtol,...
+        thr,scl,mdls,o2,mesh,oref,oreflist,projQ,projtol,...
         usv,zeroQ,gprMdl2list,mixQ,K,cores,pgnum,sig,brkQ);
     method = 'gpr';
     if mixQ
@@ -274,7 +275,7 @@ if isempty(egprmMdl)
     egprmMdl.mdlcmd = @() egprm();
     
     egprmMdlpars = var_names(ypred,ysd,ytrue,ci,l,u,zerofloorQ,n,ypost,...
-       kfntmplist,kfntmp2list,thr,scl,o2,mesh,oref,oreflist,projQ,projtol,usv,...
+       thr,scl,o2,mesh,oref,oreflist,projQ,projtol,usv,...
         zeroQ,mixQ,K,cores,pgnum,sig,brkQ);
     egprmMdlpars.mdls = rmfield(mdls,'gprMdl');
     egprmMdlpars.method = method;
