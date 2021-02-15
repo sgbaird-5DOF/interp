@@ -92,6 +92,7 @@ end
 
 %Ensemble
 
+disp(' ')
 for i = 1:K
     if KdispQ
         disp([int2str(i) '-th ensemble component symmetrization'])
