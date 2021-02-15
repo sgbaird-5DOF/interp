@@ -22,6 +22,12 @@ metaQ = T; %whether to load full model or only meta-data at end
 
 %make sure the parameters here correspond with the input to "pars" below,
 %for cells and strings, wrap in an outer cell
+
+%comment (no spaces, used in filename)
+comment = 'brk';
+% list of comments used so far:
+% 'brk', 'kim', 'kim-brk'
+
 switch runtype
     case 'test'
         ninputpts = 1000; %ceil(58604*0.8); %17176; %floor(58604*0.2); %56442; %floor(67886*0.8); %floor(264276*.8); %17176; %1893*2; %[2366]; %[1893*1]; % 5000 10000 20000 50000];
@@ -31,6 +37,7 @@ switch runtype
         sig = [0]; %J/m^2, standard deviation, added to "y"
         mygpropts = {{'PredictMethod','exact'}};
         K = 1;
+        covK = 1;
         mixQ = false;
         genseed = 10;
         brkQ = false; % take whatever GBs and replace properties with BRK energy values
@@ -43,6 +50,7 @@ switch runtype
         sig = [0]; %mJ/m^2, standard deviation, added to "y"
         mygpropts = {{'PredictMethod','exact'}};
         K = 10;
+        covK = 1;
         mixQ = true;
         genseed = 'shuffle'; %set to 'shuffle' to use different seeds
         brkQ = false;
@@ -58,14 +66,25 @@ method = {method};
 
 %parameters
 %**ADD ALL PARAMETERS HERE** (see runtype switch statement)
-pars = var_names(ninputpts,npredpts,method,datatype,pgnum,sig,genseed,brkQ,K,mixQ,mygpropts);
+pars = var_names(ninputpts,npredpts,method,datatype,pgnum,sig,genseed,...
+    brkQ,K,covK,mixQ,mygpropts);
 %note: cores gets added later and removed if strcmp(env,'local')
 %note: also need to update execfn
 
-%comment (no spaces, used in filename)
-comment = 'brk';
-% comment = 'kim';
-%comment = '';
+if ~dryrunQ
+    %% parameter file setup
+    %function to execute and output arguments from function
+    execfnmethod = 'gpr';
+    execfn = @(ninputpts,npredpts,method,datatype,pgnum,sig,genseed,brkQ) ... **NAMES NEED TO MATCH PARS FIELDS** (see above)
+        egprm_setup(ninputpts,npredpts,execfnmethod,datatype,'K',K,...
+        'pgnum',pgnum,'sig',sig,'genseed',genseed,'brkQ',brkQ,'mixQ',mixQ,...
+        'mygpropts',mygpropts); %**NAMES NEED TO MATCH PARS FIELDS AND EXECFN ARGUMENTS**
+    argoutnames = {'ypred','interpfn','mdl','mdlpars'}; %one of these needs to be 'mdlpars' to get *_meta.mat to save
+    %i.e. [ypred,interpfn,mdl,mdlpars] = interp5DOF_setup(ninputpts,npredpts,method,datatype,...);
+    
+    % walltimefn = @() 300; %can set to constant or to depend on parameters, probably fine when using standby queue
+    walltimefn = @(ninputpts,npredpts,method,cores,datatype,K) get_walltimefn(ninputpts,npredpts,method,cores,datatype,K);
+end
 
 disp(['env = ' env])
 
@@ -135,20 +154,7 @@ pars.cores = cores;
 if rmcoresQ
     pars = rmfield(pars,'cores');
 end
-if ~dryrunQ
-    %% parameter file setup
-    %function to execute and output arguments from function
-    method = 'gpr';
-    execfn = @(ninputpts,npredpts,method,datatype,pgnum,sig,genseed,brkQ) ... **NAMES NEED TO MATCH PARS FIELDS** (see above)
-        egprm_setup(ninputpts,npredpts,method,datatype,'K',K,...
-        'pgnum',pgnum,'sig',sig,'genseed',genseed,'brkQ',brkQ,'mixQ',mixQ,...
-        'mygpropts',mygpropts); %**NAMES NEED TO MATCH PARS FIELDS AND EXECFN ARGUMENTS**
-    argoutnames = {'ypred','interpfn','mdl','mdlpars'}; %one of these needs to be 'mdlpars' to get *_meta.mat to save
-    %i.e. [ypred,interpfn,mdl,mdlpars] = interp5DOF_setup(ninputpts,npredpts,method,datatype,...);
-    
-    % walltimefn = @() 300; %can set to constant or to depend on parameters, probably fine when using standby queue
-    walltimefn = @(ninputpts,npredpts,method,cores,datatype,K) get_walltimefn(ninputpts,npredpts,method,cores,datatype,K);
-    
+if ~dryrunQ    
     %% parameter file
     [parpath, parcombsets, Ntrim, jobwalltimes] = ...
         writeparfile(pars,execfn,argoutnames,walltimefn,'diarypathfn',diarypathfn,'savepathfn',savepathfn,'nreps',nreps);
