@@ -257,10 +257,11 @@ for i = 1:npts
 end
 % Euclidean: '$2\frac{180}{\pi}|o_1^{sym}-o_2^{sym}|$ (this work)'
 
-klbls = cellfun(@char,num2cell(string(nptslist)),'UniformOutput',false);
-lbls = strcat(klbls,'-');
-lbls{end}(end) = []; %remove last '-'
-savefigpng(figfolder,['dist-ensemble-k' lbls{:}])
+% klbls = cellfun(@char,num2cell(string(nptslist)),'UniformOutput',false);
+% lbls = strcat(klbls,'-');
+% lbls{end}(end) = []; %remove last '-'
+lbls = lblcat(nptslist);
+savefigpng(figfolder,['dist-ensemble-k' lbls])
 
 paperfigure()
 enstbl = struct2table(structvertcat(errmetrics{:})); %ensemble table
@@ -537,6 +538,7 @@ savefigpng(figfolder,'gprmix-sigmoid')
 ninputpts = 50000; %1000, 50000
 n = 150;
 rng(10)
+paperfigure();
 [tpredlist,tsdlist,propList,methodlist,A,B] = tunnelplot_test(2,ninputpts,n);
 fname = ['tunnel-',int2str(ninputpts)];
 fpath = fullfile(figfolder,fname);
@@ -551,6 +553,7 @@ n = 150;
 fname = ['tunnel-' int2str(ninputpts)];
 fpath = fullfile(figfolder,fname);
 load(fpath,'tpredlist','tsdlist','propList','methodlist','A','B')
+paperfigure();
 tunnelplot_test(2,ninputpts,n,tpredlist,tsdlist,propList,methodlist,A,B);
 disp(A)
 disp(B)
