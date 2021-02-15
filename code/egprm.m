@@ -109,8 +109,13 @@ for i = 1:K
         o2tmp = normr(o2tmp);
         X2{i} = proj_down(o2tmp,mdl.projtol,mdl.usv,'zeroQ',mdl.zeroQ);
     end
-    [ypredlist{i},ysdlist{i},cilist{i}] = predict(mdl.gprMdl,X2{i});
-    kfntmplist{i} = mdl.gprMdl.Impl.Kernel.makeKernelAsFunctionOfXNXM(mdl.gprMdl.Impl.ThetaHat);
+    if isfield(mdl,'cgprMdl')
+        gprMdl = mdl.cgprMdl;
+    else
+        gprMdl = mdl.gprMdl;
+    end
+    [ypredlist{i},ysdlist{i},cilist{i}] = predict(gprMdl,X2{i});
+    kfntmplist{i} = gprMdl.Impl.Kernel.makeKernelAsFunctionOfXNXM(gprMdl.Impl.ThetaHat);
     covmatlist{i} = kfntmplist{i}(X2{i},X2{i});
 end
 
