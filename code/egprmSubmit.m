@@ -17,7 +17,7 @@ nreps = 1; % number of runs or repetitions
 
 % job submission environment
 env = 'local'; %'slurm', 'local'
-dryrunQ = T; %whether to skip running the jobs and just compile results
+dryrunQ = F; %whether to skip running the jobs and just compile results
 metaQ = F; %whether to load full model or only meta-data at end
 
 %make sure the parameters here correspond with the input to "pars" below
@@ -220,7 +220,7 @@ switch env
         mdlparstbl = struct2table(mdlparscat,'AsArray',true);
         
         mdlparstbltmp = tblfilt(mdlparstbl,pars);
-        if isempty(mdlparstbltmp)
+        if isempty(mdlparstbltmp)y
             error('mdlparstbltmp was empty, check tblfilt()')
         else
             mdlparstbl = mdlparstbltmp;
