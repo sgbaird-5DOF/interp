@@ -9,3 +9,4 @@ code/data/randOctParity/*.mat
 code/data/randOctParity/pcombs/*.mat
 code/data/randOctParity/pcombs/trash/
 code/bugtest.m
+code/panel-arc-10000.mat
