@@ -23,6 +23,7 @@ arguments
     NV.nforce double = 1
     NV.nforceQ(1,1) logical = false
     NV.dispQ(1,1) logical = true
+    NV.covK(1,1) double {mustBeInteger} = 1
 end
 % INTERP5DOF  Convert misorientation and boundary plane normal 5DOF input
 % data to a closed, octonion, hyperspherical mesh and interpolate property
@@ -174,6 +175,7 @@ sigma = NV.sigma;
 nforceQ = NV.nforceQ;
 nforce = NV.nforce;
 dispQ = NV.dispQ;
+covK = NV.covK;
 
 %display method
 if dispQ
@@ -451,9 +453,19 @@ switch method
            
             if strcmp(method,'sphgpr')
                 %squared exponential kernel function with octonion distance
-                kfcn = @(XN,XM,theta) (exp(theta(2))^2)*exp(-(pdist2(XN,XM,@get_alen).^2)/(2*exp(theta(1))^2));
+                kfn = @(XN,XM,theta) (exp(theta(2))^2)*exp(-(pdist2(XN,XM,@get_alen).^2)/(2*exp(theta(1))^2));
                 theta0 = [deg2rad(10), std(y)/sqrt(2)]; %initial length scale and noise
-                gpropts = [gpropts,{'KernelFunction',kfcn,'KernelParameters',theta0}];
+                gpropts = [gpropts,{'KernelFunction',kfn,'KernelParameters',theta0}];
+            end
+            
+            if covK > 1
+                if isfield(gpropts,'KernelFunction')
+                    KernelFunction = gpropts.KernelFunction;
+                else
+                    KernelFunction = 'squaredexponential'; %only one implemented as of 2021-02-15
+                end
+                kfn = @(XN,XM,theta) ensembleVFZOcov(XN,XM,theta,usv,'K',covK,'KernelFunction',KernelFunction);
+                gpropts = [gpropts,{'KernelFunction',kfn}];
             end
             
         else

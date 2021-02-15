@@ -5,7 +5,7 @@ arguments
     y(:,1) %property values
     qm2 %query misorientations
     nA2 %query BP normals
-    K(1,1) double = 1 % number of ensembles
+    K(1,1) double = 1 % number of ensemble components (i.e. # of VFZ/corresponding GPR models)
     method char {mustBeMember(method,{'gpr','sphgpr','pbary','sphbary','idw','nn','avg'})} = 'gpr'
     epsijk(1,1) double = 1
     NV.pgnum(1,1) double = 32 %m-3m (i.e. m\overbar{3}m) FCC symmetry default
@@ -22,6 +22,7 @@ arguments
     NV.sigma(1,1) double = 0 %synthetic input noise
     NV.dispQ(1,1) logical = false
     NV.KdispQ(1,1) logical = true
+    NV.covK(1,1) double {mustBeInteger} = 1 % number of ensemble components to compute covariance matrix
 end
 % ENSEMBLEVFZO  take the ensemble average of K VFZs for same set of GBs
 KdispQ = NV.KdispQ;

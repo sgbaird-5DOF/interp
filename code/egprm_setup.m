@@ -14,6 +14,7 @@ arguments
     NV.brkQ(1,1) double = false
     NV.mixQ(1,1) logical = false
     NV.mygpropts = {'PredictMethod','exact'}
+    NV.covK(1,1) double {mustBeInteger} = 1
 end
 %INTERP5DOF_SETUP  setup for interpolating five-degree-of-freedom property
 %data using random octochorically sampled octonions
