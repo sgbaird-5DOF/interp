@@ -1,6 +1,9 @@
 % EGPRMSUBMIT  submit sets of jobs to supercomputer or run locally for egprm()
 clear; close all
 
+!git commit -am egprmSubmit.m "update egprmSubmit.m"
+!git push egprmSubmit.m
+
 T = true;
 F = false;
 
