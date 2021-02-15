@@ -1,13 +1,14 @@
 function [octvtx,oref,fiveref] = get_octpairs(pts,savename,epsijk,NV)
 arguments
 	pts(:,8) double {mustBeSqrt2Norm}
-	savename string = 'temp.mat'
+	savename string = []
     epsijk(1,1) double = 1
 	NV.o2addQ(1,1) logical = false
 	NV.pgnum(1,1) double = 32
 	NV.wtol(1,1) double = 1e-12
     NV.fiveref = []
     NV.oref(1,8) double = get_ocubo(1,'random',[],10)
+    NV.dispQ = []
 end
 % GET_OCTPAIRS  Get a set of octonions that are symmetrized with respect to a fixed reference GB (default rng seed == 10)
 % Author: Sterling Baird
@@ -35,6 +36,15 @@ end
 %  GBdist4.m
 %  mustBeSqrt2Norm.m (argument validation function)
 %--------------------------------------------------------------------------
+dispQ = NV.dispQ;
+if isempty(dispQ)
+    if size(pts,1) <= 1000
+        dispQ = false;
+    else
+        dispQ = true;
+    end
+end
+
 fnames = {'PGnames.mat','olist.mat'};
 addpathdir(fnames)
 
@@ -48,15 +58,17 @@ else
     oref = five2oct(fiveref,epsijk);
 end
 
-if isempty(savename)
-    savename = 'temp.mat';
-end
+% if isempty(savename)
+%     savename = 'temp.mat';
+% end
 
 %% get minimized distance octonions relative to oct pairs
-disp('get_octpairs ')
+if dispQ
+    disp('get_octpairs ')
+end
 npts = size(pts,1);
 orefrep = repmat(oref,npts,1);
-[dmin,octvtx] = GBdist4(orefrep,pts,NV.pgnum,'norm',NV.wtol,true,epsijk);
+[dmin,octvtx] = GBdist4(orefrep,pts,NV.pgnum,'norm',NV.wtol,dispQ,epsijk);
 
 %check if multiple octonions found (rare, otherwise might indicate an error)
 idstmp = cellfun(@(oct) size(oct,1),octvtx) > 1;
@@ -81,14 +93,15 @@ if NV.o2addQ
 end
 
 %save data
-if exist('./data','dir') == 7
-    savepath = fullfile('data',savename);
-else
-    savepath = savename;
+if ~isempty(savename)
+    if exist('./data','dir') == 7
+        savepath = fullfile('data',savename);
+    else
+        savepath = savename;
+    end
+    disp(savepath)
+    save(savepath,'pts','oref','octvtx')
 end
-disp(savepath)
-save(savepath,'pts','oref','octvtx')
-
 end
 
 %--------------------------HELPER FUNCTIONS--------------------------------
