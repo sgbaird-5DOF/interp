@@ -18,7 +18,7 @@ nreps = 1; % number of runs or repetitions
 % job submission environment
 env = 'local'; %'slurm', 'local'
 dryrunQ = F; %whether to skip running the jobs and just compile results
-metaQ = F; %whether to load full model or only metay-data at end
+metaQ = T; %whether to load full model or only meta-data at end
 
 %make sure the parameters here correspond with the input to "pars" below
 switch runtype
@@ -234,7 +234,7 @@ switch env
                     'mdlparscat','mdlparstbl'};
             end
             a = whos(savevars{:});
-            if sum([a.bytes]) > 2e9
+            if sum([a.bytes]) > 1e9
                 save(fpath,savevars{:},'-v7.3')
             else
                 save(fpath,savevars{:})
