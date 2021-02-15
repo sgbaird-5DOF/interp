@@ -44,8 +44,10 @@ if ~isempty(egprmMdl)
     K = egprmMdl.K;
     thr = egprmMdl.thr;
     scl = egprmMdl.scl;
+    cgprMdls2 = egprmMdl.cgprMdls2;
 else
     mixQ = NV.mixQ;
+    cgprMdls2 = [];
 end
 postQ = NV.postQ;
 brkQ = NV.brkQ;
@@ -162,7 +164,7 @@ else
     for i = 1:K
         %train on input points with properties less than threshold
         mdl = mdls(i);
-        if isempty(gprMdl2list)
+        if isempty(gprMdl2list) && isempty(cgprMdls2)
             thr2 = thr+0.1;
             ids = find(yprede <= thr2);
 
@@ -171,10 +173,16 @@ else
             gprMdl2 = fitrgp(X{i},ysub,'PredictMethod','exact','KernelFunction','exponential');
             gprMdl2listtmp{i} = gprMdl2;
         else
-            if iscell(gprMdl2list)
-                gprMdl2 = gprMdl2list{i};
+            %load from either cgprMdl or gprMdl
+            if isempty(gprMdl2list)
+                unpacklist = cgprMdls2;
             else
-                gprMdl2 = gprMdl2list;
+                unpacklist = gprMdl2list;
+            end
+            if iscell(unpacklist)
+                gprMdl2 = unpacklist{i};
+            else
+                gprMdl2 = unpacklist;
             end
         end
         [ypredlist2{i},ysdlist2{i},cilist2{i}] = predict(gprMdl2,X2{i});
