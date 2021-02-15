@@ -15,7 +15,7 @@ arguments
     NV.ytrue = [] %user-specified "true" values for error calculations
     NV.modelparsspec = struct()
     NV.brkQ(1,1) logical = true %whether to compute BRK values as ytrue
-    NV.mygpropts = struct.empty %for use with gpr methods 'gpr' or 'sphgpr'
+    NV.mygpropts = {'PredictMethod','exact'} %for use with gpr methods 'gpr' or 'sphgpr'
     NV.r double = [] %for use with 'idw' method, alternatively set to [] for automatic estimation
     NV.uuid(1,8) char = get_uuid() %unique ID associated with this interpolation run
     NV.o = [] %input octonions, specify these or qm/nA pairs
