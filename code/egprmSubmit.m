@@ -2,8 +2,8 @@
 clear; close all
 
 %make sure this file is committed and pushed (WARNING: any other unpushed commits will also be pushed)
-!git commit -m "update egprmSubmit.m" egprmSubmit.m
-!git push egprmSubmit.m
+system('git commit egprmSubmit.m -m "auto-update egprmSubmit.m"');
+system('git push')
 
 T = true;
 F = false;
