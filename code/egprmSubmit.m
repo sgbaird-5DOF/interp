@@ -27,7 +27,7 @@ switch runtype
         K = 1;
         mixQ = true;
         genseed = 10;
-        brkQ = true; % take whatever GBs and supply with BRK energy values
+        brkQ = false; % take whatever GBs and supply with BRK energy values
         
     case 'full'
         ninputpts = [100 388 500 1000 5000 10000 20000 50000]; % 388, 500, 1000, 2000, 5000, 10000, 20000, 50000
