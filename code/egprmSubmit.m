@@ -264,7 +264,11 @@ switch env
         %                 S.
         %             end
         %         end
-        mdltbl(:,{'method','ninputpts','npredpts','rmse','mae'})
+        if metaQ
+            disp(mdlparstbl(:,{'method','ninputpts','npredpts','rmse','mae'}))
+        else
+            disp(mdltbl(:,{'method','ninputpts','npredpts','rmse','mae'}))
+        end
 
         %% plotting
         mdlnum = 1;
