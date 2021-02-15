@@ -1,7 +1,8 @@
 % EGPRMSUBMIT  submit sets of jobs to supercomputer or run locally for egprm()
 clear; close all
 
-!git commit -am egprmSubmit.m "update egprmSubmit.m"
+%make sure this file is committed and pushed (WARNING: any other unpushed commits will also be pushed)
+!git commit egprmSubmit.m -m "update egprmSubmit.m"
 !git push egprmSubmit.m
 
 T = true;
@@ -16,7 +17,7 @@ nreps = 1; % number of runs or repetitions
 
 % job submission environment
 env = 'local'; %'slurm', 'local'
-dryrunQ = F; %whether to skip running the jobs and just compile results
+dryrunQ = T; %whether to skip running the jobs and just compile results
 metaQ = F; %whether to load full model or only metay-data at end
 
 %make sure the parameters here correspond with the input to "pars" below
