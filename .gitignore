@@ -10,3 +10,6 @@ code/data/randOctParity/pcombs/*.mat
 code/data/randOctParity/pcombs/trash/
 code/bugtest.m
 code/panel-arc-10000.mat
+code/egpr-10000.mat
+code/egprm-1000.mat
+code/egprm-10000.mat
