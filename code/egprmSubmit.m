@@ -17,7 +17,7 @@ nreps = 1; % number of runs or repetitions
 
 % job submission environment
 env = 'local'; %'slurm', 'local'
-dryrunQ = T; %whether to skip running the jobs and just compile results
+dryrunQ = F; %whether to skip running the jobs and just compile results
 metaQ = T; %whether to load full model or only meta-data at end
 
 %make sure the parameters here correspond with the input to "pars" below
@@ -240,10 +240,18 @@ switch env
             end
             a = whos(savevars{:});
             nbytes = sum([a.bytes]);
-            if nbytes > 1e9
+            if nbytes > 2e9
                 save(fpath,savevars{:},'-v7.3')
             else
-                save(fpath,savevars{:},'-nocompression')
+                try
+                    save(fpath,savevars{:})
+                catch
+                    try
+                        save(fpath,savevars{:},'-nocompression')
+                    catch
+                        save(fpath,savevars{:},'-v7.3')
+                    end
+                end
             end
         end
         writetable(mdlparstbl,[fpath(1:end-4) '.csv'],'WriteVariableNames',true)
