@@ -297,8 +297,14 @@ if isempty(egprmMdl)
        thr,scl,o2,mesh,oref,oreflist,projQ,projtol,usv,...
         zeroQ,mixQ,K,cores,pgnum,sig,brkQ);
     %remove memory-intensive variables from "parameter" structure
-    egprmMdlpars.mdls = rmfield(mdls,{'gprMdl','interpfn'});
-    %note: saving interpfn is significant contrary to what `whos interpfn` shows
+    if isfield(mdls,'gprMdl')
+        mdls = rmfield(mdls,'gprMdl');
+    end
+    if isfield(mdls,'interpfn')
+        %saving interpfn is significant contrary to what `whos interpfn` shows
+        mdls = rmfield(mdls,'interpfn');
+    end
+    egprmMdlpars.mdls = mdls;
     
     egprmMdlpars.method = method;
     
