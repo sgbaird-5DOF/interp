@@ -28,6 +28,7 @@ KdispQ = NV.KdispQ;
 [ypredlist,interpfnlist,mdllist,mdlparslist] = deal(cell(K,1)); %initialize
 for k = 1:K
     if KdispQ
+        disp(' ')
         disp([int2str(k) '-th ensemble component (ensembleVFZO.m)'])
     end
     %random reference octonion
