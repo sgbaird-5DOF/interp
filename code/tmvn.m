@@ -14,6 +14,7 @@ end
 %  Sigma - covariance matrix (or vector of diagonals along covariance matrix)
 %  l - lower bound(s)
 %  u - upper bound(s)
+%  n - number of posterior samples
 %  zerofloorQ - whether to constrain the sampling to non-negative values or not
 %
 % Outputs:
