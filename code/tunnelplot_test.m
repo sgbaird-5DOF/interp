@@ -1,16 +1,19 @@
 function [tpredlist,tsdlist,propList,methodlist,A,B] = ...
-    tunnelplot_test(testnum,ninputpts,n,tpredlist,tsdlist,propList,methodlist,A,B)
+    tunnelplot_test(testnum,ninputpts,n,tpredlist,tsdlist,propList,methodlist,A,B,nv)
 arguments
     testnum(1,1) double = 2
-    ninputpts(1,1) double = 50000
-    n(1,1) double = 300
+    ninputpts(1,1) double = 1000
+    n(1,1) double = 100
     tpredlist = []
     tsdlist = []
     propList = []
     methodlist = []
     A = []
     B = []
+    nv.extend = 0.1
 end
+extend = nv.extend;
+
 switch testnum
     case 1
         %%
@@ -61,11 +64,10 @@ switch testnum
             mdllist = [];
         end
         %%
-        paperfigure();
         [tpredlist,tsdlist,propList,methodlist,A,B] = ...
             tunnelplot(mdllist,A,B,n,'nnQ',false,'nnQ2',false,...
             'tpredlist',tpredlist,'tsdlist',tsdlist,'propList',propList,...
-            'methodlist',methodlist);
+            'methodlist',methodlist,'extend',extend,'lgdloc','south');
 end
 
 %% CODE GRAVEYARD
