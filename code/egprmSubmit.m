@@ -56,7 +56,7 @@ method = {method};
 
 %comment (no spaces, used in filename)
 % comment = 'brk';
-comment = 'brk';
+comment = 'kim';
 %comment = '';
 
 disp(['env = ' env])

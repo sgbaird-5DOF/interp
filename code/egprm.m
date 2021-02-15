@@ -286,7 +286,10 @@ if isempty(egprmMdl)
     egprmMdlpars = var_names(ypred,ysd,ytrue,ci,l,u,zerofloorQ,n,ypost,...
        thr,scl,o2,mesh,oref,oreflist,projQ,projtol,usv,...
         zeroQ,mixQ,K,cores,pgnum,sig,brkQ);
+    %remove memory-intensive variables from "parameter" structure
     egprmMdlpars.mdls = rmfield(mdls,{'gprMdl','interpfn'});
+    %note: saving interpfn is significant contrary to what `whos interpfn` shows
+    
     egprmMdlpars.method = method;
     
     if mixQ
