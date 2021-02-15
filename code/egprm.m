@@ -30,6 +30,7 @@ arguments
     NV.dispQ(1,1) logical = false
     NV.egprmDispQ(1,1) logical = true
     NV.KdispQ(1,1) logical = true
+    NV.covK(1,1) double {mustBeInteger} = 1
 end
 % EGPRM  ensemble Guassian process regression mixture model with mixture threshold (thr) given GPR models (mdls)
 thr = NV.thr;
