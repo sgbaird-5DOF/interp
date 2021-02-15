@@ -86,8 +86,10 @@ switch env
         if ~dryrunQ
             p = gcp;
             cores = p.NumWorkers;
+            rmcoresQ = false;
         else
-            cores = 1;
+%             cores = 1;
+            rmcoresQ = true;
         end
 end
 
@@ -124,6 +126,9 @@ savepathfn = @(method,ninputpts,gitcommit,puuid) fullfile(savefolder,savenamefn(
 %parameters
 %**ADD ALL PARAMETERS HERE** (see runtype switch statement)
 pars = var_names(ninputpts,npredpts,method,cores,datatype,pgnum,sig,genseed,brkQ,K,mixQ);
+if rmcoresQ
+    pars = rmfield(pars,'cores');
+end
 if ~dryrunQ
     %% parameter file setup
     %function to execute and output arguments from function
@@ -219,10 +224,6 @@ switch env
             error('mdlparstbltmp was was empty, check tblfilt()')
         else
             mdlparstbl = mdlparstbltmp;
-        end
-        
-        if ~metaQ
-            clear mdllist
         end
         
         mdlparscat = table2struct(mdlparstbl);
