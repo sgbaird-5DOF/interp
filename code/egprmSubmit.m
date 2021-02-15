@@ -208,7 +208,6 @@ switch env
             mdltbl = struct2table(mdlcat,'AsArray',true);
             mdltbl = tblfilt(mdltbl,pars);
             mdlcat = table2struct(mdltbl);
-            clear mdllist
             %         mdltbl = struct2table(mdlcat,'AsArray',true);
         end
         
@@ -221,6 +220,11 @@ switch env
         else
             mdlparstbl = mdlparstbltmp;
         end
+        
+        if ~metaQ
+            clear mdllist
+        end
+        
         mdlparscat = table2struct(mdlparstbl);
         
         %         gitcommit = get_gitcommit();
