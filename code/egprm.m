@@ -122,7 +122,11 @@ end
 if isempty(egprmMdl)
     gprMdl2list = [];
 else
-    gprMdl2list = egprmMdl.gprMdl2list;
+    if isfield(egprmMdl,'gprMdl2list')
+        gprMdl2list = egprmMdl.gprMdl2list;
+    else
+        gprMdl2list = egprmMdl.cgprMdls2;
+    end
 end
 %compile variables
 ypredtmp = [ypredlist{:}];
