@@ -237,13 +237,7 @@ switch env
         
         %         gitcommit = get_gitcommit();
         %save models and parameters
-        [gitID,~,warnedQ] = get_gitcommit();
-        if warnedQ
-            m = input(['Warning issued from get_gitcommit. Continue (y) or abort (n)? '],'s');
-            if ~strcmp(m,'y') && ~strcmp(m,'Y')
-                return
-            end
-        end
+        gitID = get_gitcommit();
         fpath = fullfile(savefolder,['gitID-' gitID '_uuID-' get_uuid() '_' comment '.mat']);
         if savecatQ
             if metaQ
