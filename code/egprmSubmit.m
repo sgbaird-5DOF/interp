@@ -64,7 +64,7 @@ pars = var_names(ninputpts,npredpts,method,datatype,pgnum,sig,genseed,brkQ,K,mix
 
 %comment (no spaces, used in filename)
 % comment = 'brk';
-comment = 'kim';
+comment = 'brk';
 %comment = '';
 
 disp(['env = ' env])
