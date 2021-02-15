@@ -459,10 +459,11 @@ switch method
         else
             % user-supplied gpr options
             gpropts = NV.mygpropts;
-            gproptnames = gpropts{1:2:end};
-            gproptvals = gpropts{2:2:end};
-            gproptstruct = cell2struct(gproptvals,gproptnames,2);
-            
+            gproptstruct = struct(gpropts{:});
+%             gproptnames = gpropts{1:2:end};
+%             gproptvals = gpropts{2:2:end};
+%             gproptstruct = cell2struct(gproptvals,gproptnames,2);
+
             %extract parameters (for table)
             G = gproptstruct;
             if isempty(fieldnames(G))
