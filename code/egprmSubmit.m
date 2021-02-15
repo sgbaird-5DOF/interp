@@ -58,7 +58,8 @@ method = {method};
 
 %parameters
 %**ADD ALL PARAMETERS HERE** (see runtype switch statement)
-pars = var_names(ninputpts,npredpts,method,cores,datatype,pgnum,sig,genseed,brkQ,K,mixQ,mygpropts);
+pars = var_names(ninputpts,npredpts,method,datatype,pgnum,sig,genseed,brkQ,K,mixQ,mygpropts);
+%note: cores gets added later and removed if strcmp(env,'local')
 %note: also need to update execfn
 
 %comment (no spaces, used in filename)
