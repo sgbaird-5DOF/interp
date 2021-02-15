@@ -22,6 +22,7 @@ arguments
     NV.oref = get_ocubo(1,'random',[],10)
     NV.nforce double = 1
     NV.nforceQ(1,1) logical = false
+    NV.dispQ(1,1) logical = true
 end
 % INTERP5DOF  Convert misorientation and boundary plane normal 5DOF input
 % data to a closed, octonion, hyperspherical mesh and interpolate property
@@ -164,9 +165,6 @@ end
 % Date: 2020-09-03
 %--------------------------------------------------------------------------
 
-%display method
-disp(['method = ' method])
-
 %unpack (some) name-value pairs
 pgnum = NV.pgnum;
 brkQ = NV.brkQ;
@@ -175,6 +173,12 @@ ytrue = NV.ytrue;
 sigma = NV.sigma;
 nforceQ = NV.nforceQ;
 nforce = NV.nforce;
+dispQ = NV.dispQ;
+
+%display method
+if dispQ
+    disp(['method = ' method])
+end
 
 % add relevant folders to path (by searching subfolders for functions)
 % addpath(genpath('.'))
@@ -220,8 +224,9 @@ symruntime = toc;
 
 [~,~,nnmu,nnsigma] = get_knn(o,'omega',1);
 
-disp(['ninputpts = ' int2str(ninputpts) ', npredpts = ' int2str(npredpts)])
-
+if dispQ
+    disp(['ninputpts = ' int2str(ninputpts) ', npredpts = ' int2str(npredpts)])
+end
 %% projection
 %important to project both sets together so they use same SVD decomposition
 
@@ -493,11 +498,15 @@ switch method
             end
         end
         
-        %Gaussian process regression        
+        %Gaussian process regression
         if ~isempty(gpropts)
-            gprMdl = fitrgp(X,y,gpropts{:}) %#ok<NOPRT>
+            gprMdl = fitrgp(X,y,gpropts{:});
         else
             gprMdl = fitrgp(X,y);
+        end
+        gprdispQ = false;
+        if gprdispQ
+            disp(gprMdl)
         end
         
 %         %cross-validate the model
@@ -520,7 +529,7 @@ switch method
             case 'fic'
                 mdlcmd = @(gprMdl,X2) predict(gprMdl,X2);
                 interpfn = @(qm2,nA2) interp_gpr(gprMdl,qm2,nA2,projtol,usv);
-                mdlspec = var_names(gprMdl,gpropts,ysd,yint);
+                mdlspec = var_names(gprMdl,cgprMdl,gpropts,ysd,yint);
             otherwise
                 mdlcmd = @(cgprMdl,X2) predict(cgprMdl,X2);
                 interpfn = @(qm2,nA2) interp_gpr(cgprMdl,qm2,nA2,projtol,usv);
