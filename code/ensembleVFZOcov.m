@@ -47,4 +47,6 @@ end
 % convert from distances to covariances
 cov = d2cov(pd,theta,KernelFunction);
 
+cov = nearestSPD(cov);
+
 end
