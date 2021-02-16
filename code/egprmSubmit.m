@@ -37,7 +37,7 @@ switch runtype
         sig = [0]; %J/m^2, standard deviation, added to "y"
         mygpropts = {{'PredictMethod','exact'}};
         K = 1;
-        covK = 1;
+        covK = 2;
         mixQ = false;
         genseed = 10;
         brkQ = false; % take whatever GBs and replace properties with BRK energy values
@@ -68,7 +68,7 @@ method = {method};
 %**ADD ALL PARAMETERS HERE** (see runtype switch statement)
 pars = var_names(ninputpts,npredpts,method,datatype,pgnum,sig,genseed,...
     brkQ,K,covK,mixQ,mygpropts);
-%note: cores gets added later and removed if strcmp(env,'local')
+%note: cores gets added later and removed if dryrunQ == true
 %note: also need to update execfn
 
 if ~dryrunQ
