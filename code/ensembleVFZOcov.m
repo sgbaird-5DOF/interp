@@ -55,8 +55,8 @@ end
 % convert from distances to covariances
 cov = d2cov(pd,theta,KernelFunction);
 
-% if size(cov,1)==size(cov,2)
-%     cov = nearestSPD(cov);
-% end
+if size(cov,1)==size(cov,2)
+    cov = nearestSPD(cov);
+end
 
 end
