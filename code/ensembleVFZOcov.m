@@ -10,12 +10,6 @@ arguments
 end
 % ENSEMBLEVFZODIST  compute a minimized GB covariance matrix across K VFZs based on reference octonions (orefs)
 
-% persistent counter
-% counter = counter+1;
-% if mod(counter,1)==0
-%     disp(counter)
-% end
-% disp(counter)
 disp([size(XN) size(XM)])
 
 %unpack
@@ -60,3 +54,13 @@ if size(cov,1)==size(cov,2)
 end
 
 end
+
+%% CODE GRAVEYARD
+%{
+wasn't doing anything:
+% persistent counter
+% counter = counter+1;
+% if mod(counter,1)==0
+%     disp(counter)
+% end
+%}
