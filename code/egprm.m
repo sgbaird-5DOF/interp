@@ -46,16 +46,17 @@ if ~isempty(egprmMdl)
     thr = egprmMdl.thr;
     scl = egprmMdl.scl;
     cgprMdls2 = egprmMdl.cgprMdls2;
+    covK = egprmMdl.covK;
 else
     mixQ = NV.mixQ;
     cgprMdls2 = [];
+    covK = NV.covK;
 end
 postQ = NV.postQ;
 brkQ = NV.brkQ;
 sig = NV.sig;
 egprmDispQ = NV.egprmDispQ;
 KdispQ = NV.KdispQ;
-covK = NV.covK;
 
 if contains(method,'gpr')
     ensembleMethod = 'gpr';
