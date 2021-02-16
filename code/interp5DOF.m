@@ -429,7 +429,8 @@ switch method
                 KernelFunction = 'squaredexponential'; %only one implemented as of 2021-02-15
             end
             kfn = @(XN,XM,theta) ensembleVFZOcov(XN,XM,theta,usv,'K',covK,'KernelFunction',KernelFunction);
-            theta0 = [mean(std(X)), std(y)/sqrt(2)]; %initial length scale and noise, fitrgp defaults for 'squaredexponential'
+%             theta0 = [mean(std(X)), std(y)/sqrt(2)]; %initial length scale and noise, fitrgp defaults for 'squaredexponential'
+            theta0 = [rad2deg(10/2), std(y)/sqrt(2)]; %initial length scale and noise
             gprappend = {'KernelFunction',kfn,'KernelParameters',theta0};
         else
             gprappend = [];
