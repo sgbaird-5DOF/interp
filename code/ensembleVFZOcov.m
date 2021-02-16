@@ -32,9 +32,11 @@ for i = 1:K
     
     % symmetrize both sets of points
     o = proj_up(XN,usv);
+    o = sqrt2norm(o,'quat');
     o = get_octpairs(o,'oref',oref);
     
     o2 = proj_up(XM,usv);
+    o2 = sqrt2norm(o2,'quat');
     o2 = get_octpairs(o2,'oref',oref);
     
     %keep taking minimum distances
