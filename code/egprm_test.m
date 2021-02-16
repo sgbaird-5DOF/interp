@@ -7,11 +7,12 @@ arguments
     scl(1,1) double = 30
     epsijk(1,1) double = 1
     nv.mixQ(1,1) logical = true
-    nv.loadQ(1,1) logical = true
+    nv.loadQ(1,1) logical = false
     nv.seed(1,1) double = 10
     nv.mat char = 'Ni'
     nv.lgdloc char = 'best'
     nv.mdl = []
+    nv.ntunnelpts(1,1) double = 300;
 end
 % EGPRM_TEST  perform a self-contained ensemble Gaussian process mixture run
 loadQ = nv.loadQ;
@@ -20,6 +21,7 @@ mat = nv.mat;
 mixQ = nv.mixQ;
 lgdloc = nv.lgdloc;
 mdl = nv.mdl;
+ntunnelpts = nv.ntunnelpts;
 
 %% setup
 rng(seed);
@@ -49,9 +51,6 @@ end
 
 %% load
 % load(fname,'mdl')
-
-%% tunnel parameters
-ntunnelpts = 300;
 
 %% initial tunnelplot to get A,B
 % paperfigure();
