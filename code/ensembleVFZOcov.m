@@ -10,7 +10,7 @@ arguments
 end
 % ENSEMBLEVFZODIST  compute a minimized GB covariance matrix across K VFZs based on reference octonions (orefs)
 
-disp([size(XN) size(XM)])
+% disp([size(XN) size(XM)])
 
 %unpack
 K = nv.K;
@@ -50,6 +50,7 @@ end
 cov = d2cov(pd,theta,KernelFunction);
 
 if size(cov,1)==size(cov,2)
+    cov = nearestSPD(cov);
     cov = nearestSPD(cov);
 end
 
