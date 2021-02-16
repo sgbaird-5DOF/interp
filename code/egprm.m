@@ -55,6 +55,7 @@ brkQ = NV.brkQ;
 sig = NV.sig;
 egprmDispQ = NV.egprmDispQ;
 KdispQ = NV.KdispQ;
+covK = NV.covK;
 
 if contains(method,'gpr')
     ensembleMethod = 'gpr';
