@@ -17,7 +17,7 @@ nreps = 1; % number of runs or repetitions
 
 % job submission environment
 env = 'local'; %'slurm', 'local'
-dryrunQ = F; %whether to skip running the jobs and just compile results
+dryrunQ = T; %whether to skip running the jobs and just compile results
 metaQ = T; %whether to load full model or only meta-data at end
 
 %make sure the parameters here correspond with the input to "pars" below,
@@ -37,7 +37,7 @@ switch runtype
         sig = [0]; %J/m^2, standard deviation, added to "y"
         mygpropts = {{'PredictMethod','exact'}};
         K = 1;
-        covK = 10;
+        covK = 2;
         mixQ = false;
         genseed = 10;
         brkQ = false; % take whatever GBs and replace properties with BRK energy values
