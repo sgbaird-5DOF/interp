@@ -37,7 +37,7 @@ switch runtype
         sig = [0]; %J/m^2, standard deviation, added to "y"
         mygpropts = {{'PredictMethod','fic'}};
         K = 1;
-        covK = 2;
+        covK = 1; %very slow if covK > 1. Haven't been able to run to completion even with only 100 GBs
         mixQ = false;
         genseed = 10;
         brkQ = false; % take whatever GBs and replace properties with BRK energy values
