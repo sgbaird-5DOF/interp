@@ -176,6 +176,7 @@ nforceQ = NV.nforceQ;
 nforce = NV.nforce;
 dispQ = NV.dispQ;
 covK = NV.covK;
+mygpropts = NV.mygpropts;
 
 %display method
 if dispQ
@@ -250,7 +251,7 @@ d = size(a,2);
 if d <= 8
     ppts = proj_down(o,projtol,usv,'zeroQ',zeroQ,'nforceQ',nforceQ,'nforce',nforce);
     ppts2 = proj_down(o2,projtol,usv,'zeroQ',zeroQ,'nforceQ',nforceQ,'nforce',nforce);
-else 
+else
     error("Input doesn't have degenerate dimension or has too few (i.e. check input data), or try reducing proj_down tolerance input (tol)")
 end
 
@@ -280,7 +281,7 @@ if brkQ
     noisetype = 'normal';
     switch noisetype
         case 'normal'
-%             y = normrnd(y,sigma);
+            %             y = normrnd(y,sigma);
             y = y + abs(normrnd(zeros(size(y)),sigma));
         case 'uniform'
             y = y + sigma*2*(rand(size(y))-0.5); %uniform
@@ -306,7 +307,7 @@ if brkQ
     noisetype = 'normal';
     switch noisetype
         case 'normal'
-%             ytrue = normrnd(ytrue,sigma);
+            %             ytrue = normrnd(ytrue,sigma);
             ytrue = ytrue + abs(normrnd(zeros(size(ytrue)),sigma));
         case 'uniform'
             ytrue = ytrue + sigma*2*(rand(size(ytrue))-0.5); %uniform
@@ -327,7 +328,7 @@ ncores = p.NumWorkers;
 gitcommit = get_gitcommit();
 
 %% package into struct
-%general model variables 
+%general model variables
 mdlgen = var_names(method,projtol,zeroQ,usv,starttime,ncores,ninputpts,npredpts,...
     gitcommit,uuid,predinput,queryinput,projQ,oref,oref2,nnmu,nnsigma,symruntime);
 %general parameters
@@ -382,12 +383,12 @@ switch method
             
             %unpack NN extrapolation RMSE and MAE values
             nn_rmse = barypars.nn_errmetrics.rmse;
-            nn_mae = barypars.nn_errmetrics.mae;        
+            nn_mae = barypars.nn_errmetrics.mae;
             
             %model-specific variables
             mdlspec = var_names(databary,facetprops,barytol,barytype,inttol,...
                 intfacetIDs,nnMax,facetIDs,barypars,nn_rmse,nn_mae);
-                        
+            
             %model-specific parameters
             mdlparsspec = var_names(barytol,barytype,inttol,nnMax,...
                 nn_rmse,nn_mae,nints,numnonints,int_fraction,barypars);
@@ -421,26 +422,38 @@ switch method
         end
         
         %gpr options
-        if isempty(NV.mygpropts)
+        if covK > 1
+            if isfield(mygpropts,'KernelFunction')
+                KernelFunction = mygpropts.KernelFunction;
+            else
+                KernelFunction = 'squaredexponential'; %only one implemented as of 2021-02-15
+            end
+            kfn = @(XN,XM,theta) ensembleVFZOcov(XN,XM,theta,usv,'K',covK,'KernelFunction',KernelFunction);
+            gprappend = {'KernelFunction',kfn};
+        else
+            gprappend = [];
+        end
+        
+        if isempty(mygpropts)
             %% interp5DOF's default gpr options
             thresh = Inf;
             if ninputpts <= thresh
                 PredictMethod = 'fic';
-%                 gpropts = {'Sigma',1e-6,'ConstantSigma',true,'SigmaLowerBound',1e-8}; %interpolation
-%                 gpropts = {'KernelFunction','exponential'};
-%                 PredictMethod = 'exact';
-%                 gpropts = {'FitMethod','none','KernelFunction','exponential','Sigma',0.005,...
-%                     'ConstantSigma',true};
-%                 gpropts = {'KernelParameters',[deg2rad(2.5),0.02]};
-%                 gpropts = {'ActiveSetMethod','sgma','NumActiveSetRepeats',1};
-%                   gpropts = {'OptimizeHyperparameters',{'KernelScale','Sigma'},...
-%                       'HyperparameterOptimizationOptions',struct('UseParallel',true)};
-%                 gpropts = {'KernelParameters',[deg2rad(2.5),0.01],...
-%                     'OptimizeHyperparameters',{'KernelScale','Sigma'}};
-%                 gpropts = {'KernelFunction','ardsquaredexponential',...
-%                     'KernelParameters',[deg2rad(2.5)*ones(1,7),0.05],...
-%                     'OptimizeHyperparameters','Sigma'};
-%                 gpropts = {'KernelFunction','ardsquaredexponential'};
+                %                 gpropts = {'Sigma',1e-6,'ConstantSigma',true,'SigmaLowerBound',1e-8}; %interpolation
+                %                 gpropts = {'KernelFunction','exponential'};
+                %                 PredictMethod = 'exact';
+                %                 gpropts = {'FitMethod','none','KernelFunction','exponential','Sigma',0.005,...
+                %                     'ConstantSigma',true};
+                %                 gpropts = {'KernelParameters',[deg2rad(2.5),0.02]};
+                %                 gpropts = {'ActiveSetMethod','sgma','NumActiveSetRepeats',1};
+                %                   gpropts = {'OptimizeHyperparameters',{'KernelScale','Sigma'},...
+                %                       'HyperparameterOptimizationOptions',struct('UseParallel',true)};
+                %                 gpropts = {'KernelParameters',[deg2rad(2.5),0.01],...
+                %                     'OptimizeHyperparameters',{'KernelScale','Sigma'}};
+                %                 gpropts = {'KernelFunction','ardsquaredexponential',...
+                %                     'KernelParameters',[deg2rad(2.5)*ones(1,7),0.05],...
+                %                     'OptimizeHyperparameters','Sigma'};
+                %                 gpropts = {'KernelFunction','ardsquaredexponential'};
             else
                 PredictMethod = 'bcd';
                 gpropts = {'BlockSize',10000};
@@ -449,8 +462,8 @@ switch method
                 gpropts = {};
             end
             gpropts = [gpropts {'PredictMethod',PredictMethod}];
-%             gpropts = {'PredictMethod',PredictMethod};
-           
+            %             gpropts = {'PredictMethod',PredictMethod};
+            
             if strcmp(method,'sphgpr')
                 %squared exponential kernel function with octonion distance
                 kfn = @(XN,XM,theta) (exp(theta(2))^2)*exp(-(pdist2(XN,XM,@get_alen).^2)/(2*exp(theta(1))^2));
@@ -458,24 +471,14 @@ switch method
                 gpropts = [gpropts,{'KernelFunction',kfn,'KernelParameters',theta0}];
             end
             
-            if covK > 1
-                if isfield(gpropts,'KernelFunction')
-                    KernelFunction = gpropts.KernelFunction;
-                else
-                    KernelFunction = 'squaredexponential'; %only one implemented as of 2021-02-15
-                end
-                kfn = @(XN,XM,theta) ensembleVFZOcov(XN,XM,theta,usv,'K',covK,'KernelFunction',KernelFunction);
-                gpropts = [gpropts,{'KernelFunction',kfn}];
-            end
-            
         else
             % user-supplied gpr options
-            gpropts = NV.mygpropts;
+            gpropts = mygpropts;
             gproptstruct = struct(gpropts{:});
-%             gproptnames = gpropts{1:2:end};
-%             gproptvals = gpropts{2:2:end};
-%             gproptstruct = cell2struct(gproptvals,gproptnames,2);
-
+            %             gproptnames = gpropts{1:2:end};
+            %             gproptvals = gpropts{2:2:end};
+            %             gproptstruct = cell2struct(gproptvals,gproptnames,2);
+            
             %extract parameters (for table)
             G = gproptstruct;
             if isempty(fieldnames(G))
@@ -510,7 +513,7 @@ switch method
                 gproptshort.FitMethod = FitMethod;
             end
         end
-        
+        gpropts = [gpropts,gprappend];
         %Gaussian process regression
         if ~isempty(gpropts)
             gprMdl = fitrgp(X,y,gpropts{:});
@@ -522,8 +525,8 @@ switch method
             disp(gprMdl)
         end
         
-%         %cross-validate the model
-%         cvgprMdl = crossval(gprMdl);
+        %         %cross-validate the model
+        %         cvgprMdl = crossval(gprMdl);
         
         %compact the model
         cgprMdl = compact(gprMdl);
@@ -548,7 +551,7 @@ switch method
                 interpfn = @(qm2,nA2) interp_gpr(cgprMdl,qm2,nA2,projtol,usv);
                 mdlspec = var_names(cgprMdl,gpropts,ysd,yint,covK);
         end
-
+        
         %model-specific parameters
         if exist('gproptshort','var') == 1
             if ~isempty(fieldnames(gproptshort))
@@ -574,8 +577,8 @@ switch method
         mdlparsspec.KernelParameterNames = cgprMdl.KernelInformation.KernelParameterNames;
         mdlparsspec.Beta = cgprMdl.Beta;
         mdlparsspec.covK = covK;
-%         mdlparsspec.Sigma = cgprMdl.Sigma;
-%         mdlparsspec.CrossVal = CrossVal;
+        %         mdlparsspec.Sigma = cgprMdl.Sigma;
+        %         mdlparsspec.CrossVal = CrossVal;
         
     case 'idw' % inverse distance weighting
         %whether to remove degenerate dimension or not
@@ -588,7 +591,7 @@ switch method
         end
         
         r = NV.r;
-
+        
         L = 2; %norm-power (i.e. L == 2 --> Euclidean norm)
         %different from Tovar's FEX idw.m implementation, but should be
         %similar or same output
@@ -675,7 +678,7 @@ mdlparsgen.runtime = runtime;
 mdlparsgen.parity = parity;
 
 %% concatenate structs
-%model variables 
+%model variables
 mdl = structhorzcat(mdlgen,mdlspec);
 %model parameters
 mdlpars = structhorzcat(mdlparsgen,mdlparsspec);
@@ -812,7 +815,7 @@ end
 
 %         mdlcmd = @(ppts,propList,gpropts) predict(fitrgp(ppts,propList,gpropts{:}),ppts2);
 
-% 
+%
 %             gpropts = struct(...
 %                 'OptimizeHyperparameters',{'KernelScale','Sigma'},...
 %                 'HyperparameterOptimizationOptions',hyperopts,...
@@ -854,12 +857,12 @@ end
 
 
 %             facetprops = NV.facetprops;
-%             
+%
 %             %find NaN values & replace with NN values (NN extrapolation)
 %             [NNextrapID,~] = isnan(databary);
 %             nnList = dsearchn(ppts2(NNextrapID),ppts);
 %             d = size(databary,2);
-%             
+%
 %             % e.g. databary == [NaN NaN NaN], facetprops == [NaN NaN NaN]
 %             % --> [1 0 0], [1.213 0 0], such that dot([1 0 0],[1.213 0 0])
 %             % == 1.213, where 1.213 is the extrapolated NN value
@@ -887,11 +890,11 @@ end
 %             if sum([isempty(NV.databary) isempty(NV.facetprops)]) == 1
 %                 error('both databary and facetprops should be supplied simultaneously')
 %             end
-%             
+%
 %             if ~all(size(NV.databary) == size(NV.facetprops))
 %                 error('databary and facetprops must have the same dimensions')
 %             end
-%             
+%
 %             if sum([isempty(NV.databary) isempty(NV.facetprops)])==1
 %                 error('both databary and facetprops should be defined or neither')
 %             end
