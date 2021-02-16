@@ -2,9 +2,9 @@ function cov = ensembleVFZOcov(XN,XM,theta,usv,nv)
 arguments
     XN(:,:) double
     XM(:,:) double
-    theta(1,:) double
+    theta(1,:) double = [1,1]
     usv = struct.empty
-    nv.K(1,1) double = []
+    nv.K = []
     nv.orefs = []
     nv.KernelFunction = 'squaredexponential'
 end
@@ -41,7 +41,7 @@ for i = 1:K
     
     %keep taking minimum distances
     pd = cat(3,pd,pdist2(o,o2));
-    pd = min(pd,3);
+    pd = min(pd,[],3);
 end
 
 % convert from distances to covariances
