@@ -75,7 +75,7 @@ if ~dryrunQ
     %% parameter file setup
     %function to execute and output arguments from function
     execfnmethod = 'gpr';
-    execfn = @(ninputpts,npredpts,method,datatype,pgnum,sig,genseed,brkQ) ... **NAMES NEED TO MATCH PARS FIELDS** (see above)
+    execfn = @(ninputpts,npredpts,method,datatype,pgnum,sig,genseed,brkQ,K,covK) ... **NAMES NEED TO MATCH PARS FIELDS** (see above)
         egprm_setup(ninputpts,npredpts,execfnmethod,datatype,'K',K,'covK',covK,...
         'pgnum',pgnum,'sig',sig,'genseed',genseed,'brkQ',brkQ,'mixQ',mixQ,...
         'mygpropts',mygpropts); %**NAMES NEED TO MATCH PARS FIELDS AND EXECFN ARGUMENTS**
