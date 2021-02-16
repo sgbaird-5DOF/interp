@@ -542,11 +542,11 @@ switch method
             case 'fic'
                 mdlcmd = @(gprMdl,X2) predict(gprMdl,X2);
                 interpfn = @(qm2,nA2) interp_gpr(gprMdl,qm2,nA2,projtol,usv);
-                mdlspec = var_names(gprMdl,cgprMdl,gpropts,ysd,yint);
+                mdlspec = var_names(gprMdl,cgprMdl,gpropts,ysd,yint,covK);
             otherwise
                 mdlcmd = @(cgprMdl,X2) predict(cgprMdl,X2);
                 interpfn = @(qm2,nA2) interp_gpr(cgprMdl,qm2,nA2,projtol,usv);
-                mdlspec = var_names(cgprMdl,gpropts,ysd,yint);
+                mdlspec = var_names(cgprMdl,gpropts,ysd,yint,covK);
         end
 
         %model-specific parameters
@@ -573,6 +573,7 @@ switch method
         mdlparsspec.KernelParameters = cgprMdl.KernelInformation.KernelParameters;
         mdlparsspec.KernelParameterNames = cgprMdl.KernelInformation.KernelParameterNames;
         mdlparsspec.Beta = cgprMdl.Beta;
+        mdlparsspec.covK = covK;
 %         mdlparsspec.Sigma = cgprMdl.Sigma;
 %         mdlparsspec.CrossVal = CrossVal;
         

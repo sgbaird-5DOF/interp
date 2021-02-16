@@ -283,7 +283,7 @@ if isempty(egprmMdl)
     
     egprmMdl = var_names(ypred,ysd,ytrue,ci,covmat,l,u,zerofloorQ,n,ypost,...
         thr,scl,mdls,o2,mesh,oref,oreflist,projQ,projtol,...
-        usv,zeroQ,gprMdl2list,mixQ,K,cores,pgnum,sig,brkQ);
+        usv,zeroQ,gprMdl2list,mixQ,K,covK,cores,pgnum,sig,brkQ);
     method = 'gpr';
     if mixQ
         method = [method 'm'];
@@ -297,7 +297,7 @@ if isempty(egprmMdl)
     
     egprmMdlpars = var_names(ypred,ysd,ytrue,ci,l,u,zerofloorQ,n,ypost,...
        thr,scl,o2,mesh,oref,oreflist,projQ,projtol,usv,...
-        zeroQ,mixQ,K,cores,pgnum,sig,brkQ);
+        zeroQ,mixQ,K,covK,cores,pgnum,sig,brkQ);
     
     % deal with pure 'gpr' case (for e.g. tunnelplot.m compatibility)
     if ~mixQ && (K == 1)
