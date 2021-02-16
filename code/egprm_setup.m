@@ -32,6 +32,7 @@ sig = NV.sig;
 genseed = NV.genseed;
 brkQ = NV.brkQ;
 mixQ = NV.mixQ;
+covK = NV.covK;
 
 %seed
 if ~isempty(genseed)
@@ -235,7 +236,7 @@ nA2 = vertcat(five2.nA);
 if ~strcmp(datatype,'rohrer-Ni')
     [o,o2] = deal([]);
 end
-egprmnv = var_names(pgnum,uuid,ytrue,brkQ,sig,o,o2,mixQ);
+egprmnv = var_names(pgnum,uuid,ytrue,brkQ,sig,o,o2,mixQ,covK);
 nvpairs = namedargs2cell(egprmnv);
 [~,ypred,~,~,~,~,~,mdl,~,~,mdlpars] = ...
     egprm(qm,nA,y,qm2,nA2,K,method,nvpairs{:});
