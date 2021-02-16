@@ -12,7 +12,7 @@ end
 
 persistent counter
 counter = counter+1;
-if mod(counter,100)==0
+if mod(counter,1)==0
     disp(counter)
 end
 % disp(counter)
