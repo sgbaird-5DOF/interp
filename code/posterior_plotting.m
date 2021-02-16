@@ -12,7 +12,7 @@ set(0, 'defaultAxesFontSize',12)
 
 figfolder = 'C:\Users\sterg\Documents\GitHub\posterior-sampling\figures';
 
-brkstr = '\\acrfull{brk} validation function \cite{bulatovGrainBoundaryEnergy2014} (black)';
+brkstr = '\acrfull{brk} validation function \cite{bulatovGrainBoundaryEnergy2014} (black)';
 festr = '\ch{Fe} simulation dataset \cite{kimPhasefieldModeling3D2014}';
 
 str1D = ['1D interpolation results for %s %s. The %s is used. The line \\overline{AB} is linearly extended '...
@@ -29,8 +29,9 @@ testnum = 2;
 n = 100;
 extend = 0.5; %percent to extend in either direction
 ninputptslist = [1000 50000]; %1000 or 50000
-paperfigure(2,2);
 
+%%
+paperfigure(2,2);
 % load('tunnel-50000','A','B')
 data = importdata(fullfile(figfolder,'AB-50000.csv')); %two points that are far apart in a particular VFZ
 A = data(1,:);
@@ -43,10 +44,12 @@ for ninputpts = ninputptslist
     tunnelplot_test(testnum,ninputpts,n,[],[],[],[],A,B,'extend',extend);
     papertext(i,'xypos',[0.1,0.95])
 end
+%%
 lbls = lblcat(ninputptslist);
 savename = ['extended1Darc-gpr-brk-',lbls];
+%%
 savefigpng(figfolder,savename)
-
+%%
 captionlist = get_captionlist(ninputptslist);
 
 caption = sprintf(str1D,captionlist,'input points',brkstr,extend*100,n);
@@ -74,14 +77,17 @@ n2 = 10000;
 thr = 1.1;
 scl = 30;
 epsijk = 1;
+ntunnelpts = 300;
 
 savename = ['panel-arc-' int2str(n)];
 
+%%
 loadQ = true;
 if loadQ
     load(savename,'mdls','ntunnelpts','extend','A','B')
 else
-    mdls = cell(1,4);
+%     mdls = cell(1,4);
+    egprmMdl = [];
 end
 
 %%
@@ -91,8 +97,9 @@ for K = [10 1]
     for mixQ = [true false]
         i = i+1;
         nexttile
-        [mdls{i},ntunnelpts,extend,A,B] = ...
-            egprm_test(n,n2,K,thr,scl,epsijk,'mixQ',mixQ,'lgdloc','south','mdl',mdls{i});
+        [mdls{i},~,extend,A,B] = ...
+            egprm_test(n,n2,K,thr,scl,epsijk,'mixQ',mixQ,'lgdloc','south',...
+            'mdl',egprmMdl,'ntunnelpts',ntunnelpts);
         switch n
             case 1000
                 ylim([0.8,1.425])
@@ -111,10 +118,10 @@ savefigpng(figfolder,savename);
 % set(gca,'Legend','off')
 %% 
 captionlist = get_captionlist({...
-    '10-component \\acrfull{egprm}',...
-    '10-component \\acrfull{egpr}',...
-    '\\acrfull{gprm}',...
-    '\\acrfull{gpr}'});
+    '10-component \acrfull{egprm}',...
+    '10-component \acrfull{egpr}',...
+    '\acrfull{gprm}',...
+    '\acrfull{gpr}'});
 str1Dci = [str1D '. \\SI{95}{\percent} confidence intervals (CI) are also shown.'];
 caption = sprintf(str1D,captionlist,'models',brkstr,extend*100,ntunnelpts);
 savefigstr(caption,savename,figfolder);
