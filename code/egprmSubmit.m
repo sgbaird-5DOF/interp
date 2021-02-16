@@ -37,7 +37,7 @@ switch runtype
         sig = [0]; %J/m^2, standard deviation, added to "y"
         mygpropts = {{'PredictMethod','exact'}};
         K = 1;
-        covK = 2;
+        covK = 10;
         mixQ = false;
         genseed = 10;
         brkQ = false; % take whatever GBs and replace properties with BRK energy values
