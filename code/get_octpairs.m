@@ -45,8 +45,8 @@ if isempty(dispQ)
     end
 end
 
-fnames = {'PGnames.mat','olist.mat'};
-addpathdir(fnames)
+% fnames = {'PGnames.mat','olist.mat'};
+% addpathdir(fnames)
 
 %% Unpack 5DOF reference (empty is OK)
 fiveref = NV.fiveref;
