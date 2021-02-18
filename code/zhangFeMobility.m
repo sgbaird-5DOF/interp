@@ -4,8 +4,9 @@
 % Boundary Mobilities in Polycrystals. Acta Materialia 2020, 191, 211–220.
 % https://doi.org/10.1016/j.actamat.2020.03.044.
 
+clear; close all
 %% Setup
-epsijk = 1; %active (1) passive (-1)
+initialepsijk = 1; %active (1) passive (-1)
 files = dir(fullfile('**','interp5DOF-paper','figures'));
 figfolder = files(1).folder;
 
@@ -32,13 +33,37 @@ histogram(y(y<0.4)); axis tight
 papertext(i,'xypos',xypos)
 xylabel()
 
-savefigpng()
+savefigpng(figfolder,'zhang-mobility-hist')
 
 %% Convert to Octonions
-qm = eu2qu(eu);
+qm = eu2qu(eu,initialepsijk);
 o = five2oct(qm,nA,epsijk);
 o = get_octpairs(o);
+[X,usv] = proj_down(o);
 
+%% fit GPR Model (LOOCV)
+gprMdl = fitrgp(X,y,'Leaveout','on');
+% gprMdl = fitrgp(X,log(y+1),'Leaveout','on');
+
+%% fit Lower Mobility Values
+Xsub = X(y<0.4,:);
+ysub = y(y<0.4);
+gprMdlSub = fitrgp(Xsub,ysub,'Leaveout','on');
+
+%% Results
+ypred = kfoldPredict(gprMdl);
+paperfigure(1,2,6.729);
+i = 0;
+i = i+1;
+nexttile(i)
+parityplot(y,ypred);
+papertext(i)
+i=i+1;
+nexttile(i)
+ypredsub = kfoldPredict(gprMdlSub);
+parityplot(ysub,ypredsub);
+papertext(i)
+% parityplot(y,ypred,'xlim',[0,0.4],'ylim',[0,0.4]);
 
 %% Helper Function(s)
 function xylabel()
