@@ -15,7 +15,7 @@ figfolder = 'C:\Users\sterg\Documents\GitHub\posterior-sampling\figures';
 brkstr = '\acrfull{brk} validation function \cite{bulatovGrainBoundaryEnergy2014} (black)';
 festr = '\ch{Fe} simulation dataset \cite{kimPhasefieldModeling3D2014}';
 
-str1D = ['1D interpolation results for %s %s. The %s is used. The line \\overline{AB} is linearly extended '...
+str1D = ['1D interpolation results for %s %s. The %s is used. The line $\\overline{AB}$ is linearly extended '...
 '\\SI{%d}{\\percent} in either direction before renormalizing and taking a uniform sampling of %d points.'];
 %example: caption = sprintf(str1D,captionlist,'input points',brkstr,extend*100,n);
 
@@ -84,7 +84,7 @@ savename = ['panel-arc-' int2str(n)];
 %%
 loadQ = true;
 if loadQ
-    load(savename,'mdls','ntunnelpts','extend','A','B')
+%     load(savename,'mdls','ntunnelpts','extend','A','B')
 else
 %     mdls = cell(1,4);
     egprmMdl = [];
