@@ -10,5 +10,5 @@
 	path = code/zhang-fe-mobility
 	url = https://github.com/sgbaird-5DOF/zhang-fe-mobility.git
 [submodule "mobility-paper"]
-	path = mobility-paper
+	path = code/mobility-paper
 	url = https://github.com/sgbaird-5DOF/mobility-paper.git
