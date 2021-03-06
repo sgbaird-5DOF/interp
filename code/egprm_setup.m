@@ -237,7 +237,7 @@ nA2 = vertcat(five2.nA);
 if ~strcmp(datatype,'rohrer-Ni')
     [o,o2] = deal([]);
 end
-egprmnv = var_names(pgnum,uuid,ytrue,brkQ,sig,o,o2,mixQ,covK);
+egprmnv = var_names(pgnum,uuid,ytrue,brkQ,sig,o,o2,mixQ,covK,postQ);
 nvpairs = namedargs2cell(egprmnv);
 [~,ypred,~,~,~,~,~,mdl,~,~,mdlpars] = ...
     egprm(qm,nA,y,qm2,nA2,K,method,nvpairs{:});
