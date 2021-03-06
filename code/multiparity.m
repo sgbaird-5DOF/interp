@@ -10,6 +10,7 @@ arguments
     NV.ylim = []
     NV.cbnds = []
     NV.Interpreter char {mustBeMember(NV.Interpreter,{'tex','latex','none'})} = 'latex'
+    NV.ht = []
 end
 % MULTIPARITY  create tiled parity plots using cell parity data
 
@@ -50,6 +51,9 @@ if ~isempty(sz)
             ht = 14.5838333333333;
         otherwise
             ht = [];
+    end
+    if ~isempty(NV.ht)
+        ht = NV.ht;
     end
     paperfigure(sz(1),sz(2),ht);
 else
