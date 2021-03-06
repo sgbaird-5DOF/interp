@@ -37,10 +37,11 @@ switch runtype
         sig = [0]; %J/m^2, standard deviation, added to "y"
         mygpropts = {{'PredictMethod','fic'}};
         K = 1;
-        covK = 10; %very slow if covK > 1. Haven't been able to run to completion even with only 100 GBs
+        covK = 1; %very slow if covK > 1. Haven't been able to run to completion even with only 100 GBs, (i.e. take ensemble-minimized distances when computing covariances, if covK > 1 uses numerical derivatives instead of analytical (very slow))
         mixQ = false;
         genseed = 10;
         brkQ = false; % take whatever GBs and replace properties with BRK energy values
+        postQ = true;
         
     case 'full'
         ninputpts = [100 388 500 1000 5000 10000 20000 50000]; % 388, 500, 1000, 2000, 5000, 10000, 20000, 50000
@@ -67,7 +68,7 @@ method = {method};
 %parameters
 %**ADD ALL PARAMETERS HERE** (see runtype switch statement)
 pars = var_names(ninputpts,npredpts,method,datatype,pgnum,sig,genseed,...
-    brkQ,K,covK,mixQ,mygpropts);
+    brkQ,K,covK,mixQ,mygpropts,postQ);
 %note: cores gets added later and removed if dryrunQ == true
 %note: also need to update execfn
 
@@ -75,10 +76,10 @@ if ~dryrunQ
     %% parameter file setup
     %function to execute and output arguments from function
     execfnmethod = 'gpr';
-    execfn = @(ninputpts,npredpts,datatype,pgnum,sig,genseed,brkQ,K,covK) ... **NAMES NEED TO MATCH PARS FIELDS** (see above)
+    execfn = @(ninputpts,npredpts,datatype,pgnum,sig,genseed,brkQ,K,covK,postQ) ... **NAMES NEED TO MATCH PARS FIELDS** (see above)
         egprm_setup(ninputpts,npredpts,execfnmethod,datatype,'K',K,'covK',covK,...
         'pgnum',pgnum,'sig',sig,'genseed',genseed,'brkQ',brkQ,'mixQ',mixQ,...
-        'mygpropts',mygpropts); %**NAMES NEED TO MATCH PARS FIELDS AND EXECFN ARGUMENTS**
+        'mygpropts',mygpropts,'postQ',postQ); %**NAMES NEED TO MATCH PARS FIELDS AND EXECFN ARGUMENTS**
     argoutnames = {'ypred','interpfn','mdl','mdlpars'}; %one of these needs to be 'mdlpars' to get *_meta.mat to save
     %i.e. [ypred,interpfn,mdl,mdlpars] = interp5DOF_setup(ninputpts,npredpts,method,datatype,...);
     
