@@ -36,7 +36,7 @@ switch runtype
         pgnum = 32; %m-3m (i.e. m\overbar{3}m) FCC symmetry default for e.g. Ni
         sig = [0]; %J/m^2, standard deviation, added to "y"
         mygpropts = {{'PredictMethod','fic'}};
-        K = 1;
+        K = 2;
         covK = 1; %very slow if covK > 1. Haven't been able to run to completion even with only 100 GBs, (i.e. take ensemble-minimized distances when computing covariances, if covK > 1 uses numerical derivatives instead of analytical (very slow))
         mixQ = false;
         genseed = 10;
