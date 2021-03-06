@@ -33,6 +33,7 @@ arguments
     NV.covK(1,1) double {mustBeInteger} = 1
 end
 % EGPRM  ensemble Guassian process regression mixture model with mixture threshold (thr) given GPR models (mdls)
+egprm_starttime = tic;
 thr = NV.thr;
 scl = NV.scl;
 ytrue = NV.ytrue;
@@ -248,11 +249,14 @@ else
     % sigmoid mix covariance function
     kfn = @(X1,X2,ypredsigmoid) kfnmix(kfne(X1,X2),kfne2(X1,X2),ypredsigmoid,scl,thr);
 end
+egprm_runtime = toc(egprm_starttime);
 
+posterior_starttime = tic;
 if postQ
     % get nearest symmetric positive definite matrix
     covmat = nearestSPD(covmat); %also takes a while
-    covmat = nearestSPD(covmat); %twice to deal with numerical precision, small negative numbers
+    covmat((covmat > -1e-12) & (covmat < 0)) = 1e-12;
+%     covmat = nearestSPD(covmat); %twice to deal with numerical precision, small negative numbers
     %alternative to second nearestSPD command, could do covmat(covmat < 0) = 1e-12; or similar
     
     %% Posterior Sampling
@@ -269,6 +273,7 @@ else
     zerofloorQ = [];
     n = [];
 end
+posterior_runtime = toc(posterior_starttime);
 
 %% Package EGPRM Model
 if isempty(egprmMdl)
@@ -285,7 +290,8 @@ if isempty(egprmMdl)
     
     egprmMdl = var_names(ypred,ysd,ytrue,ci,covmat,l,u,zerofloorQ,n,ypost,...
         thr,scl,mdls,o2,mesh,oref,oreflist,projQ,projtol,...
-        usv,zeroQ,gprMdl2list,mixQ,K,covK,cores,pgnum,sig,brkQ);
+        usv,zeroQ,gprMdl2list,mixQ,K,covK,cores,pgnum,sig,brkQ,...
+        posterior_runtime,egprm_runtime);
     method = 'gpr';
     if mixQ
         method = [method 'm'];
@@ -299,7 +305,8 @@ if isempty(egprmMdl)
     
     egprmMdlpars = var_names(ypred,ysd,ytrue,ci,l,u,zerofloorQ,n,ypost,...
        thr,scl,o2,mesh,oref,oreflist,projQ,projtol,usv,...
-        zeroQ,mixQ,K,covK,cores,pgnum,sig,brkQ);
+        zeroQ,mixQ,K,covK,cores,pgnum,sig,brkQ,...
+        posterior_runtime,egprm_runtime);
     
     % deal with pure 'gpr' case (for e.g. tunnelplot.m compatibility)
     if ~mixQ && (K == 1)
