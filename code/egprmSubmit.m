@@ -277,10 +277,10 @@ switch env
         disp(mdlparstbl)
         
         if metaQ
-            disp(mdlparstbl(:,{'method','ninputpts','npredpts','rmse','mae'}))
+            disp(mdlparstbl(:,{'method','ninputpts','npredpts','rmse','mae','posterior_runtime'}))
             mdlplot = mdlparscat;
         else
-            disp(mdltbl(:,{'method','ninputpts','npredpts','rmse','mae'}))
+            disp(mdltbl(:,{'method','ninputpts','npredpts','rmse','mae','posterior_runtime'}))
             mdlplot = mdlcat;
         end
         
