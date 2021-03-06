@@ -34,6 +34,7 @@ genseed = NV.genseed;
 brkQ = NV.brkQ;
 mixQ = NV.mixQ;
 covK = NV.covK;
+postQ = NV.postQ;
 
 %seed
 if ~isempty(genseed)
