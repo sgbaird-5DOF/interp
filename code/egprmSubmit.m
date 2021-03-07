@@ -16,24 +16,24 @@ runtype = 'test'; %'test','full'
 nreps = 1; % number of runs or repetitions
 
 % job submission environment
-env = 'slurm'; %'slurm', 'local'
+env = 'local'; %'slurm', 'local'
 
 dryrunQ = F; %whether to skip running the jobs and just compile results
-metaQ = T; %whether to load full model or only meta-data at end
+metaQ = F; %whether to load full model or only meta-data at end
 
 %make sure the parameters here correspond with the input to "pars" below,
 %for cells and strings, wrap in an outer cell
 
 %comment (no spaces, used in filename)
-comment = 'tmvn-runtime-test';
+comment = 'distributed-post-sampling';
 % list of comments used so far:
-% 'brk', 'kim', 'kim-brk', {'tmvn-runtime',{'','-1','-2','-test'}}
+% 'brk', 'kim', 'kim-brk', {'tmvn-runtime',{'','-1','-2','-test'}}, 'distributed-post-sampling'
 
 switch runtype
     case 'test'
-        ninputpts = ceil(58604*0.8); %1000; %17176; %floor(58604*0.2); %56442; %floor(67886*0.8); %floor(264276*.8); %17176; %1893*2; %[2366]; %[1893*1]; % 5000 10000 20000 50000];
-        npredpts = floor(58604*0.2); %[100 388 500 1000 2000 5000 10000]; %floor(58604*0.2); %58604-17176; %ceil(58604*0.8); %11443; %floor(67886*0.2); %ceil(264276*0.2); %67886-17176; %67886-1893*2; %65520; %473*1;
-        datatype = {'brk','kim'}; % 'brk', 'kim', 'rohrer-Ni', 'rohrer-test', 'rohrer-brk-test', 'olmsted-Ni'
+        ninputpts = 1000; %ceil(58604*0.8); %17176; %floor(58604*0.2); %56442; %floor(67886*0.8); %floor(264276*.8); %17176; %1893*2; %[2366]; %[1893*1]; % 5000 10000 20000 50000];
+        npredpts = 1000; %floor(58604*0.2); %[100 388 500 1000 2000 5000 10000]; %floor(58604*0.2); %58604-17176; %ceil(58604*0.8); %11443; %floor(67886*0.2); %ceil(264276*0.2); %67886-17176; %67886-1893*2; %65520; %473*1;
+        datatype = {'brk'}; % 'brk', 'kim', 'rohrer-Ni', 'rohrer-test', 'rohrer-brk-test', 'olmsted-Ni'
         pgnum = 32; %m-3m (i.e. m\overbar{3}m) FCC symmetry default for e.g. Ni
         sig = [0]; %J/m^2, standard deviation, added to "y"
         mygpropts = {{'PredictMethod','fic'}};
@@ -42,7 +42,7 @@ switch runtype
         mixQ = false;
         genseed = 10;
         brkQ = false; % take whatever GBs and replace properties with BRK energy values
-        npostpts = 10000;
+        npostpts = 1000;
         postQ = true;
         
     case 'full'
