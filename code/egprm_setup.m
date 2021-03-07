@@ -16,6 +16,7 @@ arguments
     NV.mygpropts = {'PredictMethod','exact'}
     NV.covK(1,1) double {mustBeInteger} = 1
     NV.postQ(1,1) logical = true
+    NV.npostpts(1,1) double = npredpts
 end
 %INTERP5DOF_SETUP  setup for interpolating five-degree-of-freedom property
 %data using random octochorically sampled octonions
@@ -238,7 +239,7 @@ nA2 = vertcat(five2.nA);
 if ~strcmp(datatype,'rohrer-Ni')
     [o,o2] = deal([]);
 end
-egprmnv = var_names(pgnum,uuid,ytrue,brkQ,sig,o,o2,mixQ,covK,postQ);
+egprmnv = var_names(pgnum,uuid,ytrue,brkQ,sig,o,o2,mixQ,covK,postQ,npostpts);
 nvpairs = namedargs2cell(egprmnv);
 [~,ypred,~,~,~,~,~,mdl,~,~,mdlpars] = ...
     egprm(qm,nA,y,qm2,nA2,K,method,nvpairs{:});

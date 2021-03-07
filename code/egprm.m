@@ -26,6 +26,7 @@ arguments
     NV.egprmMdl = [] %an egprmMdl can be supplied to make the interpolation faster (skip symmetrization)
     NV.mixQ(1,1) logical = true %whether or not to perform the "mixture" part of EGPRM
     NV.postQ(1,1) logical = false %whether to sample from posterior distribution (expensive for e.g. 10000+ GBs)
+    NV.npostpts(1,1) double = npredpts %number of posterior sample points (no effect if postQ == false)
     NV.sig(1,1) double = 0
     NV.dispQ(1,1) logical = false
     NV.egprmDispQ(1,1) logical = true
@@ -256,7 +257,7 @@ if postQ
     disp('posterior sampling')
     % get nearest symmetric positive definite matrix
     covmat = nearestSPD(covmat); %also takes a while
-    covmat((covmat > -1e-12) & (covmat <= 0)) = 1e-12;
+    covmat((covmat > -1e-12) & (covmat <= 0)) = eps;
 %     covmat = nearestSPD(covmat); %twice to deal with numerical precision, small negative numbers
     %alternative to second nearestSPD command, could do covmat(covmat < 0) = 1e-12; or similar
     
@@ -268,7 +269,7 @@ if postQ
     zerofloorQ = true;
     n = 100; %number of samples from posterior distribution
     
-    method = 'slicesample';
+    method = 'mvrandn';
     ypost = tmvn(ypred,covmat,l,u,n,method,zerofloorQ); %takes a long time for 10000^2 matrix
 %     ypost = mvnrnd_trn(l.',u.',ypred.',covmat,n);
 else
