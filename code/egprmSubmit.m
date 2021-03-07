@@ -83,7 +83,7 @@ if ~dryrunQ
     argoutnames = {'ypred','interpfn','mdl','mdlpars'}; %one of these needs to be 'mdlpars' to get *_meta.mat to save
     %i.e. [ypred,interpfn,mdl,mdlpars] = interp5DOF_setup(ninputpts,npredpts,method,datatype,...);
     
-    % walltimefn = @() 300; %can set to constant or to depend on parameters, probably fine when using standby queue
+    %walltimefn = @() 3600; %can set to constant or to depend on parameters, probably fine when using standby queue
     walltimefn = @(ninputpts,npredpts,method,cores,datatype,K) get_walltimefn(ninputpts,npredpts,method,cores,datatype,K);
 end
 
