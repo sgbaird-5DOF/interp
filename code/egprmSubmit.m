@@ -31,7 +31,7 @@ comment = 'tmvn-runtime';
 switch runtype
     case 'test'
         ninputpts = 1000; %ceil(58604*0.8); %17176; %floor(58604*0.2); %56442; %floor(67886*0.8); %floor(264276*.8); %17176; %1893*2; %[2366]; %[1893*1]; % 5000 10000 20000 50000];
-        npredpts = [100 388 500 1000 2000 5000 10000]; %floor(58604*0.2); %58604-17176; %ceil(58604*0.8); %11443; %floor(67886*0.2); %ceil(264276*0.2); %67886-17176; %67886-1893*2; %65520; %473*1;
+        npredpts = [100 388 500 1000 5000 10000 20000 50000]; %floor(58604*0.2); %58604-17176; %ceil(58604*0.8); %11443; %floor(67886*0.2); %ceil(264276*0.2); %67886-17176; %67886-1893*2; %65520; %473*1;
         datatype = {'brk'}; % 'brk', 'kim', 'rohrer-Ni', 'rohrer-test', 'rohrer-brk-test', 'olmsted-Ni'
         pgnum = 32; %m-3m (i.e. m\overbar{3}m) FCC symmetry default for e.g. Ni
         sig = [0]; %J/m^2, standard deviation, added to "y"
@@ -110,6 +110,7 @@ end
 switch env
     case 'slurm'
         cores = 12;
+        rmcoresQ = false;
     case 'local'
         if ~dryrunQ
             p = gcp;
@@ -124,15 +125,15 @@ end
 %% functions to generate save filepaths
 datafolder = 'egprm';
 %diary
-% files = dir(fullfile('**','data',datafolder,'diary'));
-% diaryfolder = files(1).folder;
-diaryfolder = fullfile('data','diary');
+%files = dir(fullfile('**','data',datafolder,'diary'));
+%diaryfolder = files(1).folder;
+diaryfolder = fullfile('data','egprm','diary');
 diarynamefn = @(method,ninputpts,gitcommit,puuid) [method int2str(ninputpts) '_gitID-' gitcommit(1:7) '_puuID-' puuid '_' comment '.txt'];
 diarypathfn = @(method,ninputpts,gitcommit,puuid) fullfile(diaryfolder,diarynamefn(method,ninputpts,gitcommit,puuid));
 %data
-% files = dir(fullfile('**','data',datafolder,'pcombs'));
-% savefolder = files(1).folder;
-savefolder = fullfile('data','pcombs');
+%files = dir(fullfile('**','data',datafolder,'pcombs'));
+%savefolder = files(1).folder;
+savefolder = fullfile('data','egprm','pcombs');
 savenamefn = @(method,ninputpts,gitcommit,puuid) [method int2str(ninputpts) '_gitID-' gitcommit(1:7) '_puuID-' puuid '_' comment '.mat'];
 
 %for use with dir
@@ -166,7 +167,7 @@ end
 switch env
     case 'slurm'
         %setup
-        mem = 1024*4*cores; %total memory of job, MB
+        mem = 1024*12*cores; %total memory of job, MB
         qosopt = 'standby'; %'', 'test', 'standby'
         scriptfpath = fullfile('MATslurm','code','submit.sh');
         %submission
