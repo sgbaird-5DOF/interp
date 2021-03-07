@@ -26,7 +26,7 @@ metaQ = T; %whether to load full model or only meta-data at end
 %comment (no spaces, used in filename)
 comment = 'tmvn-runtime-1';
 % list of comments used so far:
-% 'brk', 'kim', 'kim-brk', 'tmvn-runtime'
+% 'brk', 'kim', 'kim-brk', 'tmvn-runtime', 'tmvn-runtime-1'
 
 switch runtype
     case 'test'
