@@ -241,7 +241,7 @@ if ~strcmp(datatype,'rohrer-Ni')
 end
 egprmnv = var_names(pgnum,uuid,ytrue,brkQ,sig,o,o2,mixQ,covK,postQ,npostpts);
 nvpairs = namedargs2cell(egprmnv);
-[~,ypred,~,~,~,~,~,mdl,~,~,mdlpars] = ...
+[ypred,~,~,~,~,~,~,mdl,~,~,mdlpars] = ...
     egprm(qm,nA,y,qm2,nA2,K,method,nvpairs{:});
 
 %% error values

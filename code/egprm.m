@@ -1,4 +1,4 @@
-function [ypost,ypred,ysd,ytrue,ci,covmat,kfn,egprmMdl,gprMdl2list,X2,egprmMdlpars] = ...
+function [ypred,ysd,ypost,ytrue,ci,covmat,kfn,egprmMdl,gprMdl2list,X2,egprmMdlpars] = ...
     egprm(qm,nA,y,qm2,nA2,K,method,epsijk,NV)
 arguments
     qm = [] %input misorientation quaternions
@@ -55,6 +55,7 @@ else
     covK = NV.covK;
 end
 postQ = NV.postQ;
+npostpts = NV.npostpts;
 brkQ = NV.brkQ;
 sig = NV.sig;
 egprmDispQ = NV.egprmDispQ;
@@ -252,12 +253,41 @@ else
 end
 egprm_runtime = toc(egprm_starttime);
 
+% Some prep for packaging egprmMdl
+if isempty(egprmMdl)
+    p = gcp;
+    cores = p.NumWorkers;
+    
+    mesh = mdls(1).mesh;
+    projQ = mdls(1).projQ;
+    projtol = mdls(1).projtol;
+    usv = mdls(1).usv;
+    zeroQ = mdls(1).zeroQ;
+    oref = mdls(1).oref;
+    oreflist = vertcat(mdls.oref);
+else
+    projQ = egprmMdl.projQ;
+    projtol = egprmMdl.projtol;
+    usv = egprmMdl.usv;
+    zeroQ = egprmMdl.zeroQ;
+    oreflist = egprmMdl.oreflist;
+end
+
 posterior_starttime = tic;
 if postQ
     disp('posterior sampling')
+    
+    %get new points that are uniformly distributed in 5DOF space
+    pts3 = get_ocubo(npostpts); %posterior points
+    egprmMdltmp = egprmMdl;
+    
+    y3 = egprm('o',pts3);
+    X3 = proj_down(pts3,projtol,usv);
+    covmat3 = kfn(pts3,pts3); %assumes use of reference octonions from oreflist
+    
     % get nearest symmetric positive definite matrix
-    covmat = nearestSPD(covmat); %also takes a while
-    covmat((covmat > -1e-12) & (covmat <= 0)) = eps;
+    covmat3 = nearestSPD(covmat3); %also takes a while
+    covmat3((covmat3 > -1e-12) & (covmat3 <= 0)) = eps;
 %     covmat = nearestSPD(covmat); %twice to deal with numerical precision, small negative numbers
     %alternative to second nearestSPD command, could do covmat(covmat < 0) = 1e-12; or similar
     
@@ -270,7 +300,7 @@ if postQ
     n = 100; %number of samples from posterior distribution
     
     method = 'mvrandn';
-    ypost = tmvn(ypred,covmat,l,u,n,method,zerofloorQ); %takes a long time for 10000^2 matrix
+    ypost = tmvn(ypred,covmat3,l,u,n,method,zerofloorQ); %takes a long time for 10000^2 matrix
 %     ypost = mvnrnd_trn(l.',u.',ypred.',covmat,n);
 else
     ypost = [];
@@ -283,17 +313,6 @@ posterior_runtime = toc(posterior_starttime);
 
 %% Package EGPRM Model
 if isempty(egprmMdl)
-    p = gcp;
-    cores = p.NumWorkers;
-    
-    mesh = mdls(1).mesh;
-    projQ = mdls(1).projQ;
-    projtol = mdls(1).projtol;
-    usv = mdls(1).usv;
-    zeroQ = mdls(1).zeroQ;
-    oref = mdls(1).oref;
-    oreflist = vertcat(mdls.oref);
-    
     egprmMdl = var_names(ypred,ysd,ytrue,ci,covmat,l,u,zerofloorQ,n,ypost,...
         thr,scl,mdls,o2,mesh,oref,oreflist,projQ,projtol,...
         usv,zeroQ,gprMdl2list,mixQ,K,covK,cores,pgnum,sig,brkQ,...
