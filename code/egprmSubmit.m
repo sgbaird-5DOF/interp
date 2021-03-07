@@ -16,8 +16,8 @@ runtype = 'test'; %'test','full'
 nreps = 1; % number of runs or repetitions
 
 % job submission environment
-env = 'slurm'; %'slurm', 'local'
-dryrunQ = F; %whether to skip running the jobs and just compile results
+env = 'local'; %'slurm', 'local'
+dryrunQ = T; %whether to skip running the jobs and just compile results
 metaQ = T; %whether to load full model or only meta-data at end
 
 %make sure the parameters here correspond with the input to "pars" below,
@@ -109,7 +109,7 @@ end
 % # cores
 switch env
     case 'slurm'
-        cores = 12;
+        cores = 4;
         rmcoresQ = false;
     case 'local'
         if ~dryrunQ
@@ -167,7 +167,7 @@ end
 switch env
     case 'slurm'
         %setup
-        mem = 1024*12*cores; %total memory of job, MB
+        mem = 1024*4*cores; %total memory of job, MB
         qosopt = 'standby'; %'', 'test', 'standby'
         scriptfpath = fullfile('MATslurm','code','submit.sh');
         %submission
