@@ -16,8 +16,8 @@ runtype = 'test'; %'test','full'
 nreps = 1; % number of runs or repetitions
 
 % job submission environment
-env = 'slurm'; %'slurm', 'local'
-dryrunQ = F; %whether to skip running the jobs and just compile results
+env = 'local'; %'slurm', 'local'
+dryrunQ = T; %whether to skip running the jobs and just compile results
 metaQ = T; %whether to load full model or only meta-data at end
 
 %make sure the parameters here correspond with the input to "pars" below,
@@ -83,7 +83,7 @@ if ~dryrunQ
     argoutnames = {'ypred','interpfn','mdl','mdlpars'}; %one of these needs to be 'mdlpars' to get *_meta.mat to save
     %i.e. [ypred,interpfn,mdl,mdlpars] = interp5DOF_setup(ninputpts,npredpts,method,datatype,...);
     
-    walltimefn = @() 3600; %can set to constant or to depend on parameters, probably fine when using standby queue
+    walltimefn = @() 30; %can set to constant or to depend on parameters, probably fine when using standby queue
     %walltimefn = @(ninputpts,npredpts,method,cores,datatype,K) get_walltimefn(ninputpts,npredpts,method,cores,datatype,K);
 end
 
