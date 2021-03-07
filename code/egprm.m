@@ -261,12 +261,15 @@ if postQ
     %alternative to second nearestSPD command, could do covmat(covmat < 0) = 1e-12; or similar
     
     %% Posterior Sampling
-    l = max([zeros(size(ypred)),0.895255*ypred],[],2)-ypred; %lower bound
-    u = 1.2444*ypred; %upper bound
+%     l = max([zeros(size(ypred)),0.895255*ypred],[],2)-ypred; %lower bound
+%     u = 1.2444*ypred; %upper bound
+    l = zeros(size(ypred));
+    u = inf*ones(size(ypred));
     zerofloorQ = true;
     n = 100; %number of samples from posterior distribution
     
-    ypost = tmvn(ypred,covmat,l,u,n,zerofloorQ); %takes a long time for 10000^2 matrix
+%     ypost = tmvn(ypred,covmat,l,u,n,zerofloorQ); %takes a long time for 10000^2 matrix
+    ypost = mvnrnd_trn(l.',u.',ypred.',covmat,n);
 else
     ypost = [];
     l = [];
