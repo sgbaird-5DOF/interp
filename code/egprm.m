@@ -268,7 +268,8 @@ if postQ
     zerofloorQ = true;
     n = 100; %number of samples from posterior distribution
     
-%     ypost = tmvn(ypred,covmat,l,u,n,zerofloorQ); %takes a long time for 10000^2 matrix
+    method = 'slicesample';
+%     ypost = tmvn(ypred,covmat,l,u,n,method,zerofloorQ); %takes a long time for 10000^2 matrix
     ypost = mvnrnd_trn(l.',u.',ypred.',covmat,n);
 else
     ypost = [];
