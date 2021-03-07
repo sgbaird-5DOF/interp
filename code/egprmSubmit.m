@@ -24,7 +24,7 @@ metaQ = T; %whether to load full model or only meta-data at end
 %for cells and strings, wrap in an outer cell
 
 %comment (no spaces, used in filename)
-comment = 'tmvn-runtime';
+comment = 'tmvn-runtime-1';
 % list of comments used so far:
 % 'brk', 'kim', 'kim-brk', 'tmvn-runtime'
 
