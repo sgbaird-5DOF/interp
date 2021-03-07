@@ -110,6 +110,7 @@ end
 switch env
     case 'slurm'
         cores = 12;
+        rmcoresQ = false;
     case 'local'
         if ~dryrunQ
             p = gcp;
