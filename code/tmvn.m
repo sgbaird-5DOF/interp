@@ -59,6 +59,6 @@ switch method
         sig = mvrandn(l,u,Sigma,n); % sample from posterior distribution with mu == 0
         y = mu+sig; %add mean (mu) back in
     case 'slicesample'
-        y = slicesample(mean(mu),n,'pdf',@tmvnpdf);
+        y = slicesample(mu.',n,'pdf',@(X) tmvnpdf(X,mu.',Sigma,l,u));
 end
 end
