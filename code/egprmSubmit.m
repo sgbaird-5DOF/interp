@@ -16,8 +16,8 @@ runtype = 'test'; %'test','full'
 nreps = 1; % number of runs or repetitions
 
 % job submission environment
-env = 'local'; %'slurm', 'local'
-dryrunQ = T; %whether to skip running the jobs and just compile results
+env = 'slurm'; %'slurm', 'local'
+dryrunQ = F; %whether to skip running the jobs and just compile results
 metaQ = T; %whether to load full model or only meta-data at end
 
 %make sure the parameters here correspond with the input to "pars" below,
