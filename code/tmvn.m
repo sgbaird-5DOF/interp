@@ -35,9 +35,10 @@ end
 % References:
 %  (1) Botev, Z. I. The Normal Law under Linear Restrictions: Simulation
 %  and Estimation via Minimax Tilting. J. R. Stat. Soc. B 2017, 79 (1),
-%  125–148. https://doi.org/10.1111/rssb.12162.
+%  125???148. https://doi.org/10.1111/rssb.12162.
 %--------------------------------------------------------------------------
 sz = size(mu);
+addpathdir('mvrandn.m')
 
 % allow for scalar inputs to l and u
 if isscalar(l)
