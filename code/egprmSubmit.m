@@ -24,7 +24,7 @@ metaQ = T; %whether to load full model or only meta-data at end
 %for cells and strings, wrap in an outer cell
 
 %comment (no spaces, used in filename)
-comment = 'tmvn-runtime-1';
+comment = 'tmvn-runtime-2';
 % list of comments used so far:
 % 'brk', 'kim', 'kim-brk', 'tmvn-runtime', 'tmvn-runtime-1'
 
@@ -83,8 +83,8 @@ if ~dryrunQ
     argoutnames = {'ypred','interpfn','mdl','mdlpars'}; %one of these needs to be 'mdlpars' to get *_meta.mat to save
     %i.e. [ypred,interpfn,mdl,mdlpars] = interp5DOF_setup(ninputpts,npredpts,method,datatype,...);
     
-    %walltimefn = @() 3600; %can set to constant or to depend on parameters, probably fine when using standby queue
-    walltimefn = @(ninputpts,npredpts,method,cores,datatype,K) get_walltimefn(ninputpts,npredpts,method,cores,datatype,K);
+    walltimefn = @() 3600; %can set to constant or to depend on parameters, probably fine when using standby queue
+    %walltimefn = @(ninputpts,npredpts,method,cores,datatype,K) get_walltimefn(ninputpts,npredpts,method,cores,datatype,K);
 end
 
 disp(['env = ' env])
