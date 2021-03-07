@@ -253,9 +253,10 @@ egprm_runtime = toc(egprm_starttime);
 
 posterior_starttime = tic;
 if postQ
+    disp('posterior sampling')
     % get nearest symmetric positive definite matrix
     covmat = nearestSPD(covmat); %also takes a while
-    covmat((covmat > -1e-12) & (covmat < 0)) = 1e-12;
+    covmat((covmat > -1e-12) & (covmat <= 0)) = 1e-12;
 %     covmat = nearestSPD(covmat); %twice to deal with numerical precision, small negative numbers
     %alternative to second nearestSPD command, could do covmat(covmat < 0) = 1e-12; or similar
     
