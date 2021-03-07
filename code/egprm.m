@@ -72,7 +72,7 @@ end
 freshQ = false;
 % perform the ensemble
 if isempty(mdls) && isempty(egprmMdl)
-    NVtmp = rmfield(NV,{'mdls','thr','egprmMdl','scl','mixQ','postQ','egprmDispQ'});
+    NVtmp = rmfield(NV,{'mdls','thr','egprmMdl','scl','mixQ','postQ','egprmDispQ','npostpts'});
     NVpairs = namedargs2cell(NVtmp);
     [~,~,~,mdls,mdlparslist] = ensembleVFZO(qm,nA,y,qm2,nA2,K,ensembleMethod,NVpairs{:});
     freshQ = true;
