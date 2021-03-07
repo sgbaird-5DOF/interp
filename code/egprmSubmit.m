@@ -124,13 +124,15 @@ end
 %% functions to generate save filepaths
 datafolder = 'egprm';
 %diary
-files = dir(fullfile('**','data',datafolder,'diary'));
-diaryfolder = files(1).folder;
+%files = dir(fullfile('**','data',datafolder,'diary'));
+%diaryfolder = files(1).folder;
+diaryfolder = fullfile('data','diary');
 diarynamefn = @(method,ninputpts,gitcommit,puuid) [method int2str(ninputpts) '_gitID-' gitcommit(1:7) '_puuID-' puuid '_' comment '.txt'];
 diarypathfn = @(method,ninputpts,gitcommit,puuid) fullfile(diaryfolder,diarynamefn(method,ninputpts,gitcommit,puuid));
 %data
-files = dir(fullfile('**','data',datafolder,'pcombs'));
-savefolder = files(1).folder;
+%files = dir(fullfile('**','data',datafolder,'pcombs'));
+%savefolder = files(1).folder;
+savefolder = fullfile('data','pcombs');
 savenamefn = @(method,ninputpts,gitcommit,puuid) [method int2str(ninputpts) '_gitID-' gitcommit(1:7) '_puuID-' puuid '_' comment '.mat'];
 
 %for use with dir
