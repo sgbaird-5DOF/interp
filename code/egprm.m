@@ -1,4 +1,4 @@
-function [ypred,ysd,ypost,ytrue,ci,covmat,kfn,egprmMdl,gprMdl2list,X2,egprmMdlpars] = ...
+function [egprmMdl,ypred,ysd,ytrue,ci,covmat,kfn,gprMdl2list,X2,egprmMdlpars] = ...
     egprm(qm,nA,y,qm2,nA2,K,method,epsijk,NV)
 arguments
     qm = [] %input misorientation quaternions
@@ -272,44 +272,6 @@ else
     zeroQ = egprmMdl.zeroQ;
     oreflist = egprmMdl.oreflist;
 end
-
-posterior_starttime = tic;
-if postQ
-    disp('posterior sampling')
-    
-    %get new points that are uniformly distributed in 5DOF space
-    pts3 = get_ocubo(npostpts); %posterior points
-    egprmMdltmp = egprmMdl;
-    
-    y3 = egprm('o',pts3);
-    X3 = proj_down(pts3,projtol,usv);
-    covmat3 = kfn(pts3,pts3); %assumes use of reference octonions from oreflist
-    
-    % get nearest symmetric positive definite matrix
-    covmat3 = nearestSPD(covmat3); %also takes a while
-    covmat3((covmat3 > -1e-12) & (covmat3 <= 0)) = eps;
-%     covmat = nearestSPD(covmat); %twice to deal with numerical precision, small negative numbers
-    %alternative to second nearestSPD command, could do covmat(covmat < 0) = 1e-12; or similar
-    
-    %% Posterior Sampling
-%     l = max([zeros(size(ypred)),0.895255*ypred],[],2)-ypred; %lower bound
-%     u = 1.2444*ypred; %upper bound
-    l = zeros(size(ypred));
-    u = inf*ones(size(ypred));
-    zerofloorQ = true;
-    n = 100; %number of samples from posterior distribution
-    
-    method = 'mvrandn';
-    ypost = tmvn(ypred,covmat3,l,u,n,method,zerofloorQ); %takes a long time for 10000^2 matrix
-%     ypost = mvnrnd_trn(l.',u.',ypred.',covmat,n);
-else
-    ypost = [];
-    l = [];
-    u = [];
-    zerofloorQ = [];
-    n = [];
-end
-posterior_runtime = toc(posterior_starttime);
 
 %% Package EGPRM Model
 if isempty(egprmMdl)
