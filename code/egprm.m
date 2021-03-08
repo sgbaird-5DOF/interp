@@ -187,7 +187,7 @@ else
         if isempty(gprMdl2list) && isempty(cgprMdls2)
             thr2 = thr+0.1;
             ids = find(yprede <= thr2);
-
+            
             ysub = y(ids);
             X{i} = mdl.mesh.ppts(ids,:);
             gprMdl2 = fitrgp(X{i},ysub,'PredictMethod','exact','KernelFunction','exponential');
@@ -275,10 +275,10 @@ end
 
 %% Package EGPRM Model
 if isempty(egprmMdl)
-    egprmMdl = var_names(ypred,ysd,ytrue,ci,covmat,l,u,zerofloorQ,n,ypost,...
+    egprmMdl = var_names(ypred,ysd,ytrue,ci,covmat,...
         thr,scl,mdls,o2,mesh,oref,oreflist,projQ,projtol,...
         usv,zeroQ,gprMdl2list,mixQ,K,covK,cores,pgnum,sig,brkQ,...
-        posterior_runtime,egprm_runtime);
+        egprm_runtime);
     method = 'gpr';
     if mixQ
         method = [method 'm'];
@@ -290,10 +290,10 @@ if isempty(egprmMdl)
     egprmMdl.interpfn = @() egprm();
     egprmMdl.mdlcmd = @() egprm();
     
-    egprmMdlpars = var_names(ypred,ysd,ytrue,ci,l,u,zerofloorQ,n,ypost,...
-       thr,scl,o2,mesh,oref,oreflist,projQ,projtol,usv,...
+    egprmMdlpars = var_names(ypred,ysd,ytrue,ci,...
+        thr,scl,o2,mesh,oref,oreflist,projQ,projtol,usv,...
         zeroQ,mixQ,K,covK,cores,pgnum,sig,brkQ,...
-        posterior_runtime,egprm_runtime);
+        egprm_runtime);
     
     % deal with pure 'gpr' case (for e.g. tunnelplot.m compatibility)
     if ~mixQ && (K == 1)
