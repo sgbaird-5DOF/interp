@@ -25,10 +25,13 @@ metaQ = F; %whether to load full model or only meta-data at end
 %for cells and strings, wrap in an outer cell
 
 %comment (no spaces, used in filename)
-comment = 'distributed-post-sampling';
+comment = 'tmvn-runtime-test';
 % list of comments used so far:
-% 'brk', 'kim', 'kim-brk', {'tmvn-runtime',{'','-1','-2','-test'}}, 'distributed-post-sampling'
+%{
+'brk', 'kim', 'kim-brk', {'tmvn-runtime',{'','-1','-2','-test'}},
+'distributed-post-sampling', 
 
+%}
 switch runtype
     case 'test'
         ninputpts = 1000; %ceil(58604*0.8); %17176; %floor(58604*0.2); %56442; %floor(67886*0.8); %floor(264276*.8); %17176; %1893*2; %[2366]; %[1893*1]; % 5000 10000 20000 50000];
