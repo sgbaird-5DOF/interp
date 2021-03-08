@@ -1,12 +1,13 @@
-function y = tmvn(mu,Sigma,l,u,n,method,zerofloorQ)
+function y = tmvn(mu,Sigma,l,u,n,method,nv)
 arguments
     mu(:,1) double
-    Sigma(:,:) double
-    l(:,1) double = 0.75*mu;
-    u(:,1) double = 1.5*mu;
-    n(1,1) double = 1;
-    method char {mustBeMember(method,{'mvrandn','slicesample'})} = 'slicesample'
-    zerofloorQ(1,1) logical = true
+    Sigma double
+    l double = mu*(0.895255-1);
+    u double = mu*(1.2444-1);
+    n(1,1) double = 100;
+    method char {mustBeMember(method,{'mvrandn','slicesample'})} = 'mvrandn'
+    nv.zerofloorQ(1,1) logical = true
+    nv.nearestSPD_Q(1,1) logical = true
 end
 % TMVN  sample from truncated multivariate normal distribution using mean and covariance matrix
 %--------------------------------------------------------------------------
@@ -39,6 +40,18 @@ end
 %  125???148. https://doi.org/10.1111/rssb.12162.
 %--------------------------------------------------------------------------
 sz = size(mu);
+
+%unpackage
+zerofloorQ = nv.zerofloorQ;
+nearestSPD_Q = nv.nearestSPD_Q;
+
+if nearestSPD_Q
+    % get nearest symmetric positive definite matrix
+    Sigma = nearestSPD(Sigma); %also takes a while
+    Sigma((Sigma > -1e-12) & (Sigma <= 0)) = eps;
+    %     covmat = nearestSPD(covmat); %twice to deal with numerical precision, small negative numbers
+    %alternative to second nearestSPD command, could do covmat(covmat < 0) = 1e-12; or similar
+end
 
 switch method
     case 'mvrandn'
