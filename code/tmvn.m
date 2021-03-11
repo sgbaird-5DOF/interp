@@ -1,11 +1,11 @@
-function y = tmvn(mu,Sigma,l,u,n,method,nv)
+function y = tmvn(mu,Sigma,l,u,n,nv)
 arguments
     mu(:,1) double
     Sigma double
     l double = mu*(0.895255-1);
     u double = mu*(1.2444-1);
     n(1,1) double = 100;
-    method char {mustBeMember(method,{'mvrandn','slicesample'})} = 'mvrandn'
+    nv.method char {mustBeMember(nv.method,{'mvrandn','slicesample'})} = 'mvrandn'
     nv.zerofloorQ(1,1) logical = true
     nv.nearestSPD_Q(1,1) logical = true
 end
@@ -42,6 +42,7 @@ end
 sz = size(mu);
 
 %unpackage
+method = nv.method;
 zerofloorQ = nv.zerofloorQ;
 nearestSPD_Q = nv.nearestSPD_Q;
 
@@ -69,9 +70,23 @@ switch method
             % output will never be lower than 0
             l = max([-mu,l-mu],[],2);
         end
+        
         sig = mvrandn(l,u,Sigma,n); % sample from posterior distribution with mu == 0
         y = mu+sig; %add mean (mu) back in
     case 'slicesample'
+        %unfinished, not entirely sure if this is a correct approach
         y = slicesample(mu,n,'pdf',@(X) tmvnpdf(X,mu,Sigma,l,u));
 end
 end
+
+%% CODE GRAVEYARD
+%{
+
+%         assert(all(size(l)==size(u)),'l and u should be the same shape')
+%         if size(l,1) > size(l,2)
+%             %convert to row vectors
+%             l = l.';
+%             u = u.';
+%         end
+
+%}
