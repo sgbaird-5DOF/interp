@@ -1,4 +1,4 @@
-function [egprmMdl,ypred,ysd,ytrue,ci,covmat,kfn,gprMdl2list,X2,egprmMdlpars] = ...
+function [egprmMdl,ypred,ysd,ytrue,ci,covmat,kfn,gprMdls2,X2,egprmMdlpars] = ...
     egprm(qm,nA,y,qm2,nA2,K,method,epsijk,NV)
 arguments
     qm = [] %input misorientation quaternions
@@ -26,7 +26,7 @@ arguments
     NV.egprmMdl = [] %an egprmMdl can be supplied to make the interpolation faster (skip symmetrization)
     NV.mixQ(1,1) logical = true %whether or not to perform the "mixture" part of EGPRM
     NV.postQ(1,1) logical = false %whether to sample from posterior distribution (expensive for e.g. 10000+ GBs)
-    NV.npostpts(1,1) double = npredpts %number of posterior sample points (no effect if postQ == false)
+    NV.npostpts(1,1) double = 10000 %number of posterior sample points (no effect if postQ == false)
     NV.sig(1,1) double = 0
     NV.dispQ(1,1) logical = false
     NV.egprmDispQ(1,1) logical = true
@@ -47,15 +47,21 @@ if ~isempty(egprmMdl)
     K = egprmMdl.K;
     thr = egprmMdl.thr;
     scl = egprmMdl.scl;
-    cgprMdls2 = egprmMdl.cgprMdls2;
-    covK = egprmMdl.covK;
+    if isfield(egprmMdl,'cgprMdls2')
+        cgprMdls2 = egprmMdl.cgprMdls2;
+    else
+        cgprMdls2 = [];
+    end
+    if isfield(egprmMdl,'covK')
+        covK = egprmMdl.covK; %used indirectly by being passed in NV struct
+    else
+        covK = NV.covK;
+    end
 else
     mixQ = NV.mixQ;
     cgprMdls2 = [];
     covK = NV.covK;
 end
-postQ = NV.postQ;
-npostpts = NV.npostpts;
 brkQ = NV.brkQ;
 sig = NV.sig;
 egprmDispQ = NV.egprmDispQ;
@@ -68,6 +74,18 @@ end
 if egprmDispQ
     disp(['K: ' int2str(K) ', mixQ: ' int2str(mixQ)])
 end
+
+if isempty(o2) && isempty(qm2) && isempty(nA2) && isempty(ytrue)
+   %generate dummy data
+   [~,qm2,nA2] = get_five(1);
+   ytrue = 1;
+end
+
+if isempty(o2)
+    o2 = five2oct(qm2,nA2);
+end
+
+
 
 freshQ = false;
 % perform the ensemble
@@ -90,11 +108,7 @@ y = mdls(1).mesh.props;
 
 %initialize
 [X2,ypredlist,ysdlist,cilist,covmatlist,kfntmplist,kfntmp2list,...
-    gprMdl2list,ypredsigmoidlist,gprmMdllist] = deal(cell(1,K));
-
-if isempty(o2)
-    o2 = five2oct(qm2,nA2);
-end
+    gprMdls2,ypredsigmoidlist,gprmMdllist] = deal(cell(1,K));
 
 if isempty(egprmMdl) && brkQ
     ytrue = GB5DOF_setup(o2(:,1:4),o2(:,5:8),[0 0 1],'Ni',epsijk);
@@ -126,12 +140,12 @@ for i = 1:K
 end
 
 if isempty(egprmMdl)
-    gprMdl2list = [];
+    gprMdls2 = [];
 else
-    if isfield(egprmMdl,'gprMdl2list')
-        gprMdl2list = egprmMdl.gprMdl2list;
+    if isfield(egprmMdl,'gprMdls2')
+        gprMdls2 = egprmMdl.gprMdls2;
     else
-        gprMdl2list = egprmMdl.cgprMdls2;
+        gprMdls2 = egprmMdl.cgprMdls2;
     end
 end
 %compile variables
@@ -180,24 +194,31 @@ if ~mixQ
 else
     %% GPR Mix Setup
     % lower subset models
-    [ypredlist2,ysdlist2,cilist2,covmatlist2,gprMdl2listtmp,X] = deal(cell(1,K));
+    [ypredlist2,ysdlist2,cilist2,covmatlist2,gprMdls2tmp,X] = deal(cell(1,K));
     for i = 1:K
         %train on input points with properties less than threshold
         mdl = mdls(i);
-        if isempty(gprMdl2list) && isempty(cgprMdls2)
+        if isempty(gprMdls2) && isempty(cgprMdls2)
             thr2 = thr+0.1;
             ids = find(yprede <= thr2);
             
-            ysub = y(ids);
-            X{i} = mdl.mesh.ppts(ids,:);
-            gprMdl2 = fitrgp(X{i},ysub,'PredictMethod','exact','KernelFunction','exponential');
-            gprMdl2listtmp{i} = gprMdl2;
+            if ~isempty(ids)
+                ysub = y(ids);
+                X{i} = mdl.mesh.ppts(ids,:);
+                gprMdl2 = fitrgp(X{i},ysub,'PredictMethod','exact','KernelFunction','exponential');
+                gprMdls2tmp{i} = gprMdl2;
+            else
+                warning(['yprede has no values less than or equal to thr2. ' ...
+                    'Cannot train lower subset model. ' ...
+                    ' Setting gprMdl2 = []'])
+                    gprMdls2tmp{i} = [];
+            end
         else
             %load from either cgprMdl or gprMdl
-            if isempty(gprMdl2list)
+            if isempty(gprMdls2)
                 unpacklist = cgprMdls2;
             else
-                unpacklist = gprMdl2list;
+                unpacklist = gprMdls2;
             end
             if iscell(unpacklist)
                 gprMdl2 = unpacklist{i};
@@ -209,7 +230,7 @@ else
         kfntmp2 = gprMdl2.Impl.Kernel.makeKernelAsFunctionOfXNXM(gprMdl2.Impl.ThetaHat);
         covmatlist2{i} = kfntmp2(X2{i},X2{i});
     end
-    gprMdl2list = gprMdl2listtmp;
+    gprMdls2 = gprMdls2tmp;
     %compile variables
     ypredtmp2 = [ypredlist2{:}];
     ysdtmp2 = [ysdlist2{:}];
@@ -277,7 +298,7 @@ end
 if isempty(egprmMdl)
     egprmMdl = var_names(ypred,ysd,ytrue,ci,covmat,...
         thr,scl,mdls,o2,mesh,oref,oreflist,projQ,projtol,...
-        usv,zeroQ,gprMdl2list,mixQ,K,covK,cores,pgnum,sig,brkQ,...
+        usv,zeroQ,gprMdls2,mixQ,K,covK,cores,pgnum,sig,brkQ,...
         egprm_runtime);
     method = 'gpr';
     if mixQ
@@ -321,7 +342,7 @@ if isempty(egprmMdl)
     egprmMdlpars.method = method;
     
     if mixQ
-        cgprMdls2 = cellfun(@compact,gprMdl2list,'UniformOutput',false);
+        cgprMdls2 = cellfun(@compact,gprMdls2,'UniformOutput',false);
         egprmMdl.cgprMdls2 = cgprMdls2;
         egprmMdlpars.cgprMdls2 = cgprMdls2;
     end
@@ -390,7 +411,7 @@ ypredsigmoid,kfntmplist,kfntmp2list
 
 
     %     if ~isempty(egprmMdl)
-    % %         gprMdl2 = egprmMdl.gprMdl2list{i};
+    % %         gprMdl2 = egprmMdl.gprMdls2{i};
     %     else
     %         gprMdl2 = [];
     %     end
@@ -406,7 +427,7 @@ ypredsigmoid,kfntmplist,kfntmp2list
 
     %     % GPR mixture model
     %     [ypredlist{i},ysdlist{i},cilist{i},covmatlist{i},kfntmplist{i},...
-    %         kfntmp2list{i},gprMdl2list{i},ypredsigmoidlist{i},gprmMdllist{i}] = ...
+    %         kfntmp2list{i},gprMdls2{i},ypredsigmoidlist{i},gprmMdllist{i}] = ...
     %         gprmix(mdl,X,y,X2{i},ytrue,thr,'plotQ',plotQ,'dispQ',dispQ,'gprMdl2',gprMdl2);
 
 
@@ -416,4 +437,15 @@ ypredsigmoid,kfntmplist,kfntmp2list
 
 
 % o = NV.o;
+
+
+                warning(['yprede has no values less than or equal to thr2. ' ...
+                    'Cannot train lower subset model. ' ...
+                    ' Setting gprMdl2 = mdls(' int2str(i) ').gprMdl or cgprMdl'])
+
+                if isfield(mdls(i),'gprMdl')
+                    gprMdls2tmp{i} = []; %mdls(i).gprMdl;
+                else
+                    gprMdls2tmp{i} = []; %mdls(i).cgprMdl;
+                end
 %}
