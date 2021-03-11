@@ -45,8 +45,6 @@ switch runtype
         mixQ = false;
         genseed = 10;
         brkQ = false; % take whatever GBs and replace properties with BRK energy values
-        npostpts = 1000;
-        postQ = true;
         
     case 'full'
         ninputpts = [100 388 500 1000 5000 10000 20000 50000]; % 388, 500, 1000, 2000, 5000, 10000, 20000, 50000
@@ -73,7 +71,7 @@ method = {method};
 %parameters
 %**ADD ALL PARAMETERS HERE** (see runtype switch statement)
 pars = var_names(ninputpts,npredpts,method,datatype,pgnum,sig,genseed,...
-    brkQ,K,covK,mixQ,mygpropts,postQ,npostpts);
+    brkQ,K,covK,mixQ,mygpropts);
 %note: cores gets added later and removed if dryrunQ == true
 %note: also need to update execfn
 
@@ -81,10 +79,10 @@ if ~dryrunQ
     %% parameter file setup
     %function to execute and output arguments from function
     execfnmethod = 'gpr';
-    execfn = @(ninputpts,npredpts,datatype,pgnum,sig,genseed,brkQ,K,covK,postQ,npostpts) ... **NAMES NEED TO MATCH PARS FIELDS** (see above)
+    execfn = @(ninputpts,npredpts,datatype,pgnum,sig,genseed,brkQ,K,covK) ... **NAMES NEED TO MATCH PARS FIELDS** (see above)
         egprm_setup(ninputpts,npredpts,execfnmethod,datatype,'K',K,'covK',covK,...
         'pgnum',pgnum,'sig',sig,'genseed',genseed,'brkQ',brkQ,'mixQ',mixQ,...
-        'mygpropts',mygpropts,'postQ',postQ,'npostpts',npostpts); %**NAMES NEED TO MATCH PARS FIELDS AND EXECFN ARGUMENTS**
+        'mygpropts',mygpropts); %**NAMES NEED TO MATCH PARS FIELDS AND EXECFN ARGUMENTS**
     argoutnames = {'ypred','interpfn','mdl','mdlpars'}; %one of these needs to be 'mdlpars' to get *_meta.mat to save
     %i.e. [ypred,interpfn,mdl,mdlpars] = interp5DOF_setup(ninputpts,npredpts,method,datatype,...);
     
@@ -285,12 +283,11 @@ switch env
         disp(mdlparstbl)
         
         if metaQ
-            disp(mdlparstbl(:,{'method','ninputpts','npredpts','rmse','mae','posterior_runtime'}))
             mdlplot = mdlparscat;
         else
-            disp(mdltbl(:,{'method','ninputpts','npredpts','rmse','mae','posterior_runtime'}))
             mdlplot = mdlcat;
         end
+        disp(mdlplot(:,{'method','ninputpts','npredpts','rmse','mae'}))
         
         %% plotting
         mdlnum = 1;
