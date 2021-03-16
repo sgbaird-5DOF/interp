@@ -24,7 +24,7 @@ parfor i = 1:ncheck
     
     %     pdtmp = pd(ind{i});
     o = pts(checks(:,1),:);
-    o2 = pts(checks(:,2),:);    
+    o2 = pts(checks(:,2),:);
     pdavg = mean(pdtmp)*ones(size(pdtmp));
     %error metrics
     e = pdavg-pdtmp; %error
