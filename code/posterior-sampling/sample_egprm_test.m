@@ -32,3 +32,5 @@ parityplot(mdl.mesh.props,ypred(:,i))
 
 paperfigure();
 tunnelplot(postMdls,'nnQ',false,'nnQ2',false,'extend',0.5)
+
+save('posterior-sampling\sample_egprm_test.mat')
