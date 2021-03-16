@@ -45,7 +45,7 @@ if isempty(dispQ)
     end
 end
 
-fnames = {'PGnames.mat','olist.mat'};
+fnames = {'PGnames.mat'};
 addpathdir(fnames)
 
 %% Unpack 5DOF reference (empty is OK)
@@ -486,5 +486,8 @@ if NV.plotQ
 	plot3(t{:},'*')
 	title(['disQ == ' int2str(disQ)])
 end
+
+% fnames = {'PGnames.mat','olist.mat'};
+% addpathdir(fnames)
 
 %}
