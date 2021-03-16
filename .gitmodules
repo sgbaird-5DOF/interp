@@ -6,3 +6,6 @@
 [submodule "interp5DOF-paper"]
 	path = code/interp5DOF-paper
 	url = ../../sgbaird/interp5DOF-paper.git
+[submodule "code/ternplot"]
+	path = code/ternplot
+	url = git@github.com:alchemyst/ternplot.git
