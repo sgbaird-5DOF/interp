@@ -3,10 +3,11 @@ function walltimefn = get_walltimefn(ndatapts,npredpts,method,cores,datatype,K) 
 arguments
     ndatapts(1,1) double
     npredpts(1,1) double
-    method char {mustBeMember(method,{'sphgpr','gpr','pbary','sphbary','idw','nn','avg','egprm','egpr','gprm','gprmix'})}
+    method char {mustBeMember(method,{'sphgpr','gpr','pbary','sphbary',...
+        'idw','nn','avg','egprm','egpr','gprm','gprmix'})}
     cores(1,1) double
-    datatype char {mustBeMember(datatype,{'brk','kim','rohrer-Ni',...
-        'rohrer-test','rohrer-brk-test','olmsted-Ni'})} = 'brk'
+    datatype char %{mustBeMember(datatype,{'brk','kim','rohrer-Ni',...
+        %'rohrer-test','rohrer-brk-test','olmsted-Ni','olmsted-MgO'})} = 'brk'
     K(1,1) double = 1
 end
 walltimeBuffer = 5;
