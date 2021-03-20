@@ -3,7 +3,7 @@ arguments
    ndatapts(1,1) double
    npredpts(1,1) double
    cores(1,1) double
-   datatype char {mustBeMember(datatype,{'brk','kim','rohrer-Ni','rohrer-test','olmsted-Ni'})} = 'brk'
+   datatype char %{mustBeMember(datatype,{'brk','kim','rohrer-Ni','rohrer-test','olmsted-Ni'})} = 'brk'
 end
 switch ndatapts
     case num2cell(1:1000)
