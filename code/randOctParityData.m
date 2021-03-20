@@ -278,7 +278,7 @@ switch env
         nexttile
         t1 = ['$L_{\mathrm{kernel}}$: ' num2str(rad2deg(Lval)*2) ' ($^\circ{}$), ' ...
         '$\sigma_{\mathrm{kernel}}$: ' num2str(sigval) ' ($J m^{-2}$)'];
-        brkQ = true;
+        brkQ = false;
         tunnelplot(mdl,'brkQ',brkQ)
         title(t1,'Interpreter','latex')
         % multiparity({mdl.errmetrics},'charlblQ',false);
