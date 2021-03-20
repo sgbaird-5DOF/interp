@@ -165,7 +165,7 @@ switch datatype
         
         % assign GBE values
         switch datatype
-            case {'rohrer-test','rohrer-Ni'}
+            case {'rohrer-test','rohrer-Ni','rohrer-MgO'}
                 resE = importdata(resEfpath);
                 resE(resE < 0) = 0;
             case {'rohrer-brk-test'}
