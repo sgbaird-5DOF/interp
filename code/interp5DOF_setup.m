@@ -4,7 +4,7 @@ arguments
     npredpts
     method char = 'gpr'
     datatype char {mustBeMember(datatype,{'brk','kim','rohrer-Ni','rohrer-test',...
-        'rohrer-brk-test','olmsted-Ni'})} = 'brk'
+        'rohrer-brk-test','olmsted-Ni','rohrer-MgO'})} = 'brk'
     epsijk(1,1) double = 1
     NV.pgnum(1,1) double = 32 %m-3m (i.e. m\overbar{3}m) FCC symmetry default
     NV.uuid = get_uuid()
@@ -140,7 +140,7 @@ switch datatype
         y = GB5DOF_setup([],five.q,five.nA,'Ni',epsijk);
         ytrue = GB5DOF_setup([],five2.q,five2.nA,'Ni',epsijk);
         
-    case {'rohrer-Ni','rohrer-test','rohrer-brk-test'}
+    case {'rohrer-Ni','rohrer-MgO','rohrer-test','rohrer-brk-test'}
         switch datatype
             case 'rohrer-Ni'
 %                 datfpath = '../../TJ2GBE/TJdata/triples_Ni_0131_21520.txt';
@@ -151,6 +151,11 @@ switch datatype
 %                 %convert
 %                 [q,nA] = TJ2five(EAs,norms,epsijk);
 %                 oct = TJ2oct(EAs,norms,epsijk);
+
+            case 'rohrer-MgO'
+                datfpath = '../../TJ2GBE/TJdata/triples-MgO-19094.dat';
+                resEfpath = '../../TJ2GBE/output/MgO-19094-lamb1nn200mresE.txt';
+                
             case {'rohrer-test','rohrer-brk-test'}
                 datfpath = '../../TJ2GBE/TJdata/triples_30000.dat';
 %                 [~,EAs,norms] = read_dat(datfpath);
