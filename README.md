@@ -25,8 +25,8 @@ See [cloning a repository](https://docs.github.com/en/github/creating-cloning-an
 
 ### Basic steps:
 * Step 0: download the [code](https://github.com/sgbaird-5DOF/interp.git)
-* Step 1: navigate to [interp-5DOF/code/](code/)
-* Step 2: open MATLAB and call [interp5DOF_test.m](code/interp5DOF_test.m)
+* Step 1: set [interp-5DOF/code/](code/) as working directory
+* Step 2: add subfolderse to path and run [interp5DOF_test.m](code/interp5DOF_test.m)
 
 ### Platform-specific directions
 #### Linux
@@ -35,25 +35,32 @@ See [cloning a repository](https://docs.github.com/en/github/creating-cloning-an
 
 Verify that [MATslurm](https://github.com/sgbaird-5DOF/MATslurm) is not an empty directory. If you're using GitHub Desktop, you may need to clone the directory with the above command using Git Bash, which can be opened via ``` Ctrl-` ``` or on the toolbar via Repository-->"Open in Git Bash".
 
-##### Step 1: navigate to [interp-5DOF/code/](code/)
-`cd interp-5DOF/code/`
-
-##### Step 2: open MATLAB and call [interp5DOF_test.m](code/interp5DOF_test.m)
+##### Step 1: open MATLAB and navigate to navigate to [interp-5DOF/code/](code/)
 `matlab`
 
+\>\> `cd interp-5DOF/code/`
+
+##### Step 2: Add subfolders to path and run [interp5DOF_test.m](code/interp5DOF_test.m)
+
+\>\> `addpath(genpath('.'))`
 \>\> `interp5DOF_test`
 
 #### Windows
 ##### Step 0: download the code
 Open GitHub Desktop and clone and/or fork `https://github.com/sgbaird-5DOF/interp.git`
 The submodules should be downloaded automatically. If you want to commit to submodules, add these to GitHub desktop as well ("add from existing", navigate within interp folder to the submodule, click on submodule folder, and "add").
-##### Step 1: 
-Navigate to [interp-5DOF/code/](code/)
+##### Step 1: open MATLAB and navigate to navigate to [interp-5DOF/code/](code/)
+Set [interp-5DOF/code/](code/) as working directory via `cd` or GUI
 
-##### Step 2: open MATLAB and call [interp5DOF_test.m](code/interp5DOF_test.m)
+##### Step 2: Add subfolders to path and run [interp5DOF_test.m](code/interp5DOF_test.m)
 
+\>\> `addpath(genpath('.'))`
+\>\> `interp5DOF_test`
+
+<!---
 ## Accessing functions via addpathdir()
 dir() and addpath() commands are used to locate functions in subfolders of the current working directory via a custom function [addpathdir.m](code/addpathdir.m). This could give anomalous behavior if the directory structure is changed such that filenames are non-unique in sub-folders of the parent folder where addpathdir() gets called, or if files with the same name are present elsewhere on the user's MATLAB path.
+--->
 
 ## Getting started
 Look at [interp5DOF.m](code/interp5DOF.m), which is a top-level function for creating a mesh, importing/generating data, triangulating a mesh and identifying the intersecting facet for datapoints (if applicable), and computing an interpolation.
