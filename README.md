@@ -85,6 +85,21 @@ method = 'gpr'; %interpolation method
 ## Test functions
 Most functions have a corresponding "test" function (e.g. hsphext_subdiv.m --> hsphext_subdiv_test.m, interp5DOF.m --> interp5DOF_test.m) which gives simple usage example(s). These are useful for debugging, visualizations, and understanding the functions without having to do a full run which could be time-consuming. This also allows for the non-test function code to be more succinct, as certain plotting routines can be moved to the test function instead. The various test functions generally run to completion within a few seconds, and the parameters may be changed freely (e.g. dimension, number of points, etc.) where applicable. Some test functions have specific plotting routines for 1-sphere (2D) and 2-sphere (3D) cases since a 7-sphere is difficult to visualize and interpret ([n-sphere](https://en.wikipedia.org/wiki/N-sphere)). For example, see [sphbary_test.m](code/sphbary_test.m) and [toBPFZ_test.m](code/toBPFZ_test.m).
 
+## Data Preparation
+Input GBs can take on the following forms:
+- misorientation (`qm`) / boundary plane normal (`nA`) pairs
+- octonions (`o`)
+
+Prediction GBs have a `2` appended, as in `qm2`. The inputs are stacked vertically (i.e. 1st row corresponds to 1st GB, 2nd row to 2nd GB, etc.).
+
+Data can be converted between forms/conventions using the various rotation functions available in the repository (modified versions of [GB Octonion Code](https://github.com/ichesser/GB_octonion_code/tree/master/TutorialCode/rotation_conversions)).
+
+### Active vs. Passive Rotation Convention
+Active rotation is specified with an input parameter `'epsijk'` == `1` and is the default used throughout the work. Passive rotation, in theory, can be specified via `epsijk` == `-1` which should be propagated throughout the entire codebase via the top-level input, but this has not undergone the same extensive testing as the active rotation convention. To convert from the passive to the active rotation convention, I suggest converting the GB into octonion form and applying `qinv.m` to each grain boundary, that is:
+```matlab
+o = [qinv(o(1:4,:) qinv(o(5:8,:))];
+```
+
 ## parfor loops
 Parfor loops are used by default where there is potential for significant speed-up. A parfor-compatible text progress bar is encoded into many of these. Adding disp() or fprintf() inside the parfor loop (aside from what's already inside the nested text progress bar function) may cause odd behavior on the command line output, but should not affect the integrity of the code execution. Because the parfor-compatible text progress bars need to be nested functions, in order to [deal with the inability to add variables to static workspaces](https://www.mathworks.com/help/matlab/matlab_prog/variables-in-nested-and-anonymous-functions.html), you can either assign variables to "ans" (a special variable that is still accessible), output statements directly to the command line terminal (no variable assignment), or comment the nested function, `nUpdateProgress()`.
 
