@@ -14,7 +14,7 @@ the beginning of functions, which is used extensively throughout). For users of 
 
 ### Toolboxes
 - [Statistics and Machine Learning Toolbox](https://www.mathworks.com/products/statistics.html) (for Gaussian Process Regression: [fitrgp()](https://www.mathworks.com/help/stats/fitrgp.html), [fitrgp.predict()](https://www.mathworks.com/help/stats/compactregressiongp.predict.html))
-- [Parallel Computing Toolbox](https://www.mathworks.com/products/parallel-computing.html) (optional, but for fitrgp() may need to change `hyperopts = struct('UseParallel',true,'Optimizer','bayesopt','MaxObjectiveEvaluations',maxhyperobj);` to `hyperopts = struct('UseParallel',false,'Optimizer','bayesopt','MaxObjectiveEvaluations',maxhyperobj);` in [interp5DOF.m](code/interp5DOF.m) under "method-specific interpolation" section --> 'gpr' case.)
+- [Parallel Computing Toolbox](https://www.mathworks.com/products/parallel-computing.html) (optional) <!---, but for fitrgp() may need to change `hyperopts = struct('UseParallel',true,'Optimizer','bayesopt','MaxObjectiveEvaluations',maxhyperobj);` to `hyperopts = struct('UseParallel',false,'Optimizer','bayesopt','MaxObjectiveEvaluations',maxhyperobj);` in [interp5DOF.m](code/interp5DOF.m) under "method-specific interpolation" section 'gpr' case.)--->
 - [Symbolic Math Toolbox](https://www.mathworks.com/products/symbolic.html) (optional, for [numStabBary.m](code/numStabBary.m))
 
 ### Files
@@ -31,7 +31,9 @@ See [cloning a repository](https://docs.github.com/en/github/creating-cloning-an
 ### Platform-specific directions
 #### Linux
 ##### Step 0: download the code
-`git clone --recurse-submodules https://github.com/sgbaird-5DOF/interp.git`
+```bash
+git clone --recurse-submodules https://github.com/sgbaird-5DOF/interp.git
+```
 
 Verify that [MATslurm](https://github.com/sgbaird-5DOF/MATslurm) is not an empty directory. If you're using GitHub Desktop, you may need to clone the directory with the above command using Git Bash, which can be opened via ``` Ctrl-` ``` or on the toolbar via Repository-->"Open in Git Bash".
 
@@ -71,7 +73,7 @@ interp5DOF.m can be called in other functions/scripts to produce interpolation r
 
 ### Simple Example Data
 Separate from [interp5DOF_test.m](code/interp5DOF_test.m), the following is a fast, bare-bones example to show the basic input/output format of interp5DOF.m. See also [get_cubo.m](code/get_cubo.m)
-```
+```matlab
 npts = 100;
 qm = get_cubo(npts); nA = normr(rand(npts,3)); %random (qm,nA) pairs
 propList = 1:npts; %property values
