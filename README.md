@@ -43,6 +43,7 @@ Verify that [MATslurm](https://github.com/sgbaird-5DOF/MATslurm) is not an empty
 ##### Step 2: Add subfolders to path and run [interp5DOF_test.m](code/interp5DOF_test.m)
 
 \>\> `addpath(genpath('.'))`
+
 \>\> `interp5DOF_test`
 
 #### Windows
@@ -55,6 +56,7 @@ Set [interp-5DOF/code/](code/) as working directory via `cd` or GUI
 ##### Step 2: Add subfolders to path and run [interp5DOF_test.m](code/interp5DOF_test.m)
 
 \>\> `addpath(genpath('.'))`
+
 \>\> `interp5DOF_test`
 
 <!---
