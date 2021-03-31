@@ -38,7 +38,11 @@ prec = 12; %precision
 tol = 1e-6; %tolerance
 
 %number of octonion pairs
-npts = size(o1,1);
+npts = size(o2,1);
+
+if (size(o1,1) == 1) && (size(o2,1) > 1)
+    o1 = repmat(o1,npts,1);
+end
 
 grainexchangeQ = true;
 doublecoverQ = true;
@@ -55,7 +59,7 @@ switch dtype
 		distfn = @(o1,o2) vecnorm(o1-o2,2,2);
 end
 
-dmin = zeros(1,npts);
+dmin = zeros(npts,1);
 o2minsyms = cell(1,npts);
 
 %textwaitbar setup
