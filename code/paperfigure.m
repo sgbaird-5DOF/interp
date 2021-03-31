@@ -1,10 +1,12 @@
-function [fig,t] = paperfigure(nrows,ncols,ht)
+function [fig,t] = paperfigure(nrows,ncols,ht,nv)
 arguments
    nrows(1,1) double = 1
    ncols(1,1) double = 1
    ht double = []
+   nv.opts = []
 end
 % PAPERFIGURE  call figure in centimeters and with appropriate size
+opts=nv.opts;
 switch ncols
     case 1
         wd = 9;
@@ -18,7 +20,11 @@ if isempty(ht)
 end
 pos = [12-(wd-9)/2,7-(ht-9)/2,wd,ht];
 
-fig = figure('Units','centimeters','Position',pos);
+if isempty(opts)
+    fig = figure('Units','centimeters','Position',pos);
+else
+    fig = figure('Units','centimeters','Position',pos,opts{:});
+end
 t = tiledlayout(nrows,ncols,'TileSpacing','compact','Padding','compact');
 
 end
