@@ -19,14 +19,8 @@ disp('file loaded')
 files = dir(fullfile('**','interp5DOF-paper','figures'));
 figfolder = files(1).folder;
 
-% addpathdir({'paperfigure.m','dist-parity.mat','olm_octonion_list.txt',...
-%     'oct50000.mat','gmat2q.m','PGnames.mat','var_names.m'})
 addpath(genpath('.'))
-
-set(0, 'DefaultTextInterpreter', 'latex')
-set(0, 'DefaultLegendInterpreter', 'latex')
-set(0, 'DefaultAxesTickLabelInterpreter', 'latex')
-set(0,'defaultAxesFontSize',12)
+setlatex()
 
 %% parity plot
 methodlist = {'pbary','gpr','idw','nn'};
@@ -197,7 +191,7 @@ clear pd1 pd2 pd3
 %     oA = get_octpairs(oAB(:,1:8));
 %     oB = get_octpairs(oAB(:,9:16));
 
-%% octonion ensemble
+%% load data for octonion ensemble and fixed test
 addpathdir({'olm_octonion_list.txt','olm_pairwise_distances_cubic.mat'})
 A = importdata('olm_octonion_list.txt');
 olmoct = A.data;
@@ -213,6 +207,7 @@ load('olm_pairwise_distances_cubic.mat','olmpairwisedistancescubic')
 pd_olmchesser = table2array(olmpairwisedistancescubic);
 pd7 = rad2deg(pd_olmchesser(:));
 
+%% octonion ensemble
 [pd4c, pd5c, pd6c, errmetrics] = deal(cell(numnpts,1));
 oref = zeros(numnpts,8);
 % oref = get_orefs(8);
@@ -263,7 +258,7 @@ end
 lbls = lblcat(nptslist);
 savefigpng(figfolder,['dist-ensemble-k' lbls])
 
-paperfigure()
+paperfigure();
 enstbl = struct2table(structvertcat(errmetrics{:})); %ensemble table
 % G = findgroups(enstbl.ksize);
 plot(enstbl.ksize,enstbl.rmse,'-*')
@@ -273,6 +268,20 @@ hold on
 plot(enstbl.ksize,enstbl.mae,'-*')
 legend('RMSE','MAE','Interpreter','latex')
 savefigpng(figfolder,['dist-ensemble-rmse-mae'])
+
+%% fixed test - does holding one octonion fixed give same as both varied
+tic
+pd_fix = get_pd_fix(olmoct);
+pdfixtime = toc;
+tmp = pd_fix;
+pd_fix = rad2deg(pd_fix);
+pd_fix = pd_fix(:);
+
+paperfigure();
+parityplot(pd7,pd_fix,'scatter','xname','GBO distance','yname','Fixed GBO distance','xunits','deg','yunits','deg')
+fixed_errmetrics = get_errmetrics(pd7,pd_fix);
+
+savefigpng(figfolder,'pd-fix')
 
 %% Ensemble Interpolation (Load)
 fname = 'ensemble-interp';
@@ -792,5 +801,7 @@ A = importdata('olm_octonion_list.txt');
 
         tlisttmp = cellfun(@(ID) regexprep(ID,{'pbary','gpr','idw','nn'},{'Barycentric','GPR','IDW','NN'}),cellstr(ID3),'UniformOutput',false);
 
+% addpathdir({'paperfigure.m','dist-parity.mat','olm_octonion_list.txt',...
+%     'oct50000.mat','gmat2q.m','PGnames.mat','var_names.m'})
 
 %}
