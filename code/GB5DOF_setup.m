@@ -44,6 +44,10 @@ pB = normr(pB);
 
 npts = size(pB,1);
 
+if isempty(mA)
+    mA = [0 0 1];
+end
+
 if size(mA,1) == 1
     mA = repmat(mA,npts,1);
 end
