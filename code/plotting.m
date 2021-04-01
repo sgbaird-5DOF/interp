@@ -643,6 +643,38 @@ savefigpng(figfolder,fname)
 disp(['wtrmse: ' num2str(errmetrics.wtrmse)])
 disp(['wtmae: ' num2str(errmetrics.wtmae)])
 
+%% Olmsted Ni Dataset Comparison
+%see also interp5DOF_setup.m
+A = importdata('olm_octonion_list.txt');
+
+o = A.data;
+o = [qinv(o(:,1:4)),qinv(o(:,5:8))];
+o = get_octpairs(o);
+
+B = importdata('olm_properties.txt');
+y = B.data(:,1);
+
+[qm,nA] = oct2five(o);
+qm2 = qm;
+nA2 = nA;
+ytrue = y;
+
+[ypred,interpfn,mdl,mdlpars] = interp5DOF(qm,nA,y,qm2,nA2,'ytrue',ytrue);
+
+y_brk = GB5DOF_setup(o(:,1:4),o(:,5:8));
+brk_errmetrics = get_errmetrics(ytrue,y_brk);
+
+parity{1} = struct('ytrue',ytrue,'ypred',y_brk);
+parity{2} = struct('ytrue',ytrue,'ypred',ypred);
+multiparity(parity,{'BRK','VFZ'})
+strs={'BRK GBE ($J m^{-2}$)','GPR GBE ($J m^{-2}$)'};
+for i = 1:2
+    ax=nexttile(i);
+    str=strs{i};
+    ax.XLabel.String = ['actual ' str];
+    ax.YLabel.String = ['predicted ' str];
+end
+savefigpng(figfolder,'resubloss-ni')
 %% CODE GRAVEYARD
 %{
 %split apply & find groups
