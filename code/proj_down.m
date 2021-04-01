@@ -97,7 +97,7 @@ if ~isempty(usv)
 		
 	elseif nforceQ
 		projpts = projpts(:,1:end-ndegdim);
-		disp(['Nonzero last column. E.g. ' num2str(pts([1 2],end)) ...
+		warning(['Nonzero last column. E.g. ' num2str(pts([1 2],end).') ...
 			'. Forcing projection ' int2str(ndegdim) ' dimensions.'])
 		
 	elseif ~nforceQ
