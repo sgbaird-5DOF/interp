@@ -11,7 +11,7 @@ arguments
     NV.cbnds = []
     NV.Interpreter char {mustBeMember(NV.Interpreter,{'tex','latex','none'})} = 'latex'
 end
-% MULTIPARITY  create tiled parity plots using cell parity data
+% MULTIPARITY  create tiled parity plots using cell parity data which contains 'ytrue' and 'ypred'
 
 if ~iscell(parity)
     if isscalar(parity)
