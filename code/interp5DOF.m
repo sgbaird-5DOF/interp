@@ -3,8 +3,8 @@ arguments
     qm %input misorientation quaternions
     nA %input BP normals
     y(:,1) %property values
-    qm2 %query misorientations
-    nA2 %query BP normals
+    qm2 = [] %query misorientations
+    nA2 = [] %query BP normals
     method char {mustBeMember(method,{'gpr','sphgpr','pbary','sphbary','idw','nn','avg'})} = 'gpr'
     epsijk(1,1) double = 1
     NV.pgnum(1,1) double = 32 %m-3m (i.e. m\overbar{3}m) FCC symmetry default
@@ -12,7 +12,7 @@ arguments
     NV.facetIDs = [] %for use with bary methods
     NV.ytrue = [] %user-specified "true" values for error calculations
     NV.modelparsspec = struct()
-    NV.brkQ(1,1) logical = true %whether to compute BRK values as ytrue
+    NV.brkQ(1,1) logical = false %whether to compute BRK values as ytrue
     NV.sigma(1,1) double = 0 %noise to add to property values
     NV.mygpropts = struct.empty %for use with gpr methods 'gpr' or 'sphgpr'
     NV.r double = [] %for use with 'idw' method, alternatively set to [] for automatic estimation
@@ -174,6 +174,7 @@ sigma = NV.sigma;
 nforceQ = NV.nforceQ;
 nforce = NV.nforce;
 dispQ = NV.dispQ;
+o2 = NV.o2;
 
 %display method
 if dispQ
@@ -197,12 +198,15 @@ else
 end
 
 %query points
-if isempty(qm2) && isempty(nA2) && ~isempty(NV.o2)
+if isempty(qm2) && isempty(nA2) && ~isempty(o2)
     queryinput = 'octonion';
-    otmp2 = NV.o2;
-else
+    otmp2 = o2;
+elseif ~isempty(qm2) && ~isempty(nA2) && isempty(o2)
     queryinput = '5dof';
     otmp2 = five2oct(qm2,nA2,epsijk);
+elseif isempty(qm2) && isempty(nA2) && isempty(o2)
+    queryinput = 'octonion';
+    otmp2 = get_ocubo(); %dummy variable
 end
 
 %symmetrization
