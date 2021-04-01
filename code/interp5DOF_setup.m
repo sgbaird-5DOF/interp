@@ -201,7 +201,6 @@ switch datatype
         ytrue = ytmp(id2);
         
     case 'olmsted-Ni'
-        %this is probably about all I have left to try.
         A = importdata('olm_octonion_list.txt');
         o = A.data;
         o = [qinv(o(:,1:4)),qinv(o(:,5:8))];
