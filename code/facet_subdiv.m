@@ -1,4 +1,4 @@
-function [newpts,TRI,varargout] = facet_subdiv(pts,nint,delaunayQ,convhullQ)
+function [newpts,TRI,k,topIDs] = facet_subdiv(pts,nint,delaunayQ,convhullQ)
 arguments
 	pts {mustBeReal,mustBeFinite}
 	nint(1,1) double = 1
@@ -54,6 +54,8 @@ else
 	subdivpts = projpts;
 end
 
+topIDs = find(ismembertol(subdivpts,projpts,'ByRows',true)).'; %transposed top-level (i.e. pts) IDs in subdivpts
+
 nnew = size(subdivpts,1); %number of new points
 
 %compute the delaunay triangulation
@@ -65,9 +67,11 @@ end
 
 %compute the convex hull
 if convhullQ && (nnew > d-1)
-	varargout{1} = convhulln(subdivpts);
+	k = convhulln(subdivpts);
+elseif convhullQ && (nnew <= d-1)
+	k = 1:d-1;
 else
-	varargout{1} = 1:d-1;
+    k = [];
 end
 
 newpts = proj_up(subdivpts,usv);
