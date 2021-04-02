@@ -52,7 +52,7 @@ elseif subhemiQ
 			% to what extent it will cause distortions in the triangulation,
 			% but will be lessened by not normalizing mean(pts)
 			projpts = projfacet2hyperplane(mean(pts),pts);
-			a = proj_down(projpts,tol,'zeroQ',false);
+			a = proj_down(projpts,tol,'zero',false);
 			disp('--delaunayn')
 			K = delaunayn(a);
 			
