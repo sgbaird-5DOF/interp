@@ -1,10 +1,10 @@
 function pts = sqrt2norm(pts,type,nv)
-% SQRT2NORM  take a set of octonions and give each row norm == sqrt(2) if (norm == 1) || (norm == sqrt(2))
 arguments
-    pts(:,8) double {mustBeNumeric,mustBeFinite}
+    pts double {mustBeNumeric,mustBeFinite}
     type char {mustBeMember(type,{'oct','quat'})} = 'oct'
     nv.warnQ(1,1) logical = true
 end
+% sqrt2norm  take a set of octonions and give each row norm == sqrt(2) if (norm == 1) || (norm == sqrt(2))
 %--------------------------------------------------------------------------
 % Author: Sterling Baird
 %
