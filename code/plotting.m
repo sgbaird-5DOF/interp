@@ -662,17 +662,18 @@ ytrue = y;
 [ypred,interpfn,mdl,mdlpars] = interp5DOF(qm,nA,y,qm2,nA2,'ytrue',ytrue);
 
 y_brk = GB5DOF_setup(o(:,1:4),o(:,5:8));
+gpr_errmetrics = get_errmetrics(ytrue,ypred);
 brk_errmetrics = get_errmetrics(ytrue,y_brk);
 
 parity{1} = struct('ytrue',ytrue,'ypred',y_brk);
 parity{2} = struct('ytrue',ytrue,'ypred',ypred);
 multiparity(parity,{'BRK','VFZ'})
-strs={'BRK GBE ($J m^{-2}$)','GPR GBE ($J m^{-2}$)'};
+strs={'BRK','GPR'};
 for i = 1:2
     ax=nexttile(i);
     str=strs{i};
-    ax.XLabel.String = ['actual ' str];
-    ax.YLabel.String = ['predicted ' str];
+    ax.XLabel.String = ['actual simulated GBE ($J m^{-2}$)'];
+    ax.YLabel.String = ['predicted ' str ' GBE ($J m^{-2}$)'];
 end
 savefigpng(figfolder,'resubloss-ni')
 %% CODE GRAVEYARD
