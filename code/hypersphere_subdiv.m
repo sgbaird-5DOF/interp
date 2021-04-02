@@ -1,9 +1,10 @@
-function [Ktr,K_out,newpts] = hypersphere_subdiv(pts,K,nint,tricollapseQ)
+function [Ktr,K_out,newpts] = hypersphere_subdiv(pts,K,nint,tricollapseQ,nv)
 arguments
 	pts double
 	K double
 	nint(1,1) double = 1
 	tricollapseQ(1,1) logical = true
+    nv.warn(1,1) logical = true
 end
 % HYPERSPHERE_SUBDIV  Subdivide a "spherical" convex hull and collapse the triangulation.
 %--------------------------------------------------------------------------
@@ -22,6 +23,7 @@ end
 
 %		normr.m
 %--------------------------------------------------------------------------
+warnQ = nv.warn;
 nm = vecnorm(pts,2,2);
 avgnm = mean(nm);
 tol = 1e-3;
@@ -141,8 +143,9 @@ else
 	K_out = [];
 end
 
-assert(sum(ismembertol(round(pts,15),round(newpts,15),1e-6,'ByRows',true)) == npts,...
-	'points lost during subdiv. check facet_subdiv input degeneracy')
+if warnQ && (sum(ismembertol(round(pts,15),round(newpts,15),1e-6,'ByRows',true)) ~= npts)
+    warning('points lost during subdiv. check facet_subdiv input degeneracy')
+end
 
 end %hypersphere_subdiv
 
