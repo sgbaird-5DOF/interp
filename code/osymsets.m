@@ -2,7 +2,7 @@ function osets = osymsets(oct,pgnum,usv,grainexchangeQ,doublecoverQ,uniqueQ,epsi
 arguments
 	oct(:,8) double {mustBeFinite,mustBeReal,mustBeSqrt2Norm}
 	pgnum(1,1) double {mustBeInteger} = 32 %default to Oh cubic point group
-	usv = struct
+	usv = []
 	grainexchangeQ(1,1) logical {mustBeLogical} = false
 	doublecoverQ(1,1) logical {mustBeLogical} = false
     uniqueQ(1,1) logical {mustBeLogical} = false
