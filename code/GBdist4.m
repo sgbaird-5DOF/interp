@@ -1,4 +1,4 @@
-function [dmin, o2minsyms] = GBdist4(o1,o2,pgnum,dtype,wtol,waitbarQ,epsijk)
+function [dmin, o2minsyms] = GBdist4(o1,o2,pgnum,dtype,wtol,waitbarQ,epsijk,nv)
 arguments
 	o1(:,8) double {mustBeFinite,mustBeReal,mustBeSqrt2Norm}
 	o2(:,8) double {mustBeFinite,mustBeReal,mustBeSqrt2Norm}
@@ -7,6 +7,8 @@ arguments
 	wtol(1,1) double {mustBeFinite,mustBeReal} = 1e-12 %omega tolerance
 	waitbarQ logical = false
     epsijk(1,1) double = 1
+    nv.prec(1,1) double = 12
+    nv.tol(1,1) double = 1e-6
 end
 % GBDIST4  modified version of GBdist function by CMU group. Keeps o1 constant.
 %--------------------------------------------------------------------------
@@ -34,8 +36,8 @@ end
 % Author: Sterling Baird
 % Date: 2020-07-27
 %--------------------------------------------------------------------------
-prec = 12; %precision
-tol = 1e-6; %tolerance
+prec = nv.prec; %precision for duplicates
+tol = nv.tol; %tolerance for duplicates
 
 %number of octonion pairs
 npts = size(o2,1);
@@ -46,6 +48,7 @@ end
 
 grainexchangeQ = true;
 doublecoverQ = true;
+uniqueQ = false;
 %get symmetric octonions (SEOs)
 % osets = osymsets(o2,pgnum,struct,grainexchangeQ,doublecoverQ); %out of memory 2020-08-03
 
@@ -86,7 +89,7 @@ function nUpdateProgress(~)
 	p = p + nreps;
 end
 
-%loop through octonion pairs
+%loop through octonion pairs, could be sped up significantly via batch approach and/or via GPU adaptation (see gpuArray)
 parfor i = 1:npts %parfor compatible
 	%text waitbar
 	if mod(i,nreps2) == 0
@@ -97,7 +100,7 @@ parfor i = 1:npts %parfor compatible
 	
 	%% setup	
 	%unpack symmetrically equivalent octonions (SEOs) of single octonion
-	oset = osymsets(o2(i,:),pgnum,struct,grainexchangeQ,doublecoverQ,epsijk);
+	oset = osymsets(o2(i,:),pgnum,struct,grainexchangeQ,doublecoverQ,uniqueQ,epsijk);
 	o2tmp = oset{1};
 	
 	%number of SEOs
