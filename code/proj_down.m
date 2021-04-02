@@ -3,9 +3,10 @@ arguments
 	pts double {mustBeFinite,mustBeReal}
 	tol(1,1) double {mustBeFinite,mustBeReal} = 1e-5
 	usv struct = struct.empty
-	NV.nforce double = 1
-	NV.nforceQ(1,1) logical = false
-	NV.zeroQ(1,1) logical = true
+	NV.nforcedim double {mustBeNonnegative,mustBeInteger} = 1
+	NV.force(1,1) logical {mustBeLogical} = false
+	NV.zero(1,1) logical = true
+    NV.finaldim double = []
 end
 % PROJ_DOWN  project down by removing null dimensions (i.e. a rotation and translation) via singular value decomposition
 % (SVD)
@@ -43,20 +44,25 @@ end
 %
 %--------------------------------------------------------------------------
 % unpackage name value pairs
-nforce = NV.nforce;
-nforceQ = NV.nforceQ;
+nforcedim = NV.nforcedim;
+forceQ = NV.force;
+finaldim = NV.finaldim;
 
 % --if zeropt is requested as output, then set zeroQ = true
 if nargout == 3
 	zeroQ = true;
 else
-	zeroQ = NV.zeroQ;
+	zeroQ = NV.zero;
 end
 
 %dimensionality
 d = size(pts,2);
 
-if nforce >= d
+if ~isempty(finaldim) && forceQ
+    nforcedim = d-finaldim;
+end
+
+if nforcedim >= d
 	error(['nforce should be less than d == ' int2str(size(pts,2))])
 end
 
@@ -80,8 +86,8 @@ if ~isempty(usv)
 
 	
 	%number of degenerate dimensions
-	if nforceQ
-		ndegdim = nforce;
+	if forceQ
+		ndegdim = nforcedim;
 
 	elseif size(S,1) == size(S,2)
 		ndegdim = sum(abs(diag(S)) < tol);
@@ -95,12 +101,12 @@ if ~isempty(usv)
 		%remove last column(s)
 		projpts = projpts(:,1:end-ndegdim);
 		
-	elseif nforceQ
+	elseif forceQ
 		projpts = projpts(:,1:end-ndegdim);
 		warning(['Nonzero last column. E.g. ' num2str(pts([1 2],end).') ...
 			'. Forcing projection ' int2str(ndegdim) ' dimensions.'])
 		
-	elseif ~nforceQ
+	elseif ~forceQ
 		projpts = pts;
 		usv = struct.empty;
 		%not sure if I should have a constant, non-zero last column be OK
@@ -134,8 +140,8 @@ elseif isempty(usv)
 	usv.avg = avg;
 	
 	%number of degenerate dimensions
-	if nforceQ
-		ndegdim = nforce;
+	if forceQ
+		ndegdim = nforcedim;
 		
 	elseif size(S,1) == size(S,2)
 		ndegdim = sum(abs(diag(S)) < tol);
@@ -145,7 +151,7 @@ elseif isempty(usv)
 		ndegdim = sum(all(S < tol));
 	end
 	
-	if (ndegdim > 0) || nforceQ
+	if (ndegdim > 0) || forceQ
 		%project to lower dimension (i.e. rotation and translation)
 		projptstmp = U*S(:,1:d-ndegdim);
         if zeroQ
@@ -157,7 +163,7 @@ elseif isempty(usv)
         else
             projpts = projptstmp;
         end
-		if (ndegdim == 0) && nforceQ
+		if (ndegdim == 0) && forceQ
 			warning(['ndegdim == 0, tol == ' num2str(tol) ...
 				', min(diag(S)) == ' num2str(min(diag(S))) ...
 				', max(diag(S)) == ' num2str(max(diag(S))) ...
