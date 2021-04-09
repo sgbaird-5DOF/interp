@@ -1,7 +1,7 @@
 function [intfacetIDs,dataBary,klist] = intersect_facet(pts,K,datalist,tol,NV)
 arguments
     pts double {mustBeFinite,mustBeReal}
-    K uint16 {mustBeFinite,mustBeReal} %maximum of 65535 points, change to uint32 otherwise
+    K uint16 {mustBeFinite,mustBeReal} %maximum of 65535 points (not rows), change to uint32 otherwise
     datalist double {mustBeFinite,mustBeReal}
     tol(1,1) double {mustBeFinite,mustBeReal} = 1e-6
     NV.maxnormQ(1,1) logical = true
