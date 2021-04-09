@@ -1,8 +1,9 @@
-function [Ktr,K,meshpts] = hsphext_subdiv(pts,nint,tricollapseQ)
+function [Ktr,K,meshpts] = hsphext_subdiv(pts,nint,tricollapseQ,nv)
 arguments
 	pts double
 	nint(1,1) double = 1
 	tricollapseQ(1,1) logical = true
+    nv.projtol(1,1) double = 1e-4
 end
 % HSPHEXT_SUBDIV  Hypersphere exterior hull subdivision.
 %--------------------------------------------------------------------------
@@ -15,7 +16,7 @@ end
 % Outputs:
 %
 % Dependencies:
-%	hypersphere_subdiv.m		
+%	hypersphere_subdiv.m
 %		-facet_subdiv.m
 %
 %		-tricollapse.m
@@ -31,11 +32,11 @@ end
 %		a bug I can fix) and also less than a hemisphere (?) (since
 %		sphere_stereograph.m is used)
 %--------------------------------------------------------------------------
-
+projtol = nv.projtol;
 % project points to hyperplane (introduce deg dimension)
 projpts = projfacet2hyperplane(mean(pts),pts); %valid for max arc length < pi
 % rotate to remove newly introduced deg dimension
-projpts = proj_down(projpts,1e-4);
+projpts = proj_down(projpts,projtol);
 
 % get exterior
 %joggling input makes it so that coplanar facets aren't merged
