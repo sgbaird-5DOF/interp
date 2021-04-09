@@ -245,13 +245,13 @@ projQ = true;
 zeroQ = false;
 o = normr(o);
 o2 = normr(o2);
-[a,usv] = proj_down([o;o2],projtol,'zeroQ',zeroQ,'nforceQ',nforceQ,'nforce',nforce);
+[a,usv] = proj_down([o;o2],projtol,'zero',zeroQ,'force',nforceQ,'nforcedim',nforce);
 
 d = size(a,2);
 %projected points
 if d <= 8
-    ppts = proj_down(o,projtol,usv,'zeroQ',zeroQ,'nforceQ',nforceQ,'nforce',nforce);
-    ppts2 = proj_down(o2,projtol,usv,'zeroQ',zeroQ,'nforceQ',nforceQ,'nforce',nforce);
+    ppts = proj_down(o,projtol,usv,'zero',zeroQ,'force',nforceQ,'nforcedim',nforce);
+    ppts2 = proj_down(o2,projtol,usv,'zero',zeroQ,'force',nforceQ,'nforcedim',nforce);
 else
     error("Input doesn't have degenerate dimension or has too few (i.e. check input data), or try reducing proj_down tolerance input (tol)")
 end
@@ -343,7 +343,7 @@ switch method
     case {'sphbary','pbary'}
         if isempty(NV.databary)
             %% get triangulation
-            [pptstmp,usvtri] = proj_down(o,projtol,'zeroQ',true);
+            [pptstmp,usvtri] = proj_down(o,projtol,'zero',true);
             K = sphconvhulln(pptstmp);
             mesh.pts = proj_up(pptstmp,usvtri);
             

@@ -60,7 +60,7 @@ switch slerptype
         tpts = 1/sqrt(2)*[normr(tpts(:,1:4)),normr(tpts(:,5:8))];
         t = n2c(tpts);
         arcpts = interparc(n,t{:},'spline');
-        arcpts = normr(get_octpairs(sqrt2norm(arcpts,'quat'),[],1,'oref',mdls{1}.oref,'dispQ',false));
+        arcpts = normr(get_octpairs(sqrt2norm(arcpts,'quat'),1,'oref',mdls{1}.oref,'dispQ',false));
         %         arcpts = 1/sqrt(2)*sqrt2norm(arcpts);
         [d2,seg] = arclength(t{:},'spline');
 %         d2 = 2*d2; %convert to omega
@@ -79,7 +79,7 @@ if (isempty(nv.tpredlist) && isempty(nv.tsdlist) && isempty(nv.propList) && ...
         mdl = mdls{i};
         methodlist{i} = mdl.method;
         if mdl.projQ
-            arcppts = proj_down(arcpts,mdl.projtol,mdl.usv,'zeroQ',mdl.zeroQ);
+            arcppts = proj_down(arcpts,mdl.projtol,mdl.usv,'zero',mdl.zeroQ);
             %         ptstmp = proj_down([arcpts;mdl.mesh.pts],mdl.projtol,'zeroQ',mdl.zeroQ);
             %         arcppts = ptstmp(1:size(arcpts,1),:);
             %         ppts = ptstmp((size(arcpts,1)+1):end,:);

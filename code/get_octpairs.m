@@ -1,7 +1,6 @@
-function [octvtx,oref,fiveref] = get_octpairs(pts,savename,epsijk,NV)
+function [octvtx,oref,fiveref] = get_octpairs(pts,epsijk,NV)
 arguments
 	pts(:,8) double {mustBeSqrt2Norm}
-	savename string = []
     epsijk(1,1) double = 1
 	NV.o2addQ(1,1) logical = false
 	NV.pgnum(1,1) double = 32
@@ -92,16 +91,16 @@ if NV.o2addQ
 	octvtx = [oref; octvtx];
 end
 
-%save data
-if ~isempty(savename)
-    if exist('./data','dir') == 7
-        savepath = fullfile('data',savename);
-    else
-        savepath = savename;
-    end
-    disp(savepath)
-    save(savepath,'pts','oref','octvtx')
-end
+% %save data
+% if ~isempty(savename)
+%     if exist('./data','dir') == 7
+%         savepath = fullfile('data',savename);
+%     else
+%         savepath = savename;
+%     end
+%     disp(savepath)
+%     save(savepath,'pts','oref','octvtx')
+% end
 end
 
 %--------------------------HELPER FUNCTIONS--------------------------------

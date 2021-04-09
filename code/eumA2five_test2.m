@@ -112,7 +112,8 @@ o2 = get_ocubo();
 % [~,osym] = GBdist([o2 o],pgnum,false,epsijk);
 % osym1 = osym(1:8);
 % osym2 = osym(9:16);
-[~, osym2] = GBdist4(o2,o,32,'norm',1e-12,false,epsijk);
+waitbarQ = true;
+[~, osym2] = GBdist4(o2,o,32,'norm',1e-12,waitbarQ,epsijk);
 osym2 = osym2{1};
 
 qAsym = osym2(1,1:4);
