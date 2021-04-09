@@ -192,7 +192,7 @@ clear pd1 pd2 pd3
 %     oB = get_octpairs(oAB(:,9:16));
 
 %% load data for octonion ensemble and fixed test
-addpathdir({'olm_octonion_list.txt','olm_pairwise_distances_cubic.mat'})
+% addpathdir({'olm_octonion_list.txt','olm_pairwise_distances_cubic.mat'})
 A = importdata('olm_octonion_list.txt');
 olmoct = A.data;
 olmoct = [qinv(olmoct(:,1:4)),qinv(olmoct(:,5:8))];
