@@ -1,4 +1,7 @@
 function out = qinv(q)
+arguments
+   q double 
+end
 %vectorized by SGB 2020-08-15
 %%% Lp(r) = vec(prp*) active. For passive, implement Lp*(r) = vec(p*rp)
 % also see https://dx.doi.org/10.1088/0965-0393/23/8/083501 eq. 24 in
