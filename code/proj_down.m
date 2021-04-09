@@ -78,7 +78,7 @@ if ~isempty(usv)
         %projection
         projptstmp = ([Zero;pts]-avg)/V';
         projpts = projptstmp(2:end,:);
-        assert(ismembertol(projptstmp(1,1:d-1),zeropt,'ByRows',true),...
+        assert(ismembertol(projptstmp(1,1:d-nforcedim),zeropt,1e-6,'ByRows',true),...
             ['Zero [' num2str(projptstmp(1,:)) '] did not map back to zeropt [' num2str(zeropt) ']'])
     else
         projpts = (pts-avg)/V';
