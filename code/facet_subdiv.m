@@ -1,9 +1,10 @@
-function [newpts,TRI,k,topIDs] = facet_subdiv(pts,nint,delaunayQ,convhullQ)
+function [newpts,TRI,k,topIDs] = facet_subdiv(pts,nint,delaunayQ,convhullQ,nv)
 arguments
 	pts {mustBeReal,mustBeFinite}
 	nint(1,1) double = 1
 	delaunayQ(1,1) logical = true
 	convhullQ(1,1) logical = false
+    nv.projtol(1,1) double = 1e-6
 end
 % FACET_SUBDIV  Project a facet from n-dimensional space to a simplex in n-1
 % dimensions, subdivide the simplex, compute the triangulation, and
@@ -44,8 +45,8 @@ end
 %		trifacet_area3D.m, plot_dmatrix.m
 %--------------------------------------------------------------------------
 d = size(pts,2);
-
-[projpts,usv] = proj_down(pts,1e-6,struct.empty,'zeroQ',false);
+projtol = nv.projtol;
+[projpts,usv] = proj_down(pts,projtol,[],'zero',false);
 
 %subdivide the facet turned into simplex
 if nint > 1
@@ -54,7 +55,7 @@ else
 	subdivpts = projpts;
 end
 
-topIDs = find(ismembertol(subdivpts,projpts,'ByRows',true)).'; %transposed top-level (i.e. pts) IDs in subdivpts
+topIDs = ismembertol(subdivpts,projpts,'ByRows',true).'; %transposed top-level (i.e. pts) IDs in subdivpts
 
 nnew = size(subdivpts,1); %number of new points
 
