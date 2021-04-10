@@ -4,9 +4,13 @@ arguments
    ncols(1,1) double = 1
    ht double = []
    nv.opts = []
+   nv.Padding = 'compact'
+   nv.TileSpacing = 'compact'
 end
 % PAPERFIGURE  call figure in centimeters and with appropriate size
 opts=nv.opts;
+padding = nv.Padding;
+tilespacing = nv.TileSpacing;
 switch ncols
     case 1
         wd = 9;
@@ -25,7 +29,7 @@ if isempty(opts)
 else
     fig = figure('Units','centimeters','Position',pos,opts{:});
 end
-t = tiledlayout(nrows,ncols,'TileSpacing','compact','Padding','compact');
+t = tiledlayout(nrows,ncols,'TileSpacing',tilespacing,'Padding',padding);
 
 end
 
