@@ -1,4 +1,0 @@
-DNE: get_ocubo.m. Is file name/extension correct? Is file contained in subfolder of working directory?
-datatype = kim
-Caught "std::exception" Exception message is:
-fl:filesystem:SystemError

@@ -1,4 +1,0 @@
-brkQ,method,projtol,zeroQ,starttime,nmeshpts,ndatapts,ncores,gitcommit,uuid,predinput,queryinput,projQ,runtime,parity,PredictMethod,KernelType,KernelParameters_1,KernelParameters_2,KernelParameterNames,Beta,Sigma,genseed,errmetrics,rmse,mae,L,int_fraction,nints,numnonints,r
-1,gpr,0.0001,0,24-Oct-2020 16:03:45,200,10000,12,4b756d6,f11ede10,5dof,5dof,0,1.130236,,exact,SquaredExponential,0.0884130947270062,0.132050603212174,SigmaL,SigmaF,1.17045121168279,0.0461211703053476,10,,0.100785586614209,0.0693252541906391,NaN,NaN,NaN,NaN,NaN
-1,idw,0.0001,0,24-Oct-2020 16:03:31,200,10000,12,4b756d6,f9a9c447,5dof,5dof,1,0.326775,,,,,,,NaN,NaN,10,,0.127307669950897,0.0903578826730016,2,1,10000,0,0.0436332312998582
-1,nn,0.0001,0,24-Oct-2020 16:03:16,200,10000,12,4b756d6,fb14acfc,5dof,5dof,1,0.060828,,,,,,,NaN,NaN,1207150105,,0.138436605427911,0.0981542617107822,NaN,NaN,NaN,NaN,NaN
