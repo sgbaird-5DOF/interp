@@ -103,7 +103,10 @@ Active rotation is specified with an input parameter `'epsijk'` == `1` and is th
 ```matlab
 o = [qinv(o(1:4,:) qinv(o(5:8,:))];
 ```
-
+or simply
+```matlab
+o = oflip(o);
+```
 ## parfor loops
 Parfor loops are used by default where there is potential for significant speed-up. A parfor-compatible text progress bar is encoded into many of these. Adding disp() or fprintf() inside the parfor loop (aside from what's already inside the nested text progress bar function) may cause odd behavior on the command line output, but should not affect the integrity of the code execution. Because the parfor-compatible text progress bars need to be nested functions, in order to [deal with the inability to add variables to static workspaces](https://www.mathworks.com/help/matlab/matlab_prog/variables-in-nested-and-anonymous-functions.html) while debugging, you can either assign variables to "ans" (a special variable that is still accessible), output statements directly to the command line terminal (no variable assignment). Alternatively, you can comment the nested function, `nUpdateProgress()`.
 
