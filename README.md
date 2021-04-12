@@ -14,7 +14,8 @@ the beginning of functions, which is used extensively throughout). For users of 
 
 ### Toolboxes
 - [Statistics and Machine Learning Toolbox](https://www.mathworks.com/products/statistics.html) (for Gaussian Process Regression: [fitrgp()](https://www.mathworks.com/help/stats/fitrgp.html), [fitrgp.predict()](https://www.mathworks.com/help/stats/compactregressiongp.predict.html))
-- [Parallel Computing Toolbox](https://www.mathworks.com/products/parallel-computing.html) (optional) <!---, but for fitrgp() may need to change `hyperopts = struct('UseParallel',true,'Optimizer','bayesopt','MaxObjectiveEvaluations',maxhyperobj);` to `hyperopts = struct('UseParallel',false,'Optimizer','bayesopt','MaxObjectiveEvaluations',maxhyperobj);` in [interp5DOF.m](code/interp5DOF.m) under "method-specific interpolation" section 'gpr' case.)--->
+- [Parallel Computing Toolbox](https://www.mathworks.com/products/parallel-computing.html) (optional)
+<!---, but for fitrgp() may need to change `hyperopts = struct('UseParallel',true,'Optimizer','bayesopt','MaxObjectiveEvaluations',maxhyperobj);` to `hyperopts = struct('UseParallel',false,'Optimizer','bayesopt','MaxObjectiveEvaluations',maxhyperobj);` in [interp5DOF.m](code/interp5DOF.m) under "method-specific interpolation" section 'gpr' case.) --->
 - [Symbolic Math Toolbox](https://www.mathworks.com/products/symbolic.html) (optional, for [numStabBary.m](code/numStabBary.m))
 
 ### Files
@@ -26,7 +27,7 @@ See [cloning a repository](https://docs.github.com/en/github/creating-cloning-an
 ### Basic steps:
 * Step 0: download the [code](https://github.com/sgbaird-5DOF/interp.git)
 * Step 1: set [interp-5DOF/code/](code/) as working directory
-* Step 2: add subfolderse to path and run [interp5DOF_test.m](code/interp5DOF_test.m)
+* Step 2: add subfolders to path (`addpath(genpath('.'))`) and run [interp5DOF_test.m](code/interp5DOF_test.m)
 
 ### Platform-specific directions
 #### Linux
@@ -67,9 +68,9 @@ dir() and addpath() commands are used to locate functions in subfolders of the c
 --->
 
 ## Getting started
-Look at [interp5DOF.m](code/interp5DOF.m), which is a top-level function for creating a mesh, importing/generating data, triangulating a mesh and identifying the intersecting facet for datapoints (if applicable), and computing an interpolation.
+Look at [interp5DOF.m](code/interp5DOF.m), which is a high-level function for Gaussian Process Regression (GPR), barycentric, nearest neighbor (NN), and inverse-distance weighting (IDW) interpolation. This involves importing/generating data and computing an interpolation.
 
-interp5DOF.m can be called in other functions/scripts to produce interpolation results using 5DOF misorientation/boundary plane normal pairs (qm/nA) and grain boundary property values. It was written with loosely similar input/output structure to the MATLAB built-in function [interpn()](https://www.mathworks.com/help/matlab/ref/interpn.html) involving input points, input values, query points, and query values.
+`interp5DOF.m` can be called in other functions/scripts to produce interpolation results using 5DOF misorientation/boundary plane normal pairs (qm/nA) and grain boundary property values. It was written with loosely similar input/output structure to the MATLAB built-in function [interpn()](https://www.mathworks.com/help/matlab/ref/interpn.html) involving input points and values, query points and values, and options.
 
 ### Simple Example Data
 Separate from [interp5DOF_test.m](code/interp5DOF_test.m), the following is a fast, bare-bones example to show the basic input/output format of interp5DOF.m. See also [get_cubo.m](code/get_cubo.m)
@@ -83,7 +84,10 @@ method = 'gpr'; %interpolation method
 ```
 
 ## Test functions
-Most functions have a corresponding "test" function (e.g. hsphext_subdiv.m --> hsphext_subdiv_test.m, interp5DOF.m --> interp5DOF_test.m) which gives simple usage example(s). These are useful for debugging, visualizations, and understanding the functions without having to do a full run which could be time-consuming. This also allows for the non-test function code to be more succinct, as certain plotting routines can be moved to the test function instead. The various test functions generally run to completion within a few seconds, and the parameters may be changed freely (e.g. dimension, number of points, etc.) where applicable. Some test functions have specific plotting routines for 1-sphere (2D) and 2-sphere (3D) cases since a 7-sphere is difficult to visualize and interpret ([n-sphere](https://en.wikipedia.org/wiki/N-sphere)). For example, see [sphbary_test.m](code/sphbary_test.m) and [toBPFZ_test.m](code/toBPFZ_test.m).
+Most functions have a corresponding "test" function (e.g. `hsphext_subdiv.m` --> `hsphext_subdiv_test.m`, `interp5DOF.m` --> `interp5DOF_test.m`) which gives simple usage example(s). These are useful for debugging, visualizations, and understanding the functions without having to do a full run which could be time-consuming. This also allows for the non-test function code to be more succinct, as certain plotting routines can be moved to the test function instead. The various test functions generally run to completion within a few seconds, and the parameters can generally be changed freely (e.g. dimension, number of points). Some test functions have specific plotting routines for 1-sphere (2D) and 2-sphere (3D) cases since a 7-sphere is difficult to visualize and interpret ([n-sphere](https://en.wikipedia.org/wiki/N-sphere)). For example, see [sphbary_test.m](code/sphbary_test.m) and [toBPFZ_test.m](code/toBPFZ_test.m).
+
+## Plots
+Most plots in the paper are produced in the script: [plotting.m](code/plotting.m).
 
 ## Data Preparation
 Input GBs can take on the following forms:
@@ -101,11 +105,11 @@ o = [qinv(o(1:4,:) qinv(o(5:8,:))];
 ```
 
 ## parfor loops
-Parfor loops are used by default where there is potential for significant speed-up. A parfor-compatible text progress bar is encoded into many of these. Adding disp() or fprintf() inside the parfor loop (aside from what's already inside the nested text progress bar function) may cause odd behavior on the command line output, but should not affect the integrity of the code execution. Because the parfor-compatible text progress bars need to be nested functions, in order to [deal with the inability to add variables to static workspaces](https://www.mathworks.com/help/matlab/matlab_prog/variables-in-nested-and-anonymous-functions.html), you can either assign variables to "ans" (a special variable that is still accessible), output statements directly to the command line terminal (no variable assignment), or comment the nested function, `nUpdateProgress()`.
+Parfor loops are used by default where there is potential for significant speed-up. A parfor-compatible text progress bar is encoded into many of these. Adding disp() or fprintf() inside the parfor loop (aside from what's already inside the nested text progress bar function) may cause odd behavior on the command line output, but should not affect the integrity of the code execution. Because the parfor-compatible text progress bars need to be nested functions, in order to [deal with the inability to add variables to static workspaces](https://www.mathworks.com/help/matlab/matlab_prog/variables-in-nested-and-anonymous-functions.html) while debugging, you can either assign variables to "ans" (a special variable that is still accessible), output statements directly to the command line terminal (no variable assignment). Alternatively, you can comment the nested function, `nUpdateProgress()`.
 
-If the parallel computing toolbox is not installed, the parfor loops will execute as regular for loops. If the parallel computing toolbox is installed and you only want to use a single core, start a parallel pool with only one core before running any of the functions via `parpool(1)`. The loop will still run as a parfor loop, however. A `parfor` loop with a single core and parallel computing toolbox should not run any slower than a regular `for` loop as long as they are contained within functions. A `parfor` loop executed within a script, however, is likely to result in significant slow-down.
+If the parallel computing toolbox is not installed, the `parfor` loops will execute as regular `for` loops. If the parallel computing toolbox is installed and you only want to use a single core, start a parallel pool with only one core before running any of the functions via `parpool(1)`. The loop will still run internally as a `parfor` loop, however. A `parfor` loop with a single core and parallel computing toolbox should not run any slower than a regular `for` loop as long as they are contained within functions. A `parfor` loop executed within a script, however, is likely to result in significant slow-down.
 
-To debug within a `parfor` loop, simply change it to a `for` loop while debugging and change it back afterwards. I added "parfor compatible" as a comment next to the parfor statements. Thus, you can use MATLAB [find files](https://www.mathworks.com/help/matlab/matlab_env/finding-files-and-folders.html#:~:text=To%20open%20the%20Find%20Files,on%20the%20MATLAB%20search%20path.) (Ctrl+Shift+F) to search for the keyword "parfor compatible" (including quotes) in order to keep track of which parfor loops have been changed to for loops. If you make changes and an error arises, it is possible it will only give useful information at the top-level where the `parfor` started, hence the debugging suggestion above.
+To debug within a `parfor` loop, simply change it to a `for` loop while debugging and change it back afterwards. I added "parfor compatible" as a comment next to the parfor statements. Thus, you can use MATLAB [find files](https://www.mathworks.com/help/matlab/matlab_env/finding-files-and-folders.html#:~:text=To%20open%20the%20Find%20Files,on%20the%20MATLAB%20search%20path.) (`Ctrl+Shift+F`) to search for the keyword "parfor compatible" (including quotes) in order to keep track of which parfor loops have been changed to for loops. If you make changes and an error arises, it is possible it will only give useful information at the top-level where the `parfor` started, hence the debugging suggestion above.
 
 ## File dependencies
 Take a look at [parseReqFiles_test.m](code/parseReqFiles_test.m) for generating a list of file dependencies for [interp5DOF.m](code/inter5DOF.m) (below) or other files.
