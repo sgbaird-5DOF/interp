@@ -38,7 +38,7 @@ git clone --recurse-submodules https://github.com/sgbaird-5DOF/interp.git
 
 Verify that [MATslurm](https://github.com/sgbaird-5DOF/MATslurm) is not an empty directory. If you're using GitHub Desktop, you may need to clone the directory with the above command using Git Bash, which can be opened via ``` Ctrl-` ``` or on the toolbar via Repository-->"Open in Git Bash".
 
-##### Step 1: open MATLAB and navigate to navigate to [interp-5DOF/code/](code/)
+##### Step 1: open MATLAB and navigate to [interp-5DOF/code/](code/)
 `matlab`
 
 \>\> `cd interp-5DOF/code/`
