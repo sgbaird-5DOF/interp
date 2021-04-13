@@ -4,7 +4,7 @@
 See
 > 1. Baird, S., Homer, E., Fullwood, T., & Johnson, O. (2021). Five Degree-of-Freedom Property Interpolation of Arbitrary Grain Boundaries via Voronoi Fundamental Zone Octonion Framework. (Soon to be available on ArXiv. Soon to be submitted to Computational Materials Science)
 > 1. [GB_octonion_code](https://github.com/ichesser/GB_octonion_code)
-> 1. Chesser, I., Francis, T., De Graef, M., & Holm, E. A. (2020). Learning the Grain Boundary Manifold: Tools for Visualizing and Fitting Grain Boundary Properties. Acta Materialia. https://doi.org/10.2139/ssrn.3460311
+> 1. Chesser, I.; Francis, T.; De Graef, M.; Holm, E. A. Learning the Grain Boundary Manifold: Tools for Visualizing and Fitting Grain Boundary Properties. Acta Materialia 2020, 195, 209–218. https://doi.org/10.1016/j.actamat.2020.05.024.
 > 1. Francis, T., Chesser, I., Singh, S., Holm, E. A., & De Graef, M. (2019). A geodesic octonion metric for grain boundaries. Acta Materialia, 166, 135–147. https://doi.org/10.1016/j.actamat.2018.12.034
 
 ## Dependencies
