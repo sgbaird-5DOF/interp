@@ -1,8 +1,8 @@
 # Five Degree-of-Freedom (5DOF) Interpolation
- Code related to meshing and interpolation of grain boundaries by representing 5DOF of grain boundaries as octonions and mapping them into a Voronoi Fundamental Zone.
+ Code related to meshing and interpolation of grain boundaries by representing 5DOF of grain boundaries as octonions and mapping them into a Voronoi Fundamental Zone. (https://github.com/sgbaird-5DOF/interp)
  
 See
-> 1. Baird, S., Homer, E., Fullwood, T., & Johnson, O. (2021). Five Degree-of-Freedom Property Interpolation of Arbitrary Grain Boundaries via Voronoi Fundamental Zone Octonion Framework. (Submitted and soon to be available on ArXiv, citation available soon. Planning to submit to Computational Materials Science)
+> 1. Baird, S., Homer, E., Fullwood, T., & Johnson, O. (2021). Five Degree-of-Freedom Property Interpolation of Arbitrary Grain Boundaries via Voronoi Fundamental Zone Octonion Framework. (Soon to be available on ArXiv. Soon to be submitted to Computational Materials Science)
 > 1. [GB_octonion_code](https://github.com/ichesser/GB_octonion_code)
 > 1. Chesser, I., Francis, T., De Graef, M., & Holm, E. A. (2020). Learning the Grain Boundary Manifold: Tools for Visualizing and Fitting Grain Boundary Properties. Acta Materialia. https://doi.org/10.2139/ssrn.3460311
 > 1. Francis, T., Chesser, I., Singh, S., Holm, E. A., & De Graef, M. (2019). A geodesic octonion metric for grain boundaries. Acta Materialia, 166, 135–147. https://doi.org/10.1016/j.actamat.2018.12.034
@@ -22,7 +22,7 @@ the beginning of functions, which is used extensively throughout). For users of 
 See [File dependencies](https://github.com/sgbaird/octonion-mesh/blob/master/README.md#file-dependencies)
 
 ## Usage
-See [cloning a repository](https://docs.github.com/en/github/creating-cloning-and-archiving-repositories/cloning-a-repository) and [git submodules](https://git-scm.com/book/en/v2/Git-Tools-Submodules) for more information or other options such as using GitHub Desktop (Windows, Linux, etc.) or downloading a .zip file. [Forking](https://docs.github.com/en/github/getting-started-with-github/fork-a-repo) and pull requests are welcome/encouraged.
+See [cloning a repository](https://docs.github.com/en/github/creating-cloning-and-archiving-repositories/cloning-a-repository) and [git submodules](https://git-scm.com/book/en/v2/Git-Tools-Submodules) for more information or other options such as using GitHub Desktop (Windows, Linux, etc.) or downloading a .zip file. [Forking](https://docs.github.com/en/github/getting-started-with-github/fork-a-repo), pull requests, and opening of issues are welcome/encouraged.
 
 ### Basic steps:
 * Step 0: download the [code](https://github.com/sgbaird-5DOF/interp.git)
@@ -87,7 +87,8 @@ method = 'gpr'; %interpolation method
 Most functions have a corresponding "test" function (e.g. `hsphext_subdiv.m` --> `hsphext_subdiv_test.m`, `interp5DOF.m` --> `interp5DOF_test.m`) which gives simple usage example(s). These are useful for debugging, visualizations, and understanding the functions without having to do a full run which could be time-consuming. This also allows for the non-test function code to be more succinct, as certain plotting routines can be moved to the test function instead. The various test functions generally run to completion within a few seconds, and the parameters can generally be changed freely (e.g. dimension, number of points). Some test functions have specific plotting routines for 1-sphere (2D) and 2-sphere (3D) cases since a 7-sphere is difficult to visualize and interpret ([n-sphere](https://en.wikipedia.org/wiki/N-sphere)). For example, see [sphbary_test.m](code/sphbary_test.m) and [toBPFZ_test.m](code/toBPFZ_test.m).
 
 ## Plots
-Most plots in the paper are produced in the script: [plotting.m](code/plotting.m).
+Most plots in the paper are produced in the script: [plotting.m](code/plotting.m). One of the larger file dependencies, [gitID-0055bee_uuID-475a2dfd_paper-data6.mat, can be downloaded at figshare](https://doi.org/10.6084/m9.figshare.14405924.v1) and has the following citation:
+> @misc{baird_homer_fullwood_johnson_2021, title={gitID-0055bee_uuID-475a2dfd_paper-data6.mat}, url={https://figshare.com/articles/dataset/gitID-0055bee_uuID-475a2dfd_paper-data6_mat/14405924/1}, DOI={10.6084/m9.figshare.14405924.v1}, abstractNote={This is a larger MATLAB .mat file required for reproducing plots from the sgbaird-5DOF/interp repository for grain boundary property interpolation. It contains multiple trials of five degree-of-freedom interpolation model runs for various interpolation schemes.}, publisher={figshare}, author={Baird, Sterling and Homer, Eric R and Fullwood, David and Johnson, Oliver K.}, year={2021}, month={Apr} } 
 
 ## Data Preparation
 Input GBs can take on the following forms:
