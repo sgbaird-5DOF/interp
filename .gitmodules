@@ -8,4 +8,4 @@
 	url = ../../sgbaird/interp5DOF-paper.git
 [submodule "code/ternplot"]
 	path = code/ternplot
-	url = git@github.com:alchemyst/ternplot.git
+	url = ../../alchemyst/ternplot.git
