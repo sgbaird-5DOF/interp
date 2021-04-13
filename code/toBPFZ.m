@@ -1,4 +1,4 @@
-function [nAout,nArot] = toBPFZ(qlist,nAlist,NV)
+function [nAout,nArot,nR] = toBPFZ(qlist,nAlist,NV)
 arguments
     qlist(:,4)
     nAlist(:,3)
@@ -51,7 +51,7 @@ npts = size(qlist,1);
 nAout = zeros(npts,3);
 
 nR = length(Rmats);
-nArot = repmat({zeros(nR,3)},npts,1);
+nArot = repmat({zeros(2*nR,3)},npts,1);
 
 for i = 1:npts
     %unpack
@@ -74,6 +74,7 @@ for i = 1:npts
     %initialize
     for j = 1:nR
         nArot{i}(j,:) = (Rmats{j}*nA.').';
+        nArot{i}(j+nR,:) = (Rmats{j}*-nA.').';
     end
     nArot{i} = uniquetol(nArot{i},'ByRows',true);
     
