@@ -15,15 +15,22 @@ exID = posIDs(2);
 nAex = nAlist(exID,:); %example
 addpathdir('q2rod.m')
 
+pgnum = 32;
+
 %get symmetrically equivalent ones
-[nAout,nArot] = toBPFZ(qlist,nAlist);
+[nAout,nArot,nR] = toBPFZ(qlist,nAlist,'pgnum',pgnum);
 
 %example
 % nAoutex = nAout(posID1,:);
 nArotex = nArot{exID+1};
 
 %reference normal
-nAref = nArot{1}(18,:);
+refnum = 32;
+if refnum > 2*nR
+    refnum = randi(2*nR);
+end
+nAref = nArot{1}(refnum,:);
+% nAref = nArot{1}(2,:);
 
 
 %% plotting
@@ -31,9 +38,10 @@ paperfigure(1,2);
 tnum = 1;
 nexttile(tnum) % voronoi cell point cloud
 nAsub = nArot(2:end);
-v = num2cell(randi(24,npts-1,1));
+v = num2cell(randi(nR,npts-1,1));
 nAdata = cellfun(@(x,i) x(i,:),nAsub,v,'UniformOutput',false);
 nAdata = vertcat(nAdata{:});
+nAdata = [nAdata;-nAdata];
 t = n2c(nAdata);
 plot3(t{:},'r.')
 
