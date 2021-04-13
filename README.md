@@ -1,5 +1,5 @@
-# Five Degree-of-Freedom (5DOF) Interpolation
- Code related to meshing and interpolation of grain boundaries by representing 5DOF of grain boundaries as octonions and mapping them into a Voronoi Fundamental Zone. (https://github.com/sgbaird-5DOF/interp)
+# Five Degree-of-Freedom Grain Boundary Interpolation
+ Code related to meshing and interpolation of grain boundaries by representing 5DOF of grain boundaries as grain boundary octonions and mapping them into a Voronoi Fundamental Zone. (https://github.com/sgbaird-5DOF/interp)
  
 See
 > 1. Baird, S., Homer, E., Fullwood, T., & Johnson, O. (2021). Five Degree-of-Freedom Property Interpolation of Arbitrary Grain Boundaries via Voronoi Fundamental Zone Octonion Framework. (Soon to be available on ArXiv. Soon to be submitted to Computational Materials Science)
