@@ -437,7 +437,7 @@ toBPFZ_test(1)
 % nexttile
 % toBPFZ_test(4)
 fname = 'voronoi';
-savefigpng(figfolder,fname,[178.5 41.5 1755 784])
+savefigpng(figfolder,fname)
 % savefigpng(folder,'voronoi-4NN')
 
 %% bary interp
