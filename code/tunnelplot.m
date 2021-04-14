@@ -95,7 +95,12 @@ if (isempty(nv.tpredlist) && isempty(nv.tsdlist) && isempty(nv.propList) && ...
                 [intfacetIDs,databary,klist] = intersect_facet(mdl.mesh.ppts,mdl.mesh.sphK,arcppts,mdl.inttol,'nnMax',mdl.nnMax);
                 tpredlist{i} = get_interp(mdl.mesh,mdl.data,intfacetIDs,mdl.barytype,mdl.barytol);
             case 'gpr'
-                [tpredlist{i},tsdlist{i},cilist{i}] = predict(mdl.gprMdl,arcppts);
+                if isfield(mdl,'gprMdl')
+                    gprMdl = mdl.gprMdl;
+                else
+                    gprMdl = mdl.cgprMdl;
+                end
+                [tpredlist{i},tsdlist{i},cilist{i}] = predict(gprMdl,arcppts);
                 
                 %     out = exec_argfn(mdl.mdlcmd,mdl,{'tpred','tsd'});
                 %     tpred = out.tpred;
