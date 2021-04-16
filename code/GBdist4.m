@@ -4,11 +4,14 @@ arguments
 	o2(:,8) double {mustBeFinite,mustBeReal,mustBeSqrt2Norm}
 	pgnum(1,1) double {mustBeInteger} = 32 % default == cubic Oh point group
 	dtype char {mustBeMember(dtype,{'omega','norm'})} = 'norm'
-	wtol(1,1) double {mustBeFinite,mustBeReal} = 1e-12 %omega tolerance
+	wtol double = [] %omega tolerance
 	waitbarQ logical = false
     epsijk(1,1) double = 1
     nv.prec(1,1) double = 12
     nv.tol(1,1) double = 1e-6
+    nv.nNN(1,1) double = 1 %number of NNs
+    nv.IncludeTies(1,1) {mustBeLogical} = true
+    nv.deleteDuplicates(1,1) {mustBeLogical} = true
 end
 % GBDIST4  modified version of GBdist function by CMU group. Keeps o1 constant.
 %--------------------------------------------------------------------------
@@ -38,6 +41,13 @@ end
 %--------------------------------------------------------------------------
 prec = nv.prec; %precision for duplicates
 tol = nv.tol; %tolerance for duplicates
+nNN = nv.nNN; %number of nearest neighbors
+IncludeTies = nv.IncludeTies; %used in knnsearch
+deleteDuplicatesQ = nv.deleteDuplicates;
+
+if ~isempty(wtol)
+    warning('GBdist4.m functionality has been adjusted to not use wtol (2021-04-14). Specify "prec" and "tol" instead.')
+end
 
 %number of octonion pairs
 npts = size(o2,1);
@@ -81,13 +91,13 @@ else
 	nreps = nreps2;
 end
 
-function nUpdateProgress(~)
-	percentDone = 100*p/N;
-	msg = sprintf('%3.0f', percentDone); %Don't forget this semicolon
-	fprintf([reverseStr, msg]);
-	reverseStr = repmat(sprintf('\b'), 1, length(msg));
-	p = p + nreps;
-end
+% function nUpdateProgress(~)
+% 	percentDone = 100*p/N;
+% 	msg = sprintf('%3.0f', percentDone); %Don't forget this semicolon
+% 	fprintf([reverseStr, msg]);
+% 	reverseStr = repmat(sprintf('\b'), 1, length(msg));
+% 	p = p + nreps;
+% end
 
 %loop through octonion pairs, could be sped up significantly via batch approach and/or via GPU adaptation (see gpuArray)
 parfor i = 1:npts %parfor compatible
@@ -146,17 +156,27 @@ parfor i = 1:npts %parfor compatible
 	%% find minimum distances & octonions
 	%get first instance of minimum omega
 	dmin(i) = min(dlist);
+    
+    idx = knnsearch(round(dlist,prec),dmin(i),'IncludeTies',IncludeTies,'K',nNN);
 	
+    if IncludeTies
+        minIDs = horzcat(idx{:});
+    else
+        minIDs = idx;
+    end
 	%find logical indices of all minimum omegas
-	minIDs = ismembertol(dlist,dmin(i),wtol,'DataScale',1); %loosened tol for min omegas, 2020-07-28
+% 	minIDs = ismembertol(dlist,dmin(i),wtol,'DataScale',1); %loosened tol for min omegas, 2020-07-28
 
 	%find corresponding symmetrized octonions (with duplicates)
 	o2minsymsTmp = o2syms(minIDs,:);
 	
 	%delete duplicate rows (low tol OK b.c. matching 8 numbers)
-	[~,minIDs] = uniquetol(round(o2minsymsTmp,prec),tol,'ByRows',true,'DataScale',1); %generally repeats will be the same within ~12 sig figs
-	o2minsyms{i} = o2minsymsTmp(minIDs,:);
-	
+    if deleteDuplicatesQ
+        [~,minIDs] = uniquetol(round(o2minsymsTmp,prec),tol,'ByRows',true,'DataScale',1); %generally repeats will be the same within ~12 sig figs
+        o2minsyms{i} = o2minsymsTmp(minIDs,:);
+    else
+        o2minsyms{i} = o2minsymsTmp; %2021-04-14
+    end
 end
 
 end %GBdist4.m
