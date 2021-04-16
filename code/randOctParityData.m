@@ -12,17 +12,17 @@ runtype = 'test'; %'test','full'
 nreps = 1; % number of runs or repetitions
 
 % job submission environment
-env = 'local'; %'slurm', 'local'
+env = 'slurm'; %'slurm', 'local'
 dryrunQ = F; %whether to skip running the jobs and just compile results
 metaQ = F; %whether to load full model or only metay-data at end
 
 %make sure the parameters here correspond with the input to "pars" below
 switch runtype
     case 'test'
-        ninputpts = 40516; %17176; %floor(58604*0.2); %56442; %floor(67886*0.8); %floor(264276*.8); %17176; %1893*2; %[2366]; %[1893*1]; % 5000 10000 20000 50000];
-        npredpts = 10000; %58604-17176; %ceil(58604*0.8); %11443; %floor(67886*0.2); %ceil(264276*0.2); %67886-17176; %67886-1893*2; %65520; %473*1;
-        method = {'gpr','nn'}; % 'sphbary', 'pbary', 'gpr', 'sphgpr', 'nn', 'avg'
-        datatype = {'rohrer-MgO'}; % 'brk', 'kim', 'rohrer-Ni', 'rohrer-test', 'rohrer-brk-test', 'olmsted-Ni', 'olmsted-MgO'
+        ninputpts = floor(58604*0.8); %40516; %17176; %floor(58604*0.2); %56442; %floor(67886*0.8); %floor(264276*.8); %17176; %1893*2; %[2366]; %[1893*1]; % 5000 10000 20000 50000];
+        npredpts = ceil(58604*0.2); %10000; %58604-17176; %ceil(58604*0.8); %11443; %floor(67886*0.2); %ceil(264276*0.2); %67886-17176; %67886-1893*2; %65520; %473*1;
+        method = {'gpr'}; % 'sphbary', 'pbary', 'gpr', 'sphgpr', 'nn', 'avg'
+        datatype = {'kim'}; % 'brk', 'kim', 'rohrer-Ni', 'rohrer-test', 'rohrer-brk-test', 'olmsted-Ni', 'rohrer-MgO'
         pgnum = 32; %m-3m (i.e. m\overbar{3}m) FCC symmetry default for e.g. Ni
         sig = [0]; %J/m^2, standard deviation, added to "y"
         genseed = 11;
@@ -62,11 +62,11 @@ end
 % comment = 'kim-minrepeats2-trainsigma0.2';
 % comment = 'kim-minrepeats2-traintestsigma0.2';
 % comment = 'kim-minrepeats5-trainsigma0.2-posnoise';
-% comment = 'kim-rng11';
+comment = 'kim-rng11';
 % comment = 'paper-data3';
 % comment = 'paper-data-test';
 % comment = 'paper-data5';
-comment = 'rohrer-MgO';
+% comment = 'rohrer-MgO';
 % comment = 'test';
 % comment = 'kim-trainRepeat-testNoRepeat';
 % comment = 'rohrer';
@@ -116,12 +116,12 @@ end
 
 %% functions to generate save filepaths
 %diary
-files = dir(fullfile('**','data','randOctParity','diary'));
+files = dir(fullfile('**','data','diary'));
 diaryfolder = files(1).folder;
 diarynamefn = @(method,ninputpts,gitcommit,puuid) [method int2str(ninputpts) '_gitID-' gitcommit(1:7) '_puuID-' puuid '_' comment '.txt'];
 diarypathfn = @(method,ninputpts,gitcommit,puuid) fullfile(diaryfolder,diarynamefn(method,ninputpts,gitcommit,puuid));
 %data
-files = dir(fullfile('**','data','randOctParity','pcombs'));
+files = dir(fullfile('**','data','pcombs'));
 savefolder = files(1).folder;
 savenamefn = @(method,ninputpts,gitcommit,puuid) [method int2str(ninputpts) '_gitID-' gitcommit(1:7) '_puuID-' puuid '_' comment '.mat'];
 
