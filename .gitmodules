@@ -9,3 +9,6 @@
 [submodule "code/ternplot"]
 	path = code/ternplot
 	url = ../../alchemyst/ternplot.git
+[submodule "code/latexTable"]
+	path = code/latexTable
+	url = ../../eliduenisch/latexTable.git
