@@ -1,13 +1,15 @@
-function [octvtx,oref,fiveref] = get_octpairs(pts,epsijk,NV)
+function [octvtx,oref,fiveref,ids] = get_octpairs(pts,epsijk,nv)
 arguments
 	pts(:,8) double {mustBeSqrt2Norm}
     epsijk(1,1) double = 1
-	NV.o2addQ(1,1) logical = false
-	NV.pgnum(1,1) double = 32
-	NV.wtol(1,1) double = 1e-12
-    NV.fiveref = []
-    NV.oref(1,8) double = get_ocubo(1,'random',[],10)
-    NV.dispQ = []
+	nv.o2addQ(1,1) logical = false
+	nv.pgnum(1,1) double = 32
+	nv.wtol double = []
+    nv.fiveref = []
+    nv.oref(1,8) double = get_ocubo(1,'random',[],10)
+    nv.dispQ = []
+    nv.nNN(1,1) double = 1 %number of NNs
+    nv.IncludeTies(1,1) {mustBeLogical} = true
 end
 % GET_OCTPAIRS  Get a set of octonions that are symmetrized with respect to a fixed reference GB (default rng seed == 10)
 % Author: Sterling Baird
@@ -35,7 +37,9 @@ end
 %  GBdist4.m
 %  mustBeSqrt2Norm.m (argument validation function)
 %--------------------------------------------------------------------------
-dispQ = NV.dispQ;
+dispQ = nv.dispQ;
+nNN = nv.nNN;
+IncludeTies = nv.IncludeTies;
 if isempty(dispQ)
     if size(pts,1) <= 1000
         dispQ = false;
@@ -48,11 +52,11 @@ fnames = {'PGnames.mat'};
 addpathdir(fnames)
 
 %% Unpack 5DOF reference (empty is OK)
-fiveref = NV.fiveref;
+fiveref = nv.fiveref;
 
 %% get reference octonion
 if isempty(fiveref)
-    oref = NV.oref;
+    oref = nv.oref;
 else
     oref = five2oct(fiveref,epsijk);
 end
@@ -66,27 +70,31 @@ if dispQ
     disp('get_octpairs ')
 end
 npts = size(pts,1);
-orefrep = repmat(oref,npts,1);
-[dmin,octvtx] = GBdist4(orefrep,pts,NV.pgnum,'norm',NV.wtol,dispQ,epsijk);
+% orefrep = repmat(oref,npts,1);
+[dmin,octvtx] = GBdist4(oref,pts,nv.pgnum,'norm',nv.wtol,dispQ,epsijk,'IncludeTies',IncludeTies,'nNN',nNN);
 
-%check if multiple octonions found (rare, otherwise might indicate an error)
-idstmp = cellfun(@(oct) size(oct,1),octvtx) > 1;
-nids = sum(idstmp);
-if nids > 0
-    disp(['nids: ' int2str(nids)])
-    %display the id since it's a rare occurrence
-    disp(find(idstmp))
-    %replace octonions with first octonion
-    ids = find(idstmp);
-    for i = 1:length(ids)
-        id = ids(i);
-        octvtx{id} = octvtx{id}(1,:);
-    end
-end
+len = cellfun(@(x) size(x,1),octvtx);
+ids = arrayfun(@(x) repelem(x,len(x)),1:npts,'UniformOutput',false);
+ids = [ids{:}];
+% ids = cumsum(cellfun(@(x) size(x,1),octvtx));
+% %check if multiple octonions found (rare, otherwise might indicate an error)
+% idstmp = cellfun(@(oct) size(oct,1),octvtx) > 1;
+% nids = sum(idstmp);
+% if nids > 0
+%     disp(['nids: ' int2str(nids)])
+%     %display the id since it's a rare occurrence
+%     disp(find(idstmp))
+%     %replace octonions with first octonion
+%     ids = find(idstmp);
+%     for i = 1:length(ids)
+%         id = ids(i);
+%         octvtx{id} = octvtx{id}(1,:);
+%     end
+% end
 %catenate
 octvtx = vertcat(octvtx{:});
 
-if NV.o2addQ
+if nv.o2addQ
     %add reference octonion
 	octvtx = [oref; octvtx];
 end
@@ -357,7 +365,7 @@ end
 
 
 
-% [~,oct_sym0] = GBdist4(o1,o2,32,'norm',NV.wtol);
+% [~,oct_sym0] = GBdist4(o1,o2,32,'norm',nv.wtol);
 
 %unpack no boundary point
 % name2 = 'O';
@@ -411,7 +419,7 @@ end
 % 	%unpack other octonion in pair
 % 	o3 = pts(i,:); %input
 % 	%symmetrized pairs
-% 	[octvtx{i+1},omega3(i+1)] = GBpair(o1,o2,o3,NV.pgnum,NV.method,NV.wtol);
+% 	[octvtx{i+1},omega3(i+1)] = GBpair(o1,o2,o3,nv.pgnum,nv.method,nv.wtol);
 % end
 
 % o3 = pts(1,:);
@@ -427,13 +435,13 @@ end
 % t = num2cell(o2,2);
 % [octvtx{2:end}] = t{:};
 % 
-% if ~NV.o2addQ
+% if ~nv.o2addQ
 % 	octvtx{1} = [];
 % end
 % octvtx = vertcat(octvtx{:});
 
 
-	NV.method char {mustBeMember(NV.method,{'standard','pairwise'})} = 'pairwise'
+	nv.method char {mustBeMember(nv.method,{'standard','pairwise'})} = 'pairwise'
 
 
 name1 = 'random';
@@ -473,9 +481,9 @@ fnames = {'PGnames.mat','olist.mat','misFZfeatures.mat'};
 
 
 
-	NV.plotQ(1,1) logical = false
+	nv.plotQ(1,1) logical = false
 
-if NV.plotQ
+if nv.plotQ
     % compute 5DOF representation
     five = GBoct2five(octvtx,true);
     figure
