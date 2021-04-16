@@ -1,4 +1,4 @@
-function [ypred,interpfn,mdl,mdlpars] = interp5DOF(qm,nA,y,qm2,nA2,method,epsijk,NV)
+function [ypred,interpfn,mdl,mdlpars] = interp5DOF(qm,nA,y,qm2,nA2,method,epsijk,nv)
 arguments
     qm %input misorientation quaternions
     nA %input BP normals
@@ -7,22 +7,24 @@ arguments
     nA2 = [] %query BP normals
     method char {mustBeMember(method,{'gpr','sphgpr','pbary','sphbary','idw','nn','avg'})} = 'gpr'
     epsijk(1,1) double = 1
-    NV.pgnum(1,1) double = 32 %m-3m (i.e. m\overbar{3}m) FCC symmetry default
-    NV.databary = [] %for use with bary methods
-    NV.facetIDs = [] %for use with bary methods
-    NV.ytrue = [] %user-specified "true" values for error calculations
-    NV.modelparsspec = struct()
-    NV.brkQ(1,1) logical = false %whether to compute BRK values as ytrue
-    NV.sigma(1,1) double = 0 %noise to add to property values
-    NV.mygpropts = struct.empty %for use with gpr methods 'gpr' or 'sphgpr'
-    NV.r double = [] %for use with 'idw' method, alternatively set to [] for automatic estimation
-    NV.uuid(1,8) char = get_uuid() %unique ID associated with this interpolation run
-    NV.o = [] %input octonions, specify these or qm/nA pairs
-    NV.o2 = [] %query octonions, specify these or qm2/nA2 pairs
-    NV.oref = get_ocubo(1,'random',[],10)
-    NV.nforce double = 1
-    NV.nforceQ(1,1) logical = false
-    NV.dispQ(1,1) logical = true
+    nv.pgnum(1,1) double = 32 %m-3m (i.e. m\overbar{3}m) FCC symmetry default
+    nv.databary = [] %for use with bary methods
+    nv.facetIDs = [] %for use with bary methods
+    nv.ytrue = [] %user-specified "true" values for error calculations
+    nv.modelparsspec = struct()
+    nv.brkQ(1,1) logical = false %whether to compute BRK values as ytrue
+    nv.sigma(1,1) double = 0 %noise to add to property values
+    nv.mygpropts = struct.empty %for use with gpr methods 'gpr' or 'sphgpr'
+    nv.r double = [] %for use with 'idw' method, alternatively set to [] for automatic estimation
+    nv.uuid(1,8) char = get_uuid() %unique ID associated with this interpolation run
+    nv.o = [] %input octonions, specify these or qm/nA pairs
+    nv.o2 = [] %query octonions, specify these or qm2/nA2 pairs
+    nv.oref = get_ocubo(1,'random',[],10)
+    nv.nforce double = 1
+    nv.nforceQ(1,1) logical = false
+    nv.dispQ(1,1) logical = true
+    nv.IncludeTies(1,1) {mustBeLogical} = true
+    nv.nNN(1,1) double = 1
 end
 % INTERP5DOF  Convert misorientation and boundary plane normal 5DOF input
 % data to a closed, octonion, hyperspherical mesh and interpolate property
@@ -52,7 +54,7 @@ end
 %    'insertnamehere' - no functionality, but contains instructions for
 %      implementing your own interpolation scheme
 %
-%  NV - method-specific name-value pairs
+%  nv - method-specific name-value pairs
 %     method == 'sphbary' or 'pbary'
 %       'databary' - supply barycentric coordinates to reduce redundant
 %       computation if repeating interp5DOF calls for same list of qm/nA
@@ -166,15 +168,17 @@ end
 %--------------------------------------------------------------------------
 
 %unpack (some) name-value pairs
-pgnum = NV.pgnum;
-brkQ = NV.brkQ;
-uuid = NV.uuid;
-ytrue = NV.ytrue;
-sigma = NV.sigma;
-nforceQ = NV.nforceQ;
-nforce = NV.nforce;
-dispQ = NV.dispQ;
-o2 = NV.o2;
+pgnum = nv.pgnum;
+brkQ = nv.brkQ;
+uuid = nv.uuid;
+ytrue = nv.ytrue;
+sigma = nv.sigma;
+nforceQ = nv.nforceQ;
+nforce = nv.nforce;
+dispQ = nv.dispQ;
+o2 = nv.o2;
+IncludeTies = nv.IncludeTies;
+nNN = nv.nNN;
 
 %display method
 if dispQ
@@ -182,16 +186,16 @@ if dispQ
 end
 
 % add relevant folders to path (by searching subfolders for functions)
-% addpath(genpath('.'))
-addpathdir({'normr.m','GB5DOF_setup.m','cu2qu.m','q2rod.m','five2oct.m',...
-    'correctdis.m','interp_gpr.m'})
+addpath(genpath('.'))
+% addpathdir({'normr.m','GB5DOF_setup.m','cu2qu.m','q2rod.m','five2oct.m',...
+%     'correctdis.m','interp_gpr.m'})
 
 %% convert to octonions & symmetrize
 tic
 %predictor points
-if isempty(qm) && isempty(nA) && ~isempty(NV.o)
+if isempty(qm) && isempty(nA) && ~isempty(nv.o)
     predinput = 'octonion';
-    otmp = NV.o;
+    otmp = nv.o;
 else
     predinput = '5dof';
     otmp = five2oct(qm,nA,epsijk);
@@ -210,12 +214,12 @@ elseif isempty(qm2) && isempty(nA2) && isempty(o2)
 end
 
 %symmetrization
-wtol = 1e-6;
-[o,oref] = get_octpairs(otmp,'wtol',wtol,'pgnum',pgnum,'oref',NV.oref);
+% wtol = 1e-6;
+[o,oref,~,ids] = get_octpairs(otmp,'pgnum',pgnum,'oref',nv.oref,'IncludeTies',IncludeTies,'nNN',nNN);
 ninputpts = size(o,1);
 
 %symmetrization
-[o2,oref2] = get_octpairs(otmp2,'wtol',wtol,'pgnum',pgnum,'oref',NV.oref);
+[o2,oref2] = get_octpairs(otmp2,'pgnum',pgnum,'oref',nv.oref,'IncludeTies',false,'nNN',1);
 npredpts = size(o2,1);
 
 %make sure that reference octonions are identical within tolerance
@@ -292,6 +296,8 @@ elseif isempty(y)
     y = nan(size(ppts2,1),1);
 end
 
+y = y(ids); %data augmentation for property values
+
 mesh.props = y;
 
 %data property values
@@ -331,17 +337,18 @@ gitcommit = get_gitcommit();
 %% package into struct
 %general model variables
 mdlgen = var_names(method,projtol,zeroQ,usv,starttime,ncores,ninputpts,npredpts,...
-    gitcommit,uuid,predinput,queryinput,projQ,oref,oref2,nnmu,nnsigma,symruntime);
+    gitcommit,uuid,predinput,queryinput,projQ,oref,oref2,nnmu,nnsigma,symruntime,...
+    IncludeTies,nNN);
 %general parameters
 mdlparsgen = var_names(method,projtol,zeroQ,starttime,ninputpts,...
     npredpts,ncores,gitcommit,uuid,predinput,queryinput,projQ,oref,oref2,nnmu,nnsigma,...
-    symruntime);
+    symruntime,IncludeTies,nNN);
 
 %% method-specific interpolation
 tic
 switch method
     case {'sphbary','pbary'}
-        if isempty(NV.databary)
+        if isempty(nv.databary)
             %% get triangulation
             [pptstmp,usvtri] = proj_down(o,projtol,'zero',true);
             K = sphconvhulln(pptstmp);
@@ -396,8 +403,8 @@ switch method
             
         else
             %unpack
-            databary = NV.databary;
-            facetIDs = NV.facetIDs;
+            databary = nv.databary;
+            facetIDs = nv.facetIDs;
             
             %interpolate using supplied barycentric coordinates
             [ypred,facetprops,NNextrapID,nnList] = interp_bary_fast(ppts,ppts2,meshprops,databary,facetIDs);
@@ -410,7 +417,7 @@ switch method
             mdlspec = var_names(databary,facetprops,NNextrapID,nnList,facetIDs);
             
             %model-specific parameters
-            mdlparsspec = NV.modelparsspec;
+            mdlparsspec = nv.modelparsspec;
         end
         
     case {'sphgpr','gpr'}
@@ -423,7 +430,7 @@ switch method
         end
         
         %gpr options
-        if isempty(NV.mygpropts)
+        if isempty(nv.mygpropts)
             %% interp5DOF's default gpr options
             thresh = Inf;
             if ninputpts <= thresh
@@ -462,7 +469,7 @@ switch method
             
         else
             % user-supplied gpr options
-            gpropts = NV.mygpropts;
+            gpropts = nv.mygpropts;
             gproptnames = gpropts(1:2:end);
             gproptvals = gpropts(2:2:end);
             gproptstruct = cell2struct(gproptvals,gproptnames,2);
@@ -578,7 +585,7 @@ switch method
             X2 = o2;
         end
         
-        r = NV.r;
+        r = nv.r;
         
         L = 2; %norm-power (i.e. L == 2 --> Euclidean norm)
         %different from Tovar's FEX idw.m implementation, but should be
@@ -658,6 +665,7 @@ mdlgen.ypred = ypred;
 mdlgen.mdlcmd = mdlcmd;
 mdlgen.interpfn = interpfn;
 mdlgen.runtime = runtime;
+mesh.ids = ids;
 mdlgen.mesh = mesh;
 mdlgen.data = data;
 mdlgen.parity = parity;
@@ -844,7 +852,7 @@ end
 %             mdlspec.intfacetcell = intfacetcell;
 
 
-%             facetprops = NV.facetprops;
+%             facetprops = nv.facetprops;
 %
 %             %find NaN values & replace with NN values (NN extrapolation)
 %             [NNextrapID,~] = isnan(databary);
@@ -859,7 +867,7 @@ end
 %             facetprops(NNextrapID,1) = propList(nnList);
 %             facetprops(NNextrapID,2:d) = 0;
             
-%             switch NV.modelparsspec.method
+%             switch nv.modelparsspec.method
 %                 case 'sphbary'
 %                     getinterpmethod = 'spherical';
 %                 case 'pbary'
@@ -875,15 +883,15 @@ end
 
 
             % additional input checking
-%             if sum([isempty(NV.databary) isempty(NV.facetprops)]) == 1
+%             if sum([isempty(nv.databary) isempty(nv.facetprops)]) == 1
 %                 error('both databary and facetprops should be supplied simultaneously')
 %             end
 %
-%             if ~all(size(NV.databary) == size(NV.facetprops))
+%             if ~all(size(nv.databary) == size(nv.facetprops))
 %                 error('databary and facetprops must have the same dimensions')
 %             end
 %
-%             if sum([isempty(NV.databary) isempty(NV.facetprops)])==1
+%             if sum([isempty(nv.databary) isempty(nv.facetprops)])==1
 %                 error('both databary and facetprops should be defined or neither')
 %             end
 
