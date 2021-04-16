@@ -1,10 +1,11 @@
-function propList = GB5DOF_setup(pA,pB,mA,mat,epsijk)
+function propList = GB5DOF_setup(pA,pB,mA,mat,epsijk,nv)
 arguments
-    pA(:,4)
-    pB(:,4)
+    pA(:,4) = []
+    pB(:,4) = []
     mA(:,3) = [0 0 1] %default is octonion convention
     mat char = 'Ni'
     epsijk(1,1) double = 1
+    nv.o double = []
 end
 %GB5DOF_SETUP  Compute 5DOF GB energy from BRK function
 %--------------------------------------------------------------------------
@@ -39,6 +40,12 @@ end
 %     mA = vertcat(five.nA).';
 % end
 
+o = nv.o;
+if isempty([pA;pB])
+    assert(~isempty(o),'specify either pA and pB or o')
+    pA = o(:,1:4);
+    pB = o(:,5:8);
+end
 pA = normr(pA);
 pB = normr(pB);
 
