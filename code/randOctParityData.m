@@ -168,7 +168,7 @@ switch env
         %setup
         mem = 1024*12*cores; %total memory of job, MB
         qosopt = 'standby'; %'', 'test', 'standby'
-        files = dir(fullfile('MATslurm','code','submit.sh'));
+        files = dir(fullfile('**','MATslurm','code','submit.sh'));
         scriptfpath = fullfile(files(1).folder,files(1).name);
         %submission
         submit_sbatch(parpath,cores,mem,qosopt,scriptfpath); %submit.sh --> exec_combs.m --> execfn (defined above)
