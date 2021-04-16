@@ -572,6 +572,7 @@ switch method
         mdlparsspec.KernelParameters = cgprMdl.KernelInformation.KernelParameters;
         mdlparsspec.KernelParameterNames = cgprMdl.KernelInformation.KernelParameterNames;
         mdlparsspec.Beta = cgprMdl.Beta;
+        mdlparsspec.Sigma = cgprMdl.Sigma;
         %         mdlparsspec.Sigma = cgprMdl.Sigma;
         %         mdlparsspec.CrossVal = CrossVal;
         
