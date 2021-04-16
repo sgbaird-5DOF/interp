@@ -18,6 +18,8 @@ disp('file loaded')
 %saving
 files = dir(fullfile('**','interp5DOF-paper','figures'));
 figfolder = files(1).folder;
+files = dir(fullfile('**','interp5DOF-paper','tables'));
+tblfolder = files(1).folder;
 
 addpath(genpath('.'))
 setlatex()
@@ -660,22 +662,49 @@ nA2 = nA;
 ytrue = y;
 
 [ypred,interpfn,mdl,mdlpars] = interp5DOF(qm,nA,y,qm2,nA2,'ytrue',ytrue);
+[ypred_lowSig,interpfn_lowSig,mdl_lowSig,mdlpars_lowSig] = interp5DOF(qm,nA,y,qm2,nA2,'ytrue',ytrue,...
+    'mygpropts',{'PredictMethod','exact','Sigma',1e-4,'ConstantSigma',true,'SigmaLowerBound',5e-5});
 
 y_brk = GB5DOF_setup(o(:,1:4),o(:,5:8));
 gpr_errmetrics = get_errmetrics(ytrue,ypred);
+gpr_lowSig_errmetrics = get_errmetrics(ytrue,ypred_lowSig);
 brk_errmetrics = get_errmetrics(ytrue,y_brk);
 
 parity{1} = struct('ytrue',ytrue,'ypred',y_brk);
 parity{2} = struct('ytrue',ytrue,'ypred',ypred);
-multiparity(parity,{'BRK','VFZ'})
-strs={'BRK','GPR'};
-for i = 1:2
-    ax=nexttile(i);
-    str=strs{i};
-    ax.XLabel.String = ['actual simulated GBE ($J m^{-2}$)'];
-    ax.YLabel.String = ['predicted ' str ' GBE ($J m^{-2}$)'];
+parity{3} = struct('ytrue',ytrue,'ypred',ypred_lowSig);
+
+strs={'BRK','GPR','low-noise-GPR'};
+for i = 1:3
+    paperfigure();
+    str = strs{i};
+    parityplot(parity{i}.ypred,parity{i}.ytrue,'yname',['predicted ' str]);
+    str = lower(str);
+    savefigpng(figfolder,['resubloss-ni-' str])
 end
-savefigpng(figfolder,'resubloss-ni')
+
+S = structvertcat(mdlpars,mdlpars_lowSig);
+KernelParameters = vertcat(S.KernelParameters);
+SigmaL = 2*rad2deg(KernelParameters(:,1));
+SigmaF = KernelParameters(:,2);
+KernelParameterNames = S.KernelParameterNames;
+Beta = vertcat(S.Beta);
+Sigma = vertcat(S.Sigma);
+ConstantSigma = {'no';'yes'};
+T = table(ConstantSigma,SigmaL,SigmaF,Beta,Sigma,'VariableNames',...
+    {'Constant $\sigma$','$\sigma_L$ ($^\circ{}$)',...
+    '$\sigma_F$ ($J m^{-2}$)',...
+    '$\beta$ ($J m^{-2}$)',...
+    '$\sigma_\mathrm{in}$ ($J m^{-2}$)'});
+caption = ['Fitted parameters for two \gls{gpr} models fitted to the 388 '...
+    'simulated Ni \glspl{gbe} by \citet{olmstedSurveyComputedGrain2009a}. '...
+    'The first model allows $\sigma$ to vary, whereas the second constrains '...
+    '$\sigma$ to be fixed. $\sigma_L$, $\sigma_F$, $\beta$, and $\sigma$ are '...
+    'the kernel length scale, signal standard deviation, constant basis function, '...
+    'and input property standard deviation, respectively. See '...
+    '\url{https://www.mathworks.com/help/stats/fitrgp.html} for additional details.'];
+savetblstr(T,'resubloss-ni-pars',tblfolder,caption)
+
 %% CODE GRAVEYARD
 %{
 %split apply & find groups
@@ -836,5 +865,11 @@ A = importdata('olm_octonion_list.txt');
 
 % addpathdir({'paperfigure.m','dist-parity.mat','olm_octonion_list.txt',...
 %     'oct50000.mat','gmat2q.m','PGnames.mat','var_names.m'})
+
+% multiparity(parity,{'BRK','VFZ','VFZ-lowSig'})
+    %     ax=nexttile(i);
+%     str=strs{i};
+%     ax.XLabel.String = ['actual simulated GBE ($J m^{-2}$)'];
+%     ax.YLabel.String = ['predicted ' str ' GBE ($J m^{-2}$)'];
 
 %}
