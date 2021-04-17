@@ -91,13 +91,13 @@ else
 	nreps = nreps2;
 end
 
-% function nUpdateProgress(~)
-% 	percentDone = 100*p/N;
-% 	msg = sprintf('%3.0f', percentDone); %Don't forget this semicolon
-% 	fprintf([reverseStr, msg]);
-% 	reverseStr = repmat(sprintf('\b'), 1, length(msg));
-% 	p = p + nreps;
-% end
+function nUpdateProgress(~)
+	percentDone = 100*p/N;
+	msg = sprintf('%3.0f', percentDone); %Don't forget this semicolon
+	fprintf([reverseStr, msg]);
+	reverseStr = repmat(sprintf('\b'), 1, length(msg));
+	p = p + nreps;
+end
 
 %loop through octonion pairs, could be sped up significantly via batch approach and/or via GPU adaptation (see gpuArray)
 parfor i = 1:npts %parfor compatible
