@@ -7,6 +7,13 @@
 % fname = 'gitID-014bf70_uuID-3ed9cba0_paper-data3.mat';
 % fname = 'gitID-6ede824_uuID-1cf78415_paper-data5.mat';
 fname = 'gitID-0055bee_uuID-475a2dfd_paper-data6.mat';
+files = dir(fullfile('**','interp','data'));
+datafolder = files(1).folder;
+datapath = fullfile(datafolder,fname);
+if exist(datapath,'file') ~= 2
+    warning(['downloading data file because could not find at ' datapath ' , May take a few minutes.'])
+    websave(datapath,'https://ndownloader.figshare.com/files/27540842')
+end
 files = dir(fullfile('**',fname));
 fpath = fullfile(files(1).folder,files(1).name);
 load(fpath);
@@ -61,6 +68,16 @@ for datatype = datatypelist
         savefigpng(figfolder,[char(datatype) 'parity' int2str(ninputpts)]);
     end
 end
+
+%% kernel scale for GPR
+tbltmp = mdlparstbl(...
+    ismember(mdlparstbl.method,'gpr') & ...
+    ismember(mdlparstbl.datatype,'brk') & ...
+    mdlparstbl.ninputpts==50000,:);
+
+kpars = tbltmp.KernelParameters;
+kpars2 = [kpars{:}];
+avgKernelScale = mean(2*rad2deg(kpars2(1,:)));
 
 %% errors
 methodlist = {'pbary','gpr','idw','nn','avg'};
@@ -647,6 +664,7 @@ disp(['wtmae: ' num2str(errmetrics.wtmae)])
 
 %% Olmsted Ni Dataset Comparison
 %see also interp5DOF_setup.m
+rng(10)
 A = importdata('olm_octonion_list.txt');
 
 o = A.data;
@@ -678,32 +696,60 @@ strs={'BRK','GPR','low-noise-GPR'};
 for i = 1:3
     paperfigure();
     str = strs{i};
-    parityplot(parity{i}.ypred,parity{i}.ytrue,'yname',['predicted ' str]);
+    parityplot(parity{i}.ypred,parity{i}.ytrue,'xname','Olmsted Ni','yname',['predicted ' str]);
     str = lower(str);
     savefigpng(figfolder,['resubloss-ni-' str])
 end
 
+%% Fitted Parameters
 S = structvertcat(mdlpars,mdlpars_lowSig);
-KernelParameters = vertcat(S.KernelParameters);
-SigmaL = 2*rad2deg(KernelParameters(:,1));
-SigmaF = KernelParameters(:,2);
+KernelParameters = [S.KernelParameters];
+SigmaL = 2*rad2deg(KernelParameters(1,:)).';
+SigmaF = KernelParameters(2,:).';
 KernelParameterNames = S.KernelParameterNames;
 Beta = vertcat(S.Beta);
 Sigma = vertcat(S.Sigma);
 ConstantSigma = {'no';'yes'};
-T = table(ConstantSigma,SigmaL,SigmaF,Beta,Sigma,'VariableNames',...
-    {'Constant $\sigma$','$\sigma_L$ ($^\circ{}$)',...
-    '$\sigma_F$ ($J m^{-2}$)',...
-    '$\beta$ ($J m^{-2}$)',...
-    '$\sigma_\mathrm{in}$ ($J m^{-2}$)'});
-caption = ['Fitted parameters for two \gls{gpr} models fitted to the 388 '...
-    'simulated Ni \glspl{gbe} by \citet{olmstedSurveyComputedGrain2009a}. '...
-    'The first model allows $\sigma$ to vary, whereas the second constrains '...
-    '$\sigma$ to be fixed. $\sigma_L$, $\sigma_F$, $\beta$, and $\sigma$ are '...
-    'the kernel length scale, signal standard deviation, constant basis function, '...
-    'and input property standard deviation, respectively. See '...
-    '\url{https://www.mathworks.com/help/stats/fitrgp.html} for additional details.'];
-savetblstr(T,'resubloss-ni-pars',tblfolder,caption)
+R = @(x) round(x,4,'decimals');
+T = table(ConstantSigma,R(SigmaL),R(SigmaF),R(Beta),R(Sigma),'VariableNames',...
+    {'constant-sigma (yes/no)','sigma-L (deg)',...
+    'sigma-F (J m^-2)',...
+    'beta (J m^-2)',...
+    'sigma (J m^-2)'});
+writetable(T,fullfile(tblfolder,'resubloss-ni-pars.csv'))
+% caption = ['Fitted parameters for two \gls{gpr} models fitted to the 388 '...
+%     'simulated Ni \glspl{gbe} by \citet{olmstedSurveyComputedGrain2009a}. '...
+%     'The first model allows $\sigma$ to vary, whereas the second constrains '...
+%     '$\sigma$ to be fixed. $\sigma_L$, $\sigma_F$, $\beta$, and $\sigma$ are '...
+%     'the kernel length scale, signal standard deviation, constant basis function, '...
+%     'and input property standard deviation, respectively. See '...
+%     '\url{https://www.mathworks.com/help/stats/fitrgp.html} for additional details.'];
+% savetblstr(T,'resubloss-ni-pars',tblfolder,caption)
+
+%% Low-Sigma 1D slices
+fname = 'olm-oct-Sigma-3-5-7-9-11.mat';
+files = dir(fullfile('**','data','**',fname));
+fpath = fullfile(files(1).folder,files(1).name);
+load(fpath,'oolmABCDE','yolmABCDE','olm_ids') %generated in fz_proj.mlx
+
+n = 150;
+Slist = [5 7 9 11];
+A = oolmABCDE{1};
+paperfigure(2,2);
+
+for i = 1:4
+    S = Slist(i);
+    B = oolmABCDE{i+1};
+    fname = ['tunnel-3-' int2str(S)];
+    fpath = fullfile(figfolder,fname);
+    % load(fpath,'tpredlist','tsdlist','propList','methodlist','A','B')
+    nexttile()
+    tunneltri([],'line',A,B,'brk',true,'olm',true); %note, this function is in the egprm repo (2021-04-20)
+    tunneltri(mdl,
+%     tunnelplot_test(2,ninputpts,n,tpredlist,tsdlist,propList,methodlist,A,B);
+    papertext(i)
+    savefigpng(figfolder,fname)
+end
 
 %% CODE GRAVEYARD
 %{
