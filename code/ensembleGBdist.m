@@ -3,7 +3,7 @@ arguments
    o(:,8) double = get_ocubo(100)
    o2(:,8) double = []
    K(1,1) double = 10
-   dtype char = 'euclidean'
+   dtype char {mustBeMember(dtype,{'euclidean','arclength','omega'})} = 'euclidean'
    nv.pdtype char {mustBeMember(nv.pdtype,{'dist','pdist','pdist2'})} = 'pdist'
    nv.orefs = get_orefs(K)
    nv.disp {mustBeLogical} = true
