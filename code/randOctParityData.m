@@ -27,7 +27,7 @@ switch runtype
         sig = [0]; %J/m^2, standard deviation, added to "y"
         genseed = 11;
         brkQ = false;
-        
+        mygpropts = {'PredictMethod','exact','Sigma',5e-2,'ConstantSigma',true,'SigmaLowerBound',1e-2};
     case 'full'
         ninputpts = [100 388 500 1000 5000 10000 20000 50000]; % 388, 500, 1000, 2000, 5000, 10000, 20000, 50000
         npredpts = 10000;
@@ -40,7 +40,7 @@ switch runtype
 end
 
 %comment (no spaces, used in filename)
-comment = 'olmsted-Ni';
+comment = 'olmsted-Ni-rng11-Sigma-5e-2';
 % comment = 'paper-data2';
 % comment = 'rohrer-Ni-test5';
 % comment = 'rohrer-Ni-regularization';
@@ -152,7 +152,8 @@ if ~dryrunQ
     %function to execute and output arguments from function
     execfn = @(ninputpts,npredpts,method,datatype,pgnum,sig,genseed,brkQ) ... **NAMES NEED TO MATCH PARS FIELDS** (see above)
         interp5DOF_setup(ninputpts,npredpts,method,datatype,...
-        'pgnum',pgnum,'sig',sig,'genseed',genseed,'brkQ',brkQ); %**NAMES NEED TO MATCH PARS FIELDS AND EXECFN ARGUMENTS**
+        'pgnum',pgnum,'sig',sig,'genseed',genseed,'brkQ',brkQ,...
+        'mygpropts',mygpropts); %**NAMES NEED TO MATCH PARS FIELDS AND EXECFN ARGUMENTS**
     argoutnames = {'ypred','interpfn','mdl','mdlpars'};
     %i.e. [ypred,interpfn,mdl,mdlpars] = interp5DOF_setup(ninputpts,npredpts,method,datatype,...);
     
