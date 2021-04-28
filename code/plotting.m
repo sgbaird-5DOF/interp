@@ -168,9 +168,14 @@ nnmu = splitapply(@mean,tbltmp.nnmu,G);
 nnsigma = splitapply(@std,tbltmp.nnmu,G);
 paperfigure();
 errorbar(ID,nnmu,nnsigma);
+hold on
+x = 388:100:50000;
+f = 2.5025e-5*x-1.27396*log(x)+15.4499;
+plot(x,f,'k-');
 set(gca,'XScale','log');
 xlabel('VFZO Set Size','Interpreter','latex')
 ylabel('VFZO $\omega_{\mathrm{NN}}$ ($^{\circ}$)','Interpreter','latex')
+legend('Data','$ax-\mathrm{log}(x)b+c$','Interpreter','latex')
 savefigpng(figfolder,'nndist-vs-setsize');
 
 %% dist-parity
@@ -735,19 +740,36 @@ load(fpath,'oolmABCDE','yolmABCDE','olm_ids') %generated in fz_proj.mlx
 n = 150;
 Slist = [5 7 9 11];
 A = oolmABCDE{1};
-paperfigure(2,2);
+% paperfigure(2,2);
 
+% fname = 'gpr388_gitID-57857cd_puuID-abf7948f_olmsted-Ni-rng11-Sigma-1e-2.mat';
+% fname = 'gpr388_gitID-57857cd_puuID-d2476f08_olmsted-Ni-rng11-Sigma-5e-2.mat';
+% fname = 'gpr388_gitID-57857cd_puuID-67702aca_olmsted-Ni-rng10.mat';
+fname = 'gpr388_gitID-57857cd_puuID-e9c787cd_olmsted-Ni';
+load(fname,'mdl','mdlpars')
+mdl.mixQ = false;
+mdl.K = 1;
+mdl.thr = [];
+mdl.scl = [];
+mdl.mdls(1) = mdl;
+mdl.cgprMdls2 = [];
+mdl.oreflist = [];
 for i = 1:4
     S = Slist(i);
-    B = oolmABCDE{i+1};
+    B = get_octpairs(oolmABCDE{i+1},'oref',get_ocubo(1,'random',[],10));
     fname = ['tunnel-3-' int2str(S)];
     fpath = fullfile(figfolder,fname);
     % load(fpath,'tpredlist','tsdlist','propList','methodlist','A','B')
-    nexttile()
-    tunneltri([],'line',A,B,'brk',true,'olm',true); %note, this function is in the egprm repo (2021-04-20)
-    tunneltri(mdl,
+%     nexttile()
+    paperfigure();
+    tunneltri(mdl,'line',A,B,'olm',true,'mkr','r.','disptxt',false,'extend',0);
+    hold on
+    tunneltri([],'line',A,B,'brk',true,'txt',{'$\Sigma3$',['$\Sigma' int2str(Slist(i)) '$']},'extend',0); %note, tunneltri() is in the egprm repo, not the interp repo (2021-04-20)
 %     tunnelplot_test(2,ninputpts,n,tpredlist,tsdlist,propList,methodlist,A,B);
-    papertext(i)
+%     papertext(i)
+%     if i == 1
+        legend('GPR','BRK','location','best')
+%     end
     savefigpng(figfolder,fname)
 end
 
