@@ -22,8 +22,8 @@ end
 
 %% get BRK function values
 tic
-y = GB5DOF_setup(five);
-ytrue = GB5DOF_setup(five2);
+y = GB5DOF_setup([],qm,nA);
+ytrue = GB5DOF_setup([],qm2,nA2);
 toc
 
 %% Interpolation
