@@ -76,8 +76,16 @@ dmin = zeros(npts,1);
 o2minsyms = cell(1,npts);
 
 %textwaitbar setup
-D = parallel.pool.DataQueue;
-afterEach(D, @nUpdateProgress);
+%textwaitbar setup
+lastwarn('')
+[~,warnID] = lastwarn();
+[~] = ver('parallel');
+if ~strcmp(warnID,'MATLAB:ver:NotFound')
+    D = parallel.pool.DataQueue;
+    afterEach(D, @nUpdateProgress);
+else
+    waitbarQ = false;
+end
 nsets = npts;
 ninterval = 20;
 N=nsets;

@@ -66,10 +66,18 @@ subfacetIDs = dataProj; %sub IDs (i.e. IDs from sublist of facets)
 intfacetIDs = dataProj; % facet IDs that can be used to index into K
 t = dataProj;
 
+waitbarQ = true;
 %textwaitbar setup
-D = parallel.pool.DataQueue;
-K = parallel.pool.Constant(K);
-afterEach(D, @nUpdateProgress);
+lastwarn('')
+[~,warnID] = lastwarn();
+[~] = ver('parallel');
+if ~strcmp(warnID,'MATLAB:ver:NotFound')
+    D = parallel.pool.DataQueue;
+    K = parallel.pool.Constant(K);
+    afterEach(D, @nUpdateProgress);
+else
+    waitbarQ = false;
+end
 N=ndatapts;
 p=1;
 reverseStr = '';
@@ -88,7 +96,9 @@ nreps = nreps2;
 parfor i  = 1:ndatapts % parfor compatible
     %text waitbar
     if mod(i,nreps2) == 0
-        send(D,i);
+        if waitbarQ
+            send(D,i);
+        end
     end
     
     %% first NN projection
