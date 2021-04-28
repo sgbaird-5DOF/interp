@@ -33,10 +33,10 @@ See [cloning a repository](https://docs.github.com/en/github/creating-cloning-an
 #### Linux
 ##### Step 0: download the code
 ```bash
-git clone --recurse-submodules https://github.com/sgbaird-5DOF/interp.git
+git -c submodule.interp5DOF-paper.update=none clone --recurse-submodules https://github.com/sgbaird-5DOF/interp.git
 ```
 
-Verify that [MATslurm](https://github.com/sgbaird-5DOF/MATslurm) is not an empty directory. If you're using GitHub Desktop, you may need to clone the directory with the above command using Git Bash, which can be opened via ``` Ctrl-` ``` or on the toolbar via Repository-->"Open in Git Bash".
+Verify that [MATslurm](https://github.com/sgbaird-5DOF/MATslurm) is not an empty directory.
 
 ##### Step 1: open MATLAB and navigate to navigate to [interp-5DOF/code/](code/)
 `matlab`
@@ -51,8 +51,18 @@ Verify that [MATslurm](https://github.com/sgbaird-5DOF/MATslurm) is not an empty
 
 #### Windows
 ##### Step 0: download the code
-Open GitHub Desktop and clone and/or fork `https://github.com/sgbaird-5DOF/interp.git`
-The submodules should be downloaded automatically. If you want to commit to submodules, add these to GitHub desktop as well ("add from existing", navigate within interp folder to the submodule, click on submodule folder, and "add").
+Open GitHub Desktop and make a dummy repository via `Ctrl+N` so that you can open Git Bash via GitHub Desktop. Then clone and/or fork `https://github.com/sgbaird-5DOF/interp.git` by opening the Git Bash command line (i.e. Menubar --> Repository --> "Open in Git Bash" or 
+```
+Ctrl+`
+```
+) then run the following command in the directory where you want `interp` to appear:
+```bash
+git -c submodule.interp5DOF-paper.update=none clone --recurse-submodules https://github.com/sgbaird-5DOF/interp.git
+```
+
+Alternatively, you can try cloning directly in GitHub Desktop or via the "Open in GitHub Desktop" button under ![image](https://user-images.githubusercontent.com/45469701/116357284-907f9200-a7b9-11eb-81a3-3f55d27b8017.png), but it will likely throw an error, and I'm not sure if it will correctly clone the `MATslurm` submodule by the time it reaches that error. `MATslurm` is a bare minimum requirement for running `interp5DOF.m`. Attempt at your own risk.
+
+The submodules should be downloaded automatically. In order to update these submodules, add these to GitHub desktop as well ("add from existing", navigate within interp folder to the submodule, click on submodule folder, and "add").
 ##### Step 1: open MATLAB and navigate to navigate to [interp-5DOF/code/](code/)
 Set [interp-5DOF/code/](code/) as working directory via `cd` or GUI
 
@@ -115,7 +125,12 @@ This is distinct from `ensembleVFZO.m`, which takes the average interpolated pro
 Drop me a note in "Issues" if you have something you'd like to do or something you'd like to clarify, but can't figure out among the (many) options and functions in the `interp` repo. With a few details, there's a good chance I can offer some suggestions that will save a lot of time.
 
 ## Plots
-Most plots in the paper are produced in the script: [plotting.m](code/plotting.m). The larger file dependencies, `gitID-0055bee_uuID-475a2dfd_paper-data6.mat` and `gpr46883_gitID-b473165_puuID-50ffdcf6_kim-rng11.mat` can be [downloaded at figshare](https://doi.org/10.6084/m9.figshare.14405924.v3) and have the following citation:
+Most plots in the paper are produced in the script: [plotting.m](code/plotting.m). First, you need to create a dummy folder:
+```bash
+mkdir interp/code/interp5DOF-paper/figures/
+```
+
+The larger file dependencies, `gitID-0055bee_uuID-475a2dfd_paper-data6.mat` and `gpr46883_gitID-b473165_puuID-50ffdcf6_kim-rng11.mat` can be [downloaded at figshare](https://doi.org/10.6084/m9.figshare.14405924.v3) and have the following citation:
 > @misc{baird_homer_fullwood_johnson_2021, title={Five Degree-of-Freedom Grain Boundary Interpolation}, url={https://figshare.com/articles/dataset/gitID-0055bee_uuID-475a2dfd_paper-data6_mat/14405924/3}, DOI={10.6084/m9.figshare.14405924.v3}, abstractNote={These are larger MATLAB .mat files required for reproducing plots from the sgbaird-5DOF/interp repository for grain boundary property interpolation. gitID-0055bee_uuID-475a2dfd_paper-data6.mat contains multiple trials of five degree-of-freedom interpolation model runs for various interpolation schemes. gpr46883_gitID-b473165_puuID-50ffdcf6_kim-rng11.mat contains a Gaussian Process Regression model trained on 46883 Fe simulation GBs.}, publisher={figshare}, author={Baird, Sterling and Homer, Eric R and Fullwood, David and Johnson, Oliver K.}, year={2021}, month={Apr} }
 
 ## Data Preparation
