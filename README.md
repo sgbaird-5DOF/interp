@@ -7,6 +7,9 @@ See
 > 1. Chesser, I., Francis, T., De Graef, M., & Holm, E. A. (2020). Learning the Grain Boundary Manifold: Tools for Visualizing and Fitting Grain Boundary Properties. Acta Materialia. https://doi.org/10.2139/ssrn.3460311
 > 1. Francis, T., Chesser, I., Singh, S., Holm, E. A., & De Graef, M. (2019). A geodesic octonion metric for grain boundaries. Acta Materialia, 166, 135–147. https://doi.org/10.1016/j.actamat.2018.12.034
 
+## Table of Contents
+Use the <img src=https://user-images.githubusercontent.com/45469701/116359125-a68e5200-a7bb-11eb-8eba-dbea2acf653c.png width=30> button at the top-left of the README window
+
 ## Dependencies
 ### MATLAB Version
 MATLAB R2019b or higher (mainly for the [arguments ... end syntax checking](https://www.mathworks.com/help/matlab/matlab_prog/function-argument-validation-1.html) at
