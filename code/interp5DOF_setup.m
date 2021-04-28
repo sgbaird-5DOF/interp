@@ -1,4 +1,4 @@
-function [ypred,interpfn,mdl,mdlpars] = interp5DOF_setup(ninputpts,npredpts,method,datatype,epsijk,NV)
+function [ypred,interpfn,mdl,mdlpars] = interp5DOF_setup(ninputpts,npredpts,method,datatype,epsijk,nv)
 arguments
     ninputpts
     npredpts
@@ -6,12 +6,13 @@ arguments
     datatype char {mustBeMember(datatype,{'brk','kim','rohrer-Ni','rohrer-test',...
         'rohrer-brk-test','olmsted-Ni','rohrer-MgO'})} = 'brk'
     epsijk(1,1) double = 1
-    NV.pgnum(1,1) double = 32 %m-3m (i.e. m\overbar{3}m) FCC symmetry default
-    NV.uuid = get_uuid()
-    NV.K(1,1) double = 1 %# of VFZO ensembles
-    NV.sig(1,1) double = 0 %mJ/m^2, standard deviation to add to y
-    NV.genseed = []
-    NV.brkQ(1,1) double = false
+    nv.pgnum(1,1) double = 32 %m-3m (i.e. m\overbar{3}m) FCC symmetry default
+    nv.uuid = get_uuid()
+    nv.K(1,1) double = 1 %# of VFZO ensembles
+    nv.sig(1,1) double = 0 %mJ/m^2, standard deviation to add to y
+    nv.genseed = []
+    nv.brkQ(1,1) double = false
+    nv.mygpropts = struct.empty
 end
 %INTERP5DOF_SETUP  setup for interpolating five-degree-of-freedom property
 %data using random octochorically sampled octonions
@@ -22,12 +23,13 @@ end
 addpathdir({'cu2qu.m','q2rod.m','qmult.m','get_ocubo.m','get_uuid.m'})
 
 %unpack
-pgnum = NV.pgnum;
-uuid = NV.uuid;
-K = NV.K;
-sig = NV.sig;
-genseed = NV.genseed;
-brkQ = NV.brkQ;
+pgnum = nv.pgnum;
+uuid = nv.uuid;
+K = nv.K;
+sig = nv.sig;
+genseed = nv.genseed;
+brkQ = nv.brkQ;
+mygpropts = nv.mygpropts;
 
 %seed
 if ~isempty(genseed)
@@ -238,10 +240,10 @@ for k = 1:K
             % use octonions obtained via GBlab2oct
             [qm,nA,qm2,nA2]=deal([]);
             [ypredlist{k},interpfnlist{k},mdllist{k},mdlparslist{k}] = interp5DOF(qm,nA,y,qm2,nA2,method,...
-                'pgnum',pgnum,'uuid',uuid,'ytrue',ytrue,'o',o,'o2',o2,'brkQ',brkQ,'sig',sig);
+                'pgnum',pgnum,'uuid',uuid,'ytrue',ytrue,'o',o,'o2',o2,'brkQ',brkQ,'sig',sig,'mygpropts',mygpropts);
         otherwise
             [ypredlist{k},interpfnlist{k},mdllist{k},mdlparslist{k}] = interp5DOF(qm,nA,y,qm2,nA2,method,...
-                'pgnum',pgnum,'uuid',uuid,'ytrue',ytrue,'brkQ',brkQ,'sig',sig);
+                'pgnum',pgnum,'uuid',uuid,'ytrue',ytrue,'brkQ',brkQ,'sig',sig,'mygpropts',mygpropts);
     end
 end
 ypredtmp = [ypredlist{:}];
@@ -363,10 +365,10 @@ mdlextra = var_names(ocubotype,ocuboseed1,ocuboseed2,genseed,errmetrics,rmse,mae
 
 
 
-   NV.inputtype char {mustBeMember(NV.inputtype,{'5dof','octonion'})} = '5dof'
+   nv.inputtype char {mustBeMember(nv.inputtype,{'5dof','octonion'})} = '5dof'
 
 
-inputtype = NV.inputtype;
+inputtype = nv.inputtype;
 'o',o,'o2',o2,
 
 
