@@ -2,7 +2,7 @@
  Code related to meshing and interpolation of grain boundaries by representing 5DOF of grain boundaries as grain boundary octonions and mapping them into a Voronoi Fundamental Zone. ([https://github.com/sgbaird-5DOF/interp](https://github.com/sgbaird-5DOF/interp))
  
 See
-> 1. Baird, S., Homer, E., Fullwood, T., & Johnson, O. (2021). Five Degree-of-Freedom Property Interpolation of Arbitrary Grain Boundaries via Voronoi Fundamental Zone Octonion Framework. (Soon to be available on ArXiv. Soon to be submitted to Computational Materials Science)
+> 1. Baird, S. G.; Homer, E. R.; Fullwood, D. T.; Johnson, O. K. Five Degree-of-Freedom Property Interpolation of Arbitrary Grain Boundaries via Voronoi Fundamental Zone Octonion Framework. 2021. https://arxiv.org/abs/2104.06575 (Soon to be submitted to Computational Materials Science)
 > 1. [GB_octonion_code](https://github.com/ichesser/GB_octonion_code)
 > 1. Chesser, I., Francis, T., De Graef, M., & Holm, E. A. (2020). Learning the Grain Boundary Manifold: Tools for Visualizing and Fitting Grain Boundary Properties. Acta Materialia. https://doi.org/10.2139/ssrn.3460311
 > 1. Francis, T., Chesser, I., Singh, S., Holm, E. A., & De Graef, M. (2019). A geodesic octonion metric for grain boundaries. Acta Materialia, 166, 135–147. https://doi.org/10.1016/j.actamat.2018.12.034
@@ -85,6 +85,34 @@ method = 'gpr'; %interpolation method
 
 ## Test functions
 Most functions have a corresponding "test" function (e.g. `hsphext_subdiv.m` --> `hsphext_subdiv_test.m`, `interp5DOF.m` --> `interp5DOF_test.m`) which gives simple usage example(s). These are useful for debugging, visualizations, and understanding the functions without having to do a full run which could be time-consuming. This also allows for the non-test function code to be more succinct, as certain plotting routines can be moved to the test function instead. The various test functions generally run to completion within a few seconds, and the parameters can generally be changed freely (e.g. dimension, number of points). Some test functions have specific plotting routines for 1-sphere (2D) and 2-sphere (3D) cases since a 7-sphere is difficult to visualize and interpret ([n-sphere](https://en.wikipedia.org/wiki/N-sphere)). For example, see [sphbary_test.m](code/sphbary_test.m) and [toBPFZ_test.m](code/toBPFZ_test.m).
+
+## Distance Calculations
+If you only want to (manually) compute distances in the VFZ sense, first you need to map all GBs into a VFZ.
+```matlab
+npts = 100;
+o = get_ocubo(npts); %generate some random data
+o = get_octpairs(o); %symmetrize (using default reference GBO)
+```
+At this point, you can get the VFZ pairwise distance matrix via:
+```matlab
+pd = pdist(o);
+```
+Alternatively, `pdist2()` may be of interest if you want pairwise distances between two sets of points, or `vecnorm()` if you want to calculate distances between two lists of GBOs:
+```matlab
+npts2 = 100;
+o2 = get_ocubo(npts2);
+o2 = get_octpairs(o2);
+d = vecnorm(o1-o2,2,2); %o1 and o2 need to be the same size
+```
+If you want the "true" minimum distances (i.e. essentially the same implementation as [GB_octonion_code](https://github.com/ichesser/GB_octonion_code), but vectorized and parallelized), you may use `GBdist4.m` directly with two sets of GBOs.
+```matlab
+d = GBdist4(o1,o2);
+```
+It depends on the application, but if you want to compute large pairwise distance matrices that are nearly identical to the traditional GBO distances, I recommend using the ensembled VFZ distance via `ensembleGBdist.m` with `K >= 10`. This will be much faster than using `GBdist4.m`. For reference, this corresponds to (from the main paper when `K==10`):  
+<img src=https://user-images.githubusercontent.com/45469701/116044929-bcbad780-a62e-11eb-8c59-58a4354badbb.png width=300>  
+This is distinct from `ensembleVFZO.m`, which takes the average interpolated property from `K` different VFZs.
+
+Drop me a note in "Issues" if you have something you'd like to do or something you'd like to clarify, but can't figure out among the (many) options and functions in the `interp` repo. With a few details, there's a good chance I can offer some suggestions that will save a lot of time.
 
 ## Plots
 Most plots in the paper are produced in the script: [plotting.m](code/plotting.m). The larger file dependencies, `gitID-0055bee_uuID-475a2dfd_paper-data6.mat` and `gpr46883_gitID-b473165_puuID-50ffdcf6_kim-rng11.mat` can be [downloaded at figshare](https://doi.org/10.6084/m9.figshare.14405924.v3) and have the following citation:
