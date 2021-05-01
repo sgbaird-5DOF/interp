@@ -7,6 +7,9 @@ See
 > 1. Chesser, I., Francis, T., De Graef, M., & Holm, E. A. (2020). Learning the Grain Boundary Manifold: Tools for Visualizing and Fitting Grain Boundary Properties. Acta Materialia. https://doi.org/10.2139/ssrn.3460311
 > 1. Francis, T., Chesser, I., Singh, S., Holm, E. A., & De Graef, M. (2019). A geodesic octonion metric for grain boundaries. Acta Materialia, 166, 135–147. https://doi.org/10.1016/j.actamat.2018.12.034
 
+## Table of Contents
+Use the <img src=https://user-images.githubusercontent.com/45469701/116359125-a68e5200-a7bb-11eb-8eba-dbea2acf653c.png width=30> button at the top-left of the README window
+
 ## Dependencies
 ### MATLAB Version
 MATLAB R2019b or higher (mainly for the [arguments ... end syntax checking](https://www.mathworks.com/help/matlab/matlab_prog/function-argument-validation-1.html) at
@@ -22,7 +25,7 @@ the beginning of functions, which is used extensively throughout). For users of 
 See [File dependencies](https://github.com/sgbaird/octonion-mesh/blob/master/README.md#file-dependencies)
 
 ## Usage
-See [cloning a repository](https://docs.github.com/en/github/creating-cloning-and-archiving-repositories/cloning-a-repository) and [git submodules](https://git-scm.com/book/en/v2/Git-Tools-Submodules) for more information or other options such as using GitHub Desktop (Windows, Linux, etc.) or downloading a .zip file. [Forking](https://docs.github.com/en/github/getting-started-with-github/fork-a-repo), pull requests, and opening of issues are welcome/encouraged. Note that the .zip files will not contain submodules, which means that you'll need to download any submodules individually if you go that route (bare minimum would be the [MATslurm](https://github.com/sgbaird-5DOF/MATslurm) repository). Instead of downloading a .zip file, I suggest instead downloading and using GitHub Desktop. If you run into issues with the repository, you can download a lightweight version of `interp5DOF.m` and its dependencies [here](code/interp5DOF-lightweight.zip) then read README.txt for instructions, but please open up an issue in the GitHub repo if you do run into trouble with the repo.
+See [cloning a repository](https://docs.github.com/en/github/creating-cloning-and-archiving-repositories/cloning-a-repository) and [git submodules](https://git-scm.com/book/en/v2/Git-Tools-Submodules) for more information or other options such as using GitHub Desktop (Windows, Linux, etc.) or downloading a .zip file. [Forking](https://docs.github.com/en/github/getting-started-with-github/fork-a-repo), pull requests, and opening of issues are welcome/encouraged. Note that the .zip files will not contain submodules, which means that you'll need to download any submodules individually if you go that route (bare minimum would be the [MATslurm](https://github.com/sgbaird-5DOF/MATslurm) repository). Instead of downloading a .zip file, I suggest instead downloading and using GitHub Desktop. If you run into issues with the repository, you can download a [lightweight version of interp5DOF.m and its dependencies](code/interp5DOF-lightweight.zip), unzip it, and read README.txt for instructions, but please open up an issue in the GitHub repo if you do run into trouble with the repo. That way, you can get the most recent updates and others can benefit from it.
 
 ### Basic steps:
 * Step 0: download the [code](https://github.com/sgbaird-5DOF/interp.git)
@@ -33,10 +36,10 @@ See [cloning a repository](https://docs.github.com/en/github/creating-cloning-an
 #### Linux
 ##### Step 0: download the code
 ```bash
-git clone --recurse-submodules https://github.com/sgbaird-5DOF/interp.git
+git -c submodule.interp5DOF-paper.update=none clone --recurse-submodules https://github.com/sgbaird-5DOF/interp.git
 ```
 
-Verify that [MATslurm](https://github.com/sgbaird-5DOF/MATslurm) is not an empty directory. If you're using GitHub Desktop, you may need to clone the directory with the above command using Git Bash, which can be opened via ``` Ctrl-` ``` or on the toolbar via Repository-->"Open in Git Bash".
+Verify that [MATslurm](https://github.com/sgbaird-5DOF/MATslurm) is not an empty directory.
 
 ##### Step 1: open MATLAB and navigate to navigate to [interp-5DOF/code/](code/)
 `matlab`
@@ -51,8 +54,18 @@ Verify that [MATslurm](https://github.com/sgbaird-5DOF/MATslurm) is not an empty
 
 #### Windows
 ##### Step 0: download the code
-Open GitHub Desktop and clone and/or fork `https://github.com/sgbaird-5DOF/interp.git`
-The submodules should be downloaded automatically. If you want to commit to submodules, add these to GitHub desktop as well ("add from existing", navigate within interp folder to the submodule, click on submodule folder, and "add").
+Open GitHub Desktop and make a dummy repository via `Ctrl+N` so that you can open Git Bash via GitHub Desktop. Then clone and/or fork `https://github.com/sgbaird-5DOF/interp.git` by opening the Git Bash command line (i.e. Menubar --> Repository --> "Open in Git Bash" or 
+```
+Ctrl+`
+```
+) then run the following command in the directory where you want `interp` to appear:
+```bash
+git -c submodule.interp5DOF-paper.update=none clone --recurse-submodules https://github.com/sgbaird-5DOF/interp.git
+```
+
+Alternatively, you can try cloning directly in GitHub Desktop or via the "Open in GitHub Desktop" button under ![image](https://user-images.githubusercontent.com/45469701/116357284-907f9200-a7b9-11eb-81a3-3f55d27b8017.png), but it will likely throw an error, and I'm not sure if it will correctly clone the `MATslurm` submodule by the time it reaches that error. `MATslurm` is a bare minimum requirement for running `interp5DOF.m`. Attempt at your own risk.
+
+The submodules should be downloaded automatically. In order to update these submodules, add these to GitHub desktop as well ("add from existing", navigate within interp folder to the submodule, click on submodule folder, and "add").
 ##### Step 1: open MATLAB and navigate to navigate to [interp-5DOF/code/](code/)
 Set [interp-5DOF/code/](code/) as working directory via `cd` or GUI
 
@@ -115,7 +128,12 @@ This is distinct from `ensembleVFZO.m`, which takes the average interpolated pro
 Drop me a note in "Issues" if you have something you'd like to do or something you'd like to clarify, but can't figure out among the (many) options and functions in the `interp` repo. With a few details, there's a good chance I can offer some suggestions that will save a lot of time.
 
 ## Plots
-Most plots in the paper are produced in the script: [plotting.m](code/plotting.m). The larger file dependencies, `gitID-0055bee_uuID-475a2dfd_paper-data6.mat` and `gpr46883_gitID-b473165_puuID-50ffdcf6_kim-rng11.mat` can be [downloaded at figshare](https://doi.org/10.6084/m9.figshare.14405924.v3) and have the following citation:
+Most plots in the paper are produced in the script: [plotting.m](code/plotting.m). First, you need to create a dummy folder:
+```bash
+mkdir interp/code/interp5DOF-paper/figures/
+```
+
+The larger file dependencies, `gitID-0055bee_uuID-475a2dfd_paper-data6.mat` and `gpr46883_gitID-b473165_puuID-50ffdcf6_kim-rng11.mat` can be [downloaded at figshare](https://doi.org/10.6084/m9.figshare.14405924.v3) and have the following citation:
 > @misc{baird_homer_fullwood_johnson_2021, title={Five Degree-of-Freedom Grain Boundary Interpolation}, url={https://figshare.com/articles/dataset/gitID-0055bee_uuID-475a2dfd_paper-data6_mat/14405924/3}, DOI={10.6084/m9.figshare.14405924.v3}, abstractNote={These are larger MATLAB .mat files required for reproducing plots from the sgbaird-5DOF/interp repository for grain boundary property interpolation. gitID-0055bee_uuID-475a2dfd_paper-data6.mat contains multiple trials of five degree-of-freedom interpolation model runs for various interpolation schemes. gpr46883_gitID-b473165_puuID-50ffdcf6_kim-rng11.mat contains a Gaussian Process Regression model trained on 46883 Fe simulation GBs.}, publisher={figshare}, author={Baird, Sterling and Homer, Eric R and Fullwood, David and Johnson, Oliver K.}, year={2021}, month={Apr} }
 
 ## Data Preparation
