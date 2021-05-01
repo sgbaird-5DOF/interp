@@ -3,7 +3,7 @@ arguments
     pts double
     pts2 double
 end
-% GET_ALEN  get arclength of sphere (acos of dot product, note that this is half the octonion distance)
+% GET_ALEN  get arclength of points on a sphere (acos of dot product, note that this is half the octonion distance)
 pts = normr(pts);
 pts2 = normr(pts2);
 npts = size(pts2,1);
