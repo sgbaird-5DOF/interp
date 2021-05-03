@@ -773,6 +773,36 @@ for i = 1:4
     savefigpng(figfolder,fname)
 end
 
+%% largest minimum (symmetrized) distance between any 2 GBs
+load('oct50000.mat','pts')
+npts = 20000;
+pts = pts(1:npts,:);
+K = 20;
+fpath = fullfile(datafolder,['pd' int2str(npts) '-K' int2str(K)]);
+%%
+pd = ensembleGBdist(pts,[],K);
+save(fpath,'pd','npts','K','-v7.3')
+%%
+load(fpath,'pd','npts')
+%%
+mpd = 2*max(pd,[],'all');
+disp(['max pd (degrees):' num2str(mpd)])
+pd2 = ensembleGBdist(sqrt2norm(pts),[],1);
+mpd2 = 2*max(pd2,[],'all');
+
+%% PCA
+[coeff,score,latent,tsquared,explained,mu] = pca(pts,'NumComponents',5);
+
+
+%% posterior data for Dr. Johnson
+S = load('gpr46883_gitID-b473165_puuID-50ffdcf6_kim-rng11.mat');
+mdl = S.mdl;
+gprMdl = mdl.gprMdl;
+kfcn = gprMdl.Impl.Kernel.makeKernelAsFunctionOfXNXM(gprMdl.Impl.ThetaHat);
+ppts = proj_down(pts,mdl.projtol,mdl.usv,'zero',mdl.zeroQ);
+covmat = kfcn(ppts,ppts);
+% covmat = nearestSPD(covmat);
+
 %% CODE GRAVEYARD
 %{
 %split apply & find groups
