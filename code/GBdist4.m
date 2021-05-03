@@ -76,7 +76,6 @@ dmin = zeros(npts,1);
 o2minsyms = cell(1,npts);
 
 %textwaitbar setup
-%textwaitbar setup
 lastwarn('')
 [~,warnID] = lastwarn();
 [~] = ver('parallel');
