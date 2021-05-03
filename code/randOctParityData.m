@@ -27,7 +27,8 @@ switch runtype
         sig = [0]; %J/m^2, standard deviation, added to "y"
         genseed = 11;
         brkQ = false;
-        mygpropts = {'PredictMethod','exact','Sigma',5e-2,'ConstantSigma',true,'SigmaLowerBound',1e-2};
+        mygpropts = {'PredictMethod','exact'};
+%         mygpropts = {'PredictMethod','exact','Sigma',5e-2,'ConstantSigma',true,'SigmaLowerBound',1e-2};
     case 'full'
         ninputpts = [100 388 500 1000 5000 10000 20000 50000]; % 388, 500, 1000, 2000, 5000, 10000, 20000, 50000
         npredpts = 10000;
@@ -40,7 +41,8 @@ switch runtype
 end
 
 %comment (no spaces, used in filename)
-comment = 'olmsted-Ni-rng11-Sigma-5e-2';
+comment = 'olmsted-Ni-rng11';
+% comment = 'olmsted-Ni-rng11-Sigma-5e-2';
 % comment = 'paper-data2';
 % comment = 'rohrer-Ni-test5';
 % comment = 'rohrer-Ni-regularization';
