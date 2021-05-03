@@ -8,6 +8,7 @@ arguments
    nv.orefs = get_orefs(K)
    nv.disp {mustBeLogical} = true
    nv.pgnum(1,1) double {mustBeInteger} = 32
+   nv.squareform(1,1) logical {mustBeLogical} = true
 end
 %% ensemble grain boundary distance (take minimum)
 pdtype = nv.pdtype;
@@ -44,9 +45,13 @@ for i = 1:K
         case 'dist'
             d = fn(osym,osym2);
         case 'pdist'
-            d = squareform(pdist(osym,fn));
+            d = pdist(osym,fn);
         case 'pdist2'
-            d = squareform(pdist2(osym,osym2,fn));
+            d = pdist2(osym,osym2,fn);
+    end
+    switch pdtype
+        case {'pdist','pdist2'}
+            d = squareform(d);
     end
     if i == 1
         dmin = d;
