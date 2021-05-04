@@ -6,6 +6,7 @@ arguments
     NV.dispQ(1,1) logical = false
     NV.ID = []
     NV.Y = []
+    NV.skipself(1,1) logical = true
 end
 % GET_KNN  k-nearest neighbor points, distances, mean, and std
 %--------------------------------------------------------------------------
@@ -37,18 +38,24 @@ end
 %get nearest neighbor IDs and euclidean distances
 ID = NV.ID;
 Y = NV.Y;
+skipselfQ = NV.skipself;
 assert(isempty(ID) || isempty(Y),'ID and Y should not be supplied simultaneously')
 if ~isempty(ID)
     Y = X(ID,:);
 elseif isempty(Y)
     Y = X; %check NNs within set of points (otherwise check NN against specific pts in NV.Y)
 end
-    
-[idxtmp,Dtmp] = knnsearch(X,Y,'K',K+1);
 
+if skipselfQ
+    [idxtmp,Dtmp] = knnsearch(X,Y,'K',K+1);
+else
+    [idxtmp,Dtmp] = knnsearch(X,Y,'K',K);
+end
 %remove "self" column
-idxtmp = idxtmp(:,2:end);
-Dtmp = Dtmp(:,2:end);
+if skipselfQ
+    idxtmp = idxtmp(:,2:end);
+    Dtmp = Dtmp(:,2:end);
+end
 
 %initialize
 [mu,sigma] = deal(zeros(K,1));
