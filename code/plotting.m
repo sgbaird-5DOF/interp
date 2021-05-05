@@ -708,7 +708,8 @@ for i = 1:3
 end
 
 %% Fitted Parameters
-kim = load('gpr46883_gitID-b473165_puuID-50ffdcf6_kim-rng11.mat','mdl');
+% kim = load('gpr46883_gitID-b473165_puuID-50ffdcf6_kim-rng11.mat','mdl');
+kim = load('gpr58604_gitID-1cb3232_puuID-2bf8308c_kim-Fe-train-all-data.mat','mdl');
 S = structvertcat(mdlpars,mdlpars_lowSig);
 KernelParameters = [S.KernelParameters,kim.mdl.gprMdl.KernelInformation.KernelParameters];
 SigmaL = 2*rad2deg(KernelParameters(1,:)).';
@@ -755,7 +756,9 @@ A2 = get_octpairs(kimABCDE{1});
 % fname = 'gpr388_gitID-57857cd_puuID-d2476f08_olmsted-Ni-rng11-Sigma-5e-2.mat';
 % fname = 'gpr388_gitID-57857cd_puuID-67702aca_olmsted-Ni-rng10.mat';
 % fname = 'gpr388_gitID-57857cd_puuID-e9c787cd_olmsted-Ni';
-fnames = {'gpr46883_gitID-b473165_puuID-50ffdcf6_kim-rng11.mat',...
+% fnames = {'gpr46883_gitID-b473165_puuID-50ffdcf6_kim-rng11.mat',...
+%     'gpr388_gitID-57857cd_puuID-e9c787cd_olmsted-Ni'};
+fnames = {'gpr58604_gitID-1cb3232_puuID-2bf8308c_kim-Fe-train-all-data.mat',...
     'gpr388_gitID-57857cd_puuID-e9c787cd_olmsted-Ni'};
 datatypes = {'kim','olmsted'};
 mats = {'Fe','Ni'};
