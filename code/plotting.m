@@ -9,6 +9,7 @@
 fname = 'gitID-0055bee_uuID-475a2dfd_paper-data6.mat';
 files = dir(fullfile('**','interp','data'));
 datafolder = files(1).folder;
+assert(contains(datafolder,'interp'),'interp should be in datafolder path');
 datapath = fullfile(datafolder,fname);
 if exist(datapath,'file') ~= 2
     warning(['downloading data file because could not find at ' datapath ' , May take a few minutes.'])
@@ -707,17 +708,21 @@ for i = 1:3
 end
 
 %% Fitted Parameters
+kim = load('gpr46883_gitID-b473165_puuID-50ffdcf6_kim-rng11.mat','mdl');
 S = structvertcat(mdlpars,mdlpars_lowSig);
-KernelParameters = [S.KernelParameters];
+KernelParameters = [S.KernelParameters,kim.mdl.gprMdl.KernelInformation.KernelParameters];
 SigmaL = 2*rad2deg(KernelParameters(1,:)).';
 SigmaF = KernelParameters(2,:).';
 KernelParameterNames = S.KernelParameterNames;
-Beta = vertcat(S.Beta);
-Sigma = vertcat(S.Sigma);
-ConstantSigma = {'no';'yes'};
+Beta = vertcat(S.Beta,kim.mdl.gprMdl.Beta);
+Sigma = vertcat(S.Sigma,kim.mdl.gprMdl.Sigma);
+ConstantSigma = {'no';'yes';'no'};
+datasets = {'Ni';'Ni';'Fe'};
+% numGBs = [388;388;46883];
 R = @(x) round(x,4,'decimals');
-T = table(ConstantSigma,R(SigmaL),R(SigmaF),R(Beta),R(Sigma),'VariableNames',...
-    {'constant-sigma (yes/no)','sigma-L (deg)',...
+T = table(datasets,ConstantSigma,R(SigmaL),R(SigmaF),R(Beta),R(Sigma),'VariableNames',...
+    {'element',...
+    'constant-sigma (yes/no)','sigma-L (deg)',...
     'sigma-F (J m^-2)',...
     'beta (J m^-2)',...
     'sigma (J m^-2)'});
@@ -733,44 +738,101 @@ writetable(T,fullfile(tblfolder,'resubloss-ni-pars.csv'))
 
 %% Low-Sigma 1D slices
 fname = 'olm-oct-Sigma-3-5-7-9-11.mat';
-files = dir(fullfile('**','data','**',fname));
+files = dir(fullfile('**','interp','data','**',fname));
 fpath = fullfile(files(1).folder,files(1).name);
 load(fpath,'oolmABCDE','yolmABCDE','olm_ids') %generated in fz_proj.mlx
 
+fname = 'kim-oct-Sigma-3-5-7-9-11';
+load(fullfile(files(1).folder,fname),'kimABCDE','ykimABCDE','kim_ids');
+
 n = 150;
 Slist = [5 7 9 11];
-A = oolmABCDE{1};
+A1 = oolmABCDE{1};
+A2 = get_octpairs(kimABCDE{1});
 % paperfigure(2,2);
 
 % fname = 'gpr388_gitID-57857cd_puuID-abf7948f_olmsted-Ni-rng11-Sigma-1e-2.mat';
 % fname = 'gpr388_gitID-57857cd_puuID-d2476f08_olmsted-Ni-rng11-Sigma-5e-2.mat';
 % fname = 'gpr388_gitID-57857cd_puuID-67702aca_olmsted-Ni-rng10.mat';
-fname = 'gpr388_gitID-57857cd_puuID-e9c787cd_olmsted-Ni';
-load(fname,'mdl','mdlpars')
-mdl.mixQ = false;
-mdl.K = 1;
-mdl.thr = [];
-mdl.scl = [];
-mdl.mdls(1) = mdl;
-mdl.cgprMdls2 = [];
-mdl.oreflist = [];
-for i = 1:4
-    S = Slist(i);
-    B = get_octpairs(oolmABCDE{i+1},'oref',get_ocubo(1,'random',[],10));
-    fname = ['tunnel-3-' int2str(S)];
-    fpath = fullfile(figfolder,fname);
-    % load(fpath,'tpredlist','tsdlist','propList','methodlist','A','B')
-%     nexttile()
-    paperfigure();
-    tunneltri(mdl,'line',A,B,'olm',true,'mkr','r.','disptxt',false,'extend',0);
-    hold on
-    tunneltri([],'line',A,B,'brk',true,'txt',{'$\Sigma3$',['$\Sigma' int2str(Slist(i)) '$']},'extend',0); %note, tunneltri() is in the egprm repo, not the interp repo (2021-04-20)
-%     tunnelplot_test(2,ninputpts,n,tpredlist,tsdlist,propList,methodlist,A,B);
-%     papertext(i)
-%     if i == 1
-        legend('GPR','BRK','location','best')
-%     end
-    savefigpng(figfolder,fname)
+% fname = 'gpr388_gitID-57857cd_puuID-e9c787cd_olmsted-Ni';
+fnames = {'gpr46883_gitID-b473165_puuID-50ffdcf6_kim-rng11.mat',...
+    'gpr388_gitID-57857cd_puuID-e9c787cd_olmsted-Ni'};
+datatypes = {'kim','olmsted'};
+mats = {'Fe','Ni'};
+for j = 1:2
+    fname = fnames{j};
+    datatype = datatypes{j};
+    mat = mats{j};
+    load(fname,'mdl','mdlpars')
+    mdl.mixQ = false;
+    mdl.K = 1;
+    mdl.thr = [];
+    mdl.scl = [];
+    mdl.mdls(1) = mdl;
+    mdl.cgprMdls2 = [];
+    mdl.oreflist = [];
+    for i = 1:4
+        S = Slist(i);
+        switch datatype
+            case 'olmsted'
+                A = A1;
+                B = get_octpairs(oolmABCDE{i+1},'oref',get_ocubo(1,'random',[],10));
+            case 'kim'
+                A = A2;
+                B = get_octpairs(kimABCDE{i+1},'oref',get_ocubo(1,'random',[],10));
+        end
+        fname = ['path-3-' int2str(S) '-' datatype];
+%         fpath = fullfile(figfolder,fname);
+        % load(fpath,'tpredlist','tsdlist','propList','methodlist','A','B')
+        %     nexttile()
+        paperfigure();
+        if j == 2
+            tunneltri(mdl,'line',A,B,'olm',true,'mkr','r.','disptxt',false,...
+                'extend',0,'uncertainty',true);
+        else
+            tunneltri(mdl,'line',A,B,'mkr','r.',...
+                'txt',{'$\Sigma3$',['$\Sigma' int2str(S) '$']},...
+                'extend',0,'uncertainty',true);
+        end
+        hold on
+        if j == 2
+            tunneltri([],'line',A,B,'brk',true,'txt',{'$\Sigma3$',['$\Sigma' int2str(Slist(i)) '$']},'extend',0); %note, tunneltri() is in the egprm repo, not the interp repo (2021-04-20)
+        end
+        %     tunnelplot_test(2,ninputpts,n,tpredlist,tsdlist,propList,methodlist,A,B);
+        %     papertext(i)
+        %     if i == 1
+        if j == 2
+            legend('Ni-GPR','Ni-BRK','location','south')
+        else
+            legend('Fe-GPR','location','south')
+        end
+        %     end
+        savefigpng(figfolder,fname)
+        
+        paperfigure(1,1,11.5);
+        if strcmp(datatype,'olmsted')
+            brkQ = true;
+        else
+            brkQ = false;
+        end
+        tunnelplot({mdl},A,B,100,'lgdloc','northoutside','brkQ',brkQ,'K',6);
+        xlabel(['$\overline{\Sigma3,\Sigma' int2str(S) '}(t) (^\circ{})$'])
+        fig = gcf;
+        ax = gca;
+        switch datatype
+            case 'olmsted'
+                chnum = 3;
+            case 'kim'
+                chnum = 2;
+        end
+        ax.Children(1).DisplayName=[mat '-GPR($\pm$CI)'];
+        ax.Children(chnum).DisplayName=['$\overline{\Sigma3,\Sigma' int2str(S) '}$ 1st-NN'];
+        cb = colorbar;
+        cb.Label.Interpreter = 'latex';
+        cb.Label.String = ['GBO distance to $\overline{\Sigma3,\Sigma' int2str(S) '} (^\circ{})$'];
+        fname = ['tunnel-3-' int2str(S) '-' datatype];
+        savefigpng(figfolder,fname)
+    end
 end
 
 %% largest minimum (symmetrized) distance between any 2 GBs
@@ -783,7 +845,7 @@ fpath = fullfile(datafolder,['pd' int2str(npts) '-K' int2str(K)]);
 pd = ensembleGBdist(pts,[],K);
 save(fpath,'pd','npts','K','-v7.3')
 %%
-load(fpath,'pd','npts')
+load(fpath,'pd')
 %%
 mpd = 2*max(pd,[],'all');
 disp(['max pd (degrees):' num2str(mpd)])
@@ -792,17 +854,75 @@ mpd2 = 2*max(pd2,[],'all');
 
 %% PCA
 [coeff,score,latent,tsquared,explained,mu] = pca(pts,'NumComponents',5);
+sum(explained(1:5))
+tbl = table((1:8).',round(explained,4,'significant'),'VariableNames',{'Dimension','Explained Variance (%)'});
+writetable(tbl,fullfile(tblfolder,'pca-explained.csv'))
 
+%% USV matrices
+load('oct50000.mat','pts')
+[~,usv] = proj_down(pts);
+usv.S(5,5)/usv.S(1,1)
+
+dimdists = 2*diag(usv.S);
+tbl = table((1:8).',round(dimdists,4,'significant'),'VariableNames',{'Dimension','GBO Distance (deg)'});
+writetable(tbl,fullfile(tblfolder,'svd-size.csv'))
+
+%% NBOs pairs
+% nbo = repmat(get_cubo([],'uniform',10),1,2);
+nnbo = 2500;
+nbo = repmat(get_cubo(nnbo),1,2);
+nbo = normr(get_octpairs(nbo));
+[idx,d] = knnsearch(nbo,nbo,'K',2,'IncludeTies',true);
+d = vertcat(d{:});
+d = 2*rad2deg(d(:,2));
+paperfigure();
+histogram(d)
+xlabel('$\omega_{\mathrm{NN}} (^\circ{})$','Interpreter','latex')
+ylabel('Number of NBOs','Interpreter','latex')
+savefigpng(figfolder,['nbo' int2str(nnbo) '-nnhist'])
 
 %% posterior data for Dr. Johnson
-S = load('gpr46883_gitID-b473165_puuID-50ffdcf6_kim-rng11.mat');
-mdl = S.mdl;
-gprMdl = mdl.gprMdl;
-kfcn = gprMdl.Impl.Kernel.makeKernelAsFunctionOfXNXM(gprMdl.Impl.ThetaHat);
-ppts = proj_down(pts,mdl.projtol,mdl.usv,'zero',mdl.zeroQ);
-covmat = kfcn(ppts,ppts);
-% covmat = nearestSPD(covmat);
+fnames = {'gpr46883_gitID-b473165_puuID-50ffdcf6_kim-rng11.mat',...
+    'gpr388_gitID-63ce950_puuID-7e693646_olmsted-Ni-rng11.mat'};
+savenames = {'gpr46883-kim','gpr388-olmsted'};
+nfnames = length(fnames);
 
+load('oct50000.mat','pts')
+npts = 20000;
+pts = pts(1:npts,:);
+
+A = importdata('olm_octonion_list.txt');
+oolm = A.data;
+oolm = [qinv(oolm(:,1:4)),qinv(oolm(:,5:8))];
+oolm = get_octpairs(oolm);
+pts = normr([oolm;nbo;pts]);
+olm_ids = [3 169 32 21 33];
+Sigma = [3 5 7 9 11];
+
+covmats = cell(1,nfnames);
+for i = 1:nfnames
+    fname = fnames{i};
+    S = load(fname,'mdl');
+    mdl = S.mdl;
+    ppts = proj_down(pts,mdl.projtol,mdl.usv,'zero',mdl.zeroQ);
+    gprMdl = mdl.cgprMdl;
+    kfcn = gprMdl.Impl.Kernel.makeKernelAsFunctionOfXNXM(gprMdl.Impl.ThetaHat);
+    covmats{i} = kfcn(ppts,ppts);
+    savename = savenames{i};
+    savepath = fullfile(datafolder,savename);
+%     writematrix(covmats{i},[savepath '-cov.csv']);
+    covmats{i} = squareform(covmats{i}-diag(diag(covmats{i})));
+    covmat = covmats{i};
+%     [y,ysd] = predict(gprMdl,ppts);
+    save([savepath '-cov'],'covmat','olm_ids','Sigma','-v7.3')
+end
+d = squareform(pdist(pts));
+savename = ['eucl' int2str(npts+nnbo)];
+% writematrix(d,fullfile(datafolder,[savename '-dist.csv']));
+% writematrix(pts,fullfile(datafolder,[savename '-dist.csv']));
+save(fullfile(datafolder,savename),'d','pts')
+
+% covmat = nearestSPD(covmat);
 %% CODE GRAVEYARD
 %{
 %split apply & find groups
@@ -970,4 +1090,6 @@ A = importdata('olm_octonion_list.txt');
 %     ax.XLabel.String = ['actual simulated GBE ($J m^{-2}$)'];
 %     ax.YLabel.String = ['predicted ' str ' GBE ($J m^{-2}$)'];
 
+
+        %         fig.Children(chnum).Label=['GBO distance to $\overline{\Sigma3 \Sigma' int2str(S) '}$'];
 %}
