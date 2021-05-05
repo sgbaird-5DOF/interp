@@ -210,12 +210,27 @@ switch datatype
         B = importdata('olm_properties.txt');
         y = B.data(:,1);
         
-        [qm,nA] = oct2five(o,epsijk);
-        five.q = qm;
-        five.nA = nA;
-        five2.q = qm;
-        five2.nA = nA;
-        ytrue = y;
+        if npredpts ~= 0
+            c = cvpartition(ninputpts,'Holdout',npredpts);
+            id1 = training(c);
+            id2 = test(c);
+        else
+            id1 = 1:ninputpts;
+            id2 = [];
+        end
+        
+        [q,nA] = oct2five(o,epsijk);
+        
+        %split 5dof parameters
+        five = struct('q',q(id1,:),'nA',nA(id1,:));
+        five2 = struct('q',q(id2,:),'nA',nA(id2,:));
+%         five.q = qm;
+%         five.nA = nA;
+%         five2.q = qm;
+%         five2.nA = nA;
+        y = y(id1);
+        ytrue = y(id2);
+%         ytrue = y;
 end
 
 % noisetype = 'normal';
