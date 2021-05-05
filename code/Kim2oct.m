@@ -23,10 +23,11 @@ removezeroQ = true;
 
 addpathdir({'eu2qu.m','q2rod.m','get_octpairs.m','GBfive2oct.m','Kim'})
 
-folder = 'Kim';
-if exist(folder,'dir') ~= 7
-	mkdir(folder)
-end
+files = dir(fullfile('**','interp','code','Kim'));
+kimfolder = files(1).folder;
+% if exist(folder,'dir') ~= 7
+% 	mkdir(folder)
+% end
 
 %load mechanically selected Kim data
 % fname = 'Kim2011_FeGBEnergy.txt';
@@ -36,7 +37,7 @@ txt = fileread(fname);
 %convert 'D' (meaning double precision, base 10) to 'e', as in 1e2 == 100
 txt = strrep(txt,'D','e');
 fname2 = [fname(1:end-4) '_matlab.txt'];
-fpath = fullfile(folder,fname2);
+fpath = fullfile(kimfolder,fname2);
 fid=fopen(fpath,'w');
 fprintf(fid,txt);
 fclose(fid);
@@ -51,7 +52,7 @@ fnamesym = 'Fe_BCC_Spe_DB.txt';
 txtsym = fileread(fnamesym);
 txtsym = strrep(txtsym,'D','e');
 fnamesym2 = [fname(1:end-4) '_matlab.txt'];
-fpathsym = fullfile(folder,fnamesym2);
+fpathsym = fullfile(kimfolder,fnamesym2);
 fid=fopen(fpathsym,'w');
 fprintf(fid,txtsym);
 fclose(fid);
@@ -74,6 +75,33 @@ disp(['# total points: ' int2str(nptstot)])
 data5dof = [datatmp(:,1:end-1);datatmpsym(:,2:end-1)]; %ignore column that contains "Sigma" in datatmpsym
 gbe = [datatmp(:,end);datatmpsym(:,end)];
 
+%% pick out low GBE/low Sigma GBs
+cl = readcell(fnamesym2);
+Sigma = cl(17:end,1);
+
+numIDs = cellfun(@isnumeric,Sigma);
+for i = 1:length(Sigma)
+    if isnumeric(Sigma{i})
+        Sigma{i} = int2str(Sigma{i});
+    end
+end
+
+% Sigma = datatmpsym(:,1);
+id = unique(Sigma);
+SigmaList = {'3' '5' '7' '9' '11'};
+firstIDs = cellfun(@(S) find(strcmp(id,S)),SigmaList);
+id = [id(firstIDs);id(setdiff(1:length(id),firstIDs))];
+nid = length(id);
+minIDs = cell(1,nid);
+for i = 1:nid
+    S = id(i);
+    gbetmp = datatmpsym(:,end); %reset
+    gbetmp(~strcmp(Sigma,S)) = inf; %(Sigma ~= S)
+    [~,minIDs{i}] = min(gbetmp);
+end
+Slist = id(1:5);
+kim_ids = [minIDs{1:5}];
+
 %% conversion to octonions
 %extract 5DOF parameters
 data5dof = deg2rad(data5dof);
@@ -91,13 +119,22 @@ nAlist = [x y z];
 
 %get octonion mesh
 meshListTmp = five2oct(qlist,nAlist,epsijk);
-meshListFull = get_octpairs(meshListTmp,[],epsijk);
+meshListFull = get_octpairs(meshListTmp,epsijk);
 
 mechIDs = [true(1,npts),false(1,nptssym)];
 specIDs = ~mechIDs;
 
 %% get property list
 propListFull = gbe/1000; % convert from mJ/m^2 to J/m^2
+
+%% save low-GBE/low-Sigma GBs
+kimABCDE = num2cell(meshListTmp(kim_ids+npts,:),2);
+ykimABCDE = gbe(kim_ids+npts);
+files = dir(fullfile('**','interp','data'));
+datafolder = files(1).folder;
+save(fullfile(datafolder,'kim-oct-Sigma-3-5-7-9-11'),'kimABCDE','ykimABCDE','kim_ids','Slist')
+lowSig_IDs = zeros(1,nptstot);
+lowSig_IDs(kim_ids) = 1;
 
 if removezeroQ
     %% remove GBs with GBE near 0
@@ -107,6 +144,7 @@ if removezeroQ
     
     mechIDs = mechIDs(ids);
     specIDs = specIDs(ids);
+    kimIDs = kimIDs(ids);
     
     qlist = qlist(ids,:);
     nAlist = nAlist(ids,:);
@@ -122,6 +160,7 @@ if avgQ
     end
     mechIDs(rmIDlist) = [];
     specIDs(rmIDlist) = [];
+    kimIDs(rmIDlist) = [];
     
     qlist(rmIDlist,:) = [];
     nAlist(rmIDlist,:) = [];
@@ -148,7 +187,7 @@ five = struct('q',qlist,'nA',nAlist);
 %% write files
 %write octonions and GB Energy to .txt file
 fname = 'Kim2011_Fe_oct_GBE.txt';
-fpath = fullfile(folder,fname);
+fpath = fullfile(kimfolder,fname);
 fid = fopen(fpath,'w');
 fprintf(fid,[...
 	'#------------------------------------------------- \n' ...
@@ -160,13 +199,13 @@ fprintf(fid,[...
 	'#------------------------------------------------- \n']); %6 header lines
 % writematrix([meshList propList],fname,'WriteMode','append','Delimiter','tab') %only works in 2020a
 ftmp = 'temp.txt';
-ftmppath = fullfile(folder,ftmp);
+ftmppath = fullfile(kimfolder,ftmp);
 writematrix([meshList propList],ftmppath,'Delimiter','tab');
 txtsym = fileread(ftmppath);
 fprintf(fid,txtsym);
 fclose(fid);
 %save to .mat file
-save(fpath(1:end-4),'meshList','propList','five','mechIDs','specIDs','meshTable')
+save(fpath(1:end-4),'meshList','propList','five','mechIDs','specIDs','kimIDs','meshTable')
 
 
 %% Extra Commentary
