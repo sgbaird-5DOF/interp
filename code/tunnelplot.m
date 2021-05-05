@@ -19,12 +19,14 @@ arguments
     nv.gprMdl2 = []
     nv.nsamp = []
     nv.extend = 0
+    nv.K = 6
 end
 % TUNNELPLOT  plot points along a 1D arc and NNs if specified (like going through a tunnel)
 nnQ = nv.nnQ;
 nnQ2 = nv.nnQ2;
 brkQ = nv.brkQ;
 extend = nv.extend;
+K = nv.K;
 
 if ~isempty(mdls) && ~iscell(mdls) && isscalar(mdls)
     mdls = {mdls};
@@ -52,9 +54,11 @@ switch slerptype
         arcpts = normr(get_octpairs(OSLERP(A,B,d1,n,extend),'dispQ',false));
         d2 = d1;
     case 'interparc'
+        A = normr(A);
+        B = normr(B);
         dx = B-A;
-        Apre = sqrt2norm(-extend*dx+A,'quat','warnQ',false);
-        Bpost = sqrt2norm(extend*dx+B,'quat','warnQ',false);
+        Apre = normr(sqrt2norm(-extend*dx+A,'quat','warnQ',false));
+        Bpost = normr(sqrt2norm(extend*dx+B,'quat','warnQ',false));
         t = arrayfun(@(i) linspace(Apre(i),Bpost(i),n).',1:size(A,2),'UniformOutput',false); %1D interpolation across each dimension
         tpts = [t{:}];
         tpts = 1/sqrt(2)*[normr(tpts(:,1:4)),normr(tpts(:,5:8))];
@@ -174,8 +178,7 @@ hold on
 ax = cell(3,1);
 
 if nnQ2
-    K = 6;
-    [~,nnd,~,~,ids] = get_knn(ppts,'norm',K,'Y',arcppts);
+    [~,nnd,~,~,ids] = get_knn(ppts,'norm',K,'Y',arcppts,'skipself',false);
     tprednn = cellfun(@(id) propList{i}(id),n2c(ids),'UniformOutput',false);
     sz2 = zeros(n,K);
     for i = 1:K
