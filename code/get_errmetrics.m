@@ -1,7 +1,7 @@
 function errout = get_errmetrics(ypred,ytrue,type,NV)
 arguments
-    ypred double {mustBeReal,mustBeFinite}
-    ytrue double {mustBeReal,mustBeFinite} %or measured
+    ypred double {mustBeReal}
+    ytrue double {mustBeReal} %or measured
     type char {mustBeMember(type,{'e','ae','mae','se','rmse','all'})} = 'all'
     NV.dispQ(1,1) logical = false
 end
