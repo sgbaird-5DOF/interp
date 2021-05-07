@@ -20,6 +20,7 @@ arguments
     nv.nsamp = []
     nv.extend = 0
     nv.K = 6
+    nv.uncertainty(1,1) logical {mustBeLogical} = true
 end
 % TUNNELPLOT  plot points along a 1D arc and NNs if specified (like going through a tunnel)
 nnQ = nv.nnQ;
@@ -27,6 +28,7 @@ nnQ2 = nv.nnQ2;
 brkQ = nv.brkQ;
 extend = nv.extend;
 K = nv.K;
+uncertaintyQ = nv.uncertainty;
 
 if ~isempty(mdls) && ~iscell(mdls) && isscalar(mdls)
     mdls = {mdls};
@@ -104,7 +106,12 @@ if (isempty(nv.tpredlist) && isempty(nv.tsdlist) && isempty(nv.propList) && ...
                 else
                     gprMdl = mdl.cgprMdl;
                 end
-                [tpredlist{i},tsdlist{i},cilist{i}] = predict(gprMdl,arcppts);
+                if uncertaintyQ
+                    [tpredlist{i},tsdlist{i},cilist{i}] = predict(gprMdl,arcppts);
+                else
+                    tpredlist{i} = predict(gprMdl,arcppts);
+                    [tsdlist{i},cilist{i}] = deal([]);
+                end
                 
                 %     out = exec_argfn(mdl.mdlcmd,mdl,{'tpred','tsd'});
                 %     tpred = out.tpred;
@@ -208,7 +215,11 @@ if brkQ
     i = i+1;
 end
 
-errbartype = 'ci'; %'ci' or 'sd'
+if uncertaintyQ
+    errbartype = 'ci'; %'ci', 'sd', 'none'
+else
+    errbartype = 'none';
+end
 for j = 1:nmdl
     method = methodlist{j};
     switch method
@@ -219,9 +230,13 @@ for j = 1:nmdl
                 case 'ci'
                     axtmp=shadedErrorBar(x,tpredlist{j},abs(cilist{j}-tpredlist{j}),'lineProps','bo');
             end
-            ax{j}=axtmp.mainLine;
-            ax{i}.LineWidth = 0.25;
-            ax{j}.MarkerSize = 3;
+            if strcmp(errbartype,'none')
+                ax{j} = plot(x,tpredlist{j},'k.','MarkerSize',10);
+            else
+                ax{j}=axtmp.mainLine;
+                ax{i}.LineWidth = 0.25;
+                ax{j}.MarkerSize = 3;
+            end
         case {'gprmix','egprm','egpr','gprm'}
             if isempty(nv.nsamp)
                 switch errbartype
