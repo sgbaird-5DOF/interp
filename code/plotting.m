@@ -11,6 +11,7 @@ files = dir(fullfile('**','interp','data'));
 datafolder = files(1).folder;
 assert(contains(datafolder,'interp'),'interp should be in datafolder path');
 datapath = fullfile(datafolder,fname);
+%%
 if exist(datapath,'file') ~= 2
     warning(['downloading data file because could not find at ' datapath ' , May take a few minutes.'])
     websave(datapath,'https://ndownloader.figshare.com/files/27540842')
@@ -758,7 +759,9 @@ A2 = get_octpairs(kimABCDE{1});
 % fname = 'gpr388_gitID-57857cd_puuID-e9c787cd_olmsted-Ni';
 % fnames = {'gpr46883_gitID-b473165_puuID-50ffdcf6_kim-rng11.mat',...
 %     'gpr388_gitID-57857cd_puuID-e9c787cd_olmsted-Ni'};
-fnames = {'gpr58604_gitID-1cb3232_puuID-2bf8308c_kim-Fe-train-all-data.mat',...
+% fnames = {'gpr58604_gitID-1cb3232_puuID-2bf8308c_kim-Fe-train-all-data.mat',...
+%     'gpr388_gitID-57857cd_puuID-e9c787cd_olmsted-Ni'};
+fnames = {'gpr58604_gitID-3b7183c_puuID-ce759533_kim-Fe-train-all-data-fic.mat',...
     'gpr388_gitID-57857cd_puuID-e9c787cd_olmsted-Ni'};
 datatypes = {'kim','olmsted'};
 mats = {'Fe','Ni'};
@@ -785,32 +788,25 @@ for j = 1:2
                 B = get_octpairs(kimABCDE{i+1},'oref',get_ocubo(1,'random',[],10));
         end
         fname = ['path-3-' int2str(S) '-' datatype];
-%         fpath = fullfile(figfolder,fname);
-        % load(fpath,'tpredlist','tsdlist','propList','methodlist','A','B')
-        %     nexttile()
-        paperfigure();
-        if j == 2
-            tunneltri(mdl,'line',A,B,'olm',true,'mkr','r.','disptxt',false,...
-                'extend',0,'uncertainty',true);
-        else
-            tunneltri(mdl,'line',A,B,'mkr','r.',...
-                'txt',{'$\Sigma3$',['$\Sigma' int2str(S) '$']},...
-                'extend',0,'uncertainty',true);
-        end
-        hold on
-        if j == 2
-            tunneltri([],'line',A,B,'brk',true,'txt',{'$\Sigma3$',['$\Sigma' int2str(Slist(i)) '$']},'extend',0); %note, tunneltri() is in the egprm repo, not the interp repo (2021-04-20)
-        end
-        %     tunnelplot_test(2,ninputpts,n,tpredlist,tsdlist,propList,methodlist,A,B);
-        %     papertext(i)
-        %     if i == 1
-        if j == 2
-            legend('Ni-GPR','Ni-BRK','location','south')
-        else
-            legend('Fe-GPR','location','south')
-        end
-        %     end
-        savefigpng(figfolder,fname)
+%         paperfigure();
+%         if j == 2
+%             tunneltri(mdl,'line',A,B,'olm',true,'mkr','r.','disptxt',false,...
+%                 'extend',0,'uncertainty',true);
+%         else
+%             tunneltri(mdl,'line',A,B,'mkr','r.',...
+%                 'txt',{'$\Sigma3$',['$\Sigma' int2str(S) '$']},...
+%                 'extend',0,'uncertainty',true);
+%         end
+%         hold on
+%         if j == 2
+%             tunneltri([],'line',A,B,'brk',true,'txt',{'$\Sigma3$',['$\Sigma' int2str(Slist(i)) '$']},'extend',0); %note, tunneltri() is in the egprm repo, not the interp repo (2021-04-20)
+%         end
+%         if j == 2
+%             legend('Ni-GPR','Ni-BRK','location','south')
+%         else
+%             legend('Fe-GPR','location','south')
+%         end
+%         savefigpng(figfolder,fname)
         
         paperfigure(1,1,11.5);
         if strcmp(datatype,'olmsted')
@@ -825,6 +821,7 @@ for j = 1:2
         switch datatype
             case 'olmsted'
                 chnum = 3;
+                
             case 'kim'
                 chnum = 2;
         end
@@ -1095,4 +1092,18 @@ A = importdata('olm_octonion_list.txt');
 
 
         %         fig.Children(chnum).Label=['GBO distance to $\overline{\Sigma3 \Sigma' int2str(S) '}$'];
+
+        %     tunnelplot_test(2,ninputpts,n,tpredlist,tsdlist,propList,methodlist,A,B);
+        %     papertext(i)
+        %     if i == 1
+        %     end
+
+%         fpath = fullfile(figfolder,fname);
+        % load(fpath,'tpredlist','tsdlist','propList','methodlist','A','B')
+        %     nexttile()
 %}
+%         if strcmp(datatype,'kim')
+%             tunnelplot({mdl},A,B,100,'lgdloc','northoutside','brkQ',brkQ,'K',6,'uncertainty',false);
+%         else
+%             tunnelplot({mdl},A,B,100,'lgdloc','northoutside','brkQ',brkQ,'K',6);
+%         end
