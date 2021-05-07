@@ -19,15 +19,15 @@ metaQ = F; %whether to load full model or only meta-data at end
 %make sure the parameters here correspond with the input to "pars" below
 switch runtype
     case 'test'
-        ninputpts = 388; %floor(58604*0.8); %40516; %17176; %floor(58604*0.2); %56442; %floor(67886*0.8); %floor(264276*.8); %17176; %1893*2; %[2366]; %[1893*1]; % 5000 10000 20000 50000];
+        ninputpts = 58604; %388; %floor(58604*0.8); %40516; %17176; %floor(58604*0.2); %56442; %floor(67886*0.8); %floor(264276*.8); %17176; %1893*2; %[2366]; %[1893*1]; % 5000 10000 20000 50000];
         npredpts = 0; %ceil(58604*0.2); %10000; %58604-17176; %ceil(58604*0.8); %11443; %floor(67886*0.2); %ceil(264276*0.2); %67886-17176; %67886-1893*2; %65520; %473*1;
         method = {'gpr'}; % 'sphbary', 'pbary', 'gpr', 'sphgpr', 'nn', 'avg'
-        datatype = {'olmsted-Ni'}; % 'brk', 'kim', 'rohrer-Ni', 'rohrer-test', 'rohrer-brk-test', 'olmsted-Ni', 'rohrer-MgO'
+        datatype = {'kim'}; % 'brk', 'kim', 'rohrer-Ni', 'rohrer-test', 'rohrer-brk-test', 'olmsted-Ni', 'rohrer-MgO'
         pgnum = 32; %m-3m (i.e. m\overbar{3}m) FCC symmetry default for e.g. Ni
         sig = [0]; %J/m^2, standard deviation, added to "y"
         genseed = 11;
         brkQ = false;
-        mygpropts = {'PredictMethod','exact'};
+        mygpropts = {'PredictMethod','fic'};
 %         mygpropts = {'PredictMethod','exact','Sigma',5e-2,'ConstantSigma',true,'SigmaLowerBound',1e-2};
     case 'full'
         ninputpts = [100 388 500 1000 5000 10000 20000 50000]; % 388, 500, 1000, 2000, 5000, 10000, 20000, 50000
