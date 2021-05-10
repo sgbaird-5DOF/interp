@@ -68,8 +68,8 @@ switch slerptype
         arcpts = interparc(n,t{:},'spline');
         arcpts = normr(get_octpairs(sqrt2norm(arcpts,'quat'),1,'oref',mdls{1}.oref,'dispQ',false));
         %         arcpts = 1/sqrt(2)*sqrt2norm(arcpts);
-        [d2,seg] = arclength(t{:},'spline');
-%         d2 = 2*d2; %convert to omega
+        [d2tmp,seg] = arclength(t{:},'spline');
+        d2 = 2*d2tmp; %convert to omega
 end
 
 %% property interpolation
