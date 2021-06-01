@@ -125,7 +125,7 @@ for i = 1:nfnames
     
     savepath2 = [savepath '-cov'];
     warning(['saving ' savepath2 '.mat'])
-    save(savepath2,'covmat','-v7.3')
+    save(savepath2,'covmat')
     
     savepath3 = [savepath '-dist'];    
     warning(['saving ' savepath3 '.mat'])
@@ -133,7 +133,7 @@ for i = 1:nfnames
     
     savepath4 = [savepath '-other'];
     warning(['saving ' savepath4 '.mat'])
-    save(savepath4,'ids','Sigma','pts','five','y','ypred','ysd','-v7.3')
+    save(savepath4,'ids','Sigma','pts','five','y','ypred','ysd')
     
     %package
     %--comment these lines if you run out of memory
