@@ -42,12 +42,9 @@ By cloning the GitHub repository according to the instructions here, all file de
 - Optional: [Install Atom](https://atom.io/) text editor which has some slick integrations with git
 - [Install GitHub Desktop](https://desktop.github.com/)
 - [Install Git Bash](https://git-scm.com/downloads). For Git Bash, the default installation options should be fine.
-- Login to GitHub Desktop and make a dummy repository via `Ctrl+N` so that you can open Git Bash via GitHub Desktop.
-- Clone and/or fork `https://github.com/sgbaird-5DOF/interp.git` by opening the Git Bash command line via Menubar --> Repository --> "Open in Git Bash" or 
-```
-Ctrl+`
-```
-- Run the following commands:
+- Login to GitHub Desktop and make the "tutorial repository" so that you can open Git Bash via GitHub Desktop
+- Clone and/or fork `https://github.com/sgbaird-5DOF/interp.git` by opening the Git Bash command line via Menubar --> Repository --> "Open in Git Bash" or Ctrl+`
+and run the following commands:
 ```bash
 cd ..
 git -c submodule.interp5DOF-paper.update=none clone --recurse-submodules https://github.com/sgbaird-5DOF/interp.git
@@ -55,7 +52,7 @@ git -c submodule.interp5DOF-paper.update=none clone --recurse-submodules https:/
 
 The `-c submodule.xxxx.update=none` flag indicates that a particular (private) submodule be ignored. The public submodules should be downloaded automatically (e.g. `MATslurm`). In order to update these submodules, add these directories to GitHub desktop as well (`Ctrl+O`).
 
-Alternatively, you can try cloning directly in GitHub Desktop or via the "Open in GitHub Desktop" button under ![image](https://user-images.githubusercontent.com/45469701/116357284-907f9200-a7b9-11eb-81a3-3f55d27b8017.png), but it will likely throw an error, and it may not clone the `MATslurm` submodule by the time it reaches that error, which is a bare minimum requirement for running `interp5DOF.m`.
+Alternatively, you can try cloning directly in GitHub Desktop or via the "Open in GitHub Desktop" button under <img src=https://user-images.githubusercontent.com/45469701/116357284-907f9200-a7b9-11eb-81a3-3f55d27b8017.png width=100>, but it will likely throw an error, and it may not clone the `MATslurm` submodule by the time it reaches that error, which is a bare minimum requirement for running `interp5DOF.m`.
 
 ##### Step 1: open MATLAB and navigate to navigate to [interp-5DOF/code/](code/)
 Set [interp-5DOF/code/](code/) as working directory via `cd` or GUI
