@@ -39,7 +39,7 @@ By cloning the GitHub repository according to the instructions here, all file de
 #### Windows
 ##### Step 0: download the code
 
-- Optional: [Install Atom](https://atom.io/) text editor which has some slick integrations with git
+- [Install Atom](https://atom.io/) text editor which has some slick integrations with git
 - [Install GitHub Desktop](https://desktop.github.com/)
 - [Install Git Bash](https://git-scm.com/downloads). For Git Bash, the default installation options should be fine.
 - Login to GitHub Desktop and make the "tutorial repository" so that you can open Git Bash via GitHub Desktop
