@@ -935,8 +935,8 @@ for i = 1:nfnames
     covmat = covmats{i};
     d = pdist(pts);
 %     [y,ysd] = predict(gprMdl,ppts);
-    save([savepath '-cov'],'covmat','ids','Sigma','pts','-v7.3')
-    save([savepath '-dist'],'ids','Sigma','pts','d','-v7.3')
+%     save([savepath '-cov'],'covmat','ids','Sigma','pts','-v7.3')
+%     save([savepath '-dist'],'ids','Sigma','pts','d','-v7.3')
 end
 % savename = ['eucl' int2str(npts+nnbo)];
 % % writematrix(d,fullfile(datafolder,[savename '-dist.csv']));
