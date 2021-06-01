@@ -55,7 +55,7 @@ The `-c submodule.xxxx.update=none` flag indicates that a particular (private) s
 Alternatively, you can try cloning directly in GitHub Desktop or via the "Open in GitHub Desktop" button under <img src=https://user-images.githubusercontent.com/45469701/116357284-907f9200-a7b9-11eb-81a3-3f55d27b8017.png width=100>, but it will likely throw an error, and it may not clone the `MATslurm` submodule by the time it reaches that error, which is a bare minimum requirement for running `interp5DOF.m`.
 
 ##### Step 1: open MATLAB and navigate to navigate to [interp-5DOF/code/](code/)
-Set [interp-5DOF/code/](code/) as working directory via `cd` or GUI
+Set interp as working directory via `cd` or GUI
 
 ##### Step 2: Add subfolders to path and run [interp5DOF_test.m](code/interp5DOF_test.m)
 
