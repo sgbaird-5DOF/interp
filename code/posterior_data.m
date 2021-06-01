@@ -53,7 +53,7 @@ nbo = normr(get_octpairs(nbo));
 d = vertcat(d{:});
 d = 2*rad2deg(d(:,2)); %convert to "Toby" distance (i.e. traditional octonion)
 paperfigure();
-histogram(d)
+histogram(d) %histogram of pairwise distances
 xlabel('$\omega_{\mathrm{NN}} (^\circ{})$','Interpreter','latex')
 ylabel('Number of NBOs','Interpreter','latex')
 savefigpng(figfolder,['nbo' int2str(nnbo) '-nnhist'])
