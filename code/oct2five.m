@@ -31,7 +31,7 @@ end
 %  166, 135–147. https://doi.org/10.1016/j.actamat.2018.12.034.
 %--------------------------------------------------------------------------
 npts = size(o,1);
-qA = o(:,1:4);
-qB = o(:,5:8);
+qA = normr(o(:,1:4));
+qB = normr(o(:,5:8));
 mA = repmat([0 0 1],npts,1);
 [qm,nA] = qmA2five(qA,qB,mA,epsijk);
