@@ -39,8 +39,8 @@ By cloning the GitHub repository according to the instructions here, all file de
 #### Windows
 ##### Step 0: download the code
 
+- Optional: [Install Atom](https://atom.io/) text editor which has some slick integrations with git
 - [Install GitHub Desktop](https://desktop.github.com/)
-- Optional: [Install Atom](https://atom.io/) text editor which has some slick integrations with git.
 - [Install Git Bash](https://git-scm.com/downloads). For Git Bash, the default installation options should be fine.
 - Login to GitHub Desktop and make a dummy repository via `Ctrl+N` so that you can open Git Bash via GitHub Desktop.
 - Clone and/or fork `https://github.com/sgbaird-5DOF/interp.git` by opening the Git Bash command line via Menubar --> Repository --> "Open in Git Bash" or 
