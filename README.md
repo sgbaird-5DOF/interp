@@ -38,11 +38,16 @@ By cloning the GitHub repository according to the instructions here, all file de
 
 #### Windows
 ##### Step 0: download the code
-[Download GitHub Desktop](https://desktop.github.com/) and [Git Bash](https://git-scm.com/downloads). For Git Bash, the default installation options should be fine. I prefer to use [Atom](https://atom.io/) as the text editor which has some slick integrations with git. Login to GitHub Desktop and make a dummy repository via `Ctrl+N` so that you can open Git Bash via GitHub Desktop. Then clone and/or fork `https://github.com/sgbaird-5DOF/interp.git` by opening the Git Bash command line via Menubar --> Repository --> "Open in Git Bash" or 
+
+0.a [Install GitHub Desktop](https://desktop.github.com/)
+0.b Optional: [Install Atom](https://atom.io/) text editor which has some slick integrations with git.
+0.c [Install Git Bash](https://git-scm.com/downloads). For Git Bash, the default installation options should be fine.
+0.d Login to GitHub Desktop and make a dummy repository via `Ctrl+N` so that you can open Git Bash via GitHub Desktop.
+0.e Clone and/or fork `https://github.com/sgbaird-5DOF/interp.git` by opening the Git Bash command line via Menubar --> Repository --> "Open in Git Bash" or 
 ```
 Ctrl+`
 ```
-then run the following commands:
+0.f Run the following commands:
 ```bash
 cd ..
 git -c submodule.interp5DOF-paper.update=none clone --recurse-submodules https://github.com/sgbaird-5DOF/interp.git
