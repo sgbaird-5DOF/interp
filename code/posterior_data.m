@@ -63,7 +63,7 @@ savenames = {'gpr58604-kim','gpr388-olmsted'};
 nfnames = length(fnames);
 
 load('oct50000.mat','pts')
-npts = 20000; %produces large matrices - 20,000 x 20,000
+npts = 15000; %can produce large matrices, at least (npts x npts)
 pts = pts(1:npts,:);
 
 A = importdata('olm_octonion_list.txt');
@@ -74,7 +74,7 @@ oolm = get_octpairs(oolm);
 B = importdata('olm_properties.txt');
 yolm = B.data(:,1);
 
-load('Kim2011_Fe_oct_GBE','meshList','propList','specIDs');
+load('Kim2011_Fe_oct_GBE','meshList','propList','specIDs','mechIDs');
 
 okim = meshList(specIDs,:);
 ykim = propList(specIDs);
@@ -122,12 +122,18 @@ for i = 1:nfnames
     %saving
     savename = savenames{i};
     savepath = fullfile(datafolder,savename);
+    
     savepath2 = [savepath '-cov'];
     warning(['saving ' savepath2 '.mat'])
-    save([savepath '-cov'],'covmat','ids','Sigma','pts','five','ypred','ysd','-v7.3')
-    savepath3 = [savepath '-dist'];
+    save(savepath2,'covmat','-v7.3')
+    
+    savepath3 = [savepath '-dist'];    
     warning(['saving ' savepath3 '.mat'])
-    save([savepath '-dist'],'d','ids','Sigma','pts','five','ypred','ysd','-v7.3')
+    save(savepath3,'d')
+    
+    savepath4 = [savepath '-other'];
+    warning(['saving ' savepath4 '.mat'])
+    save(savepath4,'ids','Sigma','pts','five','y','ypred','ysd','-v7.3')
     
     %package
     %--comment these lines if you run out of memory
