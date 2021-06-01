@@ -13,9 +13,18 @@ Use the <img src=https://user-images.githubusercontent.com/45469701/116359125-a6
 ## Dependencies
 ### MATLAB Version
 MATLAB R2019b or higher (mainly for the [arguments ... end syntax checking](https://www.mathworks.com/help/matlab/matlab_prog/function-argument-validation-1.html) at
+<<<<<<< HEAD
 the beginning of functions, which is used extensively throughout). For users of R2007a - R2019a, I suggest removing the arguments ... end syntax for any functions that use this and replacing it with corresponding [inputParser()](https://www.mathworks.com/help/matlab/ref/inputparser.html) and [varargin](https://www.mathworks.com/help/matlab/ref/varargin.html) code to deal with variable input arguments, default parameter values, and repeating arguments. Alternatively, you could remove the arguments ... end syntax lines for each function and update every place that the function is called so that all input arguments are specified. Open up an issue if you need more details on this. Other functions may need to be replaced if they aren't available in early MATLAB versions.
 
 ### Toolboxes
+=======
+the beginning of functions, which is used extensively throughout).
+
+#### R2007a - R2019a
+I suggest removing the arguments ... end syntax for any functions that use this and replacing it with corresponding [inputParser()](https://www.mathworks.com/help/matlab/ref/inputparser.html) and [varargin](https://www.mathworks.com/help/matlab/ref/varargin.html) code to deal with variable input arguments, default parameter values, and repeating arguments. Alternatively, you could remove the arguments ... end syntax lines for each function and update every place that the function is called so that all input arguments are specified. Open up an issue if you need more details on this. Other functions may need to be replaced if they aren't available in early MATLAB versions.
+
+### MATLAB Toolboxes
+>>>>>>> e6b3c7974cc9504ec719f3d9f135d9659b6b4e11
 - [Statistics and Machine Learning Toolbox](https://www.mathworks.com/products/statistics.html) (for Gaussian Process Regression: [fitrgp()](https://www.mathworks.com/help/stats/fitrgp.html), [fitrgp.predict()](https://www.mathworks.com/help/stats/compactregressiongp.predict.html))
 - [Parallel Computing Toolbox](https://www.mathworks.com/products/parallel-computing.html) (optional)
 - [Symbolic Math Toolbox](https://www.mathworks.com/products/symbolic.html) (optional, for [numStabBary.m](code/numStabBary.m))
@@ -28,13 +37,19 @@ By cloning the GitHub repository according to the instructions here, all file de
 
 ### Basic steps:
 * Step 0: download the [code](https://github.com/sgbaird-5DOF/interp.git)
+<<<<<<< HEAD
 * Step 1: set [interp-5DOF/code/](code/) as working directory
 * Step 2: add subfolders to path (`addpath(genpath('.'))`) and run [interp5DOF_test.m](code/interp5DOF_test.m)
+=======
+* Step 1: set `interp/` as working directory
+* Step 2: add subfolders to path (`addpath(genpath('.'))`) and run [interp5DOF_test.m](code/interp5DOF_test.m) to verify it works
+>>>>>>> e6b3c7974cc9504ec719f3d9f135d9659b6b4e11
 
 ### Platform-specific directions
 
 #### Windows
 ##### Step 0: download the code
+<<<<<<< HEAD
 [Download GitHub Desktop](https://desktop.github.com/) and [Git Bash](https://git-scm.com/downloads). For Git Bash, the default installation options should be fine. I prefer to use [Atom](https://atom.io/) as the text editor which has some slick integrations with git. Login to GitHub Desktop and make a dummy repository via `Ctrl+N` so that you can open Git Bash via GitHub Desktop. Then clone and/or fork `https://github.com/sgbaird-5DOF/interp.git` by opening the Git Bash command line (i.e. Menubar --> Repository --> "Open in Git Bash" or 
 ```
 Ctrl+`
@@ -50,6 +65,26 @@ Alternatively, you can try cloning directly in GitHub Desktop or via the "Open i
 
 ##### Step 1: open MATLAB and navigate to navigate to [interp-5DOF/code/](code/)
 Set [interp-5DOF/code/](code/) as working directory via `cd` or GUI
+=======
+
+- [Install Atom text editor](https://atom.io/) which has some slick integrations with git
+- [Install GitHub Desktop](https://desktop.github.com/)
+- [Install Git Bash](https://git-scm.com/downloads). For Git Bash, the default installation options should be fine.
+- Login to GitHub Desktop and make the "tutorial repository" so that you can open Git Bash via GitHub Desktop
+- Clone and/or fork `https://github.com/sgbaird-5DOF/interp.git` by opening the Git Bash command line via Menubar --> Repository --> "Open in Git Bash" or Ctrl+`
+and run the following commands:
+```bash
+cd ..
+git -c submodule.interp5DOF-paper.update=none clone --recurse-submodules https://github.com/sgbaird-5DOF/interp.git
+```
+
+The `-c submodule.xxxx.update=none` flag indicates that a particular (private) submodule be ignored. The public submodules should be downloaded automatically (e.g. `MATslurm`). In order to update these submodules, add these directories to GitHub desktop as well (`Ctrl+O`).
+
+Alternatively, you can try cloning directly in GitHub Desktop or via the "Open in GitHub Desktop" button under <img src=https://user-images.githubusercontent.com/45469701/116357284-907f9200-a7b9-11eb-81a3-3f55d27b8017.png width=100>, but it will likely throw an error, and it may not clone the `MATslurm` submodule by the time it reaches that error, which is a bare minimum requirement for running `interp5DOF.m`.
+
+##### Step 1: open MATLAB and navigate to navigate to [interp-5DOF/code/](code/)
+Set interp as working directory via `cd` or GUI
+>>>>>>> e6b3c7974cc9504ec719f3d9f135d9659b6b4e11
 
 ##### Step 2: Add subfolders to path and run [interp5DOF_test.m](code/interp5DOF_test.m)
 
