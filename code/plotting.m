@@ -882,9 +882,11 @@ ylabel('Number of NBOs','Interpreter','latex')
 savefigpng(figfolder,['nbo' int2str(nnbo) '-nnhist'])
 
 %% posterior data for Dr. Johnson
-fnames = {'gpr46883_gitID-b473165_puuID-50ffdcf6_kim-rng11.mat',...
-    'gpr388_gitID-63ce950_puuID-7e693646_olmsted-Ni-rng11.mat'};
-savenames = {'gpr46883-kim','gpr388-olmsted'};
+% fnames = {'gpr46883_gitID-b473165_puuID-50ffdcf6_kim-rng11.mat',...
+%     'gpr388_gitID-63ce950_puuID-7e693646_olmsted-Ni-rng11.mat'};
+fnames = {'gpr58604_gitID-3b7183c_puuID-ce759533_kim-Fe-train-all-data-fic.mat',...
+    'gpr388_gitID-57857cd_puuID-e9c787cd_olmsted-Ni'};
+savenames = {'gpr58604-kim','gpr388-olmsted'};
 nfnames = length(fnames);
 
 load('oct50000.mat','pts')
@@ -895,13 +897,32 @@ A = importdata('olm_octonion_list.txt');
 oolm = A.data;
 oolm = [qinv(oolm(:,1:4)),qinv(oolm(:,5:8))];
 oolm = get_octpairs(oolm);
-pts = normr([oolm;nbo;pts]);
+
+B = importdata('olm_properties.txt');
+yolm = B.data(:,1);
+
+load('Kim2011_Fe_oct_GBE','meshList','propList','specIDs');
+
+okim = meshList(specIDs,:);
+ykim = propList(specIDs);
+
+olm_pts = normr([oolm;nbo;pts]);
+kim_pts = normr([okim;nbo;pts]);
+
 olm_ids = [3 169 32 21 33];
+kim_ids = [7 162 259 315 406];
+
+idlist = {kim_ids,olm_ids};
+ptslist = {kim_pts,olm_pts};
+ylist = {ykim,yolm};
 Sigma = [3 5 7 9 11];
 
 covmats = cell(1,nfnames);
 for i = 1:nfnames
     fname = fnames{i};
+    ids = idlist{i};
+    pts = ptslist{i};
+    y = ylist{i};
     S = load(fname,'mdl');
     mdl = S.mdl;
     ppts = proj_down(pts,mdl.projtol,mdl.usv,'zero',mdl.zeroQ);
@@ -911,16 +932,16 @@ for i = 1:nfnames
     savename = savenames{i};
     savepath = fullfile(datafolder,savename);
 %     writematrix(covmats{i},[savepath '-cov.csv']);
-    covmats{i} = squareform(covmats{i}-diag(diag(covmats{i})));
     covmat = covmats{i};
+    d = pdist(pts);
 %     [y,ysd] = predict(gprMdl,ppts);
-    save([savepath '-cov'],'covmat','olm_ids','Sigma','-v7.3')
+    save([savepath '-cov'],'covmat','ids','Sigma','pts','-v7.3')
+    save([savepath '-dist'],'ids','Sigma','pts','d','-v7.3')
 end
-d = squareform(pdist(pts));
-savename = ['eucl' int2str(npts+nnbo)];
-% writematrix(d,fullfile(datafolder,[savename '-dist.csv']));
-% writematrix(pts,fullfile(datafolder,[savename '-dist.csv']));
-save(fullfile(datafolder,savename),'d','pts')
+% savename = ['eucl' int2str(npts+nnbo)];
+% % writematrix(d,fullfile(datafolder,[savename '-dist.csv']));
+% % writematrix(pts,fullfile(datafolder,[savename '-dist.csv']));
+% save(fullfile(datafolder,savename),'d','pts')
 
 % covmat = nearestSPD(covmat);
 %% CODE GRAVEYARD
