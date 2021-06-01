@@ -68,7 +68,7 @@ pts = pts(1:npts,:);
 
 A = importdata('olm_octonion_list.txt');
 oolm = A.data;
-oolm = [qinv(oolm(:,1:4)),qinv(oolm(:,5:8))];
+oolm = oflip(oolm);
 oolm = get_octpairs(oolm);
 
 B = importdata('olm_properties.txt');
@@ -140,7 +140,7 @@ for i = 1:nfnames
 end
 
 %% CODE GRAVEYARD
-
+%{
 %     writematrix(covmats{i},[savepath '-cov.csv']);
 
 % savename = ['eucl' int2str(npts+nnbo)];
@@ -151,3 +151,6 @@ end
 %     files = dir(fullfile('**',fname));
 %     fpath = fullfile(files(1).folder,files(1).name);
 %     load(fpath)
+
+% qinv(oolm(:,1:4)),qinv(oolm(:,5:8))];
+%}
