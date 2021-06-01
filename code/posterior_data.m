@@ -125,7 +125,7 @@ for i = 1:nfnames
     
     savepath2 = [savepath '-cov'];
     warning(['saving ' savepath2 '.mat'])
-    save(savepath2,'covmat')
+    save(savepath2,'covmat','-v7.3')
     
     savepath3 = [savepath '-dist'];    
     warning(['saving ' savepath3 '.mat'])
