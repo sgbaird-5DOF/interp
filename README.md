@@ -31,8 +31,8 @@ By cloning the GitHub repository according to the instructions here, all file de
 
 ### Basic steps:
 * Step 0: download the [code](https://github.com/sgbaird-5DOF/interp.git)
-* Step 1: set [interp-5DOF/code/](code/) as working directory
-* Step 2: add subfolders to path (`addpath(genpath('.'))`) and run [interp5DOF_test.m](code/interp5DOF_test.m)
+* Step 1: set `interp/` as working directory
+* Step 2: add subfolders to path (`addpath(genpath('.'))`) and run [interp5DOF_test.m](code/interp5DOF_test.m) to verify it works
 
 ### Platform-specific directions
 
