@@ -2,7 +2,7 @@
  Code related to meshing and interpolation of grain boundaries by representing 5DOF of grain boundaries as grain boundary octonions and mapping them into a Voronoi Fundamental Zone. ([https://github.com/sgbaird-5DOF/interp](https://github.com/sgbaird-5DOF/interp))
  
 See
-> 1. Baird, S. G.; Homer, E. R.; Fullwood, D. T.; Johnson, O. K. Five Degree-of-Freedom Property Interpolation of Arbitrary Grain Boundaries via Voronoi Fundamental Zone Octonion Framework. 2021. https://arxiv.org/abs/2104.06575 (Soon to be submitted to Computational Materials Science)
+> 1. Baird, S. G.; Homer, E. R.; Fullwood, D. T.; Johnson, O. K. Five Degree-of-Freedom Property Interpolation of Arbitrary Grain Boundaries via Voronoi Fundamental Zone Octonion Framework. 2021. https://arxiv.org/abs/2104.06575 (Submitted to Computational Materials Science)
 > 1. [GB_octonion_code](https://github.com/ichesser/GB_octonion_code)
 > 1. Chesser, I., Francis, T., De Graef, M., & Holm, E. A. (2020). Learning the Grain Boundary Manifold: Tools for Visualizing and Fitting Grain Boundary Properties. Acta Materialia. https://doi.org/10.2139/ssrn.3460311
 > 1. Francis, T., Chesser, I., Singh, S., Holm, E. A., & De Graef, M. (2019). A geodesic octonion metric for grain boundaries. Acta Materialia, 166, 135–147. https://doi.org/10.1016/j.actamat.2018.12.034
@@ -22,10 +22,9 @@ the beginning of functions, which is used extensively throughout). For users of 
 
 <!---, but for fitrgp() may need to change `hyperopts = struct('UseParallel',true,'Optimizer','bayesopt','MaxObjectiveEvaluations',maxhyperobj);` to `hyperopts = struct('UseParallel',false,'Optimizer','bayesopt','MaxObjectiveEvaluations',maxhyperobj);` in [interp5DOF.m](code/interp5DOF.m) under "method-specific interpolation" section 'gpr' case.) --->
 ### Files
-See [File dependencies](https://github.com/sgbaird/octonion-mesh/blob/master/README.md#file-dependencies)
+By cloning the GitHub repository according to the instructions here, all file dependencies should be included. See [File dependencies](https://github.com/sgbaird/octonion-mesh/blob/master/README.md#file-dependencies) for a list of files that `interp5DOF.m` depends on.
 
-## Usage
-See [cloning a repository](https://docs.github.com/en/github/creating-cloning-and-archiving-repositories/cloning-a-repository) and [git submodules](https://git-scm.com/book/en/v2/Git-Tools-Submodules) for more information or other options such as using GitHub Desktop (Windows, Linux, etc.) or downloading a .zip file. [Forking](https://docs.github.com/en/github/getting-started-with-github/fork-a-repo), pull requests, and opening of issues are welcome/encouraged. Note that the .zip files will not contain submodules, which means that you'll need to download any submodules individually if you go that route (bare minimum would be the [MATslurm](https://github.com/sgbaird-5DOF/MATslurm) repository). Instead of downloading a .zip file, I suggest instead downloading and using GitHub Desktop. If you run into issues with the repository, you can download a [lightweight version of interp5DOF.m and its dependencies](code/interp5DOF-lightweight.zip), unzip it, and read README.txt for instructions, but please open up an issue in the GitHub repo if you do run into trouble with the repo. That way, you can get the most recent updates and others can benefit from it.
+## Installation
 
 ### Basic steps:
 * Step 0: download the [code](https://github.com/sgbaird-5DOF/interp.git)
@@ -33,6 +32,36 @@ See [cloning a repository](https://docs.github.com/en/github/creating-cloning-an
 * Step 2: add subfolders to path (`addpath(genpath('.'))`) and run [interp5DOF_test.m](code/interp5DOF_test.m)
 
 ### Platform-specific directions
+
+#### Windows
+##### Step 0: download the code
+[Download GitHub Desktop](https://desktop.github.com/) and [Git Bash](https://git-scm.com/downloads). For Git Bash, the default installation options should be fine. I prefer to use [Atom](https://atom.io/) as the text editor which has some slick integrations with git. Login to GitHub Desktop and make a dummy repository via `Ctrl+N` so that you can open Git Bash via GitHub Desktop. Then clone and/or fork `https://github.com/sgbaird-5DOF/interp.git` by opening the Git Bash command line (i.e. Menubar --> Repository --> "Open in Git Bash" or 
+```
+Ctrl+`
+```
+) then run the following command in the directory where you want the `interp` directory to appear:
+```bash
+git -c submodule.interp5DOF-paper.update=none clone --recurse-submodules https://github.com/sgbaird-5DOF/interp.git
+```
+
+The `-c submodule.xxxx.update=none` flag indicates that a particular (private) submodule be ignored. The public submodules should be downloaded automatically. In order to update these submodules, add these to GitHub desktop as well ("add from existing", navigate within interp folder to the submodule, click on submodule folder, and "add").
+
+Alternatively, you can try cloning directly in GitHub Desktop or via the "Open in GitHub Desktop" button under ![image](https://user-images.githubusercontent.com/45469701/116357284-907f9200-a7b9-11eb-81a3-3f55d27b8017.png), but it will likely throw an error, and it may not correctly clone the `MATslurm` submodule by the time it reaches that error. `MATslurm` is a bare minimum requirement for running `interp5DOF.m`. Attempt at your own risk.
+
+##### Step 1: open MATLAB and navigate to navigate to [interp-5DOF/code/](code/)
+Set [interp-5DOF/code/](code/) as working directory via `cd` or GUI
+
+##### Step 2: Add subfolders to path and run [interp5DOF_test.m](code/interp5DOF_test.m)
+
+\>\> `addpath(genpath('.'))`
+
+\>\> `interp5DOF_test`
+
+<!---
+## Accessing functions via addpathdir()
+dir() and addpath() commands are used to locate functions in subfolders of the current working directory via a custom function [addpathdir.m](code/addpathdir.m). This could give anomalous behavior if the directory structure is changed such that filenames are non-unique in sub-folders of the parent folder where addpathdir() gets called, or if files with the same name are present elsewhere on the user's MATLAB path.
+--->
+
 #### Linux
 ##### Step 0: download the code
 ```bash
@@ -52,33 +81,8 @@ Verify that [MATslurm](https://github.com/sgbaird-5DOF/MATslurm) is not an empty
 
 \>\> `interp5DOF_test`
 
-#### Windows
-##### Step 0: download the code
-Open GitHub Desktop and make a dummy repository via `Ctrl+N` so that you can open Git Bash via GitHub Desktop. Then clone and/or fork `https://github.com/sgbaird-5DOF/interp.git` by opening the Git Bash command line (i.e. Menubar --> Repository --> "Open in Git Bash" or 
-```
-Ctrl+`
-```
-) then run the following command in the directory where you want `interp` to appear:
-```bash
-git -c submodule.interp5DOF-paper.update=none clone --recurse-submodules https://github.com/sgbaird-5DOF/interp.git
-```
-
-Alternatively, you can try cloning directly in GitHub Desktop or via the "Open in GitHub Desktop" button under ![image](https://user-images.githubusercontent.com/45469701/116357284-907f9200-a7b9-11eb-81a3-3f55d27b8017.png), but it will likely throw an error, and I'm not sure if it will correctly clone the `MATslurm` submodule by the time it reaches that error. `MATslurm` is a bare minimum requirement for running `interp5DOF.m`. Attempt at your own risk.
-
-The submodules should be downloaded automatically. In order to update these submodules, add these to GitHub desktop as well ("add from existing", navigate within interp folder to the submodule, click on submodule folder, and "add").
-##### Step 1: open MATLAB and navigate to navigate to [interp-5DOF/code/](code/)
-Set [interp-5DOF/code/](code/) as working directory via `cd` or GUI
-
-##### Step 2: Add subfolders to path and run [interp5DOF_test.m](code/interp5DOF_test.m)
-
-\>\> `addpath(genpath('.'))`
-
-\>\> `interp5DOF_test`
-
-<!---
-## Accessing functions via addpathdir()
-dir() and addpath() commands are used to locate functions in subfolders of the current working directory via a custom function [addpathdir.m](code/addpathdir.m). This could give anomalous behavior if the directory structure is changed such that filenames are non-unique in sub-folders of the parent folder where addpathdir() gets called, or if files with the same name are present elsewhere on the user's MATLAB path.
---->
+#### Troubleshooting
+See [cloning a repository](https://docs.github.com/en/github/creating-cloning-and-archiving-repositories/cloning-a-repository) and [git submodules](https://git-scm.com/book/en/v2/Git-Tools-Submodules) for more information or other options such as using GitHub Desktop (Windows, Linux, etc.) or downloading a .zip file. [Forking](https://docs.github.com/en/github/getting-started-with-github/fork-a-repo), pull requests, and opening of issues are welcome/encouraged. Note that the .zip files will not contain submodules, which means that you'll need to download any submodules individually if you go that route (bare minimum would be the [MATslurm](https://github.com/sgbaird-5DOF/MATslurm) repository). Instead of downloading a .zip file, I suggest instead downloading and using GitHub Desktop. If you run into issues with the repository, you can download a [lightweight version of interp5DOF.m and its dependencies](code/interp5DOF-lightweight.zip), unzip it, and read README.txt for instructions, but please open up an issue in the GitHub repo if you do run into trouble with the repo. That way, you can get the most recent updates and others can benefit from it.
 
 ## Getting started
 Look at [interp5DOF.m](code/interp5DOF.m), which is a high-level function for Gaussian Process Regression (GPR), barycentric, nearest neighbor (NN), and inverse-distance weighting (IDW) interpolation. This involves importing/generating data and computing an interpolation.
