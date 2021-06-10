@@ -104,7 +104,9 @@ for i = 1:nfnames
     gprMdl = mdl.cgprMdl;
     
     %conversion to 5DOF
-    five = oct2five(pts);
+    [qm,nA] = oct2five(pts);
+    five.qm = qm;
+    five.nA = nA;
     
     %svd transformation
     ppts = proj_down(pts,mdl.projtol,mdl.usv,'zero',mdl.zeroQ);
