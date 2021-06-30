@@ -989,7 +989,7 @@ pts = {pts1,pts2};
 
 brk = GB5DOF_setup(o1(:,1:4),o2(:,5:8));
 
-%%
+%% prediction and plotting
 [y,ysd] = deal(cell(1,2));
 for i = 1:nfnames
     fname = fnames{i};
@@ -1004,8 +1004,6 @@ for i = 1:nfnames
     savepath = fullfile(datafolder,savename);
     [y{i},ysd{i}] = predict(gprMdl,ppts);
     
-%     f = scatteredInterpolant(t{:},y{i});
-    
     paperfigure();
     t = n2c(nAtest);
     scatter3(t{:},10,y{i},'filled')
@@ -1017,6 +1015,8 @@ for i = 1:nfnames
     cb.Label.String = 'GBE ($J m^{-2}$)';
     cb.Label.Interpreter = 'latex';
 end
+
+%     f = scatteredInterpolant(t{:},y{i});
 
 %%
 paperfigure();
