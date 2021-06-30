@@ -8,11 +8,11 @@ F = false;
 %loop through different combinations of parameters using random,
 %octochorically sampled octonions
 addpathdir({'var_names.m','writeparfile.m','walltimefns'})
-runtype = 'test'; %'test','full'
+runtype = 'full'; %'test','full'
 nreps = 1; % number of runs or repetitions
 
 % job submission environment
-env = 'local'; %'slurm', 'local'
+env = 'slurm'; %'slurm', 'local'
 dryrunQ = F; %whether to skip running the jobs and just compile results
 metaQ = F; %whether to load full model or only meta-data at end
 
@@ -36,12 +36,12 @@ switch runtype
         datatype = {'brk'};
         pgnum = 32; %m-3m (i.e. m\overbar{3}m) FCC symmetry default for e.g. Ni
         sig = [0]; %mJ/m^2, standard deviation, added to "y"
-        genseed = 'shuffle'; %set to 'shuffle' to use different seeds
+        genseed = 11; %'shuffle'; %set to 'shuffle' to use different seeds
         brkQ = false;
 end
 
 %comment (no spaces, used in filename)
-comment = 'olmsted-Ni-rng12';
+% comment = 'olmsted-Ni-rng12';
 % comment = 'olmsted-Ni-rng11-Sigma-5e-2';
 % comment = 'paper-data2';
 % comment = 'rohrer-Ni-test5';
@@ -69,6 +69,7 @@ comment = 'olmsted-Ni-rng12';
 % comment = 'paper-data3';
 % comment = 'paper-data-test';
 % comment = 'paper-data5';
+comment = 'paper-data7';
 % comment = 'rohrer-MgO';
 % comment = 'test';
 % comment = 'kim-trainRepeat-testNoRepeat';
