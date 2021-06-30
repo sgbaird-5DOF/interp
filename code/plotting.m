@@ -7,18 +7,21 @@
 % fname = 'gitID-014bf70_uuID-3ed9cba0_paper-data3.mat';
 % fname = 'gitID-6ede824_uuID-1cf78415_paper-data5.mat';
 fname = 'gitID-0055bee_uuID-475a2dfd_paper-data6.mat';
-files = dir(fullfile('**','interp','data'));
-datafolder = files(1).folder;
-assert(contains(datafolder,'interp'),'interp should be in datafolder path');
+files = dir(fullfile('**','data'));
+folders = {files.folder};
+ids = find(cellfun(@(x) contains(x,fullfile('interp','data')),folders));
+datafolder = files(ids(1)).folder;
+%assert(contains(datafolder,'interp'),'interp should be in datafolder path');
 datapath = fullfile(datafolder,fname);
 %%
 if exist(datapath,'file') ~= 2
-    warning(['downloading data file because could not find at ' datapath ' , May take a few minutes.'])
+    warning(['downloading data file because could not find at ' datapath ', May take a few minutes.'])
     websave(datapath,'https://ndownloader.figshare.com/files/27540842')
 end
-files = dir(fullfile('**',fname));
-fpath = fullfile(files(1).folder,files(1).name);
-load(fpath);
+%files = dir(fullfile('**',fname));
+%fpath = fullfile(files(1).folder,files(1).name);
+%load(fpath);
+load(datapath)
 disp('file loaded')
 
 % slurmQ = 0;
@@ -513,6 +516,12 @@ papertext(2);
 disp(A)
 disp(B)
 
+[qm1,nA1] = oct2five(A);
+disp(qm1)
+disp(nA1)
+[qm2,nA2] = oct2five(B);
+disp(qm2)
+disp(nA2)
 % nsamp = 10;
 % gprsamples = mvnrnd(ypred,covmat,nsamp);
 
@@ -581,6 +590,15 @@ save(fpath,'tpredlist','tsdlist','propList','methodlist','A','B')
 disp(A)
 disp(B)
 savefigpng(figfolder,fname)
+
+A = [0.8658    -0.4269    -0.1270    0.2280    0.2810    0.8390    -0.3852    0.2622];
+B = [0.4684    -0.7657    -0.4100    -0.1617    -0.1483    0.8204    -0.3588    0.4198];
+[qm1,nA1] = oct2five(A);
+disp(qm1)
+disp(nA1)
+[qm2,nA2] = oct2five(B);
+disp(qm2)
+disp(nA2)
 
 %% tunnel plot (shortcut)
 ninputpts = 1000;
@@ -917,6 +935,7 @@ ptslist = {kim_pts,olm_pts};
 ylist = {ykim,yolm};
 Sigma = [3 5 7 9 11];
 
+%%
 covmats = cell(1,nfnames);
 for i = 1:nfnames
     fname = fnames{i};
@@ -944,6 +963,86 @@ end
 % save(fullfile(datafolder,savename),'d','pts')
 
 % covmat = nearestSPD(covmat);
+
+%% Ni and Fe predictions, varying BP normal with fixed misorientation
+savenames = {'gpr58604-kim-misfix','gpr388-olmsted-misfix'};
+npts = 20000;
+
+kimSig3 = kim_pts(kim_ids(1),:);
+olmSig3 = olm_pts(olm_ids(1),:);
+
+[qm1,nA1] = oct2five(kimSig3);
+[qm2,nA2] = oct2five(olmSig3);
+
+qm1 = repmat(qm1,npts,1);
+qm2 = repmat(qm2,npts,1);
+
+nAtest = normr(normrnd(0,1,npts,3)); %uniform sampling of sphere
+
+o1 = five2oct(qm1,nAtest);
+o2 = five2oct(qm2,nAtest);
+
+pts1 = normr(get_octpairs(o1));
+pts2 = normr(get_octpairs(o2));
+
+pts = {pts1,pts2};
+
+brk = GB5DOF_setup(o1(:,1:4),o2(:,5:8));
+
+%%
+[y,ysd] = deal(cell(1,2));
+for i = 1:nfnames
+    fname = fnames{i};
+    load(fname,'mdl')
+    ppts = proj_down(pts{i},mdl.projtol,mdl.usv,'zero',mdl.zeroQ);
+    if isfield(mdl,'gprMdl')
+        gprMdl = mdl.gprMdl;
+    else
+        gprMdl = mdl.cgprMdl;
+    end
+    savename = savenames{i};
+    savepath = fullfile(datafolder,savename);
+    [y{i},ysd{i}] = predict(gprMdl,ppts);
+    
+%     f = scatteredInterpolant(t{:},y{i});
+    
+    paperfigure();
+    t = n2c(nAtest);
+    scatter3(t{:},10,y{i},'filled')
+    axis equal vis3d
+    xlabel('x')
+    ylabel('y')
+    zlabel('z')
+    cb = colorbar;
+    cb.Label.String = 'GBE ($J m^{-2}$)';
+    cb.Label.Interpreter = 'latex';
+end
+
+%%
+paperfigure();
+t = n2c(nAtest);
+scatter3(t{:},10,brk,'filled')
+axis equal vis3d
+xlabel('x')
+ylabel('y')
+zlabel('z')
+cb = colorbar;
+cb.Label.String = 'GBE ($J m^{-2}$)';
+cb.Label.Interpreter = 'latex';
+
+%% reference octonion
+oref = get_ocubo(1,'random',[],10);
+orefsym = osymsets(oref);
+orefsym = orefsym{:};
+pd2 = pdist2(oref,orefsym,@get_omega);
+pd2 = rad2deg(pd2);
+paperfigure();
+histogram(pd2)
+xlabel('$o_\mathrm{ref}$ $\Omega$ ($^{\circ}$)','Interpreter','latex')
+ylabel('\# SEOs')
+
+savefigpng(figfolder,'oref-seo-dist')
+
 %% CODE GRAVEYARD
 %{
 %split apply & find groups
