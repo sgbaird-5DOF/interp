@@ -1,7 +1,7 @@
 %INTERP5DOF_TEST  simple test case for five degree-of-freedom GB property interpolation
 clear; close all
 
-testnum = 2;
+testnum = 1;
 
 addpathdir({'cu2qu.m','q2rod.m','qmult.m','get_uuid.m','qmA2nA.m'})
 
