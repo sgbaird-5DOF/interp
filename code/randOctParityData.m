@@ -9,7 +9,7 @@ F = false;
 %octochorically sampled octonions
 addpathdir({'var_names.m','writeparfile.m','walltimefns'})
 runtype = 'full'; %'test','full'
-nreps = 1; % number of runs or repetitions
+nreps = 10; % number of runs or repetitions
 
 % job submission environment
 env = 'slurm'; %'slurm', 'local'
