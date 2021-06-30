@@ -27,6 +27,6 @@ end
 %--------------------------------------------------------------------------
 q = get_cubo(npts,'random',[],printQ);
 % nA = normr(rand(npts,3)-0.5); %(somewhat) non-uniform sampling of sphere
-nA = normr(normrnd(0,1,npts,3)-0.5); %uniform sampling of sphere
+nA = normr(normrnd(0,1,npts,3)); %uniform sampling of sphere %removed -0.5 2021-06-30
 five = var_names(q,nA);
 end
