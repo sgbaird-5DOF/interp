@@ -37,7 +37,9 @@ data/pcombs/gpr388_gitID-13fe5d2_puuID-fd6692b8_olmsted-Ni-rng12.mat
 data/pcombs/gpr388_gitID-13fe5d2_puuID-fd6692b8_olmsted-Ni-rng12_meta.mat
 code/data/randOctParity/
 code/data/
-data/**
+data/*
+data/diary/*
+data/pcombs/*
 !data/diary/avg100_gitID-5308c86_puuID-e3eeb8fe_paper-data9-test.txt
 !data/pcombs/avg100_gitID-5308c86_puuID-e3eeb8fe_paper-data9-test_meta.mat
 parameters/**
