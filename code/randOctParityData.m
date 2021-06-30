@@ -37,6 +37,7 @@ switch runtype
         pgnum = 32; %m-3m (i.e. m\overbar{3}m) FCC symmetry default for e.g. Ni
         sig = [0]; %mJ/m^2, standard deviation, added to "y"
         genseed = 11; %'shuffle'; %set to 'shuffle' to use different seeds
+        mygpropts = {'PredictMethod','fic'};
         brkQ = false;
 end
 
