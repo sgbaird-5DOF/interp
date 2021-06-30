@@ -70,7 +70,7 @@ end
 % comment = 'paper-data3';
 % comment = 'paper-data-test';
 % comment = 'paper-data5';
-comment = 'paper-data9-test';
+comment = 'paper-data9';
 % comment = 'rohrer-MgO';
 % comment = 'test';
 % comment = 'kim-trainRepeat-testNoRepeat';
