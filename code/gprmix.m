@@ -52,6 +52,7 @@ end
 
 %% setup
 %unpack name-value pairs
+gprMdl = mdl.gprMdl;
 scl = nv.scl;
 plotQ = nv.plotQ;
 dispQ = nv.dispQ;
