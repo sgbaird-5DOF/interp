@@ -8,7 +8,7 @@ F = false;
 %loop through different combinations of parameters using random,
 %octochorically sampled octonions
 addpathdir({'var_names.m','writeparfile.m','walltimefns'})
-runtype = 'test'; %'test','full'
+runtype = 'full'; %'test','full'
 nreps = 10; % number of runs or repetitions
 
 % job submission environment
@@ -36,7 +36,7 @@ switch runtype
         datatype = {'brk'};
         pgnum = 32; %m-3m (i.e. m\overbar{3}m) FCC symmetry default for e.g. Ni
         sig = [0]; %mJ/m^2, standard deviation, added to "y"
-        genseed = 11; %'shuffle'; %set to 'shuffle' to use different seeds
+        genseed = 'shuffle'; %11; %'shuffle'; %set to 'shuffle' to use different seeds
         mygpropts = {'PredictMethod','fic'};
         brkQ = false;
 end
@@ -70,8 +70,8 @@ end
 % comment = 'paper-data3';
 % comment = 'paper-data-test';
 % comment = 'paper-data5';
-% comment = 'paper-data9';
-comment = 'kim-paper-data3';
+comment = 'paper-data10';
+% comment = 'kim-paper-data3';
 % comment = 'rohrer-MgO';
 % comment = 'test';
 % comment = 'kim-trainRepeat-testNoRepeat';
