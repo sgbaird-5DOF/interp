@@ -1,6 +1,6 @@
-function test_voronoisphere(xyz)
+function voronoiboundary = test_voronoisphere(xyz)
 arguments
-    xyz double
+    xyz(3,:) double
 end
 % Script to test voronoisphere (modified from original (Bruno Luong) by Sterling Baird)
 % Random data
@@ -23,7 +23,7 @@ xyz = bsxfun(@rdivide, xyz, sqrt(sum(xyz.^2,1)));
 n = size(xyz,2);
 
 [P, K, voronoiboundary, s] = voronoisphere(xyz);
-sum(s)
+% sum(s)
 
 %% Graphic (1)
 % f = gcf;
