@@ -6,7 +6,10 @@
 % fname = 'gitID-c67a123_uuID-18d21f26_set4.mat';
 % fname = 'gitID-014bf70_uuID-3ed9cba0_paper-data3.mat';
 % fname = 'gitID-6ede824_uuID-1cf78415_paper-data5.mat';
-fname = 'gitID-0055bee_uuID-475a2dfd_paper-data6.mat';
+% fname = 'gitID-0055bee_uuID-475a2dfd_paper-data6.mat'; %bug in get_five.m with sphere sampling
+% fname = 'gitID-dd6fa64_uuID-17bbadb9_paper-data9.mat'; %all runs used same rng unfortunately
+fname = 'gitID-9ebfa46_uuID-34192072_paper-data10.mat';
+
 files = dir(fullfile('**','data'));
 folders = {files.folder};
 ids = find(cellfun(@(x) contains(x,fullfile('interp','data')),folders));
@@ -82,7 +85,7 @@ tbltmp = mdlparstbl(...
 
 kpars = tbltmp.KernelParameters;
 kpars2 = [kpars{:}];
-avgKernelScale = mean(2*rad2deg(kpars2(1,:)));
+avgKernelScale = mean(2*rad2deg(kpars2(1,:)))
 
 %% errors
 methodlist = {'pbary','gpr','idw','nn','avg'};
@@ -99,7 +102,7 @@ for datatype = datatypelist
     t1 = nexttile(1);
     t1.Legend.Position = [0.299964268608805 0.516990889931764 0.163876007802576 0.229411769754747];
     t2 = nexttile(2);
-    t2.Legend.Position = [0.769986057377123 0.592250149191023 0.163876007802576 0.229411769754747];
+    t2.Legend.Position = [0.774250188549525 0.509817862551335 0.163876007802575 0.229411769754747];
 %     fig.Children.Children(3).Position = [0.780569390710456 0.495824223265097 0.163876007802576 0.229411769754747];
     %saving
     savefigpng(figfolder,[char(datatype) 'error'])
@@ -183,6 +186,9 @@ ylabel('VFZO $\omega_{\mathrm{NN}}$ ($^{\circ}$)','Interpreter','latex')
 legend('Data','$ax-\mathrm{log}(x)b+c$','Interpreter','latex')
 savefigpng(figfolder,'nndist-vs-setsize');
 
+%%
+clear mdlparstbl
+
 %% dist-parity
 seed = 10; %#ok<*UNRCH>
 rng(seed);
@@ -209,6 +215,7 @@ parityplot(pd1,pd3,'scatter','cscale','linear','xname','Euclidean Distance',...
 
 %saving
 % savefigpng(folder,fname);
+fpath = fullfile(figfolder,fname);
 print(fpath,'-dpng','-r300') %saving .fig takes too long, file is pretty big
 clear pd1 pd2 pd3
 
@@ -317,7 +324,7 @@ fname = 'ensemble-interp';
 
 seed = 10;
 rng(seed);
-ninputpts = 50000;
+ninputpts = 50000; %50000
 npredpts = 10000;
 [~,qm,nA] = get_five(ninputpts);
 o = five2oct(qm,nA);
@@ -333,11 +340,12 @@ fpath = fullfile(figfolder,fname);
 save(fpath,'ypred','ypredlist','ytrue','qm','nA','qm2','nA2','y','o','o2')
 % save(fpath,'ypred','ypredlist','ytrue','qm','nA','qm2','nA2','y','o','o2',...
 %     'interpfnlist','mdllist','mdlparslist') %ran into issues with saving, maybe out of memory
+% gprMdls = cellfun(@(x) x.gprMdl, mdllist, 'UniformOutput',false);
 
 %% load Ensemble Interpolation
 fname = 'ensemble-interp';
 fpath = fullfile(figfolder,fname);
-load(fname,'ypred','ypredlist','ytrue','qm','nA','qm2','nA2','y','o','o2')
+load(fpath,'ypred','ypredlist','ytrue','qm','nA','qm2','nA2','y','o','o2')
 
 %% Ensemble Interpolation
 paperfigure(2,2,14.509833333333333)
@@ -417,15 +425,15 @@ savefigpng(figfolder,fname)
 
 %% distance histogram and knn vs. meshpoints
 addpathdir({'gmat2q.m','oct50000.mat'})
-% % setpaperdefaults()
-% % distance histogram
-% seed = 10;
-% rng(seed);
-% npts = 50000;
-% five = get_five(npts);
-% o = GBfive2oct(five);
-% pts = get_octpairs(o);
-% save('oct50000.mat','pts')
+% setpaperdefaults()
+% distance histogram
+seed = 10;
+rng(seed);
+npts = 50000;
+[~,qm,nA] = get_five(npts);
+o = five2oct(qm,nA);
+pts = get_octpairs(o);
+save('oct50000.mat','pts')
 
 load('oct50000.mat','pts');
 
@@ -528,6 +536,60 @@ disp(nA2)
 
 savefigpng(figfolder,'kim-interp')
 
+fpath = fullfile(figfolder,'kimAB');
+save(fpath,'A','B')
+
+%%
+fpath = fullfile(figfolder,'kimAB');
+load(fpath,'A','B')
+[qm1,nA1] = oct2five(A);
+disp(qm1)
+disp(nA1)
+[qm2,nA2] = oct2five(B);
+disp(qm2)
+disp(nA2)
+
+dm1 = disorientation(qm1(1,:));
+dm2 = disorientation(qm2(1,:));
+
+r1 = q2rod(dm1);
+r2 = q2rod(dm2);
+
+paperfigure();
+plotFZrodriguez()
+
+scl = 0.1;
+x = [1,0,0]*scl;
+y = [0,1,0]*scl;
+z = [0,0,1]*scl;
+
+w = [0,0,0];
+hold on
+quiver3(w,w,w,x,y,z,1,'linewidth',1)
+text(x(1),x(2)+0.01,x(3),'$d_1$','FontWeight','bold','Interpreter','latex')
+text(y(1),y(2),y(3)+0.01,'$d_2$','FontWeight','bold','Interpreter','latex')
+text(z(1)+0.01,z(2),z(3),'$d_3$','FontWeight','bold','Interpreter','latex')
+
+hold on
+t = n2c(r1);
+ax = cell(1,3);
+ax{1} = scatter3(t{:},'b');
+t = n2c(r2);
+ax{2} = scatter3(t{:},'r');
+t = n2c([r1; r1(1:2) 0; r1(1) 0 0]);
+ax{3} = plot3(t{:},'k:');
+t = n2c([r2; r2(1:2) 0; r2(1) 0 0]);
+ax{4} = plot3(t{:},'k:');
+legend([ax{1:2}],'A','B','Location',[0.190232753462038 0.576379005936667 0.180441240026672 0.110647062492371]);
+
+savefigpng(figfolder,'ABrod-kim')
+
+%% Kim (non-mix) results
+load('gpr46883_gitID-5e6bd14_puuID-2e34b447_kim-paper-data3_meta.mat','errmetrics')
+format long
+errmetrics
+format short
+
 %% Kim Tunnel Plots and Posterior Sampling
 paperfigure(2,2,13.6843);
 rng(10)
@@ -583,22 +645,59 @@ ninputpts = 50000; %1000, 50000
 n = 150;
 rng(10)
 paperfigure();
-[tpredlist,tsdlist,propList,methodlist,A,B] = tunnelplot_test(2,ninputpts,n);
+[tpredlist,tsdlist,propList,methodlist,A,B] = tunnelplot_test(2,ninputpts,n,'extend',0);
 fname = ['tunnel-',int2str(ninputpts)];
 fpath = fullfile(figfolder,fname);
 save(fpath,'tpredlist','tsdlist','propList','methodlist','A','B')
-disp(A)
-disp(B)
 savefigpng(figfolder,fname)
 
-A = [0.8658    -0.4269    -0.1270    0.2280    0.2810    0.8390    -0.3852    0.2622];
-B = [0.4684    -0.7657    -0.4100    -0.1617    -0.1483    0.8204    -0.3588    0.4198];
+%%
+fname = ['tunnel-',int2str(50000)];
+fpath = fullfile(figfolder,fname);
+load(fpath,'A','B')
+disp(A)
+disp(B)
 [qm1,nA1] = oct2five(A);
 disp(qm1)
 disp(nA1)
 [qm2,nA2] = oct2five(B);
 disp(qm2)
 disp(nA2)
+
+dm1 = disorientation(qm1(1,:));
+dm2 = disorientation(qm2(1,:));
+
+r1 = q2rod(dm1);
+r2 = q2rod(dm2);
+
+paperfigure();
+plotFZrodriguez()
+
+scl = 0.1;
+x = [1,0,0]*scl;
+y = [0,1,0]*scl;
+z = [0,0,1]*scl;
+
+w = [0,0,0];
+hold on
+quiver3(w,w,w,x,y,z,1,'linewidth',1)
+text(x(1),x(2)+0.01,x(3),'$d_1$','FontWeight','bold','Interpreter','latex')
+text(y(1),y(2),y(3)+0.01,'$d_2$','FontWeight','bold','Interpreter','latex')
+text(z(1)+0.01,z(2),z(3),'$d_3$','FontWeight','bold','Interpreter','latex')
+
+hold on
+t = n2c(r1);
+ax = cell(1,3);
+ax{1} = scatter3(t{:},'b');
+t = n2c(r2);
+ax{2} = scatter3(t{:},'r');
+t = n2c([r1; r1(1:2) 0; r1(1) 0 0]);
+ax{3} = plot3(t{:},'k:');
+t = n2c([r2; r2(1:2) 0; r2(1) 0 0]);
+ax{4} = plot3(t{:},'k:');
+legend([ax{1:2}],'A','B','Location',[0.190232753462038 0.576379005936667 0.180441240026672 0.110647062492371]);
+
+savefigpng(figfolder,'ABrod')
 
 %% tunnel plot (shortcut)
 ninputpts = 1000;
@@ -965,7 +1064,10 @@ end
 % covmat = nearestSPD(covmat);
 
 %% Ni and Fe predictions, varying BP normal with fixed misorientation
-savenames = {'gpr58604-kim-misfix','gpr388-olmsted-misfix'};
+fnames = {'gpr58604_gitID-3b7183c_puuID-ce759533_kim-Fe-train-all-data-fic.mat',...
+    'gpr50000_gitID-dd6fa64_puuID-88aa16b9_paper-data9.mat'};
+
+savenames = {'gpr58604-kim-misfix','gpr50000-olmsted-misfix'};
 npts = 20000;
 
 kimSig3 = kim_pts(kim_ids(1),:);
@@ -982,12 +1084,14 @@ nAtest = normr(normrnd(0,1,npts,3)); %uniform sampling of sphere
 o1 = five2oct(qm1,nAtest);
 o2 = five2oct(qm2,nAtest);
 
-pts1 = normr(get_octpairs(o1));
-pts2 = normr(get_octpairs(o2));
+pts1 = get_octpairs(o1);
+pts2 = get_octpairs(o2);
+pts1 = normr(pts1);
+pts2 = normr(pts2);
 
 pts = {pts1,pts2};
 
-brk = GB5DOF_setup(o1(:,1:4),o2(:,5:8));
+brk = GB5DOF_setup(o2(:,1:4),o2(:,5:8));
 
 %% prediction and plotting
 [y,ysd] = deal(cell(1,2));
@@ -1003,32 +1107,102 @@ for i = 1:nfnames
     savename = savenames{i};
     savepath = fullfile(datafolder,savename);
     [y{i},ysd{i}] = predict(gprMdl,ppts);
-    
-    paperfigure();
-    t = n2c(nAtest);
-    scatter3(t{:},10,y{i},'filled')
-    axis equal vis3d
-    xlabel('x')
-    ylabel('y')
-    zlabel('z')
-    cb = colorbar;
-    cb.Label.String = 'GBE ($J m^{-2}$)';
-    cb.Label.Interpreter = 'latex';
 end
 
 %     f = scatteredInterpolant(t{:},y{i});
 
 %%
-paperfigure();
+figure('Units','centimeters','Position',[12 9.144 9 6.856]);
 t = n2c(nAtest);
-scatter3(t{:},10,brk,'filled')
+scatter3(t{:},10,y{1},'filled')
 axis equal vis3d
 xlabel('x')
 ylabel('y')
 zlabel('z')
 cb = colorbar;
-cb.Label.String = 'GBE ($J m^{-2}$)';
+cb.Label.String = 'Fe-GPR GBE ($J m^{-2}$)';
 cb.Label.Interpreter = 'latex';
+
+savefigpng(figfolder,'fe-gpr');
+spinGIF(figfolder,'fe-gpr');
+
+%%
+% paperfigure(1,2,7);
+figure('Units','centimeters','Position',[7.5 9.9695 18 6.0305]);
+t = n2c(nAtest);
+ys = {y{2},brk};
+mn = min(vertcat(ys{:}));
+mx = max(vertcat(ys{:}));
+cx = [mn mx];
+lbls = {'Ni-GPR','Ni-BRK'};
+for i = 1:2
+    subplot(1,2,i)
+    scatter3(t{:},10,ys{i},'filled')
+    axis equal vis3d
+    xlabel('x')
+    ylabel('y')
+    zlabel('z')
+    caxis(cx)
+    cb = colorbar('eastoutside');
+    cb.Label.String = [lbls{i} ' GBE ($J m^{-2}$)'];
+    cb.Label.Interpreter = 'latex';
+    paperannotation(i)
+end
+
+savefigpng(figfolder,'ni-gpr-brk');
+spinGIF(figfolder,'ni-gpr-brk','n',2);
+
+%% stereographic projection
+R1 = vecpair2rmat(nA1,[0 0 1]);
+R2 = vecpair2rmat(nA2,[0 0 1]);
+
+nAS1 = (R1*nAtest.').';
+ids1 = nAS1(:,3) >= 0;
+nAS1 = nAS1(ids1,:);
+
+nAS2 = (R2*nAtest.').';
+ids2 = nAS2(:,3) >= 0;
+nAS2 = nAS2(ids2,:);
+
+ss1 = sphere_stereograph(nAS1);
+ss1 = ss1(:,1:2);
+
+ss2 = sphere_stereograph(nAS2);
+ss2 = ss2(:,1:2);
+
+%% Fe
+paperfigure();
+t = n2c(ss1);
+scatter(t{:},10,y{1}(ids1),'filled')
+hold on
+c = [0.5 0.5 0.5];
+viscircles([0,0],2,'Color',c,'LineStyle',':','EnhanceVisibility',false,'LineWidth',1.5);
+cb = colorbar('northoutside');
+cb.Label.String = 'Fe GBE ($J m^{-2}$)';
+cb.Label.Interpreter = 'latex';
+axis equal off
+
+%% Ni
+paperfigure(2,1);
+ys = {y{2},brk};
+mn = min(vertcat(ys{:}));
+mx = max(vertcat(ys{:}));
+cx = [mn mx];
+for i = 1:2
+    nexttile
+    t = n2c(ss2);
+    scatter(t{:},10,ys{i}(ids2),'filled')
+    hold on
+    viscircles([0,0],2,'Color',[0.5 0.5 0.5],'LineStyle',':','EnhanceVisibility',false,'LineWidth',1.5);
+    caxis(cx)
+    axis equal off
+    if i == 1
+        cb = colorbar('northoutside');
+        cb.Label.String = 'Ni GBE ($J m^{-2}$)';
+        cb.Label.Interpreter = 'latex';
+    end
+    papertext(i)
+end
 
 %% reference octonion
 oref = get_ocubo(1,'random',[],10);
@@ -1221,9 +1395,67 @@ A = importdata('olm_octonion_list.txt');
 %         fpath = fullfile(figfolder,fname);
         % load(fpath,'tpredlist','tsdlist','propList','methodlist','A','B')
         %     nexttile()
+
+% o1sym = osymsets(o1);
+% o1sym = o1sym{:};
+% [~,nA1sym] = oct2five(o1sym);
+% nA1sym = uniquetol([nA1sym;-nA1sym],1e-3,'ByRows',true);
+% 
+% o2sym = osymsets(o1);
+% o2sym = o2sym{:};
+% [~,nA2sym] = oct2five(o2sym);
+
+
+
+% t = n2c(sb1);
+% scatter(t{:},1,[0.5 0.5 0.5],'filled','MarkerEdgeColor','none')
+% t = n2c(sb2);
+% scatter(t{:},1,[0.5 0.5 0.5],'filled','MarkerEdgeColor','none')
+
+
+% %%
+% %get symmetrically equivalent BP normals
+% q = [1 0 0 0];
+% 
+% symnames = load('PGnames.mat'); %need to add crystal_symmetry_ops to path in order for this to work
+% symops = load('PGsymops.mat');
+% qpt = symops.Q{32}; %choose point group symmetry
+% t = num2cell(qpt,2);
+% %convert quaternions to rotation matrices
+% Rmats = cellfun(@(q) qu2om(q),t,'UniformOutput',false);
+% 
+% nR = length(Rmats);
+% nArot = zeros(nR*2,3);
+% for i = 1:nR
+%    nArot(i,:) = (Rmats{i}*nA1.').';
+%    nArot(i+nR,:) = (Rmats{i}*-nA1.').';
+% end
+% 
+% [nAout,nArot1,nR] = toBPFZ(qm1(1,:),nA1);
+% [nAout,nArot2,nR] = toBPFZ(qm2(1,:),nA2);
+% 
+% vb1 = test_voronoisphere(nArot1{1}.');
+% vb1 = [vb1{:}].';
+% 
+% vb2 = test_voronoisphere(nArot2{1}.');
+% vb2 = [vb2{:}].';
+% 
+% b1 = (R1*vb1.').';
+% % b1 = vb1;
+% b1 = b1(b1(:,3) >= 0,:);
+% sb1 = sphere_stereograph(b1);
+% sb1 = sb1(:,1:2);
+% 
+% b2 = (R2*vb.').';
+% % b2 = vb2;
+% b2 = b2(b2(:,3) >= 0,:);
+% sb2 = sphere_stereograph(b2);
+% sb2 = sb2(:,1:2);
+
 %}
 %         if strcmp(datatype,'kim')
 %             tunnelplot({mdl},A,B,100,'lgdloc','northoutside','brkQ',brkQ,'K',6,'uncertainty',false);
 %         else
 %             tunnelplot({mdl},A,B,100,'lgdloc','northoutside','brkQ',brkQ,'K',6);
 %         end
+
