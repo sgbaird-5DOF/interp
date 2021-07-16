@@ -1,4 +1,7 @@
 function q = sphere_stereograph ( p )
+arguments
+   p(:,3) 
+end
 % SPHERE_STEREOGRAPH compute the stereographic image of points on a sphere.
 %*****************************************************************************80
 %
