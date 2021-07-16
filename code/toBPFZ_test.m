@@ -78,7 +78,7 @@ t = n2c(nAref*1.02);
 plot3(t{:},'ko','MarkerFaceColor','w')
 % quivplot(1.5)
 axis equal tight off
-test_voronoisphere(nArot{1}.')
+test_voronoisphere(nArot{1}.');
 if K == 2
     lgdlbltmp = {'$p_i^*$ (symmetrized)'};
     lgdlbl = ['$p_{i,1}$ (starting)',lgdlbltmp,'$p_\mathrm{ref}$ (reference)'];
