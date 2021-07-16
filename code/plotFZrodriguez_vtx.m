@@ -10,9 +10,9 @@ z = [0,0,1]*scl;
 w = [0,0,0];
 hold on
 quiver3(w,w,w,x,y,z,1,'linewidth',1)
-text(x(1),x(2)+0.01,x(3),'d_1','FontWeight','bold')
-text(y(1),y(2),y(3)+0.01,'d_2','FontWeight','bold')
-text(z(1)+0.01,z(2),z(3),'d_3','FontWeight','bold')
+text(x(1),x(2)+0.01,x(3),'$d_1$','FontWeight','bold','Interpreter','latex')
+text(y(1),y(2),y(3)+0.01,'$d_2$','FontWeight','bold','Interpreter','latex')
+text(z(1)+0.01,z(2),z(3),'$d_3$','FontWeight','bold','Interpreter','latex')
 
 addpathdir({'misFZfeatures.mat','q2rod.m'})
 load('misFZfeatures.mat','dlist')
