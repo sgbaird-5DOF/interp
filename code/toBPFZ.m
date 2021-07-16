@@ -101,7 +101,7 @@ for i = 1:npts
         %         hold on
         t=n2c(nArot{i});
         %         plot3(t{:},'*')
-        test_voronoisphere(nArot{i}.')
+        test_voronoisphere(nArot{i}.');
     end
 end
 
