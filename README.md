@@ -104,6 +104,23 @@ git --recurse-submodules https://github.com/sgbaird-5DOF/interp.git
 #### Troubleshooting
 See [cloning a repository](https://docs.github.com/en/github/creating-cloning-and-archiving-repositories/cloning-a-repository) and [git submodules](https://git-scm.com/book/en/v2/Git-Tools-Submodules) for more information or other options such as using GitHub Desktop (Windows, Linux, etc.) or downloading a .zip file. [Forking](https://docs.github.com/en/github/getting-started-with-github/fork-a-repo), pull requests, and opening of issues are welcome/encouraged. Note that the .zip files will not contain submodules, which means that you'll need to download any submodules individually if you go that route (bare minimum would be the [MATslurm](https://github.com/sgbaird-5DOF/MATslurm) repository). Instead of downloading a .zip file, I suggest instead downloading and using GitHub Desktop. If you run into issues with the repository, you can download a [lightweight version of interp5DOF.m and its dependencies](code/interp5DOF-lightweight.zip), unzip it, and read README.txt for instructions, but please open up an issue in the GitHub repo if you do run into trouble with the repo. That way, you can get the most recent updates and others can benefit from it.
 
+#### Adding as Submodule
+If you wish to add the interp repository as a submodule to your own repository, first navigate to where you would like the submodule to appear, and then run the following commands in git bash:
+```bash
+git submodule add https://github.com/sgbaird-5DOF/interp.git
+git submodule update --init --recursive
+```
+Then commit/push your changes.
+
+If you later need to remove the submodule from your repository (or need to start over), you will need to do the following:
+- Run `git rm --cached <submodule name>`
+- Delete the relevant lines from the `.gitmodules` file.
+- Delete the relevant section from `.git/config`.
+- Commit
+- Delete the now untracked submodule files.
+- Remove directory `.git/modules/<submodule name>`
+([Source](https://gist.github.com/kyleturner/1563153#gistcomment-1568993))
+ 
 ## Getting started
 Look at [interp5DOF.m](code/interp5DOF.m), which is a high-level function for Gaussian Process Regression (GPR), barycentric, nearest neighbor (NN), and inverse-distance weighting (IDW) interpolation. This involves importing/generating data and computing an interpolation.
 
