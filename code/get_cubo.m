@@ -34,6 +34,7 @@ end
 %--------------------------------------------------------------------------
 if strcmp(method,'uniform') && isempty(sidelength)
 	sidelength = ceil(n^(1/3)); % auto-calculate sidelength
+    n = sidelength^3;
 elseif isempty(n)
 	n = sidelength^3;
 end
