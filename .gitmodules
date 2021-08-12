@@ -3,9 +3,6 @@
 	url = ../MATslurm.git #relative path
 
 	#url = git@github.com:sgbaird-5dof/MATslurm.git
-[submodule "interp5DOF-paper"]
-	path = code/interp5DOF-paper
-	url = ../../sgbaird/interp5DOF-paper.git
 [submodule "code/ternplot"]
 	path = code/ternplot
 	url = ../../alchemyst/ternplot.git
