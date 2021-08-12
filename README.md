@@ -46,16 +46,15 @@ Ctrl+`
 ```
 ) then run the following command in the directory where you want the `interp` directory to appear:
 ```bash
-git -c submodule.interp5DOF-paper.update=none clone --recurse-submodules https://github.com/sgbaird-5DOF/interp.git
+git clone --recurse-submodules https://github.com/sgbaird-5DOF/interp.git
 ```
 
-The `-c submodule.xxxx.update=none` flag indicates that a particular (private) submodule be ignored. The public submodules should be downloaded automatically. In order to update these submodules, add these to GitHub desktop as well ("add from existing", navigate within interp folder to the submodule, click on submodule folder, and "add").
+<!-- The `-c submodule.xxxx.update=none` flag indicates that a particular (private) submodule be ignored. The public submodules should be downloaded automatically. In order to update these submodules, add these to GitHub desktop as well ("add from existing", navigate within interp folder to the submodule, click on submodule folder, and "add"). -->
 
 Alternatively, you can try cloning directly in GitHub Desktop or via the "Open in GitHub Desktop" button under ![image](https://user-images.githubusercontent.com/45469701/116357284-907f9200-a7b9-11eb-81a3-3f55d27b8017.png), but it will likely throw an error, and it may not correctly clone the `MATslurm` submodule by the time it reaches that error. `MATslurm` is a bare minimum requirement for running `interp5DOF.m`. Attempt at your own risk.
 
 ##### Step 1: open MATLAB and navigate to navigate to [interp-5DOF/code/](code/)
 Set [interp-5DOF/code/](code/) as working directory via `cd` or GUI
-=======
 
 - [Install Atom text editor](https://atom.io/) which has some slick integrations with git
 - [Install GitHub Desktop](https://desktop.github.com/)
@@ -65,10 +64,8 @@ Set [interp-5DOF/code/](code/) as working directory via `cd` or GUI
 and run the following commands:
 ```bash
 cd ..
-git -c submodule.interp5DOF-paper.update=none clone --recurse-submodules https://github.com/sgbaird-5DOF/interp.git
+git clone --recurse-submodules https://github.com/sgbaird-5DOF/interp.git
 ```
-
-The `-c submodule.xxxx.update=none` flag indicates that a particular (private) submodule be ignored. The public submodules should be downloaded automatically (e.g. `MATslurm`). In order to update these submodules, add these directories to GitHub desktop as well (`Ctrl+O`).
 
 Alternatively, you can try cloning directly in GitHub Desktop or via the "Open in GitHub Desktop" button under <img src=https://user-images.githubusercontent.com/45469701/116357284-907f9200-a7b9-11eb-81a3-3f55d27b8017.png width=100>, but it will likely throw an error, and it may not clone the `MATslurm` submodule by the time it reaches that error, which is a bare minimum requirement for running `interp5DOF.m`.
 
@@ -89,10 +86,9 @@ dir() and addpath() commands are used to locate functions in subfolders of the c
 #### Linux
 ##### Step 0: download the code
 ```bash
-git -c submodule.interp5DOF-paper.update=none clone --recurse-submodules https://github.com/sgbaird-5DOF/interp.git
+git --recurse-submodules https://github.com/sgbaird-5DOF/interp.git
 ```
-
-Verify that [MATslurm](https://github.com/sgbaird-5DOF/MATslurm) is not an empty directory.
+<!-- Verify that [MATslurm](https://github.com/sgbaird-5DOF/MATslurm) is not an empty directory. -->
 
 ##### Step 1: open MATLAB and navigate to navigate to [interp-5DOF/code/](code/)
 `matlab`
