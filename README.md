@@ -28,6 +28,10 @@ By cloning the GitHub repository according to the instructions here, all file de
 
 ## Installation
 
+### Quick Installation
+While I suggest cloning/forking the repository to make it easier to maintain and develop the repository, for a quick installation simply download and unzip the `interp.zip` file from the [latest release](https://github.com/sgbaird-5DOF/interp/releases/).
+![image](https://user-images.githubusercontent.com/45469701/129271136-ef01fbfe-0782-40d0-b0ae-22745cc67ac9.png)
+
 ### Basic steps:
 * Step 0: download the [code](https://github.com/sgbaird-5DOF/interp.git)
 * Step 1: set [interp-5DOF/code/](code/) as working directory
