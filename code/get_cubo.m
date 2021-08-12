@@ -8,7 +8,7 @@ end
 % GET_CUBO  get n quaternions from randomly or uniformly sampled cubochoric points
 %--------------------------------------------------------------------------
 % Inputs:
-%		n - # of octonions to output (re-calculated if using 'uniform' method
+%		n - # of quaternions to output (re-calculated if using 'uniform' method
 %		and sidelength is specified
 %
 %		method - sampling method, 'random', 'uniform'
