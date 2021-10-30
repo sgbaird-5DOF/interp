@@ -40,7 +40,7 @@ While I suggest cloning/forking the repository to make it easier to maintain and
 ### Platform-specific directions
 
 #### Windows
-##### Step 0: download the code
+**Step 0: Download the code**
 [Download GitHub Desktop](https://desktop.github.com/) and [Git Bash](https://git-scm.com/downloads). For Git Bash, the default installation options should be fine. I prefer to use [Atom](https://atom.io/) as the text editor which has some slick integrations with git. Login to GitHub Desktop and make a dummy repository via `Ctrl+N` so that you can open Git Bash via GitHub Desktop. Then clone and/or fork `https://github.com/sgbaird-5DOF/interp.git` by opening the Git Bash command line (i.e. Menubar --> Repository --> "Open in Git Bash" or
 ```
 Ctrl+`
@@ -54,7 +54,7 @@ git clone --recurse-submodules https://github.com/sgbaird-5DOF/interp.git
 
 Alternatively, you can try cloning directly in GitHub Desktop or via the "Open in GitHub Desktop" button under ![image](https://user-images.githubusercontent.com/45469701/116357284-907f9200-a7b9-11eb-81a3-3f55d27b8017.png), but it will likely throw an error, and it may not correctly clone the `MATslurm` submodule by the time it reaches that error. `MATslurm` is a bare minimum requirement for running `interp5DOF.m`. Attempt at your own risk.
 
-##### Step 1: open MATLAB and navigate to navigate to [interp-5DOF/code/](code/)
+**Step 1: open MATLAB and navigate to navigate to [interp-5DOF/code/](code/)**
 Set [interp-5DOF/code/](code/) as working directory via `cd` or GUI
 
 - [Install Atom text editor](https://atom.io/) which has some slick integrations with git
@@ -70,10 +70,7 @@ git clone --recurse-submodules https://github.com/sgbaird-5DOF/interp.git
 
 Alternatively, you can try cloning directly in GitHub Desktop or via the "Open in GitHub Desktop" button under <img src=https://user-images.githubusercontent.com/45469701/116357284-907f9200-a7b9-11eb-81a3-3f55d27b8017.png width=100>, but it will likely throw an error, and it may not clone the `MATslurm` submodule by the time it reaches that error, which is a bare minimum requirement for running `interp5DOF.m`.
 
-##### Step 1: open MATLAB and navigate to navigate to [interp-5DOF/code/](code/)
-Set interp as working directory via `cd` or GUI
-
-##### Step 2: Add subfolders to path and run [interp5DOF_test.m](code/interp5DOF_test.m)
+**Step 2: Add subfolders to path and run [interp5DOF_test.m](code/interp5DOF_test.m)**
 
 \>\> `addpath(genpath('.'))`
 
@@ -85,18 +82,18 @@ dir() and addpath() commands are used to locate functions in subfolders of the c
 --->
 
 #### Linux
-##### Step 0: download the code
+**Step 0: download the code**
 ```bash
 git --recurse-submodules https://github.com/sgbaird-5DOF/interp.git
 ```
 <!-- Verify that [MATslurm](https://github.com/sgbaird-5DOF/MATslurm) is not an empty directory. -->
 
-##### Step 1: open MATLAB and navigate to navigate to [interp-5DOF/code/](code/)
+**Step 1: open MATLAB and navigate to navigate to [interp-5DOF/code/](code/)**
 `matlab`
 
 \>\> `cd interp-5DOF/code/`
 
-##### Step 2: Add subfolders to path and run [interp5DOF_test.m](code/interp5DOF_test.m)
+**Step 2: Add subfolders to path and run [interp5DOF_test.m](code/interp5DOF_test.m)**
 
 \>\> `addpath(genpath('.'))`
 
