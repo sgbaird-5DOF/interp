@@ -1,2 +1,4 @@
 # Auto detect text files and perform LF normalization
 * text=auto
+**/*.cpp linguist-vendored=false
+**/*.cpp linguist-detectable=false
