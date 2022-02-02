@@ -43,11 +43,11 @@ While I suggest cloning/forking the repository to make it easier to maintain and
 
 #### Windows
 **Step 0: Download the code**  
-[Download GitHub Desktop](https://desktop.github.com/) and [Git Bash](https://git-scm.com/downloads). For Git Bash, the default installation options should be fine. I prefer to use [Atom](https://atom.io/) as the text editor which has some slick integrations with git. Login to GitHub Desktop and make a dummy repository via `Ctrl+N` so that you can open Git Bash via GitHub Desktop. Then clone and/or fork `https://github.com/sgbaird-5DOF/interp.git` by opening the Git Bash command line (i.e. Menubar --> Repository --> "Open in Git Bash" or
+[Download GitHub Desktop](https://desktop.github.com/) and [Git Bash](https://git-scm.com/downloads). For Git Bash, the default installation options should be fine. I prefer to use [Atom](https://atom.io/) as the text editor which has some slick integrations with git. Login to GitHub Desktop and make a dummy repository via `Ctrl+N` so that you can open Git Bash via GitHub Desktop. Then clone and/or fork `https://github.com/sgbaird-5DOF/interp.git` by opening the Git Bash command line (i.e. Menubar --> Repository --> "Open in Git Bash") or
 ```
 Ctrl+`
 ```
-) then run the following command in the directory where you want the `interp` directory to appear:
+then run the following command in the directory where you want the `interp` directory to appear:
 ```bash
 git clone --recurse-submodules https://github.com/sgbaird-5DOF/interp.git
 ```
@@ -57,20 +57,10 @@ git clone --recurse-submodules https://github.com/sgbaird-5DOF/interp.git
 Alternatively, you can try cloning directly in GitHub Desktop or via the "Open in GitHub Desktop" button under ![image](https://user-images.githubusercontent.com/45469701/116357284-907f9200-a7b9-11eb-81a3-3f55d27b8017.png), but it will likely throw an error, and it may not correctly clone the `MATslurm` submodule by the time it reaches that error. `MATslurm` is a bare minimum requirement for running `interp5DOF.m`. Attempt at your own risk.
 
 **Step 1: open MATLAB and navigate to navigate to [interp-5DOF/code/](code/)**  
-Set [interp-5DOF/code/](code/) as working directory via `cd` or GUI
-
-- [Install Atom text editor](https://atom.io/) which has some slick integrations with git
-- [Install GitHub Desktop](https://desktop.github.com/)
-- [Install Git Bash](https://git-scm.com/downloads). For Git Bash, the default installation options should be fine.
-- Login to GitHub Desktop and make the "tutorial repository" so that you can open Git Bash via GitHub Desktop
-- Clone and/or fork `https://github.com/sgbaird-5DOF/interp.git` by opening the Git Bash command line via Menubar --> Repository --> "Open in Git Bash" or Ctrl+`
-and run the following commands:
 ```bash
-cd ..
-git clone --recurse-submodules https://github.com/sgbaird-5DOF/interp.git
+matlab
+cd interp-5DOF/code/
 ```
-
-Alternatively, you can try cloning directly in GitHub Desktop or via the "Open in GitHub Desktop" button under <img src=https://user-images.githubusercontent.com/45469701/116357284-907f9200-a7b9-11eb-81a3-3f55d27b8017.png width=100>, but it will likely throw an error, and it may not clone the `MATslurm` submodule by the time it reaches that error, which is a bare minimum requirement for running `interp5DOF.m`.
 
 **Step 2: Add subfolders to path and run [interp5DOF_test.m](code/interp5DOF_test.m)**  
 
