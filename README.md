@@ -150,6 +150,7 @@ o = get_octpairs(o); %symmetrize (using default reference GBO)
 At this point, you can get the VFZ pairwise distance matrix via:
 ```matlab
 pd = pdist(o);
+mat = squareform(pd);
 ```
 Alternatively, `pdist2()` may be of interest if you want pairwise distances between two sets of points, or `vecnorm()` if you want to calculate distances between two lists of GBOs:
 ```matlab
