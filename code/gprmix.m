@@ -71,10 +71,13 @@ y = y(ids);
 
 %% original model
 
-[ypredtmp,ysdtmp,citmp] = predict(gprMdl,X2);
+% [ypredtmp,ysdtmp,citmp] = predict(gprMdl,X2);
+% kfntmp = gprMdl.Impl.Kernel.makeKernelAsFunctionOfXNXM(gprMdl.Impl.ThetaHat);
+% covmattmp = kfntmp(X2,X2);
 
-kfntmp = gprMdl.Impl.Kernel.makeKernelAsFunctionOfXNXM(gprMdl.Impl.ThetaHat);
-covmattmp = kfntmp(X2,X2);
+alpha = 0.05;
+kfntmp = @(Xnew, Xnew) predictExactWithCov(gprMdl.Impl, Xnew, alpha);
+[ypredtmp, covmattmp, citmp] = predictExactWithCov(gprMdl.Impl, X2, alpha);
 
 %find predictions below threshold and populate ypred
 ids2 = ypredtmp <= thr;
@@ -93,14 +96,16 @@ covmat(~ids2) = covmattmp(~ids2);
 %train on input points with properties less than threshold
 if ~isempty(X)
     gprMdl2 = fitrgp(X,y,'PredictMethod','exact','KernelFunction','exponential');
-    [ypredtmp2,ysdtmp2,citmp2] = predict(gprMdl2,X2);
-    kfntmp2 = gprMdl2.Impl.Kernel.makeKernelAsFunctionOfXNXM(gprMdl2.Impl.ThetaHat);
-    covmattmp2 = kfntmp2(X2,X2);
+    %     [ypredtmp2,ysdtmp2,citmp2] = predict(gprMdl2,X2);
+    %     kfntmp2 = gprMdl2.Impl.Kernel.makeKernelAsFunctionOfXNXM(gprMdl2.Impl.ThetaHat);
+    %     covmattmp2 = kfntmp2(X2,X2);
+    [ypredtmp2, covmattmp2, citmp2] = predictExactWithCov(gprMdl2.Impl, X2, alpha);
 elseif ~isempty(nv.gprMdl2)
     gprMdl2 = nv.gprMdl2;
-    [ypredtmp2,ysdtmp2,citmp2] = predict(gprMdl2,X2);
-    kfntmp2 = gprMdl2.Impl.Kernel.makeKernelAsFunctionOfXNXM(gprMdl2.Impl.ThetaHat);
-    covmattmp2 = kfntmp2(X2,X2);
+    %     [ypredtmp2,ysdtmp2,citmp2] = predict(gprMdl2,X2);
+    %     kfntmp2 = gprMdl2.Impl.Kernel.makeKernelAsFunctionOfXNXM(gprMdl2.Impl.ThetaHat);
+    %     covmattmp2 = kfntmp2(X2,X2);
+    [ypredtmp2, covmattmp2, citmp2] = predictExactWithCov(gprMdl2.Impl, X2, alpha);
 else
     [ypredtmp2,ysdtmp2] = deal([]);
 end
