@@ -92,7 +92,7 @@ Sigma = [3 5 7 9 11];
 
 %% posterior data
 %initialize
-[covmats,ds,ypredlist,ysdlist,fivelist] = deal(cell(1,nfnames));
+[covmats,ds,ypredlist,ysdlist,fivelist,cilist] = deal(cell(1,nfnames));
 for i = 1:nfnames
     %unpack
     fname = fnames{i};
@@ -112,14 +112,17 @@ for i = 1:nfnames
     ppts = proj_down(pts,mdl.projtol,mdl.usv,'zero',mdl.zeroQ);
     
     %covariance kernel/matrices
-    kfcn = gprMdl.Impl.Kernel.makeKernelAsFunctionOfXNXM(gprMdl.Impl.ThetaHat);
-    covmat = kfcn(ppts,ppts);
+%     kfcn = gprMdl.Impl.Kernel.makeKernelAsFunctionOfXNXM(gprMdl.Impl.ThetaHat);
+%     covmat = kfcn(ppts,ppts);
+
+    alpha = 0.05; %1 minus confidence intervals
+    [ypred, covmat, ci] = predictExactWithCov(gprMdl.Impl, ppts, alpha);
     
     % pairwise distances
     d = pdist(pts);
     
     %predictions
-    [ypred,ysd] = predict(gprMdl,ppts);
+%     [ypred,ysd] = predict(gprMdl,ppts);
     
     %saving
     savename = savenames{i};
@@ -135,7 +138,7 @@ for i = 1:nfnames
     
     savepath4 = [savepath '-other'];
     warning(['saving ' savepath4 '.mat'])
-    save(savepath4,'ids','Sigma','pts','five','y','ypred','ysd')
+    save(savepath4,'ids','Sigma','pts','five','y','ypred','ci')
     
     %package
     %--comment these lines if you run out of memory
@@ -143,8 +146,9 @@ for i = 1:nfnames
     covmats{i} = covmat;
     ds{i} = d;
     ypredlist{i} = ypred;
-    ysdlist{i} = ysd;
-    clear five covmat d ypred ysd
+%     ysdlist{i} = ysd;
+    cilist{i} = ci;
+    clear five covmat d ypred ysd ci
 end
 
 %% CODE GRAVEYARD
