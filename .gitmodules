@@ -1,8 +1,3 @@
-[submodule "code/MATslurm"]
-	path = code/MATslurm
-	url = ../MATslurm.git #relative path
-
-	#url = git@github.com:sgbaird-5dof/MATslurm.git
 [submodule "code/ternplot"]
 	path = code/ternplot
 	url = ../../alchemyst/ternplot.git
