@@ -93,14 +93,35 @@ firstIDs = cellfun(@(S) find(strcmp(id,S)),SigmaList);
 id = [id(firstIDs);id(setdiff(1:length(id),firstIDs))];
 nid = length(id);
 minIDs = cell(1,nid);
+ykim = datatmpsym(:,end);
 for i = 1:nid
     S = id(i);
-    gbetmp = datatmpsym(:,end); %reset
+    gbetmp = ykim; %reset
     gbetmp(~strcmp(Sigma,S)) = inf; %(Sigma ~= S)
     [~,minIDs{i}] = min(gbetmp);
 end
 Slist = id(1:5);
 kim_ids = [minIDs{1:5}];
+
+%SigmaNum = cellfun(@str2num, id, 'UniformOutput', false);
+nSigma = length(Sigma);
+SigmaNum = zeros(1,nSigma);
+for i = 1:nSigma
+    str = Sigma{i};
+    SigmaNum(i) = str2double(str);
+    if isnan(SigmaNum(i))
+        str = str(1:end-1);
+        SigmaNum(i) = str2double(str);
+    end
+end
+paperfigure();
+hexscatter(SigmaNum.', ykim, minmax(SigmaNum), minmax(ykim.')+1e-3*[-1,1], 'reflineQ', false, 'axis', 'square', 'cscale', 'linear')
+xlabel('$\Sigma$','Interpreter','latex')
+ylabel('GBE $(J m^{-2})$','Interpreter','latex')
+hold on
+ax = plot(SigmaNum([minIDs{:}]), ykim([minIDs{:}]),'k');
+legend(ax,'Lower Bound','Interpreter','latex','Location','south')
+savefigpng('C:\Users\sterg\Pictures\qual-exam', 'sigma-kim')
 
 %% conversion to octonions
 %extract 5DOF parameters
