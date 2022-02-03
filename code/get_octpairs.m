@@ -1,4 +1,4 @@
-function [octvtx,oref,fiveref,ids] = get_octpairs(pts,epsijk,nv)
+ function [octvtx,oref,fiveref,ids] = get_octpairs(pts,epsijk,nv)
 arguments
 	pts(:,8) double {mustBeSqrt2Norm}
     epsijk(1,1) double = 1
