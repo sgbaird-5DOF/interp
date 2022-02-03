@@ -1045,8 +1045,10 @@ for i = 1:nfnames
     mdl = S.mdl;
     ppts = proj_down(pts,mdl.projtol,mdl.usv,'zero',mdl.zeroQ);
     gprMdl = mdl.cgprMdl;
-    kfcn = gprMdl.Impl.Kernel.makeKernelAsFunctionOfXNXM(gprMdl.Impl.ThetaHat);
-    covmats{i} = kfcn(ppts,ppts);
+%     kfcn = gprMdl.Impl.Kernel.makeKernelAsFunctionOfXNXM(gprMdl.Impl.ThetaHat);
+%     covmats{i} = kfcn(ppts,ppts);
+    alpha = 0.5;
+    [~, covmats{i}, ~] = predictExactWithCov(gprMdl2.Impl, ppts, alpha);
     savename = savenames{i};
     savepath = fullfile(datafolder,savename);
 %     writematrix(covmats{i},[savepath '-cov.csv']);
