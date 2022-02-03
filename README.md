@@ -1,4 +1,8 @@
 # Five Degree-of-Freedom Grain Boundary Interpolation
+[![View Five Degree-of-Freedom Grain Boundary Interpolation on File Exchange](https://www.mathworks.com/matlabcentral/images/matlab-file-exchange.svg)](https://www.mathworks.com/matlabcentral/fileexchange/105940-five-degree-of-freedom-grain-boundary-interpolation) ![Lines of code](https://img.shields.io/tokei/lines/github/sgbaird-5DOF/interp) ![GitHub all releases](https://img.shields.io/github/downloads/sgbaird-5DOF/interp/total)
+
+![GitHub Release Date](https://img.shields.io/github/release-date/sgbaird-5DOF/interp) ![GitHub commits since latest release (by date)](https://img.shields.io/github/commits-since/sgbaird-5DOF/interp/latest)
+
  Code related to meshing and interpolation of grain boundaries by representing 5DOF of grain boundaries as grain boundary octonions and mapping them into a Voronoi Fundamental Zone. ([https://github.com/sgbaird-5DOF/interp](https://github.com/sgbaird-5DOF/interp))
 
 See
@@ -41,11 +45,11 @@ While I suggest cloning/forking the repository to make it easier to maintain and
 
 #### Windows
 **Step 0: Download the code**  
-[Download GitHub Desktop](https://desktop.github.com/) and [Git Bash](https://git-scm.com/downloads). For Git Bash, the default installation options should be fine. I prefer to use [Atom](https://atom.io/) as the text editor which has some slick integrations with git. Login to GitHub Desktop and make a dummy repository via `Ctrl+N` so that you can open Git Bash via GitHub Desktop. Then clone and/or fork `https://github.com/sgbaird-5DOF/interp.git` by opening the Git Bash command line (i.e. Menubar --> Repository --> "Open in Git Bash" or
+[Download GitHub Desktop](https://desktop.github.com/) and [Git Bash](https://git-scm.com/downloads). For Git Bash, the default installation options should be fine. I prefer to use [Atom](https://atom.io/) as the text editor which has some slick integrations with git. Login to GitHub Desktop and make a dummy repository via `Ctrl+N` so that you can open Git Bash via GitHub Desktop. Then clone and/or fork `https://github.com/sgbaird-5DOF/interp.git` by opening the Git Bash command line (i.e. Menubar --> Repository --> "Open in Git Bash") or
 ```
 Ctrl+`
 ```
-) then run the following command in the directory where you want the `interp` directory to appear:
+then run the following command in the directory where you want the `interp` directory to appear:
 ```bash
 git clone --recurse-submodules https://github.com/sgbaird-5DOF/interp.git
 ```
@@ -55,20 +59,10 @@ git clone --recurse-submodules https://github.com/sgbaird-5DOF/interp.git
 Alternatively, you can try cloning directly in GitHub Desktop or via the "Open in GitHub Desktop" button under ![image](https://user-images.githubusercontent.com/45469701/116357284-907f9200-a7b9-11eb-81a3-3f55d27b8017.png), but it will likely throw an error, and it may not correctly clone the `MATslurm` submodule by the time it reaches that error. `MATslurm` is a bare minimum requirement for running `interp5DOF.m`. Attempt at your own risk.
 
 **Step 1: open MATLAB and navigate to navigate to [interp-5DOF/code/](code/)**  
-Set [interp-5DOF/code/](code/) as working directory via `cd` or GUI
-
-- [Install Atom text editor](https://atom.io/) which has some slick integrations with git
-- [Install GitHub Desktop](https://desktop.github.com/)
-- [Install Git Bash](https://git-scm.com/downloads). For Git Bash, the default installation options should be fine.
-- Login to GitHub Desktop and make the "tutorial repository" so that you can open Git Bash via GitHub Desktop
-- Clone and/or fork `https://github.com/sgbaird-5DOF/interp.git` by opening the Git Bash command line via Menubar --> Repository --> "Open in Git Bash" or Ctrl+`
-and run the following commands:
 ```bash
-cd ..
-git clone --recurse-submodules https://github.com/sgbaird-5DOF/interp.git
+matlab
+cd interp-5DOF/code/
 ```
-
-Alternatively, you can try cloning directly in GitHub Desktop or via the "Open in GitHub Desktop" button under <img src=https://user-images.githubusercontent.com/45469701/116357284-907f9200-a7b9-11eb-81a3-3f55d27b8017.png width=100>, but it will likely throw an error, and it may not clone the `MATslurm` submodule by the time it reaches that error, which is a bare minimum requirement for running `interp5DOF.m`.
 
 **Step 2: Add subfolders to path and run [interp5DOF_test.m](code/interp5DOF_test.m)**  
 
@@ -148,6 +142,7 @@ o = get_octpairs(o); %symmetrize (using default reference GBO)
 At this point, you can get the VFZ pairwise distance matrix via:
 ```matlab
 pd = pdist(o);
+mat = squareform(pd);
 ```
 Alternatively, `pdist2()` may be of interest if you want pairwise distances between two sets of points, or `vecnorm()` if you want to calculate distances between two lists of GBOs:
 ```matlab
