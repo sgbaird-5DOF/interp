@@ -91,9 +91,13 @@ d = vecnorm(o1-o2,2,2); %o1 and o2 need to be the same size
 ```
 If you want the "true" minimum distances (i.e. essentially the same implementation as [GB_octonion_code](https://github.com/ichesser/GB_octonion_code), but vectorized and parallelized), you may use `GBdist4.m` directly with two sets of GBOs.
 ```matlab
-d = GBdist4(o1,o2);
+d = GBdist4(o1,o2,dtype="norm");
 ```
-It depends on the application, but if you want to compute large pairwise distance matrices that are nearly identical to the traditional GBO distances, I recommend using the ensembled VFZ distance via `ensembleGBdist.m` with `K >= 10`. This will be much faster than using `GBdist4.m`. For reference, this corresponds to (from the main paper when `K==10`):  
+It depends on the application, but if you want to compute large pairwise distance matrices that are nearly identical to the traditional GBO distances, I recommend using the ensembled VFZ distance via `ensembleGBdist.m` with `K >= 10`.
+```matlab
+d = ensembleGBdist(o,o2,dtype="omega")
+```
+This will be much faster than using `GBdist4.m`. For reference, this corresponds to (from the main paper when `K==10`):  
 <img src=https://user-images.githubusercontent.com/45469701/116044929-bcbad780-a62e-11eb-8c59-58a4354badbb.png width=300>  
 This is distinct from `ensembleVFZO.m`, which takes the average interpolated property from `K` different VFZs.
 
