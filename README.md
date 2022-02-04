@@ -61,18 +61,32 @@ If you only want to (manually) compute distances in the VFZ sense, first you nee
 ```matlab
 npts = 100;
 o = get_ocubo(npts); %generate some random data
-o = get_octpairs(o); %symmetrize (using default reference GBO)
+o = get_octpairs(o); %symmetrize (using default reference GBO), vecnorm(o(1,:)) == ~sqrt(2)
+o = normr(o); % normalize
 ```
 At this point, you can get the VFZ pairwise distance matrix via:
 ```matlab
 pd = pdist(o);
 mat = squareform(pd);
 ```
+The units will be the same as is given by eq.(1) from DOI: [10.1016/j.commatsci.2021.110756](https://dx.doi.org/10.1016/j.commatsci.2021.110756).
+
+<img src=https://user-images.githubusercontent.com/45469701/152618082-91d597fb-6646-4156-89d2-98540eddadaa.png width=200>
+
+To convert to the traditional GBO distance, multiply $d_E$ by a factor of `2`.
+
+
 Alternatively, `pdist2()` may be of interest if you want pairwise distances between two sets of points, or `vecnorm()` if you want to calculate distances between two lists of GBOs:
 ```matlab
 npts2 = 100;
+o1 = get_ocubo(npts1);
+o1 = get_octpairs(o1);
+o1 = normr(o1);
+
 o2 = get_ocubo(npts2);
 o2 = get_octpairs(o2);
+o2 = normr(o2)
+
 d = vecnorm(o1-o2,2,2); %o1 and o2 need to be the same size
 ```
 If you want the "true" minimum distances (i.e. essentially the same implementation as [GB_octonion_code](https://github.com/ichesser/GB_octonion_code), but vectorized and parallelized), you may use `GBdist4.m` directly with two sets of GBOs.
@@ -83,7 +97,7 @@ It depends on the application, but if you want to compute large pairwise distanc
 <img src=https://user-images.githubusercontent.com/45469701/116044929-bcbad780-a62e-11eb-8c59-58a4354badbb.png width=300>  
 This is distinct from `ensembleVFZO.m`, which takes the average interpolated property from `K` different VFZs.
 
-Drop me a note in "Issues" if you have something you'd like to do or something you'd like to clarify, but can't figure out among the (many) options and functions in the `interp` repo. With a few details, there's a good chance I can offer some suggestions that will save a lot of time.
+[Open an issue](https://github.com/sgbaird-5DOF/interp/issues/new/choose) if you have something you'd like to do or something you'd like to clarify, but can't figure out among the (many) options and functions in the `interp` repo. With a few details, there's a good chance I can offer some suggestions that will save a lot of time.
 
 ## Plots
 Most plots in the paper are produced in the script: [plotting.m](code/plotting.m). First, you need to create a dummy folder:
