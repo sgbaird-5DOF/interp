@@ -1,0 +1,2 @@
+- name: Run MATLAB Tests
+  uses: matlab-actions/run-tests@v1.0.1
