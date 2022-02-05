@@ -17,7 +17,7 @@ Use the <img src=https://user-images.githubusercontent.com/45469701/116359125-a6
 
 ## Dependencies
 ### MATLAB Version
-MATLAB R2019b or higher (mainly for the [arguments ... end syntax checking](https://www.mathworks.com/help/matlab/matlab_prog/function-argument-validation-1.html) at the beginning of functions, which is used extensively throughout). For users of R2007a - R2019a, I suggest removing the arguments ... end syntax for any functions that use this and replacing it with corresponding [inputParser()](https://www.mathworks.com/help/matlab/ref/inputparser.html) and [varargin](https://www.mathworks.com/help/matlab/ref/varargin.html) code to deal with variable input arguments, default parameter values, and repeating arguments. Alternatively, you could remove the arguments ... end syntax lines for each function and update every place that the function is called so that all input arguments are specified. Open up an issue if you need more details on this. Other functions may need to be replaced if they aren't available in early MATLAB versions.
+MATLAB R2019b or higher (mainly for the [arguments ... end syntax checking](https://www.mathworks.com/help/matlab/matlab_prog/function-argument-validation-1.html) at the beginning of functions, which is used extensively throughout).
 
 #### R2007a - R2019a
 I suggest removing the arguments ... end syntax for any functions that use this and replacing it with corresponding [inputParser()](https://www.mathworks.com/help/matlab/ref/inputparser.html) and [varargin](https://www.mathworks.com/help/matlab/ref/varargin.html) code to deal with variable input arguments, default parameter values, and repeating arguments. Alternatively, you could remove the arguments ... end syntax lines for each function and update every place that the function is called so that all input arguments are specified. Open up an issue if you need more details on this. Other functions may need to be replaced if they aren't available in early MATLAB versions.
@@ -61,29 +61,47 @@ If you only want to (manually) compute distances in the VFZ sense, first you nee
 ```matlab
 npts = 100;
 o = get_ocubo(npts); %generate some random data
-o = get_octpairs(o); %symmetrize (using default reference GBO)
+o = get_octpairs(o); %symmetrize (using default reference GBO), vecnorm(o(1,:)) == ~sqrt(2)
+o = normr(o); % normalize
 ```
 At this point, you can get the VFZ pairwise distance matrix via:
 ```matlab
 pd = pdist(o);
 mat = squareform(pd);
 ```
+The units will be the same as is given by eq.(1) from DOI: [10.1016/j.commatsci.2021.110756](https://dx.doi.org/10.1016/j.commatsci.2021.110756).
+
+<img src=https://user-images.githubusercontent.com/45469701/152618082-91d597fb-6646-4156-89d2-98540eddadaa.png width=200>
+
+To convert to the traditional GBO distance, multiply $d_E$ by a factor of `2`.
+
+
 Alternatively, `pdist2()` may be of interest if you want pairwise distances between two sets of points, or `vecnorm()` if you want to calculate distances between two lists of GBOs:
 ```matlab
 npts2 = 100;
+o1 = get_ocubo(npts1);
+o1 = get_octpairs(o1);
+o1 = normr(o1);
+
 o2 = get_ocubo(npts2);
 o2 = get_octpairs(o2);
+o2 = normr(o2)
+
 d = vecnorm(o1-o2,2,2); %o1 and o2 need to be the same size
 ```
 If you want the "true" minimum distances (i.e. essentially the same implementation as [GB_octonion_code](https://github.com/ichesser/GB_octonion_code), but vectorized and parallelized), you may use `GBdist4.m` directly with two sets of GBOs.
 ```matlab
-d = GBdist4(o1,o2);
+d = GBdist4(o1,o2,dtype="norm");
 ```
-It depends on the application, but if you want to compute large pairwise distance matrices that are nearly identical to the traditional GBO distances, I recommend using the ensembled VFZ distance via `ensembleGBdist.m` with `K >= 10`. This will be much faster than using `GBdist4.m`. For reference, this corresponds to (from the main paper when `K==10`):  
+It depends on the application, but if you want to compute large pairwise distance matrices that are nearly identical to the traditional GBO distances, I recommend using the ensembled VFZ distance via `ensembleGBdist.m` with `K >= 10`.
+```matlab
+d = ensembleGBdist(o,o2,dtype="omega")
+```
+This will be much faster than using `GBdist4.m`. For reference, this corresponds to (from the main paper when `K==10`):  
 <img src=https://user-images.githubusercontent.com/45469701/116044929-bcbad780-a62e-11eb-8c59-58a4354badbb.png width=300>  
 This is distinct from `ensembleVFZO.m`, which takes the average interpolated property from `K` different VFZs.
 
-Drop me a note in "Issues" if you have something you'd like to do or something you'd like to clarify, but can't figure out among the (many) options and functions in the `interp` repo. With a few details, there's a good chance I can offer some suggestions that will save a lot of time.
+[Open an issue](https://github.com/sgbaird-5DOF/interp/issues/new/choose) if you have something you'd like to do or something you'd like to clarify, but can't figure out among the (many) options and functions in the `interp` repo. With a few details, there's a good chance I can offer some suggestions that will save a lot of time.
 
 ## Plots
 Most plots in the paper are produced in the script: [plotting.m](code/plotting.m). First, you need to create a dummy folder:
