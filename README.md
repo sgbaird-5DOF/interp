@@ -3,19 +3,14 @@
 
 [![DOI](https://img.shields.io/badge/CMS-10.1016%2Fj.commatsci.2021.110756-blue)](https://doi.org/10.1016/j.commatsci.2021.110756) [![DOI](https://zenodo.org/badge/282085693.svg)](https://zenodo.org/badge/latestdoi/282085693)
 
- Code related to meshing and interpolation of grain boundaries by representing 5DOF of grain boundaries as grain boundary octonions and mapping them into a Voronoi Fundamental Zone. ([https://github.com/sgbaird-5DOF/interp](https://github.com/sgbaird-5DOF/interp))
+ Code related to meshing, interpolation, and distance calculations of grain boundaries by representing 5DOF of grain boundaries as grain boundary octonions (GBOs) and mapping them into a Voronoi Fundamental Zone (VFZ). ([https://github.com/sgbaird-5DOF/interp](https://github.com/sgbaird-5DOF/interp))
 
 <img src=https://user-images.githubusercontent.com/45469701/152452613-2cab0239-1412-4a6c-8fb7-7af9f810be33.png width=750>
 <sup> Figure adapted based on table of contents from DOI: 10.1016/j.commatsci.2021.110756 (a) 2D analogy of a Grain Boundary Octonion Voronoi Fundamental Zone (GBO-VFZ) with dark blue points within the VFZ, with the VFZ defined by the reference point (white) and Oh point group. (b) grain boundary energy (GBE) values plotted continuously between two arbitrary grain boundary octonions (i.e. changes in all 5DOF). (c) Hexagonally binned parity plot of GPR predictions colored by number of points per bin, log colorscale. </sup>
 
-## Citing
-> 1. Baird, S. G.; Homer, E. R.; Fullwood, D. T.; Johnson, O. K. Five Degree-of-Freedom Property Interpolation of Arbitrary Grain Boundaries via Voronoi Fundamental Zone Framework. Computational Materials Science 2021, 200, 110756. https://doi.org/10.1016/j.commatsci.2021.110756.
-> 1. [GB_octonion_code](https://github.com/ichesser/GB_octonion_code)
-> 1. Chesser, I., Francis, T., De Graef, M., & Holm, E. A. (2020). Learning the Grain Boundary Manifold: Tools for Visualizing and Fitting Grain Boundary Properties. Acta Materialia. https://doi.org/10.2139/ssrn.3460311
-> 1. Francis, T., Chesser, I., Singh, S., Holm, E. A., & De Graef, M. (2019). A geodesic octonion metric for grain boundaries. Acta Materialia, 166, 135–147. https://doi.org/10.1016/j.actamat.2018.12.034
+We go over [dependencies](https://github.com/sgbaird-5DOF/interp/blob/master/README.md#dependencies), [getting started instructions](https://github.com/sgbaird-5DOF/interp/edit/master/README.md#getting-started) including installation, basic usage, distance calculations, plotting, and using custom datasets. Finally, we go over the [file dependencies](https://github.com/sgbaird-5DOF/interp/edit/master/README.md#file-dependencies) (no additional installation needed), [short descriptions of various files](https://github.com/sgbaird-5DOF/interp/edit/master/README.md#contentsm-short-descriptions) in the repository, [advanced installation](https://github.com/sgbaird-5DOF/interp/edit/master/README.md#advanced-installation), and [citing information](https://github.com/sgbaird-5DOF/interp/edit/master/README.md#citing).
 
-## Table of Contents
-Use the <img src=https://user-images.githubusercontent.com/45469701/116359125-a68e5200-a7bb-11eb-8eba-dbea2acf653c.png width=30> button at the top-left of the README window (on GitHub)
+To quickly navigate the README table of contents, use the table of contents button [<img src=https://user-images.githubusercontent.com/45469701/116359125-a68e5200-a7bb-11eb-8eba-dbea2acf653c.png width=30>](https://github.com/sgbaird-5DOF/interp/blob/master/README.md) at the top-left of the [GitHub README window](https://github.com/sgbaird-5DOF/interp).
 
 ## Dependencies
 ### MATLAB Version
@@ -34,17 +29,17 @@ I suggest removing the arguments ... end syntax for any functions that use this 
 See [File dependencies](https://github.com/sgbaird/octonion-mesh/blob/master/README.md#file-dependencies) for a list of files that `interp5DOF.m` depends on.
 
 ## Getting Started
-## Quick Installation
+### Quick Installation
 The quickest way to install the code is downloading and unzipping the [latest release](https://github.com/sgbaird-5DOF/interp/releases/) or [latest version](https://github.com/sgbaird/interp5DOF-paper/archive/refs/heads/main.zip), add all subfolders of `interp` to the path via `addpath(genpath(.))`, and make sure it's working by running [`interp5DOF_test`](code/interp5DOF_test.m). For additional details or development instructions, see [advanced installation](https://github.com/sgbaird-5DOF/interp/edit/master/README.md#advanced-installation).
 
-## Basic Usage
+### Basic Usage
 See [interp5DOF.m](code/interp5DOF.m), which is a high-level function for Gaussian Process Regression (GPR), barycentric, nearest neighbor (NN), and inverse-distance weighting (IDW) interpolation. This involves importing/generating data and computing an interpolation.
 
 `interp5DOF.m` can be called in other functions/scripts to produce interpolation results using 5DOF misorientation/boundary plane normal pairs (qm/nA) and grain boundary property values. It was written with loosely similar input/output structure to the MATLAB built-in function [interpn()](https://www.mathworks.com/help/matlab/ref/interpn.html) involving input points and values, query points and values, and options.
 
 For a short description of the various functions included in this repository, see [`Contents.m`](code/Contents.m) or [this section](https://github.com/sgbaird-5DOF/interp/edit/master/README.md#contentsm-short-descriptions).
 
-### Simple Example Data
+#### Simple Example Data
 Separate from [interp5DOF_test.m](code/interp5DOF_test.m), the following is a fast, bare-bones example to show the basic input/output format of interp5DOF.m. See also [get_cubo.m](code/get_cubo.m)
 ```matlab
 npts = 100;
@@ -55,10 +50,10 @@ method = 'gpr'; %interpolation method
 [propOut,interpfn,mdl,mdlpars] = interp5DOF(qm,nA,propList,qm2,nA2,method)
 ```
 
-### Test functions
+#### Test functions
 Most functions have a corresponding "test" function (e.g. `hsphext_subdiv.m` --> `hsphext_subdiv_test.m`, `interp5DOF.m` --> `interp5DOF_test.m`) which gives simple usage example(s). These are useful for debugging, visualizations, and understanding the functions without having to do a full run which could be time-consuming. This also allows for the non-test function code to be more succinct, as certain plotting routines can be moved to the test function instead. The various test functions generally run to completion within a few seconds, and the parameters can generally be changed freely (e.g. dimension, number of points). Some test functions have specific plotting routines for 1-sphere (2D) and 2-sphere (3D) cases since a 7-sphere is difficult to visualize and interpret ([n-sphere](https://en.wikipedia.org/wiki/N-sphere)). For example, see [sphbary_test.m](code/sphbary_test.m) and [toBPFZ_test.m](code/toBPFZ_test.m).
 
-## Distance Calculations
+### Distance Calculations
 If you only want to (manually) compute distances in the VFZ sense, first you need to map all GBs into a VFZ.
 ```matlab
 npts = 100;
@@ -105,7 +100,7 @@ This is distinct from `ensembleVFZO.m`, which takes the average interpolated pro
 
 [Open an issue](https://github.com/sgbaird-5DOF/interp/issues/new/choose) if you have something you'd like to do or something you'd like to clarify, but can't figure out among the (many) options and functions in the `interp` repo. With a few details, there's a good chance I can offer some suggestions that will save a lot of time.
 
-## Plots
+### Plots
 Most plots in the paper are produced in the script: [plotting.m](code/plotting.m). First, you need to create a dummy folder:
 ```bash
 mkdir interp/code/interp5DOF-paper/figures/
@@ -114,7 +109,7 @@ mkdir interp/code/interp5DOF-paper/figures/
 The larger file dependencies, `gitID-0055bee_uuID-475a2dfd_paper-data6.mat` and `gpr46883_gitID-b473165_puuID-50ffdcf6_kim-rng11.mat` can be [downloaded at figshare](https://doi.org/10.6084/m9.figshare.14405924.v3) and have the following citation:
 > @misc{baird_homer_fullwood_johnson_2021, title={Five Degree-of-Freedom Grain Boundary Interpolation}, url={https://figshare.com/articles/dataset/gitID-0055bee_uuID-475a2dfd_paper-data6_mat/14405924/3}, DOI={10.6084/m9.figshare.14405924.v3}, abstractNote={These are larger MATLAB .mat files required for reproducing plots from the sgbaird-5DOF/interp repository for grain boundary property interpolation. gitID-0055bee_uuID-475a2dfd_paper-data6.mat contains multiple trials of five degree-of-freedom interpolation model runs for various interpolation schemes. gpr46883_gitID-b473165_puuID-50ffdcf6_kim-rng11.mat contains a Gaussian Process Regression model trained on 46883 Fe simulation GBs.}, publisher={figshare}, author={Baird, Sterling and Homer, Eric R and Fullwood, David and Johnson, Oliver K.}, year={2021}, month={Apr} }
 
-## Data Preparation
+### Data Preparation
 Input GBs can take on the following forms:
 - misorientation (`qm`) / boundary plane normal (`nA`) pairs
 - octonions (`o`)
@@ -140,7 +135,7 @@ or simply
 ```matlab
 o = oflip(o);
 ```
-## parfor loops
+### parfor loops
 Parfor loops are used by default where there is potential for significant speed-up. A parfor-compatible text progress bar is encoded into many of these. Adding disp() or fprintf() inside the parfor loop (aside from what's already inside the nested text progress bar function) may cause odd behavior on the command line output, but should not affect the integrity of the code execution. Because the parfor-compatible text progress bars need to be nested functions, in order to [deal with the inability to add variables to static workspaces](https://www.mathworks.com/help/matlab/matlab_prog/variables-in-nested-and-anonymous-functions.html) while debugging, you can either assign variables to "ans" (a special variable that is still accessible), output statements directly to the command line terminal (no variable assignment). Alternatively, you can comment the nested function, `nUpdateProgress()`.
 
 If the parallel computing toolbox is not installed, the `parfor` loops will execute as regular `for` loops. If the parallel computing toolbox is installed and you only want to use a single core, start a parallel pool with only one core before running any of the functions via `parpool(1)`. The loop will still run internally as a `parfor` loop, however. A `parfor` loop with a single core and parallel computing toolbox should not run any slower than a regular `for` loop as long as they are contained within functions. A `parfor` loop executed within a script, however, is likely to result in significant slow-down.
@@ -510,3 +505,9 @@ If you later need to remove the submodule from your repository (or need to start
 - Delete the now untracked submodule files.
 - Remove directory `.git/modules/<submodule name>`
 ([Source](https://gist.github.com/kyleturner/1563153#gistcomment-1568993))
+
+## Citing
+> 1. Baird, S. G.; Homer, E. R.; Fullwood, D. T.; Johnson, O. K. Five Degree-of-Freedom Property Interpolation of Arbitrary Grain Boundaries via Voronoi Fundamental Zone Framework. Computational Materials Science 2021, 200, 110756. https://doi.org/10.1016/j.commatsci.2021.110756.
+> 1. [GB_octonion_code](https://github.com/ichesser/GB_octonion_code)
+> 1. Chesser, I., Francis, T., De Graef, M., & Holm, E. A. (2020). Learning the Grain Boundary Manifold: Tools for Visualizing and Fitting Grain Boundary Properties. Acta Materialia. https://doi.org/10.2139/ssrn.3460311
+> 1. Francis, T., Chesser, I., Singh, S., Holm, E. A., & De Graef, M. (2019). A geodesic octonion metric for grain boundaries. Acta Materialia, 166, 135–147. https://doi.org/10.1016/j.actamat.2018.12.034
