@@ -24,7 +24,7 @@ I suggest removing the arguments ... end syntax for any functions that use this 
 
 ### MATLAB Toolboxes
 - [Statistics and Machine Learning Toolbox](https://www.mathworks.com/products/statistics.html) (for Gaussian Process Regression: [fitrgp()](https://www.mathworks.com/help/stats/fitrgp.html), [fitrgp.predict()](https://www.mathworks.com/help/stats/compactregressiongp.predict.html))
-- [Parallel Computing Toolbox](https://www.mathworks.com/products/parallel-computing.html) (`parfor`, can be made optional)
+- [Parallel Computing Toolbox](https://www.mathworks.com/products/parallel-computing.html) (`parfor`, optional)
 - [Symbolic Math Toolbox](https://www.mathworks.com/products/symbolic.html) (optional, for [numStabBary.m](code/numStabBary.m))
 
 <!---, but for fitrgp() may need to change `hyperopts = struct('UseParallel',true,'Optimizer','bayesopt','MaxObjectiveEvaluations',maxhyperobj);` to `hyperopts = struct('UseParallel',false,'Optimizer','bayesopt','MaxObjectiveEvaluations',maxhyperobj);` in [interp5DOF.m](code/interp5DOF.m) under "method-specific interpolation" section 'gpr' case.) --->
