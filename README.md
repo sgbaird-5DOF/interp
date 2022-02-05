@@ -4,7 +4,7 @@
  Code related to meshing and interpolation of grain boundaries by representing 5DOF of grain boundaries as grain boundary octonions and mapping them into a Voronoi Fundamental Zone. ([https://github.com/sgbaird-5DOF/interp](https://github.com/sgbaird-5DOF/interp))
 
 <img src=https://user-images.githubusercontent.com/45469701/152452613-2cab0239-1412-4a6c-8fb7-7af9f810be33.png width=750>
-<sup> Figure adapted based on table of contents from DOI: 10.1016/j.commatsci.2021.110756 (a) 2D analogy of a Grain Boundary Octonion Voronoi Fundamental Zone (GBO-VFZ). (b) grain boundary energy (GBE) values plotted continuously between two arbitrary grain boundary octonions (i.e. changes in all 5DOF). Dark blue points are mapped into the VFZ. (c) Hexagonally binned parity plot of GPR predictions colored by number of points per bin, log colorscale. </sup>
+<sup> Figure adapted based on table of contents from DOI: 10.1016/j.commatsci.2021.110756 (a) 2D analogy of a Grain Boundary Octonion Voronoi Fundamental Zone (GBO-VFZ) with dark blue points within the VFZ, with the VFZ defined by the reference point (white) and `Oh` point group. (b) grain boundary energy (GBE) values plotted continuously between two arbitrary grain boundary octonions (i.e. changes in all 5DOF). (c) Hexagonally binned parity plot of GPR predictions colored by number of points per bin, log colorscale. </sup>
 
 ## Citing
 > 1. Baird, S. G.; Homer, E. R.; Fullwood, D. T.; Johnson, O. K. Five Degree-of-Freedom Property Interpolation of Arbitrary Grain Boundaries via Voronoi Fundamental Zone Framework. Computational Materials Science 2021, 200, 110756. https://doi.org/10.1016/j.commatsci.2021.110756.
