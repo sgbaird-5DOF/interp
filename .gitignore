@@ -45,3 +45,5 @@ data/pcombs/*
 parameters/**
 !parameters/uuID-15abb01b.mat
 code/interp5DOF-paper/
+code/latexTable/
+code/ternplot/
