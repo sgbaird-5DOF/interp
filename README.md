@@ -1,7 +1,10 @@
 # Five Degree-of-Freedom Grain Boundary Interpolation
 [![View Five Degree-of-Freedom Grain Boundary Interpolation on File Exchange](https://www.mathworks.com/matlabcentral/images/matlab-file-exchange.svg)](https://www.mathworks.com/matlabcentral/fileexchange/105940-five-degree-of-freedom-grain-boundary-interpolation) [![Lines of code](https://img.shields.io/tokei/lines/github/sgbaird-5DOF/interp)](https://shields.io/category/size) [![GitHub all releases](https://img.shields.io/github/downloads/sgbaird-5DOF/interp/total)](https://shields.io/category/downloads) [![GitHub release (latest by date)](https://img.shields.io/github/v/release/sgbaird-5DOF/interp) ![GitHub Release Date](https://img.shields.io/github/release-date/sgbaird-5DOF/interp)](https://github.com/sgbaird-5DOF/interp/releases/latest) [![GitHub commits since latest release (by date)](https://img.shields.io/github/commits-since/sgbaird-5DOF/interp/latest)](https://github.com/sgbaird-5DOF/interp/commits/master)
-
-[![DOI](https://img.shields.io/badge/CMS-10.1016%2Fj.commatsci.2021.110756-blue)](https://doi.org/10.1016/j.commatsci.2021.110756) [![DOI](https://zenodo.org/badge/282085693.svg)](https://zenodo.org/badge/latestdoi/282085693)
+ 
+[![DOI](https://img.shields.io/badge/Paper_1:_CMS-10.1016%2Fj.commatsci.2021.110756-blue)](https://doi.org/10.1016/j.commatsci.2021.110756)
+[![arXiv](https://img.shields.io/badge/Paper_1:_arXiv-2104.06575-b31b1b.svg)](https://arxiv.org/abs/2104.06575)
+[![arXiv](https://img.shields.io/badge/Paper_2:_ChemRxiv-2021.ds0ml-b31b1b.svg)](https://doi.org/10.26434/chemrxiv-2021-ds0ml)
+[![DOI](https://zenodo.org/badge/282085693.svg)](https://zenodo.org/badge/latestdoi/282085693)
 
  Code related to meshing, interpolation, and distance calculations of grain boundaries by representing 5DOF of grain boundaries as grain boundary octonions (GBOs) and mapping them into a Voronoi Fundamental Zone (VFZ). ([https://github.com/sgbaird-5DOF/interp](https://github.com/sgbaird-5DOF/interp))
 
@@ -508,6 +511,7 @@ If you later need to remove the submodule from your repository (or need to start
 
 ## Citing
 > 1. Baird, S. G.; Homer, E. R.; Fullwood, D. T.; Johnson, O. K. Five Degree-of-Freedom Property Interpolation of Arbitrary Grain Boundaries via Voronoi Fundamental Zone Framework. Computational Materials Science 2021, 200, 110756. https://doi.org/10.1016/j.commatsci.2021.110756.
+> 1. Baird, S. G.; Homer, E. R.; Fullwood, D. T.; Johnson, O. K. Towards a Quantitative Cartography of the Grain Boundary Energy Landscape: Paths and Correlations; preprint; Chemistry, 2021. https://doi.org/10.26434/chemrxiv-2021-ds0ml.
 > 1. [GB_octonion_code](https://github.com/ichesser/GB_octonion_code)
 > 1. Chesser, I., Francis, T., De Graef, M., & Holm, E. A. (2020). Learning the Grain Boundary Manifold: Tools for Visualizing and Fitting Grain Boundary Properties. Acta Materialia. https://doi.org/10.2139/ssrn.3460311
 > 1. Francis, T., Chesser, I., Singh, S., Holm, E. A., & De Graef, M. (2019). A geodesic octonion metric for grain boundaries. Acta Materialia, 166, 135–147. https://doi.org/10.1016/j.actamat.2018.12.034
