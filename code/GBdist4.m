@@ -80,8 +80,13 @@ lastwarn('')
 [~,warnID] = lastwarn();
 [~] = ver('parallel');
 if ~strcmp(warnID,'MATLAB:ver:NotFound')
-    D = parallel.pool.DataQueue;
-    afterEach(D, @nUpdateProgress);
+    try
+        D = parallel.pool.DataQueue;
+        afterEach(D, @nUpdateProgress);
+    catch
+        warn("Could start parallel pool")
+    end
+        
 else
     waitbarQ = false;
 end
