@@ -959,14 +959,14 @@ pts = pts(1:npts,:);
 K = 20;
 fpath = fullfile(datafolder,['pd' int2str(npts) '-K' int2str(K)]);
 %%
-pd = ensembleGBdist(pts,[],K, squareform=true);
+pd = ensembleGBdist(pts,[],K, "squareform", true);
 save(fpath,'pd','npts','K','-v7.3')
 %%
 load(fpath,'pd')
 %%
 mpd = 2*max(pd,[],'all');
 disp(['max pd (degrees):' num2str(mpd)])
-pd2 = ensembleGBdist(sqrt2norm(pts),[],1, squareform=true);
+pd2 = ensembleGBdist(sqrt2norm(pts),[],1, "squareform", true);
 mpd2 = 2*max(pd2,[],'all');
 
 %% PCA
