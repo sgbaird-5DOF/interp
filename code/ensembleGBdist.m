@@ -24,7 +24,7 @@ end
     
 switch dtype
     case 'euclidean'
-        fn = "euclidean"
+        fn = "euclidean";
     case 'arclength'
         fn = @get_alen;
     case 'omega'
