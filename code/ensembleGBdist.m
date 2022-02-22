@@ -15,12 +15,16 @@ pdtype = nv.pdtype;
 orefs = nv.orefs;
 dispQ = nv.disp;
 pgnum = nv.pgnum;
+use_squareform = nv.squareform;
 % d = cell(1,K);
 
-% if strcmp(pdtype,'dist')
+if strcmp(pdtype,'pdist') && ~isempty(o2)
+    error("If using `pdtype==pdist`, `o2` should be empty, else specify `pdtype==pdist2`")
+end
+    
 switch dtype
     case 'euclidean'
-        fn = @(a,b) norm(a-b);
+        fn = "euclidean"
     case 'arclength'
         fn = @get_alen;
     case 'omega'
@@ -45,13 +49,15 @@ for i = 1:K
         case 'dist'
             d = fn(osym,osym2);
         case 'pdist'
-            d = pdist(osym,fn);
+            d = pdist(osym, fn);
         case 'pdist2'
             d = pdist2(osym,osym2,fn);
     end
-    switch pdtype
-        case {'pdist','pdist2'}
-            d = squareform(d);
+    if use_squareform
+        switch pdtype
+            case {'pdist','pdist2'}
+                d = squareform(d);
+        end
     end
     if i == 1
         dmin = d;
