@@ -33,7 +33,7 @@ See [File dependencies](https://github.com/sgbaird/octonion-mesh/blob/master/REA
 
 ## Getting Started
 ### Quick Installation
-The quickest way to install the code is downloading and unzipping the [latest release](https://github.com/sgbaird-5DOF/interp/releases/) or [latest version](https://github.com/sgbaird/interp5DOF-paper/archive/refs/heads/main.zip), add all subfolders of `interp` to the path via `addpath(genpath(.))`, and make sure it's working by running [`interp5DOF_test`](code/interp5DOF_test.m). For additional details or development instructions, see [advanced installation](https://github.com/sgbaird-5DOF/interp/edit/master/README.md#advanced-installation).
+The quickest way to install the code is downloading and unzipping the [latest release](https://github.com/sgbaird-5DOF/interp/releases/) or [latest version](https://github.com/sgbaird/interp5DOF-paper/archive/refs/heads/main.zip), add all subfolders of `interp` to the path via `addpath(genpath("."))`, and make sure it's working by running [`interp5DOF_test`](code/interp5DOF_test.m). For additional details or development instructions, see [advanced installation](https://github.com/sgbaird-5DOF/interp/edit/master/README.md#advanced-installation).
 
 ### Basic Usage
 See [interp5DOF.m](code/interp5DOF.m), which is a high-level function for Gaussian Process Regression (GPR), barycentric, nearest neighbor (NN), and inverse-distance weighting (IDW) interpolation. This involves importing/generating data and computing an interpolation.
@@ -45,6 +45,8 @@ For a short description of the various functions included in this repository, se
 #### Simple Example Data
 Separate from [interp5DOF_test.m](code/interp5DOF_test.m), the following is a fast, bare-bones example to show the basic input/output format of interp5DOF.m. See also [get_cubo.m](code/get_cubo.m)
 ```matlab
+cd code/
+addpath(genpath("."))
 npts = 100;
 qm = get_cubo(npts); nA = normr(rand(npts,3)); %random (qm,nA) pairs
 propList = 1:npts; %property values
