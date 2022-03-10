@@ -78,6 +78,16 @@ switch testnum
             tunnelplot(mdllist,A,B,n,'nnQ',false,'nnQ2',false,...
             'tpredlist',tpredlist,'tsdlist',tsdlist,'propList',propList,...
             'methodlist',methodlist,'extend',extend,'lgdloc','south');
+    case 3
+        npts = 100;
+        qm = get_cubo(npts); nA = normr(rand(npts,3)); %random (qm,nA) pairs
+        propList = 1:npts; %property values
+        qm2 = get_cubo(npts); nA2 = normr(rand(npts,3)); %random (qm,nA) pairs
+        method = 'gpr'; %interpolation method
+        [propOut,interpfn,mdl,mdlpars] = interp5DOF(qm,nA,propList,qm2,nA2,method);
+    case 4
+        load("SymmetrizedKernelTest_TMS.mat")
+        tunnelplot(mdllist2, A, B)
 end
 
 %% CODE GRAVEYARD
