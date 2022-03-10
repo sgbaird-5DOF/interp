@@ -35,22 +35,3 @@ end
 
 % qm = qmult(qBlab,qinv(qAlab),epsijk); %issue1: produces consistent results internally within GBdist(), but not during conversion, (passive convention)
 qm = qmult(qinv(qAlab),qBlab,epsijk); %issue2: produces consistent results in 5DOF-->octonion conversion, but not within GBdist(), (active convention)
-
-%% CODE GRAVEYARD
-%{
-%    convention char {mustBeMember(convention,{'francis','johnson'})} = 'johnson'
-
-% switch convention
-%     case 'francis'
-%         qm = qmult(qBlab,qinv(qAlab)); %ref [1], eqn. S-4
-%     case 'johnson'
-%         qm = qmult(qinv(qAlab),qBlab);
-% end
-
-% qm = qmult(qBlab,qinv(qAlab),epsijk);
-
-% qm = disorientation(qmult(qinv(qAlab),qBlab,epsijk));
-
-% qm = qmultiply(qinv(qAlab),qBlab);
-% qm = qmultiply(qBlab,qinv(qAlab));
-%}

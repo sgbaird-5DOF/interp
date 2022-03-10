@@ -31,12 +31,3 @@ pmag = vecnorm(p,2,2);
 rnew = (p0.^2-pmag.^2).*r+2*dot(p,r,2).*p+2*epsijk*p0.*cross(p,r,2);
 
 end
-
-%% CODE GRAVEYARD
-%{
-%check "P" or epsijk value
-global epsijk
-if isempty(epsijk)
-	error('need to set epsijk')
-end
-%}
