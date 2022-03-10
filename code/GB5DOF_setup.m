@@ -93,30 +93,3 @@ parfor k = 1:npts
 end
 propList = vertcat(E.(mat));
 end
-
-%% CODE GRAVEYARD
-%{
-
-% f = waitbar(0,['calculating GB energies for ',int2str(nGB),' points.']);	
-
-    %     E.Al(k) = GB5DOF(gA_R(:,:,k),gB_R(:,:,k),'Al');
-	%     E.Au(k) = GB5DOF(gA_R(:,:,k),gB_R(:,:,k),'Au');
-	%     E.Cu(k) = GB5DOF(gA_R(:,:,k),gB_R(:,:,k),'Cu');
-
-% close(f);
-%E.Ni = reshape(E.Ni,size(x)); %x was an output from sphere() in other code
-
-% 	waitbar(k/nGB,f)
-
-% for i = 1:npts
-%     mAtmp = mA(i,:);
-%     R = vecpair2rmat(mAtmp,[1 0 0],epsijk);
-%     qR = om2qu(R,epsijk);
-%     pAtmp = pA(i,:);
-%     pBtmp = pB(i,:);
-%     qA = qmult(qR,pAtmp,epsijk);
-%     qB = qmult(qR,pBtmp,epsijk);
-%     omA(:,:,i) = qu2om(qA,epsijk);
-%     omB(:,:,i) = qu2om(qB,epsijk);
-% end
-%}
