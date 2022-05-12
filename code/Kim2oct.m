@@ -144,7 +144,7 @@ if removezeroQ
     
     mechIDs = mechIDs(ids);
     specIDs = specIDs(ids);
-    kimIDs = kimIDs(ids);
+%     kimIDs = kimIDs(ids);
     
     qlist = qlist(ids,:);
     nAlist = nAlist(ids,:);
@@ -152,15 +152,17 @@ end
 
 %% average properties for repeat octonions and remove repeats (except one)
 if avgQ
-    [meshList,propList,rmIDlist,keepIDs,rmIDcell,errmetrics] = avgrepeats(meshList,propList,'mean'); %#ok<*UNRCH>
+    [meshList,propList,rmIDlist,keepIDs,rmIDcell,errmetrics] = avgrepeats(meshList,propList,'min'); %#ok<*UNRCH>
+%     [meshList,propList,rmIDlist,keepIDs,rmIDcell,errmetrics] = avgrepeats(meshList,propList,'mean'); %#ok<*UNRCH>
     files = dir(fullfile('**','interp5DOF-paper','figures'));
     if ~isempty(files)
         figfolder = files(1).folder;
-        save(fullfile(figfolder,'kim-interp-degeneracy.mat'),'errmetrics')
+        save(fullfile(figfolder,'kim-interp-degeneracy-min.mat'),'errmetrics')
+%         save(fullfile(figfolder,'kim-interp-degeneracy.mat'),'errmetrics')
     end
     mechIDs(rmIDlist) = [];
     specIDs(rmIDlist) = [];
-    kimIDs(rmIDlist) = [];
+%     kimIDs(rmIDlist) = [];
     
     qlist(rmIDlist,:) = [];
     nAlist(rmIDlist,:) = [];
@@ -186,7 +188,8 @@ five = struct('q',qlist,'nA',nAlist);
 
 %% write files
 %write octonions and GB Energy to .txt file
-fname = 'Kim2011_Fe_oct_GBE.txt';
+fname = ['Kim2011_Fe_oct_GBE_min',datestr(now,'yyyymmdd'),'.txt'];
+% fname = 'Kim2011_Fe_oct_GBE.txt';
 fpath = fullfile(kimfolder,fname);
 fid = fopen(fpath,'w');
 fprintf(fid,[...
@@ -205,7 +208,8 @@ txtsym = fileread(ftmppath);
 fprintf(fid,txtsym);
 fclose(fid);
 %save to .mat file
-save(fpath(1:end-4),'meshList','propList','five','mechIDs','specIDs','kimIDs','meshTable')
+save(fpath(1:end-4),'meshList','propList','five','mechIDs','specIDs','meshTable')
+% save(fpath(1:end-4),'meshList','propList','five','mechIDs','specIDs','kimIDs','meshTable')
 
 
 %% Extra Commentary

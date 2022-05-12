@@ -47,33 +47,34 @@ SBlist = Spairs(:,5:8);
 qSA = qmult(SAlist,qArep);
 qSB = qmult(SBlist,qBrep);
 
+qxpi = repmat([0 1 0 0],nsyms,1); % rotation by pi around the x axis used for grain exchange symmetry
 if grainexchangeQ && doublecoverQ
-	%apply grain exchange & double cover
-	symocts = [...
-		qSA	 qSB
-		qSA	-qSB
-		-qSA	 qSB
-		-qSA	-qSB
-		qSB	 qSA
-		qSB	-qSA
-		-qSB	 qSA
-		-qSB	-qSA];
-	
+    %apply grain exchange & double cover
+    symocts = [...
+        qSA     qSB
+        qSA     -qSB
+        -qSA    qSB
+        -qSA    -qSB
+        qmult(qxpi,qSB,epsijk)     qmult(qxpi,qSA,epsijk)
+        qmult(qxpi,qSB,epsijk)     qmult(qxpi,-qSA,epsijk)
+        qmult(qxpi,-qSB,epsijk)	   qmult(qxpi,qSA,epsijk)
+        qmult(qxpi,-qSB,epsijk)	   qmult(qxpi,-qSA,epsijk)];
+    
 elseif grainexchangeQ && ~doublecoverQ
-	symocts = [...
-		qSA qSB
-		qSB qSA];
-	
+    symocts = [...
+        qSA qSB
+        qmult(qxpi,qSB,epsijk) qmult(qxpi,qSA,epsijk)];
+    
 elseif ~grainexchangeQ && doublecoverQ
-	symocts = [...
-		qSA qSB
-		-qSA qSB
-		qSA -qSB
-		-qSA -qSB];
-	
+    symocts = [...
+        qSA qSB
+        -qSA qSB
+        qSA -qSB
+        -qSA -qSB];
+    
 elseif ~(grainexchangeQ || doublecoverQ)
-	symocts = [...
-		qSA qSB];
+    symocts = [...
+        qSA qSB];
 end
 
 %reduce to unique set of octonions

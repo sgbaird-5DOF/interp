@@ -1,7 +1,8 @@
-function d = disorientation(m,cs)
+function d = disorientation(m,cs,prec)
 arguments
     m
     cs = 'cubic'
+    prec = 6 % 6 digits of precision
 end
 % DISORIENTATION determines the unique misorientation between two adjacent
 % crystals among all of the symmetrically equivalent ones, satisfying the
@@ -13,6 +14,13 @@ end
 %Filename:  disorientation.m
 %Author:    Oliver Johnson
 %Date:      2/25/2012
+%
+% DISORIENTATION determines the unique misorientation between two adjacent
+% crystals among all of the symmetrically equivalent ones, satisfying the
+% conditions specified in [1], where a unit quaternion is defined by 
+% q = [q0 q1 q2 q3]. DISORIENTATION is fully vectorized and employs a 
+% memory management scheme to ensure quick computation by keeping, as much 
+% as possible, to the physical memory.
 %
 % Inputs:
 %   m - An npts-by-4 array of unit quaternions representing the
@@ -27,6 +35,9 @@ end
 %        'tetragonal'
 %        'hexagonal'
 %        'cubic'
+%   
+%   prec (optional) - A scalar indicating the number of digits after the 
+%                     decimal point to consider in the comparison.
 %
 % Outputs:
 %   d - An npts-by-4 array containing the quaternion representing the
@@ -48,37 +59,37 @@ end
 %---determine appropriate symmetry relations to use---%
 switch lower(cs)
     case {'triclinic','c1','1','-1','ci'}
-        dis = @(m0,m1,m2,m3) dis_triclinic(m0,m1,m2,m3);
+        dis = @(m0,m1,m2,m3) dis_triclinic(m0,m1,m2,m3,prec);
 %         neq = 1; %number of equations used for computing symmetryically equivalent rotations
 %         nperms = 1;
 %         nsigns = 4;
     case {'monoclinic','m','cs','c2h','c2','2/m','2'}
-        dis = @(m0,m1,m2,m3) dis_monoclinic(m0,m1,m2,m3);
+        dis = @(m0,m1,m2,m3) dis_monoclinic(m0,m1,m2,m3,prec);
 %         neq = 1;
 %         nperms = 2;
 %         nsigns = 8;
     case {'orthorhombic','mmm','mm2','d2h','d2','c2v','222'}
-        dis = @(m0,m1,m2,m3) dis_orthorhombic(m0,m1,m2,m3);
+        dis = @(m0,m1,m2,m3) dis_orthorhombic(m0,m1,m2,m3,prec);
 %         neq = 1;
 %         nperms = 4;
 %         nsigns = 16;
     case {'trigonal','rhombohedral','d3d','d3','c3v','c3i','c3','3m','32','3','-3m','-3',' -3'}
-        dis = @(m0,m1,m2,m3) dis_trigonal(m0,m1,m2,m3);
+        dis = @(m0,m1,m2,m3) dis_trigonal(m0,m1,m2,m3,prec);
 %         neq = 9;
 %         nperms = 2;
 %         nsigns = 8;
     case {'tetragonal','s4','d4h','d4','d2d','c4v','c4h','c4','4mm','422','4/mmm','4/m','4','-42m','-4'}
-        dis = @(m0,m1,m2,m3) dis_tetragonal(m0,m1,m2,m3);
+        dis = @(m0,m1,m2,m3) dis_tetragonal(m0,m1,m2,m3,prec);
 %         neq = 2;
 %         nperms = 8;
 %         nsigns = 16;
     case {'hexagonal','d6h','d6','d3h','c6v','c6h','c6','c3h','6mm','622','6/mmm','6/m','6','-6m2','-6'}
-        dis = @(m0,m1,m2,m3) dis_hexagonal(m0,m1,m2,m3);
+        dis = @(m0,m1,m2,m3) dis_hexagonal(m0,m1,m2,m3,prec);
 %         neq = 9;
 %         nperms = 4;
 %         nsigns = 16;
     case {'cubic','m-3m','m-3','th','td','t','oh','o','432','23','-43m'}
-        dis = @(m0,m1,m2,m3) dis_cubic(m0,m1,m2,m3);
+        dis = @(m0,m1,m2,m3) dis_cubic(m0,m1,m2,m3,prec);
 %         neq = 6;
 %         nperms = 24;
 %         nsigns = 16;
@@ -101,13 +112,13 @@ d = dis(m(:,1),m(:,2),m(:,3),m(:,4));
 end
 
 %symmetry relations for triclinic crystal symmetry
-function D = dis_triclinic(m0,m1,m2,m3)
+function D = dis_triclinic(m0,m1,m2,m3,prec)
 
 %---number of misorientations---%
 nm = numel(m0);
 
 %---pre-allocate---%
-D = zeros(nm,4);
+D = nan(nm,4);
 
 %---compute equivalent misorientations---%
 eq = {@(a0,a1,a2,a3) a0,@(a0,a1,a2,a3) a1, @(a0,a1,a2,a3) a2, @(a0,a1,a2,a3) a3};
@@ -132,15 +143,20 @@ for i = 1:size(eq,1)
             d = eq{i,p(k,4)}(m0,m1,m2,m3).*s(j,4);
 
             %---test for disorientation---%
-            isdis = a >= 0 & d >= 0;
+%             isdis = a >= 0 & d >= 0;
+            isdis = nge(a,0,prec) & nge(d,0,prec);
             
             %---suplemental conditions for uniqueness---%
-            sup1 = isdis & d == 0;
+%             sup1 = isdis & d == 0;
+            sup1 = isdis & neq(d,0,prec);
             if any(sup1)
-                isdis(sup1) = c(sup1) >= 0;
-                sup2 = sup1 & c == 0;
+%                 isdis(sup1) = c(sup1) >= 0;
+                isdis(sup1) = nge(c(sup1),0,prec);
+%                 sup2 = sup1 & c == 0;
+                sup2 = sup1 & neq(c,0,prec);
                 if any(sup2)
-                    isdis(sup2) = b(sup2) >= 0;
+%                     isdis(sup2) = b(sup2) >= 0;
+                    isdis(sup2) = nge(b(sup2),0,prec);
                 end
             end
             
@@ -156,19 +172,19 @@ end
 end
 
 %symmetry relations for monoclinic crystal symmetry
-function D = dis_monoclinic(m0,m1,m2,m3)
+function D = dis_monoclinic(m0,m1,m2,m3,prec)
 
 %---number of misorientations---%
 nm = numel(m0);
 
 %---pre-allocate---%
-D = zeros(nm,4);
+D = nan(nm,4);
 
 %---compute equivalent misorientations---%
 eq = {@(a0,a1,a2,a3) a0,@(a0,a1,a2,a3) a1, @(a0,a1,a2,a3) a2,@(a0,a1,a2,a3) a3};
 
 %---all possible sign changes---%
-s = zeros(8,4);
+s = nan(8,4);
 ind = 1;
 for i = -1:2:1
     for j = -1:2:1
@@ -201,16 +217,21 @@ for i = 1:size(eq,1)
             end
 
             %---test for disorientation---%
-            isdis = a >= b & b >= 0 & d >= 0;
+%             isdis = a >= b & b >= 0 & d >= 0;
+            isdis = nge(a,b,prec) & nge(b,0,prec) & nge(d,0,prec);
             
             %---supplemental conditions for uniqueness---%
-            sup1 = isdis & a == b & d > 0;
+%             sup1 = isdis & a == b & d > 0;
+            sup1 = isdis & neq(a,b,prec) & ngt(d,0,prec);
             if any(sup1)
-                isdis(sup1) = c(sup1) > 0;
+%                 isdis(sup1) = c(sup1) > 0;
+                isdis(sup1) = ngt(c(sup1),0,prec);
             end
-            sup2 = isdis & d == 0;
+%             sup2 = isdis & d == 0;
+            sup2 = isdis & neq(d,0,prec);
             if any(sup2)
-                isdis(sup2) = c(sup2) >= 0;
+%                 isdis(sup2) = c(sup2) >= 0;
+                isdis(sup2) = nge(c(sup2),0,prec);
             end
                         
             %---store disorientations---%
@@ -225,19 +246,19 @@ end
 end
 
 %symmetry relations for orthorhombic crystal symmetry
-function D = dis_orthorhombic(m0,m1,m2,m3)
+function D = dis_orthorhombic(m0,m1,m2,m3,prec)
 
 %---number of misorientations---%
 nm = numel(m0);
 
 %---pre-allocate---%
-D = zeros(nm,4);
+D = nan(nm,4);
 
 %---compute equivalent misorientations---%
 eq = {@(a0,a1,a2,a3) a0,@(a0,a1,a2,a3) a1, @(a0,a1,a2,a3) a2,@(a0,a1,a2,a3) a3};
 
 %---all possible sign changes---%
-s = zeros(16,4);
+s = nan(16,4);
 ind = 1;
 for i = -1:2:1
     for j = -1:2:1
@@ -267,20 +288,28 @@ for i = 1:size(eq,1)
             d = eq{i,p(k,4)}(m0,m1,m2,m3).*s(j,4);
 
             %---test for disorientation---%
-            isdis = a >= b & b >= 0 & a >= c & c >= 0 & a >= d & d >= 0;
+%             isdis = a >= b & b >= 0 & a >= c & c >= 0 & a >= d & d >= 0;
+            isdis = nge(a,b,prec) & nge(b,0,prec) & nge(a,c,prec) &...
+                nge(c,0,prec) & nge(a,d,prec) & nge(d,0,prec);
             
             %---suplemental conditions for uniqueness---%
-            sup1 = isdis & a == b;
+%             sup1 = isdis & a == b;
+            sup1 = isdis & neq(a,b,prec);
             if any(sup1)
-                isdis(sup1) = c(sup1) >= d(sup1);
+%                 isdis(sup1) = c(sup1) >= d(sup1);
+                isdis(sup1) = nge(c(sup1),d(sup1),prec);
             end
-            sup2 = isdis & a == c;
+%             sup2 = isdis & a == c;
+            sup2 = isdis & neq(a,c,prec);
             if any(sup2)
-                isdis(sup2) = b(sup2) >= d(sup2);
+%                 isdis(sup2) = b(sup2) >= d(sup2);
+                isdis(sup2) = nge(b(sup2),d(sup2),prec);
             end
-            sup3 = isdis & a == d;
+%             sup3 = isdis & a == d;
+            sup3 = isdis & neq(a,d,prec);
             if any(sup3)
-                isdis(sup3) = b(sup3) >= c(sup3);
+%                 isdis(sup3) = b(sup3) >= c(sup3);
+                isdis(sup3) = nge(b(sup3),c(sup3),prec);
             end
             
             %---store disorientations---%
@@ -295,13 +324,13 @@ end
 end
 
 %symmetry relations for trigonal (rhombohedral) crystal symmetry
-function D = dis_trigonal(m0,m1,m2,m3)
+function D = dis_trigonal(m0,m1,m2,m3,prec)
 
 %---number of misorientations---%
 nm = numel(m0);
 
 %---pre-allocate---%
-D = zeros(nm,4);
+D = nan(nm,4);
 
 %---compute equivalent misorientations---%
 eq(1,:) = {@(a0,a1,a2,a3) a0, @(a0,a1,a2,a3) a1, @(a0,a1,a2,a3) a2, @(a0,a1,a2,a3) a3};
@@ -315,7 +344,7 @@ eq(8,:) = {@(a0,a1,a2,a3) 0.5*(a0+sqrt(3)*a3), @(a0,a1,a2,a3) 0.5*(a1+sqrt(3)*a2
 eq(9,:) = {@(a0,a1,a2,a3) 0.5*(a0-sqrt(3)*a3), @(a0,a1,a2,a3) 0.5*(a1-sqrt(3)*a2), @(a0,a1,a2,a3) 0.5*(a2+sqrt(3)*a1), @(a0,a1,a2,a3) 0.5*(a3+sqrt(3)*a0)};
 
 %---all possible sign changes---%
-s = zeros(8,4);
+s = nan(8,4);
 ind = 1;
 for i = -1:2:1
     for j = -1:2:1
@@ -348,16 +377,22 @@ for i = 1:size(eq,1)
             end
 
             %---test for disorientation---%
-            isdis = a >= b & b >= sqrt(3)*abs(c) & a >= sqrt(3)*d & d >= 0;
+%             isdis = a >= b & b >= sqrt(3)*abs(c) & a >= sqrt(3)*d & d >= 0;
+            isdis = nge(a,b,prec) & nge(b,sqrt(3)*abs(c),prec) &...
+                nge(a,sqrt(3)*d,prec) & nge(d,0,prec);
 
             %---suplemental conditions for uniqueness---%
-            sup1 = isdis & a == b & d > 0;
+%             sup1 = isdis & a == b & d > 0;
+            sup1 = isdis & neq(a,b,prec) & ngt(d,0,prec);
             if any(sup1)
-                isdis(sup1) = c(sup1) > 0;
+%                 isdis(sup1) = c(sup1) > 0;
+                isdis(sup1) = ngt(c(sup1),0,prec);
             end
-            sup2 = isdis & d == 0;
+%             sup2 = isdis & d == 0;
+            sup2 = isdis & neq(d,0,prec);
             if any(sup2)
-                isdis(sup2) = c(sup2) >= 0;
+%                 isdis(sup2) = c(sup2) >= 0;
+                isdis(sup2) = nge(c(sup2),0,prec);
             end
             
             %---store disorientations---%
@@ -372,20 +407,20 @@ end
 end
 
 %symmetry relations for tetragonal crystal symmetry
-function D = dis_tetragonal(m0,m1,m2,m3)
+function D = dis_tetragonal(m0,m1,m2,m3,prec)
 
 %---number of misorientations---%
 nm = numel(m0);
 
 %---pre-allocate---%
-D = zeros(nm,4);
+D = nan(nm,4);
 
 %---compute equivalent misorientations---%
 eq(1,:) = {@(a0,a1,a2,a3) a0, @(a0,a1,a2,a3) a1, @(a0,a1,a2,a3) a2, @(a0,a1,a2,a3) a3};
 eq(2,:) = {@(a0,a1,a2,a3) 2^(-1/2)*(a0+a3), @(a0,a1,a2,a3) 2^(-1/2)*(a1+a2), @(a0,a1,a2,a3) 2^(-1/2)*(a1-a2), @(a0,a1,a2,a3) 2^(-1/2)*(a0-a3)};
 
 %---all possible sign changes---%
-s = zeros(16,4);
+s = nan(16,4);
 ind = 1;
 for i = -1:2:1
     for j = -1:2:1
@@ -419,21 +454,30 @@ for i = 1:size(eq,1)
             d = eq{i,p(k,4)}(m0,m1,m2,m3).*s(j,4);
 
             %---test for disorientation---%
-            isdis = a >= b & b >= c & c >= 0 & a >= 2^(-1/2)*(b+c) &...
-                    a >= (sqrt(2)+1)*d & d >= 0;
+%             isdis = a >= b & b >= c & c >= 0 & a >= 2^(-1/2)*(b+c) &...
+%                     a >= (sqrt(2)+1)*d & d >= 0;
+            isdis = nge(a,b,prec) & nge(b,c,prec) & nge(c,0,prec) &...
+                nge(a,2^(-1/2)*(b+c),prec) &...
+                nge(a,(sqrt(2)+1)*d,prec) & nge(d,0,prec);
             
             %---suplemental conditions for uniqueness---%
-            sup1 = isdis & a == b;
+%             sup1 = isdis & a == b;
+            sup1 = isdis & neq(a,b,prec);
             if any(sup1)
-                isdis(sup1) = c(sup1) >= d(sup1);
+%                 isdis(sup1) = c(sup1) >= d(sup1);
+                isdis(sup1) = nge(c(sup1),d(sup1),prec);
             end
-            sup2 = isdis & sqrt(2)*a == b+c;
+%             sup2 = isdis & sqrt(2)*a == b+c;
+            sup2 = isdis & neq(sqrt(2)*a,b+c,prec);
             if any(sup2)
-                isdis(sup2) = b(sup2)-c(sup2) >= sqrt(2)*d(sup2);
+%                 isdis(sup2) = b(sup2)-c(sup2) >= sqrt(2)*d(sup2);
+                isdis(sup2) = nge(b(sup2)-c(sup2),sqrt(2)*d(sup2),prec);
             end
-            sup3 = isdis & a == (sqrt(2)+1)*d;
+%             sup3 = isdis & a == (sqrt(2)+1)*d;
+            sup3 = isdis & neq(a,(sqrt(2)+1)*d,prec);
             if any(sup3)
-                isdis(sup3) = b(sup3) >= (sqrt(2)+1)*c(sup3);
+%                 isdis(sup3) = b(sup3) >= (sqrt(2)+1)*c(sup3);
+                isdis(sup3) = nge(b(sup3),(sqrt(2)+1)*c(sup3),prec);
             end
             
             %---store disorientations---%
@@ -448,13 +492,13 @@ end
 end
 
 %symmetry relations for hexagonal crystal symmetry
-function D = dis_hexagonal(m0,m1,m2,m3)
+function D = dis_hexagonal(m0,m1,m2,m3,prec)
 
 %---number of misorientations---%
 nm = numel(m0);
 
 %---pre-allocate---%
-D = zeros(nm,4);
+D = nan(nm,4);
 
 %---compute equivalent misorientations---%
 eq(1,:) = {@(a0,a1,a2,a3) a0, @(a0,a1,a2,a3) a1, @(a0,a1,a2,a3) a2, @(a0,a1,a2,a3) a3};
@@ -468,7 +512,7 @@ eq(8,:) = {@(a0,a1,a2,a3) 0.5*(a0-sqrt(3)*a3), @(a0,a1,a2,a3) 0.5*(a1-sqrt(3)*a2
 eq(9,:) = {@(a0,a1,a2,a3) 0.5*(a0-sqrt(3)*a3), @(a0,a1,a2,a3) 0.5*(a1+sqrt(3)*a2), @(a0,a1,a2,a3) 0.5*(a2-sqrt(3)*a1), @(a0,a1,a2,a3) 0.5*(a3+sqrt(3)*a0)};
 
 %---all possible sign changes---%
-s = zeros(16,4);
+s = nan(16,4);
 ind = 1;
 for i = -1:2:1
     for j = -1:2:1
@@ -498,22 +542,32 @@ for i = 1:size(eq,1)
             d = eq{i,p(k,4)}(m0,m1,m2,m3).*s(j,4);
 
             %---test for disorientation---%
-            isdis = a >= b & b >= sqrt(3)*c & c >= 0 &...
-                    a >= 0.5*(sqrt(3)*b+c) &...
-                    a >= (2+sqrt(3))*d & d >= 0;
+%             isdis = a >= b & b >= sqrt(3)*c & c >= 0 &...
+%                     a >= 0.5*(sqrt(3)*b+c) &...
+%                     a >= (2+sqrt(3))*d & d >= 0;
+            isdis = nge(a,b,prec) & nge(b,sqrt(3)*c,prec) &...
+                nge(c,0,prec) &...
+                nge(a,0.5*(sqrt(3)*b+c),prec) &...
+                nge(a,(2+sqrt(3))*d,prec) & nge(d,0,prec);
 
             %---suplemental conditions for uniqueness---%
-            sup1 = isdis & a == b;
+%             sup1 = isdis & a == b;
+            sup1 = isdis & neq(a,b,prec);
             if any(sup1)
-                isdis(sup1) = c(sup1) >= d(sup1);
+%                 isdis(sup1) = c(sup1) >= d(sup1);
+                isdis(sup1) = nge(c(sup1),d(sup1),prec);
             end
-            sup2 = isdis & a == 0.5*(sqrt(3)*b+c);
+%             sup2 = isdis & a == 0.5*(sqrt(3)*b+c);
+            sup2 = isdis & neq(a,0.5*(sqrt(3)*b+c),prec);
             if any(sup2)
-                isdis(sup2) = 0.5*(b(sup2)-sqrt(3)*c(sup2)) >= d(sup2);
+%                 isdis(sup2) = 0.5*(b(sup2)-sqrt(3)*c(sup2)) >= d(sup2);
+                isdis(sup2) = nge(0.5*(b(sup2)-sqrt(3)*c(sup2)),d(sup2),prec);
             end
-            sup3 = isdis & a == (2+sqrt(3))*d;
+%             sup3 = isdis & a == (2+sqrt(3))*d;
+            sup3 = isdis & neq(a,(2+sqrt(3))*d,prec);
             if any(sup3)
-                isdis(sup3) = b(sup3) >= (2+sqrt(3))*c(sup3);
+%                 isdis(sup3) = b(sup3) >= (2+sqrt(3))*c(sup3);
+                isdis(sup3) = nge(b(sup3),(2+sqrt(3))*c(sup3),prec);
             end
             
             %---store disorientations---%
@@ -528,13 +582,13 @@ end
 end
 
 %symmetry relations for cubic crystal symmetry
-function D = dis_cubic(m0,m1,m2,m3)
+function D = dis_cubic(m0,m1,m2,m3,prec)
 
 %---number of misorientations---%
 nm = numel(m0);
 
 %---pre-allocate---%
-D = zeros(nm,4);
+D = nan(nm,4);
 
 %---compute equivalent misorientations---%
 eq(1,:) = {@(a0,a1,a2,a3) a0, @(a0,a1,a2,a3) a1, @(a0,a1,a2,a3) a2, @(a0,a1,a2,a3) a3};
@@ -545,7 +599,7 @@ eq(5,:) = {@(a0,a1,a2,a3) 0.5*(a0+a1+a2+a3), @(a0,a1,a2,a3) 0.5*(a0+a1-a2-a3), @
 eq(6,:) = {@(a0,a1,a2,a3) 0.5*(a0+a1+a2-a3), @(a0,a1,a2,a3) 0.5*(a0+a1-a2+a3), @(a0,a1,a2,a3) 0.5*(a0-a1+a2+a3), @(a0,a1,a2,a3) 0.5*(a0-a1-a2-a3)};
 
 %---all possible sign changes---%
-s = zeros(16,4);
+s = nan(16,4);
 ind = 1;
 for i = -1:2:1
     for j = -1:2:1
@@ -572,13 +626,18 @@ for i = 1:size(eq,1)
             d = eq{i,p(k,4)}(m0,m1,m2,m3).*s(j,4);
 
             %---test for disorientation---%
-            isdis = (b >= c & c >= d & d >= 0) & (b <= (sqrt(2)-1)*a) &...
-                    (b+c+d <= a);
+%             isdis = (b >= c & c >= d & d >= 0) & (b <= (sqrt(2)-1)*a) &...
+%                     (b+c+d <= a);
+            isdis = (nge(b,c,prec) & nge(c,d,prec) & nge(d,0,prec)) &...
+                (nle(b,(sqrt(2)-1)*a,prec)) &...
+                    (nle(b+c+d,a,prec));
             
             %---suplemental conditions for uniqueness---%
-            sup1 = isdis & a == (sqrt(2)+1)*b;
+%             sup1 = isdis & a == (sqrt(2)+1)*b;
+            sup1 = isdis & neq(a,(sqrt(2)+1)*b,prec);
             if any(sup1)
-                isdis(sup1) = c(sup1) <= (sqrt(2)+1)*d(sup1);
+%                 isdis(sup1) = c(sup1) <= (sqrt(2)+1)*d(sup1);
+                isdis(sup1) = nle(c(sup1),(sqrt(2)+1)*d(sup1),prec);
             end
             
             %---store disorientations---%

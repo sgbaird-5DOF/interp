@@ -1,4 +1,5 @@
-% Q2GMAT converts quaternions to their canonical 3x3 rotation matrix representation
+% Q2GMAT converts quaternions to their canonical 3x3 rotation matrix
+% representation, using the Euler-Rodrigues formula.
 %-------------------------------------------------------------------------%
 %Filename:  q2gmat.m
 %Author:    Oliver Johnson

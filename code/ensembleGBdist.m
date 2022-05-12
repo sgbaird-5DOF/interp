@@ -51,7 +51,9 @@ for i = 1:K
     end
     switch pdtype
         case {'pdist','pdist2'}
-            d = squareform(d);
+            if nv.squareform
+                d = squareform(d);
+            end
     end
     if i == 1
         dmin = d;
