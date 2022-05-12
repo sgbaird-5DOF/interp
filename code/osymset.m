@@ -53,6 +53,7 @@ SBlist = Spairs(:,5:8);
 qSA = qmult(qArep,SAlist,epsijk);
 qSB = qmult(qBrep,SBlist,epsijk);
 
+qxpi = repmat([0 1 0 0],nsyms,1); % rotation by pi around the x axis used for grain exchange symmetry
 if grainexchangeQ && doublecoverQ
     %apply grain exchange & double cover
     symocts = [...
@@ -60,15 +61,15 @@ if grainexchangeQ && doublecoverQ
         qSA     -qSB
         -qSA    qSB
         -qSA    -qSB
-        qSB     qSA
-        qSB     -qSA
-        -qSB	 qSA
-        -qSB	-qSA];
+        qmult(qxpi,qSB,epsijk)     qmult(qxpi,qSA,epsijk)
+        qmult(qxpi,qSB,epsijk)     qmult(qxpi,-qSA,epsijk)
+        qmult(qxpi,-qSB,epsijk)	   qmult(qxpi,qSA,epsijk)
+        qmult(qxpi,-qSB,epsijk)	   qmult(qxpi,-qSA,epsijk)];
     
 elseif grainexchangeQ && ~doublecoverQ
     symocts = [...
         qSA qSB
-        qSB qSA];
+        qmult(qxpi,qSB,epsijk) qmult(qxpi,qSA,epsijk)];
     
 elseif ~grainexchangeQ && doublecoverQ
     symocts = [...
