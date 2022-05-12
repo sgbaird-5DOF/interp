@@ -53,11 +53,11 @@ for i = 1:K
         case 'pdist2'
             d = pdist2(osym,osym2,fn);
     end
-    if use_squareform
-        switch pdtype
-            case {'pdist','pdist2'}
+    switch pdtype
+        case {'pdist','pdist2'}
+            if nv.squareform
                 d = squareform(d);
-        end
+            end
     end
     if i == 1
         dmin = d;
