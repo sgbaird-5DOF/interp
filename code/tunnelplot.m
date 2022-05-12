@@ -192,7 +192,10 @@ if nnQ2
         sz = -rescale(nnd{i},-50,-2);
         %     sz2 = 2*rad2deg(-nnd{i}+2*min(nnd{i}));
         sz2(:,i) = 2*rad2deg(nnd{i});
-        scatter(x,tprednn{i},sz,sz2(:,i),'o')
+%         scatter(x,tprednn{i},sz,sz2(:,i),'o')
+        for ii = 1:numel(x) % okj added - to revert uncomment above line
+            scatter(x(ii),tprednn{i}(ii),sz(ii),sz2(ii,i),'o','filled','markeredgecolor','none','MarkerFaceAlpha',interp1([0,max(sz2(:))],[1,0.1],sz2(ii,i)))
+        end
     end
 end
 i = 1;
