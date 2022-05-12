@@ -175,16 +175,37 @@ tbltmp = mdlparstbl(mdlparstbl.datatype == 'brk',:);
 nnmu = splitapply(@mean,tbltmp.nnmu,G);
 nnsigma = splitapply(@std,tbltmp.nnmu,G);
 paperfigure();
-errorbar(ID,nnmu,nnsigma);
+% errorbar(ID,nnmu,nnsigma);
+yyaxis left
+hErr = errorbar(ID,nnmu,nnsigma);
+% hold on
+% x = 388:100:50000;
+% f = 2.5025e-5*x-1.27396*log(x)+15.4499;
+% plot(x,f,'k-');
+set(gca,'XScale','log','ycolor','k');
+% xlabel('VFZO Set Size','Interpreter','latex')
+xlabel('Cardinality of VFZO Point Set','Interpreter','latex')
+% ylabel('VFZO $\omega_{\mathrm{NN}}$ ($^{\circ}$)','Interpreter','latex')
+ylabel('NN Distance ($d_\Omega\ \left[^{\circ}\right]$)','Interpreter','latex')
+ylm = ylim;
+yyaxis right
+hCorr = plot(ID,nnmu./7.5);
 hold on
-x = 388:100:50000;
-f = 2.5025e-5*x-1.27396*log(x)+15.4499;
-plot(x,f,'k-');
-set(gca,'XScale','log');
-xlabel('VFZO Set Size','Interpreter','latex')
-ylabel('VFZO $\omega_{\mathrm{NN}}$ ($^{\circ}$)','Interpreter','latex')
-legend('Data','$ax-\mathrm{log}(x)b+c$','Interpreter','latex')
-savefigpng(figfolder,'nndist-vs-setsize');
+xlm = xlim;
+% plot(xlm,0.25*ones(size(xlm)),'k--','color',0.8*ones(1,3))
+% plot(xlm,0.5*ones(size(xlm)),'k--','color',0.8*ones(1,3))
+% plot(xlm,0.75*ones(size(xlm)),'k--','color',0.8*ones(1,3))
+% plot(xlm,ones(size(xlm)),'k--','color',0.8*ones(1,3))
+% plot(xlm,1.25*ones(size(xlm)),'k--','color',0.8*ones(1,3))
+% plot(xlm,1.5*ones(size(xlm)),'k--','color',0.8*ones(1,3))
+ylabel('NN Distance ($l$)','Interpreter','latex')
+ylim(ylm/7.5);
+set(gca,'ycolor','k')
+set(hCorr,'linestyle','none')
+% legend('Data','$ax-\mathrm{log}(x)b+c$','Interpreter','latex')
+savefigpng(figfolder,'nndist-vs-setsize-final');
+
+% interp1(nnmu,ID,7.5)
 
 %%
 clear mdlparstbl
