@@ -15,7 +15,6 @@ pdtype = nv.pdtype;
 orefs = nv.orefs;
 dispQ = nv.disp;
 pgnum = nv.pgnum;
-use_squareform = nv.squareform;
 % d = cell(1,K);
 
 if strcmp(pdtype,'pdist') && ~isempty(o2)
