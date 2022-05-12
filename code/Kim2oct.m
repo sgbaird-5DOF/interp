@@ -165,7 +165,6 @@ if removezeroQ
     
     mechIDs = mechIDs(ids);
     specIDs = specIDs(ids);
-    kimIDs = kimIDs(ids);
     
     qlist = qlist(ids,:);
     nAlist = nAlist(ids,:);
@@ -181,7 +180,6 @@ if avgQ
     end
     mechIDs(rmIDlist) = [];
     specIDs(rmIDlist) = [];
-    kimIDs(rmIDlist) = [];
     
     qlist(rmIDlist,:) = [];
     nAlist(rmIDlist,:) = [];
@@ -226,7 +224,7 @@ txtsym = fileread(ftmppath);
 fprintf(fid,txtsym);
 fclose(fid);
 %save to .mat file
-save(fpath(1:end-4),'meshList','propList','five','mechIDs','specIDs','kimIDs','meshTable')
+save(fpath(1:end-4),'meshList','propList','five','mechIDs','specIDs','meshTable')
 
 
 %% Extra Commentary
@@ -243,87 +241,8 @@ save(fpath(1:end-4),'meshList','propList','five','mechIDs','specIDs','kimIDs','m
 % 38000	65000	0.3366
 % 38000	38003	0.3378
 % 
-% Since norm(nAlist(ids(38000),:)-nAlist(ids(38003),:)) == 0.5002 = ~0.2567*2, this makes me think that epsijk == 1 is the correct interpretation. This is also supported by the description in the paper of the misorientation convention being qinv(qA)**qB
-%}
-
-%----------------------------------CODE GRAVEYARD--------------------------
-%{
-
-% varNames = meshTable.Properties.VariableNames; %Euler angles (misorientation, deg), the polar & azimuth (inclination, deg), GBE (mJ/m^2)
-
-%[meshList,ia] = uniquetol(meshListFull,'ByRows',true);
-%disp(['# unique pts: ' int2str(npts)])
-
-%setGlobal_epsijk(-1);  
-
-%','setGlobal_epsijk.m'
-
-
-%get octonion mesh
-meshListTmp = GBfive2oct(qlist,nAlist);
-meshListFull = get_octpairs(meshListTmp);
-
-%Kim references Bunge notation, so using that convention for rotation conversion
-
-
-datatmp2 = deg2rad(datatmp(:,1:end-1));
-
-% %convert from active to passive convention?
-% qlist = qinv(qlist);
-
-
-%split back into mechanically and intentionally selected GBs
-% qmech = qlist(1:npts,:);
-% nAmech = nAlist(1:npts,:);
-% 
-% qspec = qlist(npts+1:end,:);
-% nAspec = nAlist(npts+1:end,:);
-
-% meshmech = meshListFull(1:npts,:);
-% meshspec = meshListFull(npts+1:end,:);
-
-
-% propmech = propListFull(1:npts,:);
-% propspec = propListFull(npts+1:end,:);
-
-
-%     [meshmech,propmech] = avgrepeats(meshmech,propmech); %#ok<*UNRCH>
-%     [meshspec,propspec] = avgrepeats(meshspec,propspec); %#ok<*UNRCH>
-
-
-
-%     idsmech = find(propmech);
-%     meshmech = meshmech(ids,:);
-%     propmech = propmech(ids,:);
-%     
-%     idsspec = find(propspec);
-%     meshspec = meshspec(ids,:);
-%     propspec = propspec(ids,:);
-    %     qmech = qmech(idsmech,:);
-%     nAmech = nAmech(idsmech,:);
-%     
-%     qspec = qspec(idsspec,:);
-%     nAspec = nAspec(idsspec,:);
-
-
-
-        % mechIDs = 1:npts;
-% specIDs = npts+1:nptstot;
-%     mechIDs = setdiff(mechIDs,rmIDlist);
-    
-%     specIDs = setdiff(specIDs,rmIDlist);
-%     nmechIDs = numel(mechIDs);
-%     nspecIDs = numel(specIDs);
-    
-%     mechIDs = 1:nmechIDs;
-%     specIDs = (nmechIDs+1):(nmechIDs+nspecIDs);
-
-%     mechIDs = intersect(mechIDs,ids); %note that sorting occurs, but shouldn't matter because mechIDs is already sorted
-%     specIDs = intersect(specIDs,ids);
-    
-%     nmechIDs = numel(mechIDs);
-%     nspecIDs = numel(specIDs);
-    
-%     mechIDs = 1:nmechIDs;
-%     specIDs = (nmechIDs+1):(nmechIDs+nspecIDs);
+% Since norm(nAlist(ids(38000),:)-nAlist(ids(38003),:)) == 0.5002 = ~0.2567*2,
+% this makes me think that epsijk == 1 is the correct interpretation.
+% This is also supported by the description in the paper of the misorientation
+% convention being qinv(qA)**qB
 %}
