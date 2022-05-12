@@ -25,6 +25,9 @@ arguments
     nv.dispQ(1,1) logical = true
     nv.IncludeTies(1,1) {mustBeLogical} = true
     nv.nNN(1,1) double = 1
+    nv.noboundaryQ(1,1) logical {mustBeLogical} = false % enforce no-boundary constraint
+    nv.weights char {mustBeMember(nv.weights,{'rsw','kernel'})} = 'rsw'
+    nv.wthreshold = 'min'
 end
 % INTERP5DOF  Convert misorientation and boundary plane normal 5DOF input
 % data to a closed, octonion, hyperspherical mesh and interpolate property
@@ -245,6 +248,7 @@ projtol = 1e-4;
 %     otherwise
 %         projQ = true;
 % end
+% projQ = false;
 projQ = true;
 zeroQ = false;
 o = normr(o);
@@ -532,6 +536,8 @@ switch method
                 [ypred,ysd,yint] = predict(gprMdl,X2);
             case 'bcd'
                 ypred = predict(cgprMdl,X2);
+                ysd = [];
+                yint = [];
             otherwise
                 [ypred,ysd,yint] = predict(gprMdl,X2);
         end
@@ -655,6 +661,73 @@ switch method
         mdlparsspec = struct();
 end
 runtime = toc; %time elapsed to do the interpolation (method-specific portion)
+
+%% apply no-boundary constraint if applicable
+
+if nv.noboundaryQ
+
+    % determine threshold
+    if ischar(nv.wthreshold) && strcmpi(nv.wthreshold,'min') % use the minimum of the input disorientation angles and the constant 5 deg
+
+        % compute input disorientation angles
+        qd = disorientation(qm,'cubic'); % there may be a faster way to do this since we just want the angle
+        [w,~,~] = q2rot(qd); % disorientation angle
+
+        % take the minimum
+        wthreshold = min([min(w),deg2rad(5)]);
+
+    elseif isscalar(nv.wthreshold)
+
+        % use the supplied value
+        wthreshold = nv.wthreshold;
+
+    else
+
+        % throw error
+        error('Unrecognized wthreshold value.')
+
+    end
+
+    switch method
+        case {'sphbary','pbary'}
+
+            % update predictions
+            ypred = applyNoBoundaryConstraint(ypred,[],[],qm2,[],'weights','rsw','wthreshold',wthreshold);
+
+        case {'sphgpr','gpr'}
+
+            % update predictions
+            [ypred,ysd,yint] = applyNoBoundaryConstraint(ypred,ysd,yint,qm2,gprMdl,'weights',nv.weights,'wthreshold',wthreshold);
+
+            % update mdlspec
+            switch PredictMethod
+                case 'fic'
+                    mdlspec = var_names(gprMdl,cgprMdl,gpropts,ysd,yint);
+                otherwise
+                    mdlspec = var_names(cgprMdl,gpropts,ysd,yint);
+            end
+
+        case 'idw'
+
+            % update predictions
+            ypred = applyNoBoundaryConstraint(ypred,[],[],qm2,[],'weights','rsw','wthreshold',wthreshold);
+            
+        case 'nn'
+
+            % update predictions
+            ypred = applyNoBoundaryConstraint(ypred,[],[],qm2,[],'weights','rsw','wthreshold',wthreshold);
+
+        case 'avg'
+
+            % update predictions
+            ypred = applyNoBoundaryConstraint(ypred,[],[],qm2,[],'weights','rsw','wthreshold',wthreshold);
+
+        case 'insertnamehere'
+
+            error('noboundaryQ = true is not yet implemented for custom interpolation methods.')
+            
+    end
+end
 
 %% append extra general variables
 %parity variables
