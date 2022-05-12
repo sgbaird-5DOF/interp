@@ -47,3 +47,5 @@ parameters/**
 code/interp5DOF-paper/
 code/latexTable/
 code/ternplot/
+code/interp5DOF_GB5DOF_port.zip
+code/bare_bones.m
