@@ -6,6 +6,8 @@
 [![arXiv](https://img.shields.io/badge/Paper_2:_ChemRxiv-2021.ds0ml-b31b1b.svg)](https://doi.org/10.26434/chemrxiv-2021-ds0ml)
 [![DOI](https://zenodo.org/badge/282085693.svg)](https://zenodo.org/badge/latestdoi/282085693)
 
+> **NOTE: We are in the process of refactoring this codebase, including correcting a helper function within one of the GB conversion scripts**
+
  Code related to meshing, interpolation, and distance calculations of grain boundaries by representing 5DOF of grain boundaries as grain boundary octonions (GBOs) and mapping them into a Voronoi Fundamental Zone (VFZ). ([https://github.com/sgbaird-5DOF/interp](https://github.com/sgbaird-5DOF/interp))
 
 <img src=https://user-images.githubusercontent.com/45469701/152452613-2cab0239-1412-4a6c-8fb7-7af9f810be33.png width=750>
