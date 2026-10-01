@@ -31,6 +31,14 @@
 - MATLAB is not installed on the Claude runner. If a change needs MATLAB to
   verify, push it and read the `test-matlab.yml` results on the PR (you have
   `actions: read`) rather than claiming it works.
+- `test-matlab.yml` is not green yet. Its first working run (2026-10-01, run
+  36931126159) reported 34 passed, 55 failed. Most failures come from the
+  `*_test.m` scripts rather than the library: `run-tests` runs each `%%`
+  section of a script as an isolated test, so variables defined in an earlier
+  section are undefined later (28 of them are `MATLAB:UndefinedFunction` for
+  variables like `qm`, `nvec`, `ninputpts`). Others load `.mat`/data files by
+  missing paths. Judge a change by whether it changes this baseline, not by an
+  all-green run, and name any test whose status you changed.
 - The codebase is mid-refactor (see the README note dated 2026-02-24),
   including a helper function in one of the GB conversion scripts. Prefer
   small, well-scoped changes and say which functions you touched.
