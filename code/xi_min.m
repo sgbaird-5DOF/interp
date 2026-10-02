@@ -73,7 +73,7 @@ if nargout == 2
     switch epsijk
         case 1 % active
             o2sym = [qmultiply(qxizs,qC), qmultiply(qxizs,qD)];
-        case 2 % passive
+        case -1 % passive
             o2sym = [qmultiply(qC,qxizs), qmultiply(qD,qxizs)];
     end
 end
