@@ -35,7 +35,7 @@ end
 %                      threshold (in radians) to use with the 'rsw'
 %                      weighting scheme; OR the string 'min', in which case
 %                      wthreshold is set to the minimum of 
-%                      [min(w),deg2rad(5)], where w contains the 
+%                      [min(w),2*deg2rad(5)], where w contains the 
 %                      disorientation angles of all of the input GBs
 %                      (data). See applyNoBoundaryConstraint.m
 %
@@ -140,14 +140,14 @@ end
 if nv.noboundaryQ
 
     % determine threshold
-    if ischar(nv.wthreshold) && strcmpi(nv.wthreshold,'min') % use the minimum of the input disorientation angles and the constant 5 deg
+    if ischar(nv.wthreshold) && strcmpi(nv.wthreshold,'min') % use the minimum of the input disorientation angles and the constant 10 domega = 2*(5 dOmega)
 
         % compute input disorientation angles
         qd = disorientation(nv.qm,'cubic'); % there may be a faster way to do this since we just want the angle
-        [w,~,~] = q2rot(qd); % disorientation angle
+        [w,~,~] = q2rot(qd); % disorientation angle [domega]
 
         % take the minimum
-        wthreshold = min([min(w),deg2rad(5)]);
+        wthreshold = min([min(w),2*deg2rad(5)]); % [domega]
 
     elseif isscalar(nv.wthreshold)
 

@@ -53,7 +53,10 @@ elseif isEqual
 	
 elseif isOpposite
 	% vectors pointing in opposite directions
-	R = -eye(3);
+% 	R = -eye(3);
+    null_space = null(v1); % arbitrary basis for the null space of v1.'
+    vAx = null_space(:,1); % choose one of the basis vectors as the rotation axis
+    R = ax2om([vAx(:).', pi]);
 end
 
 if epsijk == -1 %-1 seems to produce consistent results with section 4.2 of (1)

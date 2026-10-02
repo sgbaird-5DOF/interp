@@ -667,14 +667,14 @@ runtime = toc; %time elapsed to do the interpolation (method-specific portion)
 if nv.noboundaryQ
 
     % determine threshold
-    if ischar(nv.wthreshold) && strcmpi(nv.wthreshold,'min') % use the minimum of the input disorientation angles and the constant 5 deg
+    if ischar(nv.wthreshold) && strcmpi(nv.wthreshold,'min') % use the minimum of the input disorientation angles and the constant 10 domega = 2*(5 dOmega)
 
         % compute input disorientation angles
         qd = disorientation(qm,'cubic'); % there may be a faster way to do this since we just want the angle
-        [w,~,~] = q2rot(qd); % disorientation angle
+        [w,~,~] = q2rot(qd); % disorientation angle [domega]
 
         % take the minimum
-        wthreshold = min([min(w),deg2rad(5)]);
+        wthreshold = min([min(w),2*deg2rad(5)]); % [domega]
 
     elseif isscalar(nv.wthreshold)
 

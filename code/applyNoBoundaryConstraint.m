@@ -6,7 +6,7 @@ arguments
     qm2(:,4) = [] % query misorientations
     mdl = [] % trained model 
     nv.weights char {mustBeMember(nv.weights,{'rsw','kernel'})} = 'rsw'
-    nv.wthreshold(1,1) double = deg2rad(5)
+    nv.wthreshold(1,1) double = 2*deg2rad(5) % domega = 2*dOmega
 end
 
 % APPLYNOBOUNDARYCONSTRAINT  Adjusts model predictions to enforce the

@@ -3,8 +3,8 @@ arguments
 	oct(:,8) double {mustBeFinite,mustBeReal,mustBeSqrt2Norm}
 	pgnum(1,1) double {mustBeInteger} = 32 %default to Oh cubic point group
 	usv = []
-	grainexchangeQ(1,1) logical {mustBeLogical} = false
-	doublecoverQ(1,1) logical {mustBeLogical} = false
+	grainexchangeQ(1,1) logical {mustBeLogical} = true
+	doublecoverQ(1,1) logical {mustBeLogical} = true
     uniqueQ(1,1) logical {mustBeLogical} = false
     epsijk(1,1) double {mustBeInteger} = 1
 end
@@ -67,7 +67,7 @@ parfor i = 1:ndatapts %parfor compatible
 	qB = qBlist(i,:);
 	
 	%get symmetrically equivalent octonions
-	osets{i} = osymset(qA,qB,Spairs,grainexchangeQ,doublecoverQ,uniqueQ,epsijk);
+	osets{i} = osymset(qA,qB,Spairs,pgnum,grainexchangeQ,doublecoverQ,uniqueQ,epsijk);
 end
 
 end %osymsets

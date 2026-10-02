@@ -33,11 +33,10 @@ end
 %			--osymset.m
 %				--qmult.m
 %		get_omega.m
-%		zeta_min2.m (naming distinct from 'zeta_min' to prevent conflicts in
-%		GBdist.m)
+%		xi_min.m (replacement of 'zeta_min' and 'zeta_min2')
 % Notes:
-% Author: Sterling Baird
-% Date: 2020-07-27
+% Author: Sterling Baird / Oliver Johnson
+% Date: 2024-01-25
 %--------------------------------------------------------------------------
 prec = nv.prec; %precision for duplicates
 tol = nv.tol; %tolerance for duplicates
@@ -134,27 +133,30 @@ parfor i = 1:npts %parfor compatible
 	%copy octonion
 	o1rep = repmat(o1tmp,nsets,1);
 	
-	%unpack quaternions
-	qSC = o2tmp(:,1:4);
-	qSD = o2tmp(:,5:8);
+	% %unpack quaternions
+	% qSC = o2tmp(:,1:4);
+	% qSD = o2tmp(:,5:8);
 	
 	%% apply U(1) symmetry
-	% get minimum zeta & sigma values (zm)
-	zm = zeta_min2(o1rep,o2tmp,-epsijk);
-    mA = [0 0 1]; %octonion convention that BP normal is [0 0 1] in lab frame
-    mArep = repmat(mA,nsets,1);
-    qzm = ax2qu([mArep zm],-epsijk);
-% 	qzm = [cos(zm/2) zeros(nsets,2) sin(zm/2)];
-%     qzm = [cos(zm/2) zeros(nsets,2) -epsijk*sin(zm/2)];
+
+    [~,o2syms] = xi_min(o1rep,o2tmp,epsijk);
 	
-	% get minimized quaternions
-% 	qCz = qmult(qSC,qzm,epsijk);
-% 	qDz = qmult(qSD,qzm,epsijk);
-    qCz = qmult(qzm,qSC,epsijk);
-	qDz = qmult(qzm,qSD,epsijk);
-	
-	%package quaternions
-	o2syms = [qCz qDz];
+%     % get minimum zeta & sigma values (zm)
+% 	zm = zeta_min2(o1rep,o2tmp,-epsijk);
+%     mA = [0 0 1]; %octonion convention that BP normal is [0 0 1] in lab frame
+%     mArep = repmat(mA,nsets,1);
+%     qzm = ax2qu([mArep zm],-epsijk);
+% % 	qzm = [cos(zm/2) zeros(nsets,2) sin(zm/2)];
+% %     qzm = [cos(zm/2) zeros(nsets,2) -epsijk*sin(zm/2)];
+% 
+% 	% get minimized quaternions
+% % 	qCz = qmult(qSC,qzm,epsijk);
+% % 	qDz = qmult(qSD,qzm,epsijk);
+%     qCz = qmult(qzm,qSC,epsijk);
+% 	qDz = qmult(qzm,qSD,epsijk);
+% 
+% 	%package quaternions
+% 	o2syms = [qCz qDz];
 	
 	%% compute distances
 	%give the octonions a norm of sqrt(2)
