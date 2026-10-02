@@ -55,6 +55,12 @@ end
 %
 %  [ypred,ysd,yint] = predict5DOF(qm2,nA2,mdl,'noboundaryQ',true);
 %
+% Notes:
+%  Ask for ysd/yint only if you need them. With exact GPR, the mean costs
+%  O(N) per query point for N training points, but ysd/yint from the
+%  compact model (what interp5DOF returns for exact predictions) cost
+%  roughly O(N^3) per call. See predict5DOF_test.m for timings.
+%
 % Dependencies:
 %  MATLAB 2019b or higher (mainly for the "arguments" syntax checking at
 %  the beginning of functions, which is used extensively throughout)
@@ -72,8 +78,11 @@ end
 % convert query points to octonions
 o = five2oct(qm2,nA2,nv.epsijk); % will have norm of sqrt(2)
 
-% map to same VFZ as the model
-o = get_octpairs(o,nv.epsijk,'oref',mdl.oref,'dispQ',false);
+% map to same VFZ as the model, one octonion per query point (as for the
+% query points in interp5DOF). With ties included, a query GB with several
+% equally close symmetric equivalents gives several rows, which would no
+% longer line up with qm2/nA2.
+o = get_octpairs(o,nv.epsijk,'oref',mdl.oref,'dispQ',false,'IncludeTies',false);
 
 % convert to unit norm
 o = normr(o);
