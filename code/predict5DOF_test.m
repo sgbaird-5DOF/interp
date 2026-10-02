@@ -48,21 +48,23 @@ assert(isequal(size(ypred4),[size(qm4,1) 1]),...
 % time spent in each stage of predict5DOF
 predict5DOF_timing(qm2,nA2,mdl);
 
-% exact GPR prediction time vs. number of training points (synthetic 7D
-% points, fixed hyperparameters, no fitting). The last two columns predict
-% 10 points with sd, from the compact and the full model.
+% exact GPR prediction time vs. number of training points, N (synthetic 7D
+% points, fixed hyperparameters, no fitting), for the compact model (what
+% interp5DOF returns for exact predictions) and the full model
 nquery = 1000;
 Xq = normr(randn(nquery,7));
-fprintf('exact GPR predict for %d query points (seconds)\n',nquery)
-fprintf('%8s %10s %12s %16s %16s\n','N','mean','mean+sd','10 pts compact','10 pts full')
+fprintf('exact GPR predict, seconds for %d query points (and for 10 query points with sd)\n',nquery)
+fprintf('%8s %14s %14s %14s %14s %14s\n','N','mean compact','sd compact','sd full',...
+    'sd10 compact','sd10 full')
 for N = [1000 2000 4000 8000]
     X = normr(randn(N,7));
     gpr = fitrgp(X,sum(X,2),'FitMethod','none','PredictMethod','exact',...
         'KernelParameters',[0.3;1],'Sigma',0.1);
     cgpr = compact(gpr);
     tic; ytmp = predict(cgpr,Xq); tmean = toc; %#ok<NASGU>
-    tic; [ytmp,sdtmp] = predict(cgpr,Xq); tsd = toc; %#ok<ASGLU>
+    tic; [ytmp,sdtmp] = predict(cgpr,Xq); tsdc = toc; %#ok<ASGLU>
+    tic; [ytmp,sdtmp] = predict(gpr,Xq); tsdf = toc; %#ok<ASGLU>
     tic; [ytmp,sdtmp] = predict(cgpr,Xq(1:10,:)); tsd10c = toc; %#ok<ASGLU>
     tic; [ytmp,sdtmp] = predict(gpr,Xq(1:10,:)); tsd10f = toc; %#ok<ASGLU>
-    fprintf('%8d %10.3f %12.3f %16.3f %16.3f\n',N,tmean,tsd,tsd10c,tsd10f)
+    fprintf('%8d %14.3f %14.3f %14.3f %14.3f %14.3f\n',N,tmean,tsdc,tsdf,tsd10c,tsd10f)
 end

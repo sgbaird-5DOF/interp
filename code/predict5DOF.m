@@ -55,6 +55,12 @@ end
 %
 %  [ypred,ysd,yint] = predict5DOF(qm2,nA2,mdl,'noboundaryQ',true);
 %
+% Notes:
+%  Ask for ysd/yint only if you need them. With exact GPR, the mean costs
+%  O(N) per query point for N training points, but ysd/yint from the
+%  compact model (what interp5DOF returns for exact predictions) cost
+%  roughly O(N^3) per call. See predict5DOF_test.m for timings.
+%
 % Dependencies:
 %  MATLAB 2019b or higher (mainly for the "arguments" syntax checking at
 %  the beginning of functions, which is used extensively throughout)
