@@ -45,6 +45,8 @@ mustBeSqrt2Norm.m|code/
 mustContainFields.m|code/
 normr.m|code/
 numStabBary.m|code/
+neq.m|code/numeric-relation-operators/
+nlt.m|code/numeric-relation-operators/
 osymset.m|code/
 osymsets.m|code/
 proj_down.m|code/
@@ -62,4 +64,4 @@ sphbary.m|code/
 sphbary_setup.m|code/
 sphconvhulln.m|code/
 sqrt2norm.m|code/
-zeta_min2.m|code/
+xi_min.m|code/

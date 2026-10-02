@@ -174,6 +174,7 @@
 %   vert2lcon                         - An extension of Michael Kleder's vert2con function, handles degeneracy
 %   write_video                       - write a set of images to a video named movname with some defaults
 %   write_video_test                  - 
+%   xi_min                            - Correction to CMU group function zeta_min(), written by Oliver Johnson & Sterling Baird
 %   zeta_min2                         - ZETA_MIN  Alternative version of CMU group function zeta_min(), vectorized by Sterling Baird
 %   zeta_min2_r2018a                  - arguments
 %   GBoct2mat                         - convertion grain boundary octonions to orientation matrices (**unfinished**)

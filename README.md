@@ -197,6 +197,8 @@ Take a look at [parseReqFiles_test.m](code/parseReqFiles_test.m) for generating 
 1. [mustContainFields.m](code/mustContainFields.m)
 1. [normr.m](code/normr.m)
 1. [numStabBary.m](code/numStabBary.m)
+1. [neq.m](code/numeric-relation-operators/neq.m)
+1. [nlt.m](code/numeric-relation-operators/nlt.m)
 1. [osymset.m](code/osymset.m)
 1. [osymsets.m](code/osymsets.m)
 1. [proj_down.m](code/proj_down.m)
@@ -214,7 +216,7 @@ Take a look at [parseReqFiles_test.m](code/parseReqFiles_test.m) for generating 
 1. [sphbary_setup.m](code/sphbary_setup.m)
 1. [sphconvhulln.m](code/sphconvhulln.m)
 1. [sqrt2norm.m](code/sqrt2norm.m)
-1. [zeta_min2.m](code/zeta_min2.m)
+1. [xi_min.m](code/xi_min.m)
 
 ## Contents.m (short descriptions)
 Version as of Nov 3, 2020. See [Contents.m](code/Contents.m) for latest version.
