@@ -49,3 +49,6 @@ code/latexTable/
 code/ternplot/
 code/interp5DOF_GB5DOF_port.zip
 code/bare_bones.m
+# scratch files written by get_interp.m and Kim2oct.m
+code/temp.mat
+code/Kim/temp.txt
