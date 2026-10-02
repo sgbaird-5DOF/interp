@@ -5,8 +5,10 @@ arguments
    epsijk(1,1) double = 1
 end
 % VECPAIR2RMAT  Compute a (non-unique) rotation matrix to go from v1 to v2.
-%  If v1 == v2 or v1 == -v2 within the given numerical precision, then the
-%  identity matrix or -1*identity matrix is given, respectively. Active
+%  If v1 == v2 within the given numerical precision, then the identity
+%  matrix is given. If v1 == -v2, then a rotation of pi about an axis
+%  orthogonal to v1 is given (a proper rotation, unlike -1*identity, which
+%  om2qu turns into complex quaternions; see issue 27). Active
 %  rotation matrix, right-handed coordinate system, positive angle of
 %  rotation is counter-clockwise looking from endpoint towards origin,
 %  left-multipled matrix (i.e. R*v1).
@@ -52,8 +54,11 @@ elseif isEqual
 	R = eye(3);
 	
 elseif isOpposite
-	% vectors pointing in opposite directions
-	R = -eye(3);
+	% vectors pointing in opposite directions: rotate by pi about an axis
+	% orthogonal to v1
+	null_space = null(v1); % arbitrary basis for the null space of v1
+	vAx = null_space(:,1); % choose one of the basis vectors as the rotation axis
+	R = ax2om([vAx(:).', pi]);
 end
 
 if epsijk == -1 %-1 seems to produce consistent results with section 4.2 of (1)
