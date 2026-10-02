@@ -72,8 +72,11 @@ end
 % convert query points to octonions
 o = five2oct(qm2,nA2,nv.epsijk); % will have norm of sqrt(2)
 
-% map to same VFZ as the model
-o = get_octpairs(o,nv.epsijk,'oref',mdl.oref,'dispQ',false);
+% map to same VFZ as the model, one octonion per query point (as for the
+% query points in interp5DOF). With ties included, a query GB with several
+% equally close symmetric equivalents gives several rows, which would no
+% longer line up with qm2/nA2.
+o = get_octpairs(o,nv.epsijk,'oref',mdl.oref,'dispQ',false,'IncludeTies',false);
 
 % convert to unit norm
 o = normr(o);
