@@ -46,8 +46,8 @@ jobs:
     runs-on: ubuntu-latest
     # Allow long waits (e.g., Edison polling) without hitting a job-level limit.
     # This budget now covers both attempts, so a fallback after a long first
-    # attempt gets whatever is left of the 180 minutes.
-    timeout-minutes: 180
+    # attempt gets whatever is left of the 360 minutes.
+    timeout-minutes: 360
     permissions:
       contents: read
       # Write, not read, so the "Explain the failure" step can edit the first
