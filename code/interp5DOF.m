@@ -332,9 +332,14 @@ data.props = ytrue;
 %% additional variables
 % current date and time
 starttime = datetime(clock);
-% number of cores (i.e. parfor workers)
-p = gcp;
-ncores = p.NumWorkers;
+% number of cores (i.e. parfor workers); 1 if Parallel Computing Toolbox
+% (optional) isn't available
+try
+    p = gcp;
+    ncores = p.NumWorkers;
+catch
+    ncores = 1;
+end
 %git commit version
 gitcommit = get_gitcommit();
 

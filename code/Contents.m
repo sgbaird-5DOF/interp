@@ -126,6 +126,9 @@
 %   plotFZrodriguez                   - define the FZ vertices
 %   plotFZrodriguez_test              - PLOTFZRODRIGUEZ_TEST
 %   plotFZrodriguez_vtx               - plotFZrodriguez with 'A','B','C','D','E','O' vertices
+%   predict5DOF                       - Predict GB property values from a trained model for GBs specified by (qm2,nA2)
+%   predict5DOF_test                  - predict5DOF test (also prints evaluation timings)
+%   predict5DOF_timing                - Time each stage of predict5DOF for a trained GPR model
 %   proj_down                         - project down by removing null dimensions (i.e. a rotation and translation) via singular value decomposition
 %   proj_down_r2018a                  - arguments
 %   proj_down_test                    - 
