@@ -170,6 +170,7 @@
 %   tofiveFZ                          - Take 5DOF data and rotate it into misorientation and boundary plane fundamental zones.
 %   tricollapse                       - collapse triangulation of points (i.e. a triangulation involving repeat points).
 %   vecpair2rmat                      - Compute a (non-unique) rotation matrix to go from v1 to v2.
+%   vecpair2rmat_test                 - vecpair2rmat test (incl. antipodal vectors)
 %   vert2con                          - convert a set of points to the set of inequality constraints
 %   vert2lcon                         - An extension of Michael Kleder's vert2con function, handles degeneracy
 %   write_video                       - write a set of images to a video named movname with some defaults
