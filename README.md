@@ -35,7 +35,9 @@ See [File dependencies](https://github.com/sgbaird/octonion-mesh/blob/master/REA
 
 ## Getting Started
 ### Quick Installation
-The quickest way to install the code is downloading and unzipping the [latest release](https://github.com/sgbaird-5DOF/interp/releases/) or [latest version](https://github.com/sgbaird/interp5DOF-paper/archive/refs/heads/main.zip), add all subfolders of `interp` to the path via `addpath(genpath("."))`, and make sure it's working by running [`interp5DOF_test`](code/interp5DOF_test.m). For additional details or development instructions, see [advanced installation](https://github.com/sgbaird-5DOF/interp/edit/master/README.md#advanced-installation).
+The quickest way to install the code is downloading and unzipping the [latest release](https://github.com/sgbaird-5DOF/interp/releases/) or [latest version](https://github.com/sgbaird/interp5DOF-paper/archive/refs/heads/main.zip), add the `code` folder and its subfolders to the path via `addpath(genpath("code"))` (run from the `interp` folder), and make sure it's working by running [`interp5DOF_test`](code/interp5DOF_test.m). For additional details or development instructions, see [advanced installation](https://github.com/sgbaird-5DOF/interp/edit/master/README.md#advanced-installation).
+
+Avoid adding the whole `interp` folder, or a folder of results, to the path with subfolders (`addpath(genpath("."))` from `interp`, or "Add with Subfolders"). That also adds `.git` and any data or results folders, and a path with many folders and files can make MATLAB very slow.
 
 ### Basic Usage
 See [interp5DOF.m](code/interp5DOF.m), which is a high-level function for Gaussian Process Regression (GPR), barycentric, nearest neighbor (NN), and inverse-distance weighting (IDW) interpolation. This involves importing/generating data and computing an interpolation.
@@ -439,7 +441,7 @@ Version as of Nov 3, 2020. See [Contents.m](code/Contents.m) for latest version.
 ### Basic steps:
 * Step 0: download the [code](https://github.com/sgbaird-5DOF/interp.git)
 * Step 1: set `interp/` as working directory
-* Step 2: add subfolders to path (`addpath(genpath('.'))`) and run [interp5DOF_test.m](code/interp5DOF_test.m) to verify it works
+* Step 2: add the `code` folder and its subfolders to path (`addpath(genpath('code'))`) and run [interp5DOF_test.m](code/interp5DOF_test.m) to verify it works
 
 ### Platform-specific directions
 

@@ -188,8 +188,13 @@ if dispQ
     disp(['method = ' method])
 end
 
-% add relevant folders to path (by searching subfolders for functions)
-addpath(genpath('.'))
+% add interp's own folders to the path if they aren't there yet. (Not
+% addpath(genpath('.')), which adds every folder below the current folder,
+% e.g. results folders, on every call; a path with many folders and files
+% slows MATLAB down.)
+if any(cellfun(@(f) exist(f,'file') ~= 2,{'qmult','var_names','qinv_johnson','interp_gpr'}))
+    addpath(genpath(fileparts(mfilename('fullpath'))))
+end
 % addpathdir({'normr.m','GB5DOF_setup.m','cu2qu.m','q2rod.m','five2oct.m',...
 %     'correctdis.m','interp_gpr.m'})
 
