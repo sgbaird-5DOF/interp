@@ -43,6 +43,27 @@
   including a helper function in one of the GB conversion scripts. Prefer
   small, well-scoped changes and say which functions you touched.
 
+### Opening a new PR from a run started on a PR
+
+The action's push wrapper (`git-push.sh`) only updates the branch the run
+started on, so on an open PR it can't create a branch for separate work. When
+the request calls for a new PR (a spin-off, a stacked PR, work that doesn't
+belong in this PR's diff), the repository's owner authorizes this, and it is not a
+workaround of the action:
+
+1. Commit the work on a local branch (base it on `master`, or on this PR's branch
+   for a stacked PR).
+2. `bash <(git show origin/master:scripts/push_new_branch.sh) claude/<slug>`.
+   This runs master's copy, which older PR branches don't have and a PR can't
+   change. It only creates new `claude/*` branches: it refuses any other name
+   and any branch that already exists, and never overwrites.
+3. `gh pr create --head claude/<slug> --base <master or this PR's branch>`, and
+   link the new PR in your comment.
+
+Everything else keeps the wrapper's rule: never push to `master`, to a person's
+branch or to another existing PR's branch, and never force-push. Use the
+wrapper for pushes to this run's own branch as usual.
+
 ### The GitHub token dies at minute 60 (push early, re-mint to continue)
 
 The GitHub App token a session starts with (`GITHUB_TOKEN`/`GH_TOKEN` in the
