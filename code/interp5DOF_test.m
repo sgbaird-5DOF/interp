@@ -1,11 +1,13 @@
 %INTERP5DOF_TEST  simple test case for five degree-of-freedom GB property interpolation
+% (No %% sections: run-tests runs each section as a separate test in its
+% own workspace, so later sections wouldn't see qm, nA, ypred, etc.)
 clear; close all
 
 testnum = 1;
 
 addpathdir({'cu2qu.m','q2rod.m','qmult.m','get_uuid.m','qmA2nA.m'})
 
-%% Test Parameters
+% Test Parameters
 switch testnum
     case 1
         ninputpts = 388;
@@ -16,25 +18,25 @@ switch testnum
         npredpts = 10000;
 end
 
-%% random 5DOF parameters
+% random 5DOF parameters
 [five,qm,nA] = get_five(ninputpts);
 [five2,qm2,nA2] = get_five(npredpts);
 
-%% get BRK function values
+% get BRK function values
 tic
 y = GB5DOF_setup([],qm,nA);
 ytrue = GB5DOF_setup([],qm2,nA2);
 toc
 
-%% Interpolation
+% Interpolation
 tstart = tic;
 [ypred,interpfn,mdl,mdlpars] = interp5DOF(qm,nA,y,qm2,nA2,'gpr');
 toc(tstart)
 
-%% Results
+% Results
 errmetrics = get_errmetrics(ypred,ytrue,'dispQ',true);
 
-%% Plotting
+% Plotting
 paperfigure();
 parityplot(ytrue,ypred)
 
